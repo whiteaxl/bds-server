@@ -10,6 +10,7 @@ export default class Component extends React.Component{
             <Layout title="Home Page">
                 <h1>Administration</h1>
                 <a href='/admin/extract/bds_com'> Extract data from BDS </a>
+                <br/>
                 <a href='/admin/viewall'> ViewAll </a>
                 
             </Layout>

@@ -10,11 +10,6 @@
  */
 var HapiServer = require('./src/config/hapi');
 
-/**
-* The mongodb will be used to store all the users
-*/
-require('./src/database/mongodb');
-
 
 require('babel-core/register')({
     presets: ['react', 'es2015']

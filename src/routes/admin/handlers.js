@@ -1,6 +1,10 @@
 
 var Boom = require('boom');
-var Ads = require('../../database/models/Ads');
+//var Ads = require('../../database/models/Ads');
+
+var couchbase = require('couchbase');
+var ViewQuery = couchbase.ViewQuery;
+var myBucket = require('../../database/mydb')
 
 var Extract = require('../../lib/extract')
 
@@ -17,24 +21,19 @@ internals.bdsCom = function(req, reply) {
 	var start = new Date();
 
 	Extract.extractBDS((adsDto) => {
-		Ads.findOne({title: adsDto.title}, function(err, one) {
+		adsDto._type = "Ads"
+
+		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
+			if (err) throw err;
+		})
+
+		/*
+		Ads.findOneAndUpdate({title: adsDto.title}, adsDto, {upsert: true}, function(err, one) {
 			if (err) throw err;
 
-			if (!ads) {
-				console.log("Existed " + adsDto.title);
-				countExisted++;
-				return;	
-			}
-			
-			var ads = new Ads(adsDto)
-			ads.save((err, ads) => {
-				if (err) {
-					throw err;
-				}
-				//done one
-				countInsert++;
-			});			
-		});
+			countExisted++;
+		})
+		*/
 	}
 	,() => { //done all handle
 		var duration = new Date() - start;
@@ -52,12 +51,16 @@ internals.test = function(req, reply) {
 }
 
 internals.viewall = function(req, reply) {
-	Ads.find({}, function(err, allAds) {
-		if (err) throw err;
+	var query = ViewQuery.from('ads', 'all_ads');
+	myBucket.query(query, function(err, allAds) {
+		console.log(allAds);
 
-		reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
-	})
-	
+		if (!allAds)
+			allAds = [];
+
+	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
+	});
+
 }
 
 module.exports = internals;

@@ -8,8 +8,9 @@ export default class Component extends React.Component{
 	allData() {
 		return (
 
-			this.props.allAds.map(function(one) {
-		        return <div> {one.title} </div>
+			this.props.allAds.map(function(oneDoc) {
+                var one = oneDoc.value;
+		        return <li> <img src = {one.cover}/> <span> {one.title} </span> </li>
             })
 		)
 	}
@@ -17,8 +18,10 @@ export default class Component extends React.Component{
        return (
             <Layout title="ViewAll Page">
                 <h1>ViewAll</h1>
-                <h2> count : {this.props.allAds.length} </h2>
+                <h2> Total records : {this.props.allAds.length} </h2>
+                <ol>
                 {this.allData()}
+                </ol>
             </Layout>
         );
     }

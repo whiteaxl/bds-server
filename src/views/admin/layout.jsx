@@ -14,7 +14,7 @@ var Component = React.createClass({
                     {this.props.children}
                     <hr />
                     <p>
-                        <a href="/">Home</a> | <a href="/about">About Us</a>
+                        <a href="/admin">Home</a> | <a href="/admin/viewall"> View All </a>| <a href="/about">About Us</a>
                     </p>
                 </body>
             </html>
