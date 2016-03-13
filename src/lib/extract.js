@@ -6,8 +6,8 @@ var BDSExtractor = require ('./BDSExtractor');
 
 var bds = new BDSExtractor();
 
-internals.extractBDS = function(handleData, handleDone) {
-	bds.extract(handleData, handleDone);
+internals.extractBDS = function(cridential,handleData, handleDone) {
+	bds.extract(cridential, handleData, handleDone);
 }
 
 module.exports = internals;

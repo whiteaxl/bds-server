@@ -45,6 +45,17 @@ internals.endpoints = [
 	      	tags: ['api']
 		}
 	}
+	, 
+	{
+		method: 'GET', 
+		path: '/admin/deleteall', 
+		handler: MyHandlers.deleteall, 
+		config : {
+			description: 'Get the default/home template.',
+	      	notes: 'Renders the /docs/home.md file as HTML.',
+	      	tags: ['api']
+		}
+	}
 ];
 
 module.exports = internals;

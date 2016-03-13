@@ -6,22 +6,48 @@ var osmosis = require('osmosis');
 //html entity coding
 var entities = require("entities");
 
-
+var DSLoaiNhaDat = require("./loaiNhaDat");
 
 var BDS_NAME_MAP = {
-	'Thuộc dự án' :'detail_duAn', 
-	'Địa chỉ' : 'detail_diaChi', 
-	'Mã số' : 'detail_maSo', 
-	'Loại tin rao' : 'detail_loaiTinRao',  
-	'Ngày đăng tin' : 'detail_ngayDangTin', 
-	'Ngày hết hạn': 'detail_ngayHetHan', 
-	'Số phòng ngủ': 'detail_soPhongNgu', 
+	'Thuộc dự án' :'duAn', 
+	'Địa chỉ' : 'diaChi', 
+	'Mã số' : 'maSo', 
+	'Loại tin rao' : 'loaiTinRao',  
+	'Ngày đăng tin' : 'ngayDangTin', 
+	'Ngày hết hạn': 'ngayHetHan', 
+	'Số phòng ngủ': 'soPhongNgu_full', 
+	'Số tầng': 'soTang_full', 
 	//custInfo
 	'Điện thoại' : 'cust_phone', 
 	'Mobile' : 'cust_mobile', 
 	'Đăng bởi' : 'cust_dangBoi', 
 	'Email'		: 'cust_email'
 }
+
+//(x,y), x is Ban/Thue, y is loaiNhaDat
+var LOAI_BDS_NAME_MAP = {
+	'Bán căn hộ chung cư' :'0,1', 
+	'Bán nhà biệt thự, liền kề' : '0,4',
+	'Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)' : '0,4',
+	'Bán nhà riêng' : '0,2',
+	'Bán nhà mặt phố' : '0,3',
+	'Bán đất nền dự án' : '0,5',
+	'Bán đất nền dự án (đất trong dự án quy hoạch)' :'0,5',
+	'Bán trang trại, khu nghỉ dưỡng' : '0,99',
+	'Bán kho, nhà xưởng' : '0,99',
+	'Bán loại bất động sản khác' : '0,99',
+	'Bán đất' : '0,5',
+	//thue
+	'Cho thuê căn hộ chung cư' : '1,1',
+	'Cho thuê nhà riêng' : '1,2', 
+	'Cho thuê nhà mặt phố' : "2,3", 
+	'Cho thuê nhà trọ, phòng trọ' : '1,99',
+	'Cho thuê văn phòng' : '1,4',
+	'Cho thuê cửa hàng - ki ốt' : '1,5',
+	'Cho thuê kho, nhà xưởng, đất' : '1,99',
+	'Cho thuê loại bất động sản khác' : '1,99'
+}
+
 
 var parseEmail = function(encEmail) {
 	let idx1 = encEmail.indexOf('mailto:');
@@ -37,13 +63,36 @@ var parseEmail = function(encEmail) {
 	return '';
 }
 
+function _convertLoaiTinGiao(ads) {
+	if (ads.loaiTinRao) {
+
+		var mapped = LOAI_BDS_NAME_MAP[ads.loaiTinRao];
+		
+
+		var spl = mapped.split(",");
+		if (spl.length = 2) {
+			ads.loaiTin = Number(spl[0]);
+			ads.loaiNhaDat = Number(spl[1]);
+			if (ads.loaiTin === 0) {
+				ads.ten_loaiTin = "Bán";
+				ads.ten_loaiNhaDat = DSLoaiNhaDat.ban[ads.loaiNhaDat];
+			}
+
+			if (ads.loaiTin === 1) {
+				ads.ten_loaiTin = "Cho Thuê";
+				ads.ten_loaiNhaDat = DSLoaiNhaDat.thue[ads.loaiNhaDat];
+			}
+		}
+	}
+}
+
 
 class BDSExtractor {
 	constructor() {
 	}
 
-	extract(handleData, handleDone) {
-		this.extractWithLimit(handleData, handleDone, 1, 2);
+	extract(cridential, handleData, handleDone) {
+		this.extractWithLimit(handleData, handleDone, cridential.pageFrom, cridential.pageTo);
 	}
 
 	extractWithLimit(handleData, handleDone, start, end) {
@@ -62,10 +111,10 @@ class BDSExtractor {
 			 if (count==end) {
 			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 			 	clearInterval(myInterval);
+
+			 	handleDone();
 			 }
 		}, 1000);
-
-		handleDone();
 
 	}
 
@@ -79,9 +128,8 @@ class BDSExtractor {
 			'cover' : '.p-main > div > a > img@src'
 		})
 		.data(function(list) {
-			//console.log("CCCC:" +list.title);
-			//console.log("CCCC:" +list.cover);
-			handleData(list);
+			
+			handleData(1, list);
 		})
 		.follow('.p-title a@href')
 		.find('#product-detail')
@@ -104,16 +152,23 @@ class BDSExtractor {
 		    	images_small: listing.images, 
 		    	price_value: listing.price.split(' ')[0],
 		    	price_unit: listing.price.split(' ')[1], 
-		    	area: listing.area.substr(0, listing.area.length-2), 
+		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
 		    	area_full: listing.area, 
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
 		    }
+
+		    //convert gia'
+		    if (ads.price_unit==='tỷ') {
+		    	ads.gia = ads.price_value*1000;
+		    } else {
+		    	ads.gia = ads.price_value*1;
+		    } 
+
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
 		    // detail
 		    for (var i = 0; i < listing.detailLefts.length; i++) {
 		    	ads[BDS_NAME_MAP[listing.detailLefts[i]]] = listing.detailRights[i];
 		    }
-
 		    
 		    // customer information : thong tin lien lac
 		    for (var i = 0; i < listing.custLefts.length; i++) {
@@ -124,8 +179,19 @@ class BDSExtractor {
 		    	}
 		    	ads[BDS_NAME_MAP[listing.custLefts[i]]] = val;	
 		    }
+		    //convert loai tin giao
+		    _convertLoaiTinGiao(ads);
 		
-		    handleData(ads);
+			//convert so phong ngu
+		    if (ads.soPhongNgu_full) {
+		    	ads.soPhongNgu = Number(ads.soPhongNgu_full.substr(0, 1));
+		    }
+		    //convert so tang
+		    if (ads.soTang_full) {
+		    	ads.soTang = Number(ads.soTang_full.substr(0, 1));
+		    }
+
+		    handleData(2, ads);
 		})
 		
 		.log(console.log)
@@ -136,6 +202,8 @@ class BDSExtractor {
 			handleDone();
 		})
 	}
+
+	
 }
 
 module.exports = BDSExtractor;

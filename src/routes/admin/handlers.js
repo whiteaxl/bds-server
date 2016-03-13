@@ -16,27 +16,47 @@ internals.index = function(req, reply) {
 
 
 internals.bdsCom = function(req, reply) {
+	console.log(req.query);
+	
+
 	var countInsert  = 0;
 	var countExisted  = 0;
-	var start = new Date();
+	var duration = 0;
 
-	Extract.extractBDS((adsDto) => {
+	if (!req.query.pageFrom || !req.query.pageTo) {
+		reply.view('admin/extract_bds_com', {
+			duration: duration,
+			count: countInsert + countExisted,
+			countInsert: countInsert
+		});
+
+		return;
+	}
+
+	//when having parameter
+
+	var start = new Date();
+	var headers = {};
+
+	Extract.extractBDS(req.query,(from, adsDto) => {
+		//from header, just store it
+		if (from===1) {
+			headers[adsDto.title] = adsDto;
+			return;
+		}
+
 		adsDto._type = "Ads"
+		//get cover from header obj (merge)
+		adsDto.cover = headers[adsDto.title].cover;
+
+		countInsert++;
 
 		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
 			if (err) throw err;
 		})
-
-		/*
-		Ads.findOneAndUpdate({title: adsDto.title}, adsDto, {upsert: true}, function(err, one) {
-			if (err) throw err;
-
-			countExisted++;
-		})
-		*/
 	}
 	,() => { //done all handle
-		var duration = new Date() - start;
+		duration = new Date() - start;
 		reply.view('admin/extract_bds_com', {
 			duration: duration,
 			count: countInsert + countExisted,
@@ -59,6 +79,27 @@ internals.viewall = function(req, reply) {
 			allAds = [];
 
 	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
+	});
+
+}
+
+internals.deleteall = function(req, reply) {
+	var query = ViewQuery.from('ads', 'all_ads');
+	myBucket.query(query, function(err, allAds) {
+		console.log(allAds);
+		if (!allAds)
+			allAds = [];
+
+		console.log("Found " + allAds.length + " documents to delete");
+	    for(i in allAds) {
+	    	console.log("Deleting " + allAds[i].id);
+
+	        myBucket.remove(allAds[i].id, function(error, result) {
+	            console.log("Deleting " + allAds[i].title);
+	        });
+	    }
+
+	    reply({result:'Done', Count: allAds.length})
 	});
 
 }

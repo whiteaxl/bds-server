@@ -19,12 +19,14 @@
 var  GeneralRoutes = require('../routes/general/endpoints')
 var  UserRoutes = require('../routes/user/endpoints')   
 var  AdminRoutes = require('../routes/admin/endpoints')   
+var  ApiRoutes = require('../routes/api/endpoints')   
 
 var internals = {};
 
 //Concatentate the routes into one array
 internals.routes = [].concat(AdminRoutes.endpoints,
                              GeneralRoutes.endpoints,
+                             ApiRoutes.endpoints,
                              UserRoutes.endpoints
                              );
 

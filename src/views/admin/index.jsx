@@ -2,15 +2,23 @@
 
 var React = require('react');
 var Layout = require('./layout.jsx');
+//var Http = require('http');
+var $ = require('jquery');
 
 
 export default class Component extends React.Component{
+    
+
     render() {
        return (
-            <Layout title="Home Page">
+            <Layout title="Admin Page">
                 <h1>Administration</h1>
-                <a href='/admin/extract/bds_com'> Extract data from BDS </a>
-                <br/>
+                
+                <li> <h2> Extract </h2> </li>
+                <a href='/admin/extract/bds_com'> From BDS </a>
+                                
+
+                <li> <h2> View </h2> </li>
                 <a href='/admin/viewall'> ViewAll </a>
                 
             </Layout>
