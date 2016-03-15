@@ -6,7 +6,7 @@ var osmosis = require('osmosis');
 //html entity coding
 var entities = require("entities");
 
-var DSLoaiNhaDat = require("./loaiNhaDat");
+var DSLoaiNhaDat = require("./LoaiNhaDat");
 
 var BDS_NAME_MAP = {
 	'Thuộc dự án' :'duAn', 
