@@ -55,7 +55,19 @@ internals.endpoints = [
 	      	notes: 'Renders the /docs/home.md file as HTML.',
 	      	tags: ['api']
 		}
+	}, 
+
+	{
+		method: 'GET', 
+		path: '/admin/api_usage', 
+		handler: MyHandlers.api_usage, 
+		config : {
+			description: 'Get the default/home template.',
+	      	notes: 'Renders the /docs/home.md file as HTML.',
+	      	tags: ['api']
+		}
 	}
-];
+]
+	
 
 module.exports = internals;

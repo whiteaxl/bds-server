@@ -20,6 +20,9 @@ export default class Component extends React.Component{
 
                 <li> <h2> View </h2> </li>
                 <a href='/admin/viewall'> ViewAll </a>
+
+                <li> <h2> API </h2> </li>
+                <a href='/admin/api_usage'> ViewAll </a>
                 
             </Layout>
         );

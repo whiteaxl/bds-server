@@ -104,4 +104,11 @@ internals.deleteall = function(req, reply) {
 
 }
 
+internals.api_usage = function(req, reply) {
+	reply.view('admin/api', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
+}
+
+
+
+
 module.exports = internals;
