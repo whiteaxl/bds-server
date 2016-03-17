@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -X POST -d '{"loaiTin":0,"loaiNhaDat":2}' http://203.162.13.101:5000/api/find
