@@ -20,7 +20,8 @@ function findAds(queryCondition, reply) {
 		//ES5 syntax to select
 		var filtered = allAds.filter(function(doc) {
 			for (var attr in queryCondition) {
-				if (attr!=='orderBy' && !match(attr, queryCondition[attr], doc)) {
+				if (!match(attr, queryCondition[attr], doc)) {
+					console.log("Not match attr=" + attr + ", value=" + queryCondition[attr])
 					return false;
 				}
 			};
@@ -28,11 +29,10 @@ function findAds(queryCondition, reply) {
 		});
 
 		//sort
-
-		console.log("Perform ordering by " + queryCondition['orderBy']);
-
-		orderAds(filtered, queryCondition['orderBy']);
-
+		if (queryCondition) {
+			console.log("Perform ordering by " + queryCondition['orderBy']);
+			orderAds(filtered, queryCondition['orderBy']);
+		}
 
 	  	reply({
 	  		length: filtered.length,
@@ -60,11 +60,18 @@ function match(attr, value, doc) {
 	//BETWEEN
 	idx = attr.indexOf(QueryOps.BETWEEN);
 
-	if (~idx) {
-		var field = attr.substring(0, idx-1);
+	if (idx > 0) {
+		var field = attr.substring(0, idx);
+
 		var splits = value.split(",");
+
+		var ret = ads[field] >= splits[0] && ads[field] <= splits[1];
+
+		if (!ret) {
+			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field] + ", splits[0]=" + splits[0] + ", splits[1]=" + splits[1])
+		}
 		
-		return ads[field] >= splits[0] && ads[field] <= splits[1] 
+		return ret; 
 	}
 	//GREATER
 	idx = attr.indexOf(QueryOps.GREATER);
@@ -92,7 +99,7 @@ function orderAds(filtered, orderCondition) {
 		var orderByVal = orderCondition;
 		var field = '';
 		var isASC = 1;
-		console.log("aaaa=" + orderByVal)
+		console.log("orderByVal=" + orderByVal)
 		console.log(orderByVal.indexOf("DESC"))
 
 		if (orderByVal.indexOf("DESC")>0) {
