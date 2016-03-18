@@ -21,7 +21,8 @@ var BDS_NAME_MAP = {
 	'Điện thoại' : 'cust_phone', 
 	'Mobile' : 'cust_mobile', 
 	'Đăng bởi' : 'cust_dangBoi', 
-	'Email'		: 'cust_email'
+	'Email'		: 'cust_email',
+	'Tên liên lạc' : 'tenLienLac'
 }
 
 //(x,y), x is Ban/Thue, y is loaiNhaDat
@@ -67,6 +68,10 @@ function _convertLoaiTinGiao(ads) {
 	if (ads.loaiTinRao) {
 
 		var mapped = LOAI_BDS_NAME_MAP[ads.loaiTinRao];
+		if (!mapped) {
+			console.log("WARN can't find ads.loaiTinRao:" + ads.loaiTinRao)
+			return;
+		}
 		
 
 		var spl = mapped.split(",");
@@ -157,13 +162,6 @@ class BDSExtractor {
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
 		    }
 
-		    //convert gia'
-		    if (ads.price_unit==='tỷ') {
-		    	ads.gia = ads.price_value*1000;
-		    } else {
-		    	ads.gia = ads.price_value*1;
-		    } 
-
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
 		    // detail
 		    for (var i = 0; i < listing.detailLefts.length; i++) {
@@ -190,6 +188,18 @@ class BDSExtractor {
 		    if (ads.soTang_full) {
 		    	ads.soTang = Number(ads.soTang_full.substr(0, 1));
 		    }
+
+		     //convert gia'
+		    if (ads.price_unit==='tỷ') {
+		    	ads.gia = ads.price_value*1000;
+		    } else {
+		    	if (~ads.price_unit.indexOf('u/m')) {
+		    		ads.gia = ads.price_value * ads.dienTich;
+		    	}
+			    else {
+			    	ads.gia = ads.price_value*1;
+			    }
+			} 
 
 		    handleData(2, ads);
 		})
