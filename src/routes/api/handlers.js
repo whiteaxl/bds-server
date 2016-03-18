@@ -20,7 +20,7 @@ function findAds(queryCondition, reply) {
 		//ES5 syntax to select
 		var filtered = allAds.filter(function(doc) {
 			for (var attr in queryCondition) {
-				if (!match(attr, queryCondition[attr], doc)) {
+				if (attr !== "orderBy"  && !match(attr, queryCondition[attr], doc)) {
 					console.log("Not match attr=" + attr + ", value=" + queryCondition[attr])
 					return false;
 				}
