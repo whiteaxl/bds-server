@@ -97,18 +97,24 @@ class BDSExtractor {
 	}
 
 	extract(cridential, handleData, handleDone) {
-		this.extractWithLimit(handleData, handleDone, cridential.pageFrom, cridential.pageTo);
+		console.log("Starting extraction .... ");
+		this.extractWithLimit(handleData, handleDone, Number(cridential.pageFrom), Number(cridential.pageTo));
 	}
 
 	extractWithLimit(handleData, handleDone, start, end) {
+		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 
 		var count = start-1;
+
 		var _done = () => {
 			count++;
 		}
 
-		for (var i=start; i<=end; i++) {
+
+		var i = start;
+		for (i=start; i<=end; i++) {
+			console.log("Extracting for page: " + i);
 			this.extractOnePage('http://batdongsan.com.vn/nha-dat-ban/p'+i, handleData, _done);
 		}
 
