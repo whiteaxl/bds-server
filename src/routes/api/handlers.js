@@ -75,13 +75,26 @@ function match(attr, value, doc) {
 	}
 	//GREATER
 	idx = attr.indexOf(QueryOps.GREATER);
-	if (~idx) {
+	if (idx>0) {
 		//if 0 then no need to check
 		if (value===0) {
 			return true;
 		}
-		var field = attr.substring(0, idx-1);
-		return ads[field] >= value;
+
+		//
+		if (!ads[field]) {
+			return false;
+		}
+
+		var field = attr.substring(0, idx);
+		
+		let ret = ads[field] >= value;
+
+		if (!ret) {
+			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field])
+		}
+
+		return ret;
 	}
 
 	//default is equals
