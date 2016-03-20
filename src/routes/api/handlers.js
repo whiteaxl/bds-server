@@ -29,15 +29,33 @@ function findAds(queryCondition, reply) {
 		});
 
 		//sort
+
 		if (queryCondition) {
-			console.log("Perform ordering by " + queryCondition['orderBy']);
-			orderAds(filtered, queryCondition['orderBy']);
+			let od = queryCondition['orderBy'];
+			if (od) {
+				console.log("Perform ordering by " + od);
+				orderAds(filtered, od);
+			} else {
+				console.log("No ordering by ");
+			}
 		}
+
+		// limit
+		let listResult = filtered.slice(0,1000).map((one) => {
+		    let val = one.value;
+		    if (val.cover) {
+		    	val.cover_small = val.cover;
+				val.cover = val.cover_small.replace("120x90", "745x510");
+		    }
+			
+			return one;
+		});
+
+
 
 	  	reply({
 	  		length: filtered.length,
-			list: filtered
-			
+			list: filtered.slice(0,1000)
 	  	});
 	});
 }
