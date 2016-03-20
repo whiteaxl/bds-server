@@ -140,9 +140,17 @@ function orderAds(filtered, orderCondition) {
 
 
 internals.findPOST = function(req, reply) {
-	console.log("payload: " + req.payload);
+	console.log("query: " + req.payload.query);
+	try {
+		//let x=1/0;
+		findAds(req.payload, reply) 	
+	} catch (e) {
+		console.log('ERROR')
 
-	findAds(req.payload, reply) 
+		console.log(e);
+		reply("ERROR" + e);
+	}
+	
 }
 
 
