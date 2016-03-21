@@ -51,6 +51,9 @@ internals.bdsCom = function(req, reply) {
 
 		countInsert++;
 
+		myBucket.operationTimeout = 30000;
+
+
 		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
 			if (err) throw err;
 		})
@@ -73,7 +76,7 @@ internals.test = function(req, reply) {
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
 	myBucket.query(query, function(err, allAds) {
-		console.log(allAds);
+		console.log("Number of ads: " + allAds.length);
 
 		if (!allAds)
 			allAds = [];
@@ -86,7 +89,7 @@ internals.viewall = function(req, reply) {
 internals.deleteall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
 	myBucket.query(query, function(err, allAds) {
-		console.log(allAds);
+		console.log("Number of ads: " + allAds.length);
 		if (!allAds)
 			allAds = [];
 

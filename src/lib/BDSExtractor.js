@@ -92,16 +92,40 @@ function _convertLoaiTinGiao(ads) {
 }
 
 
+function convertGia(ads) {
+	if (ads.price_unit==='tỷ') {
+    	ads.gia = ads.price_value*1000;
+    	return;
+    } 
+
+	if (~ads.price_unit.indexOf('u/m')) { //trieu/m2
+		ads.gia = ads.price_value * ads.dienTich;
+		return;
+	}
+
+	if (~ads.price_unit.indexOf('nghìn/m2/tháng')) { 
+		ads.gia = ads.price_value * ads.dienTich / 1000;
+		return;
+	}
+
+    
+	ads.gia = ads.price_value*1;
+}
+
+
 class BDSExtractor {
 	constructor() {
 	}
 
 	extract(cridential, handleData, handleDone) {
 		console.log("Starting extraction .... ");
-		this.extractWithLimit(handleData, handleDone, Number(cridential.pageFrom), Number(cridential.pageTo));
+		this.extractWithLimit(handleData, handleDone
+			, Number(cridential.pageFrom), Number(cridential.pageTo)
+			, cridential.rootURL);
 	}
 
-	extractWithLimit(handleData, handleDone, start, end) {
+	//rootURL = http://batdongsan.com.vn/nha-dat-ban ; nha-dat-cho-thue
+	extractWithLimit(handleData, handleDone, start, end, rootURL) {
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 
@@ -115,7 +139,7 @@ class BDSExtractor {
 		var i = start;
 		for (i=start; i<=end; i++) {
 			console.log("Extracting for page: " + i);
-			this.extractOnePage('http://batdongsan.com.vn/nha-dat-ban/p'+i, handleData, _done);
+			this.extractOnePage(rootURL + '/p'+i, handleData, _done);
 		}
 
 		var myInterval = setInterval(function(){ 
@@ -123,9 +147,12 @@ class BDSExtractor {
 			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 			 	clearInterval(myInterval);
 
-			 	handleDone();
+			 	//handleDone();
 			 }
 		}, 1000);
+
+
+		handleDone();
 
 	}
 
@@ -196,16 +223,10 @@ class BDSExtractor {
 		    }
 
 		     //convert gia'
-		    if (ads.price_unit==='tỷ') {
-		    	ads.gia = ads.price_value*1000;
-		    } else {
-		    	if (~ads.price_unit.indexOf('u/m')) {
-		    		ads.gia = ads.price_value * ads.dienTich;
-		    	}
-			    else {
-			    	ads.gia = ads.price_value*1;
-			    }
-			} 
+		    
+		    
+
+			convertGia(ads);
 
 		    handleData(2, ads);
 		})

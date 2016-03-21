@@ -13,7 +13,8 @@ export default class ExtractBDS extends React.Component {
         return {
             pageFrom: 1, 
             pageTo: 2, 
-            result: "Init"
+            result: "Init", 
+            rootURL : "http://batdongsan.com.vn/nha-dat-ban"
         }
     }
 
@@ -21,13 +22,20 @@ export default class ExtractBDS extends React.Component {
 		return (
             <Layout title="Extract BDS">
                 <li> <h2> Extract data from BDS </h2> </li>
-                <form>
+                <form >
+                    <label> Root URL: (nha-dat-ban or nha-dat-cho-thue)</label> 
+                    <br/>
+                    <input id="rootURL" name="rootURL" size="100" value={this.state.rootURL}  />
+                    
+                    <br/>
+
                     <label> From Page: </label> 
-                    <input id="pageFrom" name="pageFrom" value={this.state.pageFrom} onChange={this._onChange} />
-                    
+                    <input id="pageFrom" name="pageFrom" value={this.state.pageFrom} />
+                
                     <label> To Page: </label> 
-                    <input id="pageTo" name="pageTo"  value={this.state.pageTo}  onChange={this._onChange} />
+                    <input id="pageTo" name="pageTo"  value={this.state.pageTo}   />
                     
+
                     <button type="Submit"><b>Extract</b> </button>
                     
                 </form>

@@ -20,7 +20,8 @@ function findAds(queryCondition, reply) {
 		//ES5 syntax to select
 		var filtered = allAds.filter(function(doc) {
 			for (var attr in queryCondition) {
-				if (attr !== "orderBy"  && !match(attr, queryCondition[attr], doc)) {
+				if (attr !== "orderBy"  && attr !== "limit"
+						&& !match(attr, queryCondition[attr], doc)) {
 					console.log("Not match attr=" + attr + ", value=" + queryCondition[attr])
 					return false;
 				}
@@ -39,6 +40,7 @@ function findAds(queryCondition, reply) {
 				console.log("No ordering by ");
 			}
 		}
+		console.log("filtered length = " + filtered.length)
 
 		// limit
 		let listResult = filtered.slice(0,1000).map((one) => {
@@ -51,11 +53,17 @@ function findAds(queryCondition, reply) {
 			return one;
 		});
 
+		console.log("listResult length = " + listResult.length)
 
+		//
+		if (queryCondition && queryCondition['limit']) {
+			let lim = queryCondition['limit'];
+			listResult = listResult.slice(0, lim)
+		}
 
 	  	reply({
 	  		length: filtered.length,
-			list: filtered.slice(0,1000)
+			list: listResult
 	  	});
 	});
 }
