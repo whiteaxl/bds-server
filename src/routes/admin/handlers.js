@@ -51,11 +51,13 @@ internals.bdsCom = function(req, reply) {
 
 		countInsert++;
 
-		myBucket.operationTimeout = 30000;
+		myBucket.operationTimeout = 120000;//2 minutes
 
 
 		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
-			if (err) throw err;
+			if (err) {
+				console.log("ERROR:" + err);
+			};
 		})
 	}
 	,() => { //done all handle
