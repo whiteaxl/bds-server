@@ -146,7 +146,6 @@ class BDSExtractor {
 			 if (count==end) {
 			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 			 	clearInterval(myInterval);
-
 			 	//handleDone();
 			 }
 		}, 1000);
@@ -170,19 +169,24 @@ class BDSExtractor {
 			handleData(1, list);
 		})
 		.follow('.p-title a@href')
-		.find('#product-detail')
+		//.find('#product-detail')
 		.set({
-		    'title'			:'.pm-title > h1',
-		    'images'		:['.list-img > ul > li > img@src'],
-		    'price'			:'.gia-title[1] > strong ',
-		    'area'			:'.gia-title[2] > strong ',
-		    'loc'			:'.diadiem-title', 
-		    'detailLefts' 		:['.left-detail .left'],
-		    'detailRights' 		:['.left-detail .right'], 
+		    'title'			:'#product-detail .pm-title > h1',
+		    'images'		:['#product-detail .list-img > ul > li > img@src'],
+		    'price'			:'#product-detail .gia-title[1] > strong ',
+		    'area'			:'#product-detail .gia-title[2] > strong ',
+		    'loc'			:'#product-detail .diadiem-title', 
+		    'detailLefts' 		:['#product-detail .left-detail .left'],
+		    'detailRights' 		:['#product-detail .left-detail .right'], 
 		    'custLefts'		:['#divCustomerInfo .left'], 
-		    'custRights'	:['#divCustomerInfo .right']
+		    'custRights'	:['#divCustomerInfo .right'],
+		    'hdLat'		:'.container-default input[id="hdLat"]@value',
+		    'hdLong'	:'.container-default input[id="hdLong"]@value',
+		    //'all' : '#product-detail '
 		})
 		.data(function(listing) {
+			//console.log(listing.all);
+
 		    
 		    // do something with listing data
 		    let ads = {
@@ -193,6 +197,8 @@ class BDSExtractor {
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
 		    	area_full: listing.area, 
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
+		    	hdLat : Number(listing.hdLat), 
+		    	hdLong : Number(listing.hdLong),
 		    }
 
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
