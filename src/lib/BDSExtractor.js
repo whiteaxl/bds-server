@@ -18,6 +18,7 @@ var BDS_NAME_MAP = {
 	'Số phòng ngủ': 'soPhongNgu_full', 
 	'Số tầng': 'soTang_full', 
 	'Số toilet': 'soPhongTam_full', 
+	'Nội thất': 'noiThat', 
 	//custInfo
 	'Điện thoại' : 'cust_phone', 
 	'Mobile' : 'cust_mobile', 
