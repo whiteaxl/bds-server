@@ -17,6 +17,7 @@ var BDS_NAME_MAP = {
 	'Ngày hết hạn': 'ngayHetHan', 
 	'Số phòng ngủ': 'soPhongNgu_full', 
 	'Số tầng': 'soTang_full', 
+	'Số toilet': 'soPhongTam_full', 
 	//custInfo
 	'Điện thoại' : 'cust_phone', 
 	'Mobile' : 'cust_mobile', 
@@ -228,6 +229,10 @@ class BDSExtractor {
 		    	ads.soTang = Number(ads.soTang_full.substr(0, 1));
 		    }
 
+			//convert so tang
+		    if (ads.soPhongTam_full) {
+		    	ads.soPhongTam = Number(ads.soPhongTam_full.substr(0, 1));
+		    }
 		     //convert gia'
 		    
 		    
