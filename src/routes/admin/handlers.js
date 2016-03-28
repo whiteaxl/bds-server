@@ -78,10 +78,9 @@ internals.test = function(req, reply) {
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
 	myBucket.query(query, function(err, allAds) {
-		console.log("Number of ads: " + allAds.length);
-
 		if (!allAds)
 			allAds = [];
+		console.log("Number of ads: " + allAds.length);
 
 	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
 	});
