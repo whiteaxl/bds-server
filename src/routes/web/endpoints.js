@@ -9,7 +9,7 @@ internals.endpoints = [
 	path: '/home/{somthingss*}', 
 	handler: {
 		directory: {
-			path: '../../web/index.html',
+			path: '../../web',
 			index: true
 		}
 	}
