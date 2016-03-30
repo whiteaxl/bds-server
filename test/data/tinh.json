@@ -1,0 +1,16 @@
+{  
+   "tinh":[  
+      {  
+         "placeID":"Place_Tinh_1",
+         "placeName":"Hà Nội",
+         "placeType":"Tinh",
+         "_type":"Place"
+      },
+      {  
+         "placeID":"Place_Tinh_4",
+         "placeName":"Hồ Chí Minh",
+         "placeType":"Tinh",
+         "_type":"Place"
+      }
+   ]
+}

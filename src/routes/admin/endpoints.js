@@ -66,7 +66,17 @@ internals.endpoints = [
 	      	notes: 'Renders the /docs/home.md file as HTML.',
 	      	tags: ['api']
 		}
-	}
+	}, 
+	{
+		method: 'GET', 
+		path: '/admin/loadData', 
+		handler: MyHandlers.loadData, 
+		config : {
+			description: 'Get the default/home template.',
+	      	notes: 'Renders the /docs/home.md file as HTML.',
+	      	tags: ['api']
+		}
+	}, 
 ]
 	
 

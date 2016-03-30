@@ -1,3 +1,4 @@
+'use strict';
 
 var Boom = require('boom');
 //var Ads = require('../../database/models/Ads');
@@ -7,6 +8,10 @@ var ViewQuery = couchbase.ViewQuery;
 var myBucket = require('../../database/mydb')
 
 var Extract = require('../../lib/extract')
+
+
+var PlacesModel = require('../../dbservices/Place')
+
 
 var internals = {};
 
@@ -109,8 +114,25 @@ internals.deleteall = function(req, reply) {
 }
 
 internals.api_usage = function(req, reply) {
-	reply.view('admin/api', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
+	reply.view('admin/api_usage.md').header('content-type','text/html; charset=utf-8');
 }
+
+internals.loadData = function(req, reply) {
+	let jsonFileName = req.query.jsonFileName;
+	if (jsonFileName) {
+		let myPlacesModel = new PlacesModel(myBucket);
+
+		var data = require('../../../test/data/' + jsonFileName + ".json");
+		
+		for (var i in data.tinh) {
+			console.log("i=" + i);
+			myPlacesModel.upsert(data.tinh[i]);	
+		}
+	}
+
+	reply.view('admin/loadData');
+}
+
 
 
 

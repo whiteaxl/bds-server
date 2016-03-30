@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Workbook>
+  <Worksheet Name="Sheet1">
+  <Table>
+   <Row>
+    <Cell><Data Type="Number">1</Data></Cell>
+    <Cell><Data Type="String">Hà Nội</Data></Cell>
+    <Cell StyleID="s21"><Data Type="DateTime">2016-01-12T00:00:00.000</Data></Cell>
+    <Cell><Data Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data Type="Number">4</Data></Cell>
+    <Cell><Data Type="String">Hồ Chí Minh</Data></Cell>
+    <Cell StyleID="s21"><Data Type="DateTime">2016-01-22T00:00:00.000</Data></Cell>
+    <Cell><Data Type="Number">0</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

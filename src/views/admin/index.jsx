@@ -17,13 +17,14 @@ export default class Component extends React.Component{
                 <li> <h2> Extract </h2> </li>
                 <a href='/admin/extract/bds_com'> From BDS </a>
                                 
-
                 <li> <h2> View </h2> </li>
                 <a href='/admin/viewall'> ViewAll </a>
 
                 <li> <h2> API </h2> </li>
-                <a href='/admin/api_usage'> ViewAll </a>
-                
+                <a href='/admin/api_usage'> API Usage </a>
+
+                <li> <h2> LoadData </h2> </li>
+                <a href='/admin/loadData'> Load Data </a>
             </Layout>
         );
     }
