@@ -63,7 +63,7 @@ internals.bdsCom = function(req, reply) {
 		myBucket.operationTimeout = 120000;//2 minutes
 
 
-		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
+		myBucket.from(adsDto.title, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			};
