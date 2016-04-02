@@ -50,13 +50,22 @@ internals.bdsCom = function(req, reply) {
 			return;
 		}
 
-		adsDto._type = "Ads"
+		adsDto._type = "Ads";
 		//get cover from header obj (merge)
 		adsDto.cover = headers[adsDto.title].cover;
 		adsDto.place = headers[adsDto.title].place;
 	    adsDto.place.duAn = adsDto.duAn;
-	    adsDto.duAn = undefined; //to remove this field
+		adsDto.place.geo = {
+			lat: adsDto.hdLat,
+			lon: adsDto.hdLong
+		};
+		adsDto.place.fullName = _fullPlaceName(adsDto.place);
 
+		//not now, demo3
+
+	    //adsDto.duAn = undefined; //to remove this field
+		//adsDto.hdLat = undefined; //to remove this field
+		//adsDto.hdLong = undefined; //to remove this field
 
 		countInsert++;
 
@@ -66,7 +75,7 @@ internals.bdsCom = function(req, reply) {
 		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
-			};
+			}
 		})
 	}
 	,() => { //done all handle
@@ -135,10 +144,28 @@ internals.loadData = function(req, reply) {
 	}
 
 	reply.view('admin/loadData');
+};
+
+
+function _fullPlaceName(place) {
+	let ret = "";
+	let _appendIfHave = function(ret, value) {
+		if (ret)
+			ret =  ret + ", " + value;
+		else
+			ret =  value;
+
+        return ret;
+	};
+
+    ret = _appendIfHave(ret, place.duAn);
+
+    ret = _appendIfHave(ret, place.huyenName);
+
+    ret = _appendIfHave(ret, place.tinhName);
+
+	return ret;
 }
-
-
-
 
 
 module.exports = internals;

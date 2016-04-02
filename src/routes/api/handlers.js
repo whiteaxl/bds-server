@@ -1,68 +1,100 @@
-'use strict'
+'use strict';
 
 var Boom = require('boom');
 //var Ads = require('../../database/models/Ads');
 
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
+
 var myBucket = require('../../database/mydb');
 var QueryOps = require('../../lib/QueryOps');
+var http = require("http");
+var logUtil = require("../../lib/logUtil");
+
+var Q_FIELD = {
+	limit : "limit",
+	orderBy : "orderBy",
+	geoBox : "geoBox",
+	place: "place"
+};
 
 var internals = {};
 
-function findAds(queryCondition, reply) {
-	//return all first
-	var query = ViewQuery.from('ads', 'all_ads');
-	myBucket.query(query, function(err, allAds) {
-		if (!allAds)
-			allAds = [];
+function _filterResult(allAds, queryCondition) {
+	if (!allAds)
+		allAds = [];
 
-		//ES5 syntax to select
-		var filtered = allAds.filter(function(doc) {
-			for (var attr in queryCondition) {
-				if (attr !== "orderBy"  && attr !== "limit"
-						&& !match(attr, queryCondition[attr], doc)) {
-					console.log("Not match attr=" + attr + ", value=" + queryCondition[attr])
-					return false;
-				}
-			};
-			return true;
-		});
-
-		//sort
-
-		if (queryCondition) {
-			let od = queryCondition['orderBy'];
-			if (od) {
-				console.log("Perform ordering by " + od);
-				orderAds(filtered, od);
-			} else {
-				console.log("No ordering by ");
+	//ES5 syntax to select
+	var filtered = allAds.filter(function(doc) {
+		for (var attr in queryCondition) {
+			if (attr !== "orderBy"  && attr !== "limit"
+				&& !match(attr, queryCondition[attr], doc)) {
+				console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
+				return false;
 			}
 		}
-		console.log("filtered length = " + filtered.length)
+		return true;
+	});
 
-		// limit
-		let listResult = filtered.slice(0,1000).map((one) => {
-		    let val = one.value;
-		    if (val.cover) {
-		    	val.cover_small = val.cover;
-				val.cover = val.cover_small.replace("120x90", "745x510");
-		    }
-			
-			return one;
-		});
+	//sort
 
-		console.log("listResult length = " + listResult.length)
+	if (queryCondition) {
+		let od = queryCondition['orderBy'];
+		if (od) {
+			console.log("Perform ordering by " + od);
+			orderAds(filtered, od);
+		} else {
+			console.log("No ordering by ");
+		}
+	}
+	console.log("filtered length = " + filtered.length);
 
-		//
-		if (queryCondition && queryCondition['limit']) {
-			let lim = queryCondition['limit'];
-			listResult = listResult.slice(0, lim)
+	// limit
+	let listResult = filtered.slice(0,1000).map((one) => {
+		let val = one.value;
+		if (val.cover) {
+			val.cover_small = val.cover;
+			val.cover = val.cover_small.replace("120x90", "745x510");
 		}
 
+		return one;
+	});
+
+	console.log("listResult length = " + listResult.length);
+
+	//
+	if (queryCondition && queryCondition['limit']) {
+		let lim = queryCondition['limit'];
+		listResult = listResult.slice(0, lim)
+	}
+
+	return listResult;
+}
+
+function findAds(queryCondition, reply) {
+	//return all first
+	let query;
+
+	if (queryCondition[Q_FIELD.geoBox]) {
+		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
+		queryCondition[Q_FIELD.geoBox] = undefined;//remove it
+	} else if (queryCondition[Q_FIELD.place]) { //by place
+		query = ViewQuery.from('ads', 'all_ads');
+	} else {
+		query = ViewQuery.from('ads', 'all_ads');
+
+		//let msg = "GeoBox or place is mandatory!";
+		//logUtil.error(msg);
+		//reply(Boom.badRequest(msg, queryCondition));
+	}
+
+	myBucket.query(query, function(err, allAds) {
+		logUtil.info("By geo/place: allAds.length= " + allAds.length);
+
+		let listResult = _filterResult(allAds, queryCondition);
+
 	  	reply({
-	  		length: filtered.length,
+	  		length: listResult.length,
 			list: listResult
 	  	});
 	});
@@ -76,7 +108,7 @@ internals.findGET = function(req, reply) {
 	var queryCondition = req.query;
 
 	findAds(queryCondition, reply);
-}
+};
 
 function match(attr, value, doc) {
 	//
@@ -127,8 +159,12 @@ function match(attr, value, doc) {
 	//console.log(ads[attr] + "," + attr)
 	//console.log(ads)
 
-	return ads[attr] == value;
-
+    if (ads[attr] == value) {
+        return true;
+    } else {
+        logUtil.info("Not match '" + attr +  "': doc value: "+ ads[attr] + ", filtered value:" + value);
+        return false;
+    }
 }
 
 //orderCondition=dienTichASC
@@ -166,7 +202,7 @@ function orderAds(filtered, orderCondition) {
 
 
 internals.findPOST = function(req, reply) {
-	console.log("query: " + req.payload.query);
+	logUtil.info("findPOST - query: " + req.payload);
 	try {
 		//let x=1/0;
 		findAds(req.payload, reply) 	

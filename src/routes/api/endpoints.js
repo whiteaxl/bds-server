@@ -23,6 +23,8 @@ internals.endpoints = [
 	      	tags: ['api']
 		}
 	}
+	
+	
 
 ];
 
