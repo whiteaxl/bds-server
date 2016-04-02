@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c45e36d58adcd8937701"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5e063accb4997e687776"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -576,7 +576,7 @@
 	// require("./src/app/app.js");
 	__webpack_require__(1);
 	__webpack_require__(2);
-	//require("./src/web/common/services/house.js");
+	__webpack_require__(3);
 
 
 /***/ },
@@ -631,6 +631,34 @@
 			function init(){
 			}
 		}
+	})();
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	(function () {
+	    'use strict';
+	    angular
+	        .module('bds')
+	        .factory('HouseService', HouseService);
+	    /* @ngInject */
+	    function HouseService($http, $q, $rootScope) {
+	      var urlPath = '/api/houses/find';
+	      var service = {};
+	      service.findHouse = findHouse;
+	      service.createHouse = createHouse;
+	      return service;
+
+	      function findHouse(){
+	      	return $http.get(urlPath);
+	      }
+	      function createHouse(desc,email,seller){
+	        return $http.post(urlPath + 'create'); 
+	      }
+	    }
+
 	})();
 
 
