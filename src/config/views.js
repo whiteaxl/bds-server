@@ -101,7 +101,7 @@ internals.init = function (server) {
     Hoek.assert(!err,err);
 
     //Load files located in ../assets
-    server.route({
+    server.route([{
       method: 'GET',
       path: '/assets/{param*}',
       handler: {
@@ -109,7 +109,17 @@ internals.init = function (server) {
           path: Path.join(__dirname, '../assets')          
         }
       }
-    });
+    },
+    {
+      method: 'GET',
+      path: '/web/{param*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, '../web')          
+        }
+      }
+    }]
+    );
   });
 
   
