@@ -7,6 +7,7 @@ var osmosis = require('osmosis');
 var entities = require("entities");
 
 var DSLoaiNhaDat = require("./LoaiNhaDat");
+var logUtil = require("./logUtil");
 
 var BDS_NAME_MAP = {
 	'Thuộc dự án' :'duAn', 
@@ -93,6 +94,19 @@ function _convertLoaiTinGiao(ads) {
 	}
 }
 
+function _parseHuyenFullName(huyenFullName) {
+	let spl = huyenFullName.split(",");
+	let place = {huyenFullName : huyenFullName}
+	if (spl.length === 2) {
+		place.huyenName = spl[0].trim();
+		place.tinhName  = spl[1].trim();
+	} else {
+		logUtil.warn("huyenFullName is wrong format:" + huyenFullName);
+	}
+
+	return place;
+}
+
 
 function convertGia(ads) {
 	if (ads.price_unit==='tỷ') {
@@ -157,6 +171,7 @@ class BDSExtractor {
 
 	}
 
+	
 
 	extractOnePage(url, handleData, handleDone) {
 		osmosis
@@ -164,11 +179,12 @@ class BDSExtractor {
 		.find('.search-productItem')
 		.set({
 			'title' : '.p-title a', 
-			'cover' : '.p-main > div > a > img@src'
+			'cover' : '.p-main > div > a > img@src',
+			'huyenFullName' : '.product-city-dist'
 		})
-		.data(function(list) {
-			
-			handleData(1, list);
+		.data(function(ads) {
+			ads.place = _parseHuyenFullName(ads.huyenFullName);
+			handleData(1, ads);
 		})
 		.follow('.p-title a@href')
 		//.find('#product-detail')
@@ -234,12 +250,9 @@ class BDSExtractor {
 		    if (ads.soPhongTam_full) {
 		    	ads.soPhongTam = Number(ads.soPhongTam_full.substr(0, 1));
 		    }
-		     //convert gia'
+		    //convert gia'
+		    convertGia(ads);
 		    
-		    
-
-			convertGia(ads);
-
 		    handleData(2, ads);
 		})
 		

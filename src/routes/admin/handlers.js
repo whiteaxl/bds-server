@@ -44,7 +44,7 @@ internals.bdsCom = function(req, reply) {
 	var headers = {};
 
 	Extract.extractBDS(req.query,(from, adsDto) => {
-		//from header, just store it
+		//from ads header, just store it
 		if (from===1) {
 			headers[adsDto.title] = adsDto;
 			return;
@@ -53,6 +53,10 @@ internals.bdsCom = function(req, reply) {
 		adsDto._type = "Ads"
 		//get cover from header obj (merge)
 		adsDto.cover = headers[adsDto.title].cover;
+		adsDto.place = headers[adsDto.title].place;
+	    adsDto.place.duAn = adsDto.duAn;
+	    adsDto.duAn = undefined; //to remove this field
+
 
 		countInsert++;
 
@@ -100,7 +104,7 @@ internals.deleteall = function(req, reply) {
 			allAds = [];
 
 		console.log("Found " + allAds.length + " documents to delete");
-	    for(i in allAds) {
+	    for(var i in allAds) {
 	    	console.log("Deleting " + allAds[i].id);
 
 	        myBucket.remove(allAds[i].id, function(error, result) {
