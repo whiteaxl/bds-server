@@ -8,7 +8,6 @@ var ViewQuery = couchbase.ViewQuery;
 
 var myBucket = require('../../database/mydb');
 var QueryOps = require('../../lib/QueryOps');
-var http = require("http");
 var logUtil = require("../../lib/logUtil");
 
 var Q_FIELD = {
@@ -21,8 +20,6 @@ var Q_FIELD = {
 var internals = {};
 
 function _filterResult(allAds, queryCondition) {
-	if (!allAds)
-		allAds = [];
 
 	//ES5 syntax to select
 	var filtered = allAds.filter(function(doc) {
@@ -89,8 +86,10 @@ function findAds(queryCondition, reply) {
 	}
 
 	myBucket.query(query, function(err, allAds) {
-		logUtil.info("By geo/place: allAds.length= " + allAds.length);
+		if (!allAds)
+			allAds = [];
 
+		logUtil.info("By geo/place: allAds.length= " + allAds.length);
 		let listResult = _filterResult(allAds, queryCondition);
 
 	  	reply({
@@ -174,8 +173,8 @@ function orderAds(filtered, orderCondition) {
 		var orderByVal = orderCondition;
 		var field = '';
 		var isASC = 1;
-		console.log("orderByVal=" + orderByVal)
-		console.log(orderByVal.indexOf("DESC"))
+		//console.log("orderByVal=" + orderByVal);
+		//console.log(orderByVal.indexOf("DESC"));
 
 		if (orderByVal.indexOf("DESC")>0) {
 			field = orderByVal.substring(0, orderByVal.length-4); //remove DESC
@@ -188,15 +187,15 @@ function orderAds(filtered, orderCondition) {
 			var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
 			if (a.value[field] > b.value[field])
-				return 1*isASC;
+				return isASC;
 			if (a.value[field] < b.value[field])
 				return -1 * isASC;
 
 			return 0;
-		}
+		};
 
 		filtered.sort(compare);
-	};
+	}
 
 }
 
@@ -207,13 +206,11 @@ internals.findPOST = function(req, reply) {
 		//let x=1/0;
 		findAds(req.payload, reply) 	
 	} catch (e) {
-		console.log('ERROR')
-
-		console.log(e);
-		reply("ERROR" + e);
+		logUtil.error(e);
+		reply(Boom.badImplementation());
 	}
 	
-}
+};
 
 
 module.exports = internals;
