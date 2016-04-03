@@ -5,12 +5,14 @@ var Boom = require('boom');
 
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
-var myBucket = require('../../database/mydb')
+var myBucket = require('../../database/mydb');
 
-var Extract = require('../../lib/extract')
+var Extract = require('../../lib/extract');
 
 
-var PlacesModel = require('../../dbservices/Place')
+var PlacesModel = require('../../dbservices/Place');
+
+
 
 
 var internals = {};
@@ -53,19 +55,8 @@ internals.bdsCom = function(req, reply) {
 		adsDto._type = "Ads";
 		//get cover from header obj (merge)
 		adsDto.cover = headers[adsDto.title].cover;
-		adsDto.place = headers[adsDto.title].place;
-	    adsDto.place.duAn = adsDto.duAn;
-		adsDto.place.geo = {
-			lat: adsDto.hdLat,
-			lon: adsDto.hdLong
-		};
-		adsDto.place.fullName = _fullPlaceName(adsDto.place);
-
-		//not now, demo3
-
-	    //adsDto.duAn = undefined; //to remove this field
-		//adsDto.hdLat = undefined; //to remove this field
-		//adsDto.hdLong = undefined; //to remove this field
+		//adsDto.place = headers[adsDto.title].place;
+		//_buildPlace(adsDto);
 
 		countInsert++;
 
@@ -91,7 +82,7 @@ internals.bdsCom = function(req, reply) {
 
 internals.test = function(req, reply) {
 	reply.view('admin/a');
-}
+};
 
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -103,7 +94,7 @@ internals.viewall = function(req, reply) {
 	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
 	});
 
-}
+};
 
 internals.deleteall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -124,11 +115,11 @@ internals.deleteall = function(req, reply) {
 	    reply({result:'Done', Count: allAds.length})
 	});
 
-}
+};
 
 internals.api_usage = function(req, reply) {
 	reply.view('admin/api_usage.md').header('content-type','text/html; charset=utf-8');
-}
+};
 
 internals.loadData = function(req, reply) {
 	let jsonFileName = req.query.jsonFileName;
@@ -146,26 +137,6 @@ internals.loadData = function(req, reply) {
 	reply.view('admin/loadData');
 };
 
-
-function _fullPlaceName(place) {
-	let ret = "";
-	let _appendIfHave = function(ret, value) {
-		if (ret)
-			ret =  ret + ", " + value;
-		else
-			ret =  value;
-
-        return ret;
-	};
-
-    ret = _appendIfHave(ret, place.duAn);
-
-    ret = _appendIfHave(ret, place.huyenName);
-
-    ret = _appendIfHave(ret, place.tinhName);
-
-	return ret;
-}
 
 
 module.exports = internals;
