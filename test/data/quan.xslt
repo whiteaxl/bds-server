@@ -7,7 +7,8 @@
     {
     	placeID: "<xsl:value-of select="Cell[1]/Data"/>",
     	placeName: "<xsl:value-of select="Cell[2]/Data"/>",
-    	placeType: "Quan"
+    	placeType: "Quan",
+        "_type":"Place"
     },
   </xsl:for-each>
 ]

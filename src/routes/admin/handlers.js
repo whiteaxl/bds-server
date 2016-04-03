@@ -123,6 +123,8 @@ internals.api_usage = function(req, reply) {
 
 internals.loadData = function(req, reply) {
 	let jsonFileName = req.query.jsonFileName;
+	let jsonFileNameQuan = req.query.jsonFileNameQuan;
+
 	if (jsonFileName) {
 		let myPlacesModel = new PlacesModel(myBucket);
 
@@ -134,7 +136,19 @@ internals.loadData = function(req, reply) {
 		}
 	}
 
-	reply.view('admin/loadData');
+    if (jsonFileNameQuan) {
+        let myPlacesModel = new PlacesModel(myBucket);
+
+        var data = require('../../../test/data/' + jsonFileNameQuan + ".json");
+
+        for (var i in data.quan) {
+            console.log("i=" + i);
+            myPlacesModel.upsert(data.quan[i]);
+        }
+    }
+
+
+    reply.view('admin/loadData');
 }
 
 

@@ -11,28 +11,31 @@ export default class ExtractBDS extends React.Component {
 
     initialState() {
         return {
-            jsonFileName : "tinh"
+            jsonFileName : "tinh",
+            jsonFileNameQuan : "quan"
         }
     }
 
-	render() {
-		return (
+    render() {
+        return (
             <Layout title="Load PLACES">
-                <li> <h2> Load PLACES:</h2> </li>
-                <form >
-                    <label> Json fileName: (tinh/huyen/duongPho/duAn/xa)</label> 
-                    <br/>
-                    <input id="jsonFileName" name="jsonFileName" size="100" value={this.state.jsonFileName}  />
-                    
-                    <br/>
+        <li> <h2> Load PLACES:</h2> </li>
+        <form >
+        <label> Json fileName: (tinh/huyen/duongPho/duAn/xa)</label>
+        <br/>
+        <input id="jsonFileName" name="jsonFileName" size="100" value={this.state.jsonFileName}  />
+            <br/>
+        <input id="jsonFileNameQuan" name="jsonFileNameQuan" size="100" value={this.state.jsonFileNameQuan}  />
 
-                    <button type="Submit"><b>Load</b> </button>
-                    
-                </form>
+<br/>
 
-                <br/>
+    <button type="Submit"><b>Load</b> </button>
 
-            </Layout>
-        );
-	}
+    </form>
+
+    <br/>
+
+    </Layout>
+);
+}
 }
