@@ -1,0 +1,259 @@
+{
+  "quan": [
+    {
+      "placeID": "28",
+      "placeName": "Đất đô thị Quận Bắc Từ Liêm",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "29",
+      "placeName": "Đất đô thị Quận Ba Đình",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "30",
+      "placeName": "Đất đô thị Quận Cầu Giấy",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "31",
+      "placeName": "Đất đô thị Quận Đống Đa",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "32",
+      "placeName": "Đất đô thị Quận Hà Đông",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "33",
+      "placeName": "Đất đô thị Quận Hai Bà Trưng",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "34",
+      "placeName": "Đất đô thị Quận Hoàng Mai",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "35",
+      "placeName": "Đất đô thị Quận Hoàn Kiếm",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "36",
+      "placeName": "Đất đô thị Quận Long Biên",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "37",
+      "placeName": "Đất đô thị Quận Nam Từ Liêm",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "38",
+      "placeName": "Đất đô thị Quận Tây Hồ",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "39",
+      "placeName": "Đất đô thị Quận Thanh Xuân",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "40",
+      "placeName": "Đất thị xã Thị xã Sơn Tây",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "41",
+      "placeName": "Đất thị trấn Ba Vì",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "42",
+      "placeName": "Đất thị trấn Chương Mỹ",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "43",
+      "placeName": "Đất thị trấn Đan Phượng",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "44",
+      "placeName": "Đất thị trấn Đông Anh",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "45",
+      "placeName": "Đất thị trấn Gia Lâm",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "46",
+      "placeName": "Đất thị trấn Hoài Đức",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "47",
+      "placeName": "Đất thị trấn Mê Linh",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "48",
+      "placeName": "Đất thị trấn Mỹ Đức",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "49",
+      "placeName": "Đất thị trấn Phúc Thọ",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "50",
+      "placeName": "Đất thị trấn Phú Xuyên",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "51",
+      "placeName": "Đất thị trấn Quốc Oai",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "52",
+      "placeName": "Đất thị trấn Sóc Sơn",
+      "placeType": "Quan",
+      "_type":"Place" },
+    {
+      "placeID": "53",
+      "placeName": "Đất thị trấn Thạch Thất",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "54",
+      "placeName": "Đất thị trấn Thanh Oai",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "55",
+      "placeName": "Đất thị trấn Thanh Trì",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "56",
+      "placeName": "Đất thị trấn Thường Tín",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "57",
+      "placeName": "Đất thị trấn Ứng Hòa",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "58",
+      "placeName": "Đất giáp ranh Chương Mỹ",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "59",
+      "placeName": "Đất giáp ranh Gia Lâm",
+      "placeType": "Quan", "_type":"Place"
+    },
+    {
+      "placeID": "60",
+      "placeName": "Đất giáp ranh Thanh Oai",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "61",
+      "placeName": "Đất giáp ranh Đan Phượng",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "62",
+      "placeName": "Đất giáp ranh Hoài Đức",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "63",
+      "placeName": "Đất giáp ranh Thanh Trì",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "64",
+      "placeName": "Đất ven trục Ba Vì",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "65",
+      "placeName": "Đất ven trục Chương Mỹ",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "66",
+      "placeName": "Đất ven trục Đan Phượng",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "67",
+      "placeName": "Đất ven trục Đông Anh",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "68",
+      "placeName": "Đất ven trục Gia Lâm",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "69",
+      "placeName": "Đất ven trục Hoài Đức",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    {
+      "placeID": "70",
+      "placeName": "Đất ven trục Mê Linh",
+      "placeType": "Quan",
+      "_type":"Place"
+    },
+    { "placeID": "71", "placeName": "Đất ven trục Mỹ Đức", "placeType": "Quan", "_type":"Place" }, { "placeID": "72", "placeName": "Đất ven trục Phúc Thọ", "placeType": "Quan", "_type":"Place" }, { "placeID": "73", "placeName": "Đất ven trục Phú Xuyên", "placeType": "Quan", "_type":"Place" }, { "placeID": "74", "placeName": "Đất ven trục Quốc Oai", "placeType": "Quan", "_type":"Place" }, { "placeID": "75", "placeName": "Đất ven trục Sóc Sơn", "placeType": "Quan", "_type":"Place" }, { "placeID": "76", "placeName": "Đất ven trục Thạch Thất", "placeType": "Quan", "_type":"Place" }, { "placeID": "77", "placeName": "Đất ven trục Thanh Oai", "placeType": "Quan", "_type":"Place" }, { "placeID": "78", "placeName": "Đất ven trục Thanh Trì", "placeType": "Quan", "_type":"Place" }, { "placeID": "79", "placeName": "Đất ven trục Thường Tín", "placeType": "Quan", "_type":"Place" }, { "placeID": "80", "placeName": "Đất ven trục Ứng Hòa", "placeType": "Quan", "_type":"Place" }, { "placeID": "81", "placeName": "Đất nông thôn Ba Vì", "placeType": "Quan", "_type":"Place" }, { "placeID": "82", "placeName": "Đất nông thôn Chương Mỹ", "placeType": "Quan", "_type":"Place" }, { "placeID": "83", "placeName": "Đất nông thôn Đan Phượng", "placeType": "Quan", "_type":"Place" }, { "placeID": "84", "placeName": "Đất nông thôn Đông Anh", "placeType": "Quan", "_type":"Place" }, { "placeID": "85", "placeName": "Đất nông thôn Gia Lâm", "placeType": "Quan", "_type":"Place" }, { "placeID": "86", "placeName": "Đất nông thôn Hoài Đức", "placeType": "Quan", "_type":"Place" }, { "placeID": "87", "placeName": "Đất nông thôn Mê Linh", "placeType": "Quan", "_type":"Place" }, { "placeID": "88", "placeName": "Đất nông thôn Mỹ Đức", "placeType": "Quan", "_type":"Place" }, { "placeID": "89", "placeName": "Đất nông thôn Phúc Thọ", "placeType": "Quan", "_type":"Place" }, { "placeID": "90", "placeName": "Đất nông thôn Phú Xuyên", "placeType": "Quan", "_type":"Place" }, { "placeID": "91", "placeName": "Đất nông thôn Quốc Oai", "placeType": "Quan", "_type":"Place" }, { "placeID": "92", "placeName": "Đất nông thôn Sóc Sơn", "placeType": "Quan", "_type":"Place" }, { "placeID": "93", "placeName": "Đất nông thôn Thạch Thất", "placeType": "Quan", "_type":"Place" }, { "placeID": "94", "placeName": "Đất nông thôn Thanh Oai", "placeType": "Quan", "_type":"Place" }, { "placeID": "95", "placeName": "Đất nông thôn Thanh Trì", "placeType": "Quan", "_type":"Place" }, { "placeID": "96", "placeName": "Đất nông thôn Thường Tín", "placeType": "Quan", "_type":"Place" }, { "placeID": "97", "placeName": "Đất nông thôn Ứng Hòa", "placeType": "Quan", "_type":"Place" }, { "placeID": "98", "placeName": "Quận 1", "placeType": "Quan", "_type":"Place" }, { "placeID": "99", "placeName": "Quận 2", "placeType": "Quan", "_type":"Place" }, { "placeID": "100", "placeName": "Quận 3", "placeType": "Quan", "_type":"Place" }, { "placeID": "101", "placeName": "Quận 4", "placeType": "Quan", "_type":"Place" }, { "placeID": "102", "placeName": "Quận 5", "placeType": "Quan", "_type":"Place" }, { "placeID": "103", "placeName": "Quận 6", "placeType": "Quan", "_type":"Place" }, { "placeID": "104", "placeName": "Quận 7", "placeType": "Quan", "_type":"Place" }, { "placeID": "105", "placeName": "Quận 8", "placeType": "Quan", "_type":"Place" }, { "placeID": "106", "placeName": "Quận 9", "placeType": "Quan", "_type":"Place" }, { "placeID": "107", "placeName": "Quận 10", "placeType": "Quan", "_type":"Place" }, { "placeID": "108", "placeName": "Quận 11", "placeType": "Quan", "_type":"Place" }, { "placeID": "109", "placeName": "Quận 12", "placeType": "Quan", "_type":"Place" }, { "placeID": "110", "placeName": "Huyện Bình Chánh", "placeType": "Quan", "_type":"Place" }, { "placeID": "111", "placeName": "Huyện Cần Giờ", "placeType": "Quan", "_type":"Place" }, { "placeID": "112", "placeName": "Huyện Củ Chi", "placeType": "Quan", "_type":"Place" }, { "placeID": "113", "placeName": "Huyện Hóc Môn", "placeType": "Quan", "_type":"Place" }, { "placeID": "114", "placeName": "Huyện Nhà Bè", "placeType": "Quan", "_type":"Place" }, { "placeID": "115", "placeName": "Quận Bình Tân", "placeType": "Quan", "_type":"Place" }, { "placeID": "116", "placeName": "Quận Bình Thạnh", "placeType": "Quan", "_type":"Place" }, { "placeID": "117", "placeName": "Quận Gò Vấp", "placeType": "Quan", "_type":"Place" }, { "placeID": "118", "placeName": "Quận Phú Nhuận", "placeType": "Quan", "_type":"Place" }, { "placeID": "119", "placeName": "Quận Tân Bình", "placeType": "Quan", "_type":"Place" }, { "placeID": "120", "placeName": "Quận Tân Phú", "placeType": "Quan", "_type":"Place" }, { "placeID": "121", "placeName": "Quận Thủ Đức", "placeType": "Quan", "_type":"Place" } ] }
