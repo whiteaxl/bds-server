@@ -51,12 +51,18 @@ function _filterResult(allAds, queryCondition) {
 	}
 	console.log("filtered length = " + filtered.length);
 
-	// limit
+	// TODO: limit
 	let listResult = filtered.slice(0,1000).map((one) => {
 		let val = one.value;
 		if (val.cover) {
 			val.cover_small = val.cover;
 			val.cover = val.cover_small.replace("120x90", "745x510");
+		}
+
+		if (val.images_small) {
+			for (var i in val.images_small) {
+				val.images_small[i] = val.images_small[i].replace("80x60", "745x510");
+			}
 		}
 
 		return one;
