@@ -4,12 +4,20 @@
          "placeID":"Place_Tinh_1",
          "placeName":"Hà Nội",
          "placeType":"Tinh",
+         "geo" : {
+            "lat" : 21.0226823,
+            "lon" : 105.7669236
+         },
          "_type":"Place"
       },
       {  
          "placeID":"Place_Tinh_4",
          "placeName":"Hồ Chí Minh",
          "placeType":"Tinh",
+         "geo" : {
+            "lat" : 10.7683247,
+            "lon" : 106.4134855
+         },
          "_type":"Place"
       }
    ]

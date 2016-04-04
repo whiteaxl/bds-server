@@ -56,6 +56,15 @@ internals.getDiaChinh = function(diaChi) {
     return diaChinh;
 };
 
+internals.fullName = function(place) {
+    //todo: other types
+    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
+        return place.placeName + ", " + place.parentName;
+    }
+
+    return place.placeName;
+};
+
 module.exports  = internals;
 
 

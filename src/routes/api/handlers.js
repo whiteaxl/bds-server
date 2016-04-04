@@ -9,6 +9,11 @@ var ViewQuery = couchbase.ViewQuery;
 var myBucket = require('../../database/mydb');
 var QueryOps = require('../../lib/QueryOps');
 var logUtil = require("../../lib/logUtil");
+var util = require("../../lib/utils");
+var PlacesModel = require('../../dbservices/Place');
+var placeUtil = require("../../lib/placeUtil");
+
+
 
 var Q_FIELD = {
 	limit : "limit",
@@ -153,12 +158,26 @@ function match(attr, value, doc) {
 
 		return ret;
 	}
+	// Place
+	//logUtil.info("AAAA="+ attr);
+	if (attr == "placeName") {
+		logUtil.info("ads.place.diaChi="+ ads.place.diaChi);
+		//logUtil.info("value="+ value);
+		//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
+		let valueLocDau = util.locDau(value);
+		let diaChiLocDau = util.locDau(ads.place.diaChi);
+
+		logUtil.info("valueLocDau="+ valueLocDau + ", diaChiLocDau=" + diaChiLocDau);
+		logUtil.info("diaChiLocDau.indexOf(valueLocDau)="+ diaChiLocDau.indexOf(valueLocDau))
+
+		if (diaChiLocDau.indexOf(valueLocDau)!==-1)
+			return true;
+
+		return false;
+	}
 
 	//default is equals
-	//console.log(ads[attr] + "," + attr)
-	//console.log(ads)
-
-    if (ads[attr] == value) {
+	if (ads[attr] == value) {
         return true;
     } else {
         logUtil.info("Not match '" + attr +  "': doc value: "+ ads[attr] + ", filtered value:" + value);
@@ -211,6 +230,50 @@ internals.findPOST = function(req, reply) {
 	}
 	
 };
+
+
+internals.findPlace = function(req, reply) {
+	logUtil.info("Enter findPlace");
+
+	let query = req.payload;
+	logUtil.info("findPlace - query: " + query);
+	try {
+		//let x=1/0;
+		logUtil.info("findPlace - query.text: " + query.text);
+
+		if (!query.text) {
+			query.text =""
+		}
+
+		let textLocDau=util.locDau(query.text);
+		logUtil.info("findPlace - textLocDau: " + textLocDau);
+
+		var myPlacesModel = new PlacesModel(myBucket);
+
+		myPlacesModel.queryAll((all) => {
+			var filtered = [];
+			for (var i in all) {
+				let place = all[i].value;
+				let name = util.locDau(place.fullName);
+
+
+				logUtil.info("findPlace - fullName loc dau: " + name);
+				if (name.indexOf(textLocDau)!==-1) {
+					filtered.push(place);
+				}
+			}
+
+			reply({length: filtered.length, list: filtered});
+		})
+
+	} catch (e) {
+		logUtil.error(e);
+		reply(Boom.badImplementation());
+	}
+
+};
+
+
 
 
 module.exports = internals;

@@ -5,14 +5,12 @@ var Boom = require('boom');
 
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
-var myBucket = require('../../database/mydb');
+var myBucket = require('../../database/mydb')
 
-var Extract = require('../../lib/extract');
-
-
-var PlacesModel = require('../../dbservices/Place');
+var Extract = require('../../lib/extract')
 
 
+var PlacesModel = require('../../dbservices/Place')
 
 
 var internals = {};
@@ -52,21 +50,23 @@ internals.bdsCom = function(req, reply) {
 			return;
 		}
 
-		adsDto._type = "Ads";
+		adsDto._type = "Ads"
 		//get cover from header obj (merge)
 		adsDto.cover = headers[adsDto.title].cover;
-		//adsDto.place = headers[adsDto.title].place;
-		//_buildPlace(adsDto);
+		adsDto.place = headers[adsDto.title].place;
+	    adsDto.place.duAn = adsDto.duAn;
+	    adsDto.duAn = undefined; //to remove this field
+
 
 		countInsert++;
 
 		myBucket.operationTimeout = 120000;//2 minutes
 
 
-		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
+		myBucket.from(adsDto.title, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
-			}
+			};
 		})
 	}
 	,() => { //done all handle
@@ -82,7 +82,7 @@ internals.bdsCom = function(req, reply) {
 
 internals.test = function(req, reply) {
 	reply.view('admin/a');
-};
+}
 
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -94,7 +94,7 @@ internals.viewall = function(req, reply) {
 	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
 	});
 
-};
+}
 
 internals.deleteall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -115,14 +115,16 @@ internals.deleteall = function(req, reply) {
 	    reply({result:'Done', Count: allAds.length})
 	});
 
-};
+}
 
 internals.api_usage = function(req, reply) {
 	reply.view('admin/api_usage.md').header('content-type','text/html; charset=utf-8');
-};
+}
 
 internals.loadData = function(req, reply) {
 	let jsonFileName = req.query.jsonFileName;
+	let jsonFileNameQuan = req.query.jsonFileNameQuan;
+
 	if (jsonFileName) {
 		let myPlacesModel = new PlacesModel(myBucket);
 
@@ -130,12 +132,30 @@ internals.loadData = function(req, reply) {
 		
 		for (var i in data.tinh) {
 			console.log("i=" + i);
+			data.tinh[i].fullName = data.tinh[i].placeName;
+
 			myPlacesModel.upsert(data.tinh[i]);	
 		}
 	}
 
-	reply.view('admin/loadData');
-};
+    if (jsonFileNameQuan) {
+        let myPlacesModel = new PlacesModel(myBucket);
+
+        var data = require('../../../test/data/' + jsonFileNameQuan + ".json");
+
+        for (var i in data.quan) {
+            console.log("i=" + i);
+			data.quan[i].fullName = data.quan[i].placeName + ", " + data.quan[i].parentName;
+
+            myPlacesModel.upsert(data.quan[i]);
+        }
+    }
+
+
+    reply.view('admin/loadData');
+}
+
+
 
 
 

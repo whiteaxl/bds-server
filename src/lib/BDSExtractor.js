@@ -67,7 +67,7 @@ var parseEmail = function(encEmail) {
 	}
 	
 	return '';
-}
+};
 
 function _convertLoaiTinGiao(ads) {
 	if (ads.loaiTinRao) {
