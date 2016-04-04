@@ -18,7 +18,7 @@ function (doc) {
 }
 
 
-//all_places
+//ddoc=place, all_places
 function (doc, meta) {
     if (doc._type=='Place')
         emit(doc.placeID, doc);

@@ -53,17 +53,13 @@ internals.bdsCom = function(req, reply) {
 		adsDto._type = "Ads"
 		//get cover from header obj (merge)
 		adsDto.cover = headers[adsDto.title].cover;
-		adsDto.place = headers[adsDto.title].place;
-	    adsDto.place.duAn = adsDto.duAn;
-	    adsDto.duAn = undefined; //to remove this field
-
 
 		countInsert++;
 
 		myBucket.operationTimeout = 120000;//2 minutes
 
 
-		myBucket.from(adsDto.title, adsDto, function(err, res) {
+		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			};
