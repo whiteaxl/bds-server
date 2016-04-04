@@ -161,6 +161,10 @@ function match(attr, value, doc) {
 	// Place
 	//logUtil.info("AAAA="+ attr);
 	if (attr == "placeName") {
+		if (!ads.place.diaChi) {
+			return false;
+		}
+
 		logUtil.info("ads.place.diaChi="+ ads.place.diaChi);
 		//logUtil.info("value="+ value);
 		//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
