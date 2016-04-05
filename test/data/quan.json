@@ -1,0 +1,104 @@
+{
+  "quan": [
+    {
+      "placeID": "28",
+      "placeName": "Bắc Từ Liêm",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "29",
+      "placeName": "Ba Đình",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "geo" : {
+        "lat": 21.0350039,
+        "lon" : 105.792398
+      },
+      "_type":"Place"
+    },
+    {
+      "placeID": "30",
+      "placeName": "Cầu Giấy",
+      "parentName": "Hà Nội",
+      "placeType": "Huyen",
+      "geo" : {
+        "lat": 21.0302666,
+        "lon" : 105.7556596
+      },
+      "_type":"Place"
+    },
+    {
+      "placeID": "31",
+      "placeName": "Đống Đa",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "geo" : {
+        "lat": 21.0149771,
+        "lon" : 105.8020329
+      },
+      "_type":"Place"
+    },
+    {
+      "placeID": "32",
+      "placeName": "Hà Đông",
+      "parentName": "Hà Nội",
+      "placeType": "Huyen",
+      "_type":"Place"
+    },
+    {
+      "placeID": "33",
+      "placeName": "Hai Bà Trưng",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "34",
+      "placeName": "Hoàng Mai",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "35",
+      "placeName": "Hoàn Kiếm",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "geo" : {
+        "lat": 21.0306272,
+        "lon" : 105.8361251
+      },
+      "_type":"Place"
+    },
+    {
+      "placeID": "36",
+      "placeName": "Long Biên",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "37",
+      "placeName": "Nam Từ Liêm",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "38",
+      "placeName": "Tây Hồ",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    },
+    {
+      "placeID": "39",
+      "placeName": "Thanh Xuân",
+      "placeType": "Huyen",
+      "parentName": "Hà Nội",
+      "_type":"Place"
+    }
+  ]
+}

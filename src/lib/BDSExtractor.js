@@ -8,6 +8,7 @@ var entities = require("entities");
 
 var DSLoaiNhaDat = require("./LoaiNhaDat");
 var logUtil = require("./logUtil");
+var placeUtil = require('./placeUtil');
 
 var BDS_NAME_MAP = {
 	'Thuộc dự án' :'duAn', 
@@ -21,11 +22,12 @@ var BDS_NAME_MAP = {
 	'Số toilet': 'soPhongTam_full', 
 	'Nội thất': 'noiThat', 
 	//custInfo
-	'Điện thoại' : 'cust_phone', 
-	'Mobile' : 'cust_mobile', 
-	'Đăng bởi' : 'cust_dangBoi', 
-	'Email'		: 'cust_email',
-	'Tên liên lạc' : 'tenLienLac'
+	'cust Điện thoại' : 'cust_phone',
+	'cust Mobile' : 'cust_mobile',
+	'cust Đăng bởi' : 'cust_dangBoi',
+	'cust Email'		: 'cust_email',
+	'cust Tên liên lạc' : 'tenLienLac',
+	'cust Địa chỉ' : 'cust_diaChi'
 }
 
 //(x,y), x is Ban/Thue, y is loaiNhaDat
@@ -65,7 +67,7 @@ var parseEmail = function(encEmail) {
 	}
 	
 	return '';
-}
+};
 
 function _convertLoaiTinGiao(ads) {
 	if (ads.loaiTinRao) {
@@ -107,6 +109,26 @@ function _parseHuyenFullName(huyenFullName) {
 	return place;
 }
 
+function _buildPlace(adsDto) {
+	adsDto.place = {};
+
+	adsDto.place.duAn = adsDto.duAn;
+	adsDto.place.geo = {
+		lat: adsDto.hdLat,
+		lon: adsDto.hdLong
+	};
+	adsDto.place.diaChi = adsDto.diaChi;
+	adsDto.place.diaChinh = placeUtil.getDiaChinh(adsDto.place.diaChi);
+
+	//for convenience
+	adsDto.place.duAnFullName = placeUtil.getDuAnFullName(adsDto.place);
+
+	//not now, demo3
+
+	//adsDto.duAn = undefined; //to remove this field
+	//adsDto.hdLat = undefined; //to remove this field
+	//adsDto.hdLong = undefined; //to remove this field
+}
 
 function convertGia(ads) {
 	if (ads.price_unit==='tỷ') {
@@ -149,7 +171,7 @@ class BDSExtractor {
 
 		var _done = () => {
 			count++;
-		}
+		};
 
 
 		var i = start;
@@ -180,10 +202,10 @@ class BDSExtractor {
 		.set({
 			'title' : '.p-title a', 
 			'cover' : '.p-main > div > a > img@src',
-			'huyenFullName' : '.product-city-dist'
+			//'huyenFullName' : '.product-city-dist'
 		})
 		.data(function(ads) {
-			ads.place = _parseHuyenFullName(ads.huyenFullName);
+			//ads.place = _parseHuyenFullName(ads.huyenFullName);
 			handleData(1, ads);
 		})
 		.follow('.p-title a@href')
@@ -193,13 +215,14 @@ class BDSExtractor {
 		    'images'		:['#product-detail .list-img > ul > li > img@src'],
 		    'price'			:'#product-detail .gia-title[1] > strong ',
 		    'area'			:'#product-detail .gia-title[2] > strong ',
-		    'loc'			:'#product-detail .diadiem-title', 
-		    'detailLefts' 		:['#product-detail .left-detail .left'],
-		    'detailRights' 		:['#product-detail .left-detail .right'], 
-		    'custLefts'		:['#divCustomerInfo .left'], 
-		    'custRights'	:['#divCustomerInfo .right'],
-		    'hdLat'		:'.container-default input[id="hdLat"]@value',
-		    'hdLong'	:'.container-default input[id="hdLong"]@value',
+		    'loc'			:'#product-detail .diadiem-title',
+			'custRights'	:['#divCustomerInfo .right'],
+			'custLefts'		:['#divCustomerInfo .left'],
+			'detailRights' 		:['#product-detail .left-detail .right'],
+			'detailLefts' 		:['#product-detail .left-detail .left'],
+
+			'hdLat'		:'.container-default input[id="hdLat"]@value',
+		    'hdLong'	:'.container-default input[id="hdLong"]@value'
 		    //'all' : '#product-detail '
 		})
 		.data(function(listing) {
@@ -217,7 +240,7 @@ class BDSExtractor {
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
 		    	hdLat : Number(listing.hdLat), 
 		    	hdLong : Number(listing.hdLong),
-		    }
+		    };
 
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
 		    // detail
@@ -226,14 +249,15 @@ class BDSExtractor {
 		    }
 		    
 		    // customer information : thong tin lien lac
-		    for (var i = 0; i < listing.custLefts.length; i++) {
-		    	//transform first:
-		    	var val = listing.custRights[i];
-		    	if (listing.custLefts[i]=='Email') {
-		    		val = parseEmail(listing.custRights[i]);
-		    	}
-		    	ads[BDS_NAME_MAP[listing.custLefts[i]]] = val;	
-		    }
+			for (var i = 0; i < listing.custLefts.length; i++) {
+				//transform first:
+				var val = listing.custRights[i];
+				if (listing.custLefts[i]=='Email') {
+					val = parseEmail(listing.custRights[i]);
+				}
+				ads[BDS_NAME_MAP['cust ' + listing.custLefts[i]]] = val;
+			}
+
 		    //convert loai tin giao
 		    _convertLoaiTinGiao(ads);
 		
@@ -252,7 +276,9 @@ class BDSExtractor {
 		    }
 		    //convert gia'
 		    convertGia(ads);
-		    
+
+			_buildPlace(ads);
+
 		    handleData(2, ads);
 		})
 		

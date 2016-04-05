@@ -6,16 +6,6 @@ var internals = {};
 internals.endpoints = [
 {
 	method: 'GET', 
-	path: '/home/{somthingss*}', 
-	handler: {
-		directory: {
-			path: '../../web',
-			index: true
-		}
-	}
-}, 
-{
-	method: 'GET', 
 	path: '/api/houses/find', 
 	handler: MyHandlers.findHouse, 
 	config : {

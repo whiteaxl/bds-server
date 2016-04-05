@@ -22,7 +22,20 @@ internals.endpoints = [
 	      	notes: 'Renders the /docs/home.md file as HTML.',
 	      	tags: ['api']
 		}
+	},
+
+	{
+		method: 'POST',
+		path: '/api/findPlace',
+		handler: Handlers.findPlace,
+		config : {
+			description: 'Get the default/home template.',
+			notes: 'Renders the /docs/home.md file as HTML.',
+			tags: ['api']
+		}
 	}
+	
+	
 
 ];
 
