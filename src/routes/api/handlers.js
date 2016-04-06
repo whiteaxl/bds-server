@@ -12,6 +12,7 @@ var logUtil = require("../../lib/logUtil");
 var util = require("../../lib/utils");
 var PlacesModel = require('../../dbservices/Place');
 var placeUtil = require("../../lib/placeUtil");
+var _ = require("lodash");
 
 
 
@@ -120,6 +121,40 @@ internals.findGET = function(req, reply) {
 	findAds(queryCondition, reply);
 };
 
+//
+function matchDiaChi(adsPlace, place) {
+    if (!place.diaChi || !adsPlace.diaChi) {
+        logUtil.info("Fail, one of the diaChi is null!")
+        return false;
+    }
+
+	logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
+	//logUtil.info("value="+ value);
+	//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
+
+
+	//compare diaChi
+	let placeDiaChiLocDau = util.locDau(place.diaChi);
+	let adsPlaceDiaChiLocDau = util.locDau(adsPlace.diaChi);
+	//remove common words
+	const COMMON_WORDS = {
+        '-district': '',
+        '-vietnam':'',
+        'hanoi' : 'ha-noi'
+    };
+	for (var f in COMMON_WORDS) {
+		placeDiaChiLocDau = placeDiaChiLocDau.replace(f,COMMON_WORDS[f]);
+		adsPlaceDiaChiLocDau = adsPlaceDiaChiLocDau.replace(f,COMMON_WORDS[f]);
+	}
+
+	logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
+
+	if (adsPlaceDiaChiLocDau.indexOf(placeDiaChiLocDau)!==-1)
+		return true;
+
+	return false;
+}
+
 function match(attr, value, doc) {
 	//
 	let ads = doc.value;
@@ -165,25 +200,22 @@ function match(attr, value, doc) {
 		return ret;
 	}
 	// Place
-	//logUtil.info("AAAA="+ attr);
 	if (attr == "placeName") {
 		if (!ads.place.diaChi) {
 			return false;
 		}
 
-		logUtil.info("ads.place.diaChi="+ ads.place.diaChi);
-		//logUtil.info("value="+ value);
-		//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
-		let valueLocDau = util.locDau(value);
-		let diaChiLocDau = util.locDau(ads.place.diaChi);
+        let place;
+        logUtil.info(value);
+        if (_.isObject(value)) {
+            place = value;
+        } else {
+            place = {
+                diaChi: value
+            }
+        }
 
-		logUtil.info("valueLocDau="+ valueLocDau + ", diaChiLocDau=" + diaChiLocDau);
-		logUtil.info("diaChiLocDau.indexOf(valueLocDau)="+ diaChiLocDau.indexOf(valueLocDau))
-
-		if (diaChiLocDau.indexOf(valueLocDau)!==-1)
-			return true;
-
-		return false;
+		return matchDiaChi(ads.place, place);
 	}
 
 	//default is equals
