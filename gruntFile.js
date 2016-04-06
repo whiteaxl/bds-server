@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 			build: {
 				entry: {
 					app: './entry.js',
-					vendor: ["angular","angular-cookies"]
+					vendor: ["angular","angular-cookies","jquery"]
 				},
 				output: {
 					path: 'src/web/dist/',

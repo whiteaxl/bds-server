@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5e063accb4997e687776"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9849f4f40623dd9a7e2b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -572,7 +572,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// require("!style!css!./src/assets/style.css");
+	 //require("!style!css!./src/web/assets/css/style.css");
+	 //require("!style!css!./src/web/assets/css/ie.css");
 	// require("./src/app/app.js");
 	__webpack_require__(1);
 	__webpack_require__(2);
