@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('bds', ['ngCookies'])
+    angular.module('bds', ['ngCookies','nemLogging','uiGmapgoogle-maps'])
 		.run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
 
 		        $rootScope.globals = $cookieStore.get('globals') || {};

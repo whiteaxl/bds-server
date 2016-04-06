@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="en" ng-app="bds">
+<html lang="en" ng-app="AngularGoogleMap">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+	<script src="/bower/underscore/underscore.js"></script>
+	<script src='/bower/lodash/dist/lodash.min.js'></script>
 	<script src="/web/dist/vendor.bundle.js"></script>
 	<script src="/web/dist/app.bundle.js"></script>
+	
 	<!-- <script src="/app/home/home.js"></script> -->
 	<title>Reway</title>
 	<style>
@@ -13,7 +17,7 @@
       }
     </style>
 </head>
-<body ng-controller="MainCtrl as mc">
+<body >
 	<div growl></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
@@ -43,7 +47,14 @@
 			</div>
 		</div>
 	</div>
-	<div data-ng-view class="container"></div>
+	<div>
+		<div ng-controller="MapCtrl">
+			<div id="map_canvas">
+    		<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options"></ui-gmap-google-map>
+			</div>
+		</div>
+		
+	</div>
 
 </body>
 </html>

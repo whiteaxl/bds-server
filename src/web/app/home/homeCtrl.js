@@ -7,6 +7,9 @@
 	function MainCtrl($rootScope, $scope,HouseService) {
 		var vm = this;
 		init();
+		$scope.map = {center: {latitude: 51.219053, longitude: 4.404418 }, zoom: 14 };
+        $scope.options = {scrollwheel: false};
+        alert($scope.map.center['latitude']);
 		vm.findHouse = function(){
 			HouseService.findHouse().then(function(res){
 				vm.sellingHouses = res.data;
