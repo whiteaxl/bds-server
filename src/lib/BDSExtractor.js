@@ -220,9 +220,10 @@ class BDSExtractor {
 			'custLefts'		:['#divCustomerInfo .left'],
 			'detailRights' 		:['#product-detail .left-detail .right'],
 			'detailLefts' 		:['#product-detail .left-detail .left'],
-
+                'chiTiet'	:'#product-detail .pm-content',
 			'hdLat'		:'.container-default input[id="hdLat"]@value',
 		    'hdLong'	:'.container-default input[id="hdLong"]@value'
+
 		    //'all' : '#product-detail '
 		})
 		.data(function(listing) {
@@ -238,10 +239,14 @@ class BDSExtractor {
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
 		    	area_full: listing.area, 
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
+                chiTiet: listing.chiTiet,
 		    	hdLat : Number(listing.hdLat), 
-		    	hdLong : Number(listing.hdLong),
+		    	hdLong : Number(listing.hdLong)
 		    };
 
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            console.log(listing.chiTiet);
+            console.log("BBBBBBBBBBBBBBBBBBBBB");
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
 		    // detail
 		    for (var i = 0; i < listing.detailLefts.length; i++) {
