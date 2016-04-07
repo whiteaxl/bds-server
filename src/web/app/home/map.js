@@ -78,7 +78,28 @@ app.controller('MapCtrl', ['MarkerCreatorService', '$scope', function (MarkerCre
                 longitude: $scope.autentiaMarker.longitude
             },
             zoom: 12,
-            markers: [],
+            markers: [{
+        id: 0,
+        coords: {
+            latitude: 37.7749295,
+            longitude: -122.4194155
+        },
+        data: 'restaurant'
+    }, {
+        id: 1,
+        coords: {
+            latitude: 37.79,
+            longitude: -122.42
+        },
+        data: 'house'
+    }, {
+        id: 2,
+        coords: {
+            latitude: 37.77,
+            longitude: -122.41
+        },
+        data: 'hotel'
+    }],
             control: {},
             options: {
                 scrollwheel: false
