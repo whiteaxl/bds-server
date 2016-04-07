@@ -32,9 +32,9 @@ var BDS_NAME_MAP = {
 
 //(x,y), x is Ban/Thue, y is loaiNhaDat
 var LOAI_BDS_NAME_MAP = {
-	'Bán căn hộ chung cư' :'0,1', 
 	'Bán nhà biệt thự, liền kề' : '0,4',
 	'Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)' : '0,4',
+	'Bán căn hộ chung cư' :'0,1',
 	'Bán nhà riêng' : '0,2',
 	'Bán nhà mặt phố' : '0,3',
 	'Bán đất nền dự án' : '0,5',
