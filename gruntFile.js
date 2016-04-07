@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			css: {
-				files: ['src/web/less/*.*'],
+				files: ['src/web/**/*.css'],
 				tasks: ['webpack']
 			},
 			js: {
