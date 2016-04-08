@@ -10,6 +10,7 @@
 		
 		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 20 , control: {}};
 		$scope.options = {scrollwheel: false};
+		$scope.markerCount = 3;
 		$scope.markers = [{
 			id: 0,
 			coords: {
@@ -66,8 +67,18 @@
 		vm.showPosition =  function(position) {
 			var lat = position.coords.latitude;
 			var lng = position.coords.longitude;
-			$scope.map.center.latitude = lat;
-			$scope.map.center.longitude = lng;
+			//$scope.map.center.latitude = lat;
+			//$scope.map.center.longitude = lng;
+			var marker = {
+				id: $scope.markerCount,
+				coords: {
+					latitude: lat,
+					longitude: lng
+				},
+				data: 'restaurant'
+			}
+			$scope.markers.push(marker);
+			$scope.markerCount = $scope.markerCount + 1;
 			$scope.$digest();
 		}
 	}

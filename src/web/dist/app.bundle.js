@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a904cd6958d1feee87e0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "69061af1f4e936f92c37"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -616,6 +616,7 @@
 			
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 20 , control: {}};
 			$scope.options = {scrollwheel: false};
+			$scope.markerCount = 3;
 			$scope.markers = [{
 				id: 0,
 				coords: {
@@ -672,8 +673,18 @@
 			vm.showPosition =  function(position) {
 				var lat = position.coords.latitude;
 				var lng = position.coords.longitude;
-				$scope.map.center.latitude = lat;
-				$scope.map.center.longitude = lng;
+				//$scope.map.center.latitude = lat;
+				//$scope.map.center.longitude = lng;
+				var marker = {
+					id: $scope.markerCount,
+					coords: {
+						latitude: lat,
+						longitude: lng
+					},
+					data: 'restaurant'
+				}
+				$scope.markers.push(marker);
+				$scope.markerCount = $scope.markerCount + 1;
 				$scope.$digest();
 			}
 		}
