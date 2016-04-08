@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "69061af1f4e936f92c37"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c3ba96c14d7182f599c5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -614,7 +614,7 @@
 			var vm = this;
 			init();
 			
-			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 20 , control: {}};
+			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false};
 			$scope.markerCount = 3;
 			$scope.markers = [{

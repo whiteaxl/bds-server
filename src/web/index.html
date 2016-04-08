@@ -36,13 +36,22 @@
 				<th translate="">Title</th>
 				<th translate="">Price</th>
 				<th translate="">Image</th>
+				<th translate="">Map</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="house in mc.sellingHouses" class="ng-scope">
-				<td class="ng-binding">{{house.value.title}}</td>
-				<td class="ng-binding">{{house.value.price_value}}</td>
+				<td class="ng-binding">{{house.value.adsID}}</td>
+				<td class="ng-binding">{{house.value.price_value}} - lat:{{house.value.place.geo.lat}}: long:{{house.value.place.geo.lon}}</td>
 				<td class="ng-binding"><img src="{{house.value.images_small[0]}}"></td>
+				<td class="ng-binding">
+					<div ng-if="true">
+						<ui-gmap-google-map draggable="true" center="house.map.center" zoom="house.map.zoom" options="house.map.options" refresh="'true'">
+    						<ui-gmap-marker coords="house.map.marker.coords" idkey="house.id">
+        					</ui-gmap-marker>
+    					</ui-gmap-google-map>
+					</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -51,7 +60,7 @@
 	</div>
 	<div>
 		<div >
-			<div id="map_canvas">
+			<div id="map_canvas" style="display: block;">
     		<ui-gmap-google-map center="map.center" control = "map.control" zoom="map.zoom" options="options" refresh="'true'">
     			<ui-gmap-markers models="markers" idKey="id" coords="'coords'" fit="'true'" icon="'icon'">
     			</ui-gmap-markers>

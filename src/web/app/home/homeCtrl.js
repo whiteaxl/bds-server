@@ -8,7 +8,7 @@
 		var vm = this;
 		init();
 		
-		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 20 , control: {}};
+		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 		$scope.options = {scrollwheel: false};
 		$scope.markerCount = 3;
 		$scope.markers = [{
