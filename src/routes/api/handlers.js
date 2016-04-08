@@ -71,9 +71,9 @@ function _filterResult(allAds, queryCondition) {
             //moment
             var toDay = moment();
             var NgayDangTinDate= moment(val.ngayDangTin, "DD-MM-YYYY");
-            var one_day=1000*60*60*24;
-
-            val.soNgayDaDangTin = Math.ceil(( toDay.seconds()-NgayDangTinDate.seconds())/(one_day));
+            //var one_day=1000*60*60*24;
+            //val.soNgayDaDangTin = Math.ceil(( toDay.seconds()-NgayDangTinDate.seconds())/(one_day));
+            val.soNgayDaDangTin = toDay.diff(NgayDangTinDate, 'days');
         }
 
 
