@@ -5,12 +5,14 @@ var Boom = require('boom');
 
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
-var myBucket = require('../../database/mydb')
+var myBucket = require('../../database/mydb');
+myBucket.operationTimeout = 120000;//2 minutes
 
-var Extract = require('../../lib/extract')
+
+var Extract = require('../../lib/extract');
 
 
-var PlacesModel = require('../../dbservices/Place')
+var PlacesModel = require('../../dbservices/Place');
 
 
 var internals = {};
@@ -50,19 +52,50 @@ internals.bdsCom = function(req, reply) {
 			return;
 		}
 
-		adsDto._type = "Ads"
-		//get cover from header obj (merge)
-		adsDto.cover = headers[adsDto.title].cover;
+		let adsObj = {};
+
+		adsObj._type = "Ads";
+		let coverSmall = headers[adsDto.title].cover;
+		let images = [];
+		if (adsDto.images_small) {
+			for (var i in adsDto.images_small) {
+				images[i] = adsDto.images_small[i].replace("80x60", "745x510");
+			}
+		}
+
+		adsObj.image = {
+			cover: coverSmall.replace("120x90", "745x510"),
+			cover_small : coverSmall,
+			images_small : adsDto.images_small,
+			images : images
+		};
+		adsObj.adsID = adsDto.title;
+		adsObj.dangBoi = {
+			userID : adsDto.cust_email,
+			email: adsDto.cust_email,
+			name: adsDto.cust_dangBoi,
+			phone: adsDto.cust_phone || adsDto.cust_mobile,
+		};
+		adsObj.ngayDangTin = adsDto.ngayDangTin;
+		adsObj.gia = adsDto.gia;
+		adsObj.dienTich = adsDto.dienTich;
+		adsObj.place = adsDto.place;
+		adsObj.place.diaChinhFullName = adsDto.diaChi;
+		adsObj.soPhongNgu = adsDto.soPhongNgu;
+		adsObj.soPhongTam = adsDto.soPhongTam;
+		adsObj.soTang = adsDto.soTang;
+		adsObj.loaiTin = adsDto.loaiTin;
+		adsObj.loaiNhaDat = adsDto.loaiNhaDat;
+		adsObj.ten_loaiTin = adsDto.ten_loaiTin;
+		adsObj.ten_loaiNhaDat = adsDto.ten_loaiNhaDat;
+		adsObj.chiTiet = adsDto.chiTiet;
 
 		countInsert++;
 
-		myBucket.operationTimeout = 120000;//2 minutes
-
-
-		myBucket.upsert(adsDto.title, adsDto, function(err, res) {
+		myBucket.upsert(adsObj.adsID, adsObj, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
-			};
+			}
 		})
 	}
 	,() => { //done all handle
@@ -78,7 +111,7 @@ internals.bdsCom = function(req, reply) {
 
 internals.test = function(req, reply) {
 	reply.view('admin/a');
-}
+};
 
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -90,7 +123,7 @@ internals.viewall = function(req, reply) {
 	  	reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
 	});
 
-}
+};
 
 internals.deleteall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
@@ -111,11 +144,11 @@ internals.deleteall = function(req, reply) {
 	    reply({result:'Done', Count: allAds.length})
 	});
 
-}
+};
 
 internals.api_usage = function(req, reply) {
 	reply.view('admin/api_usage.md').header('content-type','text/html; charset=utf-8');
-}
+};
 
 internals.loadData = function(req, reply) {
 	let jsonFileName = req.query.jsonFileName;
