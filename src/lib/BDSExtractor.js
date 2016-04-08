@@ -227,13 +227,9 @@ class BDSExtractor {
 		    //'all' : '#product-detail '
 		})
 		.data(function(listing) {
-			//console.log(listing.all);
-
-		    
-		    // do something with listing data
 		    let ads = {
-		    	title: listing.title, 
-		    	images_small: listing.images, 
+		    	title: listing.title,
+		    	images_small: listing.images,
 		    	price_value: listing.price.split(' ')[0],
 		    	price_unit: listing.price.split(' ')[1], 
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
@@ -244,10 +240,8 @@ class BDSExtractor {
 		    	hdLong : Number(listing.hdLong)
 		    };
 
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            console.log(listing.chiTiet);
-            console.log("BBBBBBBBBBBBBBBBBBBBB");
 		    //var {detailLefts, detailRights, custLefts, custRights} = listing;
+
 		    // detail
 		    for (var i = 0; i < listing.detailLefts.length; i++) {
 		    	ads[BDS_NAME_MAP[listing.detailLefts[i]]] = listing.detailRights[i];
