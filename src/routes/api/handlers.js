@@ -25,6 +25,20 @@ var Q_FIELD = {
 
 var internals = {};
 
+function stringToDate(_date,_format,_delimiter)
+{
+    var formatLowerCase=_format.toLowerCase();
+    var formatItems=formatLowerCase.split(_delimiter);
+    var dateItems=_date.split(_delimiter);
+    var monthIndex=formatItems.indexOf("mm");
+    var dayIndex=formatItems.indexOf("dd");
+    var yearIndex=formatItems.indexOf("yyyy");
+    var month=parseInt(dateItems[monthIndex]);
+    month-=1;
+    var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+    return formatedDate;
+}
+
 function _filterResult(allAds, queryCondition) {
 
 	//ES5 syntax to select
@@ -65,14 +79,16 @@ function _filterResult(allAds, queryCondition) {
 				val.images_small[i] = val.images_small[i].replace("80x60", "745x510");
 			}
 		}
-        /*
+
 		if (val.ngayDangTin) {
-            var toDay = Date.now;
-            var NgayDangTinDate= stringToDate(val.ngayDangTin,"dd-MM-yyyy","-");
+            //moment
+            var toDay = moment();
+            var NgayDangTinDate= moment(val.ngayDangTin, "DD-MM-YYYY");
             var one_day=1000*60*60*24;
-            val.soNgayDaDangTin = Math.ceil((NgayDangTinDate.getTime()-toDay.getTime())/(one_day));
+
+            val.soNgayDaDangTin = Math.ceil(( toDay.seconds()-NgayDangTinDate.seconds())/(one_day));
         }
-        */
+
 
 		return one;
 	});
