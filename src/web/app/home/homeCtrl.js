@@ -33,6 +33,7 @@
 			data: 'hotel'
 		}];
         //alert($scope.map.center['latitude']);
+
         vm.findHouse = function(){
         	
         	HouseService.findHouse().then(function(res){
@@ -67,10 +68,7 @@
 			var lng = position.coords.longitude;
 			$scope.map.center.latitude = lat;
 			$scope.map.center.longitude = lng;
-			alert(lat);
-			alert(lng);
-			$scope.map.control.refresh();
-			//map.setCenter(new google.maps.LatLng(lat, lng));
+			$scope.$digest();
 		}
 	}
 })();

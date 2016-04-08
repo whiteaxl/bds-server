@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5e950b97c8bf192fd56"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a904cd6958d1feee87e0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -639,6 +639,7 @@
 				data: 'hotel'
 			}];
 	        //alert($scope.map.center['latitude']);
+
 	        vm.findHouse = function(){
 	        	
 	        	HouseService.findHouse().then(function(res){
@@ -673,10 +674,7 @@
 				var lng = position.coords.longitude;
 				$scope.map.center.latitude = lat;
 				$scope.map.center.longitude = lng;
-				alert(lat);
-				alert(lng);
-				$scope.map.control.refresh();
-				//map.setCenter(new google.maps.LatLng(lat, lng));
+				$scope.$digest();
 			}
 		}
 	})();
