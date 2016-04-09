@@ -5,13 +5,13 @@
         .factory('HouseService', HouseService);
     /* @ngInject */
     function HouseService($http, $q, $rootScope) {
-      var urlPath = '/api/houses/find';
+      var urlPath = '/api/ads/getAllAds';
       var service = {};
-      service.findHouse = findHouse;
+      service.getAllAds = getAllAds;
       service.createHouse = createHouse;
       return service;
 
-      function findHouse(){
+      function getAllAds(){
       	return $http.get(urlPath);
       }
       function createHouse(desc,email,seller){

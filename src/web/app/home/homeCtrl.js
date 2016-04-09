@@ -7,8 +7,8 @@
 	function MainCtrl($rootScope, $scope,HouseService) {
 		var vm = this;
 		init();
-		vm.findHouse = function(){
-			HouseService.findHouse().then(function(res){
+		vm.getAllAds = function(){
+			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
 			});
 		}

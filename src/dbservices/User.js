@@ -3,13 +3,13 @@
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
 
-class AdsModel {
+class UserModel {
 	constructor(myBucket) {
 		this.myBucket = myBucket;
 	}
 
-	upsert(adsDto) {
-		this.myBucket.upsert(adsDto.adsID, adsDto, function(err, res) {
+	upsert(userDto) {
+		this.myBucket.upsert(userDto.userID, userDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			}
@@ -17,10 +17,10 @@ class AdsModel {
 	}
 
 	queryAll(callBack) {
-        let query = ViewQuery.from('ads', 'all_ads');
+        let query = ViewQuery.from('user', 'all_user');
 
         this.myBucket.query(query, function(err, all) {
-            console.log("number of ads:" + all.length);
+            console.log(all);
 
             if (!all)
                 all = [];
@@ -30,4 +30,4 @@ class AdsModel {
     }
 }
 
-module.exports = AdsModel;
+module.exports = UserModel;

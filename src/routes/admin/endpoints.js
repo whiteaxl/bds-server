@@ -76,7 +76,7 @@ internals.endpoints = [
 	      	notes: 'Renders the /docs/home.md file as HTML.',
 	      	tags: ['api']
 		}
-	}, 
+	}
 ]
 	
 

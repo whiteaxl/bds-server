@@ -11,6 +11,7 @@ var QueryOps = require('../../lib/QueryOps');
 var logUtil = require("../../lib/logUtil");
 var util = require("../../lib/utils");
 var PlacesModel = require('../../dbservices/Place');
+var AdsModel = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
 var _ = require("lodash");
 var moment = require("moment");
@@ -327,6 +328,23 @@ internals.findPlace = function(req, reply) {
 	}
 
 };
+
+internals.getAllAds = function(req, reply) {
+	var adsModel = new AdsModel(myBucket);
+	adsModel.queryAll(function(result){
+		reply(result);
+	});
+	/*var query = ViewQuery.from('ads', 'all_ads');
+	myBucket.query(query, function(err, allAds) {
+		console.log("Number of ads: " + allAds.length);
+
+		if (!allAds)
+			allAds = [];
+		reply(allAds);
+	  	//reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
+	});*/
+};
+
 
 
 
