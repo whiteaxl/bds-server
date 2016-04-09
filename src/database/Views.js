@@ -2,7 +2,7 @@
 
 function (doc, meta) {
   if (doc._type=='Ads')
-    emit(doc.title, doc);
+    emit(doc.adsID, doc);
 }
 
 // view , ddoc=ads_spatial, viewname=points
