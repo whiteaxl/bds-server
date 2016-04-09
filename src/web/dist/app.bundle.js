@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7fa2cf194b9860f0309e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1d3062e8a3ba4a267bb7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,6 +617,12 @@
 			vm.getAllAds = function(){
 				HouseService.getAllAds().then(function(res){
 					vm.sellingHouses = res.data;
+
+					for(var i = 0; i < res.data.length; i++) { 
+			    		var ads = res.data[i];
+			    		if(res.data[i].map)
+			    			$scope.markers.push(res.data[i].map.marker);
+					}
 				});
 			}
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
@@ -644,6 +650,7 @@
 				},
 				data: 'hotel'
 			}];
+			$scope.markers = [];
 			vm.createHouse = function(desc,seller,email){
 	        	vm.getLocation();
 	        	return;

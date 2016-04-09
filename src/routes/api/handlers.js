@@ -318,6 +318,35 @@ internals.findPlace = function(req, reply) {
 internals.getAllAds = function(req, reply) {
 	var adsModel = new AdsModel(myBucket);
 	adsModel.queryAll(function(result){
+		for (var i = 0; i < result.length; i++) { 
+    		var ads = result[i];
+    		if(result[i].value.place){
+    			if(result[i].value.place.geo){
+	    			result[i].map={
+	    				center: {
+							latitude: 	result[i].value.place.geo.lat,
+							longitude: 	result[i].value.place.geo.lon
+						},
+	    				marker: {
+							id: i,
+							coords: {
+								latitude: 	result[i].value.place.geo.lat,
+								longitude: 	result[i].value.place.geo.lon
+							},
+							data: 'test'
+						},
+						options:{
+							scrollwheel: false
+						},
+						zoom: 14	
+	    			}
+	    					
+				}
+    		}
+    		
+		}
+
+
 		reply(result);
 	});
 	/*var query = ViewQuery.from('ads', 'all_ads');
