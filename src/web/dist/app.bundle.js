@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d3062e8a3ba4a267bb7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e9e563882ac3d2f8ccf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,7 +617,7 @@
 			vm.getAllAds = function(){
 				HouseService.getAllAds().then(function(res){
 					vm.sellingHouses = res.data;
-
+					$scope.markers = [];
 					for(var i = 0; i < res.data.length; i++) { 
 			    		var ads = res.data[i];
 			    		if(res.data[i].map)
@@ -626,7 +626,7 @@
 				});
 			}
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
-			$scope.options = {scrollwheel: false};
+			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
 			$scope.markers = [{
 				id: 0,
@@ -684,6 +684,9 @@
 					coords: {
 						latitude: lat,
 						longitude: lng
+					},
+					options: {
+						labelContent : 'You are here'
 					},
 					data: 'restaurant'
 				}

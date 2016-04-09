@@ -333,6 +333,9 @@ internals.getAllAds = function(req, reply) {
 								latitude: 	result[i].value.place.geo.lat,
 								longitude: 	result[i].value.place.geo.lon
 							},
+							options: {
+								labelContent : result[i].value.gia
+							},
 							data: 'test'
 						},
 						options:{

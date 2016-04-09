@@ -10,7 +10,7 @@
 		vm.getAllAds = function(){
 			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
-
+				$scope.markers = [];
 				for(var i = 0; i < res.data.length; i++) { 
 		    		var ads = res.data[i];
 		    		if(res.data[i].map)
@@ -19,7 +19,7 @@
 			});
 		}
 		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
-		$scope.options = {scrollwheel: false};
+		$scope.options = {scrollwheel: false,labelContent: 'gia'};
 		$scope.markerCount = 3;
 		$scope.markers = [{
 			id: 0,
@@ -77,6 +77,9 @@
 				coords: {
 					latitude: lat,
 					longitude: lng
+				},
+				options: {
+					labelContent : 'You are here'
 				},
 				data: 'restaurant'
 			}

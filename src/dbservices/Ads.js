@@ -17,7 +17,7 @@ class AdsModel {
 	}
 
 	queryAll(callBack) {
-        let query = ViewQuery.from('ads', 'all_ads');
+        let query = ViewQuery.from('ads', 'all_ads').limit(3);
 
         this.myBucket.query(query, function(err, all) {
             console.log("number of ads:" + all.length);

@@ -32,7 +32,7 @@
 		<div >
 			<div id="map_canvas" style="display: block;">
     		<ui-gmap-google-map center="map.center" control = "map.control" zoom="map.zoom" options="options" refresh="'true'">
-    			<ui-gmap-markers models="markers" idKey="id" coords="'coords'" fit="'true'" icon="'icon'">
+    			<ui-gmap-markers models="markers" idKey="id" options = "'options'" coords="'coords'" fit="'true'" icon="'icon'">
     			</ui-gmap-markers>
     		</ui-gmap-google-map>
 			</div>
@@ -49,7 +49,7 @@
 		<tbody>
 			<tr ng-repeat="house in mc.sellingHouses" class="ng-scope">
 				<td class="ng-binding">{{house.value.adsID}}</td>
-				<td class="ng-binding">{{house.value.price_value}}</td>
+				<td class="ng-binding">{{house.value.gia}}</td>
 				<td class="ng-binding"><img src="{{house.value.image.images_small[0]}}"></td>
 			</tr>
 		</tbody>

@@ -33,7 +33,10 @@ internals.findHouse = function(req, reply) {
 								latitude: 	allAds[i].value.place.geo.lat,
 								longitude: 	allAds[i].value.place.geo.lon
 							},
-							data: 'test'
+							data: 'test',
+							options: {
+								labelContent : 'a'
+							}
 						},
 						options:{
 							scrollwheel: false
