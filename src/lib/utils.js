@@ -25,4 +25,25 @@ var locDauInt = function(str) {
     return str;
 };
 
+util.getPriceDisplay = function(val) {
+    if (!val) {
+        return "Thỏa thuận";
+    }
+
+    if (val < 1000) {
+        return val + " triệu";
+    }
+
+    return val/1000 + " tỷ";
+};
+
+util.getDienTichDisplay = function(val) {
+    if (!val) {
+        return "Không rõ";
+    }
+
+    return val + " m²";
+};
+
+
 module.exports = util;
