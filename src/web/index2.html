@@ -34,9 +34,9 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="house in mc.sellingHouses" class="ng-scope">
-				<td class="ng-binding">{{house.value.title}}</td>
+				<td class="ng-binding">{{house.value.adsID}}</td>
 				<td class="ng-binding">{{house.value.price_value}}</td>
-				<td class="ng-binding"><img src="{{house.value.images_small[0]}}"></td>
+				<td class="ng-binding"><img src="{{house.value.image.images_small[0]}}"></td>
 			</tr>
 		</tbody>
 	</table>
