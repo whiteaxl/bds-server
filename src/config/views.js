@@ -10,7 +10,7 @@
  * the location of this 'asset' is set.
  *
  */
-'use strict';
+ 'use strict';
 
 /**
  * ## Imports
@@ -18,12 +18,12 @@
  */
 // Hoek is similar to underscore
 var Handlebars = require('handlebars'),
-    Hoek = require('hoek'),
-    internals = {},    
-    Inert = require('inert'),
-    Marked = require('marked'),
-    Path = require('path'),
-    Vision = require('vision');
+Hoek = require('hoek'),
+internals = {},    
+Inert = require('inert'),
+Marked = require('marked'),
+Path = require('path'),
+Vision = require('vision');
 
 var hapiReact = require('hapi-react-views');
 
@@ -32,24 +32,24 @@ var hapiReact = require('hapi-react-views');
  *
  * Use the GitHub Markdown css 
  */
-function MarkdownView() {
+ function MarkdownView() {
 
   this.compile = function (template) {
     return function (context) {
       var html = Marked(template, context);
       return `<link rel="stylesheet" href="/assets/github-markdown.css">
-<style>
-    .markdown-body {
+      <style>
+      .markdown-body {
         box-sizing: border-box;
         min-width: 200px;
         max-width: 980px;
         margin: 0 auto;
         padding: 45px;
-    }
-</style>
-<article class="markdown-body">
-    ${html}
-</article>`;
+      }
+      </style>
+      <article class="markdown-body">
+      ${html}
+      </article>`;
     };
   };
 }
@@ -58,15 +58,15 @@ function MarkdownView() {
  * ## init
  *
  */
-internals.init = function (server) {
-  
+ internals.init = function (server) {
+
   /**
    * ### vision
    *
    * this establishes where the html is located
    * and the engine to parse it
    */
-  server.register(Vision, (err) => {
+   server.register(Vision, (err) => {
 
     Hoek.assert(!err,err);
     
@@ -95,7 +95,7 @@ internals.init = function (server) {
    * The resetpassword.js is located in ../assests
    *
    */
-  server.register(Inert, (err) => {
+   server.register(Inert, (err) => {
 
     //Confirm no err
     Hoek.assert(!err,err);
@@ -118,12 +118,21 @@ internals.init = function (server) {
           path: Path.join(__dirname, '../web')          
         }
       }
+    },
+    {
+      method: 'GET',
+      path: '/bower/{param*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, '../../bower_components')          
+        }
+      }
     }]
     );
   });
 
-  
 
-};
 
-module.exports = internals;
+ };
+
+ module.exports = internals;

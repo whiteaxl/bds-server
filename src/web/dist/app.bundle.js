@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1ee93a0476f691de266c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7fa2cf194b9860f0309e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -578,6 +578,8 @@
 	__webpack_require__(1);
 	__webpack_require__(2);
 	__webpack_require__(3);
+	__webpack_require__(4);
+
 
 
 /***/ },
@@ -586,8 +588,7 @@
 
 	(function() {
 	    'use strict';
-
-	    angular.module('bds', ['ngCookies'])
+	    angular.module('bds', ['ngCookies','nemLogging','uiGmapgoogle-maps'])
 			.run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
 
 			        $rootScope.globals = $cookieStore.get('globals') || {};
@@ -618,8 +619,35 @@
 					vm.sellingHouses = res.data;
 				});
 			}
+			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+			$scope.options = {scrollwheel: false};
+			$scope.markerCount = 3;
+			$scope.markers = [{
+				id: 0,
+				coords: {
+					latitude: 10.762622,
+					longitude: 106.660172
+				},
+				data: 'restaurant'
+			}, {
+				id: 1,
+				coords: {
+					latitude: 21.033333,
+					longitude: 105.849998
+				},
+				data: 'house'
+			}, {
+				id: 2,
+				coords: {
+					latitude: 16.0439,
+					longitude: 108.199
+				},
+				data: 'hotel'
+			}];
 			vm.createHouse = function(desc,seller,email){
-				HouseService.createHouse(desc,seller,email).then(function(res){
+	        	vm.getLocation();
+	        	return;
+	        	HouseService.createHouse(desc,seller,email).then(function(res){
 					//vm.sellingHouses = res.data;
 					alert(res.data);
 				});
@@ -628,8 +656,33 @@
 			}
 			vm.detailHouse = function(){
 				alert('todo');
+
 			}
 			function init(){
+			}
+			vm.getLocation = function () {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(vm.showPosition);
+				} else {
+					alert("Geolocation is not supported by this browser.");
+				}
+			}
+			vm.showPosition =  function(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				//$scope.map.center.latitude = lat;
+				//$scope.map.center.longitude = lng;
+				var marker = {
+					id: $scope.markerCount,
+					coords: {
+						latitude: lat,
+						longitude: lng
+					},
+					data: 'restaurant'
+				}
+				$scope.markers.push(marker);
+				$scope.markerCount = $scope.markerCount + 1;
+				$scope.$digest();
 			}
 		}
 	})();
@@ -661,6 +714,147 @@
 	    }
 
 	})();
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	var app = angular.module('AngularGoogleMap', ['uiGmapgoogle-maps']);
+
+	app.factory('MarkerCreatorService', function () {
+
+	    var markerId = 0;
+
+	    function create(latitude, longitude) {
+	        var marker = {
+	            options: {
+	                animation: 1,
+	                labelAnchor: "28 -5",
+	                labelClass: 'markerlabel'    
+	            },
+	            latitude: latitude,
+	            longitude: longitude,
+	            id: ++markerId          
+	        };
+	        return marker;        
+	    }
+
+	    function invokeSuccessCallback(successCallback, marker) {
+	        if (typeof successCallback === 'function') {
+	            successCallback(marker);
+	        }
+	    }
+
+	    function createByCoords(latitude, longitude, successCallback) {
+	        var marker = create(latitude, longitude);
+	        invokeSuccessCallback(successCallback, marker);
+	    }
+
+	    function createByAddress(address, successCallback) {
+	        var geocoder = new google.maps.Geocoder();
+	        geocoder.geocode({'address' : address}, function (results, status) {
+	            if (status === google.maps.GeocoderStatus.OK) {
+	                var firstAddress = results[0];
+	                var latitude = firstAddress.geometry.location.lat();
+	                var longitude = firstAddress.geometry.location.lng();
+	                var marker = create(latitude, longitude);
+	                invokeSuccessCallback(successCallback, marker);
+	            } else {
+	                alert("Unknown address: " + address);
+	            }
+	        });
+	    }
+
+	    function createByCurrentLocation(successCallback) {
+	        if (navigator.geolocation) {
+	            navigator.geolocation.getCurrentPosition(function (position) {
+	                var marker = create(position.coords.latitude, position.coords.longitude);
+	                invokeSuccessCallback(successCallback, marker);
+	            });
+	        } else {
+	            alert('Unable to locate current position');
+	        }
+	    }
+
+	    return {
+	        createByCoords: createByCoords,
+	        createByAddress: createByAddress,
+	        createByCurrentLocation: createByCurrentLocation
+	    };
+
+	});
+
+	app.controller('MapCtrl', ['MarkerCreatorService', '$scope', function (MarkerCreatorService, $scope) {
+
+	        MarkerCreatorService.createByCoords(40.454018, -3.509205, function (marker) {
+	            marker.options.labelContent = 'Autentia';
+	            $scope.autentiaMarker = marker;
+	        });
+	        
+	        $scope.address = '';
+
+	        $scope.map = {
+	            center: {
+	                latitude: $scope.autentiaMarker.latitude,
+	                longitude: $scope.autentiaMarker.longitude
+	            },
+	            zoom: 12,
+	            markers: [{
+	        id: 0,
+	        coords: {
+	            latitude: 37.7749295,
+	            longitude: -122.4194155
+	        },
+	        data: 'restaurant'
+	    }, {
+	        id: 1,
+	        coords: {
+	            latitude: 37.79,
+	            longitude: -122.42
+	        },
+	        data: 'house'
+	    }, {
+	        id: 2,
+	        coords: {
+	            latitude: 37.77,
+	            longitude: -122.41
+	        },
+	        data: 'hotel'
+	    }],
+	            control: {},
+	            options: {
+	                scrollwheel: false
+	            }
+	        };
+
+	        $scope.map.markers.push($scope.autentiaMarker);
+
+	        $scope.addCurrentLocation = function () {
+	            MarkerCreatorService.createByCurrentLocation(function (marker) {
+	                marker.options.labelContent = 'You´re here';
+	                $scope.map.markers.push(marker);
+	                refresh(marker);
+	            });
+	        };
+	        
+	        $scope.addAddress = function() {
+	            var address = $scope.address;
+	            if (address !== '') {
+	                MarkerCreatorService.createByAddress(address, function(marker) {
+	                    $scope.map.markers.push(marker);
+	                    refresh(marker);
+	                });
+	            }
+	        };
+
+	        function refresh(marker) {
+	            $scope.map.control.refresh({latitude: marker.latitude,
+	                longitude: marker.longitude});
+	        }
+
+	    }]);
+
 
 
 /***/ }
