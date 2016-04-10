@@ -59,6 +59,12 @@ function _filterResult(allAds, queryCondition) {
 		val.giaDisplay = util.getPriceDisplay(val.gia);
 		val.dienTichDisplay = util.getDienTichDisplay(val.dienTich);
 
+        if (val.chiTiet) {
+            var idx = val.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+            val.chiTiet =  val.chiTiet.substring(0, idx);
+            //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
+        }
+
 		if (val.ngayDangTin) {
             var NgayDangTinDate= moment(val.ngayDangTin, "DD-MM-YYYY");
             val.soNgayDaDangTin = moment().diff(NgayDangTinDate, 'days');
