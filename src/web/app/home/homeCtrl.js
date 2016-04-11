@@ -18,6 +18,13 @@
 				}
 			});
 		}
+		$scope.$on('$viewContentLoaded', function(){
+			//addCrudControls
+			window.DesignCommon.adjustPage();
+			// window.onresize = function() {
+			//     window.DesignCommon.resizePage();
+			// }
+		});
 		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 		$scope.options = {scrollwheel: false,labelContent: 'gia'};
 		$scope.markerCount = 3;

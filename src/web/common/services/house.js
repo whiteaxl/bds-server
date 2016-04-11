@@ -12,7 +12,11 @@
       return service;
 
       function getAllAds(){
-      	return $http.get(urlPath);
+        console.log("Get all Ads");
+      	//return $http.get(urlPath);
+        var deferred = $q.defer()
+        deferred.resolve({data: [{a:"a",b: "b"}]});
+        return deferred.promise;
       }
       function createHouse(desc,email,seller){
         return $http.post(urlPath + 'create'); 

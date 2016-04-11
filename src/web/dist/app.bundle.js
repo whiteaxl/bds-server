@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7e9e563882ac3d2f8ccf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d22f4ad6267f031cfd48"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -587,18 +587,60 @@
 /***/ function(module, exports) {
 
 	(function() {
-	    'use strict';
-	    angular.module('bds', ['ngCookies','nemLogging','uiGmapgoogle-maps'])
-			.run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
+	  'use strict';
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps'])
+	  .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
+	    $rootScope.globals = $cookieStore.get('globals') || {};
+	  }]);
+	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider){
+	      // For any unmatched url, send to /route1
+	      $locationProvider.html5Mode(true);
+	      //$urlRouterProvider.otherwise("/web/list.html")
+	      //alert('sss');
+	      $stateProvider
+	      .state('route1', {
+	        url: "/list.html",
+	        templateUrl: '/web/list1.html',
+	        controller: "MainCtrl",
+	        resolve: {
+	          sellingHouses: function(HouseService) {
+	            //alert(HouseService);
+	            return HouseService.getAllAds().then(function(data){
+	              return data.data;
+	            });
+	          }
+	        }
+	        ,
+	        controller: function($scope,sellingHouses){
+	          $scope.sellingHouses = sellingHouses;
+	          alert(sellingHouses.length);
+	        }
+	      }).state('search', {
+	        url: "/search.html",
+	        templateUrl: "/web/search1.html",
+	        controller: "MainCtrl",
+	        resolve: {
+	          sellingHouses: function(HouseService) {
+	            //alert(HouseService);
+	            return HouseService.getAllAds().then(function(data){
+	              return data.data;
+	            });
+	          }
+	        }
+	        // ,
+	        // controller: function($scope, adsList){
+	        //   $scope.sellingHouses = adsList;
+	        //   alert(adsList.length);
+	        // }
+	      })
+	    });
 
-			        $rootScope.globals = $cookieStore.get('globals') || {};
 
-			}]);
-	})();
+	  })();
 
-	hello = function (){
-	  alert('hello buddy! how are you today?');
-	}
+	  hello = function (){
+	    alert('hello buddy! how are you today?');
+	  }
 
 
 /***/ },
@@ -625,6 +667,13 @@
 					}
 				});
 			}
+			$scope.$on('$viewContentLoaded', function(){
+				//addCrudControls
+				window.DesignCommon.adjustPage();
+				// window.onresize = function() {
+				//     window.DesignCommon.resizePage();
+				// }
+			});
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
@@ -716,7 +765,11 @@
 	      return service;
 
 	      function getAllAds(){
-	      	return $http.get(urlPath);
+	        console.log("Get all Ads");
+	      	//return $http.get(urlPath);
+	        var deferred = $q.defer()
+	        deferred.resolve({data: [{a:"a",b: "b"}]});
+	        return deferred.promise;
 	      }
 	      function createHouse(desc,email,seller){
 	        return $http.post(urlPath + 'create'); 

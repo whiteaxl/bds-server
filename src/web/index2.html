@@ -16,6 +16,7 @@
     		width: 400px;
 	  }
     </style>
+    <link rel="stylesheet" href="asset/css/style.css" type="text/css">
 </head>
 <body ng-controller="MainCtrl as mc">
 	<div growl></div>
@@ -27,7 +28,18 @@
 				<button ng-click="mc.createHouse();">Show current location in map</button>
 				<h5 class="title" translate>
 	Sell House
+	
 	</h5>
+
+<ul class="nav">
+        <li><a ui-sref="route1">Route 1</a></li>
+        <li><a ui-sref="route2">Route 2</a></li>
+    </ul>
+
+ <ui-view>
+        <i>Some content will load here!</i>
+    </ui-view   
+
 	<div data-ng-view class="container">
 		<div >
 			<div id="map_canvas" style="display: block;">

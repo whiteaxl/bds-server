@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 			build: {
 				entry: {
 					app: './entry.js',
-					vendor: ["lodash","angular","angular-cookies","angular-simple-logger","angular-google-maps"]
+					vendor: ["lodash","jquery","angular","angular-cookies","angular-simple-logger","angular-google-maps","angular-ui-router","angular-bootstrap"]
 				},
 				output: {
 					path: 'src/web/dist/',
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 				tasks: ['webpack']
 			},
 			js: {
-				files: ['src/web/app/**/*.js','src/web/commonn/**/*.js','src/web/app/*.js'],
+				files: ['src/web/app/**/*.js','src/web/common/**/*.js','src/web/app/*.js'],
 				tasks: ['webpack']
 			}
 		}
