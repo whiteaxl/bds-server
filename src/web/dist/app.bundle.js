@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d22f4ad6267f031cfd48"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "31cda7a76ac61035821c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -598,9 +598,9 @@
 	      //$urlRouterProvider.otherwise("/web/list.html")
 	      //alert('sss');
 	      $stateProvider
-	      .state('route1', {
+	      .state('list', {
 	        url: "/list.html",
-	        templateUrl: '/web/list1.html',
+	        templateUrl: '/web/list.html',
 	        controller: "MainCtrl",
 	        resolve: {
 	          sellingHouses: function(HouseService) {
@@ -609,15 +609,13 @@
 	              return data.data;
 	            });
 	          }
-	        }
-	        ,
-	        controller: function($scope,sellingHouses){
-	          $scope.sellingHouses = sellingHouses;
-	          alert(sellingHouses.length);
-	        }
+	        },
+	        data: {
+	            bodyClass: "page-list"
+	        } 
 	      }).state('search', {
 	        url: "/search.html",
-	        templateUrl: "/web/search1.html",
+	        templateUrl: "/web/search.html",
 	        controller: "MainCtrl",
 	        resolve: {
 	          sellingHouses: function(HouseService) {
@@ -626,6 +624,29 @@
 	              return data.data;
 	            });
 	          }
+	        },
+	        data: {
+	            bodyClass: "page-search"
+	        } 
+	        // ,
+	        // controller: function($scope,sellingHouses){
+	        //   $scope.sellingHouses = sellingHouses;
+	        //   //alert(sellingHouses.length);
+	        // }
+	      }).state('home', {
+	        url: "/index.html",
+	        templateUrl: "/web/index_content.html",
+	        controller: "MainCtrl",
+	        resolve: {
+	          sellingHouses: function(HouseService) {
+	            //alert(HouseService);
+	            return HouseService.getAllAds().then(function(data){
+	              return data.data;
+	            });
+	          }
+	        },
+	        data: {
+	            bodyClass: "page-home"
 	        }
 	        // ,
 	        // controller: function($scope, adsList){
@@ -653,8 +674,9 @@
 		angular.module('bds').controller(controllerId,MainCtrl);
 
 		/* @ngInject */
-		function MainCtrl($rootScope, $scope,HouseService) {
+		function MainCtrl($rootScope, $scope,$state,HouseService) {
 			var vm = this;
+			$scope.bodyClass= "page-home";
 			init();
 			vm.getAllAds = function(){
 				HouseService.getAllAds().then(function(res){
@@ -670,10 +692,12 @@
 			$scope.$on('$viewContentLoaded', function(){
 				//addCrudControls
 				window.DesignCommon.adjustPage();
+				$scope.bodyClass = $state.current.data.bodyClass
 				// window.onresize = function() {
 				//     window.DesignCommon.resizePage();
 				// }
 			});
+			
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
