@@ -25,6 +25,7 @@
 			//     window.DesignCommon.resizePage();
 			// }
 		});
+		$scope.bodyClass= "page-list";
 		$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 		$scope.options = {scrollwheel: false,labelContent: 'gia'};
 		$scope.markerCount = 3;
