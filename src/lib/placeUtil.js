@@ -1,4 +1,6 @@
-'use strict'
+'use strict';
+
+var _ = require("lodash");
 
 var internals = {};
 
@@ -63,6 +65,64 @@ internals.fullName = function(place) {
     }
 
     return place.placeName;
+};
+
+
+
+
+internals.type = {
+    TINH : "administrative_area_level_1",
+    HUYEN : "administrative_area_level_2",
+    XA : "administrative_area_level_3",
+    XA2 : "sublocality_level_1"
+};
+
+internals.typeName = {
+    TINH : "Tinh",
+    HUYEN : "Huyen",
+    XA : "Xa",
+    DIA_DIEM: "Dia diem"
+};
+
+internals.isHuyen = function(place) {
+    let placeTypes=place.types;
+
+    if (_.indexOf(placeTypes, internals.type.HUYEN) > -1) {
+        return true;
+    }
+
+    if (_.indexOf(placeTypes, 'locality') > -1
+        && _.indexOf(placeTypes, 'political') > -1
+        && place.description.indexOf("tp.") > -1
+    ) {
+        return true;
+    }
+};
+
+internals.getTypeName = function(place) {
+    let placeTypes = place.types;
+
+    if (_.indexOf(placeTypes, internals.type.TINH) > -1) {
+        return internals.typeName.TINH;
+    }
+    if (internals.isHuyen(place)) {
+        return internals.typeName.HUYEN;
+    }
+
+    if (_.indexOf(placeTypes, internals.type.XA) > -1) {
+        return internals.typeName.XA;
+    }
+
+    if (_.indexOf(placeTypes, internals.type.XA2) > -1) {
+        return internals.typeName.XA;
+    }
+
+    return internals.typeName.DIA_DIEM;
+};
+
+
+internals.isOnePoint = function(place) {
+    return  internals.getTypeName(place) === internals.typeName.DIA_DIEM;
 };
 
 module.exports  = internals;

@@ -16,6 +16,8 @@ var placeUtil = require("../../lib/placeUtil");
 var _ = require("lodash");
 var moment = require("moment");
 
+var geoUtil = require("../../lib/geoUtil");
+
 
 var Q_FIELD = {
 	limit : "limit",
@@ -93,7 +95,15 @@ function findAds(queryCondition, reply) {
 	if (queryCondition[Q_FIELD.geoBox]) {
 		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
 		queryCondition[Q_FIELD.geoBox] = undefined;//remove it
-	} else if (queryCondition[Q_FIELD.place]) { //by place
+	} else if (queryCondition[Q_FIELD.place]) {
+        console.log(placeUtil);
+        var place = queryCondition[Q_FIELD.place];
+
+        if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+			let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, long:place.geometry.location.lng}, 10);
+		}
+
+
 		query = ViewQuery.from('ads', 'all_ads');
 	} else {
 		query = ViewQuery.from('ads', 'all_ads');
@@ -206,18 +216,23 @@ function match(attr, value, doc) {
 		return ret;
 	}
 	// Place
-	if (attr == "placeName") {
+	if (attr == "place") {
+		logUtil.info("PLACE OBJECT in QUERY:");
+		logUtil.info(value);
+
 		if (!ads.place.diaChi) {
 			return false;
 		}
 
         let place;
-        logUtil.info(value);
-        if (_.isObject(value)) {
-            place = value;
+		let dc = value.fullName;
+
+        logUtil.info(dc);
+        if (_.isObject(dc)) {
+            place = dc;
         } else {
             place = {
-                diaChi: value
+                diaChi: dc
             }
         }
 
@@ -274,6 +289,7 @@ internals.findPOST = function(req, reply) {
 		findAds(req.payload, reply) 	
 	} catch (e) {
 		logUtil.error(e);
+		console.log(e);
 		reply(Boom.badImplementation());
 	}
 	
