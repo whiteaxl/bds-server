@@ -141,20 +141,19 @@ function findAds(queryCondition, reply) {
 		let listResult = _filterResult(allAds, queryCondition);
 
         //transform
-        listResult = listResult.map((e) => {
+        let transformed = listResult.map((e) => {
             let ret = e;
             let place = e.value.place;
             //console.log(center);
             //console.log(place.geo);
-            ret.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+            ret.value.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
 
-            console.log("Distance for " + e.value.place.diaChi +  "= " + ret.distance + "m");
+            console.log("Distance for " + e.value.place.diaChi +  "= " + ret.value.distance + "m");
             return ret;
         });
-
 	  	reply({
-	  		length: listResult.length,
-			list: listResult
+	  		length: transformed.length,
+			list: transformed
 	  	});
 	});
 }
@@ -321,7 +320,9 @@ internals.findPOST = function(req, reply) {
 		findAds(req.payload, reply) 	
 	} catch (e) {
 		logUtil.error(e);
-		console.log(e);
+		//console.trace(e);
+        console.log(e, e.stack.split("\n"));
+
 		reply(Boom.badImplementation());
 	}
 	
