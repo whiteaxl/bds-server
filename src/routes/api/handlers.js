@@ -99,7 +99,9 @@ function findAds(queryCondition, reply) {
 	if (queryCondition[Q_FIELD.geoBox]) {
         logUtil.warn("findAds - Search by BOX");
 		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
-		queryCondition[Q_FIELD.geoBox] = undefined;//remove it
+		delete queryCondition[Q_FIELD.geoBox];
+		delete queryCondition[Q_FIELD.place];
+
 	} else if (queryCondition[Q_FIELD.place]) {
         //console.log(placeUtil);
         var place = queryCondition[Q_FIELD.place];
