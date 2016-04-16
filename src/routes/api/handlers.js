@@ -25,20 +25,26 @@ var Q_FIELD = {
 	orderBy : "orderBy",
 	geoBox : "geoBox",
 	place: "place",
-    radiusInKm: "radiusInKm"
+    radiusInKm: "radiusInKm",
+    gia : "gia",
+    dienTich : "dienTich",
+    loaiTin : "loaiTin"
 };
 
 var internals = {};
 
+
 function _filterResult(allAds, queryCondition) {
     //console.log(queryCondition);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+
 
 	//ES5 syntax to select
 	var filtered = allAds.filter(function(doc) {
 		for (var attr in queryCondition) {
-            if (attr !== "orderBy"  && attr !== "limit"
-				&& !match(attr, queryCondition[attr], doc)) {
-				console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
+            if (!match(attr, queryCondition[attr], doc)) {
+				//console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
 				return false;
 			}
 		}
@@ -48,15 +54,12 @@ function _filterResult(allAds, queryCondition) {
 	//sort
 
 	if (queryCondition) {
-		let od = queryCondition['orderBy'];
-		if (od) {
-			console.log("Perform ordering by " + od);
-			orderAds(filtered, od);
-		} else {
-			console.log("No ordering by ");
+		if (orderBy) {
+			console.log("Perform ordering by " + orderBy);
+			orderAds(filtered, orderBy);
 		}
 	}
-	console.log("filtered length = " + filtered.length);
+	console.log("List ads filtered length = " + filtered.length);
 
 	// TODO: limit
 	let listResult = filtered.slice(0,1000).map((one) => {
@@ -78,12 +81,11 @@ function _filterResult(allAds, queryCondition) {
 		return one;
 	});
 
-	console.log("listResult length = " + listResult.length);
+	console.log("FINAL listResult length = " + listResult.length);
 
 	//
-	if (queryCondition && queryCondition['limit']) {
-		let lim = queryCondition['limit'];
-		listResult = listResult.slice(0, lim)
+	if (queryCondition && limit) {
+		listResult = listResult.slice(0, limit)
 	}
 
 	return listResult;
@@ -95,11 +97,15 @@ function findAds(queryCondition, reply) {
 	//return all first
 	let query;
     let center = {lat: 0, lon: 0};
+    let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
+    let isSearchByDistance = false;
 
 	if (queryCondition[Q_FIELD.geoBox]) {
         logUtil.warn("findAds - Search by BOX");
-		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
-		delete queryCondition[Q_FIELD.geoBox];
+        let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+
+        //search by geoBox, so no need place
 		delete queryCondition[Q_FIELD.place];
 
 	} else if (queryCondition[Q_FIELD.place]) {
@@ -110,16 +116,12 @@ function findAds(queryCondition, reply) {
 
         if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
             logUtil.warn("findAds - Search by DIA_DIEM");
-            let radiusInKm = queryCondition[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS; //default is 5km
-            //queryCondition[Q_FIELD.radius] = undefined;
-            delete queryCondition[Q_FIELD.radiusInKm];
-
-
+            isSearchByDistance = true;
 			let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
                 , geoUtil.meter2degree(radiusInKm));
 
             console.log("Search in box: " + geoBox);
-
+            //search by geoBox, so no need place
             delete queryCondition[Q_FIELD.place];
 
             query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
@@ -142,17 +144,28 @@ function findAds(queryCondition, reply) {
 		logUtil.info("By geo/place: allAds.length= " + allAds.length);
 		let listResult = _filterResult(allAds, queryCondition);
 
-        //transform
-        let transformed = listResult.map((e) => {
-            let ret = e;
-            let place = e.value.place;
-            //console.log(center);
-            //console.log(place.geo);
-            ret.value.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+        //filter by distance
+        let transformed = [];
+        listResult.forEach((e) => {
+            let ads = e.value;
 
-            console.log("Distance for " + e.value.place.diaChi +  "= " + ret.value.distance + "m");
-            return ret;
+            let place = ads.place;
+            ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+            console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
+
+            //filter by distance bcs get by geoBox, not radius
+            if (isSearchByDistance) {
+                if (ads.distance < radiusInKm * 1000) {
+                    transformed.push(ads);
+                }
+            } else {
+                transformed.push(ads)
+            }
         });
+
+        logUtil.info("There are " + transformed.length + " ads");
+
+
 	  	reply({
 	  		length: transformed.length,
 			list: transformed
@@ -177,7 +190,7 @@ function matchDiaChi(adsPlace, place) {
         return false;
     }
 
-	logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
+	//logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
 	//logUtil.info("value="+ value);
 	//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
 
@@ -196,15 +209,37 @@ function matchDiaChi(adsPlace, place) {
 		adsPlaceDiaChiLocDau = adsPlaceDiaChiLocDau.replace(f,COMMON_WORDS[f]);
 	}
 
-	logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
+	//logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
 
 	if (adsPlaceDiaChiLocDau.indexOf(placeDiaChiLocDau)!==-1)
 		return true;
 
+    logUtil.info("Not match by PLACE: searching DiaChiLocDau=" + placeDiaChiLocDau + ", DB DiaChiLocDau=" + adsPlaceDiaChiLocDau);
+
+
 	return false;
 }
 
+function _NotSupport(attr) {
+    let attrFormalize = attr.replace(QueryOps.BETWEEN, "");
+    attrFormalize = attrFormalize.replace(QueryOps.GREATER, "");
+
+    for (var e in Q_FIELD) {
+        if (Q_FIELD[e] == attrFormalize) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function match(attr, value, doc) {
+	//If not in list, then consider as true
+	if (_NotSupport(attr)) {
+        logUtil.warn("The parameter " + attr + " does not support! So no filter!");
+        return true;
+    }
+
 	//
 	let ads = doc.value;
 
@@ -248,10 +283,10 @@ function match(attr, value, doc) {
 
 		return ret;
 	}
-	// Place
+	// Place, compare by value.fullName
 	if (attr == Q_FIELD.place) {
-		logUtil.info("PLACE OBJECT in QUERY:");
-		logUtil.info(value);
+		//logUtil.info("PLACE OBJECT in QUERY:");
+		//logUtil.info(value);
 
 		if (!ads.place.diaChi) {
 			return false;
@@ -260,7 +295,7 @@ function match(attr, value, doc) {
         let place;
 		let dc = value.fullName;
 
-        logUtil.info(dc);
+        //logUtil.info(dc);
         if (_.isObject(dc)) {
             place = dc;
         } else {
@@ -269,14 +304,16 @@ function match(attr, value, doc) {
             }
         }
 
-		return matchDiaChi(ads.place, place);
+		let ret = matchDiaChi(ads.place, place);
+
+        return ret;
 	}
 
 	//default is equals
 	if (ads[attr] == value) {
         return true;
     } else {
-        logUtil.info("Not match '" + attr +  "': doc value: "+ ads[attr] + ", filtered value:" + value);
+        logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value: "+ ads[attr] + ", searching value:" + value);
         return false;
     }
 }
