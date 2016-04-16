@@ -1,6 +1,7 @@
 (function() {
   'use strict';
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps'])
+  window.initData = {};
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps','ui.bootstrap'])
   .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
     $rootScope.globals = $cookieStore.get('globals') || {};
   }]);
@@ -15,11 +16,9 @@
         templateUrl: '/web/list.html',
         controller: "MainCtrl",
         resolve: {
-          sellingHouses: function(HouseService) {
+          title: function(HouseService) {
             //alert(HouseService);
-            return HouseService.getAllAds().then(function(data){
-              return data.data;
-            });
+            return [{'a':'a'}];
           }
         },
         data: {
@@ -30,15 +29,17 @@
         templateUrl: "/web/search.html",
         controller: "MainCtrl",
         resolve: {
-          sellingHouses: function(HouseService) {
-            //alert(HouseService);
-            return HouseService.getAllAds().then(function(data){
-              return data.data;
-            });
+          title: function(HouseService) {
+            var result = HouseService.getAllAds();
+            result.then(function(data){
+              window.initData = data.data;
+            }); 
+            return result;
           }
         },
         data: {
-            bodyClass: "page-search"
+            bodyClass: "page-search",
+            //abc: title
         } 
         // ,
         // controller: function($scope,sellingHouses){
@@ -50,15 +51,20 @@
         templateUrl: "/web/index_content.html",
         controller: "MainCtrl",
         resolve: {
-          sellingHouses: function(HouseService) {
+          title: function(HouseService) {
             //alert(HouseService);
-            return HouseService.getAllAds().then(function(data){
+            //return HouseService.getAllAds();
+            /*.then(function(data){
               return data.data;
-            });
+            });*/
+            //return $http.get("http://www.dantri.com");
+            window.initData = [{a:'a'},{b:'b'}];
           }
         },
         data: {
-            bodyClass: "page-home"
+            bodyClass: "page-home",
+            xyz: [{a:'b'}],
+            //abc: title
         }
         // ,
         // controller: function($scope, adsList){
@@ -67,7 +73,6 @@
         // }
       })
     });
-
 
   })();
 

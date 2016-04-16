@@ -29,6 +29,8 @@
     <script src="/web/dist/vendor.bundle.js"></script>
     <script src="/web/dist/app.bundle.js"></script>
     
+
+    
 <!-- Script -->
     <script src="asset/js/jquery-1.10.2.min.js"></script>
     <script src="asset/js/jquery.bxslider.min.js"></script>
@@ -40,11 +42,20 @@
     <!-- //Script -->    
     
     <base href="/web/">
+    <script type="text/javascript">
+        var title = '';
+    </script>
+    <style type="text/css">
+    .angular-google-map-container {
+            height: 559px;
+            width: 100%;
+      }
+    #google-map { height : 100%; width : 100%; top : 0; left : 0; position : absolute; z-index : 200
+    </style>
 </head>
 
-<body ng-class="bodyClass"  ui-view>
-    
-    
+<body ng-class="bodyClass" ui-view>
+        
     
 </body>
 </html>
