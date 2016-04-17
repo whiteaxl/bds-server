@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d025a18ddaa82385fbe6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "24a2b275b8d965df7986"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -580,6 +580,7 @@
 	__webpack_require__(3);
 	__webpack_require__(4);
 	__webpack_require__(5);
+	__webpack_require__(6);
 
 
 
@@ -818,8 +819,43 @@
 	  'use strict';
 	  window.initData = {};
 	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps','ui.bootstrap'])
-	  .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
+	  .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
+	    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
+	      //alert(toState.name);
+	      if (toState.name === 'home') {
+	        toState.templateUrl = '/web/index_content.html';
+	      }else{
+	        toState.templateUrl = '/web/'+toState.name+'.html';
+	      }
+	        //if (toState.name === 'list') {
+	        //  alert(toState);
+	          
+	        //}
+	    });
+	    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+	      console.log("changed to state " + toState) ;
+	    });
+
+	    $rootScope.getGoogleLocation = function(val) {
+	        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+	          params: {
+	            address: val,
+	            language: 'en',
+	            //key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	            //types: 'gecodes,cities',
+	            components: 'country:vn',
+	            sensor: false
+	          }
+	        }).then(function(response){
+	          /*return response.data.results.map(function(item){
+	            return item;
+	          });*/
+	          return response.data.results;
+	        });
+	      };
+
+
 	  }]);
 	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider){
 	      // For any unmatched url, send to /route1
@@ -828,8 +864,8 @@
 	      //alert('sss');
 	      $stateProvider
 	      .state('list', {
-	        url: "/list.html",
-	        templateUrl: '/web/list.html',
+	        url: "/list",
+	        //templateUrl: '/web/list.html',
 	        controller: "MainCtrl",
 	        resolve: {
 	          title: function(HouseService) {
@@ -841,9 +877,10 @@
 	            bodyClass: "page-list"
 	        } 
 	      }).state('search', {
-	        url: "/search.html",
-	        templateUrl: "/web/search.html",
-	        controller: "MainCtrl",
+	        url: "/search",
+	        //templateUrl: "/web/searchContent.html",
+	        controller: "SearchCtrl",
+	        controllerAs: 'mc',
 	        resolve: {
 	          title: function(HouseService) {
 	            var result = HouseService.getAllAds();
@@ -864,7 +901,7 @@
 	        // }
 	      }).state('home', {
 	        url: "/index.html",
-	        templateUrl: "/web/index_content.html",
+	        //templateUrl: "/web/index_content.html",
 	        controller: "MainCtrl",
 	        resolve: {
 	          title: function(HouseService) {
@@ -953,37 +990,53 @@
 				},
 				data: 'hotel'
 			}];*/
-			var _selected;
-	  		$scope.selected = undefined;
-	  		$scope.selected = undefined;
-	  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-	  		$scope.getLocation = function(val) {
-	    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-	      params: {
-	        address: val,
-	        sensor: false
-	      }
-	    }).then(function(response){
-	      return response.data.results.map(function(item){
-	        return item.formatted_address;
-	      });
-	    });
-	  };
-	$scope.ngModelOptionsSelected = function(value) {
-	    if (arguments.length) {
-	      _selected = value;
-	    } else {
-	      return _selected;
-	    }
-	  };
-
-	  $scope.modelOptions = {
-	    debounce: {
-	      default: 500,
-	      blur: 250
-	    },
-	    getterSetter: true
-	  };
+			vm.search = function(param){
+				//alert(param);
+				HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
+					var result = res.data.list;
+					for (var i = 0; i < result.length; i++) { 
+			    		var ads = result[i];
+			    		if(result[i].value.place){
+			    			if(result[i].value.place.geo){
+				    			result[i].map={
+				    				center: {
+										latitude: 	result[i].value.place.geo.lat,
+										longitude: 	result[i].value.place.geo.lon
+									},
+				    				marker: {
+										id: i,
+										coords: {
+											latitude: 	result[i].value.place.geo.lat,
+											longitude: 	result[i].value.place.geo.lon
+										},
+										options: {
+											labelContent : result[i].value.gia
+										},
+										data: 'test'
+									},
+									options:{
+										scrollwheel: false
+									},
+									zoom: 14	
+				    			}
+				    					
+							}
+			    		}
+			    		
+					}
+					$scope.ads_list = res.data.list;
+					$scope.markers = [];
+					for(var i = 0; i < res.data.list.length; i++) { 
+			    		var ads = res.data.list[i];
+			    		if(res.data.list[i].map)
+			    			$scope.markers.push(res.data.list[i].map.marker);
+					}
+				});
+			}
+			vm.formatLabel = function(model){
+				if(model)
+					return model.formatted_address;
+			}
 			vm.createHouse = function(desc,seller,email){
 	        	vm.getLocation();
 	        	return;
@@ -1082,36 +1135,160 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	(function () {
-	  'use strict';
-	  angular
-	  .module('bds')
-	  .factory('HouseService', HouseService);
-	  /* @ngInject */
-	  function HouseService($http, $q, $rootScope) {
-	    var urlPath = '/api/ads/getAllAds';
-	    var service = {};
-	    service.getAllAds = getAllAds;
-	    service.createHouse = createHouse;
-	    return service;
+	(function() {
+		'use strict';
+		var controllerId = 'SearchCtrl';
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+			var vm = this;
+			init();
+			$scope.$on('$viewContentLoaded', function(){
+				window.DesignCommon.adjustPage();
+				if($state.current.data)
+					$scope.bodyClass = $state.current.data.bodyClass
+			});
+	  		
+			vm.search = function(param){
+				//alert(param);
+				HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
+					var result = res.data.list;
+					for (var i = 0; i < result.length; i++) { 
+			    		var ads = result[i];
+			    		if(result[i].value.place){
+			    			if(result[i].value.place.geo){
+				    			result[i].map={
+				    				center: {
+										latitude: 	result[i].value.place.geo.lat,
+										longitude: 	result[i].value.place.geo.lon
+									},
+				    				marker: {
+										id: i,
+										coords: {
+											latitude: 	result[i].value.place.geo.lat,
+											longitude: 	result[i].value.place.geo.lon
+										},
+										options: {
+											labelContent : result[i].value.gia
+										},
+										data: 'test'
+									},
+									options:{
+										scrollwheel: false
+									},
+									zoom: 14	
+				    			}
+				    					
+							}
+			    		}
+			    		
+					}
+					$scope.ads_list = res.data.list;
+					$scope.markers = [];
+					for(var i = 0; i < res.data.list.length; i++) { 
+			    		var ads = res.data.list[i];
+			    		if(res.data.list[i].map)
+			    			$scope.markers.push(res.data.list[i].map.marker);
+					}
+				});
+			}
+			vm.formatLabel = function(model){
+				if(model)
+					return model.formatted_address;
+			}
+			function init(){
+				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+				$scope.options = {scrollwheel: false,labelContent: 'gia'};
+				$scope.markerCount = 3;
+				$scope.markers = [];
+				$scope.initData = window.initData;
+				$scope.hot_ads_cat = window.hot_ads_cat;
+				$scope.ads_list = window.testData;
+				$scope.bodyClass= "page-home";
+				for(var i = 0; i < $scope.ads_list.length; i++) { 
+		    		var ads = $scope.ads_list[i];
+		    		if(ads.place){
+		    			if(ads.place.geo){
+			    			ads.map={
+			    				center: {
+									latitude: 	ads.place.geo.lat,
+									longitude: 	ads.place.geo.lon
+								},
+			    				marker: {
+									id: i,
+									coords: {
+										latitude: 	ads.place.geo.lat,
+										longitude: 	ads.place.geo.lon
+									},
+									options: {
+										//labelContent : ads.gia,
+										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
+									},
+									data: 'test'
+								},
+								options:{
+									scrollwheel: false
+								},
+								zoom: 14	
+			    			}
+			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
+			    			$scope.markers.push(ads.map.marker);
+			    					
+						}
+		    		}
+				}
 
-	    function getAllAds(){
-	      console.log("Get all Ads");
-	      	//return $http.get(urlPath);
-	        var deferred = $q.defer()
-	        deferred.resolve({data: window.testData});
-	        return deferred.promise;
-	      }
-	      function createHouse(desc,email,seller){
-	        return $http.post(urlPath + 'create'); 
-	      }
-	    }
+			}
+			
 
-	  })();
+		});
+
+	})();
 
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	(function () {
+	  'use strict';
+	  angular
+	  .module('bds')
+	  .factory('HouseService', function($http, $q, $rootScope){
+	    var urlPath = '/api/ads/getAllAds';
+	    return {
+	      getAllAds: function(){
+	        console.log("Get all Ads");
+	        //return $http.get(urlPath);
+	        var deferred = $q.defer()
+	        deferred.resolve({data: window.testData});
+	        return deferred.promise;
+	      },
+	      createHouse: function(desc,email,seller){
+	        return $http.post(urlPath + 'create'); 
+	      },
+	      findAdsSpatial: function(googlePlace){
+	        var url = "/api/find";
+	        var data = {
+	          "loaiTin":0,
+	          "orderBy":"giaDESC",
+	          "limit": 200
+	        }
+	        if(googlePlace.geometry.bounds){
+	          console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+	          data.geoBox = [googlePlace.geometry.bounds.southwest.lng,googlePlace.geometry.bounds.southwest.lat,googlePlace.geometry.bounds.northeast.lng,googlePlace.geometry.bounds.northeast.lat]
+	        } else{
+	          console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+	          data.radiusInKm = "10";
+	        }
+
+	        return $http.post(url,data);
+	      }
+	    };
+	  });
+	})();
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	var app = angular.module('AngularGoogleMap', ['uiGmapgoogle-maps']);

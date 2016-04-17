@@ -2,8 +2,43 @@
   'use strict';
   window.initData = {};
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps','ui.bootstrap'])
-  .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
+  .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
     $rootScope.globals = $cookieStore.get('globals') || {};
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
+      //alert(toState.name);
+      if (toState.name === 'home') {
+        toState.templateUrl = '/web/index_content.html';
+      }else{
+        toState.templateUrl = '/web/'+toState.name+'.html';
+      }
+        //if (toState.name === 'list') {
+        //  alert(toState);
+          
+        //}
+    });
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+      console.log("changed to state " + toState) ;
+    });
+
+    $rootScope.getGoogleLocation = function(val) {
+        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+          params: {
+            address: val,
+            language: 'en',
+            //key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+            //types: 'gecodes,cities',
+            components: 'country:vn',
+            sensor: false
+          }
+        }).then(function(response){
+          /*return response.data.results.map(function(item){
+            return item;
+          });*/
+          return response.data.results;
+        });
+      };
+
+
   }]);
   bds.config(function($stateProvider, $urlRouterProvider,$locationProvider){
       // For any unmatched url, send to /route1
@@ -12,8 +47,8 @@
       //alert('sss');
       $stateProvider
       .state('list', {
-        url: "/list.html",
-        templateUrl: '/web/list.html',
+        url: "/list",
+        //templateUrl: '/web/list.html',
         controller: "MainCtrl",
         resolve: {
           title: function(HouseService) {
@@ -25,9 +60,10 @@
             bodyClass: "page-list"
         } 
       }).state('search', {
-        url: "/search.html",
-        templateUrl: "/web/search.html",
-        controller: "MainCtrl",
+        url: "/search",
+        //templateUrl: "/web/searchContent.html",
+        controller: "SearchCtrl",
+        controllerAs: 'mc',
         resolve: {
           title: function(HouseService) {
             var result = HouseService.getAllAds();
@@ -48,7 +84,7 @@
         // }
       }).state('home', {
         url: "/index.html",
-        templateUrl: "/web/index_content.html",
+        //templateUrl: "/web/index_content.html",
         controller: "MainCtrl",
         resolve: {
           title: function(HouseService) {

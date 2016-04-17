@@ -82,7 +82,7 @@ var hapiReact = require('hapi-react-views');
         'js' : hapiReact        
       },
       relativeTo: __dirname,
-      path: [Path.join(__dirname, '../views')]
+      path: [Path.join(__dirname, '../web')]
     });
     
   });
@@ -119,6 +119,24 @@ var hapiReact = require('hapi-react-views');
         }
       }
     },
+    // {
+    //   method: 'GET',
+    //   path: '/web/dist/{param*}',
+    //   handler: {
+    //     directory: {
+    //       path: Path.join(__dirname, '../web/dist')          
+    //     }
+    //   }
+    // },
+    // {
+    //   method: 'GET',
+    //   path: '/web/asset/js/{param*}',
+    //   handler: {
+    //     directory: {
+    //       path: Path.join(__dirname, '../web/asset/js')          
+    //     }
+    //   }
+    // },
     {
       method: 'GET',
       path: '/bower/{param*}',

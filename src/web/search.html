@@ -100,8 +100,9 @@
                             <div class="col w-340">
                                 <form action="search.html" method="post">
                                     <div class="search">
-                                        <input type="search" name="search" placeholder="Search by neighborhood, city, zip or address" value="California City, CA" autocomplete="off" class="form-control"/>
-                                        <button class="btn-search" type="submit"><i class="fa fa-search"></i> <span class="text">Search</span></button>
+                                        <input type="search" name="search" style="display: none;" placeholder="Search by neighborhood, city, zip or address" value="California City, CA" autocomplete="off" class="form-control"/>
+                                        <input type="text" class="form-control" ng-model="searchPlaceSelected" placeholder="Search by neighborhood, city, zip or address" uib-typeahead="item for item in $root.getGoogleLocation($viewValue)" typeahead-template-url="searchPlaceDropdownTemplate.html" typeahead-input-formatter="mc.formatLabel($model);" class="form-control">
+                                        <button class="btn-search" ng-click="mc.search();" type="button"><i class="fa fa-search"></i> <span class="text">Search</span></button>
                                     </div>
                                 </form>
                             </div>
@@ -512,11 +513,11 @@
                                 <div ng-repeat="ads in ads_list" class="col col-50">
                                     <div class="item">
                                         <a class="link" href="" title="">
-                                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                                            <span class="img" style="background-image: url({{ads.value.image.cover}})"></span>
                                             <span class="info">
-                                                <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                <span class="line">123 W 119th St</span>
-                                                <span class="line">New York</span>
+                                                <span class="line"><span class="price">{{ads.value.gia | currency}} VND</span> <span>{{ads.value.dienTich}} m2</span></span>
+                                                <span class="line">{{ads.value.ten_loaiNhaDat}}</span>
+                                                <span class="line">{{ads.value.ngayDangTin}}</span>
                                             </span>
                                         </a>
                                         <h3>

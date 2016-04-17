@@ -41,11 +41,19 @@ internals.server.register(Plugins.get(), (err) => {
 });
 
 
-
 //setup views for resetpassword
 Views.init(internals.server);
 
 // set routes
 Routes.init(internals.server);
+
+// internals.server.views({
+//     engines: {
+//         html: require('handlebars')
+//     },
+//     relativeTo: __dirname,
+//     path: '../../src'
+// });
+
 
 module.exports = internals.server;

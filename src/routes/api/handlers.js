@@ -83,7 +83,7 @@ function _filterResult(allAds, queryCondition) {
 function findAds(queryCondition, reply) {
 	//return all first
 	let query;
-
+	console.log("geoBox: " + queryCondition[Q_FIELD.geoBox]);
 	if (queryCondition[Q_FIELD.geoBox]) {
 		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
 		queryCondition[Q_FIELD.geoBox] = undefined;//remove it
@@ -96,6 +96,7 @@ function findAds(queryCondition, reply) {
 		//logUtil.error(msg);
 		//reply(Boom.badRequest(msg, queryCondition));
 	}
+	//query = ViewQuery.from('ads', 'all_ads');
 
 	myBucket.query(query, function(err, allAds) {
 		if (!allAds)
