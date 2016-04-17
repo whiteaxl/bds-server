@@ -101,8 +101,8 @@ function findAds(queryCondition, reply) {
     let isSearchByDistance = false;
 
 	if (queryCondition[Q_FIELD.geoBox]) {
-        logUtil.warn("findAds - Search by BOX");
         let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+        logUtil.warn("findAds - Search by BOX: " + geoBox);
 		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
 
         //search by geoBox, so no need place
@@ -353,7 +353,10 @@ function orderAds(filtered, orderCondition) {
 
 
 internals.findPOST = function(req, reply) {
-	logUtil.info("findPOST - query: " + req.payload);
+	logUtil.info("findPOST - query: " );
+    console.log(req.payload);
+
+
 	try {
 		//let x=1/0;
 		findAds(req.payload, reply) 	
