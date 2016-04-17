@@ -35,8 +35,7 @@ var internals = {};
 
 
 function _filterResult(allAds, queryCondition) {
-    //console.log(queryCondition);
-    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
+
 
 	//ES5 syntax to select
 	var filtered = allAds.filter(function(doc) {
@@ -49,14 +48,7 @@ function _filterResult(allAds, queryCondition) {
 		return true;
 	});
 
-	//sort
 
-	if (queryCondition) {
-		if (orderBy) {
-			console.log("Perform ordering by " + orderBy);
-			orderAds(filtered, orderBy);
-		}
-	}
 	console.log("List ads filtered length = " + filtered.length);
 
 	// TODO: limit
@@ -93,6 +85,7 @@ function findAds(queryCondition, reply) {
     let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
     let isSearchByDistance = false;
     let limit = util.popField(queryCondition,Q_FIELD.limit);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
 
     logUtil.info("isSearchByDistance=" + isSearchByDistance + ", radiusInKm=" + radiusInKm)
 
@@ -147,10 +140,10 @@ function findAds(queryCondition, reply) {
             let ads = e.value;
 
             let place = ads.place;
-            console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
+            //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
 
             ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-            console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
+            //console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
 
             //filter by distance bcs get by geoBox, not radius
             if (isSearchByDistance) {
@@ -160,6 +153,28 @@ function findAds(queryCondition, reply) {
             } else {
                 transformed.push(ads)
             }
+        });
+
+        //sort
+        if (queryCondition && orderBy) {
+            console.log("Perform ordering by " + orderBy);
+            orderAds(transformed, orderBy);
+        } else if (isSearchByDistance) {
+            var compare = function(a, b) {
+                //console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
+                if (a.distance > b.distance)
+                    return 1;
+                else
+                    return -1;
+
+                return 0;
+            };
+
+            transformed.sort(compare);
+        }
+
+        transformed.forEach((e) => {
+            console.log("Distance for " + e.adsID +  "= " + e.distance + "m");
         });
 
         logUtil.info("There are " + transformed.length + " ads");
@@ -340,11 +355,11 @@ function orderAds(filtered, orderCondition) {
 		}
 
 		console.log("Order by field:" + field);
-			var compare = function(a, b) {
+        var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
-			if (a.value[field] > b.value[field])
+			if (a[field] > b[field])
 				return isASC;
-			if (a.value[field] < b.value[field])
+			if (a[field] < b[field])
 				return -1 * isASC;
 
 			return 0;
