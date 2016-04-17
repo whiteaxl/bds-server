@@ -37,8 +37,6 @@ var internals = {};
 function _filterResult(allAds, queryCondition) {
     //console.log(queryCondition);
     let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
-    let limit = util.popField(queryCondition,Q_FIELD.limit);
-
 
 	//ES5 syntax to select
 	var filtered = allAds.filter(function(doc) {
@@ -83,11 +81,6 @@ function _filterResult(allAds, queryCondition) {
 
 	console.log("FINAL listResult length = " + listResult.length);
 
-	//
-	if (queryCondition && limit) {
-		listResult = listResult.slice(0, limit)
-	}
-
 	return listResult;
 }
 
@@ -99,6 +92,9 @@ function findAds(queryCondition, reply) {
     let center = {lat: 0, lon: 0};
     let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
     let isSearchByDistance = false;
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+
+    logUtil.info("isSearchByDistance=" + isSearchByDistance + ", radiusInKm=" + radiusInKm)
 
 	if (queryCondition[Q_FIELD.geoBox]) {
         let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
@@ -109,8 +105,9 @@ function findAds(queryCondition, reply) {
 		delete queryCondition[Q_FIELD.place];
 
 	} else if (queryCondition[Q_FIELD.place]) {
-        //console.log(placeUtil);
         var place = queryCondition[Q_FIELD.place];
+
+        console.log(place.geometry);
         center.lat = place.geometry.location.lat;
         center.lon = place.geometry.location.lng;
 
@@ -150,6 +147,8 @@ function findAds(queryCondition, reply) {
             let ads = e.value;
 
             let place = ads.place;
+            console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
             ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
             console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
 
@@ -165,6 +164,11 @@ function findAds(queryCondition, reply) {
 
         logUtil.info("There are " + transformed.length + " ads");
 
+
+        //limit
+        if (queryCondition && limit) {
+            transformed = transformed.slice(0, limit)
+        }
 
 	  	reply({
 	  		length: transformed.length,
