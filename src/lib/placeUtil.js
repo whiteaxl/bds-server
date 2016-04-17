@@ -122,7 +122,8 @@ internals.getTypeName = function(place) {
 
 
 internals.isOnePoint = function(place) {
-    return  internals.getTypeName(place) === internals.typeName.DIA_DIEM;
+    let name = internals.relandTypeName || internals.getTypeName(place);
+    return  name === internals.typeName.DIA_DIEM;
 };
 
 module.exports  = internals;
