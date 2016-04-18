@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "24a2b275b8d965df7986"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7964b7df58567bd865a4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -838,12 +838,12 @@
 	    });
 
 	    $rootScope.getGoogleLocation = function(val) {
-	        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+	        return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
 	          params: {
 	            address: val,
-	            language: 'en',
-	            //key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-	            //types: 'gecodes,cities',
+	            //language: 'en',
+	            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	            //types: 'gecodes,cities,places',
 	            components: 'country:vn',
 	            sensor: false
 	          }
@@ -853,15 +853,51 @@
 	          });*/
 	          return response.data.results;
 	        });
+	        // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
+	        //   params: {
+	        //     input: val,
+	        //     language: 'en',
+	        //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	        //     //types: 'gecodes,cities',
+	        //     components: 'country:vn',
+	        //     sensor: false
+	        //   }
+	        // }).then(function(response){
+	        //   /*return response.data.results.map(function(item){
+	        //     return item;
+	        //   });*/
+	        //   return response.data.results;
+	        // });
+	      };
+	    $rootScope.getGoogleLocationById = function(val) {
+	        return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
+	          params: {
+	            placeid: val,
+	            // language: 'en',
+	            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
+	            //types: 'gecodes,cities',
+	            // components: 'country:vn',
+	            // sensor: false
+	          }
+	        }).then(function(response){
+	          /*return response.data.results.map(function(item){
+	            return item;
+	          });*/
+	          return response.data.result;
+	        });
 	      };
 
-
 	  }]);
-	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider){
+	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,uiGmapGoogleMapApiProvider){
 	      // For any unmatched url, send to /route1
 	      $locationProvider.html5Mode(true);
 	      //$urlRouterProvider.otherwise("/web/list.html")
 	      //alert('sss');
+	      uiGmapGoogleMapApiProvider.configure({
+	          //    key: 'your api key',
+	          v: '3.20', //defaults to latest 3.X anyhow
+	          libraries: 'places,geometry,visualization' // Required for SearchBox.
+	      });
 	      $stateProvider
 	      .state('list', {
 	        url: "/list",
@@ -877,13 +913,16 @@
 	            bodyClass: "page-list"
 	        } 
 	      }).state('search', {
-	        url: "/search",
+	        url: "/search/:place",
 	        //templateUrl: "/web/searchContent.html",
 	        controller: "SearchCtrl",
 	        controllerAs: 'mc',
 	        resolve: {
-	          title: function(HouseService) {
+	          title: function(HouseService,$stateParams,$rootScope) {
 	            var result = HouseService.getAllAds();
+	            //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	            //alert($state.params.place);
+	            //var result = HouseService.findAdsSpatial($stateParams.place);
 	            result.then(function(data){
 	              window.initData = data.data;
 	            }); 
@@ -1138,9 +1177,19 @@
 	(function() {
 		'use strict';
 		var controllerId = 'SearchCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi){
 			var vm = this;
 			init();
+			vm.placeId = $state.params.place;
+			if(!vm.placeId)
+				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			HouseService.findGooglePlaceById(vm.placeId).then(function(response){
+				var place = response.data.result;
+				$scope.searchPlaceSelected = place;
+				vm.search();
+			});
+			
+
 			$scope.$on('$viewContentLoaded', function(){
 				window.DesignCommon.adjustPage();
 				if($state.current.data)
@@ -1194,7 +1243,45 @@
 				if(model)
 					return model.formatted_address;
 			}
+			
+			var events = {
+	          places_changed: function (searchBox) {}
+	        }
+	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
+
 			function init(){
+				uiGmapGoogleMapApi.then(function(maps){
+					var searchBox = new maps.places.Autocomplete(
+						(document.getElementById('autocomplete')), {
+						    types: ['geocode']
+					});
+					searchBox.addListener('place_changed', function() {
+					    //infowindow.close();
+					    //marker.setVisible(false);
+					    var place = searchBox.getPlace();
+					    $scope.searchPlaceSelected = place;
+
+					    HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
+							var place = response.data.result;
+							$scope.searchPlaceSelected = place;
+							vm.search();
+						});
+					    //alert(place);
+					});
+					// maps.event.addListener(searchBox, 'places_changed', function() {
+					//     var place = searchBox.getPlaces()[0];
+					   
+					//     if (!place.geometry) return;
+
+					//     if (place.geometry.viewport) {
+					//       maps.fitBounds(place.geometry.viewport);
+					//     } else {
+					//       maps.setCenter(place.geometry.location);
+					//       maps.setZoom(16);
+					//     }
+					// });
+				})
+				
 				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 				$scope.options = {scrollwheel: false,labelContent: 'gia'};
 				$scope.markerCount = 3;
@@ -1272,15 +1359,18 @@
 	          "orderBy":"giaDESC",
 	          "limit": 200
 	        }
-	        if(googlePlace.geometry.bounds){
+	        if(googlePlace.geometry.viewport){
 	          console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-	          data.geoBox = [googlePlace.geometry.bounds.southwest.lng,googlePlace.geometry.bounds.southwest.lat,googlePlace.geometry.bounds.northeast.lng,googlePlace.geometry.bounds.northeast.lat]
+	          data.geoBox = [googlePlace.geometry.viewport.southwest.lng,googlePlace.geometry.viewport.southwest.lat,googlePlace.geometry.viewport.northeast.lng,googlePlace.geometry.viewport.northeast.lat]
 	        } else{
 	          console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
 	          data.radiusInKm = "10";
 	        }
 
 	        return $http.post(url,data);
+	      },
+	      findGooglePlaceById: function(googlePlaceId){
+	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
 	      }
 	    };
 	  });

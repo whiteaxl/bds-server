@@ -43,7 +43,18 @@ internals.endpoints = [
 		notes: 'just for test',
 		tags: ['api']
 	}
+},
+{
+	method: 'POST', 
+	path: '/api/findGooglePlaceById', 
+	handler: Handlers.findGooglePlaceById, 
+	config : {
+		description: 'Get google place detail by id.',
+		notes: 'api',
+		tags: ['api']
+	}
 }
+
 
 
 ];

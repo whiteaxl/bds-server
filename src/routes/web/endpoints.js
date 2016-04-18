@@ -33,7 +33,7 @@ internals.endpoints = [
 }
 ,{ 
 	method: 'GET',
-	path: '/web/search', 
+	path: '/web/search/{p*}', 
 	handler: function(requet,reply){
 		reply.view('index.html', { page: 'search' });
 	}

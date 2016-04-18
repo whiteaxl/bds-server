@@ -21,12 +21,12 @@
     });
 
     $rootScope.getGoogleLocation = function(val) {
-        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+        return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
           params: {
             address: val,
-            language: 'en',
-            //key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-            //types: 'gecodes,cities',
+            //language: 'en',
+            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+            //types: 'gecodes,cities,places',
             components: 'country:vn',
             sensor: false
           }
@@ -36,15 +36,51 @@
           });*/
           return response.data.results;
         });
+        // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
+        //   params: {
+        //     input: val,
+        //     language: 'en',
+        //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+        //     //types: 'gecodes,cities',
+        //     components: 'country:vn',
+        //     sensor: false
+        //   }
+        // }).then(function(response){
+        //   /*return response.data.results.map(function(item){
+        //     return item;
+        //   });*/
+        //   return response.data.results;
+        // });
+      };
+    $rootScope.getGoogleLocationById = function(val) {
+        return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
+          params: {
+            placeid: val,
+            // language: 'en',
+            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
+            //types: 'gecodes,cities',
+            // components: 'country:vn',
+            // sensor: false
+          }
+        }).then(function(response){
+          /*return response.data.results.map(function(item){
+            return item;
+          });*/
+          return response.data.result;
+        });
       };
 
-
   }]);
-  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider){
+  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,uiGmapGoogleMapApiProvider){
       // For any unmatched url, send to /route1
       $locationProvider.html5Mode(true);
       //$urlRouterProvider.otherwise("/web/list.html")
       //alert('sss');
+      uiGmapGoogleMapApiProvider.configure({
+          //    key: 'your api key',
+          v: '3.20', //defaults to latest 3.X anyhow
+          libraries: 'places,geometry,visualization' // Required for SearchBox.
+      });
       $stateProvider
       .state('list', {
         url: "/list",
@@ -60,13 +96,16 @@
             bodyClass: "page-list"
         } 
       }).state('search', {
-        url: "/search",
+        url: "/search/:place",
         //templateUrl: "/web/searchContent.html",
         controller: "SearchCtrl",
         controllerAs: 'mc',
         resolve: {
-          title: function(HouseService) {
+          title: function(HouseService,$stateParams,$rootScope) {
             var result = HouseService.getAllAds();
+            //var result = $rootScope.getGoogleLocationById($stateParams.place);
+            //alert($state.params.place);
+            //var result = HouseService.findAdsSpatial($stateParams.place);
             result.then(function(data){
               window.initData = data.data;
             }); 

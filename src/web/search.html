@@ -96,13 +96,16 @@
             <div class="box-filter">
                 <div class="utility">
                     <div class="container">
-                        <div class="row">
+                        <div class="row" id = "mybox">
                             <div class="col w-340">
                                 <form action="search.html" method="post">
                                     <div class="search">
                                         <input type="search" name="search" style="display: none;" placeholder="Search by neighborhood, city, zip or address" value="California City, CA" autocomplete="off" class="form-control"/>
-                                        <input type="text" class="form-control" ng-model="searchPlaceSelected" placeholder="Search by neighborhood, city, zip or address" uib-typeahead="item for item in $root.getGoogleLocation($viewValue)" typeahead-template-url="searchPlaceDropdownTemplate.html" typeahead-input-formatter="mc.formatLabel($model);" class="form-control">
+                                        <input type="text" style="display: none;" class="form-control" ng-model="searchPlaceSelected" placeholder="Search by neighborhood, city, zip or address" uib-typeahead="item for item in $root.getGoogleLocation($viewValue)" typeahead-template-url="searchPlaceDropdownTemplate.html" typeahead-input-formatter="mc.formatLabel($model);" class="form-control">
+                                        <input type="text" placeholder="Search by neighborhood, city, zip or address" class="form-control" id="autocomplete"> </input>
                                         <button class="btn-search" ng-click="mc.search();" type="button"><i class="fa fa-search"></i> <span class="text">Search</span></button>
+
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -447,11 +450,17 @@
                     </form>
                 </div>
             </div><!-- //box-filter -->
+            <script type="text/ng-template" id="searchbox.tpl.html">
+                <input  type="text" placeholder="Search Box">
+            </script>
+
             <section class="box-search">
                 <div class="row">
                     <div class="col col-60">
                         <div class="map is-fixed" data-map="true">
                             <ui-gmap-google-map id="google-map" class="google" center="map.center" control = "map.control" zoom="map.zoom" options="options" refresh="'true'">
+                                <ui-gmap-search-box template="searchbox.template" events="searchbox.events" parentdiv="mybox">
+                                </ui-gmap-search-box>
                                 <ui-gmap-markers models="markers" idKey="id" options = "'options'" coords="'coords'" fit="'true'" icon="'icon'">
                                 </ui-gmap-markers>
                             </ui-gmap-google-map>

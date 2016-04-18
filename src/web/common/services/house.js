@@ -22,15 +22,18 @@
           "orderBy":"giaDESC",
           "limit": 200
         }
-        if(googlePlace.geometry.bounds){
+        if(googlePlace.geometry.viewport){
           console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-          data.geoBox = [googlePlace.geometry.bounds.southwest.lng,googlePlace.geometry.bounds.southwest.lat,googlePlace.geometry.bounds.northeast.lng,googlePlace.geometry.bounds.northeast.lat]
+          data.geoBox = [googlePlace.geometry.viewport.southwest.lng,googlePlace.geometry.viewport.southwest.lat,googlePlace.geometry.viewport.northeast.lng,googlePlace.geometry.viewport.northeast.lat]
         } else{
           console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
           data.radiusInKm = "10";
         }
 
         return $http.post(url,data);
+      },
+      findGooglePlaceById: function(googlePlaceId){
+        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
       }
     };
   });

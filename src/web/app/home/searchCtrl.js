@@ -1,9 +1,19 @@
 (function() {
 	'use strict';
 	var controllerId = 'SearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi){
 		var vm = this;
 		init();
+		vm.placeId = $state.params.place;
+		if(!vm.placeId)
+			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+		HouseService.findGooglePlaceById(vm.placeId).then(function(response){
+			var place = response.data.result;
+			$scope.searchPlaceSelected = place;
+			vm.search();
+		});
+		
+
 		$scope.$on('$viewContentLoaded', function(){
 			window.DesignCommon.adjustPage();
 			if($state.current.data)
@@ -57,7 +67,45 @@
 			if(model)
 				return model.formatted_address;
 		}
+		
+		var events = {
+          places_changed: function (searchBox) {}
+        }
+        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
+
 		function init(){
+			uiGmapGoogleMapApi.then(function(maps){
+				var searchBox = new maps.places.Autocomplete(
+					(document.getElementById('autocomplete')), {
+					    types: ['geocode']
+				});
+				searchBox.addListener('place_changed', function() {
+				    //infowindow.close();
+				    //marker.setVisible(false);
+				    var place = searchBox.getPlace();
+				    $scope.searchPlaceSelected = place;
+
+				    HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
+						var place = response.data.result;
+						$scope.searchPlaceSelected = place;
+						vm.search();
+					});
+				    //alert(place);
+				});
+				// maps.event.addListener(searchBox, 'places_changed', function() {
+				//     var place = searchBox.getPlaces()[0];
+				   
+				//     if (!place.geometry) return;
+
+				//     if (place.geometry.viewport) {
+				//       maps.fitBounds(place.geometry.viewport);
+				//     } else {
+				//       maps.setCenter(place.geometry.location);
+				//       maps.setZoom(16);
+				//     }
+				// });
+			})
+			
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;

@@ -13,6 +13,11 @@ var util = require("../../lib/utils");
 var PlacesModel = require('../../dbservices/Place');
 var AdsModel = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
+var http = require('http');
+var https = require('https');
+
+
+
 var _ = require("lodash");
 var moment = require("moment");
 
@@ -25,6 +30,39 @@ var Q_FIELD = {
 };
 
 var internals = {};
+
+internals.findGooglePlaceById = function(req, reply){
+	logUtil.info("findPOST - query: " + req.payload);
+	var googlePlaceId = req.payload.googlePlaceId;
+	var url = 'https://maps.googleapis.com/maps/api/place/details/json?';
+	url = url + 'key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU';
+	url = url + '&placeid=' + googlePlaceId;
+	console.log("googlePlaceId " + googlePlaceId);
+	console.log("url " + url);
+
+	https.get(url)
+    .on('response', function (response) {
+    	console.log("go here with " + response.status);
+        reply(response);
+    });
+
+	/*https.get(url, function(response) {
+        // Continuously update stream with data
+        console.log("go here with " + response.status);
+        response.on('end', function() {
+        	console.log("end here");
+        	console.log("response " + response.data);
+        });
+    });*/
+
+
+
+	/*Wreck.get(url, function (err, res, payload) {
+		console.log("go here with " + res.result + res.status);
+    	reply(res.result);
+	});*/
+}
+
 
 function _filterResult(allAds, queryCondition) {
 
