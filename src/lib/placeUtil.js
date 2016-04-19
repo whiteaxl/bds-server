@@ -81,7 +81,9 @@ internals.typeName = {
     TINH : "Tinh",
     HUYEN : "Huyen",
     XA : "Xa",
+    DUONG : "Duong",
     DIA_DIEM: "Dia diem"
+
 };
 
 internals.isHuyen = function(place) {
@@ -123,7 +125,7 @@ internals.getTypeName = function(place) {
 
 internals.isOnePoint = function(place) {
     let name = internals.relandTypeName || internals.getTypeName(place);
-    return  name === internals.typeName.DIA_DIEM;
+    return  name === internals.typeName.DIA_DIEM || name === internals.typeName.DUONG;
 };
 
 module.exports  = internals;
