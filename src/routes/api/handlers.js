@@ -142,12 +142,14 @@ function findAds(queryCondition, reply) {
             let place = ads.place;
             //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
 
-            ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+			if (center.lat && center.lon && place.geo.lat && place.geo.lon)
+            	ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
             //console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
 
             //filter by distance bcs get by geoBox, not radius
             if (isSearchByDistance) {
-                if (ads.distance < radiusInKm * 1000) {
+                if (ads.distance && ads.distance < radiusInKm * 1000) {
                     transformed.push(ads);
                 }
             } else {
