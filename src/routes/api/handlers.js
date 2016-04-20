@@ -362,24 +362,39 @@ function orderAds(filtered, orderCondition) {
 }
 
 
-//Dia DIEM ko co radiusInKm
-//{"loaiTin":0,"giaBETWEEN":"0,9999999","dienTichBETWEEN":"0,9999999"
-//	,"place":{"address_components":[{"long_name":"Cầu Giấy","short_name":"Cầu Giấy","types":["route"]},{"long_name":"Ngọc Khánh","short_name":"Ngọc Khánh","types":["sublocality_level_1","sublocality","political"]},{"long_name":"Hanoi","short_name":"Hanoi","types":["locality","political"]},{"long_name":"Ba Đình","short_name":"Ba Đình","types":["administrative_area_level_2","political"]},{"long_name":"Hà Nội","short_name":"Hà Nội","types":["administrative_area_level_1","political"]},{"long_name":"Vietnam","short_name":"VN","types":["country","political"]}],"adr_address":"<span class=\"street-address\">Cầu Giấy</span>, <span class=\"region\">Ngọc Khánh, Ba Đình, Hà Nội</span>, <span class=\"country-name\">Vietnam</span>","formatted_address":"Cầu Giấy, Ngọc Khánh, Ba Đình, Hà Nội","geometry":{"location":{"lat":21.0292648,"lng":105.8035855}},"icon":"https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png","id":"fafd310fa7da29f670db851102b82ffecc1e7ae3","name":"Cầu Giấy","place_id":"ChIJQwUvtEerNTER1FQf2YcjUoU","reference":"CqQBmAAAAFf-QVSiXl5-9IkrcRbLLW5M5DTVxBXPKdV58xmHwAyH6Q4ZjUp-GYMsvYuARoiF-JtzHbSe_4btYPiZunK4QREPjauMkZhB1MJS2l4-BHbMbrKBvETC-xvXSVOwu9kHgfD1ILl_zv3DPcBtKHbY5HkAocn4Ry0lJt1nkzRO2RIzCK9T9tc6m4vhpif9mYxojQirL_ZeN8b--EIhpE6BeOMSECHltvrlqm8Z3f6eucGBbroaFJBNRpYGqWqsU0e8uLVD-FScw016","scope":"GOOGLE","types":["route"],"url":"https://maps.google.com/?q=C%E1%BA%A7u+Gi%E1%BA%A5y,+Ng%E1%BB%8Dc+Kh%C3%A1n…h,+H%C3%A0+N%E1%BB%99i,+Vietnam&ftid=0x3135ab47b42f0543:0x85522387d91f54d4","vicinity":"Ngọc Khánh","fullName":"Cầu Giấy"},"limit":200}
-
 /**
- * Request json:
- * {
- *  loaiTin:
- *  	0=BAN, 1 = THUE
+ *  Co' 3 loai search:
+ *      Tim kiem theo GeoBox : phuc vu MAP
+ *      Tim kiem theo Dia Chinh : search text
+ *      Tim kiem theo Dia Diem  + Ban Kinh: search text
+ *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
+ *  Su dung tim theo BanKinh cho: DiaDiem (ko phai Tinh/Huyen/Xa), Current Location
+ * Request json: {
+ *  loaiTin: bat buoc
+ *  	Number, 0=BAN, 1 = THUE
  *  loaiNhaDat:
- *  	1,2,... (tham khao trong LoaiNhaDat.js)
+ *  	Number, eg: 1,2,... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
  *  giaBETWEEN:
- *  	eg "0,85" : "<from,to>", don vi la` TRIEU (voi THUE la trieu/thang)
+ *  	Array, eg [0,85] : <from,to>, don vi la` TRIEU (voi THUE la trieu/thang)
  *  dienTichBETWEEN:
- *  	"<from,to>" =, don vi la` m2
+ *  	Array: [from,to] , don vi la` m2
+ *  ngayDaDang: 1,...//so ngay da dang
+ *  huongNha:
+ *      Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
  *  geoBox:
- *		...
+ *		[105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
+ *  place_id:
+ *      Lay tu google place
+ *  CurrentLocation: //current location
+ *      Array: [lat, lon]
+ *  radiusInKm : // 2km
+ *      Number, eg: 0.5
+ *  relandTypeName : //de thong nhat giua client-server
+ *      String: Tinh/Huyen/Xa/DiaDiem
+ 	*
  *  }
+ *
+ *  Reponse : xem trong file sample_find.js
  */
 
 internals.findPOST = function(req, reply) {
