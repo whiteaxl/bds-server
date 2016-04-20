@@ -12,49 +12,15 @@
                         <nav class="nav-main">
                             <ul>
                                 <li>
-                                    <a href="" title="">Bất động sản bán</a>
+                                    <a ng-click="" title="">Bất động sản bán</a>
                                     <ul>
-                                        <li>
-                                            <a href="" title="">Nhà đất</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Chung cư</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">BDS bán gần đây</a>
-                                        </li>
-                                        <li class="border">
-                                            <a href="" title="">Tìm kiếm nâng cao</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tất cả</a>
-                                        </li>
+                                        <li ng-repeat="item in loaiNhaDatBan"><a href="">{{item.name}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="" title="">Bất động sản cho thuê</a>
+                                    <a href="" ng-click="" title="">Bất động sản cho thuê</a>
                                     <ul>
-                                        <li>
-                                            <a href="" title="">Nhà ở</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Phòng trọ</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Văn phòng</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Cửa hàng</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tham khảo giá nhà cho thuê</a>
-                                        </li>
-                                        <li class="border">
-                                            <a href="" title="">Tìm kiếm nâng cao</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tất cả</a>
-                                        </li>
+                                        <li ng-repeat="item in loaiNhaDatThue"><a href="">{{item.name}}</a></li>
                                     </ul>
                                 </li>
                                 <li>

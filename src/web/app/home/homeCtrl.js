@@ -112,6 +112,25 @@
 
 		}
 		function init(){
+			//nhannc
+			$scope.loaiNhaDatBan = [
+				{ type: "1", name: "Nhà đất" },
+				{ type: "2", name: "Chung cư" },
+				{ type: "3", name: "BDS bán gần đây" },
+				{ type: "4", name: "Tìm kiếm nâng cao" },
+				{ type: "5", name: "Tất cả" }
+			];
+
+			$scope.loaiNhaDatThue = [
+				{ type: "1", name: "Nhà ở" },
+				{ type: "2", name: "Phòng trọ" },
+				{ type: "3", name: "Văn phòng" },
+				{ type: "4", name: "Cửa hàng" },
+				{ type: "5", name: "Tham khảo giá nhà cho thuê" },
+				{ type: "6", name: "Tìm kiếm nâng cao" },
+				{ type: "7", name: "Tất cả" }
+			];
+			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
