@@ -76,7 +76,8 @@ var hapiReact = require('hapi-react-views');
         'html': Handlebars,
         'md': {
           module: new MarkdownView(),
-          contentType: 'text/html'
+          contentType: 'text/html',
+          isCached: false
         }, 
         'jsx' : hapiReact, 
         'js' : hapiReact        

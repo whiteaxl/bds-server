@@ -71,11 +71,14 @@
       };
 
   }]);
-  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,uiGmapGoogleMapApiProvider){
+  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,uiGmapGoogleMapApiProvider,$interpolateProvider){
       // For any unmatched url, send to /route1
       $locationProvider.html5Mode(true);
       //$urlRouterProvider.otherwise("/web/list.html")
       //alert('sss');
+      $interpolateProvider.startSymbol('{[{');
+      $interpolateProvider.endSymbol('}]}');
+
       uiGmapGoogleMapApiProvider.configure({
           //    key: 'your api key',
           v: '3.20', //defaults to latest 3.X anyhow

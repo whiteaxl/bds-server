@@ -114,11 +114,11 @@
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = [
-				{ type: "1", name: "Nhà đất" },
-				{ type: "2", name: "Chung cư" },
-				{ type: "3", name: "BDS bán gần đây" },
-				{ type: "4", name: "Tìm kiếm nâng cao" },
-				{ type: "5", name: "Tất cả" }
+				{ "type": "1", "name": "Nhà đất" },
+				{ "type": "2", "name": "Chung cư" },
+				{ "type": "3", "name": "BDS bán gần đây" },
+				{ "type": "4", "name": "Tìm kiếm nâng cao" },
+				{ "type": "5", "name": "Tất cả" }
 			];
 
 			$scope.loaiNhaDatThue = [

@@ -514,11 +514,11 @@
                                 <div ng-repeat="ads in ads_list" class="col col-50">
                                     <div class="item">
                                         <a class="link" href="" title="">
-                                            <span class="img" style="background-image: url({{ads.value.image.cover}})"></span>
+                                            <span class="img" style="background-image: url({[{ads.value.image.cover}]})"></span>
                                             <span class="info">
-                                                <span class="line"><span class="price">{{ads.value.gia | currency}} VND</span> <span>{{ads.value.dienTich}} m2</span></span>
-                                                <span class="line">{{ads.value.ten_loaiNhaDat}}</span>
-                                                <span class="line">{{ads.value.ngayDangTin}}</span>
+                                                <span class="line"><span class="price">{[{ads.value.gia | currency}]} VND</span> <span>{[{ads.value.dienTich}]} m2</span></span>
+                                                <span class="line">{[{ads.value.ten_loaiNhaDat}]}</span>
+                                                <span class="line">{[{ads.value.ngayDangTin}]}</span>
                                             </span>
                                         </a>
                                         <h3>

@@ -1,6 +1,5 @@
 <div class="wrapper" id="wrapper">
-            
-            <div class="main" id="main" ng-controller="MainCtrl as mc">
+            <div class="main" id="main">
                 <header class="header">
                     <div class="header-top">
                         <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
@@ -14,13 +13,13 @@
                                 <li>
                                     <a ng-click="" title="">Bất động sản bán</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatBan"><a href="">{{item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatBan"><a href="">{[{::item.name}]}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="" ng-click="" title="">Bất động sản cho thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatThue"><a href="">{{item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatThue"><a href="">{[{item.name}]}</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -135,15 +134,15 @@
                         <div class="col col-50">
                             <div class="block-02">
                                 <div ng-repeat="cat in hot_ads_cat" data-scroll="true" class="title">
-                                    <h2>{{::cat.name}}</h2>
-                                    <p>{{::cat.location}}</p>
+                                    <h2>{[{::cat.name}]}</h2>
+                                    <p>{[{::cat.location}]}</p>
                                     <div class="row">
                                         <div ng-repeat="ads in cat.list" ng-class-odd="'col-40'" ng-class-even="'col-60'" class="col ">
                                             <div class="item">
                                                 <a class="link" href=""  title="">
-                                                    <span class="img" style="background-image: url({{$even?ads.image.cover_small:ads.image.cover}})"></span>
+                                                    <span class="img" style="background-image: url({[{$even?ads.image.cover_small:ads.image.cover}]})"></span>
                                                     <span class="info">
-                                                        <span class="line"><span class="price">{{ads.gia}}</span> <span>8 bd 7 ba</span></span>
+                                                        <span class="line"><span class="price">{[{ads.gia}]}</span> <span>8 bd 7 ba</span></span>
                                                         <span class="line">123 W 119th St</span>
                                                         <span class="line">New York</span>
                                                     </span>
