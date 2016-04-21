@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "158a716cc1efc6784c14"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a0b1d7945ac29fee28e1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1038,21 +1038,21 @@
 					var result = res.data.list;
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
-			    		if(result[i].value.place){
-			    			if(result[i].value.place.geo){
+			    		if(result[i].place){
+			    			if(result[i].place.geo){
 				    			result[i].map={
 				    				center: {
-										latitude: 	result[i].value.place.geo.lat,
-										longitude: 	result[i].value.place.geo.lon
+										latitude: 	result[i].place.geo.lat,
+										longitude: 	result[i].place.geo.lon
 									},
 				    				marker: {
 										id: i,
 										coords: {
-											latitude: 	result[i].value.place.geo.lat,
-											longitude: 	result[i].value.place.geo.lon
+											latitude: 	result[i].place.geo.lat,
+											longitude: 	result[i].place.geo.lon
 										},
 										options: {
-											labelContent : result[i].value.gia
+											labelContent : result[i].gia
 										},
 										data: 'test'
 									},
@@ -1224,21 +1224,21 @@
 					var result = res.data.list;
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
-			    		if(result[i].value.place){
-			    			if(result[i].value.place.geo){
+			    		if(result[i].place){
+			    			if(result[i].place.geo){
 				    			result[i].map={
 				    				center: {
-										latitude: 	result[i].value.place.geo.lat,
-										longitude: 	result[i].value.place.geo.lon
+										latitude: 	result[i].place.geo.lat,
+										longitude: 	result[i].place.geo.lon
 									},
 				    				marker: {
 										id: i,
 										coords: {
-											latitude: 	result[i].value.place.geo.lat,
-											longitude: 	result[i].value.place.geo.lon
+											latitude: 	result[i].place.geo.lat,
+											longitude: 	result[i].place.geo.lon
 										},
 										options: {
-											labelContent : result[i].value.gia
+											labelContent : result[i].gia
 										},
 										data: 'test'
 									},
