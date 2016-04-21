@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a0b1d7945ac29fee28e1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f7103078e86df0cdc537"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1273,35 +1273,49 @@
 
 			function init(){
 				uiGmapGoogleMapApi.then(function(maps){
-					var searchBox = new maps.places.Autocomplete(
-						(document.getElementById('autocomplete')), {
-						    types: ['geocode']
-					});
-					searchBox.addListener('place_changed', function() {
-					    //infowindow.close();
-					    //marker.setVisible(false);
-					    var place = searchBox.getPlace();
-					    $scope.searchPlaceSelected = place;
-
-					    HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
-							var place = response.data.result;
-							$scope.searchPlaceSelected = place;
-							vm.search();
-						});
-					    //alert(place);
-					});
-					// maps.event.addListener(searchBox, 'places_changed', function() {
-					//     var place = searchBox.getPlaces()[0];
-					   
-					//     if (!place.geometry) return;
-
-					//     if (place.geometry.viewport) {
-					//       maps.fitBounds(place.geometry.viewport);
-					//     } else {
-					//       maps.setCenter(place.geometry.location);
-					//       maps.setZoom(16);
-					//     }
-					// });
+					$( "#autocomplete" ).autocomplete({
+				      minLength: 0,
+				      source: function (request, response) {
+				           var options = {
+				               input: request.term,
+				               //types: ['(cities)'],
+				               //region: 'US',
+				               componentRestrictions: { country: "vn" }
+				           };
+				           function callback(predictions, status) {
+				           		var results = [];
+				               for (var i = 0, prediction; prediction = predictions[i]; i++) {
+				                   results.push(
+					                   {
+					                   		description: prediction.description,
+					                   		type:  		prediction.types[0], 
+					                   }
+				                   );
+				               }
+				               response(results);
+				           }
+				           var service = new maps.places.AutocompleteService();
+				           service.getPlacePredictions(options, callback);
+				           var results = [];
+				      },
+				      focus: function( event, ui ) {
+				        $( "#autocomplete" ).val( ui.item.description );
+				        return false;
+				      },
+				      select: function( event, ui ) {
+				        $( "#autocomplete" ).val( ui.item.description );
+				        // $( "#project-id" ).val( ui.item.value );
+				        // $( "#project-description" ).html( ui.item.desc );
+				        // $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+				 
+				        return false;
+				      }
+				    })
+				    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+				      return $( "<li style='width: " + ($('#autocomplete').width() + $('.btn-search').width()) + "px;background-color: white;'>")
+				        .append( "<span>" + item.description +  "<span style='float: right;'>" + item.type + "</span></span>" )
+				        .appendTo( ul );
+				    };
 				})
 				
 				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
