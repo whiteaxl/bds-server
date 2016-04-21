@@ -15,7 +15,7 @@ var AdsModel = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
 var http = require('http');
 var https = require('https');
-
+var services = require("../../lib/services");
 
 
 var _ = require("lodash");
@@ -30,6 +30,7 @@ var Q_FIELD = {
 	orderBy : "orderBy",
 	geoBox : "geoBox",
 	place: "place",
+    placeId: "placeId",
     radiusInKm: "radiusInKm",
     gia : "gia",
     dienTich : "dienTich",
@@ -97,81 +98,29 @@ function _filterResult(allAds, queryCondition) {
 	return listResult;
 }
 
+function _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm) {
+    myBucket.query(query, function(err, allAds) {
+        if (!allAds)
+            allAds = [];
 
-function findAds(queryCondition, reply) {
-	//return all first
-	let query;
-    let center = {lat: 0, lon: 0};
-    let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
-    let isSearchByDistance = false;
-    let limit = util.popField(queryCondition,Q_FIELD.limit);
-    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
-
-    logUtil.info("isSearchByDistance=" + isSearchByDistance + ", radiusInKm=" + radiusInKm)
-
-	if (queryCondition[Q_FIELD.geoBox]) {
-        let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
-        logUtil.warn("findAds - Search by BOX: " + geoBox);
-		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
-
-        //search by geoBox, so no need place
-		delete queryCondition[Q_FIELD.place];
-
-	} else if (queryCondition[Q_FIELD.place]) {
-        var place = queryCondition[Q_FIELD.place];
-
-        console.log(place.geometry);
-        center.lat = place.geometry.location.lat;
-        center.lon = place.geometry.location.lng;
-
-        if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
-            logUtil.warn("findAds - Search by DIA_DIEM");
-            isSearchByDistance = true;
-			let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
-                , geoUtil.meter2degree(radiusInKm));
-
-            console.log("Search in box: " + geoBox);
-            //search by geoBox, so no need place
-            delete queryCondition[Q_FIELD.place];
-
-            query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
-		} else {
-            logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
-            query = ViewQuery.from('ads', 'all_ads');
-        }
-	} else {
-		query = ViewQuery.from('ads', 'all_ads');
-
-		//let msg = "GeoBox or place is mandatory!";
-		//logUtil.error(msg);
-		//reply(Boom.badRequest(msg, queryCondition));
-	}
-	//query = ViewQuery.from('ads', 'all_ads');
-
-	myBucket.query(query, function(err, allAds) {
-		if (!allAds)
-			allAds = [];
-
-		logUtil.info("By geo/place: allAds.length= " + allAds.length);
-		let listResult = _filterResult(allAds, queryCondition);
+        logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
+        let listResult = _filterResult(allAds, queryCondition);
 
         //filter by distance
         let transformed = [];
+
         listResult.forEach((e) => {
             let ads = e.value;
 
             let place = ads.place;
             //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
 
-			if (center.lat && center.lon && place.geo.lat && place.geo.lon)
-            	ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-
-            //console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
-
-            //filter by distance bcs get by geoBox, not radius
             if (isSearchByDistance) {
-                if (ads.distance && ads.distance < radiusInKm * 1000) {
-                    transformed.push(ads);
+                if (center.lat && center.lon && place.geo.lat && place.geo.lon) {
+                    ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+                    if (ads.distance < radiusInKm * 1000) {
+                        transformed.push(ads);
+                    }
                 }
             } else {
                 transformed.push(ads)
@@ -184,11 +133,9 @@ function findAds(queryCondition, reply) {
             orderAds(transformed, orderBy);
         } else if (isSearchByDistance) {
             var compare = function(a, b) {
-                //console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
-                if (a.distance > b.distance)
-                    return 1;
-                else
-                    return -1;
+                if (a.distance && b.distance) {
+                    return a.distance > b.distance
+                }
 
                 return 0;
             };
@@ -208,17 +155,86 @@ function findAds(queryCondition, reply) {
             transformed = transformed.slice(0, limit)
         }
 
-	  	reply({
-	  		length: transformed.length,
-			list: transformed
-	  	});
-	});
+        reply({
+            length: transformed.length,
+            list: transformed
+        });
+    });
+}
+
+function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm) {
+    console.log(place.geometry);
+    let center = {lat: 0, lon: 0};
+
+    center.lat = place.geometry.location.lat;
+    center.lon = place.geometry.location.lng;
+
+    if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+        logUtil.warn("findAds - Search by DIA_DIEM");
+        isSearchByDistance = true;
+        let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
+            , geoUtil.meter2degree(radiusInKm));
+
+        console.log("Search in box: " + geoBox);
+        //search by geoBox, so no need place
+        delete queryCondition[Q_FIELD.place];
+
+        query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+    } else {
+        logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
+        query = ViewQuery.from('ads', 'all_ads');
+    }
+
+    _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm);
+}
+
+
+function findAds(queryCondition, reply) {
+	//return all first
+	let query;
+
+    let isSearchByDistance = false;
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
+
+	if (queryCondition[Q_FIELD.geoBox]) {
+        let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+        logUtil.warn("findAds - Search by BOX: " + geoBox);
+		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+
+        //search by geoBox, so no need place
+		delete queryCondition[Q_FIELD.place];
+
+        _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, null, null);
+
+	} else if (queryCondition[Q_FIELD.place]) {
+        var place = queryCondition[Q_FIELD.place];
+        let radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+
+        if (place.placeId) {
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                placeDetail.fullName = placeDetail.name;
+                _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+            });
+            
+        } else { //backward...
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
+        }
+
+
+	} else {
+		query = ViewQuery.from('ads', 'all_ads');
+
+		//let msg = "GeoBox or place is mandatory!";
+		//logUtil.error(msg);
+		//reply(Boom.badRequest(msg, queryCondition));
+	}
 }
 
 //
 function matchDiaChi(adsPlace, place) {
     if (!place.diaChi || !adsPlace.diaChi) {
-        logUtil.info("Fail, one of the diaChi is null!")
+        logUtil.info("Fail, one of the diaChi is null!");
         return false;
     }
 
@@ -247,7 +263,6 @@ function matchDiaChi(adsPlace, place) {
 		return true;
 
     logUtil.info("Not match by PLACE: searching DiaChiLocDau=" + placeDiaChiLocDau + ", DB DiaChiLocDau=" + adsPlaceDiaChiLocDau);
-
 
 	return false;
 }
@@ -282,12 +297,10 @@ function match(attr, value, doc) {
 	if (idx > 0) {
 		var field = attr.substring(0, idx);
 
-		var splits = value.split(",");
-
-		var ret = ads[field] >= splits[0] && ads[field] <= splits[1];
+		var ret = ads[field] >= value[0] && ads[field] <= value[1];
 
 		if (!ret) {
-			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field] + ", splits[0]=" + splits[0] + ", splits[1]=" + splits[1])
+			console.log("FAIL to check BETWEEN " +  "field=" + field  + ", ads[field]=" + ads[field] + ", value[0]=" + value[0] + ", value[1]=" + value[1])
 		}
 		
 		return ret; 
@@ -310,7 +323,7 @@ function match(attr, value, doc) {
 		let ret = ads[field] >= value;
 
 		if (!ret) {
-			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field])
+			console.log("FAIL to check GREATER " +  "field=" + field  + ", ads[field]=" + ads[field])
 		}
 
 		return ret;
@@ -318,7 +331,6 @@ function match(attr, value, doc) {
 	// Place, compare by value.fullName
 	if (attr == Q_FIELD.place) {
 		//logUtil.info("PLACE OBJECT in QUERY:");
-		//logUtil.info(value);
 
 		if (!ads.place.diaChi) {
 			return false;
@@ -401,31 +413,35 @@ function orderAds(filtered, orderCondition) {
  *  dienTichBETWEEN:
  *  	Array: [from,to] , don vi la` m2
  *  ngayDaDang: 1,...//so ngay da dang
+ *  soPhongNguGREATER:
+ *  soPhongTamGREATER:
  *  huongNha:
  *      Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
  *  geoBox:
+ *	    Arrays, [southWest_Lat, southWest_lon
  *		[105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
- *  place_id:
- *      Lay tu google place
- *  CurrentLocation: //current location
- *      Array: [lat, lon]
- *  radiusInKm : // 2km
- *      Number, eg: 0.5
- *  relandTypeName : //de thong nhat giua client-server
- *      String: Tinh/Huyen/Xa/DiaDiem
- 	*
+ *  place { //Object
+ *      placeId:
+ *          Lay tu google place
+ *      relandTypeName : de thong nhat giua client-server
+ *          String: Tinh/Huyen/Xa/DiaDiem
+ *      radiusInKm : // 2km
+ *          Number, eg: 0.5
+ *      currentLocation: current location
+ *          Array: [lat, lon]
  *  }
+ *  orderBy:
+ *      string: ngayDangTinDESC/giaASC/giaDESC/dienTichASC, soPhongTamASC, soPhongNguASC
+ * }
  *
  *  Reponse : xem trong file sample_find.js
  */
 
 internals.findPOST = function(req, reply) {
-	logUtil.info("findPOST - query: " );
+	logUtil.info("findPOST - query parameter: " );
     console.log(req.payload);
 
-
 	try {
-		//let x=1/0;
 		findAds(req.payload, reply) 	
 	} catch (e) {
 		logUtil.error(e);
