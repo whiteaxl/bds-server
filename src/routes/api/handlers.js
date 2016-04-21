@@ -21,12 +21,19 @@ var https = require('https');
 var _ = require("lodash");
 var moment = require("moment");
 
+var geoUtil = require("../../lib/geoUtil");
+
+var DEFAULT_SEARCH_RADIUS = 5; //km
 
 var Q_FIELD = {
 	limit : "limit",
 	orderBy : "orderBy",
 	geoBox : "geoBox",
-	place: "place"
+	place: "place",
+    radiusInKm: "radiusInKm",
+    gia : "gia",
+    dienTich : "dienTich",
+    loaiTin : "loaiTin"
 };
 
 var internals = {};
@@ -45,57 +52,37 @@ internals.findGooglePlaceById = function(req, reply){
     	console.log("go here with " + response.status);
         reply(response);
     });
-
-	/*https.get(url, function(response) {
-        // Continuously update stream with data
-        console.log("go here with " + response.status);
-        response.on('end', function() {
-        	console.log("end here");
-        	console.log("response " + response.data);
-        });
-    });*/
-
-
-
-	/*Wreck.get(url, function (err, res, payload) {
-		console.log("go here with " + res.result + res.status);
-    	reply(res.result);
-	});*/
 }
 
 
 function _filterResult(allAds, queryCondition) {
 
+
 	//ES5 syntax to select
 	var filtered = allAds.filter(function(doc) {
 		for (var attr in queryCondition) {
-			if (attr !== "orderBy"  && attr !== "limit"
-				&& !match(attr, queryCondition[attr], doc)) {
-				console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
+            if (!match(attr, queryCondition[attr], doc)) {
+				//console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
 				return false;
 			}
 		}
 		return true;
 	});
 
-	//sort
 
-	if (queryCondition) {
-		let od = queryCondition['orderBy'];
-		if (od) {
-			console.log("Perform ordering by " + od);
-			orderAds(filtered, od);
-		} else {
-			console.log("No ordering by ");
-		}
-	}
-	console.log("filtered length = " + filtered.length);
+	console.log("List ads filtered length = " + filtered.length);
 
 	// TODO: limit
 	let listResult = filtered.slice(0,1000).map((one) => {
 		let val = one.value;
 		val.giaDisplay = util.getPriceDisplay(val.gia);
 		val.dienTichDisplay = util.getDienTichDisplay(val.dienTich);
+
+        if (val.chiTiet) {
+            var idx = val.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+            val.chiTiet =  val.chiTiet.substring(0, idx);
+            //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
+        }
 
 		if (val.ngayDangTin) {
             var NgayDangTinDate= moment(val.ngayDangTin, "DD-MM-YYYY");
@@ -105,28 +92,53 @@ function _filterResult(allAds, queryCondition) {
 		return one;
 	});
 
-	console.log("listResult length = " + listResult.length);
-
-	//
-	if (queryCondition && queryCondition['limit']) {
-		let lim = queryCondition['limit'];
-		listResult = listResult.slice(0, lim)
-	}
+	console.log("FINAL listResult length = " + listResult.length);
 
 	return listResult;
 }
 
 
-
 function findAds(queryCondition, reply) {
 	//return all first
 	let query;
-	console.log("geoBox: " + queryCondition[Q_FIELD.geoBox]);
+    let center = {lat: 0, lon: 0};
+    let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
+    let isSearchByDistance = false;
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
+
+    logUtil.info("isSearchByDistance=" + isSearchByDistance + ", radiusInKm=" + radiusInKm)
+
 	if (queryCondition[Q_FIELD.geoBox]) {
-		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(queryCondition[Q_FIELD.geoBox]);
-		queryCondition[Q_FIELD.geoBox] = undefined;//remove it
-	} else if (queryCondition[Q_FIELD.place]) { //by place
-		query = ViewQuery.from('ads', 'all_ads');
+        let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+        logUtil.warn("findAds - Search by BOX: " + geoBox);
+		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+
+        //search by geoBox, so no need place
+		delete queryCondition[Q_FIELD.place];
+
+	} else if (queryCondition[Q_FIELD.place]) {
+        var place = queryCondition[Q_FIELD.place];
+
+        console.log(place.geometry);
+        center.lat = place.geometry.location.lat;
+        center.lon = place.geometry.location.lng;
+
+        if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+            logUtil.warn("findAds - Search by DIA_DIEM");
+            isSearchByDistance = true;
+			let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
+                , geoUtil.meter2degree(radiusInKm));
+
+            console.log("Search in box: " + geoBox);
+            //search by geoBox, so no need place
+            delete queryCondition[Q_FIELD.place];
+
+            query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+		} else {
+            logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
+            query = ViewQuery.from('ads', 'all_ads');
+        }
 	} else {
 		query = ViewQuery.from('ads', 'all_ads');
 
@@ -143,22 +155,65 @@ function findAds(queryCondition, reply) {
 		logUtil.info("By geo/place: allAds.length= " + allAds.length);
 		let listResult = _filterResult(allAds, queryCondition);
 
+        //filter by distance
+        let transformed = [];
+        listResult.forEach((e) => {
+            let ads = e.value;
+
+            let place = ads.place;
+            //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
+			if (center.lat && center.lon && place.geo.lat && place.geo.lon)
+            	ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
+            //console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
+
+            //filter by distance bcs get by geoBox, not radius
+            if (isSearchByDistance) {
+                if (ads.distance && ads.distance < radiusInKm * 1000) {
+                    transformed.push(ads);
+                }
+            } else {
+                transformed.push(ads)
+            }
+        });
+
+        //sort
+        if (queryCondition && orderBy) {
+            console.log("Perform ordering by " + orderBy);
+            orderAds(transformed, orderBy);
+        } else if (isSearchByDistance) {
+            var compare = function(a, b) {
+                //console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
+                if (a.distance > b.distance)
+                    return 1;
+                else
+                    return -1;
+
+                return 0;
+            };
+
+            transformed.sort(compare);
+        }
+
+        transformed.forEach((e) => {
+            console.log("Distance for " + e.adsID +  "= " + e.distance + "m");
+        });
+
+        logUtil.info("There are " + transformed.length + " ads");
+
+
+        //limit
+        if (queryCondition && limit) {
+            transformed = transformed.slice(0, limit)
+        }
+
 	  	reply({
-	  		length: listResult.length,
-			list: listResult
+	  		length: transformed.length,
+			list: transformed
 	  	});
 	});
 }
-
-// ?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
-// &spPhongTamGREATER=1&dienTichBETWEEN=50,200
-// &orderBy=giaASC,dienTichDESC,soPhongNguASC
-internals.findGET = function(req, reply) {
-	//get query object
-	var queryCondition = req.query;
-
-	findAds(queryCondition, reply);
-};
 
 //
 function matchDiaChi(adsPlace, place) {
@@ -167,7 +222,7 @@ function matchDiaChi(adsPlace, place) {
         return false;
     }
 
-	logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
+	//logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
 	//logUtil.info("value="+ value);
 	//logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
 
@@ -186,15 +241,37 @@ function matchDiaChi(adsPlace, place) {
 		adsPlaceDiaChiLocDau = adsPlaceDiaChiLocDau.replace(f,COMMON_WORDS[f]);
 	}
 
-	logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
+	//logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
 
 	if (adsPlaceDiaChiLocDau.indexOf(placeDiaChiLocDau)!==-1)
 		return true;
 
+    logUtil.info("Not match by PLACE: searching DiaChiLocDau=" + placeDiaChiLocDau + ", DB DiaChiLocDau=" + adsPlaceDiaChiLocDau);
+
+
 	return false;
 }
 
+function _NotSupport(attr) {
+    let attrFormalize = attr.replace(QueryOps.BETWEEN, "");
+    attrFormalize = attrFormalize.replace(QueryOps.GREATER, "");
+
+    for (var e in Q_FIELD) {
+        if (Q_FIELD[e] == attrFormalize) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function match(attr, value, doc) {
+	//If not in list, then consider as true
+	if (_NotSupport(attr)) {
+        logUtil.warn("The parameter " + attr + " does not support! So no filter!");
+        return true;
+    }
+
 	//
 	let ads = doc.value;
 
@@ -238,30 +315,37 @@ function match(attr, value, doc) {
 
 		return ret;
 	}
-	// Place
-	if (attr == "placeName") {
+	// Place, compare by value.fullName
+	if (attr == Q_FIELD.place) {
+		//logUtil.info("PLACE OBJECT in QUERY:");
+		//logUtil.info(value);
+
 		if (!ads.place.diaChi) {
 			return false;
 		}
 
         let place;
-        logUtil.info(value);
-        if (_.isObject(value)) {
-            place = value;
+		let dc = value.fullName;
+
+        //logUtil.info(dc);
+        if (_.isObject(dc)) {
+            place = dc;
         } else {
             place = {
-                diaChi: value
+                diaChi: dc
             }
         }
 
-		return matchDiaChi(ads.place, place);
+		let ret = matchDiaChi(ads.place, place);
+
+        return ret;
 	}
 
 	//default is equals
 	if (ads[attr] == value) {
         return true;
     } else {
-        logUtil.info("Not match '" + attr +  "': doc value: "+ ads[attr] + ", filtered value:" + value);
+        logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value: "+ ads[attr] + ", searching value:" + value);
         return false;
     }
 }
@@ -284,11 +368,11 @@ function orderAds(filtered, orderCondition) {
 		}
 
 		console.log("Order by field:" + field);
-			var compare = function(a, b) {
+        var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
-			if (a.value[field] > b.value[field])
+			if (a[field] > b[field])
 				return isASC;
-			if (a.value[field] < b.value[field])
+			if (a[field] < b[field])
 				return -1 * isASC;
 
 			return 0;
@@ -300,109 +384,58 @@ function orderAds(filtered, orderCondition) {
 }
 
 
+/**
+ *  Co' 3 loai search:
+ *      Tim kiem theo GeoBox : phuc vu MAP
+ *      Tim kiem theo Dia Chinh : search text
+ *      Tim kiem theo Dia Diem  + Ban Kinh: search text
+ *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
+ *  Su dung tim theo BanKinh cho: DiaDiem (ko phai Tinh/Huyen/Xa), Current Location
+ * Request json: {
+ *  loaiTin: bat buoc
+ *  	Number, 0=BAN, 1 = THUE
+ *  loaiNhaDat:
+ *  	Number, eg: 1,2,... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
+ *  giaBETWEEN:
+ *  	Array, eg [0,85] : <from,to>, don vi la` TRIEU (voi THUE la trieu/thang)
+ *  dienTichBETWEEN:
+ *  	Array: [from,to] , don vi la` m2
+ *  ngayDaDang: 1,...//so ngay da dang
+ *  huongNha:
+ *      Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
+ *  geoBox:
+ *		[105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
+ *  place_id:
+ *      Lay tu google place
+ *  CurrentLocation: //current location
+ *      Array: [lat, lon]
+ *  radiusInKm : // 2km
+ *      Number, eg: 0.5
+ *  relandTypeName : //de thong nhat giua client-server
+ *      String: Tinh/Huyen/Xa/DiaDiem
+ 	*
+ *  }
+ *
+ *  Reponse : xem trong file sample_find.js
+ */
+
 internals.findPOST = function(req, reply) {
-	logUtil.info("findPOST - query: " + req.payload);
+	logUtil.info("findPOST - query: " );
+    console.log(req.payload);
+
+
 	try {
 		//let x=1/0;
 		findAds(req.payload, reply) 	
 	} catch (e) {
 		logUtil.error(e);
+		//console.trace(e);
+        console.log(e, e.stack.split("\n"));
+
 		reply(Boom.badImplementation());
 	}
 	
 };
-
-
-internals.findPlace = function(req, reply) {
-	logUtil.info("Enter findPlace");
-
-	let query = req.payload;
-	logUtil.info("findPlace - query: " + query);
-	try {
-		//let x=1/0;
-		logUtil.info("findPlace - query.text: " + query.text);
-
-		if (!query.text) {
-			query.text =""
-		}
-
-		let textLocDau=util.locDau(query.text);
-		logUtil.info("findPlace - textLocDau: " + textLocDau);
-
-		var myPlacesModel = new PlacesModel(myBucket);
-
-		myPlacesModel.queryAll((all) => {
-			var filtered = [];
-			for (var i in all) {
-				let place = all[i].value;
-				let name = util.locDau(place.fullName);
-
-
-				logUtil.info("findPlace - fullName loc dau: " + name);
-				if (name.indexOf(textLocDau)!==-1) {
-					filtered.push(place);
-				}
-			}
-
-			reply({length: filtered.length, list: filtered});
-		})
-
-	} catch (e) {
-		logUtil.error(e);
-		reply(Boom.badImplementation());
-	}
-
-};
-
-internals.getAllAds = function(req, reply) {
-	var adsModel = new AdsModel(myBucket);
-	adsModel.queryAll(function(result){
-		for (var i = 0; i < result.length; i++) { 
-    		var ads = result[i];
-    		if(result[i].value.place){
-    			if(result[i].value.place.geo){
-	    			result[i].map={
-	    				center: {
-							latitude: 	result[i].value.place.geo.lat,
-							longitude: 	result[i].value.place.geo.lon
-						},
-	    				marker: {
-							id: i,
-							coords: {
-								latitude: 	result[i].value.place.geo.lat,
-								longitude: 	result[i].value.place.geo.lon
-							},
-							options: {
-								labelContent : result[i].value.gia
-							},
-							data: 'test'
-						},
-						options:{
-							scrollwheel: false
-						},
-						zoom: 14	
-	    			}
-	    					
-				}
-    		}
-    		
-		}
-
-
-		reply(result);
-	});
-	/*var query = ViewQuery.from('ads', 'all_ads');
-	myBucket.query(query, function(err, allAds) {
-		console.log("Number of ads: " + allAds.length);
-
-		if (!allAds)
-			allAds = [];
-		reply(allAds);
-	  	//reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
-	});*/
-};
-
-
 
 
 

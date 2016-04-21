@@ -34,7 +34,7 @@ util.getPriceDisplay = function(val) {
         return val + " triệu";
     }
 
-    return val/1000 + " tỷ";
+    return (val/1000).toFixed(2) + " tỷ";
 };
 
 util.getDienTichDisplay = function(val) {
@@ -43,6 +43,13 @@ util.getDienTichDisplay = function(val) {
     }
 
     return val + " m²";
+};
+
+util.popField = function (obj, field){
+    let a = obj[field];
+    delete obj[field];
+
+    return a;
 };
 
 

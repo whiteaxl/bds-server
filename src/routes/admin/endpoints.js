@@ -5,7 +5,7 @@ var internals = {};
 internals.endpoints = [
 	{
 		method: 'GET', 
-		path: '/admin', 
+		path: '/web/admin', 
 		handler: MyHandlers.index, 
 		config : {
 			description: 'Get the default/home template.',
@@ -16,7 +16,7 @@ internals.endpoints = [
 
 	{
 		method: 'GET', 
-		path: '/admin/extract/bds_com', 
+		path: '/web/admin/extract/bds_com', 
 		handler: MyHandlers.bdsCom, 
 		config : {
 			description: 'Get the default/home template.',
@@ -24,20 +24,10 @@ internals.endpoints = [
 	      	tags: ['api']
 		}
 	}, 
-
+	
 	{
 		method: 'GET', 
-		path: '/admin/a', 
-		handler: MyHandlers.test, 
-		config : {
-			description: 'Get the default/home template.',
-	      	notes: 'Renders the /docs/home.md file as HTML.',
-	      	tags: ['api']
-		}
-	}, 
-	{
-		method: 'GET', 
-		path: '/admin/viewall', 
+		path: '/web/admin/viewall', 
 		handler: MyHandlers.viewall, 
 		config : {
 			description: 'Get the default/home template.',
@@ -48,36 +38,15 @@ internals.endpoints = [
 	, 
 	{
 		method: 'GET', 
-		path: '/admin/deleteall', 
+		path: '/web/admin/deleteall', 
 		handler: MyHandlers.deleteall, 
 		config : {
 			description: 'Get the default/home template.',
 	      	notes: 'Renders the /docs/home.md file as HTML.',
 	      	tags: ['api']
 		}
-	}, 
-
-	{
-		method: 'GET', 
-		path: '/admin/api_usage', 
-		handler: MyHandlers.api_usage, 
-		config : {
-			description: 'Get the default/home template.',
-	      	notes: 'Renders the /docs/home.md file as HTML.',
-	      	tags: ['api']
-		}
-	}, 
-	{
-		method: 'GET', 
-		path: '/admin/loadData', 
-		handler: MyHandlers.loadData, 
-		config : {
-			description: 'Get the default/home template.',
-	      	notes: 'Renders the /docs/home.md file as HTML.',
-	      	tags: ['api']
-		}
 	}
-]
+];
 	
 
 module.exports = internals;
