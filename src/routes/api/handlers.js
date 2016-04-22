@@ -98,8 +98,8 @@ function _filterResult(allAds, queryCondition) {
 	return listResult;
 }
 
-function _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm) {
-    myBucket.query(query, function(err, allAds) {
+function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox) {
+    myBucket.query(dbQuery, function(err, allAds) {
         if (!allAds)
             allAds = [];
 
@@ -157,23 +157,34 @@ function _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy
 
         reply({
             length: transformed.length,
+            viewport : {
+                center: center,
+                northeast : {lat:geoBox[2], lon:geoBox[3]},
+                southwest : {lat:geoBox[0], lon:geoBox[1]}
+            },
             list: transformed
         });
     });
 }
 
 function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm) {
-    console.log(place.geometry);
+    //console.log(place.geometry);
     let center = {lat: 0, lon: 0};
 
-    center.lat = place.geometry.location.lat;
-    center.lon = place.geometry.location.lng;
+    if (place.currentLocation) {
+        center.lat = place.currentLocation.lat;
+        center.lon = place.currentLocation.lon;
+    } else { //from google placedetail
+        center.lat = place.geometry.location.lat;
+        center.lon = place.geometry.location.lng;
+    }
 
-    if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+    let geoBox = null;
+
+    if (place.currentLocation || placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
         logUtil.warn("findAds - Search by DIA_DIEM");
         isSearchByDistance = true;
-        let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
-            , geoUtil.meter2degree(radiusInKm));
+        geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
 
         console.log("Search in box: " + geoBox);
         //search by geoBox, so no need place
@@ -182,10 +193,16 @@ function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderB
         query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
     } else {
         logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
+
+        if (place.geometry && place.geometry.viewport) {
+            let vp = place.geometry.viewport;
+            geoBox = [vp.southwest.lat, vp.southwest.lon, vp.northeast.lat, vp.northeast.lon];
+        }
+
         query = ViewQuery.from('ads', 'all_ads');
     }
 
-    _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm);
+    _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox);
 }
 
 
@@ -205,7 +222,7 @@ function findAds(queryCondition, reply) {
         //search by geoBox, so no need place
 		delete queryCondition[Q_FIELD.place];
 
-        _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, null, null);
+        _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, null, null, geoBox);
 
 	} else if (queryCondition[Q_FIELD.place]) {
         var place = queryCondition[Q_FIELD.place];
@@ -217,6 +234,9 @@ function findAds(queryCondition, reply) {
                 _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
             });
             
+        } if (place.currentLocation) {
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
+
         } else { //backward...
             _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
         }
@@ -418,8 +438,8 @@ function orderAds(filtered, orderCondition) {
  *  huongNha:
  *      Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
  *  geoBox:
- *	    Arrays, [southWest_Lat, southWest_lon
- *		[105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
+ *	    Arrays: [southwest_lat, southwest_lon, northeast_lat, northeast_lon]
+ *		eg: [105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
  *  place { //Object
  *      placeId:
  *          Lay tu google place
@@ -434,7 +454,19 @@ function orderAds(filtered, orderCondition) {
  *      string: ngayDangTinDESC/giaASC/giaDESC/dienTichASC, soPhongTamASC, soPhongNguASC
  * }
  *
- *  Reponse : xem trong file sample_find.js
+ *  Response : xem chi tiet trong file sample_find.js
+ *  {
+ *       length: Number, so bai dang thoa man
+         list: []
+            Danh sach cac bai dang thoa man
+         viewport : {
+            center: {lat, lng}
+            northeast : {lat, lng}
+            southwest : {lat, lng}
+         }
+            -- Neu theo DiaDiem hoac CurrentLocation: box bao cua Hinh Tron
+            -- Neu theo Tinh/Huyen/Xa: lay viewport tu google place
+ *  }
  */
 
 internals.findPOST = function(req, reply) {
