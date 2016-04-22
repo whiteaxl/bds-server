@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a0b1d7945ac29fee28e1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1771b49f20f1bd4b8bcf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -983,10 +983,17 @@
 	(function() {
 		'use strict';
 		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi){
 			var vm = this;
 			init();
-			//vm.initData = initData;
+			//nhannc
+			$scope.firstName="abc1234";
+			$scope.goToPageSearch = function(){
+				$state.go('search', { place : $scope.firstName });
+			}
+
+			//End nhannc
+			$scope.firstName ="abc123";
 			vm.getAllAds = function(){
 				HouseService.getAllAds().then(function(res){
 					vm.sellingHouses = res.data;
@@ -1009,7 +1016,7 @@
 				// }
 			});
 			
-			
+
 			/*$scope.markers = [{
 				id: 0,
 				coords: {
@@ -1112,6 +1119,22 @@
 					{ type: "6", name: "Tìm kiếm nâng cao" },
 					{ type: "7", name: "Tất cả" }
 				];
+				uiGmapGoogleMapApi.then(function(maps){
+					var searchBox = new maps.places.Autocomplete(
+						(document.getElementById('autocomplete')), {
+							types: ['geocode']
+						});
+					searchBox.addListener('place_changed', function () {
+						var place = searchBox.getPlace();
+						$scope.searchPlaceSelected = place;
+						HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
+							var place = response.data.result;
+							$scope.searchPlaceSelected = place;
+							//alert("place: " + $scope.searchPlaceSelected.place_id);
+							$scope.firstName = $scope.searchPlaceSelected.place_id;
+						});
+					})
+				})
 				//end nhannc
 				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 				$scope.options = {scrollwheel: false,labelContent: 'gia'};
@@ -1205,6 +1228,7 @@
 			vm.placeId = $state.params.place;
 			if(!vm.placeId)
 				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			alert("searchCrl: " + $state.params.place);
 			HouseService.findGooglePlaceById(vm.placeId).then(function(response){
 				var place = response.data.result;
 				$scope.searchPlaceSelected = place;
@@ -1272,6 +1296,8 @@
 	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
 			function init(){
+				vm.placeId = $state.params.place;
+				alert("vm.placeId: " + vm.placeId);
 				uiGmapGoogleMapApi.then(function(maps){
 					var searchBox = new maps.places.Autocomplete(
 						(document.getElementById('autocomplete')), {

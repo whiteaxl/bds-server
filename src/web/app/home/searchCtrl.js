@@ -7,6 +7,7 @@
 		vm.placeId = $state.params.place;
 		if(!vm.placeId)
 			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+		alert("searchCrl: " + $state.params.place);
 		HouseService.findGooglePlaceById(vm.placeId).then(function(response){
 			var place = response.data.result;
 			$scope.searchPlaceSelected = place;
@@ -74,6 +75,8 @@
         $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
 		function init(){
+			vm.placeId = $state.params.place;
+			alert("vm.placeId: " + vm.placeId);
 			uiGmapGoogleMapApi.then(function(maps){
 				var searchBox = new maps.places.Autocomplete(
 					(document.getElementById('autocomplete')), {

@@ -1,10 +1,17 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi){
 		var vm = this;
 		init();
-		//vm.initData = initData;
+		//nhannc
+		$scope.firstName="abc1234";
+		$scope.goToPageSearch = function(){
+			$state.go('search', { place : $scope.firstName });
+		}
+
+		//End nhannc
+		$scope.firstName ="abc123";
 		vm.getAllAds = function(){
 			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
@@ -27,7 +34,7 @@
 			// }
 		});
 		
-		
+
 		/*$scope.markers = [{
 			id: 0,
 			coords: {
@@ -130,6 +137,22 @@
 				{ type: "6", name: "Tìm kiếm nâng cao" },
 				{ type: "7", name: "Tất cả" }
 			];
+			uiGmapGoogleMapApi.then(function(maps){
+				var searchBox = new maps.places.Autocomplete(
+					(document.getElementById('autocomplete')), {
+						types: ['geocode']
+					});
+				searchBox.addListener('place_changed', function () {
+					var place = searchBox.getPlace();
+					$scope.searchPlaceSelected = place;
+					HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
+						var place = response.data.result;
+						$scope.searchPlaceSelected = place;
+						//alert("place: " + $scope.searchPlaceSelected.place_id);
+						$scope.firstName = $scope.searchPlaceSelected.place_id;
+					});
+				})
+			})
 			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
