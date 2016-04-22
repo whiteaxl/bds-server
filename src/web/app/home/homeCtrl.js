@@ -1,10 +1,16 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi){
 		var vm = this;
 		init();
-		//vm.initData = initData;
+		//nhannc
+		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
+		$scope.goToPageSearch = function(){
+			$state.go('search', { place : $scope.placeSearchId });
+		}
+
+		//End nhannc
 		vm.getAllAds = function(){
 			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
@@ -27,90 +33,11 @@
 			// }
 		});
 		
-		
-		/*$scope.markers = [{
-			id: 0,
-			coords: {
-				latitude: 10.762622,
-				longitude: 106.660172
-			},
-			data: 'restaurant'
-		}, {
-			id: 1,
-			coords: {
-				latitude: 21.033333,
-				longitude: 105.849998
-			},
-			data: 'house'
-		}, {
-			id: 2,
-			coords: {
-				latitude: 16.0439,
-				longitude: 108.199
-			},
-			data: 'hotel'
-		}];*/
-		vm.search = function(param){
-			//alert(param);
-			HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
-				var result = res.data.list;
-				for (var i = 0; i < result.length; i++) { 
-		    		var ads = result[i];
-		    		if(result[i].place){
-		    			if(result[i].place.geo){
-			    			result[i].map={
-			    				center: {
-									latitude: 	result[i].place.geo.lat,
-									longitude: 	result[i].place.geo.lon
-								},
-			    				marker: {
-									id: i,
-									coords: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
-									},
-									options: {
-										labelContent : result[i].gia
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14	
-			    			}
-			    					
-						}
-		    		}
-		    		
-				}
-				$scope.ads_list = res.data.list;
-				$scope.markers = [];
-				for(var i = 0; i < res.data.list.length; i++) { 
-		    		var ads = res.data.list[i];
-		    		if(res.data.list[i].map)
-		    			$scope.markers.push(res.data.list[i].map.marker);
-				}
-			});
-		}
 		vm.formatLabel = function(model){
 			if(model)
 				return model.formatted_address;
 		}
-		vm.createHouse = function(desc,seller,email){
-        	vm.getLocation();
-        	return;
-        	HouseService.createHouse(desc,seller,email).then(function(res){
-				//vm.sellingHouses = res.data;
-				alert(res.data);
-			});
-			//alert("done");
-
-		}
-		vm.detailHouse = function(){
-			alert('todo');
-
-		}
+		
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = [
@@ -130,6 +57,20 @@
 				{ type: "6", name: "Tìm kiếm nâng cao" },
 				{ type: "7", name: "Tất cả" }
 			];
+			uiGmapGoogleMapApi.then(function(maps){
+				var searchBox = new maps.places.Autocomplete(
+					(document.getElementById('autoCompleteHome')), {
+						types: ['geocode']
+					});
+				searchBox.addListener('place_changed', function () {
+					var place = searchBox.getPlace();
+					$scope.searchPlaceHomeSelected = place;
+					HouseService.findGooglePlaceById($scope.searchPlaceHomeSelected.place_id).then(function(response){
+						$scope.searchPlaceHomeSelected = response.data.result;
+						$scope.placeSearchId = $scope.searchPlaceHomeSelected.place_id;
+					});
+				})
+			})
 			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
