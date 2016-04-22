@@ -460,9 +460,9 @@ function orderAds(filtered, orderCondition) {
          list: []
             Danh sach cac bai dang thoa man
          viewport : {
-            center: {lat, lng}
-            northeast : {lat, lng}
-            southwest : {lat, lng}
+            center: {lat, lon}
+            northeast : {lat, lon}
+            southwest : {lat, lon}
          }
             -- Neu theo DiaDiem hoac CurrentLocation: box bao cua Hinh Tron
             -- Neu theo Tinh/Huyen/Xa: lay viewport tu google place
