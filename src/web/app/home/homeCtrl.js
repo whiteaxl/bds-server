@@ -5,13 +5,12 @@
 		var vm = this;
 		init();
 		//nhannc
-		$scope.firstName="abc1234";
+		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		$scope.goToPageSearch = function(){
-			$state.go('search', { place : $scope.firstName });
+			$state.go('search', { place : $scope.placeSearchId });
 		}
 
 		//End nhannc
-		$scope.firstName ="abc123";
 		vm.getAllAds = function(){
 			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
@@ -34,91 +33,11 @@
 			// }
 		});
 		
-
-		/*$scope.markers = [{
-			id: 0,
-			coords: {
-				latitude: 10.762622,
-				longitude: 106.660172
-			},
-			data: 'restaurant'
-		}, {
-			id: 1,
-			coords: {
-				latitude: 21.033333,
-				longitude: 105.849998
-			},
-			data: 'house'
-		}, {
-			id: 2,
-			coords: {
-				latitude: 16.0439,
-				longitude: 108.199
-			},
-			data: 'hotel'
-		}];*/
-		/*
-		vm.search = function(param){
-			//alert(param);
-			HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
-				var result = res.data.list;
-				for (var i = 0; i < result.length; i++) { 
-		    		var ads = result[i];
-		    		if(result[i].place){
-		    			if(result[i].place.geo){
-			    			result[i].map={
-			    				center: {
-									latitude: 	result[i].place.geo.lat,
-									longitude: 	result[i].place.geo.lon
-								},
-			    				marker: {
-									id: i,
-									coords: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
-									},
-									options: {
-										labelContent : result[i].gia
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14	
-			    			}
-			    					
-						}
-		    		}
-		    		
-				}
-				$scope.ads_list = res.data.list;
-				$scope.markers = [];
-				for(var i = 0; i < res.data.list.length; i++) { 
-		    		var ads = res.data.list[i];
-		    		if(res.data.list[i].map)
-		    			$scope.markers.push(res.data.list[i].map.marker);
-				}
-			});
-		}*/
 		vm.formatLabel = function(model){
 			if(model)
 				return model.formatted_address;
 		}
-		vm.createHouse = function(desc,seller,email){
-        	vm.getLocation();
-        	return;
-        	HouseService.createHouse(desc,seller,email).then(function(res){
-				//vm.sellingHouses = res.data;
-				alert(res.data);
-			});
-			//alert("done");
-
-		}
-		vm.detailHouse = function(){
-			alert('todo');
-
-		}
+		
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = [
@@ -140,17 +59,15 @@
 			];
 			uiGmapGoogleMapApi.then(function(maps){
 				var searchBox = new maps.places.Autocomplete(
-					(document.getElementById('autocomplete')), {
+					(document.getElementById('autoCompleteHome')), {
 						types: ['geocode']
 					});
 				searchBox.addListener('place_changed', function () {
 					var place = searchBox.getPlace();
-					$scope.searchPlaceSelected = place;
-					HouseService.findGooglePlaceById($scope.searchPlaceSelected.place_id).then(function(response){
-						var place = response.data.result;
-						$scope.searchPlaceSelected = place;
-						//alert("place: " + $scope.searchPlaceSelected.place_id);
-						$scope.firstName = $scope.searchPlaceSelected.place_id;
+					$scope.searchPlaceHomeSelected = place;
+					HouseService.findGooglePlaceById($scope.searchPlaceHomeSelected.place_id).then(function(response){
+						$scope.searchPlaceHomeSelected = response.data.result;
+						$scope.placeSearchId = $scope.searchPlaceHomeSelected.place_id;
 					});
 				})
 			})
