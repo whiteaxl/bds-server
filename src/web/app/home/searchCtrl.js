@@ -8,6 +8,7 @@
 		if(!vm.placeId)
 			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		alert("searchCrl: " + $state.params.place);
+		console.log("placeId: " + vm.placeId);
 		HouseService.findGooglePlaceById(vm.placeId).then(function(response){
 			var place = response.data.result;
 			$scope.searchPlaceSelected = place;

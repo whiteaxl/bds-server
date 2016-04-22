@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1771b49f20f1bd4b8bcf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e4c8779f20212554219f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1039,6 +1039,7 @@
 				},
 				data: 'hotel'
 			}];*/
+			/*
 			vm.search = function(param){
 				//alert(param);
 				HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
@@ -1081,7 +1082,7 @@
 			    			$scope.markers.push(res.data.list[i].map.marker);
 					}
 				});
-			}
+			}*/
 			vm.formatLabel = function(model){
 				if(model)
 					return model.formatted_address;
@@ -1229,6 +1230,7 @@
 			if(!vm.placeId)
 				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			alert("searchCrl: " + $state.params.place);
+			console.log("placeId: " + vm.placeId);
 			HouseService.findGooglePlaceById(vm.placeId).then(function(response){
 				var place = response.data.result;
 				$scope.searchPlaceSelected = place;

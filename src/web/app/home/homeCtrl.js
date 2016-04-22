@@ -57,6 +57,7 @@
 			},
 			data: 'hotel'
 		}];*/
+		/*
 		vm.search = function(param){
 			//alert(param);
 			HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
@@ -99,7 +100,7 @@
 		    			$scope.markers.push(res.data.list[i].map.marker);
 				}
 			});
-		}
+		}*/
 		vm.formatLabel = function(model){
 			if(model)
 				return model.formatted_address;
