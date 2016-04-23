@@ -13,6 +13,11 @@ var util = require("../../lib/utils");
 var PlacesModel = require('../../dbservices/Place');
 var AdsModel = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
+var http = require('http');
+var https = require('https');
+var services = require("../../lib/services");
+
+
 var _ = require("lodash");
 var moment = require("moment");
 
@@ -25,6 +30,7 @@ var Q_FIELD = {
 	orderBy : "orderBy",
 	geoBox : "geoBox",
 	place: "place",
+    placeId: "placeId",
     radiusInKm: "radiusInKm",
     gia : "gia",
     dienTich : "dienTich",
@@ -36,11 +42,24 @@ var Q_FIELD = {
 
 var internals = {};
 
+internals.findGooglePlaceById = function(req, reply){
+	logUtil.info("findPOST - query: " + req.payload);
+	var googlePlaceId = req.payload.googlePlaceId;
+	var url = 'https://maps.googleapis.com/maps/api/place/details/json?';
+	url = url + 'key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU';
+	url = url + '&placeid=' + googlePlaceId;
+	console.log("googlePlaceId " + googlePlaceId);
+	console.log("url " + url);
+
+	https.get(url)
+    .on('response', function (response) {
+    	console.log("go here with " + response.status);
+        reply(response);
+    });
+}
+
 
 function _filterResult(allAds, queryCondition) {
-    //console.log(queryCondition);
-    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
-    let limit = util.popField(queryCondition,Q_FIELD.limit);
 
 
 	//ES5 syntax to select
@@ -54,14 +73,7 @@ function _filterResult(allAds, queryCondition) {
 		return true;
 	});
 
-	//sort
 
-	if (queryCondition) {
-		if (orderBy) {
-			console.log("Perform ordering by " + orderBy);
-			orderAds(filtered, orderBy);
-		}
-	}
 	console.log("List ads filtered length = " + filtered.length);
 
 	// TODO: limit
@@ -86,52 +98,155 @@ function _filterResult(allAds, queryCondition) {
 
 	console.log("FINAL listResult length = " + listResult.length);
 
-	//
-	if (queryCondition && limit) {
-		listResult = listResult.slice(0, limit)
-	}
-
 	return listResult;
 }
 
+function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox) {
+    myBucket.query(dbQuery, function(err, allAds) {
+        if (!allAds)
+            allAds = [];
+
+        logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
+        let listResult = _filterResult(allAds, queryCondition);
+
+        //filter by distance
+        let transformed = [];
+
+        listResult.forEach((e) => {
+            let ads = e.value;
+
+            let place = ads.place;
+            //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
+            if (isSearchByDistance) {
+                if (center.lat && center.lon && place.geo.lat && place.geo.lon) {
+                    ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+                    if (ads.distance < radiusInKm * 1000) {
+                        transformed.push(ads);
+                    }
+                }
+            } else {
+                transformed.push(ads)
+            }
+        });
+
+        //sort
+        if (queryCondition && orderBy) {
+            console.log("Perform ordering by " + orderBy);
+            orderAds(transformed, orderBy);
+        } else if (isSearchByDistance) {
+            var compare = function(a, b) {
+                if (a.distance && b.distance) {
+                    return a.distance > b.distance
+                }
+
+                return 0;
+            };
+
+            transformed.sort(compare);
+        }
+
+        transformed.forEach((e) => {
+            console.log("Distance for " + e.adsID +  "= " + e.distance + "m");
+        });
+
+        logUtil.info("There are " + transformed.length + " ads");
+
+
+        //limit
+        if (queryCondition && limit) {
+            transformed = transformed.slice(0, limit)
+        }
+
+        reply({
+            length: transformed.length,
+            viewport : {
+                center: center,
+                northeast : {lat:geoBox[2], lon:geoBox[3]},
+                southwest : {lat:geoBox[0], lon:geoBox[1]}
+            },
+            list: transformed
+        });
+    });
+}
+
+function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm) {
+    //console.log(place.geometry);
+    let center = {lat: 0, lon: 0};
+
+    if (place.currentLocation) {
+        center.lat = place.currentLocation.lat;
+        center.lon = place.currentLocation.lon;
+    } else { //from google placedetail
+        center.lat = place.geometry.location.lat;
+        center.lon = place.geometry.location.lng;
+    }
+
+    let geoBox = null;
+
+    if (place.currentLocation || placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+        logUtil.warn("findAds - Search by DIA_DIEM");
+        isSearchByDistance = true;
+        geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+
+        console.log("Search in box: " + geoBox);
+        //search by geoBox, so no need place
+        delete queryCondition[Q_FIELD.place];
+
+        query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+    } else {
+        logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
+
+        if (place.geometry && place.geometry.viewport) {
+            let vp = place.geometry.viewport;
+            geoBox = [vp.southwest.lat, vp.southwest.lon, vp.northeast.lat, vp.northeast.lon];
+        }
+
+        query = ViewQuery.from('ads', 'all_ads');
+    }
+
+    _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox);
+}
 
 
 function findAds(queryCondition, reply) {
 	//return all first
 	let query;
-    let center = {lat: 0, lon: 0};
-    let radiusInKm = util.popField(queryCondition, Q_FIELD.radiusInKm) || DEFAULT_SEARCH_RADIUS;
+
     let isSearchByDistance = false;
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
 
 	if (queryCondition[Q_FIELD.geoBox]) {
-        logUtil.warn("findAds - Search by BOX");
         let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+        logUtil.warn("findAds - Search by BOX: " + geoBox);
 		query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
 
         //search by geoBox, so no need place
 		delete queryCondition[Q_FIELD.place];
 
+        _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, null, null, geoBox);
+
 	} else if (queryCondition[Q_FIELD.place]) {
-        //console.log(placeUtil);
         var place = queryCondition[Q_FIELD.place];
-        center.lat = place.geometry.location.lat;
-        center.lon = place.geometry.location.lng;
+        let radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
 
-        if (placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
-            logUtil.warn("findAds - Search by DIA_DIEM");
-            isSearchByDistance = true;
-			let geoBox = geoUtil.getBox({lat:place.geometry.location.lat, lon:place.geometry.location.lng}
-                , geoUtil.meter2degree(radiusInKm));
+        if (place.placeId) {
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                placeDetail.fullName = placeDetail.name;
+                _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+            }, (error) => {
+                reply(Boom.internal("Call google detail fail", null, null));
+            });
+            
+        } else if (place.currentLocation) {
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
 
-            console.log("Search in box: " + geoBox);
-            //search by geoBox, so no need place
-            delete queryCondition[Q_FIELD.place];
-
-            query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
-		} else {
-            logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
-            query = ViewQuery.from('ads', 'all_ads');
+        } else { //backward...
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
         }
+
+
 	} else {
 		query = ViewQuery.from('ads', 'all_ads');
 
@@ -139,57 +254,12 @@ function findAds(queryCondition, reply) {
 		//logUtil.error(msg);
 		//reply(Boom.badRequest(msg, queryCondition));
 	}
-
-	myBucket.query(query, function(err, allAds) {
-		if (!allAds)
-			allAds = [];
-
-		logUtil.info("By geo/place: allAds.length= " + allAds.length);
-		let listResult = _filterResult(allAds, queryCondition);
-
-        //filter by distance
-        let transformed = [];
-        listResult.forEach((e) => {
-            let ads = e.value;
-
-            let place = ads.place;
-            ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-            console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
-
-            //filter by distance bcs get by geoBox, not radius
-            if (isSearchByDistance) {
-                if (ads.distance < radiusInKm * 1000) {
-                    transformed.push(ads);
-                }
-            } else {
-                transformed.push(ads)
-            }
-        });
-
-        logUtil.info("There are " + transformed.length + " ads");
-
-
-	  	reply({
-	  		length: transformed.length,
-			list: transformed
-	  	});
-	});
 }
-
-// ?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
-// &spPhongTamGREATER=1&dienTichBETWEEN=50,200
-// &orderBy=giaASC,dienTichDESC,soPhongNguASC
-internals.findGET = function(req, reply) {
-	//get query object
-	var queryCondition = req.query;
-
-	findAds(queryCondition, reply);
-};
 
 //
 function matchDiaChi(adsPlace, place) {
     if (!place.diaChi || !adsPlace.diaChi) {
-        logUtil.info("Fail, one of the diaChi is null!")
+        logUtil.info("Fail, one of the diaChi is null!");
         return false;
     }
 
@@ -218,7 +288,6 @@ function matchDiaChi(adsPlace, place) {
 		return true;
 
     logUtil.info("Not match by PLACE: searching DiaChiLocDau=" + placeDiaChiLocDau + ", DB DiaChiLocDau=" + adsPlaceDiaChiLocDau);
-
 
 	return false;
 }
@@ -253,12 +322,10 @@ function match(attr, value, doc) {
 	if (idx > 0) {
 		var field = attr.substring(0, idx);
 
-		var splits = value.split(",");
-
-		var ret = ads[field] >= splits[0] && ads[field] <= splits[1];
+		var ret = ads[field] >= value[0] && ads[field] <= value[1];
 
 		if (!ret) {
-			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field] + ", splits[0]=" + splits[0] + ", splits[1]=" + splits[1])
+			console.log("FAIL to check BETWEEN " +  "field=" + field  + ", ads[field]=" + ads[field] + ", value[0]=" + value[0] + ", value[1]=" + value[1])
 		}
 		
 		return ret; 
@@ -281,7 +348,7 @@ function match(attr, value, doc) {
 		let ret = ads[field] >= value;
 
 		if (!ret) {
-			console.log("FAIL to check " +  "field=" + field  + ", ads[field]=" + ads[field])
+			console.log("FAIL to check GREATER " +  "field=" + field  + ", ads[field]=" + ads[field])
 		}
 
 		return ret;
@@ -289,7 +356,6 @@ function match(attr, value, doc) {
 	// Place, compare by value.fullName
 	if (attr == Q_FIELD.place) {
 		//logUtil.info("PLACE OBJECT in QUERY:");
-		//logUtil.info(value);
 
 		if (!ads.place.diaChi) {
 			return false;
@@ -339,11 +405,11 @@ function orderAds(filtered, orderCondition) {
 		}
 
 		console.log("Order by field:" + field);
-			var compare = function(a, b) {
+        var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
-			if (a.value[field] > b.value[field])
+			if (a[field] > b[field])
 				return isASC;
-			if (a.value[field] < b.value[field])
+			if (a[field] < b[field])
 				return -1 * isASC;
 
 			return 0;
@@ -357,14 +423,70 @@ function orderAds(filtered, orderCondition) {
 
 
 
+/**
+ *  Co' 3 loai search:
+ *      Tim kiem theo GeoBox : phuc vu MAP
+ *      Tim kiem theo Dia Chinh : search text
+ *      Tim kiem theo Dia Diem  + Ban Kinh: search text
+ *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
+ *  Su dung tim theo BanKinh cho: DiaDiem (ko phai Tinh/Huyen/Xa), Current Location
+ * Request json: {
+ *  loaiTin: bat buoc
+ *  	Number, 0=BAN, 1 = THUE
+ *  loaiNhaDat:
+ *  	Number, eg: 1,2,... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
+ *  giaBETWEEN:
+ *  	Array, eg [0,85] : <from,to>, don vi la` TRIEU (voi THUE la trieu/thang)
+ *  dienTichBETWEEN:
+ *  	Array: [from,to] , don vi la` m2
+ *  ngayDaDang: 1,...//so ngay da dang
+ *  soPhongNguGREATER:
+ *  soPhongTamGREATER:
+ *  huongNha:
+ *      Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
+ *  geoBox:
+ *	    Arrays: [southwest_lat, southwest_lon, northeast_lat, northeast_lon]
+ *		eg: [105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314]
+ *  place { //Object
+ *      placeId:
+ *          Lay tu google place
+ *      relandTypeName : de thong nhat giua client-server
+ *          String: Tinh/Huyen/Xa/DiaDiem
+ *      radiusInKm : // 2km
+ *          Number, eg: 0.5
+ *      currentLocation: current location
+ *          Array: [lat, lon]
+ *  }
+ *  orderBy:
+ *      string: ngayDangTinDESC/giaASC/giaDESC/dienTichASC, soPhongTamASC, soPhongNguASC
+ * }
+ *
+ *  Response : xem chi tiet trong file sample_find.js
+ *  {
+ *       length: Number, so bai dang thoa man
+         list: []
+            Danh sach cac bai dang thoa man
+         viewport : {
+            center: {lat, lon}
+            northeast : {lat, lon}
+            southwest : {lat, lon}
+         }
+            -- Neu theo DiaDiem hoac CurrentLocation: box bao cua Hinh Tron
+            -- Neu theo Tinh/Huyen/Xa: lay viewport tu google place
+ *  }
+ */
+
 internals.findPOST = function(req, reply) {
-	logUtil.info("findPOST - query: " + req.payload);
+	logUtil.info("findPOST - query parameter: " );
+    console.log(req.payload);
+
 	try {
 		//let x=1/0;
 		//findAds(req.payload, reply)
         var  queryCondition = req.payload;
         var adsModel = new AdsModel(myBucket);
         var orderbyList = queryCondition.orderBy;
+        var limit = queryCondition.limit;
 
         var orderByName ="";
         var orderByType ="";
@@ -374,7 +496,7 @@ internals.findPOST = function(req, reply) {
         if (orderbyList){
             var arr = orderbyList.split(",");
             var firstElement = arr[0];
-            var len =   firstElement.length();
+            var len =   firstElement.length;
             var idxASC = firstElement.indexOf("ASC");
             var idxDESC = firstElement.indexOf("DESC");
 
@@ -387,11 +509,9 @@ internals.findPOST = function(req, reply) {
                 orderByType =  "DESC";
             }
         }
-        console.log("111111111111111111");
-        console.log(util.popField(queryCondition, Q_FIELD.loaiTin));
-        console.log(util.popField(queryCondition, Q_FIELD.loaiNhaDat));
-        console.log("2222222222222");
-
+        console.log("order 111111111111111");
+        console.log(orderByName);
+        console.log(orderByType);
         if (orderByName){
             listResult = adsModel.queryAllData(util.popField(queryCondition, Q_FIELD.loaiTin),
                 util.popField(queryCondition, Q_FIELD.loaiNhaDat),
@@ -400,44 +520,21 @@ internals.findPOST = function(req, reply) {
                 util.popField(queryCondition, Q_FIELD.soPhongTam),
                 util.popField(queryCondition, Q_FIELD.dienTich),
                 orderByName,
-                orderByType
+                orderByType,
+                limit
             );
         }
         else{
-            console.log("33333");
             listResult = adsModel.queryAllData(util.popField(queryCondition, Q_FIELD.loaiTin),
                 util.popField(queryCondition, Q_FIELD.loaiNhaDat),
                 util.popField(queryCondition, Q_FIELD.gia),
                 util.popField(queryCondition, Q_FIELD.soPhongNgu),
                 util.popField(queryCondition, Q_FIELD.soPhongTam),
-                util.popField(queryCondition, Q_FIELD.dienTich)
+                util.popField(queryCondition, Q_FIELD.dienTich),
+                limit
             );
         }
 
-        //filter by distance
-        let transformed = [];
-        listResult.forEach((e) => {
-            let ads = e.value;
-
-            let place = ads.place;
-            ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-            console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
-
-            //filter by distance bcs get by geoBox, not radius
-            if (isSearchByDistance) {
-                if (ads.distance < radiusInKm * 1000) {
-                    transformed.push(ads);
-                }
-            } else {
-                transformed.push(ads)
-            }
-        });
-
-        logUtil.info("There are " + transformed.length + " ads");
-        reply({
-            length: transformed.length,
-            list: transformed
-        });
 
 	} catch (e) {
 		logUtil.error(e);
@@ -446,100 +543,8 @@ internals.findPOST = function(req, reply) {
 
 		reply(Boom.badImplementation());
 	}
-	
-};
-
-
-internals.findPlace = function(req, reply) {
-	logUtil.info("Enter findPlace");
-
-	let query = req.payload;
-	logUtil.info("findPlace - query: " + query);
-	try {
-		//let x=1/0;
-		logUtil.info("findPlace - query.text: " + query.text);
-
-		if (!query.text) {
-			query.text =""
-		}
-
-		let textLocDau=util.locDau(query.text);
-		logUtil.info("findPlace - textLocDau: " + textLocDau);
-
-		var myPlacesModel = new PlacesModel(myBucket);
-
-		myPlacesModel.queryAll((all) => {
-			var filtered = [];
-			for (var i in all) {
-				let place = all[i].value;
-				let name = util.locDau(place.fullName);
-
-
-				logUtil.info("findPlace - fullName loc dau: " + name);
-				if (name.indexOf(textLocDau)!==-1) {
-					filtered.push(place);
-				}
-			}
-
-			reply({length: filtered.length, list: filtered});
-		})
-
-	} catch (e) {
-		logUtil.error(e);
-		reply(Boom.badImplementation());
-	}
 
 };
-
-internals.getAllAds = function(req, reply) {
-	var adsModel = new AdsModel(myBucket);
-	adsModel.queryAll(function(result){
-		for (var i = 0; i < result.length; i++) { 
-    		var ads = result[i];
-    		if(result[i].value.place){
-    			if(result[i].value.place.geo){
-	    			result[i].map={
-	    				center: {
-							latitude: 	result[i].value.place.geo.lat,
-							longitude: 	result[i].value.place.geo.lon
-						},
-	    				marker: {
-							id: i,
-							coords: {
-								latitude: 	result[i].value.place.geo.lat,
-								longitude: 	result[i].value.place.geo.lon
-							},
-							options: {
-								labelContent : result[i].value.gia
-							},
-							data: 'test'
-						},
-						options:{
-							scrollwheel: false
-						},
-						zoom: 14	
-	    			}
-	    					
-				}
-    		}
-    		
-		}
-
-
-		reply(result);
-	});
-	/*var query = ViewQuery.from('ads', 'all_ads');
-	myBucket.query(query, function(err, allAds) {
-		console.log("Number of ads: " + allAds.length);
-
-		if (!allAds)
-			allAds = [];
-		reply(allAds);
-	  	//reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
-	});*/
-};
-
-
 
 
 
