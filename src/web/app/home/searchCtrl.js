@@ -1,17 +1,17 @@
 (function() {
 	'use strict';
 	var controllerId = 'SearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,$window){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,uiGmapIsReady,$window){
 		var vm = this;
-		init();
 		vm.placeId = $state.params.place;
 		if(!vm.placeId)
 			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
-		HouseService.findGooglePlaceById(vm.placeId).then(function(response){
+		init();
+		/*HouseService.findGooglePlaceById(vm.placeId).then(function(response){
 			var place = response.data.result;
 			$scope.searchPlaceSelected = place;
 			vm.search();
-		});
+		});*/
 		
 
 		$scope.$on('$viewContentLoaded', function(){
@@ -75,52 +75,37 @@
 
 		function init(){
 			uiGmapGoogleMapApi.then(function(maps){
-				$( "#autocomplete" ).autocomplete({
-			      minLength: 0,
-			      source: function (request, response) {
-			           var options = {
-			               input: request.term,
-			               //types: ['(cities)'],
-			               //region: 'US',
-			               componentRestrictions: { country: "vn" }
-			           };
-			           function callback(predictions, status) {
-			           		var results = [];
-			               for (var i = 0, prediction; prediction = predictions[i]; i++) {
-			                   results.push(
-				                   {
-				                   		description: prediction.description,
-				                   		types:  		prediction.types, 
-				                   }
-			                   );
-			               }
-			               response(results);
-			           }
-			           var service = new maps.places.AutocompleteService();
-			           service.getPlacePredictions(options, callback);
-			           var results = [];
-			      },
-			      focus: function( event, ui ) {
-			        $( "#autocomplete" ).val( ui.item.description );
-			        return false;
-			      },
-			      select: function( event, ui ) {
-			        $( "#autocomplete" ).val( ui.item.description );
-			        // $( "#project-id" ).val( ui.item.value );
-			        // $( "#project-description" ).html( ui.item.desc );
-			        // $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
-			 
-			        return false;
-			      }
-			    })
-			    .autocomplete( "instance" )._renderItem = function( ul, item ) {
-			      return $( "<li class='googlemap'>")
-			        .append( "<span>" + item.description +  "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>" )
-			        .appendTo( ul );
-			    };
-			})
+			 	window.RewayClientUtils.createPlaceAutoComplete($scope,"autocomplete",maps);
+			 	uiGmapIsReady.promise(1).then(function(instances) {
+		        instances.forEach(function(inst) {
+		            var map = inst.map;
+		            $scope.PlacesService =  new maps.places.PlacesService(map);
+				 	$scope.PlacesService.getDetails({
+			        	placeId: vm.placeId
+			        }, function(place, status) {
+				        	if (status === maps.places.PlacesServiceStatus.OK) {
+				        		$scope.searchPlaceSelected = place;
+				        		//var map = $scope.map.control.getGMap();
+				        		var current_bounds = map.getBounds();
+				        		$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
+				        		if(place.geometry.viewport){
+				        			//map.fitBounds(place.geometry.viewport);	
+				        			//$scope.map
+				        		} else if( !current_bounds.contains( place.geometry.location ) ){
+				        			//var new_bounds = current_bounds.extend(place.geometry.location);
+				        			//map.fitBounds(new_bounds);
+				        			$digest();
+				        		}
+				        		vm.search();
+				        	}
+			        	});
+		        	});
+		    	});
+			 	
+			});
 			
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+			
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
 			$scope.markers = [];
@@ -128,7 +113,7 @@
 			$scope.hot_ads_cat = window.hot_ads_cat;
 			$scope.ads_list = window.testData;
 			$scope.bodyClass= "page-home";
-			for(var i = 0; i < $scope.ads_list.length; i++) { 
+			/*for(var i = 0; i < $scope.ads_list.length; i++) { 
 	    		var ads = $scope.ads_list[i];
 	    		if(ads.place){
 	    			if(ads.place.geo){
@@ -159,7 +144,7 @@
 		    					
 					}
 	    		}
-			}
+			}*/
 
 		}
 		

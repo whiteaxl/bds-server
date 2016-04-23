@@ -24,7 +24,7 @@
         }
         if(googlePlace.geometry.viewport){
           console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-          data.geoBox = [googlePlace.geometry.viewport.southwest.lng,googlePlace.geometry.viewport.southwest.lat,googlePlace.geometry.viewport.northeast.lng,googlePlace.geometry.viewport.northeast.lat]
+          data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
         } else{
           console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
           data.radiusInKm = "10";

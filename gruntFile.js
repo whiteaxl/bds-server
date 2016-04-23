@@ -16,10 +16,10 @@ module.exports = function (grunt) {
 					root: [path.join(__dirname, "bower_components")]
 				},
 				plugins: [
-				new webpack.HotModuleReplacementPlugin()
-				,
-				new webpack.ResolverPlugin(
-					new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
+					new webpack.HotModuleReplacementPlugin()
+					,
+					new webpack.ResolverPlugin(
+						new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
 					)
 				]
 			},
