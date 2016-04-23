@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'SearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,$window){
 		var vm = this;
 		init();
 		vm.placeId = $state.params.place;
@@ -90,7 +90,7 @@
 			                   results.push(
 				                   {
 				                   		description: prediction.description,
-				                   		type:  		prediction.types[0], 
+				                   		types:  		prediction.types, 
 				                   }
 			                   );
 			               }
@@ -114,8 +114,8 @@
 			      }
 			    })
 			    .autocomplete( "instance" )._renderItem = function( ul, item ) {
-			      return $( "<li style='width: " + ($('#autocomplete').width() + $('.btn-search').width()) + "px;background-color: white;'>")
-			        .append( "<span>" + item.description +  "<span style='float: right;'>" + item.type + "</span></span>" )
+			      return $( "<li class='googlemap'>")
+			        .append( "<span>" + item.description +  "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>" )
 			        .appendTo( ul );
 			    };
 			})

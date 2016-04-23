@@ -129,7 +129,11 @@ internals.isOnePoint = function(place) {
 };
 
 
-module.exports  = internals;
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+    module.exports  = internals;
+    //if(window)
+    //    window.RewayPlaceUtil = internals;
+} 
 
 if (typeof window !== 'undefined')
    window.RewayPlaceUtil = internals;

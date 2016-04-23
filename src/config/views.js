@@ -129,15 +129,15 @@ var hapiReact = require('hapi-react-views');
     //     }
     //   }
     // },
-    // {
-    //   method: 'GET',
-    //   path: '/web/asset/js/{param*}',
-    //   handler: {
-    //     directory: {
-    //       path: Path.join(__dirname, '../web/asset/js')          
-    //     }
-    //   }
-    // },
+    {
+      method: 'GET',
+      path: '/src/lib/{param*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, '../lib/')          
+        }
+      }
+    },
     {
       method: 'GET',
       path: '/bower/{param*}',
