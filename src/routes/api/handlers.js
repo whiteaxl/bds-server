@@ -36,9 +36,7 @@ var Q_FIELD = {
     radiusInKm: "radiusInKm",
     gia : "gia",
     dienTich : "dienTich",
-    loaiTin : "loaiTin",
-    loaiNhaDat : "loaiNhaDat"
-
+    loaiTin : "loaiTin"
 };
 
 var internals = {};
