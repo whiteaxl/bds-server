@@ -37,7 +37,10 @@ var Q_FIELD = {
     gia : "gia",
     dienTich : "dienTich",
     loaiTin : "loaiTin",
-    loaiNhaDat : "loaiNhaDat"
+    loaiNhaDat : "loaiNhaDat",
+    soPhongNgu : "soPhongNgu",
+    soPhongTam: "soPhongNgu",
+    soTang : "soTang"
 };
 
 var internals = {};
