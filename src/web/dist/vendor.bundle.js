@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4f43c2b582b8a06024a6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5ccd0c1fc57d5f7d0e8e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -260,7 +260,7 @@
 /******/ 			hotSetStatus("prepare");
 /******/ 			hotCallback = callback;
 /******/ 			hotUpdate = {};
-/******/ 			var chunkId = 1;
+/******/ 			var chunkId = 2;
 /******/ 			{ // eslint-disable-line no-lone-blocks
 /******/ 				/*globals chunkId */
 /******/ 				hotEnsureUpdateChunk(chunkId);
@@ -583,15 +583,14 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
-	__webpack_require__(10);
-	__webpack_require__(11);
+	__webpack_require__(9);
 	__webpack_require__(12);
 	__webpack_require__(13);
 	__webpack_require__(14);
 	__webpack_require__(15);
 	__webpack_require__(16);
-	module.exports = __webpack_require__(17);
+	__webpack_require__(17);
+	module.exports = __webpack_require__(18);
 
 
 /***/ },
@@ -602,7 +601,8 @@
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -16473,10 +16473,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module), (function() { return this; }())))
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -16492,156 +16492,8 @@
 
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _ = __webpack_require__(8);
-
-	var internals = {};
-
-
-	internals.getDuAnFullName = function(place) {
-	    if (!place.duAn) {
-	        return null;
-	    }
-
-	    let ret = "";
-	    let _appendIfHave = function(ret, value) {
-	        if (ret)
-	            ret =  ret + ", " + value;
-	        else
-	            ret =  value;
-
-	        return ret;
-	    };
-
-	    ret = _appendIfHave(ret, place.duAn);
-
-	    ret = _appendIfHave(ret, place.diaChinh.huyen);
-
-	    ret = _appendIfHave(ret, place.diaChinh.tinh);
-
-	    return ret;
-	};
-
-	internals.getDiaChinh = function(diaChi) {
-	    let spl = diaChi.split(",");
-	    let diaChinh = {};
-
-	    let i = spl.length;
-	    diaChinh.tinh = spl[--i].trim();
-	    diaChinh.huyen = spl[--i].trim();
-	    if (i>0) {
-	        let v = spl[--i].trim();
-	        if (!v.startsWith("Dự án")) {
-	            diaChinh.xa = v;
-	        } else {
-	            return diaChinh;
-	        }
-	    }
-
-	    if (i>0) {
-	        let v = spl[--i].trim();
-	        if (!v.startsWith("Dự án")) {
-	            diaChinh.duong = v;
-	        } else {
-	            return diaChinh;
-	        }
-	    }
-
-
-	    return diaChinh;
-	};
-
-	internals.fullName = function(place) {
-	    //todo: other types
-	    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
-	        return place.placeName + ", " + place.parentName;
-	    }
-
-	    return place.placeName;
-	};
-
-
-
-
-	internals.type = {
-	    TINH : "administrative_area_level_1",
-	    HUYEN : "administrative_area_level_2",
-	    XA : "administrative_area_level_3",
-	    XA2 : "sublocality_level_1"
-	};
-
-	internals.typeName = {
-	    TINH : "Tinh",
-	    HUYEN : "Huyen",
-	    XA : "Xa",
-	    DUONG : "Duong",
-	    DIA_DIEM: "Dia diem"
-
-	};
-
-	internals.isHuyen = function(place) {
-	    let placeTypes=place.types;
-
-	    if (_.indexOf(placeTypes, internals.type.HUYEN) > -1) {
-	        return true;
-	    }
-
-	    if (_.indexOf(placeTypes, 'locality') > -1
-	        && _.indexOf(placeTypes, 'political') > -1
-	        && place.description&&place.description.indexOf("tp.") > -1
-	    ) {
-	        return true;
-	    }
-	};
-
-	internals.getTypeName = function(place) {
-	    let placeTypes = place.types;
-
-	    if (_.indexOf(placeTypes, internals.type.TINH) > -1) {
-	        return internals.typeName.TINH;
-	    }
-	    if (internals.isHuyen(place)) {
-	        return internals.typeName.HUYEN;
-	    }
-
-	    if (_.indexOf(placeTypes, internals.type.XA) > -1) {
-	        return internals.typeName.XA;
-	    }
-
-	    if (_.indexOf(placeTypes, internals.type.XA2) > -1) {
-	        return internals.typeName.XA;
-	    }
-
-	    return internals.typeName.DIA_DIEM;
-	};
-
-
-	internals.isOnePoint = function(place) {
-	    let name = internals.relandTypeName || internals.getTypeName(place);
-	    return  name === internals.typeName.DIA_DIEM || name === internals.typeName.DUONG;
-	};
-
-
-	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
-	    module.exports  = internals;
-	    //if(window)
-	    //    window.RewayPlaceUtil = internals;
-	} 
-
-	if (typeof window !== 'undefined')
-	   window.RewayPlaceUtil = internals;
-
-
-
-
-
-
-/***/ },
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -26434,10 +26286,10 @@
 
 	})( window );
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module)))
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/**
@@ -57156,7 +57008,7 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/**
@@ -57484,7 +57336,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
@@ -58125,7 +57977,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/*! angular-google-maps 2.3.2 2016-02-11
@@ -73816,7 +73668,7 @@
 	}( window,angular));
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/**
@@ -78360,15 +78212,15 @@
 	})(window, window.angular);
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(18);
+	__webpack_require__(19);
 	module.exports = 'ui.bootstrap';
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	/*

@@ -8,6 +8,15 @@
 			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
 		
+		vm.sell_price_list = window.RewayListValue.sell_steps;
+		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
+		vm.sortOptions = window.RewayListValue.sortHouseOptions;
+		vm.sortBy = 1;
+		vm.price_min = "0";
+		vm.price_max = window.RewayListValue.filter_max_value.value;
+		vm.dien_tich_min = 0;
+		vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+
 
 		$scope.$on('$viewContentLoaded', function(){
 			window.DesignCommon.adjustPage();
@@ -17,7 +26,28 @@
   		
 		vm.search = function(param){
 			//alert(param);
-			HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
+			var data = {
+			  "loaiTin": 0,
+			  "giaBETWEEN": [vm.price_min,vm.price_max],
+			  "soPhongNguGREATER": 0,
+			  "soTangGREATER": 0,
+			  "dienTichBETWEEN": [vm.dien_tich_min,vm.dien_tich_max],
+			  "geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
+			  "limit": 200,
+			  "radiusInKm": 0.5
+			};
+			var googlePlace = $scope.searchPlaceSelected;
+			if($scope.searchPlaceSelected.geometry.viewport){
+          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+        	} else{
+          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+          		data.radiusInKm = "10";
+          		data.geoBox = undefined;
+        	}
+
+
+			HouseService.findAdsSpatial(data).then(function(res){
 				var result = res.data.list;
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
