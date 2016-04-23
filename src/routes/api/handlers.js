@@ -232,9 +232,11 @@ function findAds(queryCondition, reply) {
             services.getPlaceDetail(place.placeId, (placeDetail) => {
                 placeDetail.fullName = placeDetail.name;
                 _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+            }, (error) => {
+                reply(Boom.internal("Call google detail fail", null, null));
             });
             
-        } if (place.currentLocation) {
+        } else if (place.currentLocation) {
             _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
 
         } else { //backward...
