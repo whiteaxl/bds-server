@@ -11,6 +11,10 @@ internals.all = function(req, reply) {
 	
 };
 
+// internals.home = function(req,reply){
+// 	reply.file('/web/index.html').header('content-type','text/html; charset=utf-8');
+// }
+
 internals.findHouse = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
 	myBucket.query(query, function(err, allAds) {
@@ -55,6 +59,7 @@ internals.findHouse = function(req, reply) {
 		reply([allAds[0]]);
 	  	//reply.view('admin/viewall', {allAds:allAds}).header('content-type','text/html; charset=utf-8');
 	});
+	
 };
 
 module.exports = internals;

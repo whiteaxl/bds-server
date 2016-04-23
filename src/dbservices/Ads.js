@@ -3,13 +3,11 @@
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
 
-class AdsModel {
-	constructor(myBucket) {
-		this.myBucket = myBucket;
-	}
+var myBucket = require('../database/mydb');
 
+class AdsModel {
 	upsert(adsDto) {
-		this.myBucket.upsert(adsDto.adsID, adsDto, function(err, res) {
+		myBucket.upsert(adsDto.adsID, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			}
@@ -19,7 +17,7 @@ class AdsModel {
 	queryAll(callBack) {
         let query = ViewQuery.from('ads', 'all_ads').limit(3);
 
-        this.myBucket.query(query, function(err, all) {
+        myBucket.query(query, function(err, all) {
             console.log("number of ads:" + all.length);
             console.log("Error:" + err);
             if (!all)
@@ -28,6 +26,10 @@ class AdsModel {
             callBack(all);
         });
     }
+
+	getAds(adsID, callback) {
+		myBucket.get(adsID, callback);
+	}
 }
 
 module.exports = AdsModel;

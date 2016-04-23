@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="/web/dist/vendor.bundle.js"></script>
 	<script src="/web/dist/app.bundle.js"></script>
-	<!-- <script src="/app/home/home.js"></script> -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<title>Reway</title>
 	<style>
       body {
@@ -15,11 +15,26 @@
     		height: 400px;
     		width: 400px;
 	  }
+	  
+	
     </style>
+    <base href="/web/">
+    <script type="text/ng-template" id="searchPlaceDropdownTemplate.html">
+	  <a>
+	      <span ng-bind-html="match.model.formatted_address | uibTypeaheadHighlight:query"></span>
+	  </a>
+	</script>
+
 </head>
 <body ng-controller="MainCtrl as mc">
 	<div growl></div>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+
+    <h4>Asynchronous results</h4>
+    <pre>Model: {{asyncSelected | json}}</pre>
+    <input type="text" ng-model="asyncSelected" placeholder="test" uib-typeahead="item for item in getLocation($viewValue)" typeahead-template-url="searchPlaceDropdownTemplate.html" typeahead-show-hint="true" typeahead-min-length="0" typeahead-input-formatter="mc.formatLabel($model);" class="form-control">
+    
+
+	<div class="navbar navbar-inverse navbar-fixed-top" style="display: none;">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="http://gipxy.com/">Welcome to Reway</a>
@@ -28,6 +43,11 @@
 				<h5 class="title" translate>
 	Sell House
 	</h5>
+
+
+	
+
+
 	<div data-ng-view class="container">
 		<div >
 			<div id="map_canvas" style="display: block;">

@@ -76,13 +76,14 @@ var hapiReact = require('hapi-react-views');
         'html': Handlebars,
         'md': {
           module: new MarkdownView(),
-          contentType: 'text/html'
+          contentType: 'text/html',
+          isCached: false
         }, 
         'jsx' : hapiReact, 
         'js' : hapiReact        
       },
       relativeTo: __dirname,
-      path: [Path.join(__dirname, '../views')]
+      path: [Path.join(__dirname, '../web')]
     });
     
   });
@@ -116,6 +117,24 @@ var hapiReact = require('hapi-react-views');
       handler: {
         directory: {
           path: Path.join(__dirname, '../web')          
+        }
+      }
+    },
+    // {
+    //   method: 'GET',
+    //   path: '/web/dist/{param*}',
+    //   handler: {
+    //     directory: {
+    //       path: Path.join(__dirname, '../web/dist')          
+    //     }
+    //   }
+    // },
+    {
+      method: 'GET',
+      path: '/src/lib/{param*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, '../lib/')          
         }
       }
     },

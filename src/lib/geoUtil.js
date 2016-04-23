@@ -1,5 +1,7 @@
 'use strict';
 
+var geolib = require("geolib");
+
 var internals = {};
 
 
@@ -22,7 +24,13 @@ internals.getBox = function(point, radius) {
 
 };
 
+//meters
 internals.measure = function(lat1, lon1, lat2, lon2){  // generally used geo measurement function
+    return geolib.getDistance({latitude: lat1, longitude: lon1}, {latitude: lat2, longitude: lon2})
+};
+
+
+internals.measure_old = function(lat1, lon1, lat2, lon2){  // generally used geo measurement function
     var R = 6378.137; // Radius of earth in KM
     var dLat = (lat2 - lat1) * Math.PI / 180;
     var dLon = (lon2 - lon1) * Math.PI / 180;

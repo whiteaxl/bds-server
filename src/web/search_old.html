@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" ng-app="bds">
+<head>
+    <meta charset="utf-8">
+    <title>Homepage | Trulia</title>
+    <meta property="og:title" content="Dịch vụ giúp việc gia đình">
+    <meta property="og:description" content="Công ty CP PT DV nhà sạch HMC – JupViec.vn là công ty chuyên cung cấp dịch vụ 'Giúp Việc Gia Đình' bao gồm Giúp Việc Theo Giờ và Giúp Việc Ở Lại Nhà.">
+    <meta property="og:url" content="http://www.jupviec.vn/">
+    <meta property="og:type" content="Dịch vụ giúp việc gia đình">
+    <meta property="og:image" content="https://lh6.googleusercontent.com/-dAp2HqMjlfE/VdwX5JlNRdI/AAAAAAAAAew/d1U-fPmDx9w/w1116-h586-no/giup%2Bviec%2B33k.jpg">
+    <meta name="geo.placename" content="Ha Noi, Viet Nam">
+    <meta name="geo.region" content="VN-HN">
+    <meta name="geo.position" content="21.008415;105.802989">
+    <meta name="ICBM" content="21.008415;105.802989">
+    <meta name="description" content="Công ty CP PT DV nhà sạch HMC – JupViec.vn là công ty chuyên cung cấp dịch vụ 'Giúp Việc Gia Đình' bao gồm Giúp Việc Theo Giờ và Giúp Việc Ở Lại Nhà.">
+    <meta name="keywords" content="giup viec nha, cham soc em be, don dep nha cua, giúp việc theo giờ, osin, nguoi giup viec, giup viec gia dinh, dich vu ve sinh, giúp việc nhà theo giờ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="JupViec.vn">
+    <link rel="stylesheet" href="/web/asset/css/style.css" type="text/css">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lte IE 8]>
+    <script src="asset/js/html5.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="asset/css/ie.css" type="text/css">
+    <![endif]-->
+    <script src="/web/asset/js/modernizr.min.js" type="text/javascript"></script>
+    <script src="/web/dist/vendor.bundle.js"></script>
+    <script src="/web/dist/app.bundle.js"></script>
+    
+
+    
+<!-- Script -->
+    <script src="/web/asset/js/jquery-1.10.2.min.js"></script>
+    <script src="/web/asset/js/jquery.bxslider.min.js"></script>
+    <script src="/web/asset/js/jquery.scroll.min.js"></script>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="asset/js/respond.src.min.js"></script>
+    <![endif]-->
+    <script src="/web/asset/js/common.min.js"></script>
+    <!-- //Script -->    
+    
+    <base href="/web/">
+    <script type="text/ng-template" id="searchPlaceDropdownTemplate.html">
+      <a>
+          <span ng-bind-html="match.model.formatted_address | uibTypeaheadHighlight:query"></span>
+      </a>
+    </script>
+    <script type="text/javascript">
+        var title = '';
+    </script>
+    <style type="text/css">
+    .angular-google-map-container {
+            height: 559px;
+            width: 100%;
+      }
+    /*#google-map { height : 100%; width : 100%; top : 0; left : 0; position : absolute; z-index : 200*/
+    </style>
+</head>
+
+<body ng-class="bodyClass" ui-view>
+        <!-- <div ng-include src="'./searchContent.html'"></div> -->
+</body>
+</html>

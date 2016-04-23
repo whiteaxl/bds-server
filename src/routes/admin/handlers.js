@@ -108,11 +108,6 @@ internals.bdsCom = function(req, reply) {
 	});
 };
 
-
-internals.test = function(req, reply) {
-	reply.view('admin/a');
-};
-
 internals.viewall = function(req, reply) {
 	var query = ViewQuery.from('ads', 'all_ads');
 	myBucket.query(query, function(err, allAds) {
@@ -145,47 +140,5 @@ internals.deleteall = function(req, reply) {
 	});
 
 };
-
-internals.api_usage = function(req, reply) {
-	reply.view('admin/api_usage.md').header('content-type','text/html; charset=utf-8');
-};
-
-internals.loadData = function(req, reply) {
-	let jsonFileName = req.query.jsonFileName;
-	let jsonFileNameQuan = req.query.jsonFileNameQuan;
-
-	if (jsonFileName) {
-		let myPlacesModel = new PlacesModel(myBucket);
-
-		var data = require('../../../test/data/' + jsonFileName + ".json");
-		
-		for (var i in data.tinh) {
-			console.log("i=" + i);
-			data.tinh[i].fullName = data.tinh[i].placeName;
-
-			myPlacesModel.upsert(data.tinh[i]);	
-		}
-	}
-
-    if (jsonFileNameQuan) {
-        let myPlacesModel = new PlacesModel(myBucket);
-
-        var data = require('../../../test/data/' + jsonFileNameQuan + ".json");
-
-        for (var i in data.quan) {
-            console.log("i=" + i);
-			data.quan[i].fullName = data.quan[i].placeName + ", " + data.quan[i].parentName;
-
-            myPlacesModel.upsert(data.quan[i]);
-        }
-    }
-
-
-    reply.view('admin/loadData');
-}
-
-
-
-
 
 module.exports = internals;

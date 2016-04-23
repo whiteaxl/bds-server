@@ -4,48 +4,33 @@ var internals = {};
 
 internals.endpoints = [
 {
-	method: 'GET', 
-	path: '/api/findGET', 
-	handler: Handlers.findGET, 
+	method: 'POST', 
+	path: '/api/find', 
+	handler: Handlers.findPOST, 
 	config : {
-		description: 'Get the default/home template.',
-		notes: 'Renders the /docs/home.md file as HTML.',
+		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
 		tags: ['api']
 	}
 },
 {
 	method: 'POST', 
-	path: '/api/find', 
-	handler: Handlers.findPOST, 
+	path: '/api/findGooglePlaceById', 
+	handler: Handlers.findGooglePlaceById, 
 	config : {
-		description: 'Get the default/home template.',
-		notes: 'Renders the /docs/home.md file as HTML.',
+		description: 'Get google place detail by id.',
+		notes: 'api',
 		tags: ['api']
 	}
 },
-
-{
-	method: 'POST',
-	path: '/api/findPlace',
-	handler: Handlers.findPlace,
-	config : {
-		description: 'Get the default/home template.',
-		notes: 'Renders the /docs/home.md file as HTML.',
-		tags: ['api']
+	{
+		method: 'POST',
+		path: '/api/detail',
+		handler: Handlers.detail,
+		config : {
+			description: 'Chi tiet cua mot bai dang',
+			tags: ['api']
+		}
 	}
-},
-{
-	method: 'GET', 
-	path: '/api/ads/getAllAds', 
-	handler: Handlers.getAllAds, 
-	config : {
-		description: 'Get all Ads.',
-		notes: 'just for test',
-		tags: ['api']
-	}
-}
-
-
 ];
 
 module.exports = internals;
