@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5ccd0c1fc57d5f7d0e8e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e93e647a59b9f8004767"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1287,7 +1287,7 @@
 				  "soPhongNguGREATER": 0,
 				  "soTangGREATER": 0,
 				  "dienTichBETWEEN": [vm.dien_tich_min,vm.dien_tich_max],
-				  "geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
+				  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
 				  "limit": 200,
 				  "radiusInKm": 0.5
 				};

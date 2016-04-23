@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="vm.price_min" title="Giá từ">
+                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ">
                                                 <option value="">Giá từ</option>
                                                 <option value="0">0</option>
                                                 <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}">{[{price.lable}]}</option>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="vm.price_max" title="Giá đến">
+                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến">
                                                 <option value="">Giá đến</option>
                                                 <option value="99999999999">Bất kỳ</option>
                                                 <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}" >{[{price.lable}]}</option>
@@ -134,16 +134,19 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="vm.dien_tich_min" title="Diện tích từ">
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ">
                                         <option value="">Diện tích từ</option>
                                         <option value="0">0</option>
                                         <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="col w-50">
+                                <div class="label">To</div>
+                            </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" name="vm.dien_tich_max" title="Diện tích đến">
+                                    <select class="select" data-select="true" name="mc.dien_tich_max" title="Diện tích đến">
                                         <option value="">Diện tích đến</option>
                                         <option value="99999999999">Bất kỳ</option>
                                         <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
