@@ -8,8 +8,7 @@ internals.endpoints = [
 	path: '/api/find', 
 	handler: Handlers.findPOST, 
 	config : {
-		description: 'Get the default/home template.',
-		notes: 'Renders the /docs/home.md file as HTML.',
+		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
 		tags: ['api']
 	}
 },
@@ -22,8 +21,16 @@ internals.endpoints = [
 		notes: 'api',
 		tags: ['api']
 	}
-}
-
+},
+	{
+		method: 'POST',
+		path: '/api/detail',
+		handler: Handlers.detail,
+		config : {
+			description: 'Chi tiet cua mot bai dang',
+			tags: ['api']
+		}
+	}
 ];
 
 module.exports = internals;

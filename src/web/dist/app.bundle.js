@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c8e6f90af4956d3fd176"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3079d304110154127fb7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -833,13 +833,13 @@
 				           	var results = [];
 				           	if(predictions){
 				           		for (var i = 0, prediction; prediction = predictions[i]; i++) {
-					           		results.push(
-						           		{
-						           			description: prediction.description,
-						           			types:  	prediction.types, 
-						           			place_id: 	prediction.place_id
-						           		}
-					           		);
+				           			results.push(
+				           			{
+				           				description: prediction.description,
+				           				types:  	prediction.types, 
+				           				place_id: 	prediction.place_id
+				           			}
+				           			);
 				           		}	
 				           	}
 				           	
@@ -870,11 +870,33 @@
 				        		$scope.markers = [];
 				        		var current_bounds = map.getBounds();
 				        		$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
+				        		$scope.map.zoom = 15;
 				        		if(place.geometry.viewport){
+				        			$scope.map.zoom = 10;
 				        			map.fitBounds(place.geometry.viewport);	
-				        		} else if( !current_bounds.contains( place.geometry.location ) ){
-				        			var new_bounds = current_bounds.extend(place.geometry.location);
-				        			map.fitBounds(new_bounds);
+				        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
+				        			
+				        			var marker = {
+				        				id: -1,
+				        				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+				        				data: 'test'
+				        			}
+				        			$scope.markers.push(marker);
+
+				        			var p = map.getProjection();
+				        			if (p) {
+				        				var el = $(map.getDiv());
+				        				var zf = Math.pow(2, $scope.map.zoom)*2;
+				        				var dw = (el.width()  | 0) / zf;
+				        				var dh = (el.height() | 0) / zf;
+				        				var cpx = p.fromLatLngToPoint(place.geometry.location);
+				        				map.fitBounds(new maps.LatLngBounds(
+				        				 	p.fromPointToLatLng(new maps.Point(cpx.x - dw, cpx.y + dh)),
+				        				 	p.fromPointToLatLng(new maps.Point(cpx.x + dw, cpx.y - dh))));  
+				        			}
+
+				        			$scope.map.fit = false;
+									$scope.$apply();
 				        		}
 				        	}
 				        });
@@ -886,6 +908,9 @@
 					.append( "<span>" + item.description +  "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>" )
 					.appendTo( ul );
 				};
+			},
+			getBoundsAtLatLngWithZoom: function(maps,map, center, zoom) {
+
 			}
 
 		}
@@ -1063,10 +1088,16 @@
 	(function() {
 		'use strict';
 		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService){
+		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi){
 			var vm = this;
 			init();
-			//vm.initData = initData;
+			//nhannc
+			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			$scope.goToPageSearch = function(){
+				$state.go('search', { place : $scope.placeSearchId });
+			}
+
+			//End nhannc
 			vm.getAllAds = function(){
 				HouseService.getAllAds().then(function(res){
 					vm.sellingHouses = res.data;
@@ -1089,90 +1120,11 @@
 				// }
 			});
 			
-			
-			/*$scope.markers = [{
-				id: 0,
-				coords: {
-					latitude: 10.762622,
-					longitude: 106.660172
-				},
-				data: 'restaurant'
-			}, {
-				id: 1,
-				coords: {
-					latitude: 21.033333,
-					longitude: 105.849998
-				},
-				data: 'house'
-			}, {
-				id: 2,
-				coords: {
-					latitude: 16.0439,
-					longitude: 108.199
-				},
-				data: 'hotel'
-			}];*/
-			vm.search = function(param){
-				//alert(param);
-				HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
-					var result = res.data.list;
-					for (var i = 0; i < result.length; i++) { 
-			    		var ads = result[i];
-			    		if(result[i].place){
-			    			if(result[i].place.geo){
-				    			result[i].map={
-				    				center: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
-									},
-				    				marker: {
-										id: i,
-										coords: {
-											latitude: 	result[i].place.geo.lat,
-											longitude: 	result[i].place.geo.lon
-										},
-										options: {
-											labelContent : result[i].gia
-										},
-										data: 'test'
-									},
-									options:{
-										scrollwheel: false
-									},
-									zoom: 14	
-				    			}
-				    					
-							}
-			    		}
-			    		
-					}
-					$scope.ads_list = res.data.list;
-					$scope.markers = [];
-					for(var i = 0; i < res.data.list.length; i++) { 
-			    		var ads = res.data.list[i];
-			    		if(res.data.list[i].map)
-			    			$scope.markers.push(res.data.list[i].map.marker);
-					}
-				});
-			}
 			vm.formatLabel = function(model){
 				if(model)
 					return model.formatted_address;
 			}
-			vm.createHouse = function(desc,seller,email){
-	        	vm.getLocation();
-	        	return;
-	        	HouseService.createHouse(desc,seller,email).then(function(res){
-					//vm.sellingHouses = res.data;
-					alert(res.data);
-				});
-				//alert("done");
-
-			}
-			vm.detailHouse = function(){
-				alert('todo');
-
-			}
+			
 			function init(){
 				//nhannc
 				$scope.loaiNhaDatBan = [
@@ -1192,6 +1144,20 @@
 					{ type: "6", name: "Tìm kiếm nâng cao" },
 					{ type: "7", name: "Tất cả" }
 				];
+				uiGmapGoogleMapApi.then(function(maps){
+					var searchBox = new maps.places.Autocomplete(
+						(document.getElementById('autoCompleteHome')), {
+							types: ['geocode']
+						});
+					searchBox.addListener('place_changed', function () {
+						var place = searchBox.getPlace();
+						$scope.searchPlaceHomeSelected = place;
+						HouseService.findGooglePlaceById($scope.searchPlaceHomeSelected.place_id).then(function(response){
+							$scope.searchPlaceHomeSelected = response.data.result;
+							$scope.placeSearchId = $scope.searchPlaceHomeSelected.place_id;
+						});
+					})
+				})
 				//end nhannc
 				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 				$scope.options = {scrollwheel: false,labelContent: 'gia'};
@@ -1339,6 +1305,8 @@
 			    		if(res.data.list[i].map)
 			    			$scope.markers.push(res.data.list[i].map.marker);
 					}
+					$scope.fit = true;
+					$scope.map.zoom = 10;
 				});
 			}
 			vm.formatLabel = function(model){
@@ -1381,8 +1349,7 @@
 			    	});
 				 	
 				});
-				
-				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 				
 				$scope.options = {scrollwheel: false,labelContent: 'gia'};
 				$scope.markerCount = 3;

@@ -61,6 +61,8 @@
 		    		if(res.data.list[i].map)
 		    			$scope.markers.push(res.data.list[i].map.marker);
 				}
+				$scope.fit = true;
+				$scope.map.zoom = 10;
 			});
 		}
 		vm.formatLabel = function(model){
@@ -103,8 +105,7 @@
 		    	});
 			 	
 			});
-			
-			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 			
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;

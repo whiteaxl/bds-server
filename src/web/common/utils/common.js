@@ -15,13 +15,13 @@ window.RewayClientUtils = (function($) {
 			           	var results = [];
 			           	if(predictions){
 			           		for (var i = 0, prediction; prediction = predictions[i]; i++) {
-				           		results.push(
-					           		{
-					           			description: prediction.description,
-					           			types:  	prediction.types, 
-					           			place_id: 	prediction.place_id
-					           		}
-				           		);
+			           			results.push(
+			           			{
+			           				description: prediction.description,
+			           				types:  	prediction.types, 
+			           				place_id: 	prediction.place_id
+			           			}
+			           			);
 			           		}	
 			           	}
 			           	
@@ -52,11 +52,33 @@ window.RewayClientUtils = (function($) {
 			        		$scope.markers = [];
 			        		var current_bounds = map.getBounds();
 			        		$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
+			        		$scope.map.zoom = 15;
 			        		if(place.geometry.viewport){
+			        			$scope.map.zoom = 10;
 			        			map.fitBounds(place.geometry.viewport);	
-			        		} else if( !current_bounds.contains( place.geometry.location ) ){
-			        			var new_bounds = current_bounds.extend(place.geometry.location);
-			        			map.fitBounds(new_bounds);
+			        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
+			        			
+			        			var marker = {
+			        				id: -1,
+			        				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+			        				data: 'test'
+			        			}
+			        			$scope.markers.push(marker);
+
+			        			var p = map.getProjection();
+			        			if (p) {
+			        				var el = $(map.getDiv());
+			        				var zf = Math.pow(2, $scope.map.zoom)*2;
+			        				var dw = (el.width()  | 0) / zf;
+			        				var dh = (el.height() | 0) / zf;
+			        				var cpx = p.fromLatLngToPoint(place.geometry.location);
+			        				map.fitBounds(new maps.LatLngBounds(
+			        				 	p.fromPointToLatLng(new maps.Point(cpx.x - dw, cpx.y + dh)),
+			        				 	p.fromPointToLatLng(new maps.Point(cpx.x + dw, cpx.y - dh))));  
+			        			}
+
+			        			$scope.map.fit = false;
+								$scope.$apply();
 			        		}
 			        	}
 			        });
@@ -68,6 +90,9 @@ window.RewayClientUtils = (function($) {
 				.append( "<span>" + item.description +  "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>" )
 				.appendTo( ul );
 			};
+		},
+		getBoundsAtLatLngWithZoom: function(maps,map, center, zoom) {
+
 		}
 
 	}

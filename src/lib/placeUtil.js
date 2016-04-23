@@ -2,10 +2,10 @@
 
 var _ = require("lodash");
 
-var internals = {};
+var placeUtil = {};
 
 
-internals.getDuAnFullName = function(place) {
+placeUtil.getDuAnFullName = function(place) {
     if (!place.duAn) {
         return null;
     }
@@ -29,7 +29,7 @@ internals.getDuAnFullName = function(place) {
     return ret;
 };
 
-internals.getDiaChinh = function(diaChi) {
+placeUtil.getDiaChinh = function(diaChi) {
     let spl = diaChi.split(",");
     let diaChinh = {};
 
@@ -58,7 +58,7 @@ internals.getDiaChinh = function(diaChi) {
     return diaChinh;
 };
 
-internals.fullName = function(place) {
+placeUtil.fullName = function(place) {
     //todo: other types
     if (place.placeType === "Quan" || place.placeType  === "Huyen") {
         return place.placeName + ", " + place.parentName;
@@ -70,14 +70,15 @@ internals.fullName = function(place) {
 
 
 
-internals.type = {
+placeUtil.type = {
     TINH : "administrative_area_level_1",
     HUYEN : "administrative_area_level_2",
     XA : "administrative_area_level_3",
-    XA2 : "sublocality_level_1"
+    XA2 : "sublocality_level_1",
+    DUONG : "route"
 };
 
-internals.typeName = {
+placeUtil.typeName = {
     TINH : "Tinh",
     HUYEN : "Huyen",
     XA : "Xa",
@@ -86,53 +87,57 @@ internals.typeName = {
 
 };
 
-internals.isHuyen = function(place) {
+
+placeUtil.isHuyen = function(place) {
     let placeTypes=place.types;
 
-    if (_.indexOf(placeTypes, internals.type.HUYEN) > -1) {
+    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
         return true;
     }
 
     if (_.indexOf(placeTypes, 'locality') > -1
         && _.indexOf(placeTypes, 'political') > -1
-        && place.description&&place.description.indexOf("tp.") > -1
+        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
     ) {
         return true;
     }
 };
 
-internals.getTypeName = function(place) {
+placeUtil.getTypeName = function(place) {
     let placeTypes = place.types;
 
-    if (_.indexOf(placeTypes, internals.type.TINH) > -1) {
-        return internals.typeName.TINH;
+    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
+        return placeUtil.typeName.TINH;
     }
-    if (internals.isHuyen(place)) {
-        return internals.typeName.HUYEN;
-    }
-
-    if (_.indexOf(placeTypes, internals.type.XA) > -1) {
-        return internals.typeName.XA;
+    if (placeUtil.isHuyen(place)) {
+        return placeUtil.typeName.HUYEN;
     }
 
-    if (_.indexOf(placeTypes, internals.type.XA2) > -1) {
-        return internals.typeName.XA;
+    if (_.indexOf(placeTypes, placeUtil.type.XA) > -1) {
+        return placeUtil.typeName.XA;
     }
 
-    return internals.typeName.DIA_DIEM;
+    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+        return placeUtil.typeName.XA;
+    }
+
+    if (_.indexOf(placeTypes, placeUtil.type.DUONG) > -1) {
+        return placeUtil.typeName.DUONG;
+    }
+
+    return placeUtil.typeName.DIA_DIEM;
 };
 
 
-internals.isOnePoint = function(place) {
-    let name = internals.relandTypeName || internals.getTypeName(place);
-    return  name === internals.typeName.DIA_DIEM || name === internals.typeName.DUONG;
+placeUtil.isOnePoint = function(place) {
+    let name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
 };
 
-
-module.exports  = internals;
+module.exports  = placeUtil;
 
 if (typeof window !== 'undefined')
-   window.RewayPlaceUtil = internals;
+   window.RewayPlaceUtil = placeUtil;
 
 
 
