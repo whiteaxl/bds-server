@@ -48,5 +48,10 @@
     "style-loader": "^0.13.0",
     "vision": "^4.0.1",
     "webpack": "^1.12.12"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1",
+    "supertest": "^1.2.0"
   }
 }
