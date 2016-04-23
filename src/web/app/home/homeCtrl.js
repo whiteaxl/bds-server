@@ -7,7 +7,7 @@
 		//nhannc
 		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		$scope.goToPageSearch = function(){
-			$state.go('search', { place : $scope.placeSearchId });
+			$state.go('search', { "place" : $scope.placeSearchId },{location: true});
 		}
 
 		//End nhannc

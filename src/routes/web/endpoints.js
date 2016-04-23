@@ -18,7 +18,7 @@ internals.endpoints = [
 //{ method: 'GET', path: '/api/houses/find', config: house.findHouse},
 //{ method: 'POST', path: '/api/houses/create', config: house.createHouse},
 ,{ 
-	method: 'GET',
+	method: ['GET','POST'],
 	path: '/web/index.html', 
 	handler: function(requet,reply){
 		reply.view('index.html');

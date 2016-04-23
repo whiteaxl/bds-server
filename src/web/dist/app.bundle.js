@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7024d04b9afec61e9ab9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1b8267b8dc32537443ae"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -989,7 +989,7 @@
 			//nhannc
 			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			$scope.goToPageSearch = function(){
-				$state.go('search', { place : $scope.placeSearchId });
+				$state.go('search', { "place" : $scope.placeSearchId },{location: true});
 			}
 
 			//End nhannc
