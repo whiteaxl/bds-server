@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "25db0b1ba22ed7b4056f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4f43c2b582b8a06024a6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1262,11 +1262,6 @@
 			if(!vm.placeId)
 				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			init();
-			/*HouseService.findGooglePlaceById(vm.placeId).then(function(response){
-				var place = response.data.result;
-				$scope.searchPlaceSelected = place;
-				vm.search();
-			});*/
 			
 
 			$scope.$on('$viewContentLoaded', function(){
@@ -1369,39 +1364,6 @@
 				$scope.hot_ads_cat = window.hot_ads_cat;
 				$scope.ads_list = window.testData;
 				$scope.bodyClass= "page-home";
-				/*for(var i = 0; i < $scope.ads_list.length; i++) { 
-		    		var ads = $scope.ads_list[i];
-		    		if(ads.place){
-		    			if(ads.place.geo){
-			    			ads.map={
-			    				center: {
-									latitude: 	ads.place.geo.lat,
-									longitude: 	ads.place.geo.lon
-								},
-			    				marker: {
-									id: i,
-									coords: {
-										latitude: 	ads.place.geo.lat,
-										longitude: 	ads.place.geo.lon
-									},
-									options: {
-										//labelContent : ads.gia,
-										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14	
-			    			}
-			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
-			    			$scope.markers.push(ads.map.marker);
-			    					
-						}
-		    		}
-				}*/
-
 			}
 			
 
