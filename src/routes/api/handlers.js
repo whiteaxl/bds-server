@@ -232,8 +232,17 @@ function findAds(queryCondition, reply) {
 
         if (place.placeId) {
             services.getPlaceDetail(place.placeId, (placeDetail) => {
-                placeDetail.fullName = placeDetail.name;
-                _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    placeDetail.fullName = placeDetail.name;
+                    _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+                }
+
+
             }, (error) => {
                 reply(Boom.internal("Call google detail fail", null, null));
             });
