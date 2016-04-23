@@ -61,7 +61,7 @@
 		    		if(res.data.list[i].map)
 		    			$scope.markers.push(res.data.list[i].map.marker);
 				}
-				$scope.fit = true;
+				$scope.map.fit = true;
 				$scope.map.zoom = 10;
 			});
 		}
