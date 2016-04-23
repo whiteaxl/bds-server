@@ -1,7 +1,6 @@
 'use strict';
 
 var Boom = require('boom');
-//var Ads = require('../../database/models/Ads');
 
 var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
@@ -11,12 +10,13 @@ var QueryOps = require('../../lib/QueryOps');
 var logUtil = require("../../lib/logUtil");
 var util = require("../../lib/utils");
 var PlacesModel = require('../../dbservices/Place');
-var AdsModel = require('../../dbservices/Ads');
+var AdsService = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
 var http = require('http');
 var https = require('https');
 var services = require("../../lib/services");
-
+var constant = require("../../lib/constant");
+var danhMuc  = require("../../lib/DanhMuc");
 
 var _ = require("lodash");
 var moment = require("moment");
@@ -24,6 +24,8 @@ var moment = require("moment");
 var geoUtil = require("../../lib/geoUtil");
 
 var DEFAULT_SEARCH_RADIUS = 5; //km
+
+var adsService = new AdsService();
 
 var Q_FIELD = {
 	limit : "limit",
@@ -499,6 +501,117 @@ function _validateFindRequestParameters(req, reply) {
     return true;
 }
 
+//-------------------------  DETAIL -----------------------------
 
+/**
+ *
+ * Request: adsID
+ * Response:
+ * adsID,
+ * image :{
+ *  cover, cover_small,images_small,images
+ * }
+ * gia,
+ * giaFmt : eg "20ty",
+ * place : {
+ *  duAn, diaChi, diaChinh, geo : {lat, lon}
+ * }
+ * loaiTin : Number,
+ * loaiTinFmt : String : "ban"/"Cho Thue"
+ * loaiNhaDat : Number, lpaiNhaDatFmt
+ * dienTich,
+ * dienTichFmt: eg "200m2",
+ * soPhongTam, soPhongNgu, soTang,
+ * soNgayDaDangTinFmt : eg "Tin da dang 3 ngay",
+ * chiTiet,
+ * huongNha,
+ * ngayDangTin, ngayDangTinFmt : "20/03/2016"
+ * luotXem : number
+ * moiGioiTuongTu : Array {
+     *  userID : "12345",
+        cover : "http://www.odilederousiers.fr/charles/dl/profile.png",
+        diemDanhGia: 3,
+        numberOfAds : 10,
+        phone: "0123456789",
+        name: "Nguyen Van Thang"
+    * }
+ */
+
+
+internals.detail = function(req, reply) {
+    var query = req.payload;
+    if (!query.hasOwnProperty('adsID')) {
+        reply(Boom.badRequest());
+    } else {
+        let adsID =  query.adsID;
+        adsService.getAds(adsID, (err, result) => {
+            if (err) {
+                console.log(err);
+                if (err.code === 13) {
+                    reply({
+                        status : constant.STS.SUCCESS
+                    })
+                } else {
+                    reply(Boom.badImplementation("Error when getting detail for asdID: " + adsID));
+                }
+
+                return;
+            }
+
+            var ads = result.value;
+
+            _transformDetailAds(ads);
+
+            reply({
+                ads: ads,
+                status : constant.STS.SUCCESS
+            });
+        });
+    }
+};
+
+//to client format
+function _transformDetailAds(ads) {
+    ads.loaiTinFmt = danhMuc.LoaiTin[ads.loaiTin];
+    if (ads.loaiNhaDat) {
+        ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatBan[ads.LoaiNhaDatThue] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
+    }
+
+    ads.giaFmt = util.getPriceDisplay(ads.gia);
+    ads.dienTichFmt = util.getDienTichDisplay(ads.dienTich);
+
+    if (ads.ngayDangTin) {
+        var NgayDangTinDate= moment(ads.ngayDangTin, "DD-MM-YYYY");
+        ads.soNgayDaDangTin = moment().diff(NgayDangTinDate, 'days');
+        ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
+
+        ads.ngayDangTinFmt = ads.ngayDangTin.replace("-", "/");
+    }
+
+    ads.luotXem = 0;
+
+    //dummy moi gioi
+    var mg1 = {
+        userID : "12345",
+        cover : "http://www.odilederousiers.fr/charles/dl/profile.png",
+        diemDanhGia: 3,
+        numberOfAds : 10,
+        phone: "0123456789",
+        name: "Nguyen Van Thang"
+    };
+
+    var mg2 = {
+        cover : "https://avatars0.githubusercontent.com/u/12259246?v=3&s=96",
+        userID : "12346",
+        diemDanhGia: 5,
+        numberOfAds : 20,
+        phone: "0123456781",
+        name: "Phan Nhat Vuong"
+    };
+
+    ads.moiGioiTuongTu = [mg1, mg2];
+
+
+}
 
 module.exports = internals;

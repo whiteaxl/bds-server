@@ -7,7 +7,7 @@ var server = supertest.agent("http://localhost:5000");
 
 // UNIT test begin
 
-describe("SAMPLE unit test",function(){
+describe("Find API testsuite",function(){
 
     // #1 should return error 500
 
