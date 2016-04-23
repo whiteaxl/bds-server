@@ -196,7 +196,7 @@ function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderB
 
         if (place.geometry && place.geometry.viewport) {
             let vp = place.geometry.viewport;
-            geoBox = [vp.southwest.lat, vp.southwest.lon, vp.northeast.lat, vp.northeast.lon];
+            geoBox = [vp.southwest.lat, vp.southwest.lng, vp.northeast.lat, vp.northeast.lng];
         }
 
         query = ViewQuery.from('ads', 'all_ads');
@@ -474,18 +474,30 @@ function orderAds(filtered, orderCondition) {
 internals.findPOST = function(req, reply) {
 	logUtil.info("findPOST - query parameter: " );
     console.log(req.payload);
+    //check parameter
+    if (_validateFindRequestParameters(req, reply)) {
+        try {
+            findAds(req.payload, reply)
+        } catch (e) {
+            logUtil.error(e);
+            //console.trace(e);
+            console.log(e, e.stack.split("\n"));
 
-	try {
-		findAds(req.payload, reply) 	
-	} catch (e) {
-		logUtil.error(e);
-		//console.trace(e);
-        console.log(e, e.stack.split("\n"));
-
-		reply(Boom.badImplementation());
-	}
-	
+            reply(Boom.badImplementation());
+        }
+    }
 };
+
+function _validateFindRequestParameters(req, reply) {
+    var query = req.payload;
+    if (!query.hasOwnProperty('loaiTin')) {
+        reply(Boom.badRequest());
+
+        return false;
+    }
+
+    return true;
+}
 
 
 
