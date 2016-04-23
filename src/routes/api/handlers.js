@@ -28,7 +28,10 @@ var Q_FIELD = {
     radiusInKm: "radiusInKm",
     gia : "gia",
     dienTich : "dienTich",
-    loaiTin : "loaiTin"
+    loaiTin : "loaiTin",
+    loaiNhaDat : "loaiNhaDat",
+    soPhongNgu : "soPhongNgu",
+    soPhongTam : "soPhongTam"
 };
 
 var internals = {};
@@ -352,11 +355,90 @@ function orderAds(filtered, orderCondition) {
 }
 
 
+
+
 internals.findPOST = function(req, reply) {
 	logUtil.info("findPOST - query: " + req.payload);
 	try {
 		//let x=1/0;
-		findAds(req.payload, reply) 	
+		//findAds(req.payload, reply)
+        var  queryCondition = req.payload;
+        var adsModel = new AdsModel(myBucket);
+        var orderbyList = queryCondition.orderBy;
+
+        var orderByName ="";
+        var orderByType ="";
+
+        let listResult = [];
+
+        if (orderbyList){
+            var arr = orderbyList.split(",");
+            var firstElement = arr[0];
+            var len =   firstElement.length();
+            var idxASC = firstElement.indexOf("ASC");
+            var idxDESC = firstElement.indexOf("DESC");
+
+            if(idxASC >-1){
+                orderByName = firstElement.substring(0,len -3);
+                orderByType =  "ASC";
+            }
+            if(idxDESC >-1){
+                orderByName = firstElement.substring(0,len -4);
+                orderByType =  "DESC";
+            }
+        }
+        console.log("111111111111111111");
+        console.log(util.popField(queryCondition, Q_FIELD.loaiTin));
+        console.log(util.popField(queryCondition, Q_FIELD.loaiNhaDat));
+        console.log("2222222222222");
+
+        if (orderByName){
+            listResult = adsModel.queryAllData(util.popField(queryCondition, Q_FIELD.loaiTin),
+                util.popField(queryCondition, Q_FIELD.loaiNhaDat),
+                util.popField(queryCondition, Q_FIELD.gia),
+                util.popField(queryCondition, Q_FIELD.soPhongNgu),
+                util.popField(queryCondition, Q_FIELD.soPhongTam),
+                util.popField(queryCondition, Q_FIELD.dienTich),
+                orderByName,
+                orderByType
+            );
+        }
+        else{
+            console.log("33333");
+            listResult = adsModel.queryAllData(util.popField(queryCondition, Q_FIELD.loaiTin),
+                util.popField(queryCondition, Q_FIELD.loaiNhaDat),
+                util.popField(queryCondition, Q_FIELD.gia),
+                util.popField(queryCondition, Q_FIELD.soPhongNgu),
+                util.popField(queryCondition, Q_FIELD.soPhongTam),
+                util.popField(queryCondition, Q_FIELD.dienTich)
+            );
+        }
+
+        //filter by distance
+        let transformed = [];
+        listResult.forEach((e) => {
+            let ads = e.value;
+
+            let place = ads.place;
+            ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+            console.log("Distance for " + ads.place.diaChi +  "= " + ads.distance + "m");
+
+            //filter by distance bcs get by geoBox, not radius
+            if (isSearchByDistance) {
+                if (ads.distance < radiusInKm * 1000) {
+                    transformed.push(ads);
+                }
+            } else {
+                transformed.push(ads)
+            }
+        });
+
+        logUtil.info("There are " + transformed.length + " ads");
+        reply({
+            length: transformed.length,
+            list: transformed
+        });
+
 	} catch (e) {
 		logUtil.error(e);
 		//console.trace(e);
