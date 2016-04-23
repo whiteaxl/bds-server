@@ -67,7 +67,8 @@ describe("Find API testsuite",function(){
             .send({
                 "loaiTin":0,"giaBETWEEN":[0,9999999],"soPhongNguGREATER":"0"
                 ,"soTangGREATER":"0","dienTichBETWEEN":[0,9999999],
-                "place":{"fullName":"Current Location","currentLocation":{"lat":21.041705,"lon":105.760993},"radiusInKm":0.5},
+                "place":{"fullName":"Current Location"
+                    ,"currentLocation":{"lat":21.041705,"lon":105.760993},"radiusInKm":0.5},
                 "limit":200,
                 "ngayDaDang":30
 
@@ -110,6 +111,7 @@ describe("Find API testsuite",function(){
             .end(function(err,res){
                 // HTTP status should be 200
                 res.status.should.equal(200);
+                console.log("All by diaChinh, so kq:" + res.body.length);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -126,6 +128,35 @@ describe("Find API testsuite",function(){
     };
 
     it("Tim kiem theo DiaChinh",testDiaChinh);
+
+    //-----------------------------
+    var testLoaiNhaDat = function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":"0"
+                ,"soTangGREATER":"0","dienTichBETWEEN":[0,9999999]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
+                    ,"radiusInKm":0.5},
+                "limit":200,"ngayDaDang":30
+
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+                // HTTP status should be 200
+                res.status.should.equal(200);
+
+                console.log("\nAll by diaChinh, loaiNhaDat 1, so kq:" + res.body.length);
+
+                // Error key should be false.
+                //res.body.error.should.equal(false);
+                done();
+            });
+    };
+
+    it("Tim kiem theo LoaiNhaDat",testLoaiNhaDat);
 
 
 });
