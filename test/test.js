@@ -148,7 +148,7 @@ describe("Find API testsuite",function(){
                 // HTTP status should be 200
                 res.status.should.equal(200);
 
-                console.log("\nAll by diaChinh, loaiNhaDat 1, so kq:" + res.body.length);
+                console.log("\nAll by diaChinh, loaiNhaDat 2, so kq:" + res.body.length);
 
                 // Error key should be false.
                 //res.body.error.should.equal(false);
