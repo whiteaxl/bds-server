@@ -56,29 +56,34 @@ internals.bdsCom = function(req, reply) {
 
 		adsObj._type = "Ads";
 		let coverSmall = headers[adsDto.title].cover;
-		let images = [];
+		/*
+        let images = [];
 		if (adsDto.images_small) {
 			for (var i in adsDto.images_small) {
 				images[i] = adsDto.images_small[i].replace("80x60", "745x510");
 			}
 		}
+		*/
 
 		adsObj.image = {
-			cover: coverSmall.replace("120x90", "745x510"),
-			cover_small : coverSmall,
-			images_small : adsDto.images_small,
-			images : images
+			//cover: coverSmall.replace("120x90", "745x510"),
+            cover: coverSmall,
+			//cover_small : coverSmall,
+			//images_small : adsDto.images_small,
+			images : adsDto.images_small
 		};
 		adsObj.adsID = adsDto.title;
 		adsObj.dangBoi = {
 			userID : adsDto.cust_email,
 			email: adsDto.cust_email,
 			name: adsDto.cust_dangBoi,
-			phone: adsDto.cust_phone || adsDto.cust_mobile,
+			phone: adsDto.cust_phone || adsDto.cust_mobile
 		};
 		adsObj.ngayDangTin = adsDto.ngayDangTin;
 		adsObj.gia = adsDto.gia;
+		adsObj.price_raw = adsDto.price_raw;
 		adsObj.dienTich = adsDto.dienTich;
+		adsObj.area_raw = adsDto.area_raw;
 		adsObj.place = adsDto.place;
 		adsObj.place.diaChinhFullName = adsDto.diaChi;
 		adsObj.soPhongNgu = adsDto.soPhongNgu;
@@ -89,6 +94,11 @@ internals.bdsCom = function(req, reply) {
 		adsObj.ten_loaiTin = adsDto.ten_loaiTin;
 		adsObj.ten_loaiNhaDat = adsDto.ten_loaiNhaDat;
 		adsObj.chiTiet = adsDto.chiTiet;
+		adsObj.huongNha = adsDto.huongNha;
+
+		if (adsObj.gia && adsObj.dienTich) {
+			adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
+		}
 
 		countInsert++;
 

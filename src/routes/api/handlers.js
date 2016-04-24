@@ -36,7 +36,12 @@ var Q_FIELD = {
     radiusInKm: "radiusInKm",
     gia : "gia",
     dienTich : "dienTich",
-    loaiTin : "loaiTin"
+    loaiTin : "loaiTin",
+    loaiNhaDat : "loaiNhaDat",
+    soPhongNgu : "soPhongNgu",
+    soPhongTam: "soPhongTam",
+    soTang : "soTang",
+    huongNha : "huongNha"
 };
 
 var internals = {};
@@ -114,6 +119,17 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
 
         listResult.forEach((e) => {
             let ads = e.value;
+            //images:
+            var targetSize = "745x510"; //350x280
+            if (ads.image.cover) {
+                ads.image.cover = ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize);
+            }
+            if (ads.image.images) {
+                ads.image.images = ads.image.images.map((e) => {
+                    return e.replace("80x60", targetSize);
+                });
+            }
+
 
             let place = ads.place;
             //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
@@ -136,11 +152,15 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
             orderAds(transformed, orderBy);
         } else if (isSearchByDistance) {
             var compare = function(a, b) {
-                if (a.distance && b.distance) {
-                    return a.distance > b.distance
+                if (a.distance) {
+                    if (b.distance) {
+                        return a.distance > b.distance
+                    } else {
+                        return -1
+                    }
+                } else {
+                    return 1
                 }
-
-                return 0;
             };
 
             transformed.sort(compare);
@@ -233,8 +253,17 @@ function findAds(queryCondition, reply) {
 
         if (place.placeId) {
             services.getPlaceDetail(place.placeId, (placeDetail) => {
-                placeDetail.fullName = placeDetail.name;
-                _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    placeDetail.fullName = placeDetail.name;
+                    _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+                }
+
+
             }, (error) => {
                 reply(Boom.internal("Call google detail fail", null, null));
             });
@@ -334,17 +363,19 @@ function match(attr, value, doc) {
 	idx = attr.indexOf(QueryOps.GREATER);
 	if (idx>0) {
 		//if 0 then no need to check
+        value = Number(value);
+
 		if (value===0) {
 			return true;
 		}
 
-		//
+        var field = attr.substring(0, idx);
+
+        //
 		if (!ads[field]) {
 			return false;
 		}
 
-		var field = attr.substring(0, idx);
-		
 		let ret = ads[field] >= value;
 
 		if (!ret) {
@@ -379,7 +410,7 @@ function match(attr, value, doc) {
 	}
 
 	//default is equals
-	if (ads[attr] == value) {
+	if (ads[attr] === value) {
         return true;
     } else {
         logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value: "+ ads[attr] + ", searching value:" + value);
@@ -407,6 +438,14 @@ function orderAds(filtered, orderCondition) {
 		console.log("Order by field:" + field);
         var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
+            if (a[field]!==0 && !a[field]) {
+                return 1;
+            }
+
+            if (b[field]!==0 && !b[field]) {
+                return -1;
+            }
+
 			if (a[field] > b[field])
 				return isASC;
 			if (a[field] < b[field])
@@ -575,10 +614,10 @@ internals.detail = function(req, reply) {
 function _transformDetailAds(ads) {
     ads.loaiTinFmt = danhMuc.LoaiTin[ads.loaiTin];
     if (ads.loaiNhaDat) {
-        ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatBan[ads.LoaiNhaDatThue] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
+        ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatThue[ads.loaiNhaDat] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
     }
 
-    ads.giaFmt = util.getPriceDisplay(ads.gia);
+    ads.giaFmt = util.getPriceDisplay(ads.gia, ads.loaiTin);
     ads.dienTichFmt = util.getDienTichDisplay(ads.dienTich);
 
     if (ads.ngayDangTin) {
@@ -586,10 +625,11 @@ function _transformDetailAds(ads) {
         ads.soNgayDaDangTin = moment().diff(NgayDangTinDate, 'days');
         ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
 
-        ads.ngayDangTinFmt = ads.ngayDangTin.replace("-", "/");
+        ads.ngayDangTinFmt = ads.ngayDangTin.replace(/-/g, "/");
     }
 
-    ads.luotXem = 0;
+    //dummy
+    ads.luotXem = 1232;
 
     //dummy moi gioi
     var mg1 = {

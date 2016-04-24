@@ -151,6 +151,15 @@ function convertGia(ads) {
 }
 
 
+var setHuongNha = function (ads, url) {
+	for (var i=1; i<=8; i++) {
+		if (url.indexOf("/-1/-1/-1/"+i) > -1) {
+			ads.huongNha = i;
+		}
+	}
+};
+
+
 class BDSExtractor {
 	constructor() {
 	}
@@ -230,10 +239,11 @@ class BDSExtractor {
 		    let ads = {
 		    	title: listing.title,
 		    	images_small: listing.images,
+                price_raw: listing.price,
 		    	price_value: listing.price.split(' ')[0],
 		    	price_unit: listing.price.split(' ')[1], 
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
-		    	area_full: listing.area, 
+		    	area_raw: listing.area,
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
                 chiTiet: listing.chiTiet,
 		    	hdLat : Number(listing.hdLat), 
@@ -277,6 +287,8 @@ class BDSExtractor {
 		    convertGia(ads);
 
 			_buildPlace(ads);
+
+			setHuongNha(ads, url); //base on url
 
 		    handleData(2, ads);
 		})

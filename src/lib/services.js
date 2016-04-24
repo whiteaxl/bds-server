@@ -17,10 +17,7 @@ services.getPlaceDetail = function(placeId, callback, callbackError) {
 
     request({url: url,json: true
     }, function (error, response, body) {
-        console.log("OK1111!");
-
         if (!error && response.statusCode === 200) {
-            console.log("OK!");
             callback(body.result);
         } else {
             console.log("Error when getPlaceDetail" + error);

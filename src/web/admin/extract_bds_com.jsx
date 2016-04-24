@@ -33,11 +33,30 @@ export default class ExtractBDS extends React.Component {
                     <input id="pageFrom" name="pageFrom" value={this.state.pageFrom} />
                 
                     <label> To Page: </label> 
-                    <input id="pageTo" name="pageTo"  value={this.state.pageTo}   />
+                    <input id="pageTo" name="pageTo"  value='5'   />
                     
 
                     <button type="Submit"><b>Extract</b> </button>
-                    
+                </form>
+
+                <br/>
+                <br/>
+
+                <form >
+                    <label> Root URL: 1: dong, 2:tay, 3: nam...</label>
+                    <br/>
+                    <input id="rootURL" name="rootURL" size="100" value='http://batdongsan.com.vn/nha-dat-ban/-1/-1/-1/1'  />
+
+                    <br/>
+
+                    <label> From Page: </label>
+                    <input id="pageFrom" name="pageFrom" value={this.state.pageFrom} />
+
+                    <label> To Page: </label>
+                    <input id="pageTo" name="pageTo"  value='5'   />
+
+
+                    <button type="Submit"><b>By HuongNha</b> </button>
                 </form>
 
                 <br/>
