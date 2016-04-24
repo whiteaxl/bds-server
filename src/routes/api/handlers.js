@@ -39,7 +39,7 @@ var Q_FIELD = {
     loaiTin : "loaiTin",
     loaiNhaDat : "loaiNhaDat",
     soPhongNgu : "soPhongNgu",
-    soPhongTam: "soPhongNgu",
+    soPhongTam: "soPhongTam",
     soTang : "soTang"
 };
 
@@ -346,6 +346,8 @@ function match(attr, value, doc) {
 	idx = attr.indexOf(QueryOps.GREATER);
 	if (idx>0) {
 		//if 0 then no need to check
+        value = Number(value);
+
 		if (value===0) {
 			return true;
 		}

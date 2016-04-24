@@ -101,7 +101,7 @@ describe("Find API testsuite",function(){
         server
             .post("/api/find")
             .send({
-                "loaiTin":0,"giaBETWEEN":[0,9999999],"soPhongNguGREATER":"0","soTangGREATER":"0","dienTichBETWEEN":[0,9999999]
+                "loaiTin":0,"giaBETWEEN":[0,9999999],"soPhongNguGREATER":"0","soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc","relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi","radiusInKm":0.5},
                 "limit":200,"ngayDaDang":30
 
@@ -134,8 +134,8 @@ describe("Find API testsuite",function(){
         server
             .post("/api/find")
             .send({
-                "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":"0"
-                ,"soTangGREATER":"0","dienTichBETWEEN":[0,9999999]
+                "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
