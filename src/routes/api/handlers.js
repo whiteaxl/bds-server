@@ -139,11 +139,15 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
             orderAds(transformed, orderBy);
         } else if (isSearchByDistance) {
             var compare = function(a, b) {
-                if (a.distance && b.distance) {
-                    return a.distance > b.distance
+                if (a.distance) {
+                    if (b.distance) {
+                        return a.distance > b.distance
+                    } else {
+                        return -1
+                    }
+                } else {
+                    return 1
                 }
-
-                return 0;
             };
 
             transformed.sort(compare);
@@ -421,6 +425,14 @@ function orderAds(filtered, orderCondition) {
 		console.log("Order by field:" + field);
         var compare = function(a, b) {
 				//console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
+            if (a[field]!==0 && !a[field]) {
+                return 1;
+            }
+
+            if (b[field]!==0 && !b[field]) {
+                return -1;
+            }
+
 			if (a[field] > b[field])
 				return isASC;
 			if (a[field] < b[field])
@@ -589,10 +601,10 @@ internals.detail = function(req, reply) {
 function _transformDetailAds(ads) {
     ads.loaiTinFmt = danhMuc.LoaiTin[ads.loaiTin];
     if (ads.loaiNhaDat) {
-        ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatBan[ads.LoaiNhaDatThue] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
+        ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatThue[ads.loaiNhaDat] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
     }
 
-    ads.giaFmt = util.getPriceDisplay(ads.gia);
+    ads.giaFmt = util.getPriceDisplay(ads.gia, ads.loaiTin);
     ads.dienTichFmt = util.getDienTichDisplay(ads.dienTich);
 
     if (ads.ngayDangTin) {
@@ -600,10 +612,11 @@ function _transformDetailAds(ads) {
         ads.soNgayDaDangTin = moment().diff(NgayDangTinDate, 'days');
         ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
 
-        ads.ngayDangTinFmt = ads.ngayDangTin.replace("-", "/");
+        ads.ngayDangTinFmt = ads.ngayDangTin.replace(/-/g, "/");
     }
 
-    ads.luotXem = 0;
+    //dummy
+    ads.luotXem = 1232;
 
     //dummy moi gioi
     var mg1 = {

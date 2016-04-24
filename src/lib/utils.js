@@ -25,16 +25,22 @@ var locDauInt = function(str) {
     return str;
 };
 
-util.getPriceDisplay = function(val) {
+util.getPriceDisplay = function(val, loaiTin) {
     if (!val) {
         return "Thỏa thuận";
     }
 
-    if (val < 1000) {
-        return val + " triệu";
+    if (loaiTin===0) { //ban
+        if (val < 1000) {
+            return val + " TRIỆU";
+        }
+
+        return (val/1000).toFixed(2) + " TỶ";
+    } else {
+        return val.toFixed(2) + " TRIỆU/THÁNG";
     }
 
-    return (val/1000).toFixed(2) + " tỷ";
+
 };
 
 util.getDienTichDisplay = function(val) {

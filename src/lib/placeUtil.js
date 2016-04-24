@@ -35,7 +35,13 @@ placeUtil.getDiaChinh = function(diaChi) {
 
     let i = spl.length;
     diaChinh.tinh = spl[--i].trim();
-    diaChinh.huyen = spl[--i].trim();
+    let rawHuyen = spl[--i];
+    if (rawHuyen) {
+        diaChinh.huyen = huyen.trim();
+    } else {
+        console.log("WARN -- no HUYEN information " + diaChi);
+    }
+
     if (i>0) {
         let v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {

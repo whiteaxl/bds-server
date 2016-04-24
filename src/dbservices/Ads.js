@@ -5,6 +5,7 @@ var N1qlQuery = require('couchbase').N1qlQuery;
 var ViewQuery = couchbase.ViewQuery;
 var cluster = new couchbase.Cluster('couchbase://localhost:8091');
 var bucket = cluster.openBucket('default');
+bucket.enableN1ql(['127.0.0.1:8093']);
 
 class AdsModel {
 	constructor(myBucket) {
@@ -12,7 +13,7 @@ class AdsModel {
 	}
 
 	upsert(adsDto) {
-		this.myBucket.upsert(adsDto.adsID, adsDto, function(err, res) {
+        bucket.upsert(adsDto.adsID, adsDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			}
@@ -32,12 +33,31 @@ class AdsModel {
         });
     }
 
+    countAllAds(onSuccess) {
+        var  sql = "select count(*) cnt from default where _type = 'Ads'";
+        var query = N1qlQuery.fromString(sql);
+
+        bucket.query(query, function(err, res) {
+            if (err) {
+                console.log('query failed'.red, err);
+                return;
+            }
+            console.log('success!', res);
+
+            onSuccess(res[0].cnt);
+        });
+    }
+
+    getAds(adsID, callback) {
+        bucket.get(adsID, callback);
+    }
+
 //?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
 // &spPhongTamGREATER=1&dienTichBETWEEN=50,200
 // &orderBy=giaASC,dienTichDESC,soPhongNguASC
 queryAllData(loaiTin,loaiNhaDat,gia,soPhongNgu,soPhongTam,dienTich,orderByField,orderByType,limit){
 
-    bucket.enableN1ql(['127.0.0.1:8093']); // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
+     // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
     var  sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
 
