@@ -55,7 +55,7 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.should.have.property('giaFmt');
                 res.body.ads.place.diaChi.should.equal('Dự án The Navita, Thủ Đức, Hồ Chí Minh');
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatBan[1]);
-                res.body.ads.dienTichFmt.should.equal('80 m²');
+                res.body.ads.dienTichFmt.should.equal('80m²');
                 res.body.ads.soPhongNgu.should.equal(2);
                 res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 9 ngày');
                 res.body.ads.ngayDangTinFmt.should.equal('15/04/2016');
@@ -90,7 +90,7 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.giaM2.should.equal(21.094);
                 res.body.ads.place.diaChi.should.equal('Đường Liên khu 4-5, Phường Bình Hưng Hòa B, Bình Tân, Hồ Chí Minh');
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatBan[2]);
-                res.body.ads.dienTichFmt.should.equal('64 m²');
+                res.body.ads.dienTichFmt.should.equal('64m²');
                 res.body.ads.soPhongNgu.should.equal(2);
                 res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 2 ngày');
                 res.body.ads.ngayDangTinFmt.should.equal('22/04/2016');
@@ -123,7 +123,7 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.giaM2.should.equal(0.138);
                 res.body.ads.place.diaChi.should.equal('Đường Tiền Giang, Tân Bình, Hồ Chí Minh');
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatThue[99]);
-                res.body.ads.dienTichFmt.should.equal('40 m²');
+                res.body.ads.dienTichFmt.should.equal('40m²');
                 res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 5 ngày');
 
                 done();
@@ -148,7 +148,7 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.giaFmt.should.equal('50.00 TRIỆU/THÁNG');
                 res.body.ads.giaM2.should.equal(0.313);
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatThue[2]);
-                res.body.ads.dienTichFmt.should.equal('160 m²');
+                res.body.ads.dienTichFmt.should.equal('160m²');
                 res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 4 ngày');
                 res.body.ads.soTang.should.equal(5);
 

@@ -96,10 +96,7 @@ describe("02.Find API testsuite",function(){
             .end(function(err,res){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
                 var list = res.body.list;
-                for (var i in list) {
-                    console.log(i + " - " + list[i].place.geo.lat + "," + list[i].place.geo.lon  + " - " + list[i].adsID);
-                }
-
+                
                 res.body.length.should.equal(7);
 
                 //check viewport
@@ -325,6 +322,41 @@ describe("02.Find API testsuite",function(){
     };
 
     it("Tim kiem theo testHuongNha ",testHuongNha);
+
+    //-----------------------------
+    var testTinBan= function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"huongNha":4
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"},
+                "limit":200
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                }
+
+                res.body.length.should.equal(2);
+                let one = res.body.list[0];
+                console.log(one);
+
+                one.giaFmt.should.equal("2.01 TỶ");
+                one.dienTichFmt.should.equal("60m²");
+                one.soPhongNguFmt.should.equal("2pn");
+                one.diaChi.should.equal('Đường Trần Thái Tông, Phường Dịch Vọng, Cầu Giấy, Hà Nội');
+
+                console.log("\n testTinBan, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem theo testTinBan ",testTinBan);
 
     //-----------------------------
     var testOrderDienTich = function(done){

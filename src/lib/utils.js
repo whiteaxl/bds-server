@@ -48,7 +48,7 @@ util.getDienTichDisplay = function(val) {
         return "Không rõ";
     }
 
-    return val + " m²";
+    return val + "m²";
 };
 
 util.popField = function (obj, field){
