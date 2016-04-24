@@ -513,4 +513,40 @@ describe("02.Find API testsuite",function(){
     it("Tim kiem - testOrderGiaM2 ASC ",testOrderGiaM2);
 
 
+    //-----------------------------
+    var testImageMedium = function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
+                ,"giaBETWEEN":[0,9999999]
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,50]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
+                    ,"radiusInKm":0.5},
+                "limit":200,"ngayDaDang":30
+                ,"orderBy" :'giaM2ASC'
+
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    //console.log(one.image);
+                }
+
+                res.body.length.should.equal(8);
+                res.body.list[0].image.cover.indexOf("745x510").should.equal(36);
+                res.body.list[0].image.images[1].indexOf("745x510").should.equal(38);
+
+                console.log("\testImageMedium, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem - testImageMedium ",testImageMedium);
+
+
 });

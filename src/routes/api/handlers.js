@@ -117,6 +117,17 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
 
         listResult.forEach((e) => {
             let ads = e.value;
+            //images:
+            var targetSize = "745x510"; //350x280
+            if (ads.image.cover) {
+                ads.image.cover = ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize);
+            }
+            if (ads.image.images) {
+                ads.image.images = ads.image.images.map((e) => {
+                    return e.replace("80x60", targetSize);
+                });
+            }
+
 
             let place = ads.place;
             //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
