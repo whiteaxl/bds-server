@@ -3,6 +3,7 @@ var danhMuc = {};
 var BAT_KY = "Bất kỳ";
 
 danhMuc.BAT_KY = BAT_KY;
+danhMuc.BIG =9999999;
 
 danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
 
