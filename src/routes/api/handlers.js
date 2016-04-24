@@ -541,7 +541,9 @@ function orderAds(filtered, orderCondition) {
                 },
                 diaChi,
                 ngayDangTin,
-                giaM2
+                giaM2,
+                loaiTin,
+                loaiNhaDat
              }
          viewport : {
             center: {lat, lon}
