@@ -90,6 +90,10 @@ internals.bdsCom = function(req, reply) {
 		adsObj.ten_loaiNhaDat = adsDto.ten_loaiNhaDat;
 		adsObj.chiTiet = adsDto.chiTiet;
 
+		if (adsObj.gia && adsObj.dienTich) {
+			adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
+		}
+
 		countInsert++;
 
 		myBucket.upsert(adsObj.adsID, adsObj, function(err, res) {
