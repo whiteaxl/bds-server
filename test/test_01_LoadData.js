@@ -12,7 +12,7 @@ describe("01.LoadData testsuite",function(){
     it("Test load data",function(done){
         adsService.countAllAds((cnt) => {
             console.log("Cnt = " + cnt);
-            if (cnt < 2563) {
+            if (cnt < 2767) {
                 //prepare.loadAdsFromFile("testAds.json");
                 prepare.loadAds();
 
