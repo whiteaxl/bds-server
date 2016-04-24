@@ -237,6 +237,96 @@ describe("02.Find API testsuite",function(){
     it("Tim kiem theo DienTich ",testDienTich40_50);
 
     //-----------------------------
+    var testSoPhongNgu = function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":3
+                ,"giaBETWEEN":[0,9999999]
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
+                    ,"radiusInKm":0.5},
+                "limit":200,"ngayDaDang":30
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    console.log(one.soPhongNgu + " -- " + one.adsID);
+                }
+
+                res.body.length.should.equal(18);
+
+                console.log("\ntestSoPhongNgu, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem theo SoPhongNgu ",testSoPhongNgu);
+
+    //-----------------------------
+    var testSoPhongTam= function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"soPhongTamGREATER":3
+                ,"giaBETWEEN":[0,9999999]
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"},
+                "limit":200
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    console.log(one.soPhongNgu + " -- " + one.adsID);
+                }
+
+                res.body.length.should.equal(7);
+
+                console.log("\ntestSoPhongTam, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem theo testSoPhongTam ",testSoPhongTam);
+
+    //-----------------------------
+    var testHuongNha= function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"huongNha":4
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"},
+                "limit":200
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    console.log(one.huongNha + " -- " + one.adsID);
+                }
+
+                res.body.length.should.equal(2);
+
+                console.log("\ntestHuongNha, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem theo testHuongNha ",testHuongNha);
+
+    //-----------------------------
     var testOrderDienTich = function(done){
         server
             .post("/api/find")
@@ -299,7 +389,7 @@ describe("02.Find API testsuite",function(){
             });
     };
 
-    it("Tim kiem theo DienTich ",testSoPhongNgu);
+    it("Tim kiem - testSoPhongNgu",testSoPhongNgu);
 
     //-----------------------------
     var testOrderGia = function(done){

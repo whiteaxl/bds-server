@@ -40,7 +40,8 @@ var Q_FIELD = {
     loaiNhaDat : "loaiNhaDat",
     soPhongNgu : "soPhongNgu",
     soPhongTam: "soPhongTam",
-    soTang : "soTang"
+    soTang : "soTang",
+    huongNha : "huongNha"
 };
 
 var internals = {};
@@ -367,13 +368,13 @@ function match(attr, value, doc) {
 			return true;
 		}
 
-		//
+        var field = attr.substring(0, idx);
+
+        //
 		if (!ads[field]) {
 			return false;
 		}
 
-		var field = attr.substring(0, idx);
-		
 		let ret = ads[field] >= value;
 
 		if (!ret) {
@@ -408,7 +409,7 @@ function match(attr, value, doc) {
 	}
 
 	//default is equals
-	if (ads[attr] == value) {
+	if (ads[attr] === value) {
         return true;
     } else {
         logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value: "+ ads[attr] + ", searching value:" + value);
