@@ -41,7 +41,8 @@ var Q_FIELD = {
     soPhongNgu : "soPhongNgu",
     soPhongTam: "soPhongTam",
     soTang : "soTang",
-    huongNha : "huongNha"
+    huongNha : "huongNha",
+    ngayDaDang : "ngayDaDang"
 };
 
 var internals = {};
@@ -436,6 +437,12 @@ function match(attr, value, doc) {
 
         return ret;
 	}
+    if (attr == Q_FIELD.ngayDaDang) {
+        var ngayDangTinDate= moment(ads.ngayDangTin, "DD-MM-YYYY");
+        ads.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+
+        return ads.soNgayDaDangTin <= value;
+    }
 
 	//default is equals
 	if (ads[attr] === value) {

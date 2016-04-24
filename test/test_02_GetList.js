@@ -96,7 +96,7 @@ describe("02.Find API testsuite",function(){
             .end(function(err,res){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
                 var list = res.body.list;
-                
+
                 res.body.length.should.equal(7);
 
                 //check viewport
@@ -422,6 +422,39 @@ describe("02.Find API testsuite",function(){
     };
 
     it("Tim kiem - testSoPhongNgu",testSoPhongNgu);
+
+    //-----------------------------
+    var testngayDaDang = function(done){
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
+                ,"giaBETWEEN":[0,9999999]
+                ,"dienTichBETWEEN":[40,50]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
+                    ,"radiusInKm":0.5},
+                "limit":200,"ngayDaDang":7
+
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    console.log(one.ngayDangTin + " -- " + one.adsID);
+                }
+
+                res.body.length.should.equal(4);
+
+                console.log("\n testngayDaDang, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem - testngayDaDang",testngayDaDang);
+
+
 
     //-----------------------------
     var testOrderGia = function(done){
