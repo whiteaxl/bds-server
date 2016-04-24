@@ -83,6 +83,43 @@ describe("02.Find API testsuite",function(){
     it("Tim kiem theo CurrentLoc",testCurrentLocation);
 
     //-----------------------------
+    var testDiaDiem = function(done){
+
+        server
+            .post("/api/find")
+            .send({"loaiTin":0,"giaBETWEEN":[0,9999999],"soPhongNguGREATER":"0","soTangGREATER":"0"
+                ,"dienTichBETWEEN":[0,9999999],"place":{"placeId":"ChIJiyiB48BUNDERGA0xeslhAzc"
+                    ,"relandTypeName":"Dia diem","fullName":"Cau Dien Nursery School, Phú Diễn, Hanoi","radiusInKm":0.5}
+                ,"limit":200,"ngayDaDang":30})
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+                console.log("\ntestCurrentLocation, length:" + res.body.length);
+                var list = res.body.list;
+                for (var i in list) {
+                    console.log(i + " - " + list[i].place.geo.lat + "," + list[i].place.geo.lon  + " - " + list[i].adsID);
+                }
+
+                res.body.length.should.equal(7);
+
+                //check viewport
+                var viewport = res.body.viewport;
+
+                viewport.southwest.should.have.property('lat');
+                viewport.southwest.should.have.property('lon');
+                viewport.northeast.should.have.property('lat');
+                viewport.northeast.should.have.property('lon');
+                viewport.northeast.should.not.have.property('lng');
+                done();
+            });
+    };
+
+    it("Tim kiem theo testDiaDiem",testDiaDiem);
+
+
+
+
+    //-----------------------------
     var testDiaChinh = function(done){
         server
             .post("/api/find")
