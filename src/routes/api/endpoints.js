@@ -1,4 +1,5 @@
 var Handlers = require('./handlers');
+var UserHandlers = require("./userHandlers");
 
 var internals = {};
 
@@ -28,6 +29,15 @@ internals.endpoints = [
 		handler: Handlers.detail,
 		config : {
 			description: 'Chi tiet cua mot bai dang',
+			tags: ['api']
+		}
+	},
+	{
+		method: 'POST',
+		path: '/api/user/create',
+		handler: UserHandlers.create,
+		config : {
+			description: 'Tao nguoi dung khi thuc hien Dang Nhap Khong Can Dang Ky',
 			tags: ['api']
 		}
 	}

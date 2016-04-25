@@ -37,7 +37,7 @@ placeUtil.getDiaChinh = function(diaChi) {
     diaChinh.tinh = spl[--i].trim();
     let rawHuyen = spl[--i];
     if (rawHuyen) {
-        diaChinh.huyen = huyen.trim();
+        diaChinh.huyen = rawHuyen.trim();
     } else {
         console.log("WARN -- no HUYEN information " + diaChi);
     }

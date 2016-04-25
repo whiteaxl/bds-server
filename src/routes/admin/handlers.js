@@ -24,6 +24,8 @@ internals.index = function(req, reply) {
 
 internals.bdsCom = function(req, reply) {
 	console.log(req.query);
+
+    var isSync = req.query.isSync;
 	
 
 	var countInsert  = 0;
@@ -55,7 +57,7 @@ internals.bdsCom = function(req, reply) {
 		let adsObj = {};
 
 		adsObj._type = "Ads";
-		let coverSmall = headers[adsDto.title].cover;
+		let coverSmall = headers[adsDto.title] ? headers[adsDto.title].cover : null;
 		/*
         let images = [];
 		if (adsDto.images_small) {
@@ -72,7 +74,10 @@ internals.bdsCom = function(req, reply) {
 			//images_small : adsDto.images_small,
 			images : adsDto.images_small
 		};
-		adsObj.adsID = adsDto.title;
+
+        adsObj.title = adsDto.title;
+
+
 		adsObj.dangBoi = {
 			userID : adsDto.cust_email,
 			email: adsDto.cust_email,
@@ -95,10 +100,13 @@ internals.bdsCom = function(req, reply) {
 		adsObj.ten_loaiNhaDat = adsDto.ten_loaiNhaDat;
 		adsObj.chiTiet = adsDto.chiTiet;
 		adsObj.huongNha = adsDto.huongNha;
+		adsObj.maSo = Number(adsDto.maSo);
 
 		if (adsObj.gia && adsObj.dienTich) {
 			adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
 		}
+
+        adsObj.adsID = "Ads_bds_" + adsObj.maSo;
 
 		countInsert++;
 
