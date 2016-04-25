@@ -113,7 +113,7 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
 
         logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
         let listFiltered = _filterResult(allAds, queryCondition);
-
+        //let listFiltered = all
         //filter by distance
         let transformeds = [];
         let transformed ={};

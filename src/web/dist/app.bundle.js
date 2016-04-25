@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "25db0b1ba22ed7b4056f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3b92076fa7929137ef2e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1262,12 +1262,16 @@
 			if(!vm.placeId)
 				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			init();
-			/*HouseService.findGooglePlaceById(vm.placeId).then(function(response){
-				var place = response.data.result;
-				$scope.searchPlaceSelected = place;
-				vm.search();
-			});*/
 			
+			vm.sell_price_list = window.RewayListValue.sell_steps;
+			vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
+			vm.sortOptions = window.RewayListValue.sortHouseOptions;
+			vm.sortBy = 1;
+			vm.price_min = "0";
+			vm.price_max = window.RewayListValue.filter_max_value.value;
+			vm.dien_tich_min = 0;
+			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+
 
 			$scope.$on('$viewContentLoaded', function(){
 				window.DesignCommon.adjustPage();
@@ -1277,7 +1281,35 @@
 	  		
 			vm.search = function(param){
 				//alert(param);
-				HouseService.findAdsSpatial($scope.searchPlaceSelected).then(function(res){
+				var data = {
+				  "loaiTin": 0,
+				  "giaBETWEEN": [0,vm.price_max],
+				  "soPhongNguGREATER": 0,
+				  "soTangGREATER": 0,
+				  "dienTichBETWEEN": [0,vm.dien_tich_max],
+				  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
+				  "limit": 200,
+				  "radiusInKm": 0.5
+				};
+				var googlePlace = $scope.searchPlaceSelected;
+				if($scope.searchPlaceSelected.geometry.viewport){
+	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+	          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+	          		data.radiusInKm = undefined;
+	        	} else{
+	          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+	          		data.radiusInKm = "10";
+	          		var place = {
+	          			placeId: googlePlace.place_id,
+	 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+	       				radiusInKm :  2,
+	 				    currentLocation: undefined
+	 			  	}
+	 			  	data.place = place;
+	          		data.geoBox = undefined;
+	        	}
+
+				HouseService.findAdsSpatial(data).then(function(res){
 					var result = res.data.list;
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
@@ -1369,39 +1401,6 @@
 				$scope.hot_ads_cat = window.hot_ads_cat;
 				$scope.ads_list = window.testData;
 				$scope.bodyClass= "page-home";
-				/*for(var i = 0; i < $scope.ads_list.length; i++) { 
-		    		var ads = $scope.ads_list[i];
-		    		if(ads.place){
-		    			if(ads.place.geo){
-			    			ads.map={
-			    				center: {
-									latitude: 	ads.place.geo.lat,
-									longitude: 	ads.place.geo.lon
-								},
-			    				marker: {
-									id: i,
-									coords: {
-										latitude: 	ads.place.geo.lat,
-										longitude: 	ads.place.geo.lon
-									},
-									options: {
-										//labelContent : ads.gia,
-										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14	
-			    			}
-			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
-			    			$scope.markers.push(ads.map.marker);
-			    					
-						}
-		    		}
-				}*/
-
 			}
 			
 
@@ -1431,21 +1430,8 @@
 	      createHouse: function(desc,email,seller){
 	        return $http.post(urlPath + 'create'); 
 	      },
-	      findAdsSpatial: function(googlePlace){
+	      findAdsSpatial: function(data){
 	        var url = "/api/find";
-	        var data = {
-	          "loaiTin":0,
-	          "orderBy":"giaDESC",
-	          "limit": 200
-	        }
-	        if(googlePlace.geometry.viewport){
-	          console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-	          data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
-	        } else{
-	          console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-	          data.radiusInKm = "10";
-	        }
-
 	        return $http.post(url,data);
 	      },
 	      findGooglePlaceById: function(googlePlaceId){

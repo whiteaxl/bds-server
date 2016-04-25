@@ -111,52 +111,10 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" name="price_min" title="Min Price">
-                                                <option value="">Min Price</option>
-                                                <option value="10000">$10,000</option>
-                                                <option value="20000">$20,000</option>
-                                                <option value="30000">$30,000</option>
-                                                <option value="50000">$50,000</option>
-                                                <option value="100000">$100,000</option>
-                                                <option value="130000">$130,000</option>
-                                                <option value="150000">$150,000</option>
-                                                <option value="200000">$200,000</option>
-                                                <option value="250000">$250,000</option>
-                                                <option value="300000">$300,000</option>
-                                                <option value="350000">$350,000</option>
-                                                <option value="400000">$400,000</option>
-                                                <option value="450000">$450,000</option>
-                                                <option value="500000">$500,000</option>
-                                                <option value="550000">$550,000</option>
-                                                <option value="600000">$600,000</option>
-                                                <option value="650000">$650,000</option>
-                                                <option value="700000">$700,000</option>
-                                                <option value="750000">$750,000</option>
-                                                <option value="800000">$800,000</option>
-                                                <option value="850000">$850,000</option>
-                                                <option value="900000">$900,000</option>
-                                                <option value="950000">$950,000</option>
-                                                <option value="1000000">$1M</option>
-                                                <option value="1100000">$1.1M</option>
-                                                <option value="1200000">$1.2M</option>
-                                                <option value="1250000">$1.25M</option>
-                                                <option value="1400000">$1.4M</option>
-                                                <option value="1500000">$1.5M</option>
-                                                <option value="1600000">$1.6M</option>
-                                                <option value="1700000">$1.7M</option>
-                                                <option value="1750000">$1.75M</option>
-                                                <option value="1800000">$1.8M</option>
-                                                <option value="1900000">$1.9M</option>
-                                                <option value="2000000">$2M</option>
-                                                <option value="2250000">$2.25M</option>
-                                                <option value="2500000">$2.5M</option>
-                                                <option value="2750000">$2.75M</option>
-                                                <option value="3000000">$3M</option>
-                                                <option value="3500000">$3.5M</option>
-                                                <option value="4000000">$4M</option>
-                                                <option value="5000000">$5M</option>
-                                                <option value="10000000">$10M</option>
-                                                <option value="20000000">$20M</option>
+                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ">
+                                                <option value="">Giá từ</option>
+                                                <option value="0">0</option>
+                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}">{[{price.lable}]}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -165,52 +123,10 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" name="price_max" title="Max Price">
-                                                <option value="">Max Price</option>
-                                                <option value="10000">$10,000</option>
-                                                <option value="20000">$20,000</option>
-                                                <option value="30000">$30,000</option>
-                                                <option value="50000">$50,000</option>
-                                                <option value="100000">$100,000</option>
-                                                <option value="130000">$130,000</option>
-                                                <option value="150000">$150,000</option>
-                                                <option value="200000">$200,000</option>
-                                                <option value="250000">$250,000</option>
-                                                <option value="300000">$300,000</option>
-                                                <option value="350000">$350,000</option>
-                                                <option value="400000">$400,000</option>
-                                                <option value="450000">$450,000</option>
-                                                <option value="500000">$500,000</option>
-                                                <option value="550000">$550,000</option>
-                                                <option value="600000">$600,000</option>
-                                                <option value="650000">$650,000</option>
-                                                <option value="700000">$700,000</option>
-                                                <option value="750000">$750,000</option>
-                                                <option value="800000">$800,000</option>
-                                                <option value="850000">$850,000</option>
-                                                <option value="900000">$900,000</option>
-                                                <option value="950000">$950,000</option>
-                                                <option value="1000000">$1M</option>
-                                                <option value="1100000">$1.1M</option>
-                                                <option value="1200000">$1.2M</option>
-                                                <option value="1250000">$1.25M</option>
-                                                <option value="1400000">$1.4M</option>
-                                                <option value="1500000">$1.5M</option>
-                                                <option value="1600000">$1.6M</option>
-                                                <option value="1700000">$1.7M</option>
-                                                <option value="1750000">$1.75M</option>
-                                                <option value="1800000">$1.8M</option>
-                                                <option value="1900000">$1.9M</option>
-                                                <option value="2000000">$2M</option>
-                                                <option value="2250000">$2.25M</option>
-                                                <option value="2500000">$2.5M</option>
-                                                <option value="2750000">$2.75M</option>
-                                                <option value="3000000">$3M</option>
-                                                <option value="3500000">$3.5M</option>
-                                                <option value="4000000">$4M</option>
-                                                <option value="5000000">$5M</option>
-                                                <option value="10000000">$10M</option>
-                                                <option value="20000000">$20M</option>
+                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến">
+                                                <option value="">Giá đến</option>
+                                                <option value="99999999999">Bất kỳ</option>
+                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}" >{[{price.lable}]}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -218,26 +134,22 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" name="beds" title="All Beds">
-                                        <option value="">All Beds</option>
-                                        <option value="0">0+ Beds</option>
-                                        <option value="1">1+ Beds</option>
-                                        <option value="2">2+ Beds</option>
-                                        <option value="3">3+ Beds</option>
-                                        <option value="4">4+ Beds</option>
-                                        <option value="5">5+ Beds</option>
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ">
+                                        <option value="">Diện tích từ</option>
+                                        <option value="0">0</option>
+                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="col w-50">
+                                <div class="label">To</div>
+                            </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" name="baths" title="All Baths">
-                                        <option value="">All Baths</option>
-                                        <option value="1">1+ Baths</option>
-                                        <option value="2">2+ Baths</option>
-                                        <option value="3">3+ Baths</option>
-                                        <option value="4">4+ Baths</option>
-                                        <option value="5">5+ Baths</option>
+                                    <select class="select" data-select="true" name="mc.dien_tich_max" title="Diện tích đến">
+                                        <option value="">Diện tích đến</option>
+                                        <option value="99999999999">Bất kỳ</option>
+                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
                                     </select>
                                 </div>
                             </div>
@@ -495,12 +407,10 @@
                             <h2 class="head">318 California City, CA Homes For Sale & Real Estate</h2>
                             <div class="handle">
                                 <div class="filter">
-                                    <div class="label">SORT BY:</div>
+                                    <div class="label">Sắp xếp:</div>
                                     <div class="option">
-                                        <select class="select" data-select="true" title="Relevance">
-                                            <option value="">Relevance</option>
-                                            <option value="featured;a">Featured</option>
-                                            <option value="date;d">Newest</option>
+                                        <select class="select" ng-model="mc.sortBy" data-select="true" title="Sắp xếp">
+                                            <option ng-repeat="sort in mc.sortOptions track by sort.position" value="{[{sort.value}]}">{[{sort.lable}]}</option>
                                         </select>
                                     </div>
                                 </div>
