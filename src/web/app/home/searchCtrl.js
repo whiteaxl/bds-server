@@ -43,9 +43,15 @@
         	} else{
           		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
           		data.radiusInKm = "10";
+          		var place = {
+          			placeId: googlePlace.place_id,
+ 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+       				radiusInKm :  2,
+ 				    currentLocation: undefined
+ 			  	}
+ 			  	data.place = place;
           		data.geoBox = undefined;
         	}
-
 
 			HouseService.findAdsSpatial(data).then(function(res){
 				var result = res.data.list;

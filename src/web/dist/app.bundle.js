@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e93e647a59b9f8004767"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c5c9f6e9b68f560fd011"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1298,9 +1298,15 @@
 	        	} else{
 	          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
 	          		data.radiusInKm = "10";
+	          		var place = {
+	          			placeId: googlePlace.place_id,
+	 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+	       				radiusInKm :  2,
+	 				    currentLocation: undefined
+	 			  	}
+	 			  	data.place = place;
 	          		data.geoBox = undefined;
 	        	}
-
 
 				HouseService.findAdsSpatial(data).then(function(res){
 					var result = res.data.list;
