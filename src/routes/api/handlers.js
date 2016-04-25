@@ -676,6 +676,15 @@ function _transformDetailAds(ads) {
 
         ads.ngayDangTinFmt = ads.ngayDangTin.replace(/-/g, "/");
     }
+    // big images:
+
+    ads.image.images_small =ads.image.images;
+
+    if (ads.image.images_small) {
+        ads.image.images = ads.image.images.map((one) => {
+            return one.replace("80x60", "745x510");
+        });
+    }
 
     //dummy
     ads.luotXem = 1232;

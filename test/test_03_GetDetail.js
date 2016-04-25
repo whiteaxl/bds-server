@@ -94,6 +94,8 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.huongNha.should.equal(2);
                 res.body.ads.should.have.property('luotXem');
                 res.body.ads.should.have.property('moiGioiTuongTu');
+                //image
+                res.body.ads.image.images[0].indexOf("745x510").should.not.equal(-1);
 
                 done();
             });
