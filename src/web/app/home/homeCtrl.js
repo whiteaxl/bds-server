@@ -71,6 +71,36 @@
 					});
 				})
 			})
+			function init(){
+				uiGmapGoogleMapApi.then(function(maps){
+					window.RewayClientUtils.createPlaceAutoComplete($scope,"autoCompleteHome",maps);
+					uiGmapIsReady.promise(1).then(function(instances) {
+						instances.forEach(function(inst) {
+							var map = inst.map;
+							$scope.PlacesService =  new maps.places.PlacesService(map);
+							$scope.PlacesService.getDetails({
+								placeId: vm.placeId
+							}, function(place, status) {
+								if (status === maps.places.PlacesServiceStatus.OK) {
+									$scope.searchPlaceSelected = place;
+									//var map = $scope.map.control.getGMap();
+									var current_bounds = map.getBounds();
+									$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
+									if(place.geometry.viewport){
+										//map.fitBounds(place.geometry.viewport);	
+										//$scope.map
+									} else if( !current_bounds.contains( place.geometry.location ) ){
+										//var new_bounds = current_bounds.extend(place.geometry.location);
+										//map.fitBounds(new_bounds);
+										$digest();
+									}
+									vm.search();
+								}
+							});
+						});
+					});
+
+				});
 			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
