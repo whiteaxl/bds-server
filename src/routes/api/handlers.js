@@ -41,7 +41,8 @@ var Q_FIELD = {
     soPhongNgu : "soPhongNgu",
     soPhongTam: "soPhongTam",
     soTang : "soTang",
-    huongNha : "huongNha"
+    huongNha : "huongNha",
+    ngayDaDang : "ngayDaDang"
 };
 
 var internals = {};
@@ -111,16 +112,17 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
             allAds = [];
 
         logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
-        //let listResult = _filterResult(allAds, queryCondition);
-        let listResult = allAds;
-
+        //let listFiltered = _filterResult(allAds, queryCondition);
+        let listFiltered = allAds;
         //filter by distance
-        let transformed = [];
+        let transformeds = [];
+        let transformed ={};
 
-        listResult.forEach((e) => {
+        listFiltered.forEach((e) => {
             let ads = e.value;
             //images:
             var targetSize = "745x510"; //350x280
+            /*
             if (ads.image.cover) {
                 ads.image.cover = ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize);
             }
@@ -129,6 +131,33 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
                     return e.replace("80x60", targetSize);
                 });
             }
+            */
+
+            let tmp = {
+                adsID : ads.adsID,
+                gia : ads.gia,
+                giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
+                dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
+                soPhongNgu: ads.soPhongNgu,
+                soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
+                soTang: ads.soTang,
+                soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+                image : {
+                    cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize):null,
+                    images : ads.image.images ? ads.image.images.map((e) => {
+                                return e.replace("80x60", targetSize);
+                            }) : null
+                },
+                diaChi : ads.place.diaChi,
+                ngayDangTin : ads.ngayDangTin,
+                giaM2 : ads.giaM2,
+                loaiNhaDat: ads.loaiNhaDat,
+                loaiTin: ads.loaiTin
+            };
+
+            transformed = ads;
+
+            Object.assign(transformed, tmp);
 
 
             let place = ads.place;
@@ -136,20 +165,20 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
 
             if (isSearchByDistance) {
                 if (center.lat && center.lon && place.geo.lat && place.geo.lon) {
-                    ads.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-                    if (ads.distance < radiusInKm * 1000) {
-                        transformed.push(ads);
+                    transformed.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+                    if (transformed.distance < radiusInKm * 1000) {
+                        transformeds.push(transformed);
                     }
                 }
             } else {
-                transformed.push(ads)
+                transformeds.push(transformed)
             }
         });
 
         //sort
         if (queryCondition && orderBy) {
             console.log("Perform ordering by " + orderBy);
-            orderAds(transformed, orderBy);
+            orderAds(transformeds, orderBy);
         } else if (isSearchByDistance) {
             var compare = function(a, b) {
                 if (a.distance) {
@@ -163,29 +192,29 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
                 }
             };
 
-            transformed.sort(compare);
+            transformeds.sort(compare);
         }
 
-        transformed.forEach((e) => {
+        transformeds.forEach((e) => {
             console.log("Distance for " + e.adsID +  "= " + e.distance + "m");
         });
 
-        logUtil.info("There are " + transformed.length + " ads");
+        logUtil.info("There are " + transformeds.length + " ads");
 
 
         //limit
         if (queryCondition && limit) {
-            transformed = transformed.slice(0, limit)
+            transformeds = transformeds.slice(0, limit)
         }
 
         reply({
-            length: transformed.length,
+            length: transformeds.length,
             viewport : {
                 center: center,
                 northeast : {lat:geoBox[2], lon:geoBox[3]},
                 southwest : {lat:geoBox[0], lon:geoBox[1]}
             },
-            list: transformed
+            list: transformeds
         });
     });
 }
@@ -408,6 +437,12 @@ function match(attr, value, doc) {
 
         return ret;
 	}
+    if (attr == Q_FIELD.ngayDaDang) {
+        var ngayDangTinDate= moment(ads.ngayDangTin, "DD-MM-YYYY");
+        ads.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+
+        return ads.soNgayDaDangTin <= value;
+    }
 
 	//default is equals
 	if (ads[attr] === value) {
@@ -501,8 +536,22 @@ function orderAds(filtered, orderCondition) {
  *  Response : xem chi tiet trong file sample_find.js
  *  {
  *       length: Number, so bai dang thoa man
-         list: []
-            Danh sach cac bai dang thoa man
+         list: Danh sach cac bai dang thoa man
+             Arrays {
+                adsID,
+                gia, giaFmt,
+                dienTich, dienTichFmt,
+                soPhongNgu, soPhongNguFmt,
+                soTang, soTangFmt,
+                image : {
+                    cover, images:[]
+                },
+                diaChi,
+                ngayDangTin,
+                giaM2,
+                loaiTin,
+                loaiNhaDat
+             }
          viewport : {
             center: {lat, lon}
             northeast : {lat, lon}

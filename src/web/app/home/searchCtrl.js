@@ -4,11 +4,11 @@
 	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,uiGmapIsReady,$window){
 		var vm = this;
 
-		vm.placeId = $state.params.place;
-		vm.loaiTin = $state.params.loaiTin;
-		vm.loaiNhaDat = $state.params.loaiNhaDat;;
-		if(!vm.placeId)
-			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+		$scope.placeId = $state.params.place;
+		$scope.loaiTin = $state.params.loaiTin;
+		$scope.loaiNhaDat = $state.params.loaiNhaDat;;
+		if(!$scope.placeId)
+			$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
 		console.log("placeId: " + vm.placeId);
 		console.log("loaiTin: " + vm.loaiTin);
@@ -30,16 +30,20 @@
 			if($state.current.data)
 				$scope.bodyClass = $state.current.data.bodyClass
 		});
+
+		vm.goToPageSearch = function(){
+			$state.go('search', { place : $scope.placeId });
+		}
   		
 		vm.search = function(param){
 			//alert(param);
 			var data = {
-			  "loaiTin": vm.loaiTin,
-				"loaiNhaDat": vm.loaiNhaDat,
+			  "loaiTin": $scope.loaiTin,
+				"loaiNhaDat": $scope.loaiNhaDat,
 			  "giaBETWEEN": [vm.price_min,vm.price_max],
 			  "soPhongNguGREATER": 0,
 			  "soTangGREATER": 0,
-			  "dienTichBETWEEN": [vm.dien_tich_min,vm.dien_tich_max],
+			  "dienTichBETWEEN": [0,vm.dien_tich_max],
 			  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
 			  "limit": 200,
 			  "radiusInKm": 0.5
@@ -48,6 +52,7 @@
 			if($scope.searchPlaceSelected.geometry.viewport){
           		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
           		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+          		data.radiusInKm = undefined;
         	} else{
           		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
           		data.radiusInKm = "10";
@@ -122,7 +127,7 @@
 		            var map = inst.map;
 		            $scope.PlacesService =  new maps.places.PlacesService(map);
 				 	$scope.PlacesService.getDetails({
-			        	placeId: vm.placeId
+			        	placeId: $scope.placeId
 			        }, function(place, status) {
 				        	if (status === maps.places.PlacesServiceStatus.OK) {
 				        		$scope.searchPlaceSelected = place;
@@ -135,7 +140,7 @@
 				        		} else if( !current_bounds.contains( place.geometry.location ) ){
 				        			//var new_bounds = current_bounds.extend(place.geometry.location);
 				        			//map.fitBounds(new_bounds);
-				        			$digest();
+				        			//$digest();
 				        		}
 				        		vm.search();
 				        	}
