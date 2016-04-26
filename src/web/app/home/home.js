@@ -99,7 +99,7 @@
             bodyClass: "page-list"
         } 
       }).state('search', {
-        url: "/search/:place",
+          url: "/search/:place/:loaiTin/:loaiNhaDat",
         //templateUrl: "/web/searchContent.html",
         controller: "SearchCtrl",
         controllerAs: 'mc',

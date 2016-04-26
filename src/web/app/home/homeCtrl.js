@@ -1,13 +1,34 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi, uiGmapIsReady, $window){
 		var vm = this;
-		init();
 		//nhannc
+		$scope.loaiTin;
+		$scope.loaiNhaDat;
 		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
-		$scope.goToPageSearch = function(){
-			$state.go('search', { place : $scope.placeSearchId });
+		init();
+		//alert("placeSearchId: " + $scope.placeSearchId);
+		$scope.goToPageSearch = function(msgType){
+			//alert("msgType: " + msgType);
+			if(msgType){
+				console.log("msgType: " + msgType);
+				if(msgType.length >= 2){
+					$scope.loaiTin = msgType.substring(0,1);
+					$scope.loaiNhaDat = msgType.substring(1);
+					//alert("loaiTin: " + $scope.loaiTin);
+					//alert("loaiNhaDat: " + $scope.loaiNhaDat);
+				} else{
+					$scope.loaiTin = msgType;
+					//alert("loaiTin: " + $scope.loaiTin);
+				}
+			}
+
+			console.log("$scope.placeId: " + $scope.placeId);
+			console.log("$scope.loaiTin: " + $scope.loaiTin);
+			console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
+			console.log("$scope.placeId: " + $scope.placeId);
+			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 		}
 
 		//End nhannc
@@ -15,14 +36,14 @@
 			HouseService.getAllAds().then(function(res){
 				vm.sellingHouses = res.data;
 				$scope.markers = [];
-				for(var i = 0; i < res.data.length; i++) { 
+				for(var i = 0; i < res.data.length; i++) {
 		    		var ads = res.data[i];
 		    		if(res.data[i].map)
 		    			$scope.markers.push(res.data[i].map.marker);
 				}
 			});
 		}
-		
+
 		$scope.$on('$viewContentLoaded', function(){
 			//addCrudControls
 			window.DesignCommon.adjustPage();
@@ -32,31 +53,32 @@
 			//     window.DesignCommon.resizePage();
 			// }
 		});
-		
+
 		vm.formatLabel = function(model){
 			if(model)
 				return model.formatted_address;
 		}
-		
+
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = [
-				{ "type": "1", "name": "Nhà đất" },
-				{ "type": "2", "name": "Chung cư" },
-				{ "type": "3", "name": "BDS bán gần đây" },
-				{ "type": "4", "name": "Tìm kiếm nâng cao" },
-				{ "type": "5", "name": "Tất cả" }
+				{ "type": "01", "name": "Căn hộ chung cư" },
+				{ "type": "02", "name": "Nhà riêng" },
+				{ "type": "03", "name": "Nhà mặt phố" },
+				{ "type": "04", "name": "Biệt thự, liền kề" },
+				{ "type": "05", "name": "Nhà đất" },
+				{ "type": "099", "name": "Các BDS khác" }
 			];
 
 			$scope.loaiNhaDatThue = [
-				{ type: "1", name: "Nhà ở" },
-				{ type: "2", name: "Phòng trọ" },
-				{ type: "3", name: "Văn phòng" },
-				{ type: "4", name: "Cửa hàng" },
-				{ type: "5", name: "Tham khảo giá nhà cho thuê" },
-				{ type: "6", name: "Tìm kiếm nâng cao" },
-				{ type: "7", name: "Tất cả" }
+				{ type: "11", name: "Căn hộ chung cư" },
+				{ type: "12", name: "Nhà riêng" },
+				{ type: "13", name: "Nhà mặt phố" },
+				{ type: "14", name: "Văn phòng" },
+				{ type: "15", name: "Cửa hàng, ki-ốt" },
+				{ type: "199", name: "Các BDS khác" }
 			];
+
 			uiGmapGoogleMapApi.then(function(maps){
 				var searchBox = new maps.places.Autocomplete(
 					(document.getElementById('autoCompleteHome')), {
@@ -71,36 +93,25 @@
 					});
 				})
 			})
-			function init(){
-				uiGmapGoogleMapApi.then(function(maps){
-					window.RewayClientUtils.createPlaceAutoComplete($scope,"autoCompleteHome",maps);
-					uiGmapIsReady.promise(1).then(function(instances) {
-						instances.forEach(function(inst) {
-							var map = inst.map;
-							$scope.PlacesService =  new maps.places.PlacesService(map);
-							$scope.PlacesService.getDetails({
-								placeId: vm.placeId
-							}, function(place, status) {
-								if (status === maps.places.PlacesServiceStatus.OK) {
-									$scope.searchPlaceSelected = place;
-									//var map = $scope.map.control.getGMap();
-									var current_bounds = map.getBounds();
-									$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
-									if(place.geometry.viewport){
-										//map.fitBounds(place.geometry.viewport);	
-										//$scope.map
-									} else if( !current_bounds.contains( place.geometry.location ) ){
-										//var new_bounds = current_bounds.extend(place.geometry.location);
-										//map.fitBounds(new_bounds);
-										$digest();
-									}
-									vm.search();
-								}
-							});
+
+			uiGmapGoogleMapApi.then(function(maps){
+				window.RewayClientUtils.createPlaceAutoComplete($scope,"autoCompleteHome",maps);
+				uiGmapIsReady.promise(1).then(function(instances) {
+					instances.forEach(function(inst) {
+						var map = inst.map;
+						$scope.PlacesService =  new maps.places.PlacesService(map);
+						$scope.PlacesService.getDetails({
+							placeId: vm.placeId
+						}, function(place, status) {
+							if (status === maps.places.PlacesServiceStatus.OK) {
+								$scope.searchPlaceHomeSelected = place;
+								$scope.placeSearchId = $scope.searchPlaceHomeSelected.place_id;
+							}
 						});
 					});
-
 				});
+
+			});
 			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
