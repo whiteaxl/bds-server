@@ -10,10 +10,10 @@
 		if(!$scope.placeId)
 			$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
-		console.log("placeId: " + vm.placeId);
-		console.log("loaiTin: " + vm.loaiTin);
-		console.log("loaiNhaDat: " + vm.loaiNhaDat);
-		console.log("placeId: " + vm.placeId);
+		console.log("placeId: " + $scope.placeId);
+		console.log("loaiTin: " + $scope.loaiTin);
+		console.log("loaiNhaDat: " + $scope.loaiNhaDat);
+		console.log("placeId: " + $scope.placeId);
 		
 		vm.sell_price_list = window.RewayListValue.sell_steps;
 		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;

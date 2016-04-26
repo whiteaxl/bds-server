@@ -24,10 +24,9 @@
 				}
 			}
 
-			console.log("$scope.placeId: " + $scope.placeId);
 			console.log("$scope.loaiTin: " + $scope.loaiTin);
 			console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
-			console.log("$scope.placeId: " + $scope.placeId);
+			console.log("$scope.placeId: " + $scope.placeSearchId);
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 		}
 
@@ -101,7 +100,7 @@
 						var map = inst.map;
 						$scope.PlacesService =  new maps.places.PlacesService(map);
 						$scope.PlacesService.getDetails({
-							placeId: vm.placeId
+							placeId: $scope.placeSearchId
 						}, function(place, status) {
 							if (status === maps.places.PlacesServiceStatus.OK) {
 								$scope.searchPlaceHomeSelected = place;
