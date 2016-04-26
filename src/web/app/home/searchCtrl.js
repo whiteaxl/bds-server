@@ -3,9 +3,9 @@
 	var controllerId = 'SearchCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,uiGmapIsReady,$window){
 		var vm = this;
-		vm.placeId = $state.params.place;
-		if(!vm.placeId)
-			vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+		$scope.placeId = $state.params.place;
+		if(!$scope.placeId)
+			$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
 		
 		vm.sell_price_list = window.RewayListValue.sell_steps;
@@ -23,6 +23,10 @@
 			if($state.current.data)
 				$scope.bodyClass = $state.current.data.bodyClass
 		});
+
+		vm.goToPageSearch = function(){
+			$state.go('search', { place : $scope.placeId });
+		}
   		
 		vm.search = function(param){
 			//alert(param);
@@ -115,7 +119,7 @@
 		            var map = inst.map;
 		            $scope.PlacesService =  new maps.places.PlacesService(map);
 				 	$scope.PlacesService.getDetails({
-			        	placeId: vm.placeId
+			        	placeId: $scope.placeId
 			        }, function(place, status) {
 				        	if (status === maps.places.PlacesServiceStatus.OK) {
 				        		$scope.searchPlaceSelected = place;
@@ -128,7 +132,7 @@
 				        		} else if( !current_bounds.contains( place.geometry.location ) ){
 				        			//var new_bounds = current_bounds.extend(place.geometry.location);
 				        			//map.fitBounds(new_bounds);
-				        			$digest();
+				        			//$digest();
 				        		}
 				        		vm.search();
 				        	}

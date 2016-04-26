@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3b92076fa7929137ef2e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "622cbcf783fd439f8a51"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -878,21 +878,42 @@
 				        }, function(place, status) {
 				        	if (status === maps.places.PlacesServiceStatus.OK) {
 				        		$scope.searchPlaceSelected = place;
+				        		$scope.placeId = place.place_id;
 				        		$scope.markers = [];
 				        		var current_bounds = map.getBounds();
 				        		$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
 				        		$scope.map.zoom = 15;
-				        		if(place.geometry.viewport){
-				        			$scope.map.zoom = 10;
-				        			map.fitBounds(place.geometry.viewport);	
-				        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
-				        			
-				        			var marker = {
+				        		var marker = {
 				        				id: -1,
 				        				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
 				        				data: 'test'
-				        			}
-				        			$scope.markers.push(marker);
+				        		}
+				        		$scope.markers.push(marker);
+				        		/*$scope.map.bounds = {
+				        			northeast: {
+				        				latitude: place.geometry.viewport["O"]["O"],
+										longitude: place.geometry.viewport["j"]["j"]
+				        			},
+									southwest: {
+										latitude: place.geometry.viewport["O"]["O"],
+										longitude: place.geometry.viewport["j"]["j"]
+									}
+				        			
+				        		}*/
+				        		//place.geometry.viewport;
+				        		$scope.map.fit = false;
+				        		$scope.$apply();
+				        		/*$scope.map.control.refresh({latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() });
+				        		if(place.geometry.viewport){
+				        			//$scope.map.zoom = 15;
+				        			//map.fitBounds(place.geometry.viewport);	
+				        			return;
+				        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
+				        			
+				        			
+				        			//$scope.markers.push(marker);
+				        			//$scope.map.control.refresh({latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() });
+				        			return;
 
 				        			var p = map.getProjection();
 				        			if (p) {
@@ -907,8 +928,10 @@
 				        			}
 
 				        			$scope.map.fit = false;
-									$scope.$apply();
+									
 				        		}
+				        		$scope.$apply();
+				        		$scope.map.control.refresh();*/
 				        	}
 				        });
 				        return false;
@@ -1258,9 +1281,9 @@
 		var controllerId = 'SearchCtrl';
 		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,uiGmapIsReady,$window){
 			var vm = this;
-			vm.placeId = $state.params.place;
-			if(!vm.placeId)
-				vm.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			$scope.placeId = $state.params.place;
+			if(!$scope.placeId)
+				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			init();
 			
 			vm.sell_price_list = window.RewayListValue.sell_steps;
@@ -1278,6 +1301,10 @@
 				if($state.current.data)
 					$scope.bodyClass = $state.current.data.bodyClass
 			});
+
+			vm.goToPageSearch = function(){
+				$state.go('search', { place : $scope.placeId });
+			}
 	  		
 			vm.search = function(param){
 				//alert(param);
@@ -1370,7 +1397,7 @@
 			            var map = inst.map;
 			            $scope.PlacesService =  new maps.places.PlacesService(map);
 					 	$scope.PlacesService.getDetails({
-				        	placeId: vm.placeId
+				        	placeId: $scope.placeId
 				        }, function(place, status) {
 					        	if (status === maps.places.PlacesServiceStatus.OK) {
 					        		$scope.searchPlaceSelected = place;
@@ -1383,7 +1410,7 @@
 					        		} else if( !current_bounds.contains( place.geometry.location ) ){
 					        			//var new_bounds = current_bounds.extend(place.geometry.location);
 					        			//map.fitBounds(new_bounds);
-					        			$digest();
+					        			//$digest();
 					        		}
 					        		vm.search();
 					        	}

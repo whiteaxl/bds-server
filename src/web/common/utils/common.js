@@ -49,21 +49,42 @@ window.RewayClientUtils = (function($) {
 			        }, function(place, status) {
 			        	if (status === maps.places.PlacesServiceStatus.OK) {
 			        		$scope.searchPlaceSelected = place;
+			        		$scope.placeId = place.place_id;
 			        		$scope.markers = [];
 			        		var current_bounds = map.getBounds();
 			        		$scope.map.center = {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() }
 			        		$scope.map.zoom = 15;
-			        		if(place.geometry.viewport){
-			        			$scope.map.zoom = 10;
-			        			map.fitBounds(place.geometry.viewport);	
-			        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
-			        			
-			        			var marker = {
+			        		var marker = {
 			        				id: -1,
 			        				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
 			        				data: 'test'
-			        			}
-			        			$scope.markers.push(marker);
+			        		}
+			        		$scope.markers.push(marker);
+			        		/*$scope.map.bounds = {
+			        			northeast: {
+			        				latitude: place.geometry.viewport["O"]["O"],
+									longitude: place.geometry.viewport["j"]["j"]
+			        			},
+								southwest: {
+									latitude: place.geometry.viewport["O"]["O"],
+									longitude: place.geometry.viewport["j"]["j"]
+								}
+			        			
+			        		}*/
+			        		//place.geometry.viewport;
+			        		$scope.map.fit = false;
+			        		$scope.$apply();
+			        		/*$scope.map.control.refresh({latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() });
+			        		if(place.geometry.viewport){
+			        			//$scope.map.zoom = 15;
+			        			//map.fitBounds(place.geometry.viewport);	
+			        			return;
+			        		} else {//if( !current_bounds.contains( place.geometry.location ) ){
+			        			
+			        			
+			        			//$scope.markers.push(marker);
+			        			//$scope.map.control.refresh({latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() });
+			        			return;
 
 			        			var p = map.getProjection();
 			        			if (p) {
@@ -78,8 +99,10 @@ window.RewayClientUtils = (function($) {
 			        			}
 
 			        			$scope.map.fit = false;
-								$scope.$apply();
+								
 			        		}
+			        		$scope.$apply();
+			        		$scope.map.control.refresh();*/
 			        	}
 			        });
 			        return false;
