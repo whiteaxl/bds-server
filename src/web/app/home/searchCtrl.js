@@ -38,8 +38,8 @@
 		vm.search = function(param){
 			//alert(param);
 			var data = {
-			  "loaiTin": $scope.loaiTin,
-				"loaiNhaDat": $scope.loaiNhaDat,
+			  "loaiTin": parseInt($scope.loaiTin),
+				"loaiNhaDat": parseInt($scope.loaiNhaDat),
 			  "giaBETWEEN": [vm.price_min,vm.price_max],
 			  "soPhongNguGREATER": 0,
 			  "soTangGREATER": 0,
