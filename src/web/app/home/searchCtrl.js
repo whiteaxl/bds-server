@@ -76,7 +76,7 @@
 										longitude: 	result[i].place.geo.lon
 									},
 									options: {
-										labelContent : result[i].gia
+										labelContent : result[i].giaFmt
 									},
 									data: 'test'
 								},
