@@ -4,7 +4,7 @@
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi, uiGmapIsReady, $window){
 		var vm = this;
 		//nhannc
-		$scope.loaiTin;
+		$scope.loaiTin = 0;
 		$scope.loaiNhaDat;
 		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
@@ -28,6 +28,10 @@
 			console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
 			console.log("$scope.placeId: " + $scope.placeSearchId);
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+		}
+
+		$scope.setLoaiTin = function(loaiTin){
+			$scope.loaiTin = loaiTin;
 		}
 
 		//End nhannc
