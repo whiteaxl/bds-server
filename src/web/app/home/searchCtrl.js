@@ -3,10 +3,17 @@
 	var controllerId = 'SearchCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,uiGmapGoogleMapApi,uiGmapIsReady,$window){
 		var vm = this;
+
 		$scope.placeId = $state.params.place;
+		$scope.loaiTin = $state.params.loaiTin;
+		$scope.loaiNhaDat = $state.params.loaiNhaDat;;
 		if(!$scope.placeId)
 			$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
+		console.log("placeId: " + $scope.placeId);
+		console.log("loaiTin: " + $scope.loaiTin);
+		console.log("loaiNhaDat: " + $scope.loaiNhaDat);
+		console.log("placeId: " + $scope.placeId);
 		
 		vm.sell_price_list = window.RewayListValue.sell_steps;
 		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
@@ -31,8 +38,9 @@
 		vm.search = function(param){
 			//alert(param);
 			var data = {
-			  "loaiTin": 0,
-			  "giaBETWEEN": [0,vm.price_max],
+			  "loaiTin": $scope.loaiTin,
+				"loaiNhaDat": $scope.loaiNhaDat,
+			  "giaBETWEEN": [vm.price_min,vm.price_max],
 			  "soPhongNguGREATER": 0,
 			  "soTangGREATER": 0,
 			  "dienTichBETWEEN": [0,vm.dien_tich_max],

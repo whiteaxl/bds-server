@@ -11,15 +11,15 @@
                         <nav class="nav-main">
                             <ul>
                                 <li>
-                                    <a ng-click="" title="">Bất động sản bán</a>
+                                    <a ng-click="goToPageSearch('0')" title="">Bất động sản bán</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatBan"><a href="">{[{::item.name}]}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatBan"><a ng-click="goToPageSearch(item.type)" ng-model="msgType" data-value="{[{::item.type}]}">{[{::item.name}]}</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="" ng-click="" title="">Bất động sản cho thuê</a>
+                                    <a ng-click="goToPageSearch('1')" title="">Bất động sản cho thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatThue"><a href="">{[{item.name}]}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatThue"><a ng-click="goToPageSearch(item.type)" ng-model="msgType" data-value="{[{::item.type}]}">{[{::item.name}]}</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -94,7 +94,7 @@
                                                 </div>
                                                 <div class="form">
                                                 <form action="index.html" method="post">
-                                                    <input type="search" class="form-control" placeholder="Address, City, Zip, Neighborhood" name="search" id="autoCompleteHome"/>
+                                                    <input type="search" class="form-control" placeholder="Address, City, Zip, Neighborhood" id="autoCompleteHome"/>
                                                     <button ng-click="goToPageSearch()" class="btn-search" type="button"><i class="fa fa-search"></i><span class="text">Search</span></button>
                                                     <input id="search_type" type="hidden" name="search_type" value="for_sale">
                                                 </form>
