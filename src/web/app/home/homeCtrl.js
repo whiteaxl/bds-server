@@ -16,11 +16,10 @@
 				if(msgType.length >= 2){
 					$scope.loaiTin = msgType.substring(0,1);
 					$scope.loaiNhaDat = msgType.substring(1);
-					//alert("loaiTin: " + $scope.loaiTin);
-					//alert("loaiNhaDat: " + $scope.loaiNhaDat);
+					if($scope.loaiNhaDat == '0')
+						$scope.loaiNhaDat = null;
 				} else{
 					$scope.loaiTin = msgType;
-					//alert("loaiTin: " + $scope.loaiTin);
 				}
 			}
 
@@ -65,21 +64,25 @@
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = [
-				{ "type": "01", "name": "Căn hộ chung cư" },
-				{ "type": "02", "name": "Nhà riêng" },
-				{ "type": "03", "name": "Nhà mặt phố" },
-				{ "type": "04", "name": "Biệt thự, liền kề" },
-				{ "type": "05", "name": "Nhà đất" },
-				{ "type": "099", "name": "Các BDS khác" }
+				{ type: "00", name: "Tất cả" },
+				{ type: "01", name: "Căn hộ chung cư" },
+				{ type: "02", name: "Nhà riêng" },
+				{ type: "03", name: "Nhà mặt phố" },
+				{ type: "04", name: "Biệt thự, liền kề" },
+				{ type: "05", name: "Nhà đất" },
+				{ type: "099", name: "Các BDS khác" },
+				{ type: "010", name: "Tìm kiếm nâng cao" }
 			];
 
 			$scope.loaiNhaDatThue = [
+				{ type: "10", name: "Tất cả" },
 				{ type: "11", name: "Căn hộ chung cư" },
 				{ type: "12", name: "Nhà riêng" },
 				{ type: "13", name: "Nhà mặt phố" },
 				{ type: "14", name: "Văn phòng" },
 				{ type: "15", name: "Cửa hàng, ki-ốt" },
-				{ type: "199", name: "Các BDS khác" }
+				{ type: "199", name: "Các BDS khác" },
+				{ type: "110", name: "Tìm kiếm nâng cao" }
 			];
 
 			/*uiGmapGoogleMapApi.then(function(maps){
