@@ -686,6 +686,12 @@ function _transformDetailAds(ads) {
         });
     }
 
+    if (ads.chiTiet) {
+        var idx = ads.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+        ads.chiTiet =  ads.chiTiet.substring(0, idx);
+        //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
+    }
+
     //dummy
     ads.luotXem = 1232;
 
