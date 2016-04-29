@@ -51,7 +51,14 @@ class AdsModel {
     }
 
     getAds(adsID, callback) {
+        this.initBucket();
         bucket.get(adsID, callback);
+    }
+
+    initBucket() {
+        bucket = cluster.openBucket('default');
+        bucket.enableN1ql(['127.0.0.1:8093']);
+        bucket.operationTimeout = 60 * 1000;
     }
 
 //?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
