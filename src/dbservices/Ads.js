@@ -8,19 +8,19 @@ var bucket = cluster.openBucket('default');
 bucket.enableN1ql(['127.0.0.1:8093']);
 
 class AdsModel {
-	constructor(myBucket) {
-		this.myBucket = myBucket;
-	}
+    constructor(myBucket) {
+        this.myBucket = myBucket;
+    }
 
-	upsert(adsDto) {
+    upsert(adsDto) {
         bucket.upsert(adsDto.adsID, adsDto, function(err, res) {
-			if (err) {
-				console.log("ERROR:" + err);
-			}
-		})
-	}
+            if (err) {
+                console.log("ERROR:" + err);
+            }
+        })
+    }
 
-	queryAll(callBack) {
+    queryAll(callBack) {
         let query = ViewQuery.from('ads', 'all_ads').limit(3);
 
         this.myBucket.query(query, function(err, all) {
@@ -55,44 +55,44 @@ class AdsModel {
 //?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
 // &spPhongTamGREATER=1&dienTichBETWEEN=50,200
 // &orderBy=giaASC,dienTichDESC,soPhongNguASC
-queryAllData(loaiTin,loaiNhaDat,gia,soPhongNgu,soPhongTam,dienTich,orderByField,orderByType,limit){
+    queryAllData(loaiTin,loaiNhaDat,gia,soPhongNgu,soPhongTam,dienTich,orderByField,orderByType,limit){
 
-     // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
+        // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
-    var  sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
+        var  sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
 
-    sql = sql + " and loaiTin=" + loaiTin;
+        sql = sql + " and loaiTin=" + loaiTin;
 
-    sql = sql +   (loaiNhaDat?" and loaiNhaDat=" + loaiNhaDat:"");
+        sql = sql +   (loaiNhaDat?" and loaiNhaDat=" + loaiNhaDat:"");
 
-    sql = sql + (gia?" and  gia BETWEEN " +gia[0] +  " AND " + gia[1]:"");
+        sql = sql + (gia?" and  gia BETWEEN " +gia[0] +  " AND " + gia[1]:"");
 
-    sql = sql + (soPhongNgu?" and soPhongNgu  >= " + soPhongNgu:"");
+        sql = sql + (soPhongNgu?" and soPhongNgu  >= " + soPhongNgu:"");
 
-    sql = sql + (soPhongTam?" and soPhongTam  >= " + soPhongTam:"");
+        sql = sql + (soPhongTam?" and soPhongTam  >= " + soPhongTam:"");
 
-    sql = sql + (dienTich?" and dienTich BETWEEN " +dienTich[0] +  " AND " + dienTich[1]:"");
+        sql = sql + (dienTich?" and dienTich BETWEEN " +dienTich[0] +  " AND " + dienTich[1]:"");
 
-    sql = sql + (orderByField?" order by " + orderByField + " " + orderByType:"");
+        sql = sql + (orderByField?" order by " + orderByField + " " + orderByType:"");
 
-    sql = sql +   (limit?" limit  " + limit:" limit 100 ");
+        sql = sql +   (limit?" limit  " + limit:" limit 100 ");
 
 
-    var query = N1qlQuery.fromString(sql);
+        var query = N1qlQuery.fromString(sql);
 
-    setTimeout(function() {
-        bucket.query(query, function(err, res) {
-            if (err) {
-                console.log('query failed'.red, err);
-                return;
-            }
-            console.log('success!', res);
-        });
-    }, 2000); // just in case connecting takes a second or something?
+        setTimeout(function() {
+            bucket.query(query, function(err, res) {
+                if (err) {
+                    console.log('query failed'.red, err);
+                    return;
+                }
+                console.log('success!', res);
+            });
+        }, 2000); // just in case connecting takes a second or something?
 
-}
+    }
     //nhannc
-    queryRecentAds(onSuccess, onFailure, ngayDangTin,orderByField, orderByType, limit) {
+    queryRecentAds(reply, ngayDangTin,orderByField, orderByType, limit) {
 
         // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
@@ -114,15 +114,17 @@ queryAllData(loaiTin,loaiNhaDat,gia,soPhongNgu,soPhongTam,dienTich,orderByField,
 
         console.log(sql);
 
-        var callback1 = function (err, res) {
-            if (err) {
-                onFailure();
-            }
-            else {
-                onSuccess();
-            }
-        };
-        bucket.query(query, callback1);
+        bucket.query(query, function(err, all) {
+            console.log("number of ads:" + all.length);
+            console.log("Error:" + err);
+            if (!all)
+                all = [];
+
+            reply({
+                length: all.length,
+                list: all
+            });
+        });
 
     }
     //End nhannc

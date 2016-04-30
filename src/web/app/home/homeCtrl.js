@@ -164,15 +164,16 @@
 		}
 
 		function initHotAds(){
-			console.log("----------------------aha ha aha ---------------");
+			console.log("---------------------initHotAds ---------------");
 			var data = {
 				"ngayDangTin": '25-04-2016',
 				"limit": 4
 			};
 			console.log("getRecentBds + data: " + data);
 			HouseService.findRencentAds(data).then(function(res){
+				alert("HouseService.findRencentAds: " + res);
 				var result = res.data.list;
-				console.log("Result: " + findRecent);
+				console.log("HouseService.findRencentAds: " + result);
 			});
 		}
 		vm.getLocation = function () {

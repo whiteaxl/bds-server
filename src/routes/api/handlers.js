@@ -586,7 +586,7 @@ internals.findRencentAds = function(req, reply) {
 
     try {
         var  queryCondition = req.payload;
-        var adsModel = new AdsService();
+        var adsModel = new AdsService(myBucket);
         var orderbyList = queryCondition.orderBy;
         var limit = queryCondition.limit;
         var ngayDangTin = util.popField(queryCondition, Q_FIELD.ngayDangTin);
@@ -612,7 +612,7 @@ internals.findRencentAds = function(req, reply) {
 
         var onSuccess = function(res) {
             let listResult = res;
-            console.log("-----listResult: " + listResult);
+            console.log("-----listResult: " + res.data.list);
             reply({
                 length: listResult.length,
                 list: listResult
@@ -623,7 +623,7 @@ internals.findRencentAds = function(req, reply) {
             reply(Boom.internal("Error when search:"));
         };
 
-        adsModel.queryRecentAds(onSuccess,onFailure,
+        adsModel.queryRecentAds(reply,
             ngayDangTin,
             orderByName,
             orderByType,
