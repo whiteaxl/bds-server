@@ -245,7 +245,7 @@ class BDSExtractor {
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
 		    	area_raw: listing.area,
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
-                chiTiet: listing.chiTiet,
+				chiTiet: listing.chiTiet.replace('<br/>', '\r\n'),
 		    	hdLat : Number(listing.hdLat), 
 		    	hdLong : Number(listing.hdLong)
 		    };
