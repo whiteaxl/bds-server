@@ -46,6 +46,51 @@
 			});
 		}
 
+		$scope.getRecentBds = function(){
+			HouseService.findRencentAds(data).then(function(res){
+				var result = res.data.list;
+				for (var i = 0; i < result.length; i++) {
+					var ads = result[i];
+					if(result[i].place){
+						if(result[i].place.geo){
+							result[i].map={
+								center: {
+									latitude: 	result[i].place.geo.lat,
+									longitude: 	result[i].place.geo.lon
+								},
+								marker: {
+									id: i,
+									coords: {
+										latitude: 	result[i].place.geo.lat,
+										longitude: 	result[i].place.geo.lon
+									},
+									options: {
+										labelContent : result[i].giaFmt
+									},
+									data: 'test'
+								},
+								options:{
+									scrollwheel: false
+								},
+								zoom: 14
+							}
+
+						}
+					}
+
+				}
+				$scope.ads_list = res.data.list;
+				$scope.markers = [];
+				for(var i = 0; i < res.data.list.length; i++) {
+					var ads = res.data.list[i];
+					if(res.data.list[i].map)
+						$scope.markers.push(res.data.list[i].map.marker);
+				}
+				$scope.map.fit = true;
+				$scope.map.zoom = 10;
+			});
+		}
+
 		$scope.$on('$viewContentLoaded', function(){
 			//addCrudControls
 			window.DesignCommon.adjustPage();

@@ -579,6 +579,25 @@ internals.findPOST = function(req, reply) {
     }
 };
 
+//Nhannc
+internals.findRencentAds = function(req, reply) {
+    logUtil.info("findRencentAds - query parameter: " );
+    console.log(req.payload);
+    //check parameter
+    if (_validateFindRequestParameters(req, reply)) {
+        try {
+            findAds(req.payload, reply)
+        } catch (e) {
+            logUtil.error(e);
+            //console.trace(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
+    }
+};
+//End Nhannc
+
 function _validateFindRequestParameters(req, reply) {
     var query = req.payload;
     if (!query.hasOwnProperty('loaiTin')) {
