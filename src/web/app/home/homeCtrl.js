@@ -8,6 +8,7 @@
 		$scope.loaiNhaDat;
 		$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 		init();
+		initHotAds();
 		//alert("placeSearchId: " + $scope.placeSearchId);
 		$scope.goToPageSearch = function(msgType){
 			//alert("msgType: " + msgType);
@@ -43,51 +44,6 @@
 		    		if(res.data[i].map)
 		    			$scope.markers.push(res.data[i].map.marker);
 				}
-			});
-		}
-
-		$scope.getRecentBds = function(){
-			HouseService.findRencentAds(data).then(function(res){
-				var result = res.data.list;
-				for (var i = 0; i < result.length; i++) {
-					var ads = result[i];
-					if(result[i].place){
-						if(result[i].place.geo){
-							result[i].map={
-								center: {
-									latitude: 	result[i].place.geo.lat,
-									longitude: 	result[i].place.geo.lon
-								},
-								marker: {
-									id: i,
-									coords: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
-									},
-									options: {
-										labelContent : result[i].giaFmt
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14
-							}
-
-						}
-					}
-
-				}
-				$scope.ads_list = res.data.list;
-				$scope.markers = [];
-				for(var i = 0; i < res.data.list.length; i++) {
-					var ads = res.data.list[i];
-					if(res.data.list[i].map)
-						$scope.markers.push(res.data.list[i].map.marker);
-				}
-				$scope.map.fit = true;
-				$scope.map.zoom = 10;
 			});
 		}
 
@@ -205,6 +161,19 @@
 	    		}
 			}
 
+		}
+
+		function initHotAds(){
+			console.log("----------------------aha ha aha ---------------");
+			var data = {
+				"ngayDangTin": '25-04-2016',
+				"limit": 4
+			};
+			console.log("getRecentBds + data: " + data);
+			HouseService.findRencentAds(data).then(function(res){
+				var result = res.data.list;
+				console.log("Result: " + findRecent);
+			});
 		}
 		vm.getLocation = function () {
 			if (navigator.geolocation) {

@@ -42,7 +42,7 @@ var Q_FIELD = {
     soPhongTam: "soPhongTam",
     soTang : "soTang",
     huongNha : "huongNha",
-    ngayDaDang : "ngayDaDang"
+    ngayDangTin : "ngayDangTin"
 };
 
 var internals = {};
@@ -583,17 +583,57 @@ internals.findPOST = function(req, reply) {
 internals.findRencentAds = function(req, reply) {
     logUtil.info("findRencentAds - query parameter: " );
     console.log(req.payload);
-    //check parameter
-    if (_validateFindRequestParameters(req, reply)) {
-        try {
-            findAds(req.payload, reply)
-        } catch (e) {
-            logUtil.error(e);
-            //console.trace(e);
-            console.log(e, e.stack.split("\n"));
 
-            reply(Boom.badImplementation());
+    try {
+        var  queryCondition = req.payload;
+        var adsModel = new AdsService();
+        var orderbyList = queryCondition.orderBy;
+        var limit = queryCondition.limit;
+        var ngayDangTin = util.popField(queryCondition, Q_FIELD.ngayDangTin);
+        var orderByName ="";
+        var orderByType ="";
+
+        if (orderbyList){
+            var arr = orderbyList.split(",");
+            var firstElement = arr[0];
+            var len =   firstElement.length;
+            var idxASC = firstElement.indexOf("ASC");
+            var idxDESC = firstElement.indexOf("DESC");
+
+            if(idxASC >-1){
+                orderByName = firstElement.substring(0,len -3);
+                orderByType =  "ASC";
+            }
+            if(idxDESC >-1){
+                orderByName = firstElement.substring(0,len -4);
+                orderByType =  "DESC";
+            }
         }
+
+        var onSuccess = function(res) {
+            let listResult = res;
+            console.log("-----listResult: " + listResult);
+            reply({
+                length: listResult.length,
+                list: listResult
+            });
+        };
+
+        var onFailure = function(err) {
+            reply(Boom.internal("Error when search:"));
+        };
+
+        adsModel.queryRecentAds(onSuccess,onFailure,
+            ngayDangTin,
+            orderByName,
+            orderByType,
+            limit);
+    } catch (e) {
+        logUtil.error(e);
+        //console.trace(e);
+        console.log(e, e.stack.split("\n"));
+
+        reply(Boom.badImplementation());
     }
 };
 //End Nhannc

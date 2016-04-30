@@ -91,6 +91,41 @@ queryAllData(loaiTin,loaiNhaDat,gia,soPhongNgu,soPhongTam,dienTich,orderByField,
     }, 2000); // just in case connecting takes a second or something?
 
 }
+    //nhannc
+    queryRecentAds(onSuccess, onFailure, ngayDangTin,orderByField, orderByType, limit) {
+
+        // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
+
+        var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
+
+        sql = sql + (ngayDangTin ? (" and ngayDangTin>'" + ngayDangTin + "'") : "");
+        if (orderByField) {
+
+            sql = sql + " order by " + orderByField + "  " + orderByType;
+        }
+
+        if (limit) {
+            sql = sql + " limit  " + limit;
+        }
+        else {
+            sql = sql + " limit 4 ";
+        }
+        var query = N1qlQuery.fromString(sql);
+
+        console.log(sql);
+
+        var callback1 = function (err, res) {
+            if (err) {
+                onFailure();
+            }
+            else {
+                onSuccess();
+            }
+        };
+        bucket.query(query, callback1);
+
+    }
+    //End nhannc
 }
 
 module.exports = AdsModel;
