@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1eaa706699c617e32c8d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8c001fd18982aed51845"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1337,7 +1337,7 @@
 			vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
 			vm.sortOptions = window.RewayListValue.sortHouseOptions;
 			vm.sortBy = 1;
-			vm.price_min = "0";
+			vm.price_min = 0;
 			vm.price_max = window.RewayListValue.filter_max_value.value;
 			vm.dien_tich_min = 0;
 			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
@@ -1350,7 +1350,7 @@
 			});
 
 			vm.goToPageSearch = function(){
-				$state.go('search', { place : $scope.placeId });
+				$state.go('search', { "place" : $scope.placeId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 			}
 	  		
 			vm.search = function(param){

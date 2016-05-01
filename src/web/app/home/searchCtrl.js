@@ -19,7 +19,7 @@
 		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
 		vm.sortOptions = window.RewayListValue.sortHouseOptions;
 		vm.sortBy = 1;
-		vm.price_min = "0";
+		vm.price_min = 0;
 		vm.price_max = window.RewayListValue.filter_max_value.value;
 		vm.dien_tich_min = 0;
 		vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
@@ -32,7 +32,7 @@
 		});
 
 		vm.goToPageSearch = function(){
-			$state.go('search', { place : $scope.placeId });
+			$state.go('search', { "place" : $scope.placeId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 		}
   		
 		vm.search = function(param){
