@@ -1,15 +1,22 @@
 (function() {
   'use strict';
   window.initData = {};
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','uiGmapgoogle-maps','ui.bootstrap'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap'])
   .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
     $rootScope.globals = $cookieStore.get('globals') || {};
+    //$rootScope.center = "Hanoi Vietnam";
+    $rootScope.center  = {
+      lat: 16.0439,
+      lng: 108.199
+    }
+    
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
       //alert(toState.name);
       if (toState.name === 'home') {
         toState.templateUrl = '/web/index_content.html';
       }else{
         toState.templateUrl = '/web/'+toState.name+'.html';
+        //toState.templateUrl = '/web/marker.html';
       }
         //if (toState.name === 'list') {
         //  alert(toState);
@@ -71,19 +78,19 @@
       };
 
   }]);
-  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,uiGmapGoogleMapApiProvider,$interpolateProvider){
+  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider){
       // For any unmatched url, send to /route1
       $locationProvider.html5Mode(true);
       //$urlRouterProvider.otherwise("/web/list.html")
       //alert('sss');
-      $interpolateProvider.startSymbol('{[{');
-      $interpolateProvider.endSymbol('}]}');
+      // $interpolateProvider.startSymbol('{[{');
+      // $interpolateProvider.endSymbol('}]}');
 
-      uiGmapGoogleMapApiProvider.configure({
+     /*uiGmapGoogleMapApiProvider.configure({
           //    key: 'your api key',
           v: '3.20', //defaults to latest 3.X anyhow
           libraries: 'places,geometry,visualization' // Required for SearchBox.
-      });
+      });*/
       $stateProvider
       .state('list', {
         url: "/list",

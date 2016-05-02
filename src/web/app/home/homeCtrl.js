@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi, uiGmapIsReady, $window){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService,NgMap, $window){
 		var vm = this;
 		//nhannc
 		$scope.loaiTin;
@@ -28,6 +28,10 @@
 			console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
 			console.log("$scope.placeId: " + $scope.placeSearchId);
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+		}
+		vm.selectPlaceCallback = function(place){
+			$scope.searchPlaceSelected = place;
+			$scope.placeSearchId = place.place_id;
 		}
 
 		//End nhannc
@@ -93,24 +97,33 @@
 				})
 			})*/
 
-			uiGmapGoogleMapApi.then(function(maps){
-				window.RewayClientUtils.createPlaceAutoComplete($scope,"autoCompleteHome",maps);
-				uiGmapIsReady.promise(1).then(function(instances) {
-					instances.forEach(function(inst) {
-						var map = inst.map;
-						$scope.PlacesService =  new maps.places.PlacesService(map);
-						$scope.PlacesService.getDetails({
-							placeId: $scope.placeSearchId
-						}, function(place, status) {
-							if (status === maps.places.PlacesServiceStatus.OK) {
-								$scope.searchPlaceHomeSelected = place;
-								$scope.placeSearchId = $scope.searchPlaceHomeSelected.place_id;
-							}
-						});
-					});
-				});
+			NgMap.getMap().then(function(map){
+	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autoCompleteHome",map);
+	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
+	        	$scope.PlacesService.getDetails({
+	        		placeId: $scope.placeId
+	        	}, function(place, status) {
+	        		if (status === google.maps.places.PlacesServiceStatus.OK) {
+	        			$scope.searchPlaceSelected = place;
+						        		//var map = $scope.map.control.getGMap();
+						        		var current_bounds = map.getBounds();
+						        		//$scope.map.center =  
+						        		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+						        		if(place.geometry.viewport){
+						        			//map.fitBounds(place.geometry.viewport);	
+						        			//$scope.map
+						        		} else if( !current_bounds.contains( place.geometry.location ) ){
+						        			//var new_bounds = current_bounds.extend(place.geometry.location);
+						        			//map.fitBounds(new_bounds);
+						        			//$digest();
+						        		}
+						        		$scope.$apply();
+						        		//vm.search();
+						        	}
+						        });
 
-			});
+        	});
 			//end nhannc
 			$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};

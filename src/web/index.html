@@ -12,6 +12,7 @@
     <meta name="geo.region" content="VN-HN">
     <meta name="geo.position" content="21.008415;105.802989">
     <meta name="ICBM" content="21.008415;105.802989">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta name="description" content="Công ty CP PT DV nhà sạch HMC – JupViec.vn là công ty chuyên cung cấp dịch vụ 'Giúp Việc Gia Đình' bao gồm Giúp Việc Theo Giờ và Giúp Việc Ở Lại Nhà.">
     <meta name="keywords" content="giup viec nha, cham soc em be, don dep nha cua, giúp việc theo giờ, osin, nguoi giup viec, giup viec gia dinh, dich vu ve sinh, giúp việc nhà theo giờ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,6 +40,7 @@
     <script src="/web/asset/js/jquery.bxslider.min.js"></script>
     <script src="/web/asset/js/jquery.scroll.min.js"></script>
     <script src="/web/asset/js/jquery-ui.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places" ></script>
     <!-- <script src="/src/lib/placeUtil.js"></script> -->
     <!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
     <!--[if lt IE 9]>
@@ -46,9 +48,17 @@
     <![endif]-->
     <script src="/web/asset/js/common.min.js"></script>
     <!-- //Script -->    
-    <script src="/web/dist/vendor.bundle.js"></script>
+    <!-- <script src="/web/dist/vendor.bundle.js"></script> -->
+    <script src="/bower/angular/angular.js"></script>
+    <script src="/bower/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower/angular-cookies/angular-cookies.js"></script>
+    <script src="/bower/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script src="/bower/ngmap/build/scripts/ng-map.min.js"></script>
+    <!-- <script src="/bower/angular-google-maps/dist/angular-google-maps.js"></script> -->
+    <!-- <script src="/bower/angular-bootstrap/ui-bootstrap.js"></script> -->
     <script src="/web/dist/rewaylib.bundle.js"></script>
     <script src="/web/dist/app.bundle.js"></script>
+    
     
     <base href="/web/">
     <script type="text/ng-template" id="searchPlaceDropdownTemplate.html">
@@ -63,8 +73,87 @@
     .angular-google-map-container {
             height: 559px;
             width: 100%;
+    }
+    .ngmap {
+            height: 559px;
+            width: 100%;
+    }
+    .custom-marker.my1 {
+        font-size: 1.5em;
+        padding: 10px;
+        background: #fff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border: #7F7F7F solid 1px;
       }
-    
+
+      .custom-marker.my1:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 7px 6px 0;
+        border-color: #fff transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        margin-left: -6px;
+        bottom: -6px;
+        left: 50%;
+      }
+
+      .custom-marker.my1:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 7px 6px 0;
+        border-color: #7F7F7F transparent;
+        display: block;
+        width: 0;
+        z-index: 0;
+        margin-left: -6px;
+        bottom: -7px;
+        left: 50%;
+      }
+
+      .custom-marker.my2 {
+        font-size: 1.5em;
+        padding: 10px;
+        background: #fff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border: #7F7F7F solid 1px;
+        background: red;
+      }
+
+      .custom-marker.my2:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 7px 6px 0;
+        border-color: red transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        margin-left: -6px;
+        bottom: -6px;
+        left: 50%;
+      }
+
+      .custom-marker.my2:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 7px 6px 0;
+        border-color: #7F7F7F transparent;
+        display: block;
+        width: 0;
+        z-index: 0;
+        margin-left: -6px;
+        bottom: -7px;
+        left: 50%;
+      }
     /*#google-map { height : 100%; width : 100%; top : 0; left : 0; position : absolute; z-index : 200*/
     </style>
 </head>

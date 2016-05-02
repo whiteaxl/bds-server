@@ -114,7 +114,7 @@
                                             <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ">
                                                 <option value="0">Giá từ</option>
                                                 <!-- <option value="0">0</option> -->
-                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}">{[{price.lable}]}</option>
+                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{{price.value}}">{{price.lable}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                             <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến">
                                                 <option value="">Giá đến</option>
                                                 <option value="99999999999">Bất kỳ</option>
-                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{[{price.value}]}" >{[{price.lable}]}</option>
+                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{{price.value}}" >{{price.lable}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                                     <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ">
                                         <option value="">Diện tích từ</option>
                                         <option value="0">0</option>
-                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
+                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{{s.value}}">{{s.lable}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -146,11 +146,11 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    price max {[{mc.price_min}]}
+                                    price max {{mc.price_min}}
                                     <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến">
                                         <option value="">Diện tích đến</option>
                                         <option value="99999999999">Bất kỳ</option>
-                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{[{s.value}]}">{[{s.lable}]}</option>
+                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{{s.value}}">{{s.lable}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -364,12 +364,47 @@
             <section class="box-search">
                 <div class="row">
                     <div class="col col-60">
-                        <div class="map is-fixed" data-map="true">
-                            <ui-gmap-google-map id="google-map" class="google" center="map.center" control = "map.control" zoom="map.zoom" options="options" events="map.events" refresh="'true'">
-                                <ui-gmap-markers models="markers" idKey="id" options = "'options'" coords="'coords'" fit="map.fit" icon="'icon'">
-                                </ui-gmap-markers>
-                            </ui-gmap-google-map>
+                        <div class="map is-fixed" >
+
+                            <ng-map center="{{center}}" zoom-to-include-markers="auto" class="ngmap">
+                            <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
+                                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
+                                    on-click="mc.click({{$index}})" id="{{ads_list[$index].adsID}}" >
+                                  <div class = "my1">
+                                    {{m.content}} 
+                                  </div>
+                                </custom-marker>
+                                <!-- <marker ng-repeat="m in markers track by $index" id = "{{ads_list[$index].adsID}}" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
+                                    on-click="mc.click({{$index}})"> -->
+                                    
+                                    
+                                <!-- </marker> -->
+
+                                <info-window id="iw">
+                                    <div ng-non-bindable="" class="row">
+                                            <div class="col col-50">
+                                                <div class="media" style="background-image: url({{mc.highlightAds.image.cover}});height: 100px;"></div>
+                                            </div>
+                                            <div class="col col-50">
+                                                
+                                                <div class="price">gia: {{mc.highlightAds.giaFmt}}</div>
+                                                <div class="info">dientich: {{mc.highlightAds.dientichFmt}}</div>
+                                                <div class="info">Căn hộ chung cư</div>
+                                            </div>
+                                    </div>
+                                </info-window>
+
+                                <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
+                                    <div ng-non-bindable="">
+                                        id: {{$index}}<br/>
+                                        name: {{mc.highlightAds.name}}<br/>
+
+                                        <a href="#">Click Here</a>
+                                    </div>
+                                </info-window> -->
+                            </ng-map>    
                         </div>
+
                         <nav class="nav sp">
                             <ul>
                                 <li>
@@ -408,10 +443,10 @@
                             <h2 class="head">318 California City, CA Homes For Sale & Real Estate</h2>
                             <div class="handle">
                                 <div class="filter">
-                                    <div class="label">Sắp xếp: {[{mc.sortBy}]}</div>
+                                    <div class="label">Sắp xếp: {{mc.sortBy}}</div>
                                     <div class="option">
                                         <select class="select" ng-model="mc.sortBy" data-select="true" title="Sắp xếp">
-                                            <option ng-repeat="sort in mc.sortOptions track by sort.position" value="{[{sort.value}]}">{[{sort.lable}]}</option>
+                                            <option ng-repeat="sort in mc.sortOptions track by sort.position" value="{{sort.value}}">{{sort.lable}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -422,14 +457,14 @@
                             </div>
                             <div class="row">
 
-                                <div ng-repeat="ads in ads_list" class="col col-50">
+                                <div ng-repeat="ads in ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-mouseout="mc.hideDetail();">
                                     <div class="item">
-                                        <a class="link" href="" title="">
-                                            <span class="img" style="background-image: url({[{ads.image.cover}]})"></span>
-                                            <span class="info">
-                                                <span class="line"><span class="price">{[{ads.giaFmt}]}</span> <span>{[{ads.dienTichFmt}]}</span></span>
-                                                <span class="line">{[{ads.soTangFmt}]}</span>
-                                                <span class="line">{[{ads.soPhongNguFmt}]}</span>
+                                        <a class="link" href="" title="" >
+                                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                                            <span class="info"  >
+                                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                                <span class="line">{{ads.soTangFmt}}</span>
+                                                <span class="line">{{ads.soPhongNguFmt}}</span>
                                             </span>
                                         </a>
                                         <h3>
