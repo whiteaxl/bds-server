@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "30a4c301d601a014bd27"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "363626da51cc2bf911f9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1275,6 +1275,25 @@
 
 			function initHotAds(){
 				console.log("---------------------initHotAds ---------------");
+				data = {
+					"gia": 800,
+					"limit": 4
+				};
+				HouseService.findBelowPriceAds(data).then(function(res){
+					var resultBelow = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							resultBelow.push(res.data.list[i].default);
+						}
+						$scope.hot_ads_cat.push({
+							name: "nhà dưới mức giá 800.000.000 VND",
+							location: "Hà Nội",
+							list: resultBelow
+						})
+					}
+					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+				});
+
 				var data = {
 					"ngayDangTin": '25-04-2016',
 					"limit": 4
@@ -1295,25 +1314,6 @@
 						})
 					}
 					console.log("HouseService.findRencentAds: " + result.length);
-				});
-
-				data = {
-					"gia": 800,
-					"limit": 4
-				};
-				HouseService.findBelowPriceAds(data).then(function(res){
-					var resultBelow = [];
-					if(res.data.list){
-						for (var i = 0; i < res.data.list.length; i++) {
-							resultBelow.push(res.data.list[i].default);
-						}
-						$scope.hot_ads_cat.push({
-							name: "nhà dưới mức giá",
-							location: "Hà Nội",
-							list: resultBelow
-						})
-					}
-					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
 				});
 
 			}
