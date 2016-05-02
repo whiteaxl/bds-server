@@ -53,19 +53,8 @@
 
 /******/ 	
 /******/ 	
-/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
-/******/ 	var canDefineProperty = false;
-/******/ 	try {
-/******/ 		Object.defineProperty({}, "x", {
-/******/ 			get: function() {}
-/******/ 		});
-/******/ 		canDefineProperty = true;
-/******/ 	} catch(x) {
-/******/ 		// IE will fail on defineProperty
-/******/ 	}
-/******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1eaa706699c617e32c8d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "30a4c301d601a014bd27"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -88,7 +77,7 @@
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(canDefineProperty) {
+/******/ 				if(Object.defineProperty) {
 /******/ 					Object.defineProperty(fn, name, (function(name) {
 /******/ 						return {
 /******/ 							configurable: true,
@@ -131,7 +120,7 @@
 /******/ 				}
 /******/ 			});
 /******/ 		}
-/******/ 		if(canDefineProperty) {
+/******/ 		if(Object.defineProperty) {
 /******/ 			Object.defineProperty(fn, "e", {
 /******/ 				enumerable: true,
 /******/ 				value: ensure
@@ -1125,10 +1114,11 @@
 		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, uiGmapGoogleMapApi, uiGmapIsReady, $window){
 			var vm = this;
 			//nhannc
-			$scope.loaiTin;
+			$scope.loaiTin = 0;
 			$scope.loaiNhaDat;
 			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			init();
+			initHotAds();
 			//alert("placeSearchId: " + $scope.placeSearchId);
 			$scope.goToPageSearch = function(msgType){
 				//alert("msgType: " + msgType);
@@ -1137,11 +1127,10 @@
 					if(msgType.length >= 2){
 						$scope.loaiTin = msgType.substring(0,1);
 						$scope.loaiNhaDat = msgType.substring(1);
-						//alert("loaiTin: " + $scope.loaiTin);
-						//alert("loaiNhaDat: " + $scope.loaiNhaDat);
+						if($scope.loaiNhaDat == '0')
+							$scope.loaiNhaDat = null;
 					} else{
 						$scope.loaiTin = msgType;
-						//alert("loaiTin: " + $scope.loaiTin);
 					}
 				}
 
@@ -1149,6 +1138,10 @@
 				console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
 				console.log("$scope.placeId: " + $scope.placeSearchId);
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+			}
+
+			$scope.setLoaiTin = function(loaiTin){
+				$scope.loaiTin = loaiTin;
 			}
 
 			//End nhannc
@@ -1182,21 +1175,25 @@
 			function init(){
 				//nhannc
 				$scope.loaiNhaDatBan = [
-					{ "type": "01", "name": "Căn hộ chung cư" },
-					{ "type": "02", "name": "Nhà riêng" },
-					{ "type": "03", "name": "Nhà mặt phố" },
-					{ "type": "04", "name": "Biệt thự, liền kề" },
-					{ "type": "05", "name": "Nhà đất" },
-					{ "type": "099", "name": "Các BDS khác" }
+					{ type: "00", name: "Tất cả" },
+					{ type: "01", name: "Căn hộ chung cư" },
+					{ type: "02", name: "Nhà riêng" },
+					{ type: "03", name: "Nhà mặt phố" },
+					{ type: "04", name: "Biệt thự, liền kề" },
+					{ type: "05", name: "Nhà đất" },
+					{ type: "099", name: "Các BDS khác" },
+					{ type: "010", name: "Tìm kiếm nâng cao" }
 				];
 
 				$scope.loaiNhaDatThue = [
+					{ type: "10", name: "Tất cả" },
 					{ type: "11", name: "Căn hộ chung cư" },
 					{ type: "12", name: "Nhà riêng" },
 					{ type: "13", name: "Nhà mặt phố" },
 					{ type: "14", name: "Văn phòng" },
 					{ type: "15", name: "Cửa hàng, ki-ốt" },
-					{ type: "199", name: "Các BDS khác" }
+					{ type: "199", name: "Các BDS khác" },
+					{ type: "110", name: "Tìm kiếm nâng cao" }
 				];
 
 				/*uiGmapGoogleMapApi.then(function(maps){
@@ -1238,7 +1235,7 @@
 				$scope.markerCount = 3;
 				$scope.markers = [];
 				$scope.initData = window.initData;
-				$scope.hot_ads_cat = window.hot_ads_cat;
+				//$scope.hot_ads_cat = window.hot_ads_cat;
 				$scope.ads_list = window.testData;
 				$scope.bodyClass= "page-home";
 				for(var i = 0; i < $scope.ads_list.length; i++) { 
@@ -1273,6 +1270,51 @@
 						}
 		    		}
 				}
+
+			}
+
+			function initHotAds(){
+				console.log("---------------------initHotAds ---------------");
+				var data = {
+					"ngayDangTin": '25-04-2016',
+					"limit": 4
+				};
+				console.log("getRecentBds + data: " + data);
+				$scope.hot_ads_cat = [];
+
+				HouseService.findRencentAds(data).then(function(res){
+					var result = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							result.push(res.data.list[i].default);
+						}
+						$scope.hot_ads_cat.push({
+							name: "Bất động sản mới đăng",
+							location: "Hà Nội",
+							list: result
+						})
+					}
+					console.log("HouseService.findRencentAds: " + result.length);
+				});
+
+				data = {
+					"gia": 800,
+					"limit": 4
+				};
+				HouseService.findBelowPriceAds(data).then(function(res){
+					var resultBelow = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							resultBelow.push(res.data.list[i].default);
+						}
+						$scope.hot_ads_cat.push({
+							name: "nhà dưới mức giá",
+							location: "Hà Nội",
+							list: resultBelow
+						})
+					}
+					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+				});
 
 			}
 			vm.getLocation = function () {
@@ -1356,8 +1398,6 @@
 			vm.search = function(param){
 				//alert(param);
 				var data = {
-				  "loaiTin": $scope.loaiTin,
-					"loaiNhaDat": $scope.loaiNhaDat,
 				  "giaBETWEEN": [vm.price_min,vm.price_max],
 				  "soPhongNguGREATER": 0,
 				  "soTangGREATER": 0,
@@ -1366,6 +1406,10 @@
 				  "limit": 200,
 				  "radiusInKm": 0.5
 				};
+				if($scope.loaiTin)
+					data.loaiTin = parseInt($scope.loaiTin);
+				if($scope.loaiNhaDat)
+					data.loaiNhaDat = parseInt($scope.loaiNhaDat);
 				var googlePlace = $scope.searchPlaceSelected;
 				if($scope.searchPlaceSelected.geometry.viewport){
 	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
@@ -1509,6 +1553,16 @@
 	        var url = "/api/find";
 	        return $http.post(url,data);
 	      },
+	      //Nhannc
+	      findRencentAds: function(data){
+	        var url = "/api/findRecent";
+	        return $http.post(url,data);
+	      },
+	      findBelowPriceAds: function(data){
+	        var url = "/api/findBelowPrice";
+	        return $http.post(url,data);
+	      },
+	      //End Nhannc
 	      findGooglePlaceById: function(googlePlaceId){
 	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
 	      }
