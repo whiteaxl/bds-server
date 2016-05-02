@@ -19,7 +19,7 @@
 		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
 		vm.sortOptions = window.RewayListValue.sortHouseOptions;
 		vm.sortBy = 1;
-		vm.price_min = 0;
+		vm.price_min = "0";
 		vm.price_max = window.RewayListValue.filter_max_value.value;
 		vm.dien_tich_min = 0;
 		vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
@@ -32,14 +32,12 @@
 		});
 
 		vm.goToPageSearch = function(){
-			$state.go('search', { "place" : $scope.placeId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+			$state.go('search', { place : $scope.placeId });
 		}
   		
 		vm.search = function(param){
 			//alert(param);
 			var data = {
-			  "loaiTin": $scope.loaiTin,
-				"loaiNhaDat": $scope.loaiNhaDat,
 			  "giaBETWEEN": [vm.price_min,vm.price_max],
 			  "soPhongNguGREATER": 0,
 			  "soTangGREATER": 0,
@@ -48,6 +46,10 @@
 			  "limit": 200,
 			  "radiusInKm": 0.5
 			};
+			if($scope.loaiTin)
+				data.loaiTin = parseInt($scope.loaiTin);
+			if($scope.loaiNhaDat)
+				data.loaiNhaDat = parseInt($scope.loaiNhaDat);
 			var googlePlace = $scope.searchPlaceSelected;
 			if($scope.searchPlaceSelected.geometry.viewport){
           		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
