@@ -125,7 +125,7 @@
 			$scope.markerCount = 3;
 			$scope.markers = [];
 			$scope.initData = window.initData;
-			$scope.hot_ads_cat = window.hot_ads_cat;
+			//$scope.hot_ads_cat = window.hot_ads_cat;
 			$scope.ads_list = window.testData;
 			$scope.bodyClass= "page-home";
 			for(var i = 0; i < $scope.ads_list.length; i++) { 
@@ -170,10 +170,22 @@
 				"limit": 4
 			};
 			console.log("getRecentBds + data: " + data);
+			$scope.hot_ads_cat = [];
+
 			HouseService.findRencentAds(data).then(function(res){
-				alert("HouseService.findRencentAds: " + res);
-				var result = res.data.list;
-				console.log("HouseService.findRencentAds: " + result);
+				var result = [];
+				if(res.data.list){
+					for (var i = 0; i < res.data.list.length; i++) {
+						result.push(res.data.list[i].default);
+					}
+					$scope.hot_ads_cat.push({
+						name: "Bất động sản mới đăng",
+						location: "Hà Nội",
+						list: result
+					})
+				}
+				console.log("HouseService.findRencentAds: " + result.length);
+				alert("HouseService.findRencentAds: " + result[1]);
 			});
 		}
 		vm.getLocation = function () {
