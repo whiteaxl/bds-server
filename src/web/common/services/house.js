@@ -24,6 +24,10 @@
         var url = "/api/findRecent";
         return $http.post(url,data);
       },
+      findBelowPriceAds: function(data){
+        var url = "/api/findBelowPrice";
+        return $http.post(url,data);
+      },
       //End Nhannc
       findGooglePlaceById: function(googlePlaceId){
         return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});

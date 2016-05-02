@@ -22,6 +22,15 @@ internals.endpoints = [
 		}
 	},
 	{
+		method: 'POST',
+		path: '/api/findBelowPrice',
+		handler: Handlers.findBelowPriceAds,
+		config : {
+			description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+			tags: ['api']
+		}
+	},
+	{
 		method: 'POST', 
 		path: '/api/findGooglePlaceById', 
 		handler: Handlers.findGooglePlaceById, 

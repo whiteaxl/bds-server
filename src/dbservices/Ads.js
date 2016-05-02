@@ -113,7 +113,43 @@ class AdsModel {
         }
         var query = N1qlQuery.fromString(sql);
 
-        console.log(sql);
+        console.log("queryRecentAds: " + sql);
+
+        bucket.query(query, function(err, all) {
+            console.log("number of ads:" + all.length);
+            console.log("Error:" + err);
+            if (!all)
+                all = [];
+
+            reply({
+                length: all.length,
+                list: all
+            });
+        });
+
+    }
+    queryBelowPriceAds(reply, gia, orderByField, orderByType, limit) {
+
+        // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
+
+        //var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
+        var sql = "SELECT * FROM `default`  where 1=1 and _type = 'Ads'";
+
+        sql = sql + (gia ? (" and gia <" + gia) : "");
+        if (orderByField) {
+
+            sql = sql + " order by " + orderByField + "  " + orderByType;
+        }
+
+        if (limit) {
+            sql = sql + " limit  " + limit;
+        }
+        else {
+            sql = sql + " limit 4 ";
+        }
+        var query = N1qlQuery.fromString(sql);
+
+        console.log("queryBelowPriceAds: " + sql);
 
         bucket.query(query, function(err, all) {
             console.log("number of ads:" + all.length);

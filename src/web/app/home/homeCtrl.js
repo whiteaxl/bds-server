@@ -185,8 +185,27 @@
 					})
 				}
 				console.log("HouseService.findRencentAds: " + result.length);
-				alert("HouseService.findRencentAds: " + result[1]);
 			});
+
+			data = {
+				"gia": 800,
+				"limit": 4
+			};
+			HouseService.findBelowPriceAds(data).then(function(res){
+				var resultBelow = [];
+				if(res.data.list){
+					for (var i = 0; i < res.data.list.length; i++) {
+						resultBelow.push(res.data.list[i].default);
+					}
+					$scope.hot_ads_cat.push({
+						name: "nhà dưới mức giá",
+						location: "Hà Nội",
+						list: resultBelow
+					})
+				}
+				console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+			});
+
 		}
 		vm.getLocation = function () {
 			if (navigator.geolocation) {
