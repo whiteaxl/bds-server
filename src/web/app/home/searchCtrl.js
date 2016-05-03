@@ -16,10 +16,47 @@
 		console.log("placeId: " + $scope.placeId);
 
 		
-		vm.sell_price_list = window.RewayListValue.sell_steps;
-		vm.sell_dien_tich_list = window.RewayListValue.dientich_steps;
+		//vm.sell_price_list_from = window.RewayListValue.sell_steps;
+		vm.sell_price_list_from = [
+			{
+		        value: 0,
+		        lable: "Giá từ 0",
+		        position: 0
+		    },
+		];
+		Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);
+
+		vm.sell_price_list_to = [];
+		Array.prototype.push.apply(vm.sell_price_list_to, window.RewayListValue.sell_steps);
+		vm.sell_price_list_to.push(
+			{
+		        value: window.RewayListValue.filter_max_value.value,
+		        lable: window.RewayListValue.filter_max_value.lable,
+		        position: vm.sell_price_list_to.length
+		    }
+		);
+		vm.sell_dien_tich_list_from = [
+			{
+		        value: 0,
+		        lable: "Diện tích từ 0",
+		        position: 0
+		    },
+		];
+		Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.sell_steps);
+		vm.sell_dien_tich_list_to = [];
+		Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.sell_steps);
+		vm.sell_dien_tich_list_to.push(
+			{
+		        value: window.RewayListValue.filter_max_value.value,
+		        lable: window.RewayListValue.filter_max_value.lable,
+		        position: vm.sell_price_list_to.length
+		    }
+		);
+		
+
+
 		vm.sortOptions = window.RewayListValue.sortHouseOptions;
-		vm.sortBy = 1;
+		vm.sortBy = vm.sortOptions[0].value;
 		vm.price_min = 0;
 		vm.price_max = window.RewayListValue.filter_max_value.value;
 		vm.dien_tich_min = 0;

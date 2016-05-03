@@ -111,10 +111,7 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ">
-                                                <option value="0">Giá từ</option>
-                                                <!-- <option value="0">0</option> -->
-                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{{price.value}}">{{price.lable}}</option>
+                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ" ng-options="price.value as price.lable for price in mc.sell_price_list_from">
                                             </select>
                                         </div>
                                     </div>
@@ -123,10 +120,8 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến">
-                                                <option value="">Giá đến</option>
-                                                <option value="99999999999">Bất kỳ</option>
-                                                <option ng-repeat="price in mc.sell_price_list track by price.position" value="{{price.value}}" >{{price.lable}}</option>
+                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến" ng-options="price.value as price.lable for price in mc.sell_price_list_to">
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -134,10 +129,7 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ">
-                                        <option value="">Diện tích từ</option>
-                                        <option value="0">0</option>
-                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{{s.value}}">{{s.lable}}</option>
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
                                     </select>
                                 </div>
                             </div>
@@ -146,11 +138,7 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    price max {{mc.price_min}}
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến">
-                                        <option value="">Diện tích đến</option>
-                                        <option value="99999999999">Bất kỳ</option>
-                                        <option ng-repeat="s in mc.sell_dien_tich_list track by s.position" value="{{s.value}}">{{s.lable}}</option>
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
                                     </select>
                                 </div>
                             </div>
@@ -443,10 +431,9 @@
                             <h2 class="head">318 California City, CA Homes For Sale & Real Estate</h2>
                             <div class="handle">
                                 <div class="filter">
-                                    <div class="label">Sắp xếp: {{mc.sortBy}}</div>
+                                    <div class="label">Sắp xếp: </div>
                                     <div class="option">
-                                        <select class="select" ng-model="mc.sortBy" data-select="true" title="Sắp xếp">
-                                            <option ng-repeat="sort in mc.sortOptions track by sort.position" value="{{sort.value}}">{{sort.lable}}</option>
+                                        <select class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                         </select>
                                     </div>
                                 </div>
