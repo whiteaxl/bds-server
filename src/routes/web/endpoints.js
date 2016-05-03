@@ -24,13 +24,13 @@ internals.endpoints = [
 		reply.view('index.html');
 	}
 }
-,{ 
-	method: 'GET',
-	path: '/web/index_content.html', 
-	handler: function(requet,reply){
-		reply.view('index_content.html');
-	}
-}
+// ,{ 
+// 	method: 'GET',
+// 	path: '/web/index_content.html', 
+// 	handler: function(requet,reply){
+// 		reply.view('index_content.html');
+// 	}
+// }
 ,{ 
 	method: 'GET',
 	path: '/web/search/{p*}', 

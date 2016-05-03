@@ -115,8 +115,8 @@
 			  "soTangGREATER": 0,
 			  "dienTichBETWEEN": [0,vm.dien_tich_max],
 			  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
-			  "limit": 200,
-			  "radiusInKm": 0.5
+			  "limit": 200
+			  //,"radiusInKm": 0.5
 			};
 			var googlePlace = $scope.searchPlaceSelected;
 			if($scope.searchPlaceSelected.geometry.viewport){
@@ -125,11 +125,11 @@
           		data.radiusInKm = undefined;
         	} else{
           		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-          		data.radiusInKm = "10";
+          		//data.radiusInKm = "10";
           		var place = {
           			placeId: googlePlace.place_id,
  	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-       				radiusInKm :  2,
+       				radiusInKm :  10,
  				    currentLocation: undefined
  			  	}
  			  	data.place = place;
