@@ -31,7 +31,7 @@ describe("02.Find API testsuite",function(){
             .expect(200) // THis is HTTP response
             .end(function(err,res){
                 console.log("\ntestGeoBox, length:" + res.body.length);
-                res.body.length.should.equal(86);
+                res.body.length.should.equal(69);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -66,7 +66,7 @@ describe("02.Find API testsuite",function(){
             .end(function(err,res){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
 
-                res.body.length.should.equal(46);
+                res.body.length.should.equal(40);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -97,7 +97,7 @@ describe("02.Find API testsuite",function(){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
                 var list = res.body.list;
 
-                res.body.length.should.equal(7);
+                res.body.length.should.equal(5);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -130,7 +130,7 @@ describe("02.Find API testsuite",function(){
             .expect(200) // THis is HTTP response
             .end(function(err,res){
                 console.log("\ntestDiaChinh, length:" + res.body.length);
-                res.body.length.should.equal(89);
+                res.body.length.should.equal(85);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -162,7 +162,7 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(25);
+                res.body.length.should.equal(21);
 
                 console.log("\ntestLoaiNhaDat 2, length:" + res.body.length);
                 done();
@@ -188,7 +188,7 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(7);
+                res.body.length.should.equal(6);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -219,7 +219,7 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -255,7 +255,7 @@ describe("02.Find API testsuite",function(){
                     console.log(one.soPhongNgu + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(18);
+                res.body.length.should.equal(14);
 
                 console.log("\ntestSoPhongNgu, length:" + res.body.length);
                 done();
@@ -285,7 +285,7 @@ describe("02.Find API testsuite",function(){
                     console.log(one.soPhongNgu + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(7);
+                res.body.length.should.equal(3);
 
                 console.log("\ntestSoPhongTam, length:" + res.body.length);
                 done();
@@ -346,10 +346,10 @@ describe("02.Find API testsuite",function(){
                 let one = res.body.list[0];
                 console.log(one);
 
-                one.giaFmt.should.equal("2.01 TỶ");
-                one.dienTichFmt.should.equal("60m²");
-                one.soPhongNguFmt.should.equal("2pn");
-                one.diaChi.should.equal('Đường Trần Thái Tông, Phường Dịch Vọng, Cầu Giấy, Hà Nội');
+                one.giaFmt.should.equal("5.50 TỶ");
+                one.dienTichFmt.should.equal("152m²");
+                one.soPhongNguFmt.should.equal("3pn");
+                one.diaChi.should.equal('Dự án N05 Trần Duy Hưng, Cầu Giấy, Hà Nội');
 
                 console.log("\n testTinBan, length:" + res.body.length);
                 done();
@@ -376,9 +376,9 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
                 res.body.list[0].dienTich.should.equal(41);
-                res.body.list[5].dienTich.should.equal(50);
+                res.body.list[5].dienTich.should.equal(48);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -409,7 +409,7 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -445,7 +445,7 @@ describe("02.Find API testsuite",function(){
                     console.log(one.ngayDangTin + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(4);
+                res.body.length.should.equal(5);
 
                 console.log("\n testngayDaDang, length:" + res.body.length);
                 done();
@@ -480,9 +480,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.gia + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
                 res.body.list[0].gia.should.equal(3850);
-                res.body.list[5].gia.should.equal(7800);
+                res.body.list[5].gia.should.equal(5950);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -515,9 +515,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.gia + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
                 res.body.list[0].gia.should.equal(7800);
-                res.body.list[5].gia.should.equal(3850);
+                res.body.list[5].gia.should.equal(4900);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -550,9 +550,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.soPhongNgu + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(8);
+                res.body.length.should.equal(9);
                 res.body.list[0].soPhongNgu.should.equal(1);
-                res.body.list[4].soPhongNgu.should.equal(2);
+                res.body.list[3].soPhongNgu.should.equal(2);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -585,9 +585,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.soPhongNgu + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(8);
+                res.body.length.should.equal(9);
                 res.body.list[0].soPhongNgu.should.equal(2);
-                res.body.list[4].soPhongNgu.should.equal(1);
+                res.body.list[3].soPhongNgu.should.equal(1);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -620,9 +620,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.ngayDangTin + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(8);
-                res.body.list[0].ngayDangTin.should.equal('23-04-2016');
-                res.body.list[7].ngayDangTin.should.equal('15-04-2016');
+                res.body.length.should.equal(9);
+                res.body.list[0].ngayDangTin.should.equal('25-04-2016');
+                res.body.list[7].ngayDangTin.should.equal('18-04-2016');
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -656,9 +656,9 @@ describe("02.Find API testsuite",function(){
                     console.log(one.giaM2 + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(8);
+                res.body.length.should.equal(9);
                 res.body.list[0].giaM2.should.equal(13.333);
-                res.body.list[3].giaM2.should.equal(32.751);
+                res.body.list[3].giaM2.should.equal(25);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -692,7 +692,7 @@ describe("02.Find API testsuite",function(){
                     //console.log(one.image);
                 }
 
-                res.body.length.should.equal(8);
+                res.body.length.should.equal(9);
                 res.body.list[0].image.cover.indexOf("745x510").should.equal(36);
                 res.body.list[0].image.images[1].indexOf("745x510").should.equal(38);
 
@@ -702,6 +702,34 @@ describe("02.Find API testsuite",function(){
     };
 
     it("Tim kiem - testImageMedium ",testImageMedium);
+
+    //--- khi co' geoBox, ko dc truyen len radius
+
+    var testHung = function(done){
+        server
+            .post("/api/find")
+            .send({ loaiTin: 0,
+                radiusInKm: 0.5,
+                geoBox: [ 105.7974815, 20.9950991, 105.87644590000002, 21.0502942 ] }
+            )
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    //console.log(one.image);
+                }
+
+                res.body.length.should.equal(0);
+
+                console.log("\testImageMedium, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem - testHung ",testHung);
+
 
 
 });

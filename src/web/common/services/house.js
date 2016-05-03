@@ -17,6 +17,7 @@
       },
       findAdsSpatial: function(data){
         var url = "/api/find";
+        //var url = "/api/search";
         return $http.post(url,data);
       },
       //Nhannc

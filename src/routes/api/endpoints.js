@@ -1,4 +1,5 @@
 var Handlers = require('./handlers');
+var searchhandlers = require('./searchhandlers');
 
 var internals = {};
 
@@ -48,7 +49,17 @@ internals.endpoints = [
 			description: 'Chi tiet cua mot bai dang',
 			tags: ['api']
 		}
-	}
+	},
+{
+        method: 'POST',
+        path: '/api/search',
+        handler: searchhandlers.search,
+        config : {
+            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+            tags: ['api']
+        }
+}
+
 ];
 
 module.exports = internals;

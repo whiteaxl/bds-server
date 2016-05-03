@@ -112,8 +112,8 @@ function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, order
             allAds = [];
 
         logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
-        //let listFiltered = _filterResult(allAds, queryCondition);
-        let listFiltered = allAds;
+        let listFiltered = _filterResult(allAds, queryCondition);
+        //let listFiltered = allAds;
         //filter by distance
         let transformeds = [];
         let transformed ={};
@@ -445,10 +445,10 @@ function match(attr, value, doc) {
     }
 
 	//default is equals
-	if (ads[attr] === value) {
+	if (ads[attr] == value) {
         return true;
     } else {
-        logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value: "+ ads[attr] + ", searching value:" + value);
+        logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value:"+ ads[attr] + ", searching value:" + value + ";");
         return false;
     }
 }
@@ -791,6 +791,21 @@ function _transformDetailAds(ads) {
         ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
 
         ads.ngayDangTinFmt = ads.ngayDangTin.replace(/-/g, "/");
+    }
+    // big images:
+
+    ads.image.images_small =ads.image.images;
+
+    if (ads.image.images_small) {
+        ads.image.images = ads.image.images.map((one) => {
+            return one.replace("80x60", "745x510");
+        });
+    }
+
+    if (ads.chiTiet) {
+        var idx = ads.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+        ads.chiTiet =  ads.chiTiet.substring(0, idx);
+        //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
     }
 
     //dummy

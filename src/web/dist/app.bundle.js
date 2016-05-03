@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1a953c88ab22d574c1f9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "799caa79b93cdce204a5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1333,9 +1333,14 @@
 			$scope.center = "Hanoi Vietnam";
 			$scope.placeId = $state.params.place;
 			$scope.loaiTin = $state.params.loaiTin;
-			$scope.loaiNhaDat = $state.params.loaiNhaDat;;
+			$scope.loaiNhaDat = $state.params.loaiNhaDat;
+
 			if(!$scope.placeId)
 				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			if(!$scope.loaiTin)
+				$scope.loaiTin = 0;
+			if(!$scope.loaiNhaDat)
+				$scope.loaiNhaDat = 0;
 			init();
 			console.log("placeId: " + $scope.placeId);
 			console.log("loaiTin: " + $scope.loaiTin);
@@ -1417,7 +1422,7 @@
 				$scope.searchPlaceSelected = place;
 	    		$scope.placeSearchId = place.place_id;
 	    		$scope.markers = [];
-	    		$scope.map.zoom = 15;
+	    		//$scope.map.zoom = 15;
 	    		var marker = {
 	    				id: -1,
 	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
@@ -1425,7 +1430,7 @@
 	    		}
 	    		$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
 	    		$scope.markers.push(marker);
-	    		$scope.map.fit = false;
+	    		//$scope.map.fit = false;
 	    		$scope.$apply();
 			}
 			vm.goToPageSearch = function(){
@@ -1434,15 +1439,16 @@
 	  		
 			vm.search = function(param){
 				//alert(param);
+				
 				var data = {
 				  "loaiTin": $scope.loaiTin,
-					"loaiNhaDat": $scope.loaiNhaDat,
+				  //"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
 				  "giaBETWEEN": [vm.price_min,vm.price_max],
 				  "soPhongNguGREATER": 0,
 				  "soTangGREATER": 0,
 				  "dienTichBETWEEN": [0,vm.dien_tich_max],
 				  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
-				  "limit": 200
+				  "limit": 20
 				  //,"radiusInKm": 0.5
 				};
 				var googlePlace = $scope.searchPlaceSelected;
@@ -1607,6 +1613,7 @@
 	      },
 	      findAdsSpatial: function(data){
 	        var url = "/api/find";
+	        //var url = "/api/search";
 	        return $http.post(url,data);
 	      },
 	      //Nhannc
