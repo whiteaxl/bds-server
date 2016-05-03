@@ -95,22 +95,33 @@
 			$scope.searchPlaceSelected = place;
     		$scope.placeSearchId = place.place_id;
     		$scope.markers = [];
-    		//$scope.map.zoom = 15;
     		var marker = {
     				id: -1,
     				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
     				content: 'you are here'
     		}
-    		$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
+    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
+    		
     		$scope.markers.push(marker);
-    		//$scope.map.fit = false;
     		$scope.$apply();
+
+    		if(place.geometry.viewport){
+				vm.map.fitBounds(place.geometry.viewport);	
+				//$scope.map
+			}
+
+    		//$scope.map.fit = false;
+    		
+    		vm.map.setCenter(place.geometry.location);
+    		// $scope.$apply();
+    		//$scope.map.refresh();
 		}
 		vm.goToPageSearch = function(){
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+			//vm.search();
 		}
   		
-		vm.search = function(param){
+		vm.search = function(){
 			//alert(param);
 			
 			var data = {
@@ -180,8 +191,8 @@
 		    		if(res.data.list[i].map)
 		    			$scope.markers.push(res.data.list[i].map.marker);
 				}
-				$scope.map.fit = true;
-				$scope.map.zoom = 10;
+				//$scope.map.fit = true;
+				//$scope.map.zoom = 10;
 			});
 		}
 		vm.formatLabel = function(model){
@@ -227,8 +238,10 @@
 														content: 'you are here'
 													}
 								];
-				        		$scope.$apply();
-				        		vm.search();
+								vm.search();
+								vm.map.setCenter(place.geometry.location);
+								//vm.map.refresh();
+								//$scope.$apply();	
 				        	}
 				        });
 			
