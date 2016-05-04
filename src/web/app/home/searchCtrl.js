@@ -71,7 +71,7 @@
           vm.showDetail(i);
         };
         vm.mouseout = function() {
-          //vm.hideDetail();
+          vm.hideDetail();
         };
         vm.click = function(e,i) {
         	console.log('click');
