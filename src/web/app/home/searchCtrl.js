@@ -125,7 +125,7 @@
 			//alert(param);
 			
 			var data = {
-			  "loaiTin": $scope.loaiTin,
+			  //"loaiTin": $scope.loaiTin,
 			  //"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
 			  "giaBETWEEN": [vm.price_min,vm.price_max],
 			  "soPhongNguGREATER": 0,
@@ -135,6 +135,11 @@
 			  "limit": 20
 			  //,"radiusInKm": 0.5
 			};
+			if($scope.loaiTin)
+				data.loaiTin = parseInt($scope.loaiTin);
+			if($scope.loaiNhaDat)
+				data.loaiNhaDat = parseInt($scope.loaiNhaDat);
+
 			var googlePlace = $scope.searchPlaceSelected;
 			if($scope.searchPlaceSelected.geometry.viewport){
           		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
