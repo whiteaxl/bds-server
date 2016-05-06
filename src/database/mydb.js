@@ -1,6 +1,8 @@
 var couchbase = require('couchbase');
 var cluster = new couchbase.Cluster('couchbase://127.0.0.1');
 var bucket = cluster.openBucket('default');
+bucket.enableN1ql(['127.0.0.1:8093']);
+
 
 //var N1qlQuery = require('couchbase').N1qlQuery; // get query object
 //
@@ -18,4 +20,4 @@ var bucket = cluster.openBucket('default');
 //}, 2000); // just in case connecting takes a second or something?
 
 
-module.exports = bucket
+module.exports = bucket;

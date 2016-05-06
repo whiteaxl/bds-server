@@ -57,7 +57,8 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatBan[2]);
                 res.body.ads.dienTichFmt.should.equal('38.5m²');
                 res.body.ads.soPhongNgu.should.equal(2);
-                res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 28 ngày');
+                res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 39' +
+                    ' ngày');
                 res.body.ads.ngayDangTinFmt.should.equal('29/03/2016');
                 res.body.ads.should.have.property('chiTiet');
                 res.body.ads.should.have.property('luotXem');

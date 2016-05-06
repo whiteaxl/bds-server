@@ -36,7 +36,7 @@ class AdsModel {
     }
 
     countAllAds(onSuccess) {
-        var sql = "select count(*) cnt from default where _type = 'Ads'";
+        var sql = "select count(*) cnt from default where type = 'Ads'";
         var query = N1qlQuery.fromString(sql);
 
         bucket.query(query, function (err, res) {
@@ -68,7 +68,7 @@ class AdsModel {
 
         // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
-        var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
+        var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and type = 'Ads'";
 
         sql = sql + (loaiTin ? " and loaiTin=" + loaiTin : "");
 
@@ -109,8 +109,8 @@ class AdsModel {
 
         // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
-        //var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
-        var sql = "SELECT * FROM `default`  where 1=1 and _type = 'Ads'";
+        //var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and type = 'Ads'";
+        var sql = "SELECT * FROM `default`  where 1=1 and type = 'Ads'";
 
         sql = sql + (ngayDangTin ? (" and ngayDangTin>'" + ngayDangTin + "'") : "");
         if (orderByField) {
@@ -145,8 +145,8 @@ class AdsModel {
 
         // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
 
-        //var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and _type = 'Ads'";
-        var sql = "SELECT * FROM `default`  where 1=1 and _type = 'Ads'";
+        //var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 and type = 'Ads'";
+        var sql = "SELECT * FROM `default`  where 1=1 and type = 'Ads'";
 
         sql = sql + (gia ? (" and gia <" + gia) : "");
         if (orderByField) {

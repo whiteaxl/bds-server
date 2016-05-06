@@ -1,0 +1,1 @@
+~/setup/couchbase-sync-gateway/bin/sync_gateway ./sync-gateway-config.json

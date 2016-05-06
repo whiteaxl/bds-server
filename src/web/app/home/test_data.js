@@ -47,6 +47,6 @@ data =  [{
     },
     "duAnFullName": "Vinhomes Gardenia, Nam Từ Liêm, Hà Nội"
   },
-  "_type": "Ads",
+  "type": "Ads",
   "cover": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/08/tY3PwIis/20160308100441-f67a.jpg"
 }]

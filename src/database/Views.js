@@ -1,7 +1,7 @@
 //all_ads
 
 function (doc, meta) {
-  if (doc._type=='Ads')
+  if (doc.type=='Ads')
     emit(doc.adsID, doc);
 }
 
@@ -20,6 +20,6 @@ function (doc) {
 
 //ddoc=place, all_places
 function (doc, meta) {
-    if (doc._type=='Place')
+    if (doc.type=='Place')
         emit(doc.placeID, doc);
 }

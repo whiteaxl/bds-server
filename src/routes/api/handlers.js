@@ -745,6 +745,7 @@ function _validateFindRequestParameters(req, reply) {
 
 internals.detail = function(req, reply) {
     var query = req.payload;
+    console.log("Find Detail:", query);
     if (!query.hasOwnProperty('adsID')) {
         reply(Boom.badRequest());
     } else {
