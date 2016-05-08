@@ -53,7 +53,7 @@ internals.endpoints = [
 {
         method: 'POST',
         path: '/api/search',
-        handler: searchhandlers.search,
+        handler: searchhandlers.findPOST,
         config : {
             description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
             tags: ['api']

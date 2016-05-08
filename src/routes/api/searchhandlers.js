@@ -6,6 +6,25 @@ var util = require("../../lib/utils");
 var AdsModel = require('../../dbservices/Ads');
 var placeUtil = require("../../lib/placeUtil");
 
+var couchbase = require('couchbase');
+var ViewQuery = couchbase.ViewQuery;
+
+var myBucket = require('../../database/mydb');
+var QueryOps = require('../../lib/QueryOps');
+var cluster = new couchbase.Cluster('couchbase://localhost:8091');
+var PlacesModel = require('../../dbservices/Place');
+
+var http = require('http');
+var https = require('https');
+var services = require("../../lib/services");
+var constant = require("../../lib/constant");
+var danhMuc  = require("../../lib/DanhMuc");
+
+var moment = require("moment");
+
+var geoUtil = require("../../lib/geoUtil");
+
+var DEFAULT_SEARCH_RADIUS = 5; //km
 
 var _ = require("lodash");
 
@@ -124,7 +143,7 @@ internals.search = function(req, reply) {
             reply(Boom.internal("Error when search:"));
         };
 
-        adsModel.queryAllData(onSuccess,onFailure,
+        adsModel.queryAllData(reply,
             queryCondition.loaiTin,
             util.popField(queryCondition, Q_FIELD.loaiNhaDat),
             util.popField(queryCondition, Q_FIELD.gia),
@@ -141,6 +160,492 @@ internals.search = function(req, reply) {
         console.log(e, e.stack.split("\n"));
 
         reply(Boom.badImplementation());
+    }
+};
+
+function _validateFindRequestParameters(req, reply) {
+    var query = req.payload;
+    if (!query.hasOwnProperty('loaiTin')) {
+        reply(Boom.badRequest());
+
+        return false;
+    }
+
+    return true;
+}
+
+function matchDiaChi(adsPlace, place) {
+    if (!place.diaChi || !adsPlace.diaChi) {
+        logUtil.info("Fail, one of the diaChi is null!");
+        return false;
+    }
+
+    //logUtil.info("ads.place.diaChi="+ adsPlace.diaChi);
+    //logUtil.info("value="+ value);
+    //logUtil.info("ads.place.diaChi.indexOf(value)="+ ads.place.diaChi.indexOf(value));
+
+
+    //compare diaChi
+    let placeDiaChiLocDau = util.locDau(place.diaChi);
+    let adsPlaceDiaChiLocDau = util.locDau(adsPlace.diaChi);
+    //remove common words
+    const COMMON_WORDS = {
+        '-district': '',
+        '-vietnam':'',
+        'hanoi' : 'ha-noi'
+    };
+    for (var f in COMMON_WORDS) {
+        placeDiaChiLocDau = placeDiaChiLocDau.replace(f,COMMON_WORDS[f]);
+        adsPlaceDiaChiLocDau = adsPlaceDiaChiLocDau.replace(f,COMMON_WORDS[f]);
+    }
+
+    //logUtil.info("placeDiaChiLocDau="+ placeDiaChiLocDau + ", adsPlaceDiaChiLocDau=" + adsPlaceDiaChiLocDau);
+
+    if (adsPlaceDiaChiLocDau.indexOf(placeDiaChiLocDau)!==-1)
+        return true;
+
+    logUtil.info("Not match by PLACE: searching DiaChiLocDau=" + placeDiaChiLocDau + ", DB DiaChiLocDau=" + adsPlaceDiaChiLocDau);
+
+    return false;
+}
+
+function _NotSupport(attr) {
+    let attrFormalize = attr.replace(QueryOps.BETWEEN, "");
+    attrFormalize = attrFormalize.replace(QueryOps.GREATER, "");
+
+    for (var e in Q_FIELD) {
+        if (Q_FIELD[e] == attrFormalize) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function match(attr, value, doc) {
+    //If not in list, then consider as true
+    if (_NotSupport(attr)) {
+        logUtil.warn("The parameter " + attr + " does not support! So no filter!");
+        return true;
+    }
+
+    //
+    let ads = doc.value||doc;
+
+    let idx = 0;
+    //BETWEEN
+    idx = attr.indexOf(QueryOps.BETWEEN);
+
+    if (idx > 0) {
+        var field = attr.substring(0, idx);
+
+        var ret = ads[field] >= value[0] && ads[field] <= value[1];
+
+        if (!ret) {
+            console.log("FAIL to check BETWEEN " +  "field=" + field  + ", ads[field]=" + ads[field] + ", value[0]=" + value[0] + ", value[1]=" + value[1])
+        }
+
+        return ret;
+    }
+    //GREATER
+    idx = attr.indexOf(QueryOps.GREATER);
+    if (idx>0) {
+        //if 0 then no need to check
+        value = Number(value);
+
+        if (value===0) {
+            return true;
+        }
+
+        var field = attr.substring(0, idx);
+
+        //
+        if (!ads[field]) {
+            return false;
+        }
+
+        let ret = ads[field] >= value;
+
+        if (!ret) {
+            console.log("FAIL to check GREATER " +  "field=" + field  + ", ads[field]=" + ads[field])
+        }
+
+        return ret;
+    }
+    // Place, compare by value.fullName
+    if (attr == Q_FIELD.place) {
+        //logUtil.info("PLACE OBJECT in QUERY:");
+
+        if (!ads.place.diaChi) {
+            return false;
+        }
+
+        let place;
+        let dc = value.fullName;
+
+        //logUtil.info(dc);
+        if (_.isObject(dc)) {
+            place = dc;
+        } else {
+            place = {
+                diaChi: dc
+            }
+        }
+
+        let ret = matchDiaChi(ads.place, place);
+
+        return ret;
+    }
+    if (attr == Q_FIELD.ngayDaDang) {
+        var ngayDangTinDate= moment(ads.ngayDangTin, "DD-MM-YYYY");
+        ads.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+
+        return ads.soNgayDaDangTin <= value;
+    }
+
+    //default is equals
+    if (ads[attr] == value) {
+        return true;
+    } else {
+        logUtil.info("Not match '" + attr +  ", db docID:" + ads.adsID + "': db value:"+ ads[attr] + ", searching value:" + value + ";");
+        return false;
+    }
+}
+
+function orderAds(filtered, orderCondition) {
+    if (orderCondition) {
+        var orderByVal = orderCondition;
+        var field = '';
+        var isASC = 1;
+        //console.log("orderByVal=" + orderByVal);
+        //console.log(orderByVal.indexOf("DESC"));
+
+        if (orderByVal.indexOf("DESC")>0) {
+            field = orderByVal.substring(0, orderByVal.length-4); //remove DESC
+            isASC = -1;
+        } else {
+            field = orderByVal.substring(0, orderByVal.length-3); //remove ASC
+        }
+
+        console.log("Order by field:" + field);
+        var compare = function(a, b) {
+            //console.log("Will compare: " + field +  "," + a.value.dienTich + ", " + b[field])
+            if (a[field]!==0 && !a[field]) {
+                return 1;
+            }
+
+            if (b[field]!==0 && !b[field]) {
+                return -1;
+            }
+
+            if (a[field] > b[field])
+                return isASC;
+            if (a[field] < b[field])
+                return -1 * isASC;
+
+            return 0;
+        };
+
+        filtered.sort(compare);
+    }
+
+}
+
+function _filterResult(allAds, queryCondition) {
+
+
+    //ES5 syntax to select
+    var filtered = allAds.filter(function(doc) {
+        for (var attr in queryCondition) {
+            if (!match(attr, queryCondition[attr], doc)) {
+                //console.log("Not match attr=" + attr + ", value=" + queryCondition[attr]);
+                return false;
+            }
+        }
+        return true;
+    });
+
+
+    console.log("List ads filtered length = " + filtered.length);
+
+    // TODO: limit
+    let listResult = filtered.slice(0,1000).map((one) => {
+        let val = one.value||one;
+        val.giaDisplay = util.getPriceDisplay(val.gia);
+        val.dienTichDisplay = util.getDienTichDisplay(val.dienTich);
+
+        if (val.chiTiet) {
+            var idx = val.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+            val.chiTiet =  val.chiTiet.substring(0, idx);
+            //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
+        }
+
+        if (val.ngayDangTin) {
+            var NgayDangTinDate= moment(val.ngayDangTin, "DD-MM-YYYY");
+            val.soNgayDaDangTin = moment().diff(NgayDangTinDate, 'days');
+        }
+
+        return one;
+    });
+
+    console.log("FINAL listResult length = " + listResult.length);
+
+    return listResult;
+}
+
+function _performQuery(queryCondition, dbQuery, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox) {
+    // myBucket = cluster.openBucket('default');
+    // myBucket.enableN1ql(['127.0.0.1:8093']);
+    // myBucket.operationTimeout = 60 * 1000;
+    // // var query = N1qlQuery.fromString()
+    myBucket.query(dbQuery, function(err, allAds) {
+        if (!allAds)
+            allAds = [];
+
+        logUtil.info("By geo/place: allAds.length= " + allAds.length + ", isSearchByDistance="+ isSearchByDistance + ",radiusInKm=" + radiusInKm);
+        let listFiltered = _filterResult(allAds, queryCondition);
+        //let listFiltered = allAds;
+        //filter by distance
+        let transformeds = [];
+        let transformed ={};
+
+        listFiltered.forEach((e) => {
+            let ads = e.value||e;
+            //images:
+            var targetSize = "745x510"; //350x280
+            /*
+             if (ads.image.cover) {
+             ads.image.cover = ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize);
+             }
+             if (ads.image.images) {
+             ads.image.images = ads.image.images.map((e) => {
+             return e.replace("80x60", targetSize);
+             });
+             }
+             */
+
+            let tmp = {
+                adsID : ads.adsID,
+                gia : ads.gia,
+                giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
+                dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
+                soPhongNgu: ads.soPhongNgu,
+                soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
+                soTang: ads.soTang,
+                soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+                image : {
+                    cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize):null,
+                    images : ads.image.images ? ads.image.images.map((e) => {
+                        return e.replace("80x60", targetSize);
+                    }) : null
+                },
+                diaChi : ads.place.diaChi,
+                ngayDangTin : ads.ngayDangTin,
+                giaM2 : ads.giaM2,
+                loaiNhaDat: ads.loaiNhaDat,
+                loaiTin: ads.loaiTin
+            };
+
+            transformed = ads;
+
+            Object.assign(transformed, tmp);
+
+
+            let place = ads.place;
+            //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
+
+            if (isSearchByDistance) {
+                if (center.lat && center.lon && place.geo.lat && place.geo.lon) {
+                    transformed.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
+                    if (transformed.distance < radiusInKm * 1000) {
+                        transformeds.push(transformed);
+                    }
+                }
+            } else {
+                transformeds.push(transformed)
+            }
+        });
+
+        //sort
+        if (queryCondition && orderBy) {
+            console.log("Perform ordering by " + orderBy);
+            orderAds(transformeds, orderBy);
+        } else if (isSearchByDistance) {
+            var compare = function(a, b) {
+                if (a.distance) {
+                    if (b.distance) {
+                        return a.distance > b.distance
+                    } else {
+                        return -1
+                    }
+                } else {
+                    return 1
+                }
+            };
+
+            transformeds.sort(compare);
+        }
+
+        transformeds.forEach((e) => {
+            console.log("Distance for " + e.adsID +  "= " + e.distance + "m");
+        });
+
+        logUtil.info("There are " + transformeds.length + " ads");
+
+
+        //limit
+        if (queryCondition && limit) {
+            transformeds = transformeds.slice(0, limit)
+        }
+
+        reply({
+            length: transformeds.length,
+            viewport : {
+                center: center,
+                northeast : {lat:geoBox[2], lon:geoBox[3]},
+                southwest : {lat:geoBox[0], lon:geoBox[1]}
+            },
+            list: transformeds
+        });
+    });
+}
+
+function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm) {
+    //console.log(place.geometry);
+    let center = {lat: 0, lon: 0};
+
+    if (place.currentLocation) {
+        center.lat = place.currentLocation.lat;
+        center.lon = place.currentLocation.lon;
+    } else { //from google placedetail
+        center.lat = place.geometry.location.lat;
+        center.lon = place.geometry.location.lng;
+    }
+
+    let geoBox = null;
+
+    if (place.currentLocation || placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
+        logUtil.warn("findAds - Search by DIA_DIEM");
+        isSearchByDistance = true;
+        geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+
+        console.log("Search in box: " + geoBox);
+        //search by geoBox, so no need place
+        delete queryCondition[Q_FIELD.place];
+
+        query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+    } else {
+        logUtil.warn("findAds - Search by DIA CHINH : Tinh, Huyen, Xa");
+
+        if (place.geometry && place.geometry.viewport) {
+            let vp = place.geometry.viewport;
+            geoBox = [vp.southwest.lat, vp.southwest.lng, vp.northeast.lat, vp.northeast.lng];
+        }
+
+        var Tinh = placeUtil.getTinh(place);
+        var Huyen = placeUtil.getHuyen(place);
+        var Xa = placeUtil.getXa(place);
+
+        // have to N1QL
+
+        try {
+            var adsModel = new AdsModel(myBucket);
+
+            query = adsModel.queryByDiaChinh(reply,
+                placeUtil.chuanHoa(Tinh),
+                placeUtil.chuanHoa(Huyen),
+                placeUtil.chuanHoa(Xa),
+                limit);
+        } catch (e) {
+            logUtil.error(e);
+            //console.trace(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
+
+        // query = ViewQuery.from('ads', 'all_ads');
+        
+    }
+
+    _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, center, radiusInKm, geoBox);
+}
+
+
+function findAds(queryCondition, reply) {
+    //return all first
+    let query;
+
+    let isSearchByDistance = false;
+    let limit = util.popField(queryCondition,Q_FIELD.limit);
+    let orderBy = util.popField(queryCondition,Q_FIELD.orderBy);
+
+    if (queryCondition[Q_FIELD.geoBox]) {
+        let geoBox = util.popField(queryCondition, Q_FIELD.geoBox);
+        logUtil.warn("findAds - Search by BOX: " + geoBox);
+        query = couchbase.SpatialQuery.from("ads_spatial", "points").bbox(geoBox);
+
+        //search by geoBox, so no need place
+        delete queryCondition[Q_FIELD.place];
+
+        _performQuery(queryCondition, query, reply, isSearchByDistance, orderBy, limit, null, null, geoBox);
+
+    } else if (queryCondition[Q_FIELD.place]) {
+        var place = queryCondition[Q_FIELD.place];
+        let radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+
+        if (place.placeId) {
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    placeDetail.fullName = placeDetail.name;
+                    _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, placeDetail, radiusInKm);
+                }
+
+
+            }, (error) => {
+                reply(Boom.internal("Call google detail fail", null, null));
+            });
+
+        } else if (place.currentLocation) {
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
+
+        } else { //backward...
+            _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderBy, limit, place, radiusInKm);
+        }
+
+
+    } else {
+        query = ViewQuery.from('ads', 'all_ads');
+
+        //let msg = "GeoBox or place is mandatory!";
+        //logUtil.error(msg);
+        //reply(Boom.badRequest(msg, queryCondition));
+    }
+}
+
+internals.findPOST = function(req, reply) {
+    logUtil.info("findPOST - query parameter: " );
+    console.log(req.payload);
+    //check parameter
+    if (_validateFindRequestParameters(req, reply)) {
+
+        logUtil.info("1111" );
+        try {
+            logUtil.info("22222" );
+            findAds(req.payload, reply)
+        } catch (e) {
+            logUtil.info("3333333" );
+            logUtil.error(e);
+            //console.trace(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
     }
 };
 module.exports = internals;

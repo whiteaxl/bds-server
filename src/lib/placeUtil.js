@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require("lodash");
+var util = require("../lib/utils");
 
 var placeUtil = {};
 
@@ -72,9 +73,91 @@ placeUtil.fullName = function(place) {
 
     return place.placeName;
 };
+// return Quoc Gia form Place.Place is type of Google api
+placeUtil.getQuocGia = function(place) {
 
+    var getCountry ="";
 
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
 
+        if (addr.types[0] == 'country'){
+            getCountry = addr.long_name;
+        }
+
+    }
+    return getCountry;
+};
+
+// return Tinh form Place.Place is type of Google api
+placeUtil.getTinh = function(place) {
+
+    var Tinh ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.TINH){
+            Tinh = addr.long_name;
+        }
+
+    }
+    return Tinh;
+};
+
+// return Huyen form Place.Place is type of Google api
+placeUtil.getHuyen = function(place) {
+
+    var Huyen ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.HUYEN){
+            Huyen = addr.long_name;
+        }
+
+    }
+    return Huyen;
+};
+
+// return Xa form Place.Place is type of Google api
+placeUtil.getXa = function(place) {
+
+    var Xa ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
+        {
+            Xa = addr.long_name;
+        }
+
+    }
+    return Xa;
+};
+
+// chuan hoa va bo dau 1 string
+placeUtil.chuanHoa = function(string) {
+
+    var result = util.locDau(string);
+
+    const COMMON_WORDS = {
+        '-district': '',
+        '-vietnam':'',
+        'hanoi' : 'ha-noi'
+    };
+    for (var f in COMMON_WORDS) {
+        result = result.replace(f,COMMON_WORDS[f]);
+    }
+
+    return result;
+};
 
 placeUtil.type = {
     TINH : "administrative_area_level_1",
