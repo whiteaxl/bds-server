@@ -10,6 +10,9 @@ util.locDau = function(str) {
 };
 
 var locDauInt = function(str) {
+    if(!str) {
+        return str
+    }
     //var str = (document.getElementById("title").value);
     str= str.toLowerCase();
     str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|à/g,"a");

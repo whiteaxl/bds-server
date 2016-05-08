@@ -10,6 +10,10 @@ bucket.enableN1ql(['127.0.0.1:8093']);
 
 bucket.operationTimeout = 60 * 1000;
 
+
+var DEFAULT_LIMIT = 1000;
+
+
 class AdsModel {
     constructor(myBucket) {
         this.myBucket = myBucket;
@@ -88,59 +92,82 @@ class AdsModel {
         bucket.operationTimeout = 60 * 1000;
     }
 
-//?loaiTin=0&loaiNhaDat=0&giaBETWEEN=1000,2000&soPhongNguGREATER=2
-// &spPhongTamGREATER=1&dienTichBETWEEN=50,200
-// &orderBy=giaASC,dienTichDESC,soPhongNguASC
-    queryAllData(reply, loaiTin, loaiNhaDat, gia, soPhongNgu, soPhongTam, dienTich, orderByField, orderByType, limit) {
+    //loaiTin is mandatory
+    queryAllData(
+        callback
+        , geoBox
+        , diaChinh //tinh, huyen, xa
+        , loaiTin
+        , loaiNhaDat
+        , gia //arrays from,to
+        , dienTich //arrays from,to
+        , soPhongNguGREATER
+        , soPhongTamGREATER
+        , ngayDangTinFrom
+        , huongNha
+        , orderBy//orderByField, orderByType
+        , limit
+    ) {
+        var sql = `SELECT t.* FROM default t  WHERE loaiTin = ${loaiTin}`;
 
-        // enable n1ql as per documentation (http://docs.couchbase.com/developer/node-2.0/n1ql-queries.html) - I also tried :8091, same result
+        sql = sql + (loaiNhaDat ? " AND loaiNhaDat=" + loaiNhaDat : "");
 
-        var sql = "SELECT adsID,loaiTin,image,gia,dienTich,loaiNhaDat,soPhongNgu,soPhongTam,soTang FROM `default`  where 1=1 ";
-
-        sql = sql + (loaiTin ? " and loaiTin=" + loaiTin : "");
-
-        sql = sql + (loaiNhaDat ? " and loaiNhaDat=" + loaiNhaDat : "");
-
-        sql = sql + (gia ? " and  gia BETWEEN " + gia[0] + " AND " + gia[1] : "");
-
-        sql = sql + (soPhongNgu ? " and soPhongNgu  >= " + soPhongNgu : "");
-
-        sql = sql + (soPhongTam ? " and soPhongTam  >= " + soPhongTam : "");
-
-        sql = sql + (dienTich ? " and dienTich BETWEEN " + dienTich[0] + " AND " + dienTich[1] : "");
-
-        if (orderByField) {
-            sql = sql + " order by " + orderByField + "  " + orderByType;
+        if (geoBox) {
+            sql = sql + " AND (place.geo.lat BETWEEN " + geoBox[0] + " AND " + geoBox[2] + ")";
+            sql = sql + " AND (place.geo.lon BETWEEN " + geoBox[1] + " AND " + geoBox[3] + ")";
         }
-        if (limit) {
-            sql = sql + " limit  " + limit;
+
+        if (diaChinh) {
+            if (diaChinh.tinh) {
+                sql = `${sql} AND place.diaChinh.tinhKhongDau='${diaChinh.tinh}'`;
+            }
+
+            if (diaChinh.huyen) {
+                sql = `${sql} AND place.diaChinh.huyenKhongDau='${diaChinh.huyen}'`;
+            }
+
+            if (diaChinh.xa) {
+                sql = `${sql} AND place.diaChinh.xaKhongDau='${diaChinh.xa}'`;
+            }
         }
-        else {
-            sql = sql + " limit 100 ";
+
+        if (ngayDangTinFrom) { //ngayDangTinFrom: 20-04-2016
+            sql = `${sql} and ngayDangTin > '${ngayDangTinFrom}'`;
         }
+
+        if (gia && (gia[0] > 1 || gia[1] < 9999999)) {
+            sql = `${sql} AND (gia BETWEEN ${gia[0]} AND ${gia[1]})`;
+        }
+
+        sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+
+        sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
+
+        if ((dienTich) && (dienTich[0] > 1 || dienTich[1] < 9999999)) {
+            sql = `${sql} AND (dienTich BETWEEN  ${dienTich[0]} AND ${dienTich[1]})`;
+        }
+
+        sql = sql + (huongNha ? " AND huongNha=" + huongNha : "");
+
+        //orderBy
+        if (orderBy) {
+            sql = sql + " ORDER BY " + orderBy.orderByField + "  " + orderBy.orderByType;
+        }
+
+        limit = limit || DEFAULT_LIMIT;
+        sql = sql + " LIMIT  " + limit;
+
+        console.log(sql);
+
         var query = N1qlQuery.fromString(sql);
 
-        // var callback1 = function (err, res) {
-        //     if (err) {
-        //         onFailure();
-        //     }
-        //     else {
-        //         onSuccess();
-        //     }
-        // };
-        // bucket.query(query, callback1);
         bucket.query(query, function(err, all) {
+            console.log("err=", err);
             console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
             if (!all)
                 all = [];
-
-            reply({
-                length: all.length,
-                list: all
-            });
+            callback(err, all);
         });
-
     }
     // query by Tinh, Huyen, Xa.
     queryByDiaChinh(reply, tinh,huyen,xa,limit) {

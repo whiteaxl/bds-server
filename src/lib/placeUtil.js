@@ -30,6 +30,37 @@ placeUtil.getDuAnFullName = function(place) {
     return ret;
 };
 
+placeUtil.getDiaChinhFromGooglePlace = function(place) {
+    var tinh ="";
+    var huyen ="";
+    var xa ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.TINH){
+            tinh = this.chuanHoa(addr.long_name);
+        }
+
+        if (addr.types[0] == placeUtil.type.HUYEN){
+            huyen = this.chuanHoa(addr.long_name);
+        }
+
+        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
+            xa = this.chuanHoa(addr.long_name);
+        }
+    }
+
+    let diaChinh = {
+        tinh: tinh,
+        huyen: huyen,
+        xa: xa
+    };
+
+    return diaChinh;
+};
+
 placeUtil.getDiaChinh = function(diaChi) {
     let spl = diaChi.split(",");
     let diaChinh = {};
