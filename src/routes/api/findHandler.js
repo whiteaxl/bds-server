@@ -221,6 +221,7 @@ function _isDiaDiem(relandTypeName) {
     if (tmp=="diadiem"
         || tmp=="dia diem"
         || tmp=="dia-diem"
+        || tmp=="duong"
     ) {
         return true;
     }
