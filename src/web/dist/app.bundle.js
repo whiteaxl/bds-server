@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "49e1f25c2b3fd7fceb80"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "09635d507a1063fc9191"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1346,8 +1346,7 @@
 			console.log("loaiTin: " + $scope.loaiTin);
 			console.log("loaiNhaDat: " + $scope.loaiNhaDat);
 			console.log("placeId: " + $scope.placeId);
-
-			
+				
 			//vm.sell_price_list_from = window.RewayListValue.sell_steps;
 			vm.sell_price_list_from = [
 				{
@@ -1394,11 +1393,23 @@
 			vm.dien_tich_min = 0;
 			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 
+			vm.searchData = {
+				//"loaiTin": $scope.loaiTin,
+				"loaiTin": 0,
+			  	//"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
+			  	"giaBETWEEN": [vm.price_min,vm.price_max],
+			  	"soPhongNguGREATER": 0,
+			  	"soTangGREATER": 0,
+			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
+			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+			  	"limit": 20
+			}
+
 			vm.mouseover = function(e,i) {
 	          vm.showDetail(i);
 	        };
 	        vm.mouseout = function() {
-	          //vm.hideDetail();
+	          vm.hideDetail();
 	        };
 	        vm.click = function(e,i) {
 	        	console.log('click');
@@ -1450,19 +1461,7 @@
 	  		
 			vm.search = function(){
 				//alert(param);
-				
-				var data = {
-				  "loaiTin": $scope.loaiTin,
-				  //"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
-				  "giaBETWEEN": [vm.price_min,vm.price_max],
-				  "soPhongNguGREATER": 0,
-				  "soTangGREATER": 0,
-				  "dienTichBETWEEN": [0,vm.dien_tich_max],
-				  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
-				  "limit": 20
-				  //,"radiusInKm": 0.5
-				};
-				var googlePlace = $scope.searchPlaceSelected;
+				/*var googlePlace = $scope.searchPlaceSelected;
 				if($scope.searchPlaceSelected.geometry.viewport){
 	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
 	          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
@@ -1478,9 +1477,9 @@
 	 			  	}
 	 			  	data.place = place;
 	          		data.geoBox = undefined;
-	        	}
+	        	}*/
 
-				HouseService.findAdsSpatial(data).then(function(res){
+				HouseService.findAdsSpatial(vm.searchData).then(function(res){
 					var result = res.data.list;
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
@@ -1533,9 +1532,15 @@
 	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 	        
 
+
 	        NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 	        	vm.map = map;
+	        	google.maps.event.addListener(map, "dragend", function() {
+					vm.searchData.geoBox = [vm.map.getBounds().j.j ,vm.map.getBounds().H.j,vm.map.getBounds().j.H,vm.map.getBounds().H.H];
+		          	vm.search();
+		        });
+
 	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
 	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
 							$scope.PlacesService.getDetails({
@@ -1565,6 +1570,23 @@
 															content: 'you are here'
 														}
 									];
+									var googlePlace = $scope.searchPlaceSelected;
+									if($scope.searchPlaceSelected.geometry.viewport){
+						          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+						          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+						          		vm.searchData.data.radiusInKm = undefined;
+						        	} else{
+						          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+						          		//data.radiusInKm = "10";
+						          		var placeData = {
+						          			placeId: googlePlace.place_id,
+						 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+						       				radiusInKm :  10,
+						 				    currentLocation: undefined
+						 			  	}
+						 			  	vm.searchData.place = placeData;
+						          		vm.searchData.geoBox = undefined;
+						        	}
 									vm.search();
 									vm.map.setCenter(place.geometry.location);
 									//vm.map.refresh();
@@ -1625,8 +1647,8 @@
 	        return $http.post(urlPath + 'create'); 
 	      },
 	      findAdsSpatial: function(data){
-	        var url = "/api/find";
-	        //var url = "/api/search";
+	        //var url = "/api/find";
+	        var url = "/api/search";
 	        return $http.post(url,data);
 	      },
 	      //Nhannc

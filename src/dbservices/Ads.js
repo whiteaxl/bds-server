@@ -91,6 +91,7 @@ class AdsModel {
         else {
             sql = sql + " limit 100 ";
         }
+        console.log("sql:" + sql );
         var query = N1qlQuery.fromString(sql);
 
         var callback1 = function (err, res) {
@@ -98,7 +99,7 @@ class AdsModel {
                 onFailure();
             }
             else {
-                onSuccess();
+                onSuccess(res);
             }
         };
         bucket.query(query, callback1);
