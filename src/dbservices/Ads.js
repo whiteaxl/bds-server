@@ -158,6 +158,16 @@ class AdsModel {
         sql = sql + " LIMIT  " + limit;
 
         console.log(sql);
+        /*
+        var query = N1qlQuery.fromString('select count(*) from default');
+        bucket.query(query, function(err, all) {
+            console.log("err=", err, all);
+        });
+        */
+
+        var bucket = cluster.openBucket('default');
+        bucket.enableN1ql(['127.0.0.1:8093']);
+        bucket.operationTimeout = 60 * 1000;
 
         var query = N1qlQuery.fromString(sql);
 
