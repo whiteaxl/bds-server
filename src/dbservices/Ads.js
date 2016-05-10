@@ -155,6 +155,12 @@ class AdsModel {
         }
 
         limit = limit || DEFAULT_LIMIT;
+
+        if (isNaN(limit)) {
+            console.log("WARN", "limit is not a number:" , limit);
+            limit = DEFAULT_LIMIT;
+        }
+
         sql = sql + " LIMIT  " + limit;
 
         console.log(sql);
