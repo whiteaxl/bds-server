@@ -253,7 +253,6 @@ function searchAds(q, reply) {
             , q.giaBETWEEN, q.dienTichBETWEEN
             , q.soPhongNguGREATER, q.soPhongTamGREATER
             , ngayDangTinFrom, q.huongNha
-            , null //by geoBox for MAP, so radius = null
             , orderBy, limit
         )
 
