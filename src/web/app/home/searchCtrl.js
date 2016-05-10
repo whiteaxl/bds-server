@@ -65,6 +65,13 @@
 		vm.price_max = window.RewayListValue.filter_max_value.value;
 		vm.dien_tich_min = 0;
 		vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+		vm.zoomMode = "auto";
+
+		vm.totalResultCounts = 0;
+		vm.currentPage = 0;
+		vm.lastPageNo = 0;
+		vm.startPageNo = 0;
+		vm.pageSize = 20;
 
 		vm.searchData = {
 			//"loaiTin": $scope.loaiTin,
@@ -75,7 +82,8 @@
 		  	"soTangGREATER": 0,
 		  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 		  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-		  	"limit": 20
+		  	"limit": vm.pageSize,
+		  	"pageNo": 1
 		}
 
 		vm.mouseover = function(e,i) {
@@ -90,7 +98,11 @@
 
         vm.showDetail = function(i) {
 		    vm.highlightAds = $scope.ads_list[i];
-          	vm.map.showInfoWindow("iw", $scope.ads_list[i].adsID);
+		    if($scope.ads_list[i].place){
+    			if($scope.ads_list[i].place.geo){
+    				vm.map.showInfoWindow("iw","m_" +i);
+    			}
+    		}
 		};
 
 		vm.hideDetail = function() {
@@ -132,28 +144,24 @@
 			//vm.search();
 		}
   		
-		vm.search = function(){
-			//alert(param);
-			/*var googlePlace = $scope.searchPlaceSelected;
-			if($scope.searchPlaceSelected.geometry.viewport){
-          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
-          		data.radiusInKm = undefined;
-        	} else{
-          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-          		//data.radiusInKm = "10";
-          		var place = {
-          			placeId: googlePlace.place_id,
- 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-       				radiusInKm :  10,
- 				    currentLocation: undefined
- 			  	}
- 			  	data.place = place;
-          		data.geoBox = undefined;
-        	}*/
+		vm.firstPage = function(callback){
+			vm.searchPage(1);
+		}
+		vm.nextPage = function(callback){
+			vm.searchPage(vm.currentPage+1);
+		}
+		vm.lastPage = function(callback){
+			vm.searchPage(vm.lastPageNo);
+		}
+		vm.previousPage = function(callback){
+			vm.searchPage(vm.currentPage-1);
+		}
 
+		vm.searchPage = function(i, callback){
+			vm.searchData.pageNo = i;
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
+				//vm.totalResultCounts = res.data.list.length;
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
 		    		result[i].index = i;
@@ -192,7 +200,52 @@
 				}
 				//$scope.map.fit = true;
 				//$scope.map.zoom = 10;
+				vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
+				vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+				vm.currentPage = vm.searchData.pageNo;
+
+				if(callback)
+					callback();
 			});
+		}
+
+		vm.search = function(callback){
+			//alert(param);
+			/*var googlePlace = $scope.searchPlaceSelected;
+			if($scope.searchPlaceSelected.geometry.viewport){
+          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+          		data.radiusInKm = undefined;
+        	} else{
+          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+          		//data.radiusInKm = "10";
+          		var place = {
+          			placeId: googlePlace.place_id,
+ 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+       				radiusInKm :  10,
+ 				    currentLocation: undefined
+ 			  	}
+ 			  	data.place = place;
+          		data.geoBox = undefined;
+        	}*/
+
+        	HouseService.countAds(vm.searchData).then(function(res){
+        		vm.totalResultCounts = res.data.countResult;
+        		if(vm.totalResultCounts>0){
+        			vm.currentPage = 1;
+        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+        			vm.currentPageStart = 1;
+        			vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
+
+        		} else{
+        			vm.currentPage = 0;
+					vm.lastPageNo = 0;
+					vm.startPageNo = 0;
+        		}
+        		vm.searchPage(1,callback);
+
+        	});
+
 		}
 		vm.formatLabel = function(model){
 			if(model)
@@ -210,7 +263,8 @@
         	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
         	vm.map = map;
         	google.maps.event.addListener(map, "dragend", function() {
-				vm.searchData.geoBox = [vm.map.getBounds().j.j ,vm.map.getBounds().H.j,vm.map.getBounds().j.H,vm.map.getBounds().H.H];
+				vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 	          	vm.search();
 	        });
 
@@ -246,8 +300,8 @@
 								var googlePlace = $scope.searchPlaceSelected;
 								if($scope.searchPlaceSelected.geometry.viewport){
 					          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-					          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
-					          		vm.searchData.data.radiusInKm = undefined;
+					          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
+					          		vm.searchData.radiusInKm = undefined;
 					        	} else{
 					          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
 					          		//data.radiusInKm = "10";

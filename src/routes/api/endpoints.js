@@ -1,13 +1,13 @@
 var Handlers = require('./handlers');
-var searchhandlers = require('./searchhandlers');
+var findHandler = require('./findHandler');
 
 var internals = {};
 
 internals.endpoints = [
 	{
 		method: 'POST', 
-		path: '/api/find', 
-		handler: Handlers.findPOST, 
+		path: '/api/find',
+		handler: findHandler.search,
 		config : {
 			description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
 			tags: ['api']
@@ -50,15 +50,24 @@ internals.endpoints = [
 			tags: ['api']
 		}
 	},
-{
+	{
+	        method: 'POST',
+	        path: '/api/search',
+	        handler: findHandler.search,
+	        config : {
+	            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+	            tags: ['api']
+	        }
+	},
+	{
         method: 'POST',
-        path: '/api/search',
-        handler: searchhandlers.search,
+        path: '/api/count',
+        handler: findHandler.count,
         config : {
             description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
             tags: ['api']
         }
-}
+	}
 
 ];
 

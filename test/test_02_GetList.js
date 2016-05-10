@@ -24,7 +24,7 @@ describe("02.Find API testsuite",function(){
         server
             .post("/api/find")
             .send({
-                "loaiTin":0,"orderBy":"giaDESC",
+                "loaiTin":0,
                 "geoBox":geoBox
             })
             .expect("Content-type",/json/)
@@ -47,6 +47,32 @@ describe("02.Find API testsuite",function(){
     it("Tim kiem theo geoBox",testGeoBox);
 
 
+    //-----------------------------
+    var testGeoBox2 = function(done){
+        var geoBox = [105.84372998042551,20.986007099732642,105.87777141957429,21.032107100267314];
+
+        server
+            .post("/api/find")
+            .send({
+                "loaiTin":1,
+                "geoBox":geoBox
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+                console.log("\ntestGeoBox, length:" + res.body.length);
+                res.body.length.should.equal(69);
+
+                //check viewport
+                var viewport = res.body.viewport;
+                viewport.southwest.lat.should.equal(geoBox[0]);
+                viewport.southwest.lon.should.equal(geoBox[1]);
+                viewport.northeast.lat.should.equal(geoBox[2]);
+                viewport.northeast.lon.should.equal(geoBox[3]);
+
+                done();
+            });
+    };
     //-----------------------------
     var testCurrentLocation = function(done){
 
@@ -445,7 +471,7 @@ describe("02.Find API testsuite",function(){
                     console.log(one.ngayDangTin + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(5);
+                res.body.length.should.equal(7);
 
                 console.log("\n testngayDaDang, length:" + res.body.length);
                 done();

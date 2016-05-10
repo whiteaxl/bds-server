@@ -354,10 +354,10 @@
                     <div class="col col-60">
                         <div class="map is-fixed" >
 
-                            <ng-map center="{{center}}" zoom-to-include-markers="auto" class="ngmap">
+                            <ng-map center="{{center}}" custom-zoom-to-include-markers="{{mc.zoomMode}}" class="ngmap">
                             <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
                                 <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})" id="{{ads_list[$index].adsID}}" >
+                                    on-click="mc.click({{$index}})" id="m_{{$index}}" >
                                   <div class = "my1">
                                     {{m.content}} 
                                   </div>
@@ -428,7 +428,7 @@
                             </div>
                         </div><!-- //block-04 -->
                         <div class="block-05">
-                            <h2 class="head">318 California City, CA Homes For Sale & Real Estate</h2>
+                            <h2 class="head">Tổng số {{mc.totalResultCounts}} nhà</h2>
                             <div class="handle">
                                 <div class="filter">
                                     <div class="label">Sắp xếp: </div>
@@ -463,18 +463,18 @@
                             </div>
                         </div><!-- //block-05 -->
                         <div class="block-06">
-                            <div class="stats">1 – 60 of 279 Results</div>
+                            <div class="stats">{{mc.currentPageStart}} – {{mc.currentPageEnd}} của {{mc.totalResultCounts}} kết quả</div>
                             <ul>
-                                <li>
+                                <li ng-if="mc.currentPage != 1" ng-click="mc.firstPage()">
                                     <span>First</span>
                                 </li>
-                                <li>
+                                <li ng-if="mc.currentPage != 1" ng-click="mc.previousPage()">
                                     <span>Previous</span>
                                 </li>
-                                <li>
+                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.nextPage()">
                                     <a href="" title="">Next</a>
                                 </li>
-                                <li>
+                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.lastPage()">
                                     <a href="" title="">Last</a>
                                 </li>
                             </ul>

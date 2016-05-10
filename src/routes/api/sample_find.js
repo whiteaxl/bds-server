@@ -17,7 +17,7 @@ var Response =
   "length": 21,
   "list": [
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/15/20160415191421-6bde.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/15/20160415191421-6bde.jpg",
@@ -85,7 +85,7 @@ var Response =
       "soNgayDaDangTin": 6
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/11/20160311150450-6c86.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/11/20160311150450-6c86.jpg",
@@ -153,7 +153,7 @@ var Response =
       "soNgayDaDangTin": 5
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/11/20160411143914-2675.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/11/20160411143914-2675.jpg",
@@ -229,7 +229,7 @@ var Response =
       "soNgayDaDangTin": 10
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/01/05/rFjRWEBN/20160105104233-35c7.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/01/05/rFjRWEBN/20160105104233-35c7.jpg",
@@ -278,7 +278,7 @@ var Response =
       "soNgayDaDangTin": 31
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/08/20160408081540-814c.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/08/20160408081540-814c.jpg",
@@ -348,7 +348,7 @@ var Response =
       "soNgayDaDangTin": 13
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/09/a9ejCyaw/20160409121955-39fb.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/09/a9ejCyaw/20160409121955-39fb.jpg",
@@ -395,7 +395,7 @@ var Response =
       "soNgayDaDangTin": 12
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/28/20160328141855-72f0.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/28/20160328141855-72f0.jpg",
@@ -453,7 +453,7 @@ var Response =
       "soNgayDaDangTin": 10
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/09/20160409183000-116d.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/09/20160409183000-116d.jpg",
@@ -512,7 +512,7 @@ var Response =
       "soNgayDaDangTin": 12
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/08/20160408163709-1ca5.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/08/20160408163709-1ca5.jpg",
@@ -573,7 +573,7 @@ var Response =
       "soNgayDaDangTin": 13
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/08/20160408131000-f036.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/08/20160408131000-f036.jpg",
@@ -634,7 +634,7 @@ var Response =
       "soNgayDaDangTin": 13
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/01/20160401153142-59ee.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/01/20160401153142-59ee.jpg",
@@ -695,7 +695,7 @@ var Response =
       "soNgayDaDangTin": 6
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/05/20160405140432-803c.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/05/20160405140432-803c.jpg",
@@ -749,7 +749,7 @@ var Response =
       "soNgayDaDangTin": 15
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/14/20160414110436-87e7.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/14/20160414110436-87e7.jpg",
@@ -809,7 +809,7 @@ var Response =
       "soNgayDaDangTin": 7
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/08/20160408142029-3afd.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/08/20160408142029-3afd.jpg",
@@ -868,7 +868,7 @@ var Response =
       "soNgayDaDangTin": 13
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/13/uchaoWqV/20160413095205-e133.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/13/uchaoWqV/20160413095205-e133.jpg",
@@ -925,7 +925,7 @@ var Response =
       "soNgayDaDangTin": 8
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/07/20160407150555-a408.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/07/20160407150555-a408.jpg",
@@ -984,7 +984,7 @@ var Response =
       "soNgayDaDangTin": 14
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/15/20160415090646-f08b.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/15/20160415090646-f08b.jpg",
@@ -1039,7 +1039,7 @@ var Response =
       "soNgayDaDangTin": 6
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/01/23/20160123083134-53bf.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/01/23/20160123083134-53bf.jpg",
@@ -1116,7 +1116,7 @@ var Response =
       "soNgayDaDangTin": 10
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/15/20160415101348-b8dc.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/15/20160415101348-b8dc.jpg",
@@ -1173,7 +1173,7 @@ var Response =
       "soNgayDaDangTin": 6
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/04/XFD0ig7V/20160404172018-7a13.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/04/XFD0ig7V/20160404172018-7a13.jpg",
@@ -1252,7 +1252,7 @@ var Response =
       "soNgayDaDangTin": 7
     },
     {
-      "_type": "Ads",
+      "type": "Ads",
       "image": {
         "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/04/05/20160405151009-a6ce.jpg",
         "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/05/20160405151009-a6ce.jpg",

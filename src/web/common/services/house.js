@@ -20,6 +20,11 @@
         var url = "/api/search";
         return $http.post(url,data);
       },
+      countAds: function(data){
+        //var url = "/api/find";
+        var url = "/api/count";
+        return $http.post(url,data);
+      },
       //Nhannc
       findRencentAds: function(data){
         var url = "/api/findRecent";

@@ -20,9 +20,22 @@ internals.getBox = function(point, radius) {
     sw.lat = point.lat - radius;
     sw.lon = point.lon - radius;
 
-    return [sw.lon, sw.lat, ne.lon, ne.lat];
-
+    return [sw.lat, sw.lon, ne.lat, ne.lon];
 };
+
+internals.getBoxForSpatialView = function(point, radius) {
+    let ne = {};
+    let sw = {};
+
+    ne.lat = point.lat + radius;
+    ne.lon = point.lon + radius;
+
+    sw.lat = point.lat - radius;
+    sw.lon = point.lon - radius;
+
+    return [sw.lon, sw.lat, ne.lon, ne.lat];
+};
+
 
 //meters
 internals.measure = function(lat1, lon1, lat2, lon2){  // generally used geo measurement function

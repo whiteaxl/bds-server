@@ -56,7 +56,7 @@ internals.bdsCom = function(req, reply) {
 
 		let adsObj = {};
 
-		adsObj._type = "Ads";
+		adsObj.type = "Ads";
 		let coverSmall = headers[adsDto.title] ? headers[adsDto.title].cover : null;
 		/*
         let images = [];

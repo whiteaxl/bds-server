@@ -1,0 +1,24 @@
+{
+  "log": ["*"],
+  "databases": {
+    "default": {
+      "server":"http://localhost:8091",
+      "users": {
+        "moderator": {"password": "pass", "admin_channels": ["*"]},
+        "mobile": {"password": "123"},
+        "0982969669": {"password": "123"}
+      },
+      "sync": `function(doc, oldDoc) {
+        if (doc.dangBoi && doc.dangBoi.phone) {
+          var userID = doc.dangBoi.phone;
+          var channelname = "chan_" + userID
+          channel(channelname);
+          access(userID, channelname);
+        }
+      }`
+    }
+  }
+}
+
+
+

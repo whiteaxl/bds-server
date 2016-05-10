@@ -236,7 +236,7 @@ function _searchByPlace(queryCondition, query, reply, isSearchByDistance, orderB
     if (place.currentLocation || placeUtil.isOnePoint(place)) { //DIA_DIEM, so by geoBox also
         logUtil.warn("findAds - Search by DIA_DIEM");
         isSearchByDistance = true;
-        geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+        geoBox = geoUtil.getBoxForSpatialView({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
 
         console.log("Search in box: " + geoBox);
         //search by geoBox, so no need place
@@ -745,6 +745,7 @@ function _validateFindRequestParameters(req, reply) {
 
 internals.detail = function(req, reply) {
     var query = req.payload;
+    console.log("Find Detail:", query);
     if (!query.hasOwnProperty('adsID')) {
         reply(Boom.badRequest());
     } else {
