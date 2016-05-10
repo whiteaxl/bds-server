@@ -156,7 +156,6 @@
 		vm.previousPage = function(callback){
 			vm.searchPage(vm.currentPage-1);
 		}
-
 		vm.searchPage = function(i, callback){
 			vm.searchData.pageNo = i;
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
