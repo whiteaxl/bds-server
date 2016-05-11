@@ -198,7 +198,10 @@ class AdsModel {
 
     ) {
 
-        limit = limit || DEFAULT_LIMIT;
+        if (isNaN(limit)) {
+            console.log("WARN", "limit is not a number:" , limit);
+            limit = DEFAULT_LIMIT;
+        }
 
         var sql ="SELECT t.* FROM default t" + this.buildWhereForAllData(geoBox
             , diaChinh 
@@ -214,7 +217,7 @@ class AdsModel {
             , limit
             , pageNo?pageNo:1
         );
-
+        
         console.log(sql);
         /*
         var query = N1qlQuery.fromString('select count(*) from default');

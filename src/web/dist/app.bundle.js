@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "78e01ccc2f4bf897f8d5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4479bf7783afe1e8f5ae"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1556,7 +1556,7 @@
 	        	}*/
 
 	        	HouseService.countAds(vm.searchData).then(function(res){
-	        		vm.totalResultCounts = res.data.countResult-1;
+	        		vm.totalResultCounts = res.data.countResult;
 	        		if(vm.totalResultCounts>0){
 	        			vm.currentPage = 1;
 	        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
