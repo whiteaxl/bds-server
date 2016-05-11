@@ -111,7 +111,8 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ" ng-options="price.value as price.lable for price in mc.sell_price_list_from">
+                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ" ng-change="mc.filterAds()"
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
                                             </select>
                                         </div>
                                     </div>
@@ -120,7 +121,8 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến" ng-options="price.value as price.lable for price in mc.sell_price_list_to">
+                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến" ng-change="mc.filterAds()"
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_to">
                                                 
                                             </select>
                                         </div>
@@ -129,7 +131,8 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ" ng-change="mc.filterAds()"
+                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
                                     </select>
                                 </div>
                             </div>
@@ -138,7 +141,8 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
+                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến" ng-change="mc.filterAds()"
+                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
                                     </select>
                                 </div>
                             </div>

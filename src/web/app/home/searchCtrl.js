@@ -105,6 +105,27 @@
     		}
 		};
 
+		vm.filterAds = function() {
+			alert('filterAds' );
+			var listFilter = [];
+			var gia = 0;
+			var dienTich = 0;
+			for (var i = 0; i < $scope.ads_list.length; i++) {
+				var ads = $scope.ads_list[i];
+				gia = ads.gia;
+				if((ads.dienTich == null) || (ads.dienTich='null') ){
+					dienTich = window.RewayListValue.filter_max_value.value;
+				} else{
+					dienTich = ads.dienTich;
+				}
+				if( (gia > vm.price_min) && (gia <= vm.price_max) && (dienTich > vm.dien_tich_min) && (dienTich <= vm.dien_tich_max)){
+					listFilter.push(ads);
+				}
+			}
+			alert('filterAds : ' + listFilter.length);
+			$scope.ads_list = listFilter;
+		}
+
 		vm.hideDetail = function() {
 			vm.map.hideInfoWindow('iw');
 		};
