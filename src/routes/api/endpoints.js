@@ -50,15 +50,24 @@ internals.endpoints = [
 			tags: ['api']
 		}
 	},
-{
+	{
+	        method: 'POST',
+	        path: '/api/search',
+	        handler: findHandler.search,
+	        config : {
+	            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+	            tags: ['api']
+	        }
+	},
+	{
         method: 'POST',
-        path: '/api/search',
-        handler: findHandler.search,
+        path: '/api/count',
+        handler: findHandler.count,
         config : {
             description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
             tags: ['api']
         }
-}
+	}
 
 ];
 

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "73c46a9170f391c144f6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4479bf7783afe1e8f5ae"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -602,7 +602,7 @@
 
 	window.testData =  [
 	{
-	  "_type": "Ads",
+	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
@@ -654,7 +654,7 @@
 	,
 
 	{
-	  "_type": "Ads",
+	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/30/20160330134616-2ece.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/30/20160330134616-2ece.jpg",
@@ -700,7 +700,7 @@
 	  "chiTiet": "Bán biệt thự, nhà phố tại KĐT EcoPark, khu Vườn Tùng - Vườn Mai - Aquabay giá tốt nhất thị trường, LH: 0912 893 882.\r\r+ Biệt thự Vườn Tùng - Vườn Mai xây thô hoàn thiện mặt ngoài.\r1. Biệt thự song lập, diện tích cơ bản 162 m2, giá bán từ 41 tr/m2.\r2. Biệt thự đơn lập, diện tích cơ bản từ 324 m2, giá bán từ 35tr/m2.\rVà còn nhiều loại diện tích khác, căn góc, mặt lõi vườn hoa, VIP vị trí đẹp theo nhu cầu của khách hàng.\r\rLH: 0974 84 8998, để mua được giá tốt nhất.\rTư vấn nhiệt tình, trung thực.\r\r+ Biệt thự - nhà phố Aqua Bay EcoPark, biệt thự Mimosa, biệt thự Marina, nhà phố Thảo Nguyên, Thủy Nguyên.\r1. Biệt thự Mimosa & Marina diện tích 189m2 - 210m2 - 400m2 - 712m2.\r2. Nhà phố Thảo Nguyên, Thủy Nguyên diện tích: 90m2 - 100m2 - 110m2 - 180m2 - 200m2 - 250m2 - 300m2.\rVị trí đẹp, giá tốt nhất thị trường, thủ tục nhanh gọn.\rMọi thông tin chi tiết xin liên hệ:\rTel: 0912 893 882 - 0974 84 8998.\rTrân trọng!\r\n        \r\n            Tìm kiếm theo từ khóa: \r\n        \r\n                Bán biệt thự Ecopark Văn Giang\r\n            \r\n                , \r\n            \r\n                Bán biệt thự Ecopark\r\n            \r\n                , \r\n            \r\n                Bán biệt thự dự án Ecopark"
 	},
 	{
-	  "_type": "Ads",
+	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/29/20160329100405-0146.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/29/20160329100405-0146.jpg",
@@ -802,7 +802,7 @@
 	    },
 	    "duAnFullName": "Vinhomes Riverside, Long Biên, Hà Nội"
 	  },
-	  "_type": "Ads",
+	  "type": "Ads",
 	  "cover": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/02/20160402112917-e2aa.jpg"
 	}
 	]
@@ -1346,8 +1346,7 @@
 			console.log("loaiTin: " + $scope.loaiTin);
 			console.log("loaiNhaDat: " + $scope.loaiNhaDat);
 			console.log("placeId: " + $scope.placeId);
-
-			
+				
 			//vm.sell_price_list_from = window.RewayListValue.sell_steps;
 			vm.sell_price_list_from = [
 				{
@@ -1393,6 +1392,26 @@
 			vm.price_max = window.RewayListValue.filter_max_value.value;
 			vm.dien_tich_min = 0;
 			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+			vm.zoomMode = "auto";
+
+			vm.totalResultCounts = 0;
+			vm.currentPage = 0;
+			vm.lastPageNo = 0;
+			vm.startPageNo = 0;
+			vm.pageSize = 20;
+
+			vm.searchData = {
+				//"loaiTin": $scope.loaiTin,
+				"loaiTin": 0,
+			  	//"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
+			  	"giaBETWEEN": [vm.price_min,vm.price_max],
+			  	"soPhongNguGREATER": 0,
+			  	"soTangGREATER": 0,
+			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
+			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+			  	"limit": vm.pageSize,
+			  	"pageNo": 1
+			}
 
 			vm.mouseover = function(e,i) {
 	          vm.showDetail(i);
@@ -1406,7 +1425,11 @@
 
 	        vm.showDetail = function(i) {
 			    vm.highlightAds = $scope.ads_list[i];
-	          	vm.map.showInfoWindow("iw", $scope.ads_list[i].adsID);
+			    if($scope.ads_list[i].place){
+	    			if($scope.ads_list[i].place.geo){
+	    				vm.map.showInfoWindow("iw","m_" +i);
+	    			}
+	    		}
 			};
 
 			vm.hideDetail = function() {
@@ -1448,40 +1471,23 @@
 				//vm.search();
 			}
 	  		
-			vm.search = function(){
-				//alert(param);
-				
-				var data = {
-				  "loaiTin": $scope.loaiTin,
-				  //"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
-				  "giaBETWEEN": [vm.price_min,vm.price_max],
-				  "soPhongNguGREATER": 0,
-				  "soTangGREATER": 0,
-				  "dienTichBETWEEN": [0,vm.dien_tich_max],
-				  //"geoBox": [ 105.8411264, 20.9910223, 105.8829904, 21.022562 ],
-				  "limit": 20
-				  //,"radiusInKm": 0.5
-				};
-				var googlePlace = $scope.searchPlaceSelected;
-				if($scope.searchPlaceSelected.geometry.viewport){
-	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-	          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
-	          		data.radiusInKm = undefined;
-	        	} else{
-	          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-	          		//data.radiusInKm = "10";
-	          		var place = {
-	          			placeId: googlePlace.place_id,
-	 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	       				radiusInKm :  10,
-	 				    currentLocation: undefined
-	 			  	}
-	 			  	data.place = place;
-	          		data.geoBox = undefined;
-	        	}
-
-				HouseService.findAdsSpatial(data).then(function(res){
+			vm.firstPage = function(callback){
+				vm.searchPage(1);
+			}
+			vm.nextPage = function(callback){
+				vm.searchPage(vm.currentPage+1);
+			}
+			vm.lastPage = function(callback){
+				vm.searchPage(vm.lastPageNo);
+			}
+			vm.previousPage = function(callback){
+				vm.searchPage(vm.currentPage-1);
+			}
+			vm.searchPage = function(i, callback){
+				vm.searchData.pageNo = i;
+				HouseService.findAdsSpatial(vm.searchData).then(function(res){
 					var result = res.data.list;
+					//vm.totalResultCounts = res.data.list.length;
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
 			    		result[i].index = i;
@@ -1520,7 +1526,52 @@
 					}
 					//$scope.map.fit = true;
 					//$scope.map.zoom = 10;
+					vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
+					vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+					vm.currentPage = vm.searchData.pageNo;
+
+					if(callback)
+						callback();
 				});
+			}
+
+			vm.search = function(callback){
+				//alert(param);
+				/*var googlePlace = $scope.searchPlaceSelected;
+				if($scope.searchPlaceSelected.geometry.viewport){
+	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+	          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
+	          		data.radiusInKm = undefined;
+	        	} else{
+	          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+	          		//data.radiusInKm = "10";
+	          		var place = {
+	          			placeId: googlePlace.place_id,
+	 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+	       				radiusInKm :  10,
+	 				    currentLocation: undefined
+	 			  	}
+	 			  	data.place = place;
+	          		data.geoBox = undefined;
+	        	}*/
+
+	        	HouseService.countAds(vm.searchData).then(function(res){
+	        		vm.totalResultCounts = res.data.countResult;
+	        		if(vm.totalResultCounts>0){
+	        			vm.currentPage = 1;
+	        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+	        			vm.currentPageStart = 1;
+	        			vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
+
+	        		} else{
+	        			vm.currentPage = 0;
+						vm.lastPageNo = 0;
+						vm.startPageNo = 0;
+	        		}
+	        		vm.searchPage(1,callback);
+
+	        	});
+
 			}
 			vm.formatLabel = function(model){
 				if(model)
@@ -1533,9 +1584,16 @@
 	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 	        
 
+
 	        NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 	        	vm.map = map;
+	        	google.maps.event.addListener(map, "dragend", function() {
+					vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+		          	vm.search();
+		        });
+
 	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
 	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
 							$scope.PlacesService.getDetails({
@@ -1565,6 +1623,23 @@
 															content: 'you are here'
 														}
 									];
+									var googlePlace = $scope.searchPlaceSelected;
+									if($scope.searchPlaceSelected.geometry.viewport){
+						          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+						          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
+						          		vm.searchData.radiusInKm = undefined;
+						        	} else{
+						          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+						          		//data.radiusInKm = "10";
+						          		var placeData = {
+						          			placeId: googlePlace.place_id,
+						 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+						       				radiusInKm :  10,
+						 				    currentLocation: undefined
+						 			  	}
+						 			  	vm.searchData.place = placeData;
+						          		vm.searchData.geoBox = undefined;
+						        	}
 									vm.search();
 									vm.map.setCenter(place.geometry.location);
 									//vm.map.refresh();
@@ -1625,8 +1700,13 @@
 	        return $http.post(urlPath + 'create'); 
 	      },
 	      findAdsSpatial: function(data){
-	        var url = "/api/find";
-	        //var url = "/api/search";
+	        //var url = "/api/find";
+	        var url = "/api/search";
+	        return $http.post(url,data);
+	      },
+	      countAds: function(data){
+	        //var url = "/api/find";
+	        var url = "/api/count";
 	        return $http.post(url,data);
 	      },
 	      //Nhannc

@@ -229,6 +229,87 @@ function _isDiaDiem(relandTypeName) {
     return false;
 }
 
+function countAds(q, reply){
+    var geoBox = q.geoBox;
+    let limit = q.limit;
+    let diaChinh = null;
+    let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
+    var count = 0;
+    var callback = (err, data) =>  {
+        console.log("before reply count = " + data);
+        reply({
+            countResult: data
+        });
+    };
+    if(geoBox){
+        count = adsModel.countForAllData(
+            callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
+            , q.giaBETWEEN, q.dienTichBETWEEN
+            , q.soPhongNguGREATER, q.soPhongTamGREATER
+            , ngayDangTinFrom, q.huongNha
+        );
+    } else if (q[Q_FIELD.place]) {
+        var center = {lat: 0, lon: 0};
+        var radiusInKm = null;
+        if(place.placeId){
+            relandTypeName = q.place.relandTypeName;
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    //from google placedetail
+                    
+                    center.lat = placeDetail.geometry.location.lat;
+                    center.lon = placeDetail.geometry.location.lng;
+                    placeDetail.fullName = placeDetail.name;
+                    let diaChinh = null;
+
+                    if (_isDiaDiem(relandTypeName)) {
+                        radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+                        diaChinh = null;
+                        geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+                    } else {
+                        diaChinh  = placeUtil.getDiaChinhFromGooglePlace(placeDetail);
+                        geoBox = null;
+                    }
+
+                    adsModel.countForAllData(
+                        callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
+                        , q.giaBETWEEN, q.dienTichBETWEEN
+                        , q.soPhongNguGREATER, q.soPhongTamGREATER
+                        , ngayDangTinFrom, q.huongNha
+                    )
+                }
+            }, (error) => {
+                logUtil.error(error);
+                reply(Boom.internal("Call google detail fail", null, null));
+            });
+
+        }else if (place.currentLocation) {
+            center.lat = place.currentLocation.lat;
+            center.lon = place.currentLocation.lon;
+
+            radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+
+            geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+            diaChinh = null;
+
+            adsModel.countForAllData(
+                callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
+                , q.giaBETWEEN, q.dienTichBETWEEN
+                , q.soPhongNguGREATER, q.soPhongTamGREATER
+                , ngayDangTinFrom, q.huongNha
+            )
+        }
+
+    } 
+    
+}
+
+
 function searchAds(q, reply) {
     let limit = q.limit;
 
@@ -242,18 +323,18 @@ function searchAds(q, reply) {
     var radiusInKm = null;
 
     var replyViewPort = geoBox;
+    var pageNo = q.pageNo;
 
     var callback = (err, all) =>  {
         _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply);
     };
-
     if (geoBox) {
         adsModel.queryAllData(
             callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
             , q.soPhongNguGREATER, q.soPhongTamGREATER
             , ngayDangTinFrom, q.huongNha
-            , orderBy, limit
+            , orderBy, limit,pageNo
         )
 
     } else if (q[Q_FIELD.place]) {
@@ -291,7 +372,7 @@ function searchAds(q, reply) {
                         , q.giaBETWEEN, q.dienTichBETWEEN
                         , q.soPhongNguGREATER, q.soPhongTamGREATER
                         , ngayDangTinFrom, q.huongNha
-                        , orderBy, limit
+                        , orderBy, limit,pageNo
                     )
                 }
             }, (error) => {
@@ -314,7 +395,7 @@ function searchAds(q, reply) {
                 , q.giaBETWEEN, q.dienTichBETWEEN
                 , q.soPhongNguGREATER, q.soPhongTamGREATER
                 , ngayDangTinFrom, q.huongNha
-                , orderBy, limit
+                , orderBy, limit, pageNo
             )
         }
     }
@@ -325,6 +406,19 @@ internals.search = function(req, reply) {
     if (_validateFindRequestParameters(req, reply)) {
         try {
             searchAds(req.payload, reply)
+        } catch (e) {
+            logUtil.error(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
+    }
+};
+
+internals.count = function(req,reply){
+    if (_validateFindRequestParameters(req, reply)) {
+        try {
+            countAds(req.payload, reply)
         } catch (e) {
             logUtil.error(e);
             console.log(e, e.stack.split("\n"));

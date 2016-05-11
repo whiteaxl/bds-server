@@ -92,24 +92,8 @@ class AdsModel {
         bucket.operationTimeout = 60 * 1000;
     }
 
-    //loaiTin is mandatory
-    queryAllData(
-        callback
-        , geoBox
-        , diaChinh //tinh, huyen, xa
-        , loaiTin
-        , loaiNhaDat
-        , gia //arrays from,to
-        , dienTich //arrays from,to
-        , soPhongNguGREATER
-        , soPhongTamGREATER
-        , ngayDangTinFrom
-        , huongNha
-        , orderBy//orderByField, orderByType
-        , limit
-    ) {
-        var sql = `SELECT t.* FROM default t  WHERE loaiTin = ${loaiTin}`;
-
+    buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, orderBy, limit, pageNo) {
+        var sql = ` WHERE loaiTin = ${loaiTin}`;
         sql = sql + (loaiNhaDat ? " AND loaiNhaDat=" + loaiNhaDat : "");
 
         if (geoBox) {
@@ -149,20 +133,91 @@ class AdsModel {
 
         sql = sql + (huongNha ? " AND huongNha=" + huongNha : "");
 
-        //orderBy
         if (orderBy) {
             sql = sql + " ORDER BY " + orderBy.orderByField + "  " + orderBy.orderByType;
         }
 
-        limit = limit || DEFAULT_LIMIT;
+        if(limit)
+            sql = sql + " LIMIT  " + limit;
+        if(pageNo) 
+            sql = sql + " OFFSET  " + ((pageNo-1)*limit);    
+
+        return sql;
+    }
+
+    countForAllData(
+        callback
+        , geoBox
+        , diaChinh //tinh, huyen, xa
+        , loaiTin
+        , loaiNhaDat
+        , gia //arrays from,to
+        , dienTich //arrays from,to
+        , soPhongNguGREATER
+        , soPhongTamGREATER
+        , ngayDangTinFrom
+        , huongNha
+    ){
+        var sql ="SELECT count(*) FROM default t" + this.buildWhereForAllData(geoBox
+            , diaChinh 
+            , loaiTin
+            , loaiNhaDat
+            , gia 
+            , dienTich 
+            , soPhongNguGREATER
+            , soPhongTamGREATER
+            , ngayDangTinFrom
+            , huongNha
+        );
+
+        console.log(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            console.log("err=", err, all);
+            console.log("count " + all[0].$1);
+            callback(err,all[0].$1);
+        });
+    }
+
+    //loaiTin is mandatory
+    queryAllData(
+        callback
+        , geoBox
+        , diaChinh //tinh, huyen, xa
+        , loaiTin
+        , loaiNhaDat
+        , gia //arrays from,to
+        , dienTich //arrays from,to
+        , soPhongNguGREATER
+        , soPhongTamGREATER
+        , ngayDangTinFrom
+        , huongNha
+        , orderBy//orderByField, orderByType
+        , limit
+        , pageNo
+
+    ) {
 
         if (isNaN(limit)) {
             console.log("WARN", "limit is not a number:" , limit);
             limit = DEFAULT_LIMIT;
         }
 
-        sql = sql + " LIMIT  " + limit;
-
+        var sql ="SELECT t.* FROM default t" + this.buildWhereForAllData(geoBox
+            , diaChinh 
+            , loaiTin
+            , loaiNhaDat
+            , gia 
+            , dienTich 
+            , soPhongNguGREATER
+            , soPhongTamGREATER
+            , ngayDangTinFrom
+            , huongNha
+            , orderBy
+            , limit
+            , pageNo?pageNo:1
+        );
+        
         console.log(sql);
         /*
         var query = N1qlQuery.fromString('select count(*) from default');
@@ -212,6 +267,7 @@ class AdsModel {
         else {
             sql = sql + " limit 100 ";
         }
+        console.log("sql:" + sql );
         var query = N1qlQuery.fromString(sql);
         return query;
         /*

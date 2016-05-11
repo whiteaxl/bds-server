@@ -699,6 +699,40 @@ describe("02.Find API testsuite",function(){
 
 
     //-----------------------------
+    var testPaging = function(done){
+        server
+            .post("/api/search")
+            .send({
+                "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
+                ,"giaBETWEEN":[0,9999999]
+                ,"soTangGREATER":0,"dienTichBETWEEN":[0,50]
+                ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
+                    ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
+                    ,"radiusInKm":0.5},
+                "limit":2,"ngayDaDang":30
+                ,"orderBy" :'giaM2ASC'
+                ,"page":2
+
+            })
+            .expect("Content-type",/json/)
+            .expect(200) // THis is HTTP response
+            .end(function(err,res){
+
+                for (var e in res.body.list) {
+                    let one =res.body.list[e];
+                    //console.log(one.giaM2 + " -- " + one.adsID);
+                }
+
+                res.body.length.should.equal(2);
+                
+                console.log("\ntestOrder, length:" + res.body.length);
+                done();
+            });
+    };
+
+    it("Tim kiem - testPaging ASC ",testPaging);
+
+    //-----------------------------
     var testImageMedium = function(done){
         server
             .post("/api/search")
