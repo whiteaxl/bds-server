@@ -140,7 +140,7 @@ class AdsModel {
         if(limit)
             sql = sql + " LIMIT  " + limit;
         if(pageNo) 
-            sql = sql + " OFFSET  " + ((pageNo-1)*limit + 1);    
+            sql = sql + " OFFSET  " + ((pageNo-1)*limit);    
 
         return sql;
     }
