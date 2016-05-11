@@ -31,7 +31,7 @@ describe("02.Find API testsuite",function(){
             .expect(200) // THis is HTTP response
             .end(function(err,res){
                 console.log("\ntestGeoBox, length:" + res.body.length);
-                res.body.length.should.equal(69);
+                res.body.length.should.equal(68);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -89,7 +89,7 @@ describe("02.Find API testsuite",function(){
             .end(function(err,res){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
 
-                res.body.length.should.equal(40);
+                res.body.length.should.equal(39); //TODO: ?40
 
                 //check viewport
                 var viewport = res.body.viewport;
