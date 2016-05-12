@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ" ng-change="mc.filterAds()"
+                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[0]" title="Giá từ" ng-change="mc.search()"
                                                     ng-options="price.value as price.lable for price in mc.sell_price_list_from">
                                             </select>
                                         </div>
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến" ng-change="mc.filterAds()"
+                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[1]" title="Giá đến" ng-change="mc.search()"
                                                     ng-options="price.value as price.lable for price in mc.sell_price_list_to">
                                                 
                                             </select>
@@ -131,7 +131,7 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ" ng-change="mc.filterAds()"
+                                    <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" ng-change="mc.search()"
                                             ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
                                     </select>
                                 </div>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến" ng-change="mc.filterAds()"
+                                    <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" ng-change="mc.search()"
                                             ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
                                     </select>
                                 </div>
@@ -353,152 +353,7 @@
                     </form>
                 </div>
             </div><!-- //box-filter -->
-            <section class="box-search">
-                <div class="row">
-                    <div class="col col-60">
-                        <div class="map is-fixed" >
-
-                            <ng-map center="{{center}}" custom-zoom-to-include-markers="{{mc.zoomMode}}" class="ngmap">
-                            <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})" id="m_{{$index}}" >
-                                  <div class = "my1">
-                                    {{m.content}} 
-                                  </div>
-                                </custom-marker>
-                                <!-- <marker ng-repeat="m in markers track by $index" id = "{{ads_list[$index].adsID}}" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})"> -->
-                                    
-                                    
-                                <!-- </marker> -->
-
-                                <info-window id="iw">
-                                    <div ng-non-bindable="" class="row">
-                                            <div class="col col-50">
-                                                <div class="media" style="background-image: url({{mc.highlightAds.image.cover}});height: 100px;"></div>
-                                            </div>
-                                            <div class="col col-50">
-                                                
-                                                <div class="price">gia: {{mc.highlightAds.giaFmt}}</div>
-                                                <div class="info">dientich: {{mc.highlightAds.dientichFmt}}</div>
-                                                <div class="info">Căn hộ chung cư</div>
-                                            </div>
-                                    </div>
-                                </info-window>
-
-                                <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
-                                    <div ng-non-bindable="">
-                                        id: {{$index}}<br/>
-                                        name: {{mc.highlightAds.name}}<br/>
-
-                                        <a href="#">Click Here</a>
-                                    </div>
-                                </info-window> -->
-                            </ng-map>    
-                        </div>
-
-                        <nav class="nav sp">
-                            <ul>
-                                <li>
-                                    <a href="#box-find" data-filter="open" title="Local Info">Local Info</a>
-                                </li>
-                                <li>
-                                    <a href="#" title="">Save Search</a>
-                                </li>
-                                <li>
-                                    <a href="#" title="">List</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="pc">&nbsp;</div>
-                    </div>
-                    <div class="col col-40">
-                        <div class="block-04">
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col col-50">
-                                        <a class="media" href="#" title="">
-                                            <span class="img" style="background: url(asset/img/data/img-50.jpg)">Lennar New Homes</span>
-                                        </a>
-                                    </div>
-                                    <div class="col col-50">
-                                        <h3>
-                                            <a href="#" title="">Lennar New Homes</a>
-                                        </h3>
-                                        <p>Building where you want to live! From the mid-$200's</p>
-                                        <a class="btn-more" href="" title="">Learn More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- //block-04 -->
-                        <div class="block-05">
-                            <h2 class="head">Tổng số {{mc.totalResultCounts}} nhà</h2>
-                            <div class="handle">
-                                <div class="filter">
-                                    <div class="label">Sắp xếp: </div>
-                                    <div class="option">
-                                        <select class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="group">
-                                    <a href="" ui-sref="list" title="">List</a>
-                                    <a href="" title="">Map</a>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div ng-repeat="ads in ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-mouseout="mc.hideDetail();">
-                                    <div class="item">
-                                        <a class="link" href="" title="" >
-                                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
-                                            <span class="info"  >
-                                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
-                                                <span class="line">{{ads.soTangFmt}}</span>
-                                                <span class="line">{{ads.soPhongNguFmt}}</span>
-                                            </span>
-                                        </a>
-                                        <h3>
-                                            <a href="" title=""><span class="highlight">New Homes</span><span class="name">K Hovnanian's Four Seasons</span></a>
-                                        </h3>
-                                        <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- //block-05 -->
-                        <div class="block-06">
-                            <div class="stats">{{mc.currentPageStart}} – {{mc.currentPageEnd}} của {{mc.totalResultCounts}} kết quả</div>
-                            <ul>
-                                <li ng-if="mc.currentPage != 1" ng-click="mc.firstPage()">
-                                    <span>First</span>
-                                </li>
-                                <li ng-if="mc.currentPage != 1" ng-click="mc.previousPage()">
-                                    <span>Previous</span>
-                                </li>
-                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.nextPage()">
-                                    <a href="" title="">Next</a>
-                                </li>
-                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.lastPage()">
-                                    <a href="" title="">Last</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="block-07">
-                            <ul>
-                                <li>
-                                    <a href="" title="">United States</a>
-                                </li>
-                                <li>
-                                    <a href="" title="">California</a>
-                                </li>
-                                <li>
-                                    <span>California City</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section><!-- //box-search -->
+            <div ng-include="mc.viewTemplateUrl"></div>
             <footer class="footer">
                <div class="footer-bot">
                    <div class="row">
@@ -929,3 +784,6 @@
 	 <!-- <script src="asset/js/common.min.js"></script>     -->
     <!-- <script src="/web/dist/vendor.bundle.js"></script>
     <script src="/web/dist/app.bundle.js"></script> -->
+</body>
+
+

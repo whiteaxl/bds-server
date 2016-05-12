@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4479bf7783afe1e8f5ae"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a396372dd251504db881"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -923,7 +923,8 @@
 	      if (toState.name === 'home') {
 	        toState.templateUrl = '/web/index_content.html';
 	      }else{
-	        toState.templateUrl = '/web/'+toState.name+'.html';
+	        if(!toState.templateUrl)
+	          toState.templateUrl = '/web/'+toState.name+'.html';
 	        //toState.templateUrl = '/web/marker.html';
 	      }
 	        //if (toState.name === 'list') {
@@ -1000,22 +1001,9 @@
 	          libraries: 'places,geometry,visualization' // Required for SearchBox.
 	      });*/
 	      $stateProvider
-	      .state('list', {
-	        url: "/list",
-	        //templateUrl: '/web/list.html',
-	        controller: "MainCtrl",
-	        resolve: {
-	          title: function(HouseService) {
-	            //alert(HouseService);
-	            return [{'a':'a'}];
-	          }
-	        },
-	        data: {
-	            bodyClass: "page-list"
-	        } 
-	      }).state('search', {
-	          url: "/search/:place/:loaiTin/:loaiNhaDat",
-	        //templateUrl: "/web/searchContent.html",
+	      .state('search', {
+	          url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+	        // templateUrl: "/web/search.tpl.html",
 	        controller: "SearchCtrl",
 	        controllerAs: 'mc',
 	        resolve: {
@@ -1334,6 +1322,27 @@
 			$scope.placeId = $state.params.place;
 			$scope.loaiTin = $state.params.loaiTin;
 			$scope.loaiNhaDat = $state.params.loaiNhaDat;
+			vm.viewMode = $state.params.viewMode;
+			if(!vm.viewMode)
+				vm.viewMode = "map";
+			
+			vm.viewTemplateUrl = "search.tpl.html";//1=map 2= list
+
+			if($state.params.viewMode=="list"){
+				vm.viewTemplateUrl = "list.tpl.html";
+			}else if($state.params.viewMode=="map"){
+				vm.viewTemplateUrl = "search.tpl.html"
+			}
+
+			
+			vm.showList = function(){
+				vm.viewTemplateUrl = "list.tpl.html"
+				vm.viewMode = "list";
+			}
+			vm.showMap = function(){
+				vm.viewTemplateUrl = "search.tpl.html"
+				vm.viewMode = "map";
+			}
 
 			if(!$scope.placeId)
 				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
@@ -1373,9 +1382,9 @@
 			        position: 0
 			    },
 			];
-			Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.sell_steps);
+			Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.dientich_steps);
 			vm.sell_dien_tich_list_to = [];
-			Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.sell_steps);
+			Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.dientich_steps);
 			vm.sell_dien_tich_list_to.push(
 				{
 			        value: window.RewayListValue.filter_max_value.value,
@@ -1413,6 +1422,7 @@
 			  	"pageNo": 1
 			}
 
+
 			vm.mouseover = function(e,i) {
 	          vm.showDetail(i);
 	        };
@@ -1424,13 +1434,14 @@
 	    	};
 
 	        vm.showDetail = function(i) {
-			    vm.highlightAds = $scope.ads_list[i];
-			    if($scope.ads_list[i].place){
-	    			if($scope.ads_list[i].place.geo){
+			    vm.highlightAds = vm.ads_list[i];
+			    if(vm.ads_list[i].place){
+	    			if(vm.ads_list[i].place.geo){
 	    				vm.map.showInfoWindow("iw","m_" +i);
 	    			}
 	    		}
 			};
+
 
 			vm.hideDetail = function() {
 				vm.map.hideInfoWindow('iw');
@@ -1467,7 +1478,7 @@
 	    		//$scope.map.refresh();
 			}
 			vm.goToPageSearch = function(){
-				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 				//vm.search();
 			}
 	  		
@@ -1517,7 +1528,7 @@
 			    		}
 			    		
 					}
-					$scope.ads_list = res.data.list;
+					vm.ads_list = res.data.list;
 					$scope.markers = [];
 					for(var i = 0; i < res.data.list.length; i++) { 
 			    		var ads = res.data.list[i];
@@ -1640,8 +1651,11 @@
 						 			  	vm.searchData.place = placeData;
 						          		vm.searchData.geoBox = undefined;
 						        	}
-									vm.search();
-									vm.map.setCenter(place.geometry.location);
+						        	vm.map.setCenter(place.geometry.location);
+									vm.search(function(){
+										vm.zoomMode = "auto";
+									});
+									
 									//vm.map.refresh();
 									//$scope.$apply();	
 					        	}
@@ -1668,7 +1682,7 @@
 				];*/
 				$scope.initData = window.initData;
 				$scope.hot_ads_cat = window.hot_ads_cat;
-				$scope.ads_list = window.testData;
+				vm.ads_list = window.testData;
 				$scope.bodyClass= "page-home";
 
 			}

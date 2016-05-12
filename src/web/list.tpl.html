@@ -1,0 +1,174 @@
+<div style="display: none;" >
+    
+    <ng-map center="Hanoi Vietnam" class="ngmap">
+    </ng-map>   
+
+</div>
+
+<section class="box-list">
+                <div class="container">
+                    <h1 class="title">316 California City, CA Homes For Sale & Real Estate</h1>
+                    <div class="row">
+                        <div class="col col-830">
+                            <div class="block-08">
+                                <div class="handle">
+                                    <div class="filter">
+                                        <div class="label">SORT BY:</div>
+                                        <div class="option">
+                                            <select class="select" data-select="true" title="Relevance">
+                                                <option value="">Relevance</option>
+                                                <option value="featured;a">Featured</option>
+                                                <option value="date;d">Newest</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <a href="" ng-click="mc.showList()" title="">List</a>
+                                        <a href="" ng-click="mc.showMap()" title="">Map</a>
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <div class="item" ng-repeat="ads in mc.ads_list track by $index" class="col col-50" >
+                                        <div class="row">
+                                            <div class="col col-240">
+                                                <div class="media">
+                                                    <a class="link" href="" ng-click="mc.showDetail(0);" title="">
+                                                        <span class="img" style="background-image: url({{ads.image.cover}})"</span>
+                                                         <span class="info"  >
+                                                            <span class="line"><span class="price">{{ads.giaFmt}}</span> 
+                                                            <span>{{ads.dienTichFmt}}</span></span>
+                                                            <span class="line">{{ads.soTangFmt}}</span>
+                                                            <span class="line">{{ads.soPhongNguFmt}}</span>
+                                                        </span>
+                                                    </a>
+                                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
+                                                </div>
+                                            </div>
+                                            <div class="col col-590">
+                                                <div class="row">
+                                                    <div class="col col-60">
+                                                        <h3>
+                                                            <a href="" title="">{{ads.adsID}}</a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="col col-40">
+                                                        <div class="price">{{ads.giaFmt}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-40">
+                                                        <ul class="position">
+                                                            <li>{{ads.place.diaChi}}</li>
+                                                            <li>Map</li>
+                                                        </ul>
+                                                        <div class="info">
+                                                            <span>{{ads.soPhongNgu}}pn</span><span>{{ads.soPhongTam}}</span><span>{{ads.dienTichFmt}}pt</span>
+                                                        </div>
+                                                        <div class="kind">{{ads.ten_loaiNhaDat}}</div>
+                                                    </div>
+                                                    <div class="col col-60">
+                                                        <div class="type">
+                                                            <a href="" title="">$1,032/mo</a>
+                                                            <a href="" title="">Get Pre-Approved</a>
+                                                        </div>
+                                                        <div class="desc"> Qualified discerning buyers will be happy to find this splendid Golf Course ho<wbr>me in Cal City. Property backs to t...</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-40">
+                                                        <div class="estate">Full Cycle Real Estate</div>
+                                                    </div>
+                                                    <div class="col col-60">
+                                                        <div class="action">
+                                                            <a class="btn-detail" href="" title="">View Details</a>
+                                                            <a class="favorite" data-like="true" href="#" title=""><i class="fa fa-heart-o"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <nav class="nav sp">
+                                    <ul>
+                                        <li>
+                                            <a href="#box-sort" data-sort="show" title="Sort">Sort</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="">Save Search</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="">Map</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="block-09">
+                                <div class="stats">{{mc.currentPageStart}} – {{mc.currentPageEnd}} của {{mc.totalResultCounts}} kết quả</div>
+                            <ul>
+                                <li ng-if="mc.currentPage != 1" ng-click="mc.firstPage()">
+                                    <span>First</span>
+                                </li>
+                                <li ng-if="mc.currentPage != 1" ng-click="mc.previousPage()">
+                                    <span>Previous</span>
+                                </li>
+                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.nextPage()">
+                                    <a href="" title="">Next</a>
+                                </li>
+                                <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.lastPage()">
+                                    <a href="" title="">Last</a>
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="block-07">
+                                <ul>
+                                    <li>
+                                        <a href="" title="">United States</a>
+                                    </li>
+                                    <li>
+                                        <a href="" title="">California</a>
+                                    </li>
+                                    <li>
+                                        <span>California City</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col col-320">
+                            <div class="block-10">
+                                <div class="item">
+                                    <h3>California City Real Estate</h3>
+                                    <div class="less">
+                                        By analyzing real estate information on  millions of <a href="/sitemap/California-real-estate/">homes in California</a>
+                                        and nationwide as well as helping you understand hyper-local <a href="/real_estate/California_City-California/">California City real estate trends</a>,
+                                        Trulia helps make your home search easy and enjoyable.
+                                    </div>
+                                    <div class="full">
+                                        Refine your real estate search in California City,
+                                        CA by price, number of bedrooms, bathrooms, property type (including <a href="/for_sale/California_City,CA/TOWNHOUSE_type/">townhomes</a>,
+                                        <a href="/for_sale/California_City,CA/CONDO_type/">condominiums</a> and <a href="/for_sale/California_City,CA/SINGLE-FAMILY_HOME_type/">single-family homes</a>)
+                                        , and more.
+                                        Use our interactive <a href="/home_prices/California/California_City-heat_map/">California City home price map</a>
+                                        to view real estate activity across California City ZIP codes and in other cities nearby California City.
+                                        See local real estate trends, and compare your home to <a href="/sold/California_City,CA/">recently sold homes in California City</a>
+                                        and to similar homes for sale in California City, California. View our <a href="/real_estate/California_City-California/">California City real estate guide</a>
+                                        to see average listing prices, sale prices and information for local school districts. Join <a href="/voices/---7850">California City, California community</a>
+                                        to get in touch with California City real estate agents, real estate brokers and other real estate sellers and buyers. Compare
+                                        <a href="/mortgage-rates/California_City,CA/">California City mortgages</a> from multiple lenders and mortgage brokers to finance your home purchase.
+                                        Not ready to buy yet? Find and compare <a href="/for_rent/California_City,CA/">California City Apartments for rent</a>.
+                                    </div>
+                                    <a href="#" class="more" data-toggle="text" data-group="item" data-toggle-text="Less">More</a>
+                                </div>
+                            </div>
+                            <div class="block-11">
+                                <div class="item">
+                                    <a href="#" title="">
+                                        <img src="asset/img/data/image.png" width="300" height="190" alt=""/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- //box-list -->
