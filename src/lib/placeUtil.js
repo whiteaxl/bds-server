@@ -67,9 +67,14 @@ placeUtil.getDiaChinh = function(diaChi) {
 
     let i = spl.length;
     diaChinh.tinh = spl[--i].trim();
+    if(diaChinh.tinh)
+        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
+
     let rawHuyen = spl[--i];
     if (rawHuyen) {
         diaChinh.huyen = rawHuyen.trim();
+        if(diaChinh.huyen)
+            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
     } else {
         console.log("WARN -- no HUYEN information " + diaChi);
     }
@@ -78,6 +83,8 @@ placeUtil.getDiaChinh = function(diaChi) {
         let v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {
             diaChinh.xa = v;
+            if(diaChinh.xa)
+                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
         } else {
             return diaChinh;
         }
