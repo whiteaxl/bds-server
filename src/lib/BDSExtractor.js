@@ -9,6 +9,7 @@ var entities = require("entities");
 var DSLoaiNhaDat = require("./LoaiNhaDat");
 var logUtil = require("./logUtil");
 var placeUtil = require('./placeUtil');
+var util = require("./utils");
 
 var BDS_NAME_MAP = {
 	'Thuộc dự án' :'duAn', 
@@ -229,7 +230,7 @@ class BDSExtractor {
 			'custLefts'		:['#divCustomerInfo .left'],
 			'detailRights' 		:['#product-detail .left-detail .right'],
 			'detailLefts' 		:['#product-detail .left-detail .left'],
-                'chiTiet'	:'#product-detail .pm-content',
+                'chiTiet'	:'#product-detail .pm-content :source',
 			'hdLat'		:'.container-default input[id="hdLat"]@value',
 		    'hdLong'	:'.container-default input[id="hdLong"]@value'
 
@@ -245,7 +246,7 @@ class BDSExtractor {
 		    	dienTich: Number(listing.area.substr(0, listing.area.length-2)), 
 		    	area_raw: listing.area,
 		    	loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
-				chiTiet: listing.chiTiet.replace('<br/>', '\r\n'),
+				chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
 		    	hdLat : Number(listing.hdLat), 
 		    	hdLong : Number(listing.hdLong)
 		    };

@@ -1,5 +1,8 @@
 'use strict';
 
+var htmlparser = require("htmlparser2");
+var cheerio = require('cheerio');
+var striptags = require('striptags');
 var util = {};
 
 util.locDau = function(str) {
@@ -53,6 +56,29 @@ util.getDienTichDisplay = function(val) {
 
     return val + "m²";
 };
+
+util.replaceBrHtml = function(string_to_replace) {
+    return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg,"\n\r");
+
+};
+
+
+
+util.replaceBrToDowntoLine = function(inputString) {
+    var kq = "";
+    var Timkiem = 'Tìm kiếm theo từ khóa';
+
+    var kqReplace = util.replaceBrHtml(inputString);
+    var kqReplaceA = striptags(kqReplace);
+
+     if (inputString ) {
+       var idx = kqReplaceA.indexOf(Timkiem);
+        if(idx >0)
+            kq = kqReplaceA.substring(0,idx);
+    }
+    return kq;
+};
+
 
 util.popField = function (obj, field){
     let a = obj[field];
