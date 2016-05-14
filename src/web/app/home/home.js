@@ -15,7 +15,8 @@
       if (toState.name === 'home') {
         toState.templateUrl = '/web/index_content.html';
       }else{
-        toState.templateUrl = '/web/'+toState.name+'.html';
+        if(!toState.templateUrl)
+          toState.templateUrl = '/web/'+toState.name+'.html';
         //toState.templateUrl = '/web/marker.html';
       }
         //if (toState.name === 'list') {
@@ -92,22 +93,9 @@
           libraries: 'places,geometry,visualization' // Required for SearchBox.
       });*/
       $stateProvider
-      .state('list', {
-        url: "/list",
-        //templateUrl: '/web/list.html',
-        controller: "MainCtrl",
-        resolve: {
-          title: function(HouseService) {
-            //alert(HouseService);
-            return [{'a':'a'}];
-          }
-        },
-        data: {
-            bodyClass: "page-list"
-        } 
-      }).state('search', {
-          url: "/search/:place/:loaiTin/:loaiNhaDat",
-        //templateUrl: "/web/searchContent.html",
+      .state('search', {
+          url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+        // templateUrl: "/web/search.tpl.html",
         controller: "SearchCtrl",
         controllerAs: 'mc',
         resolve: {

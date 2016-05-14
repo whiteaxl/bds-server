@@ -3,6 +3,7 @@ var danhMuc = {};
 var BAT_KY = "Bất kỳ";
 
 danhMuc.BAT_KY = BAT_KY;
+danhMuc.BIG =9999999;
 
 danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
 
@@ -14,22 +15,22 @@ danhMuc.filter_max_value = {
 danhMuc.sortHouseOptions = [
     {
         lable: "Giá từ cao đến thấp",
-        value: 1,
+        value: "giaDESC",
         position: 1
     },
     {
         lable: "Giá từ thấp đến cao",
-        value: 2,
+        value: "giaASC",
         position: 2
     },
     {
         lable: "Diện tích từ cao đến thấp",
-        value: 3,
+        value: "dienTichDESC",
         position: 3
     },
     {
         lable: "Diện tích từ thấp đến cao",
-        value: 4,
+        value: "dienTichASC",
         position: 4
     }
 ];
