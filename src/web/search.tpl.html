@@ -80,9 +80,9 @@
                             <h2 class="head">Tổng số {{mc.totalResultCounts}} nhà</h2>
                             <div class="handle">
                                 <div class="filter">
-                                    <div class="label">Sắp xếp: </div>
+                                    <div class="label">Sắp xếpa: </div>
                                     <div class="option">
-                                        <select class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
+                                        <select class="select" ng-change="alert(1);mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                         </select>
                                     </div>
                                 </div>

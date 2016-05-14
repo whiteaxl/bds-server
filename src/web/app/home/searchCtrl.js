@@ -18,8 +18,6 @@
 		}else if($state.params.viewMode=="map"){
 			vm.viewTemplateUrl = "search.tpl.html"
 		}
-
-		
 		vm.showList = function(){
 			vm.viewTemplateUrl = "list.tpl.html"
 			vm.viewMode = "list";
@@ -104,9 +102,9 @@
 		  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 		  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 		  	"limit": vm.pageSize,
+		  	"orderBy": vm.sortBy,
 		  	"pageNo": 1
 		}
-
 
 		vm.mouseover = function(e,i) {
           vm.showDetail(i);
@@ -352,6 +350,36 @@
 			
 			// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 			//$rootScope.center = "Hanoi Vietnam";
+			vm.provinces = [
+				{
+					value: "Hanoi",
+					lable: "Hà Nội"
+				},
+				{
+					value: "Da nang",
+					lable: "Đà Nãng"
+
+				}
+			];
+
+			vm.districts = [
+				{
+					value: "Cau Giay",
+					lable: "Cầu Giấy"
+				},
+				{
+					value: "Dong Da",
+					lable: "Đống Đa"
+
+				}
+			];
+
+			vm.moreFilter = {
+				province: "Hanoi",
+				district: "Dong Da"
+			}
+			
+
 
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};
 			$scope.markerCount = 3;
@@ -369,6 +397,11 @@
 			$scope.hot_ads_cat = window.hot_ads_cat;
 			vm.ads_list = window.testData;
 			$scope.bodyClass= "page-home";
+
+			if(vm.viewMode == "list"){
+
+			}
+
 
 		}
 		

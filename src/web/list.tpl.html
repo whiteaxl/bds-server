@@ -7,18 +7,15 @@
 
 <section class="box-list">
                 <div class="container">
-                    <h1 class="title">316 California City, CA Homes For Sale & Real Estate</h1>
                     <div class="row">
                         <div class="col col-830">
                             <div class="block-08">
+                                <h2 class="head">Tổng số {{mc.totalResultCounts}} nhà</h2>
                                 <div class="handle">
                                     <div class="filter">
-                                        <div class="label">SORT BY:</div>
+                                        <div class="label">Sắp xếp: </div>
                                         <div class="option">
-                                            <select class="select" data-select="true" title="Relevance">
-                                                <option value="">Relevance</option>
-                                                <option value="featured;a">Featured</option>
-                                                <option value="date;d">Newest</option>
+                                            <select ng-change="mc.searchPage(1);" class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                             </select>
                                         </div>
                                     </div>

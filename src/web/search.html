@@ -175,10 +175,12 @@
                             <div class="project" data-content="sale" style="display: block">
                                 <div class="row">
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="new_listings" value="new_listings"/> New Listings, Past Week</label>
+                                        <select class="select" data-select="true" ng-model="mc.moreFilter.province" title="Tỉnh" ng-options="province.value as province.lable for province in mc.provinces">
+                                        </select>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="recently_reduced" value="recently_reduced"/> Reduced Prices, Past Week</label>
+                                        <select class="select" data-select="true" ng-model="mc.moreFilter.district" title="Huyện" ng-options="district.value as district.lable for district in mc.districts">
+                                        </select>
                                     </div>
                                     <div class="col col-25">
                                         <label><input type="checkbox" name="new_construction" value="new_construction"/> New Construction</label>

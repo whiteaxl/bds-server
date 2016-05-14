@@ -15,22 +15,22 @@ danhMuc.filter_max_value = {
 danhMuc.sortHouseOptions = [
     {
         lable: "Giá từ cao đến thấp",
-        value: 1,
+        value: "giaDESC",
         position: 1
     },
     {
         lable: "Giá từ thấp đến cao",
-        value: 2,
+        value: "giaASC",
         position: 2
     },
     {
         lable: "Diện tích từ cao đến thấp",
-        value: 3,
+        value: "dienTichDESC",
         position: 3
     },
     {
         lable: "Diện tích từ thấp đến cao",
-        value: 4,
+        value: "dienTichASC",
         position: 4
     }
 ];
