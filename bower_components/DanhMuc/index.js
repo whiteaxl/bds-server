@@ -78,39 +78,25 @@ danhMuc.sell_steps = [
     }
 ];
 
-danhMuc.dientich_steps = [
-    {
-        value: 10,
-        lable: "10 m2",
-        position: 1
-    },
-    {
-        value: 20,
-        lable: "20 m2",
-        position: 2
-    },
-    {
-        value: 30,
-        lable: "30 m2",
-        position: 3
-    },
-    {
-        value: 40,
-        lable: "40 m2",
-        position: 4
-    },
-    {
-        value: 50,
-        lable: "50 m2",
-        position: 5
-    }
-];
-
 
 
 danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
 
 danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
+
+danhMuc.convertDienTichStepValueToNameValueArray= function(){
+    var result = [];
+    for(var i =0; i<danhMuc.dienTichStepValues.length;i++){
+        result.push({
+            value: danhMuc.dienTichStepValues[i],
+            lable: danhMuc.dienTichStepValues[i] + "m2",
+            position: i
+        });
+    }
+    return result;
+}
+
+danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
 
 danhMuc.LoaiTin = {
     0 : "Bán",

@@ -180,51 +180,58 @@
 
                             <div class="project" data-content="sale" style="display: block">
                                 <div class="row">
-                                    <div class="col col-25">
-                                        <select class="select" data-select="true" ng-model="mc.moreFilter.province" title="Tỉnh" ng-options="province.value as province.lable for province in mc.provinces">
-                                        </select>
-                                    </div>
-                                    <div class="col col-25">
-                                        <select class="select" data-select="true" ng-model="mc.moreFilter.district" title="Huyện" ng-options="district.value as district.lable for district in mc.districts">
-                                        </select>
-                                    </div>
                                     
                                     <div class="col col-25">
                                         <span>Giá từ</span><input class="form-control" style="border: 1px solid #cdd1d4;" ng-model="mc.moreFilter.priceFrom">
                                         <span>Giá đến</span><input class="form-control" name="myName" style="border: 1px solid #cdd1d4;" ng-model="mc.moreFilter.priceTo" required ng-minlength="5"> 
                                     </div>
-                                    
                                     <div class="col col-25">
-                                        <span>Diện tích từ</span><input class="form-control" style="border: 1px solid #cdd1d4;" ng-model="mc.moreFilter.squareFrom">
-                                        <span>Diện tích đến</span><input class="form-control" name="myName" style="border: 1px solid #cdd1d4;" ng-model="mc.moreFilter.squareTo" required ng-minlength="5"> 
+                                        <label>Giá từ
+                                        	<select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[0]" title="Giá từ" 
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
+                                            </select>
+										</label>
+										<label>Giá đến
+                                        	<select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[1]" title="Giá đến" 
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
+                                            </select>
+										</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label>Diện tích đến
+	                                       	<select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" 
+	                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
+	                                    	</select>
+										</label>
+										<label>Giá đến
+                                        	<select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" 
+	                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
+	                                    	</select>
+										</label>
                                     </div>
 
 
-                                    <div class="col col-25">
-                                        <label>Loại BĐS <select class="select" data-select="true" ng-model="mc.moreFilter.loaiNhaDat" title="Loại BĐS" ng-options="loaiNhaDat.value as loaiNhaDat.lable for loaiNhaDat in mc.loaiNhaDatList">
-                                        </select></label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>Số phòng ngủ <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongNgu" title="Số phòng ngủ" ng-options="soPhongNgu.value as soPhongNgu.lable for soPhongNgu in mc.soPhongNguList">
-                                        </select></label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>Số phòng tắm <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongTam" title="Số phòng tắm" ng-options="soPhongTam.value as soPhongTam.lable for soPhongTam in mc.soPhongTamList">
-                                        </select></label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>Số tầng <select class="select" data-select="true" ng-model="mc.moreFilter.soTang" title="Số tầng" ng-options="soTang.value as soTang.lable for soTang in mc.soTangList">
-                                        </select></label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>Hướng Nhà <select class="select" data-select="true" ng-model="mc.moreFilter.huongNha" title="Hướng Nhà" ng-options="huongNha.value as huongNha.lable for huongNha in mc.huongNhaList">
-                                        </select></label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>Bán kính <select class="select" data-select="true" ng-model="mc.moreFilter.radiusInKm" title="Bán kính" ng-options="radiusInKm.value as radiusInKm.lable for radiusInKm in mc.radiusInKmList">
-                                        </select></label>
-                                    </div>
 
+                                    <div class="col col-25">
+                                        <label>Loại BĐS <select class="select" data-select="true" ng-model="mc.searchData.loaiNhaDat" title="Loại BĐS" ng-options="loaiNhaDat.value as loaiNhaDat.lable for loaiNhaDat in mc.loaiNhaDatList">
+                                        </select></label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label>Số phòng ngủ <select class="select" data-select="true" ng-model="mc.searchData.soPhongNguGREATER" title="Số phòng ngủ" ng-options="soPhongNgu.value as soPhongNgu.lable for soPhongNgu in mc.soPhongNguList">
+                                        </select></label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label>Số phòng tắm <select class="select" data-select="true" ng-model="mc.searchData.soPhongTamGREATER" title="Số phòng tắm" ng-options="soPhongTam.value as soPhongTam.lable for soPhongTam in mc.soPhongTamList">
+                                        </select></label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label>Số tầng <select class="select" data-select="true" ng-model="mc.searchData.soTangGREATER" title="Số tầng" ng-options="soTang.value as soTang.lable for soTang in mc.soTangList">
+                                        </select></label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label>Hướng Nhà <select class="select" data-select="true" ng-model="mc.searchData.huongNha" title="Hướng Nhà" ng-options="huongNha.value as huongNha.lable for huongNha in mc.huongNhaList">
+                                        </select></label>
+                                    </div>
                                     
 
                                     <div class="col col-25">

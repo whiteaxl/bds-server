@@ -131,7 +131,7 @@ class AdsModel {
             sql = `${sql} AND (dienTich BETWEEN  ${dienTich[0]} AND ${dienTich[1]})`;
         }
 
-        sql = sql + (huongNha ? " AND huongNha=" + huongNha : "");
+        sql = sql + ((huongNha && huongNha>0)  ? " AND huongNha=" + huongNha : "");
 
         if (orderBy) {
             sql = sql + " ORDER BY " + orderBy.orderByField + "  " + orderBy.orderByType;

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ad13e298e8498ccfae59"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c527fc44afd253b349c6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1318,6 +1318,11 @@
 		var controllerId = 'SearchCtrl';
 		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
 			var vm = this;
+			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
+			vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
+			vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
+			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
 			$scope.center = "Hanoi Vietnam";
 			$scope.placeId = $state.params.place;
 			$scope.loaiTin = $state.params.loaiTin;
@@ -1416,12 +1421,12 @@
 
 			vm.searchData = {
 				"loaiTin": $scope.loaiTin,
-				//"loaiTin": 0,
-			  	"loaiNhaDat": $scope.loaiNhaDat, 
+				"loaiNhaDat": $scope.loaiNhaDat, 
 			  	"giaBETWEEN": [vm.price_min,vm.price_max],
 			  	"soPhongNguGREATER": 0,
 			  	"soTangGREATER": 0,
 			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
+			  	"huongNha": vm.huongNhaList[0].value,
 			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 			  	"limit": vm.pageSize,
 			  	"orderBy": vm.sortBy,
@@ -1706,11 +1711,7 @@
 				
 				
 
-				vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
-				vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
-				vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
-				vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-				vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+				
 
 				vm.moreFilter = {
 					province: "Hanoi",
