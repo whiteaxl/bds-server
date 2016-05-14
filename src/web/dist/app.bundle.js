@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bb6040561e049f9a7ab8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2e0b826c4749042e768c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1423,8 +1423,9 @@
 				"loaiTin": $scope.loaiTin,
 				"loaiNhaDat": $scope.loaiNhaDat, 
 			  	"giaBETWEEN": [vm.price_min,vm.price_max],
-			  	"soPhongNguGREATER": 0,
-			  	"soTangGREATER": 0,
+			  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
+			  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+			  	"soTangGREATER": vm.soTangList[0].value,
 			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 			  	"huongNha": vm.huongNhaList[0].value,
 			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
