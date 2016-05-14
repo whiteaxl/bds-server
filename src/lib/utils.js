@@ -1,6 +1,5 @@
 'use strict';
 
-var htmlparser = require("htmlparser2");
 var cheerio = require('cheerio');
 var striptags = require('striptags');
 var util = {};
