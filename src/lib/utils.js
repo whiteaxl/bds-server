@@ -1,7 +1,5 @@
 'use strict';
 
-var htmlparser = require("htmlparser2");
-var cheerio = require('cheerio');
 var striptags = require('striptags');
 var util = {};
 
@@ -75,6 +73,8 @@ util.replaceBrToDowntoLine = function(inputString) {
        var idx = kqReplaceA.indexOf(Timkiem);
         if(idx >0)
             kq = kqReplaceA.substring(0,idx);
+        else
+            kq = kqReplaceA;
     }
     return kq;
 };
