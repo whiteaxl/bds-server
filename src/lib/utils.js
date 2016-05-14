@@ -1,6 +1,5 @@
 'use strict';
 
-var cheerio = require('cheerio');
 var striptags = require('striptags');
 var danhMuc = require('./danhMuc');
 var util = {};
@@ -77,6 +76,8 @@ util.replaceBrToDowntoLine = function(inputString) {
        var idx = kqReplaceA.indexOf(Timkiem);
         if(idx >0)
             kq = kqReplaceA.substring(0,idx);
+        else
+            kq = kqReplaceA;
     }
     return kq;
 };
