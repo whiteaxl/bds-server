@@ -251,8 +251,9 @@ function countAds(q, reply){
     } else if (q[Q_FIELD.place]) {
         var center = {lat: 0, lon: 0};
         var radiusInKm = null;
+        var place = q[Q_FIELD.place];
         if(place.placeId){
-            relandTypeName = q.place.relandTypeName;
+            var relandTypeName = q.place.relandTypeName;
             services.getPlaceDetail(place.placeId, (placeDetail) => {
                 if (!placeDetail) { //sometime autocomplete and detail not sync
                     reply({
