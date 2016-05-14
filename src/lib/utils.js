@@ -1,7 +1,6 @@
 'use strict';
 
 var striptags = require('striptags');
-var danhMuc = require('./danhMuc');
 var util = {};
 
 util.locDau = function(str) {
