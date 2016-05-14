@@ -94,7 +94,7 @@ class AdsModel {
 
     buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;
-        sql = sql + (loaiNhaDat ? " AND loaiNhaDat=" + loaiNhaDat : "");
+        sql = sql + ((loaiNhaDat && loaiNhaDat>0) ? " AND loaiNhaDat=" + loaiNhaDat : "");
 
         if (geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + geoBox[0] + " AND " + geoBox[2] + ")";

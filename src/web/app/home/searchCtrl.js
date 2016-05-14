@@ -36,6 +36,8 @@
 			$scope.loaiTin = 0;
 		if(!$scope.loaiNhaDat)
 			$scope.loaiNhaDat = 0;
+		vm.loaiTin = $scope.loaiTin;
+
 		init();
 		console.log("placeId: " + $scope.placeId);
 		console.log("loaiTin: " + $scope.loaiTin);
@@ -79,6 +81,8 @@
 		    }
 		);
 		
+		
+		 
 
 
 		vm.sortOptions = window.RewayListValue.sortHouseOptions;
@@ -96,9 +100,9 @@
 		vm.pageSize = 20;
 
 		vm.searchData = {
-			//"loaiTin": $scope.loaiTin,
-			"loaiTin": 0,
-		  	//"loaiNhaDat": $scope.loaiNhaDat, cooment out due to not support search api
+			"loaiTin": $scope.loaiTin,
+			//"loaiTin": 0,
+		  	"loaiNhaDat": $scope.loaiNhaDat, 
 		  	"giaBETWEEN": [vm.price_min,vm.price_max],
 		  	"soPhongNguGREATER": 0,
 		  	"soTangGREATER": 0,
@@ -108,6 +112,8 @@
 		  	"orderBy": vm.sortBy,
 		  	"pageNo": 1
 		}
+
+		
 
 		vm.mouseover = function(e,i) {
           vm.showDetail(i);
@@ -376,11 +382,48 @@
 				}
 			];
 
-			vm.moreFilter = {
-				province: "Hanoi",
-				district: "Dong Da"
+			vm.loaiNhaDatList = []
+			if(vm.loaiTin == 0){
+				vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatBan);	
+			}else{
+				vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatThue);
 			}
 			
+			
+
+			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
+			vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
+			vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
+			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+
+			vm.moreFilter = {
+				province: "Hanoi",
+				district: "Dong Da",
+				priceFrom: 0,
+				priceTo: 1000,
+				soPhongNgu: vm.soPhongNguList[0].value,
+				soPhongTam: vm.soPhongTamList[0].value,
+				soTang: vm.soTangList[0].value,
+				huongNha: vm.huongNhaList[0].value,
+				radiusInKm: vm.radiusInKmList[0].value,
+				loaiNhaDat: vm.loaiNhaDatList[0].value
+			}		
+			
+			
+
+			vm.filter = function(){
+				vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
+				vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
+				vm.searchData.soTangGREATER=vm.moreFilter.soTang;
+				vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
+				vm.searchData.soPhongTamGREATER=vm.moreFilter.soPhongTam;
+				vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
+				$("a[data-action='more']").click();
+				//$('filter').trigger("click");
+				vm.searchPage(1);
+			}
+
 
 
 			$scope.options = {scrollwheel: false,labelContent: 'gia'};

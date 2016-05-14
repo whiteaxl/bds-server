@@ -221,6 +221,20 @@ danhMuc.getDanhMucKeys = function (hashDanhMuc) {
     return result;
 }
 
+danhMuc.getNameValueArray = function(hashDanhMuc){
+    var result = [];
+    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
+    for (var k in hashDanhMuc) {
+        result.push(
+            {
+                value: k,
+                lable: hashDanhMuc[k]
+            }
+        )
+    }
+    return result;
+}
+
 danhMuc.getDanhMucValues = function (hashDanhMuc) {
     var result = [];
     for (var k in hashDanhMuc) {

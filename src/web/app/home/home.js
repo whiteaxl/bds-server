@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   window.initData = {};
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages'])
   .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
