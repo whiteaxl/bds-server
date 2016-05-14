@@ -86,10 +86,10 @@ danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 2
 
 danhMuc.convertDienTichStepValueToNameValueArray= function(){
     var result = [];
-    for(var i =0; i<danhMuc.dienTichStepValues.length;i++){
+    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
         result.push({
             value: danhMuc.dienTichStepValues[i],
-            lable: danhMuc.dienTichStepValues[i] + "m2",
+            lable: danhMuc.dienTichStepValues[i] + " m2",
             position: i
         });
     }

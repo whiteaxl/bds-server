@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c527fc44afd253b349c6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bb6040561e049f9a7ab8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -16725,10 +16725,10 @@
 
 	danhMuc.convertDienTichStepValueToNameValueArray= function(){
 	    var result = [];
-	    for(var i =0; i<danhMuc.dienTichStepValues.length;i++){
+	    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
 	        result.push({
 	            value: danhMuc.dienTichStepValues[i],
-	            lable: danhMuc.dienTichStepValues[i] + "m2",
+	            lable: danhMuc.dienTichStepValues[i] + " m2",
 	            position: i
 	        });
 	    }
