@@ -2,6 +2,7 @@
 
 var cheerio = require('cheerio');
 var striptags = require('striptags');
+var danhMuc = require('./danhMuc');
 var util = {};
 
 util.locDau = function(str) {
@@ -58,9 +59,11 @@ util.getDienTichDisplay = function(val) {
 
 util.replaceBrHtml = function(string_to_replace) {
     return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg,"\n\r");
+    if (!val) {
+        return "Không rõ";
+    }
 
 };
-
 
 
 util.replaceBrToDowntoLine = function(inputString) {
@@ -88,3 +91,6 @@ util.popField = function (obj, field){
 
 
 module.exports = util;
+
+if (typeof window !== 'undefined')
+   window.RewayUtil = util;

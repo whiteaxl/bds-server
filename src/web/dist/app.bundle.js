@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5b298e020385951b1ac1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fa5a59c02d9aca09577f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1019,7 +1019,7 @@
 	          }
 	        },
 	        data: {
-	            bodyClass: "page-search",
+	            //bodyClass: "page-search",
 	            //abc: title
 	        } 
 	        // ,
@@ -1336,10 +1336,13 @@
 			vm.showList = function(){
 				vm.viewTemplateUrl = "list.tpl.html"
 				vm.viewMode = "list";
+				$scope.bodyClass = "page-list";
+
 			}
 			vm.showMap = function(){
 				vm.viewTemplateUrl = "search.tpl.html"
 				vm.viewMode = "map";
+				$scope.bodyClass = "page-search";
 			}
 
 			if(!$scope.placeId)
@@ -1425,7 +1428,7 @@
 	          vm.showDetail(i);
 	        };
 	        vm.mouseout = function() {
-	          vm.hideDetail();
+	          //vm.hideDetail();
 	        };
 	        vm.click = function(e,i) {
 	        	console.log('click');
@@ -1447,8 +1450,13 @@
 
 			$scope.$on('$viewContentLoaded', function(){
 				window.DesignCommon.adjustPage();
-				if($state.current.data)
-					$scope.bodyClass = $state.current.data.bodyClass
+				if($state.current.data){
+					//$scope.bodyClass = $state.current.data.bodyClass;
+					$scope.bodyClass = "page-search";
+					if($state.current.viewMode=="list"){
+						$scope.bodyClass = "page-list";
+					} 
+				}
 			});
 			vm.selectPlaceCallback = function(place){
 				$scope.searchPlaceSelected = place;
@@ -1461,7 +1469,7 @@
 	    		}
 	    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
 	    		
-	    		$scope.markers.push(marker);
+	    		/*$scope.markers.push(marker);
 	    		$scope.$apply();
 
 	    		if(place.geometry.viewport){
@@ -1471,9 +1479,11 @@
 
 	    		//$scope.map.fit = false;
 	    		
-	    		vm.map.setCenter(place.geometry.location);
+	    		vm.map.setCenter(place.geometry.location);*/
 	    		// $scope.$apply();
 	    		//$scope.map.refresh();
+	    		//vm.goToPageSearch();
+	    		vm.searchPage(1);
 			}
 			vm.goToPageSearch = function(){
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
@@ -1500,6 +1510,11 @@
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
 			    		result[i].index = i;
+			    		if(ads.huongNha){
+			    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+			    		}else{
+			    			ads.huongNha = "";	
+			    		}
 			    		if(result[i].place){
 			    			if(result[i].place.geo){
 				    			result[i].map={
@@ -1533,8 +1548,12 @@
 			    		if(res.data.list[i].map)
 			    			$scope.markers.push(res.data.list[i].map.marker);
 					}
-					//$scope.map.fit = true;
-					//$scope.map.zoom = 10;
+					/*if(vm.ads_list.length==0){
+						vm.zoomMode = "false";
+					}else{
+						vm.zoomMode = "auto";
+					}*/
+
 					vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
 					vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
 					vm.currentPage = vm.searchData.pageNo;
@@ -1545,26 +1564,7 @@
 			}
 
 			vm.search = function(callback){
-				//alert(param);
-				/*var googlePlace = $scope.searchPlaceSelected;
-				if($scope.searchPlaceSelected.geometry.viewport){
-	          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-	          		data.geoBox = [googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getNorthEast().lng(),googlePlace.geometry.viewport.getNorthEast().lat()]
-	          		data.radiusInKm = undefined;
-	        	} else{
-	          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-	          		//data.radiusInKm = "10";
-	          		var place = {
-	          			placeId: googlePlace.place_id,
-	 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	       				radiusInKm :  10,
-	 				    currentLocation: undefined
-	 			  	}
-	 			  	data.place = place;
-	          		data.geoBox = undefined;
-	        	}*/
-
-	        	HouseService.countAds(vm.searchData).then(function(res){
+				HouseService.countAds(vm.searchData).then(function(res){
 	        		vm.totalResultCounts = res.data.countResult;
 	        		if(vm.totalResultCounts>0){
 	        			vm.currentPage = 1;
@@ -1611,18 +1611,8 @@
 								if (status === google.maps.places.PlacesServiceStatus.OK) {
 									$scope.searchPlaceSelected = place;
 					        		//var map = $scope.map.control.getGMap();
-					        		var current_bounds = map.getBounds();
-					        		//$scope.map.center =  
-					        		$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-					        		if(place.geometry.viewport){
-					        			map.fitBounds(place.geometry.viewport);	
-					        			//$scope.map
-					        		} else if( !current_bounds.contains( place.geometry.location ) ){
-					        			//var new_bounds = current_bounds.extend(place.geometry.location);
-					        			//map.fitBounds(new_bounds);
-					        			//$digest();
-					        		}
-					        		$scope.markers = [
+					        		
+					        		/*$scope.markers = [
 										{
 															id: 0,
 															coords: {
@@ -1631,7 +1621,7 @@
 															},
 															content: 'you are here'
 														}
-									];
+									];*/
 									var googlePlace = $scope.searchPlaceSelected;
 									if($scope.searchPlaceSelected.geometry.viewport){
 						          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
@@ -1649,9 +1639,21 @@
 						 			  	vm.searchData.place = placeData;
 						          		vm.searchData.geoBox = undefined;
 						        	}
-						        	vm.map.setCenter(place.geometry.location);
+						        	
 									vm.search(function(){
 										vm.zoomMode = "auto";
+										var current_bounds = map.getBounds();
+						        		//$scope.map.center =  
+						        		vm.map.setCenter(place.geometry.location);
+						        		//$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+						        		if(place.geometry.viewport){
+						        			map.fitBounds(place.geometry.viewport);	
+						        			//$scope.map
+						        		} else if( !current_bounds.contains( place.geometry.location ) ){
+						        			//var new_bounds = current_bounds.extend(place.geometry.location);
+						        			//map.fitBounds(new_bounds);
+						        			//$digest();
+						        		}
 									});
 									
 									//vm.map.refresh();
@@ -1708,9 +1710,9 @@
 										content: 'you are here'
 									}
 				];*/
-				$scope.initData = window.initData;
-				$scope.hot_ads_cat = window.hot_ads_cat;
-				vm.ads_list = window.testData;
+				//$scope.initData = window.initData;
+				//$scope.hot_ads_cat = window.hot_ads_cat;
+				//vm.ads_list = window.testData;
 				$scope.bodyClass= "page-home";
 
 				if(vm.viewMode == "list"){

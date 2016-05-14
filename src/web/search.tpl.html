@@ -23,10 +23,15 @@
                                                 <div class="media" style="background-image: url({{mc.highlightAds.image.cover}});height: 100px;"></div>
                                             </div>
                                             <div class="col col-50">
+                                                <div class="price">{{mc.highlightAds.giaFmt}} {{mc.highlightAds.dienTichFmt}}</div>
+                                                <div class="info">{{mc.highlightAds.ten_loaiNhaDat}} {{mc.highlightAds.soTangFmt}} {{mc.highlightAds.soPhongNguFmt}}</div>
+                                                <div class="info"></div>
+                                                <div class="info">{{mc.highlightAds.huongNha}}</div>
+                                                <div class="info">{{mc.highlightAds.diaChi | limitTo: 20 }}
+                                                <span ng-if="mc.highlightAds.diaChi.length > 20">&hellip;</span>
+                                                </div>
                                                 
-                                                <div class="price">gia: {{mc.highlightAds.giaFmt}}</div>
-                                                <div class="info">dientich: {{mc.highlightAds.dientichFmt}}</div>
-                                                <div class="info">Căn hộ chung cư</div>
+
                                             </div>
                                     </div>
                                 </info-window>
@@ -80,7 +85,7 @@
                             <h2 class="head">Tổng số {{mc.totalResultCounts}} nhà</h2>
                             <div class="handle">
                                 <div class="filter">
-                                    <div class="label">Sắp xếpa: </div>
+                                    <div class="label">Sắp xếp: </div>
                                     <div class="option">
                                         <select class="select" ng-change="alert(1);mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                         </select>
@@ -99,8 +104,9 @@
                                             <span class="img" style="background-image: url({{ads.image.cover}})"></span>
                                             <span class="info"  >
                                                 <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
-                                                <span class="line">{{ads.soTangFmt}}</span>
-                                                <span class="line">{{ads.soPhongNguFmt}}</span>
+                                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                                <span class="line">{{ads.huongNha}}</span>
+                                                <span class="line">{{ads.place.diaChi}}</span>
                                             </span>
                                         </a>
                                         <h3>

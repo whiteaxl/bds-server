@@ -130,8 +130,11 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             ngayDangTin : ads.ngayDangTin,
             giaM2 : ads.giaM2,
             loaiNhaDat: ads.loaiNhaDat,
-            loaiTin: ads.loaiTin
+            loaiTin: ads.loaiTin,
+            huongNha: ads.huongNha
         };
+
+        
 
         if (tmp.chiTiet) {
             var idx = val.chiTiet.indexOf("Tìm kiếm theo từ khóa");

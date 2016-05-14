@@ -111,7 +111,7 @@
           }
         },
         data: {
-            bodyClass: "page-search",
+            //bodyClass: "page-search",
             //abc: title
         } 
         // ,

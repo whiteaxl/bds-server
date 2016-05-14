@@ -304,6 +304,13 @@ danhMuc.getRadiusInKmByIndex = function(index) {
     return danhMuc.RadiusInKmKey[index];
 }
 
+danhMuc.getHuongNhaDisplay = function(val){
+    if (!val) {
+        return "Không rõ";
+    }
+    return eval('danhMuc.HuongNha['+val + ']');
+}
+
 module.exports = danhMuc;
 
 if (typeof window !== 'undefined')
