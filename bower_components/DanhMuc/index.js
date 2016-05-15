@@ -131,6 +131,34 @@ danhMuc.LoaiNhaDatBanWeb = [
     { type: "0", name: "Tất cả" }
     ];
 
+danhMuc.LoaiNhaDatCanMuaWeb = [
+    { type: "1", name: "Mua căn hộ chung cư" },
+    { type: "2", name: "Mua nhà riêng" },
+    { type: "3", name: "Mua biệt thự, liền kề" },
+    { type: "4", name: "Mua nhà mặt phố" },
+    { type: "5", name: "Mua đất nền dự án" },
+    { type: "6", name: "Mua đất" },
+    { type: "7", name: "Mua trang trại, khu nghỉ dưỡng" },
+    { type: "8", name: "Bán trang trại, khu nghỉ dưỡng" },
+    { type: "9", name: "Mua kho, nhà xưởng" },
+    { type: "10", name: "Mua loại BĐS khác" },
+    { type: "11", name: "Tìm kiếm nâng cao" },
+    { type: "0", name: "Tất cả" }
+];
+
+danhMuc.LoaiNhaDatCanThueWeb = [
+    { type: "1", name: "Cần thuê căn hộ chung cư" },
+    { type: "2", name: "Cần thuê nhà riêng" },
+    { type: "3", name: "Cần thuê nhà mặt phố" },
+    { type: "4", name: "Cần thuê nhà trọ, phòng trọ" },
+    { type: "5", name: "Cần thuê văn phòng" },
+    { type: "6", name: "Cần thuê cửa hàng, ki ốt" },
+    { type: "7", name: "Cần thuê kho, nhà xưởng, đất" },
+    { type: "8", name: "Cần thuê loại BĐS khác" },
+    { type: "11", name: "Tìm kiếm nâng cao" },
+    { type: "0", name: "Tất cả" }
+];
+
 danhMuc.LoaiNhaDatThue = {
     1 : "Cho Thuê căn hộ chung cư",
     2 : "Cho Thuê nhà riêng",
