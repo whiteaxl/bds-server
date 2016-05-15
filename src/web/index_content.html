@@ -17,13 +17,13 @@
                         <nav class="nav-main">
                             <ul>
                                 <li>
-                                    <a ng-click="goToPageSearch('0','0')" title="">Bất động sản bán</a>
+                                    <a ng-click="goToPageSearch('0','0')" title="">BĐS bán</a>
                                     <ul>
                                         <li ng-repeat="item in loaiNhaDatBan"><a ng-click="goToPageSearch('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a ng-click="goToPageSearch('1','0')" title="">Bất động sản cho thuê</a>
+                                    <a ng-click="goToPageSearch('1','0')" title="">BĐS cho thuê</a>
                                     <ul>
                                         <li ng-repeat="item in loaiNhaDatThue"><a ng-click="goToPageSearch('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
