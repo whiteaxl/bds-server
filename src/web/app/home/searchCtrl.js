@@ -43,7 +43,7 @@
 			$scope.loaiNhaDat = 0;
 		vm.loaiTin = $scope.loaiTin;
 
-		init();
+		
 		console.log("placeId: " + $scope.placeId);
 		console.log("loaiTin: " + $scope.loaiTin);
 		console.log("loaiNhaDat: " + $scope.loaiNhaDat);
@@ -107,12 +107,14 @@
 		vm.searchData = {
 			"loaiTin": $scope.loaiTin,
 			"loaiNhaDat": $scope.loaiNhaDat, 
+			"loaiNhaDats": [],
 		  	"giaBETWEEN": [vm.price_min,vm.price_max],
 		  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
 		  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
 		  	"soTangGREATER": vm.soTangList[0].value,
 		  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 		  	"huongNha": vm.huongNhaList[0].value,
+		  	"huongNhas": [],
 		  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 		  	"limit": vm.pageSize,
 		  	"orderBy": vm.sortBy,
@@ -359,6 +361,7 @@
 				        });
 			
         });
+        init();
 
 		function init(){
 			
@@ -396,34 +399,71 @@
 			}
 			
 			
-
-			
-
 			vm.moreFilter = {
-				province: "Hanoi",
-				district: "Dong Da",
-				priceFrom: 0,
-				priceTo: 1000,
+				loaiNhaDat: vm.loaiNhaDatList.slice(),
+				huongNha: vm.huongNhaList.slice(),
 				soPhongNgu: vm.soPhongNguList[0].value,
 				soPhongTam: vm.soPhongTamList[0].value,
-				soTang: vm.soTangList[0].value,
-				huongNha: vm.huongNhaList[0].value,
-				radiusInKm: vm.radiusInKmList[0].value,
-				loaiNhaDat: vm.loaiNhaDatList[0].value
-			}		
-			
-			
+				soTang: vm.soTangList[0].value
+			}
+			vm.moreFilter.loaiNhaDat[0].selected = true;
+			vm.moreFilter.huongNha[0].selected = true;
+			vm.changeFilterLoaiNhaDat = function(k){
+				var newvalue = vm.moreFilter.loaiNhaDat[k].selected;
+				if(k==0){
+					if(newvalue==true){
+						for(var i =1; i< vm.moreFilter.loaiNhaDat.length;i++){
+							vm.moreFilter.loaiNhaDat[i].selected = false;
+						}
+					}
+				}else{
+					if(newvalue==true)
+						vm.moreFilter.loaiNhaDat[0].selected = false;	
+				}
+				
+			}
+			vm.changeFilterHuongNha = function(k){
+				var newvalue = vm.moreFilter.huongNha[k].selected;
+				if(k==0){
+					if(newvalue==true){
+						for(var i =1; i< vm.moreFilter.huongNha.length;i++){
+							vm.moreFilter.huongNha[i].selected = false;
+						}
+					}
+				}else{
+					if(newvalue==true)
+						vm.moreFilter.huongNha[0].selected = false;	
+				}
+			}
 
 			vm.filter = function(){
-				vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
+				// vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
 				vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
 				vm.searchData.soTangGREATER=vm.moreFilter.soTang;
-				vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
 				vm.searchData.soPhongTamGREATER=vm.moreFilter.soPhongTam;
-				vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
+				vm.searchData.loaiNhaDat = [];
+				vm.searchData.huongNha = [];
+				for(var i = 0; i< vm.moreFilter.loaiNhaDat.length;i++){
+					if(vm.moreFilter.loaiNhaDat[i].selected == true){
+						vm.searchData.loaiNhaDat.push(vm.moreFilter.loaiNhaDat[i].value);
+					}
+				}
+				for(var i = 0; i< vm.moreFilter.huongNha.length;i++){
+					if(vm.moreFilter.huongNha[i].selected == true){
+						vm.searchData.huongNha.push(vm.moreFilter.huongNha[i].value);
+					}
+				}
+				// vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
 				$("a[data-action='more']").click();
 				//$('filter').trigger("click");
-				vm.searchPage(1);
+				vm.search(function(){
+					vm.searchData.soPhongNguGREATER=undefined;
+					vm.searchData.soTangGREATER=undefined;
+					vm.searchData.soPhongNguGREATER=undefined;
+					vm.searchData.soPhongTamGREATER=undefined;
+					vm.searchData.huongNha=undefined;
+					vm.searchData.loaiNhaDat = vm.loaiNhaDatList[0].value;
+				});
 			}
 
 

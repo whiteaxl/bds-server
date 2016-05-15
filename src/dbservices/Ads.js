@@ -94,7 +94,28 @@ class AdsModel {
 
     buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;
-        sql = sql + ((loaiNhaDat && loaiNhaDat>0) ? " AND loaiNhaDat=" + loaiNhaDat : "");
+
+        
+        if(loaiNhaDat){
+            if(loaiNhaDat.constructor === Array && loaiNhaDat.length>0){
+                var condition = " and loaiNhaDat in [";
+                for(var i = 0; i<loaiNhaDat.length;i++){
+                    if(i==loaiNhaDat.length-1){
+                        condition = condition + loaiNhaDat[i] + "]";
+                    }else{
+                        condition = condition + loaiNhaDat[i] + ",";
+                    }
+                    if(loaiNhaDat[i] == 0){
+                        condition = "";
+                        break;
+                    }
+                }
+                sql = sql + condition;
+            }else{
+                sql = sql + ((loaiNhaDat && loaiNhaDat>0) ? " AND loaiNhaDat=" + loaiNhaDat : "");        
+            }
+        }
+        
 
         if (geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + geoBox[0] + " AND " + geoBox[2] + ")";
@@ -131,7 +152,27 @@ class AdsModel {
             sql = `${sql} AND (dienTich BETWEEN  ${dienTich[0]} AND ${dienTich[1]})`;
         }
 
-        sql = sql + ((huongNha && huongNha>0)  ? " AND huongNha=" + huongNha : "");
+        if(huongNha){
+            if(huongNha.constructor === Array && huongNha.length>0){
+                var condition = " and huongNha in [";
+                for(var i = 0; i<huongNha.length;i++){
+                    if(i==huongNha.length-1){
+                        condition = condition + huongNha[i] + "]";
+                    }else{
+                        condition = condition + huongNha[i] + ",";
+                    }
+                    if(huongNha[i] == 0){
+                        condition = "";
+                        break;
+                    }
+                }
+                sql = sql + condition;
+            }else{
+                sql = sql + ((huongNha && huongNha>0) ? " AND huongNha=" + huongNha : "");        
+            }
+        }
+
+        //sql = sql + ((huongNha && huongNha>0)  ? " AND huongNha=" + huongNha : "");
 
         if (orderBy) {
             sql = sql + " ORDER BY " + orderBy.orderByField + "  " + orderBy.orderByType;

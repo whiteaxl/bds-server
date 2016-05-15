@@ -20,8 +20,8 @@
                                         </div>
                                     </div>
                                     <div class="group">
-                                        <a href="" ng-click="mc.showList()" title="">List</a>
-                                        <a href="" ng-click="mc.showMap()" title="">Map</a>
+                                        <a href="" ng-click="mc.showList()" title="">Danh sách</a>
+                                        <a href="" ng-click="mc.showMap()" title="">Bản đồ</a>
                                     </div>
                                 </div>
                                 <div class="data">
@@ -108,16 +108,16 @@
                                 <div class="stats">{{mc.currentPageStart}} – {{mc.currentPageEnd}} của {{mc.totalResultCounts}} kết quả</div>
                             <ul>
                                 <li ng-if="mc.currentPage != 1" ng-click="mc.firstPage()">
-                                    <span>First</span>
+                                    <span>Trang đầu</span>
                                 </li>
                                 <li ng-if="mc.currentPage != 1" ng-click="mc.previousPage()">
-                                    <span>Previous</span>
+                                    <span>Trang trước</span>
                                 </li>
                                 <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.nextPage()">
-                                    <a href="" title="">Next</a>
+                                    <a href="" title="">Trang sau</a>
                                 </li>
                                 <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.lastPage()">
-                                    <a href="" title="">Last</a>
+                                    <a href="" title="">Trang cuối</a>
                                 </li>
                             </ul>
                             </div>

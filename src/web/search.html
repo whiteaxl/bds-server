@@ -100,8 +100,8 @@
                             <div class="col w-340">
                                 <form action="search.html" method="post">
                                     <div class="search">
-                                        <input type="text" placeholder="Search by neighborhood, city, zip or address" class="form-control" id="autocomplete"> </input>
-                                        <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text">Search</span></button>
+                                        <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" class="form-control" id="autocomplete"> </input>
+                                        <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text">Tìm kiếm</span></button>
 
                                         
                                     </div>
@@ -148,7 +148,7 @@
                             </div>
                             <div class="col w-120">
                                 <div class="handle">
-                                    <a href="#filter" data-toggle-text="Less Filters" data-action="more">More Filters</a>
+                                    <a href="#filter" data-toggle-text="Bộ lọc thu gọn" data-action="more">Bộ lọc nâng cao</a>
                                 </div>
                             </div>
                             <div class="col w-160">
@@ -172,62 +172,71 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-messages="mc.moreFilter.priceTo" style="color:maroon" role="alert">
-							    <div ng-message="required">You did not enter a field</div>
-							    <div ng-message="minlength">Your field is too short</div>
-							    <div ng-message="maxlength">Your field is too long</div>
-							</div>
+                            <div class="project" data-content="sale" style="display: block">
+                                <div class="row">
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="new_listings" value="new_listings"> Danh sách mới, Tuần trước</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="recently_reduced" value="recently_reduced"> Giá giảm, Tuần trước</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="new_construction" value="new_construction"> Nhà mới xây</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="fsbo" value="fsbo"> Chính chủ</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="resale" value="resale"> Bán lại</label>
+                                    </div>
+                                    <div class="col col-25">
+                                        <label><input type="checkbox" name="roreclosures" value="roreclosures"> Bị tịch thu</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="head">Loại bất động sản</div>
+                                <div class="row">
+                                    <div class="col col-25" ng-repeat="loaiNhaDat in mc.moreFilter.loaiNhaDat track by $index">
+                                        <label> <input  type="checkbox" ng-change="mc.changeFilterLoaiNhaDat($index);" value="{{loaiNhaDat.value}}" ng-model="loaiNhaDat.selected"> {{loaiNhaDat.lable}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="head">Hướng nhà</div>
+                                <div class="row">
+                                    <div class="col col-25" ng-repeat="huongNha in mc.moreFilter.huongNha track by $index">
+                                        <label> <input ng-change="mc.changeFilterHuongNha($index);"   type="checkbox" value="{{huongNha.value}}" ng-model="huongNha.selected"> {{huongNha.lable}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             <div class="project" data-content="sale" style="display: block">
                                 <div class="row">
                                     
-                                    <div class="col col-25">
-                                        <label>
-                                        	<select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[0]" title="Giá từ" 
-                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
-                                            </select>
-										</label>
-										<label> đến
-                                        	<select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[1]" title="Giá đến" 
-                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_to">
-                                            </select>
-										</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label>
-	                                       	<select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" 
-	                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
-	                                    	</select>
-										</label>
-										<label>đến
-                                        	<select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" 
-	                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
-	                                    	</select>
-										</label>
-                                    </div>
 
-
-
-                                    <div class="col col-25">
+                                    <!-- <div class="col col-25">
                                         <label>Loại BĐS <select class="select" data-select="true" ng-model="mc.searchData.loaiNhaDat" title="Loại BĐS" ng-options="loaiNhaDat.value as loaiNhaDat.lable for loaiNhaDat in mc.loaiNhaDatList">
                                         </select></label>
-                                    </div>
+                                    </div> -->
                                     <div class="col col-25">
-                                        <label>Số phòng ngủ <select class="select" data-select="true" ng-model="mc.searchData.soPhongNguGREATER" title="Số phòng ngủ" ng-options="soPhongNgu.value as soPhongNgu.lable for soPhongNgu in mc.soPhongNguList">
+                                        <label>Số phòng ngủ <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongNgu" title="Số phòng ngủ" ng-options="soPhongNgu.value as soPhongNgu.lable for soPhongNgu in mc.soPhongNguList">
                                         </select></label>
                                     </div>
                                     <div class="col col-25">
-                                        <label>Số phòng tắm <select class="select" data-select="true" ng-model="mc.searchData.soPhongTamGREATER" title="Số phòng tắm" ng-options="soPhongTam.value as soPhongTam.lable for soPhongTam in mc.soPhongTamList">
+                                        <label>Số phòng tắm <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongTam" title="Số phòng tắm" ng-options="soPhongTam.value as soPhongTam.lable for soPhongTam in mc.soPhongTamList">
                                         </select></label>
                                     </div>
                                     <div class="col col-25">
-                                        <label>Số tầng <select class="select" data-select="true" ng-model="mc.searchData.soTangGREATER" title="Số tầng" ng-options="soTang.value as soTang.lable for soTang in mc.soTangList">
+                                        <label>Số tầng <select class="select" data-select="true" ng-model="mc.moreFilter.soTang" title="Số tầng" ng-options="soTang.value as soTang.lable for soTang in mc.soTangList">
                                         </select></label>
                                     </div>
-                                    <div class="col col-25">
+                                    <!-- <div class="col col-25">
                                         <label>Hướng Nhà <select class="select" data-select="true" ng-model="mc.searchData.huongNha" title="Hướng Nhà" ng-options="huongNha.value as huongNha.lable for huongNha in mc.huongNhaList">
                                         </select></label>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
