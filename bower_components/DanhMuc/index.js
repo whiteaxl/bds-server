@@ -104,24 +104,58 @@ danhMuc.LoaiTin = {
 };
 
 danhMuc.LoaiNhaDatBan = {
-    0 : BAT_KY,
     1  : "Bán căn hộ chung cư",
     2  : "Bán nhà riêng",
-    3  : "Bán nhà mặt phố", 
-    4  : "Bán biệt thự, liền kề", 
-    5  : "Bán đất", 
-    99 : "Bán các bds khác"
+    3  : "Bán nhà mặt phố",
+    4  : "Bán biệt thự, liền kề",
+    6  : "Bán Shophouse",
+    7  : "Bán đất nền dự án",
+    5  : "Bán đất",
+    8  : "Bán trang trại, khu nghỉ dưỡng",
+    99 : "Bán các BDS khác",
+    10 : "Tìm kiếm nâng cao",
+    0 : "Tất cả"
 }
 
+danhMuc.LoaiNhaDatBanWeb = [
+    { type: "1", name: "Bán căn hộ chung cư" },
+    { type: "2", name: "Bán nhà riêng" },
+    { type: "3", name: "Bán nhà mặt phố" },
+    { type: "4", name: "Bán biệt thự, liền kề" },
+    { type: "6", name: "Bán Shophouse" },
+    { type: "7", name: "Bán đất nền dự án" },
+    { type: "5", name: "Bán đất" },
+    { type: "8", name: "Bán trang trại, khu nghỉ dưỡng" },
+    { type: "99", name: "Bán các BDS khác" },
+    { type: "10", name: "Tìm kiếm nâng cao" },
+    { type: "0", name: "Tất cả" }
+    ];
+
 danhMuc.LoaiNhaDatThue = {
-    0 : BAT_KY,
     1 : "Cho Thuê căn hộ chung cư",
     2 : "Cho Thuê nhà riêng",
-    3 : "Cho Thuê nhà mặt phố", 
-    4 : "Cho Thuê văn phòng", 
+    3 : "Cho Thuê nhà mặt phố",
+    6 : "Cho thuê nhà trọ, phòng trọ",
+    4 : "Cho Thuê văn phòng",
     5 : "Cho Thuê cửa hàng, ki-ốt",
-    99: "Cho Thuê các bds khác"
+    7 : "Cho thuê kho, nhà xưởng, đất",
+    99: "Cho Thuê các BDS khác",
+    8 : "Tìm kiếm nâng cao",
+    0 : "Tất cả"
 }
+
+danhMuc.LoaiNhaDatThueWeb = [
+    { type: "1", name: "Cho Thuê căn hộ chung cư" },
+    { type: "2", name: "Cho Thuê nhà riêng" },
+    { type: "3", name: "Cho Thuê nhà mặt phố" },
+    { type: "6", name: "Cho thuê nhà trọ, phòng trọ" },
+    { type: "4", name: "Cho Thuê văn phòng" },
+    { type: "5", name: "Cho Thuê cửa hàng, ki-ốt" },
+    { type: "7", name: "Cho thuê kho, nhà xưởng, đất" },
+    { type: "99", name: "Cho Thuê các BDS khác" },
+    { type: "8", name: "Tìm kiếm nâng cao" },
+    { type: "0", name: "Tất cả" }
+];
 
 danhMuc.SoPhongNgu = {
     0: BAT_KY,
@@ -208,6 +242,8 @@ danhMuc.getDanhMucKeys = function (hashDanhMuc) {
 }
 
 danhMuc.getNameValueArray = function(hashDanhMuc){
+    console.log("getNameValueArray");
+    console.log(hashDanhMuc);
     var result = [];
     //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
     for (var k in hashDanhMuc) {
@@ -218,6 +254,7 @@ danhMuc.getNameValueArray = function(hashDanhMuc){
             }
         )
     }
+    console.log(result);
     return result;
 }
 

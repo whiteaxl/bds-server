@@ -1,7 +1,7 @@
 {
   "name": "DanhMuc",
   "main": "index.js",
-  "_source": "D:\\Hungdq\\Working\\Gipxy\\bds-server\\src\\lib\\DanhMuc.js",
+  "_source": "D:\\working\\reway\\bds\\bds-server\\src\\lib\\DanhMuc.js",
   "_target": "*",
   "_originalSource": "./src/lib/DanhMuc.js",
   "_direct": true
