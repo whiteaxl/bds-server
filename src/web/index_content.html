@@ -19,25 +19,25 @@
                                 <li>
                                     <a ng-click="goToPageSearch('0','0')" title="">Bất động sản bán</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatBan"><a ng-click="goToPageSearch('0',item.type)" ng-model="msgType" data-value="{{::item.type}}">{{::item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatBan"><a ng-click="goToPageSearch('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a ng-click="goToPageSearch('1','0')" title="">Bất động sản cho thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatThue"><a ng-click="goToPageSearch('1', item.type)" ng-model="msgType" data-value="{{::item.type}}">{{::item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatThue"><a ng-click="goToPageSearch('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a title="">Cần mua</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatCanMua"><a ng-click="" ng-model="msgType" data-value="{{::item.type}}">{{::item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatCanMua"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="" title="">Cần thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatCanThue"><a ng-click="" ng-model="msgType" data-value="{{::item.type}}">{{::item.name}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatCanThue"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -210,7 +210,7 @@
                         <div class="col col-50">
                             <div class="block-02">
                                 <div ng-repeat="cat in hot_ads_cat" data-scroll="true" class="title">
-                                    <h2>{{::cat.name}}</h2>
+                                    <h2>{{::cat.lable}}</h2>
                                     <p>{{::cat.location}}</p>
                                     <div class="row">
                                         <div ng-repeat="ads in cat.list" ng-class-odd="'col-40'" ng-class-even="'col-60'" class="col ">

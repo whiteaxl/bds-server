@@ -118,45 +118,45 @@ danhMuc.LoaiNhaDatBan = {
 }
 
 danhMuc.LoaiNhaDatBanWeb = [
-    { type: "1", name: "Bán căn hộ chung cư" },
-    { type: "2", name: "Bán nhà riêng" },
-    { type: "3", name: "Bán nhà mặt phố" },
-    { type: "4", name: "Bán biệt thự, liền kề" },
-    { type: "6", name: "Bán Shophouse" },
-    { type: "7", name: "Bán đất nền dự án" },
-    { type: "5", name: "Bán đất" },
-    { type: "8", name: "Bán trang trại, khu nghỉ dưỡng" },
-    { type: "99", name: "Bán các BDS khác" },
-    { type: "10", name: "Tìm kiếm nâng cao" },
-    { type: "0", name: "Tất cả" }
+    { value: "1", lable: "Bán căn hộ chung cư" },
+    { value: "2", lable: "Bán nhà riêng" },
+    { value: "3", lable: "Bán nhà mặt phố" },
+    { value: "4", lable: "Bán biệt thự, liền kề" },
+    { value: "6", lable: "Bán Shophouse" },
+    { value: "7", lable: "Bán đất nền dự án" },
+    { value: "5", lable: "Bán đất" },
+    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+    { value: "99", lable: "Bán các BDS khác" },
+    { value: "10", lable: "Tìm kiếm nâng cao" },
+    { value: "0", lable: "Tất cả" }
     ];
 
 danhMuc.LoaiNhaDatCanMuaWeb = [
-    { type: "1", name: "Mua căn hộ chung cư" },
-    { type: "2", name: "Mua nhà riêng" },
-    { type: "3", name: "Mua biệt thự, liền kề" },
-    { type: "4", name: "Mua nhà mặt phố" },
-    { type: "5", name: "Mua đất nền dự án" },
-    { type: "6", name: "Mua đất" },
-    { type: "7", name: "Mua trang trại, khu nghỉ dưỡng" },
-    { type: "8", name: "Bán trang trại, khu nghỉ dưỡng" },
-    { type: "9", name: "Mua kho, nhà xưởng" },
-    { type: "10", name: "Mua loại BĐS khác" },
-    { type: "11", name: "Tìm kiếm nâng cao" },
-    { type: "0", name: "Tất cả" }
+    { value: "1", lable: "Mua căn hộ chung cư" },
+    { value: "2", lable: "Mua nhà riêng" },
+    { value: "3", lable: "Mua biệt thự, liền kề" },
+    { value: "4", lable: "Mua nhà mặt phố" },
+    { value: "5", lable: "Mua đất nền dự án" },
+    { value: "6", lable: "Mua đất" },
+    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
+    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+    { value: "9", lable: "Mua kho, nhà xưởng" },
+    { value: "10", lable: "Mua loại BĐS khác" },
+    { value: "11", lable: "Tìm kiếm nâng cao" },
+    { value: "0", lable: "Tất cả" }
 ];
 
 danhMuc.LoaiNhaDatCanThueWeb = [
-    { type: "1", name: "Cần thuê căn hộ chung cư" },
-    { type: "2", name: "Cần thuê nhà riêng" },
-    { type: "3", name: "Cần thuê nhà mặt phố" },
-    { type: "4", name: "Cần thuê nhà trọ, phòng trọ" },
-    { type: "5", name: "Cần thuê văn phòng" },
-    { type: "6", name: "Cần thuê cửa hàng, ki ốt" },
-    { type: "7", name: "Cần thuê kho, nhà xưởng, đất" },
-    { type: "8", name: "Cần thuê loại BĐS khác" },
-    { type: "11", name: "Tìm kiếm nâng cao" },
-    { type: "0", name: "Tất cả" }
+    { value: "1", lable: "Cần thuê căn hộ chung cư" },
+    { value: "2", lable: "Cần thuê nhà riêng" },
+    { value: "3", lable: "Cần thuê nhà mặt phố" },
+    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
+    { value: "5", lable: "Cần thuê văn phòng" },
+    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
+    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
+    { value: "8", lable: "Cần thuê loại BĐS khác" },
+    { value: "11", lable: "Tìm kiếm nâng cao" },
+    { value: "0", lable: "Tất cả" }
 ];
 
 danhMuc.LoaiNhaDatThue = {
@@ -173,16 +173,16 @@ danhMuc.LoaiNhaDatThue = {
 }
 
 danhMuc.LoaiNhaDatThueWeb = [
-    { type: "1", name: "Cho Thuê căn hộ chung cư" },
-    { type: "2", name: "Cho Thuê nhà riêng" },
-    { type: "3", name: "Cho Thuê nhà mặt phố" },
-    { type: "6", name: "Cho thuê nhà trọ, phòng trọ" },
-    { type: "4", name: "Cho Thuê văn phòng" },
-    { type: "5", name: "Cho Thuê cửa hàng, ki-ốt" },
-    { type: "7", name: "Cho thuê kho, nhà xưởng, đất" },
-    { type: "99", name: "Cho Thuê các BDS khác" },
-    { type: "8", name: "Tìm kiếm nâng cao" },
-    { type: "0", name: "Tất cả" }
+    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
+    { value: "2", lable: "Cho Thuê nhà riêng" },
+    { value: "3", lable: "Cho Thuê nhà mặt phố" },
+    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
+    { value: "4", lable: "Cho Thuê văn phòng" },
+    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
+    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
+    { value: "99", lable: "Cho Thuê các BDS khác" },
+    { value: "8", lable: "Tìm kiếm nâng cao" },
+    { value: "0", lable: "Tất cả" }
 ];
 
 danhMuc.SoPhongNgu = {
