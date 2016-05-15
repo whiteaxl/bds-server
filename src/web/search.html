@@ -12,13 +12,13 @@
                         <nav class="nav-main">
                             <ul>
                                 <li>
-                                    <a ng-click="mc.goToPageSearchMenu('0','0')" title="">Bất động sản bán</a>
+                                    <a ng-click="mc.goToPageSearchMenu('0','0')" title="">BĐS bán</a>
                                     <ul>
                                         <li ng-repeat="item in mc.loaiNhaDatBanMenu"><a ng-click="mc.goToPageSearchMenu('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a ng-click="mc.goToPageSearchMenu('1','0')" title="">Bất động sản cho thuê</a>
+                                    <a ng-click="mc.goToPageSearchMenu('1','0')" title="">BĐS cho thuê</a>
                                     <ul>
                                         <li ng-repeat="item in mc.loaiNhaDatThueMenu"><a ng-click="mc.goToPageSearchMenu('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
