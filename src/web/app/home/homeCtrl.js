@@ -60,8 +60,9 @@
 		function init(){
 			//nhannc
 			$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
-
 			$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+			$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+			$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
 
 			NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};

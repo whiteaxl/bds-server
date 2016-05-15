@@ -53,19 +53,8 @@
 
 /******/ 	
 /******/ 	
-/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
-/******/ 	var canDefineProperty = false;
-/******/ 	try {
-/******/ 		Object.defineProperty({}, "x", {
-/******/ 			get: function() {}
-/******/ 		});
-/******/ 		canDefineProperty = true;
-/******/ 	} catch(x) {
-/******/ 		// IE will fail on defineProperty
-/******/ 	}
-/******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "853d7a9c1269d4a1a604"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "61c17757ba25f787517c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -88,7 +77,7 @@
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(canDefineProperty) {
+/******/ 				if(Object.defineProperty) {
 /******/ 					Object.defineProperty(fn, name, (function(name) {
 /******/ 						return {
 /******/ 							configurable: true,
@@ -131,7 +120,7 @@
 /******/ 				}
 /******/ 			});
 /******/ 		}
-/******/ 		if(canDefineProperty) {
+/******/ 		if(Object.defineProperty) {
 /******/ 			Object.defineProperty(fn, "e", {
 /******/ 				enumerable: true,
 /******/ 				value: ensure
@@ -1078,19 +1067,11 @@
 			init();
 			initHotAds();
 			//alert("placeSearchId: " + $scope.placeSearchId);
-			$scope.goToPageSearch = function(msgType){
-				//alert("msgType: " + msgType);
-				if(msgType){
-					console.log("msgType: " + msgType);
-					if(msgType.length >= 2){
-						$scope.loaiTin = msgType.substring(0,1);
-						$scope.loaiNhaDat = msgType.substring(1);
-						if($scope.loaiNhaDat == '0')
-							$scope.loaiNhaDat = null;
-					} else{
-						$scope.loaiTin = msgType;
-					}
-				}
+			$scope.goToPageSearch = function(loaiTin, loaiBds){
+				$scope.loaiTin = loaiTin;
+				$scope.loaiNhaDat = loaiBds;
+				if($scope.loaiNhaDat == '0')
+					$scope.loaiNhaDat = null;
 
 				console.log("$scope.loaiTin: " + $scope.loaiTin);
 				console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
@@ -1135,27 +1116,10 @@
 
 			function init(){
 				//nhannc
-				$scope.loaiNhaDatBan = [
-					{ type: "00", name: "Tất cả" },
-					{ type: "01", name: "Căn hộ chung cư" },
-					{ type: "02", name: "Nhà riêng" },
-					{ type: "03", name: "Nhà mặt phố" },
-					{ type: "04", name: "Biệt thự, liền kề" },
-					{ type: "05", name: "Nhà đất" },
-					{ type: "099", name: "Các BDS khác" },
-					{ type: "010", name: "Tìm kiếm nâng cao" }
-				];
-
-				$scope.loaiNhaDatThue = [
-					{ type: "10", name: "Tất cả" },
-					{ type: "11", name: "Căn hộ chung cư" },
-					{ type: "12", name: "Nhà riêng" },
-					{ type: "13", name: "Nhà mặt phố" },
-					{ type: "14", name: "Văn phòng" },
-					{ type: "15", name: "Cửa hàng, ki-ốt" },
-					{ type: "199", name: "Các BDS khác" },
-					{ type: "110", name: "Tìm kiếm nâng cao" }
-				];
+				$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
+				$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+				$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+				$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
 
 				NgMap.getMap().then(function(map){
 		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
