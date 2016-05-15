@@ -153,7 +153,7 @@
 						resultBelow.push(res.data.list[i].default);
 					}
 					$scope.hot_ads_cat.push({
-						name: "nhà dưới mức giá 800.000.000 VND",
+						name: "Nhà dưới mức giá 800 triệu",
 						location: "Hà Nội",
 						list: resultBelow
 					})
