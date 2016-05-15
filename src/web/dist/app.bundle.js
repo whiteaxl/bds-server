@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5dec5fc988cff529c4c7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d5b6409e2e440172aff9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1298,6 +1298,12 @@
 			vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
 			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
 			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+			//use for menu
+			vm.loaiNhaDatBanMenu = window.RewayListValue.LoaiNhaDatBanWeb;
+			vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
+			vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+			vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
+
 			$scope.center = "Hanoi Vietnam";
 			$scope.placeId = $state.params.place;
 			$scope.loaiTin = $state.params.loaiTin;
@@ -1477,6 +1483,12 @@
 			vm.goToPageSearch = function(){
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 				//vm.search();
+			}
+
+			vm.goToPageSearchMenu = function(loaiTin, loaiNhaDat){
+				vm.searchData.loaiTin = loaiTin;
+				vm.searchData.loaiNhaDat = loaiNhaDat;
+				vm.search();
 			}
 	  		
 			vm.firstPage = function(callback){
