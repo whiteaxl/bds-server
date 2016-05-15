@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "853d7a9c1269d4a1a604"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d742311d701b66dcd1ac"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -16743,24 +16743,86 @@
 	};
 
 	danhMuc.LoaiNhaDatBan = {
-	    0 : BAT_KY,
 	    1  : "Bán căn hộ chung cư",
 	    2  : "Bán nhà riêng",
-	    3  : "Bán nhà mặt phố", 
-	    4  : "Bán biệt thự, liền kề", 
-	    5  : "Bán đất", 
-	    99 : "Bán các bds khác"
+	    3  : "Bán nhà mặt phố",
+	    4  : "Bán biệt thự, liền kề",
+	    6  : "Bán Shophouse",
+	    7  : "Bán đất nền dự án",
+	    5  : "Bán đất",
+	    8  : "Bán trang trại, khu nghỉ dưỡng",
+	    99 : "Bán các BDS khác",
+	    10 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
 	}
 
+	danhMuc.LoaiNhaDatBanWeb = [
+	    { value: "1", lable: "Bán căn hộ chung cư" },
+	    { value: "2", lable: "Bán nhà riêng" },
+	    { value: "3", lable: "Bán nhà mặt phố" },
+	    { value: "4", lable: "Bán biệt thự, liền kề" },
+	    { value: "6", lable: "Bán Shophouse" },
+	    { value: "7", lable: "Bán đất nền dự án" },
+	    { value: "5", lable: "Bán đất" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "99", lable: "Bán các BDS khác" },
+	    { value: "10", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	    ];
+
+	danhMuc.LoaiNhaDatCanMuaWeb = [
+	    { value: "1", lable: "Mua căn hộ chung cư" },
+	    { value: "2", lable: "Mua nhà riêng" },
+	    { value: "3", lable: "Mua biệt thự, liền kề" },
+	    { value: "4", lable: "Mua nhà mặt phố" },
+	    { value: "5", lable: "Mua đất nền dự án" },
+	    { value: "6", lable: "Mua đất" },
+	    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "9", lable: "Mua kho, nhà xưởng" },
+	    { value: "10", lable: "Mua loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
+	danhMuc.LoaiNhaDatCanThueWeb = [
+	    { value: "1", lable: "Cần thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cần thuê nhà riêng" },
+	    { value: "3", lable: "Cần thuê nhà mặt phố" },
+	    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
+	    { value: "5", lable: "Cần thuê văn phòng" },
+	    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
+	    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
+	    { value: "8", lable: "Cần thuê loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
 	danhMuc.LoaiNhaDatThue = {
-	    0 : BAT_KY,
 	    1 : "Cho Thuê căn hộ chung cư",
 	    2 : "Cho Thuê nhà riêng",
-	    3 : "Cho Thuê nhà mặt phố", 
-	    4 : "Cho Thuê văn phòng", 
+	    3 : "Cho Thuê nhà mặt phố",
+	    6 : "Cho thuê nhà trọ, phòng trọ",
+	    4 : "Cho Thuê văn phòng",
 	    5 : "Cho Thuê cửa hàng, ki-ốt",
-	    99: "Cho Thuê các bds khác"
+	    7 : "Cho thuê kho, nhà xưởng, đất",
+	    99: "Cho Thuê các BDS khác",
+	    8 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
 	}
+
+	danhMuc.LoaiNhaDatThueWeb = [
+	    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cho Thuê nhà riêng" },
+	    { value: "3", lable: "Cho Thuê nhà mặt phố" },
+	    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
+	    { value: "4", lable: "Cho Thuê văn phòng" },
+	    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
+	    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
+	    { value: "99", lable: "Cho Thuê các BDS khác" },
+	    { value: "8", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
 
 	danhMuc.SoPhongNgu = {
 	    0: BAT_KY,
@@ -16847,6 +16909,8 @@
 	}
 
 	danhMuc.getNameValueArray = function(hashDanhMuc){
+	    console.log("getNameValueArray");
+	    console.log(hashDanhMuc);
 	    var result = [];
 	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
 	    for (var k in hashDanhMuc) {
@@ -16857,6 +16921,7 @@
 	            }
 	        )
 	    }
+	    console.log(result);
 	    return result;
 	}
 

@@ -10,19 +10,13 @@
 		init();
 		initHotAds();
 		//alert("placeSearchId: " + $scope.placeSearchId);
-		$scope.goToPageSearch = function(msgType){
-			//alert("msgType: " + msgType);
-			if(msgType){
-				console.log("msgType: " + msgType);
-				if(msgType.length >= 2){
-					$scope.loaiTin = msgType.substring(0,1);
-					$scope.loaiNhaDat = msgType.substring(1);
-					if($scope.loaiNhaDat == '0')
-						$scope.loaiNhaDat = null;
-				} else{
-					$scope.loaiTin = msgType;
-				}
-			}
+		$scope.goToPageSearch = function(loaiTin, loaiBds){
+			if(loaiTin)
+				$scope.loaiTin = loaiTin;
+			if(loaiBds)
+				$scope.loaiNhaDat = loaiBds;
+			if($scope.loaiNhaDat == '0')
+				$scope.loaiNhaDat = null;
 
 			console.log("$scope.loaiTin: " + $scope.loaiTin);
 			console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
@@ -67,27 +61,10 @@
 
 		function init(){
 			//nhannc
-			$scope.loaiNhaDatBan = [
-				{ type: "00", name: "Tất cả" },
-				{ type: "01", name: "Căn hộ chung cư" },
-				{ type: "02", name: "Nhà riêng" },
-				{ type: "03", name: "Nhà mặt phố" },
-				{ type: "04", name: "Biệt thự, liền kề" },
-				{ type: "05", name: "Nhà đất" },
-				{ type: "099", name: "Các BDS khác" },
-				{ type: "010", name: "Tìm kiếm nâng cao" }
-			];
-
-			$scope.loaiNhaDatThue = [
-				{ type: "10", name: "Tất cả" },
-				{ type: "11", name: "Căn hộ chung cư" },
-				{ type: "12", name: "Nhà riêng" },
-				{ type: "13", name: "Nhà mặt phố" },
-				{ type: "14", name: "Văn phòng" },
-				{ type: "15", name: "Cửa hàng, ki-ốt" },
-				{ type: "199", name: "Các BDS khác" },
-				{ type: "110", name: "Tìm kiếm nâng cao" }
-			];
+			$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
+			$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+			$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+			$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
 
 			NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
@@ -166,6 +143,9 @@
 				"gia": 800,
 				"limit": 4
 			};
+
+			$scope.hot_ads_cat = [];
+
 			HouseService.findBelowPriceAds(data).then(function(res){
 				var resultBelow = [];
 				if(res.data.list){
@@ -179,6 +159,7 @@
 					})
 				}
 				console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+				console.log(resultBelow);
 			});
 
 			var data = {
@@ -186,8 +167,6 @@
 				"limit": 4
 			};
 			console.log("getRecentBds + data: " + data);
-			$scope.hot_ads_cat = [];
-
 			HouseService.findRencentAds(data).then(function(res){
 				var result = [];
 				if(res.data.list){
@@ -201,6 +180,7 @@
 					})
 				}
 				console.log("HouseService.findRencentAds: " + result.length);
+				console.log(result);
 			});
 
 		}
