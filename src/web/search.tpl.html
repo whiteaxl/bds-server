@@ -87,7 +87,7 @@
                                 <div class="filter">
                                     <div class="label">Sắp xếp: </div>
                                     <div class="option">
-                                        <select class="select" ng-change="alert(1);mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
+                                        <select class="select" ng-change="mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.searchData.orderBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                         </select>
                                     </div>
                                 </div>
