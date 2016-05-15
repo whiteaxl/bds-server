@@ -2,97 +2,134 @@
     <div class="wrapper" id="wrapper">
         <div class="main" id="main">
             <header class="header">
-                <div class="header-top">
-                    <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
-                    <h1 class="logo">
-                        <a href="index.html" title="Trulia">
-                            <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
-                        </a>
-                    </h1>
-                    <nav class="nav-main">
-                        <ul>
-                            <li>
-                                <a href="" title="">Bất động sản bán</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà đất</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Chung cư</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">BDS bán gần đây</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Bất động sản cho thuê</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà ở</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Phòng trọ</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Văn phòng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Cửa hàng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tham khảo giá nhà cho thuê</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Môn giới</a>
-                            </li>
-                            <li>
-                                <a href="" title="">Mobile</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="nav-user">
-                        <ul>
-                            <li>
-                                <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
-                            </li>
-                            <li>
-                                <a class="link" href="" title="">Lưu tìm kiếm</a>
-                            </li>
-                            <!--<li>
-                                <a class="btn" href="" title="">Đăng nhập</a>
-                            </li>-->
-                            <li>
-                                <a class="link" href="" title=""><span class="user"><i class="fa fa-user"></i> Nguyễn Tiến Chung</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Thông tin tài khoản</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title=""><i class="fa fa-sign-out"></i> Thoát</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <a href="#box-saved" class="btn-close" data-close="true"><i class="fa fa-angle-right"></i></a>
-                    <a href="#search-mobile" title="Search" class="btn-search" data-search="true"><i class="fa fa-search"></i></a>
-                </div>
-            </header><!-- //header -->
+                    <div class="header-top">
+                        <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
+                        <h1 class="logo">
+                            <a href="index.html" title="Trulia">
+                                <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                            </a>
+                        </h1>
+                        <nav class="nav-main">
+                            <ul>
+                                <li>
+                                    <a ng-click="mc.goToPageSearchMenu('0','0')" title="">Bất động sản bán</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatBanMenu"><a ng-click="mc.goToPageSearchMenu('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a ng-click="mc.goToPageSearchMenu('1','0')" title="">Bất động sản cho thuê</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatThueMenu"><a ng-click="mc.goToPageSearchMenu('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a title="">Cần mua</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatCanMuaMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Cần thuê</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatCanThueMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Tin tức</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Tin thị trường</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Phân tích - Nhận định</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Chính sách - Quản lý</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Thông tin quy hoạch</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">BĐS thế giới</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tài chính - Chứng khoán - BĐS</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tư vấn luật</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Lời khuyên</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Xây dựng - Kiến trúc</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Xây dựng</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Kiến trúc</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Nội - Ngoại thất</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Nội thất</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Ngoại thất</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tư vấn nội thất</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Tin khác</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Môi giới</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Ứng dụng mobile</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav class="nav-user">
+                            <ul>
+                                <li>
+                                    <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="" title="">Lưu tìm kiếm</a>
+                                </li>
+                                <li>
+                                    <a class="btn" href="" title="">Đăng nhập</a>
+                                </li>
+                                <!-- <li>
+                                    <a class="link" href="" title=""><span class="user"><i class="fa fa-user"></i> Nguyễn Tiến Chung</span></a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Thông tin tài khoản</a>
+                                        </li>
+                                        <li class="border">
+                                            <a href="" title=""><i class="fa fa-sign-out"></i> Thoát</a>
+                                        </li>
+                                    </ul>
+                                </li> -->
+                            </ul>
+                        </nav>
+                    </div>
+                </header><!-- //header -->
             <div class="box-filter">
                 <div class="utility">
                     <div class="container">
