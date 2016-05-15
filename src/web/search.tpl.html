@@ -87,13 +87,13 @@
                                 <div class="filter">
                                     <div class="label">Sắp xếp: </div>
                                     <div class="option">
-                                        <select class="select" ng-change="alert(1);mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
+                                        <select class="select" ng-change="mc.searchPage(1);" style="width: 100px;" title="Sắp xếp" ng-model="mc.searchData.orderBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                         </select>
                                     </div>
                                 </div>
                                 <div class="group">
-                                    <a href="" ng-click="mc.showList()" title="">List</a>
-                                    <a href="" ng-click="mc.showMap()" title="">Map</a>
+                                    <a href="" ng-click="mc.showList()" title="">Danh sách</a>
+                                    <a href="" ng-click="mc.showMap()" title="">Bản đồ</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -121,16 +121,16 @@
                             <div class="stats">{{mc.currentPageStart}} – {{mc.currentPageEnd}} của {{mc.totalResultCounts}} kết quả</div>
                             <ul>
                                 <li ng-if="mc.currentPage != 1" ng-click="mc.firstPage()">
-                                    <span>First</span>
+                                    <span>Trang đầu</span>
                                 </li>
                                 <li ng-if="mc.currentPage != 1" ng-click="mc.previousPage()">
-                                    <span>Previous</span>
+                                    <span>Trang trước</span>
                                 </li>
                                 <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.nextPage()">
-                                    <a href="" title="">Next</a>
+                                    <a href="" title="">Trang sau</a>
                                 </li>
                                 <li ng-if="mc.currentPage < mc.lastPageNo" ng-click="mc.lastPage()">
-                                    <a href="" title="">Last</a>
+                                    <a href="" title="">Trang cuối</a>
                                 </li>
                             </ul>
                         </div>
