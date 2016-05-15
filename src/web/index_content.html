@@ -210,27 +210,26 @@
                         <div class="col col-50">
                             <div class="block-02">
                                 <div ng-repeat="cat in hot_ads_cat" data-scroll="true" class="title">
-                                    <h2>{{::cat.lable}}</h2>
+                                    <h2>{{::cat.name}}</h2>
                                     <p>{{::cat.location}}</p>
                                     <div class="row">
                                         <div ng-repeat="ads in cat.list" ng-class-odd="'col-40'" ng-class-even="'col-60'" class="col ">
                                             <div class="item">
                                                 <a class="link" href=""  title="">
-                                                    <span class="img" style="background-image: url({{$even?ads.image.cover_small:ads.image.cover}})"></span>
+                                                    <span class="img" style="background-image: url({{ads.image.cover}})"></span>
                                                     <span class="info">
-                                                        <span class="line"><span class="price">{{ads.gia}}</span> <span>8 bd 7 ba</span></span>
-                                                        <span class="line">123 W 119th St</span>
-                                                        <span class="line">New York</span>
+                                                        <span class="line"><span>{{ads.dienTich}} m2</span></span>
+                                                        <span class="line"></span>
+                                                        <span class="line"></span>
                                                     </span>
                                                 </a>
                                                 <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="more sp">
-                                    <a href="" title="">See All Safe Neighborhoods</a>
+                                    <div class="more sp">
+                                        <a href="" title="">See All New Listings</a>
+                                    </div>
                                 </div>
                             </div><!-- //block-02 -->
                             
@@ -238,188 +237,11 @@
                                 <a href="" title="">
                                     <img src="asset/img/data/tsa_discovery_module.png" width="825" height="100" alt=""/>
                                 </a>
-                            </div><!-- //block-03 -->
+                            </div>
                             <div class="block-02">
                                 <div data-scroll="true" class="title">
-                                    <h2>Fixer Upper Homes</h2>
-                                    <p>New York, NY</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-50">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-50">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-50">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-50">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- //block-02 -->
-                            <div class="block-02">
-                                <div data-scroll="true" class="title">
-                                    <h2>Safe Neighborhoods</h2>
-                                    <p>New York, NY</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="more sp">
-                                    <a href="" title="">See All Safe Neighborhoods</a>
-                                </div>
-                            </div><!-- //block-02 -->
-                            <div class="block-02">
-                                <div data-scroll="true" class="title">
-                                    <h2>New Listings</h2>
-                                    <p>New York, NY</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
+                                    <h2>Nhà mới giảm giá</h2>
+                                    <p>Hà Nội</p>
                                 </div>
                                 <div class="more sp">
                                     <a href="" title="">See All New Listings</a>
@@ -427,67 +249,59 @@
                             </div><!-- //block-02 -->
                             <div class="block-02">
                                 <div data-scroll="true" class="title">
-                                    <h2>New Listings</h2>
-                                    <p>New York, NY</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-60">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col col-40">
-                                        <div class="item">
-                                            <a class="link" href=""  title="">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                                <span class="info">
-                                                    <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                                    <span class="line">123 W 119th St</span>
-                                                    <span class="line">New York</span>
-                                                </span>
-                                            </a>
-                                            <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                        </div>
-                                    </div>
+                                    <h2>Nhà chính chủ</h2>
+                                    <p>Hà Nội</p>
                                 </div>
                                 <div class="more sp">
                                     <a href="" title="">See All New Listings</a>
                                 </div>
                             </div><!-- //block-02 -->
+                            <div class="block-02">
+                                <div data-scroll="true" class="title">
+                                    <h2>Nhà xây mới</h2>
+                                    <p>Hà Nội</p>
+                                </div>
+                                <div class="more sp">
+                                    <a href="" title="">See All New Listings</a>
+                                </div>
+                            </div><!-- //block-02 -->
+                            <div class="block-02">
+                                <div data-scroll="true" class="title">
+                                    <h2>Nhà ôtô đỗ cửa</h2>
+                                    <p>Hà Nội</p>
+                                </div>
+                                <div class="more sp">
+                                    <a href="" title="">See All New Listings</a>
+                                </div>
+                            </div>
+                            <div class="block-02">
+                                <div data-scroll="true" class="title">
+                                    <h2>Nhà được miễn phí môi giới</h2>
+                                    <p>Hà Nội</p>
+                                </div>
+                                <div class="more sp">
+                                    <a href="" title="">See All New Listings</a>
+                                </div>
+                            </div>
+                            <div class="block-02">
+                                <div data-scroll="true" class="title">
+                                    <h2>Nhà chưa xem</h2>
+                                    <p>Hà Nội</p>
+                                </div>
+                                <div class="more sp">
+                                    <a href="" title="">See All New Listings</a>
+                                </div>
+                            </div>
+                            <div class="block-02">
+                                <div data-scroll="true" class="title">
+                                    <h2>Nhà cần bán gấp</h2>
+                                    <p>Hà Nội</p>
+                                </div>
+                                <div class="more sp">
+                                    <a href="" title="">See All New Listings</a>
+                                </div>
+                            </div>
+                            <!-- //block-02 -->
                         </div>
                     </div>
                 </section><!-- //box-homepage -->

@@ -141,6 +141,9 @@
 				"gia": 800,
 				"limit": 4
 			};
+
+			$scope.hot_ads_cat = [];
+
 			HouseService.findBelowPriceAds(data).then(function(res){
 				var resultBelow = [];
 				if(res.data.list){
@@ -154,6 +157,7 @@
 					})
 				}
 				console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+				console.log(resultBelow);
 			});
 
 			var data = {
@@ -161,8 +165,6 @@
 				"limit": 4
 			};
 			console.log("getRecentBds + data: " + data);
-			$scope.hot_ads_cat = [];
-
 			HouseService.findRencentAds(data).then(function(res){
 				var result = [];
 				if(res.data.list){
@@ -176,6 +178,7 @@
 					})
 				}
 				console.log("HouseService.findRencentAds: " + result.length);
+				console.log(result);
 			});
 
 		}

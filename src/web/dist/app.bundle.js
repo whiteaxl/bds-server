@@ -53,19 +53,8 @@
 
 /******/ 	
 /******/ 	
-/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
-/******/ 	var canDefineProperty = false;
-/******/ 	try {
-/******/ 		Object.defineProperty({}, "x", {
-/******/ 			get: function() {}
-/******/ 		});
-/******/ 		canDefineProperty = true;
-/******/ 	} catch(x) {
-/******/ 		// IE will fail on defineProperty
-/******/ 	}
-/******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5dec5fc988cff529c4c7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "14b2b32ff2279b92815c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -88,7 +77,7 @@
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(canDefineProperty) {
+/******/ 				if(Object.defineProperty) {
 /******/ 					Object.defineProperty(fn, name, (function(name) {
 /******/ 						return {
 /******/ 							configurable: true,
@@ -131,7 +120,7 @@
 /******/ 				}
 /******/ 			});
 /******/ 		}
-/******/ 		if(canDefineProperty) {
+/******/ 		if(Object.defineProperty) {
 /******/ 			Object.defineProperty(fn, "e", {
 /******/ 				enumerable: true,
 /******/ 				value: ensure
@@ -1209,6 +1198,9 @@
 					"gia": 800,
 					"limit": 4
 				};
+
+				$scope.hot_ads_cat = [];
+
 				HouseService.findBelowPriceAds(data).then(function(res){
 					var resultBelow = [];
 					if(res.data.list){
@@ -1222,6 +1214,7 @@
 						})
 					}
 					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+					console.log(resultBelow);
 				});
 
 				var data = {
@@ -1229,8 +1222,6 @@
 					"limit": 4
 				};
 				console.log("getRecentBds + data: " + data);
-				$scope.hot_ads_cat = [];
-
 				HouseService.findRencentAds(data).then(function(res){
 					var result = [];
 					if(res.data.list){
@@ -1244,6 +1235,7 @@
 						})
 					}
 					console.log("HouseService.findRencentAds: " + result.length);
+					console.log(result);
 				});
 
 			}
