@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d65deb67414a0cd23b4a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "853d7a9c1269d4a1a604"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1432,7 +1432,7 @@
 			  	"huongNhas": [],
 			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 			  	"limit": vm.pageSize,
-			  	"orderBy": vm.sortBy,
+			  	"orderBy": vm.sortOptions[0].value,
 			  	"pageNo": 1
 			}
 
