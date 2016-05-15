@@ -11,8 +11,10 @@
 		initHotAds();
 		//alert("placeSearchId: " + $scope.placeSearchId);
 		$scope.goToPageSearch = function(loaiTin, loaiBds){
-			$scope.loaiTin = loaiTin;
-			$scope.loaiNhaDat = loaiBds;
+			if(loaiTin)
+				$scope.loaiTin = loaiTin;
+			if(loaiBds)
+				$scope.loaiNhaDat = loaiBds;
 			if($scope.loaiNhaDat == '0')
 				$scope.loaiNhaDat = null;
 
