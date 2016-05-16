@@ -19,25 +19,25 @@
                                 <li>
                                     <a ng-click="goToPageSearch('0','0')" title="">BĐS bán</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatBan"><a ng-click="goToPageSearch('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatBan" class="{{::item.value=='10'?'border':''}}"><a ng-click="goToPageSearch('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a ng-click="goToPageSearch('1','0')" title="">BĐS cho thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatThue"><a ng-click="goToPageSearch('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatThue" class="{{::item.value=='8'?'border':''}}"><a ng-click="goToPageSearch('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a title="">Cần mua</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatCanMua"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatCanMua" class="{{::item.value=='11'?'border':''}}"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="" title="">Cần thuê</a>
                                     <ul>
-                                        <li ng-repeat="item in loaiNhaDatCanThue"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                        <li ng-repeat="item in loaiNhaDatCanThue" class="{{::item.value=='11'?'border':''}}"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>
