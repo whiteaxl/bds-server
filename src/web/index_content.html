@@ -208,8 +208,8 @@
                             <div class="pc">&nbsp;</div>
                         </div>
                         <div class="col col-50">
-                            <div class="block-02">
-                                <div ng-repeat="cat in hot_ads_cat" data-scroll="true" class="title">
+                            <div class="block-02" ng-repeat="cat in hot_ads_cat">
+                                <div data-scroll="true" class="title">
                                     <h2>{{::cat.name}}</h2>
                                     <p>{{::cat.location}}</p>
                                     <div class="row">
