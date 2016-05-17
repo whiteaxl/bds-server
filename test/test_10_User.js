@@ -10,8 +10,6 @@ var userService = new UserService();
 var server = supertest.agent("http://localhost:5000");
 
 describe("10.User",function() {
-
-
     //
     //-------------------------------------------------
     var createUserOnSyncGateway = function (done) {
@@ -20,7 +18,7 @@ describe("10.User",function() {
             matKhau: "123"
         };
 
-        userService.createUserOnSyncGateway(userDto, (err, res)=> {
+        userService.createLoginOnSyncGateway(userDto, (err, res)=> {
             console.log(res);
             done();
         });

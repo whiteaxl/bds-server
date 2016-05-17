@@ -9,98 +9,191 @@ var cluster = new couchbase.Cluster('couchbase://localhost:8091');
 var bucket = cluster.openBucket('default');
 bucket.enableN1ql(['127.0.0.1:8093']);
 
+let constant = require('../lib/constant');
+let log = require('../lib/logUtil');
+
 var request = require("request");
 
 var syncUserDB_URL = "http://localhost:4985/default/";
 
 
 class UserModel {
-    getUserByDeviceID(deviceID, callback) {
-        var sql = `select default.* from default where type='User' and deviceID =  '${deviceID}'`;
-        var query = N1qlQuery.fromString(sql);
+  getUser(userDto, callback) {
+    var sql = `select default.* from default where type='User'`;
 
-        bucket.query(query, callback);
+    if (userDto.phone) {
+      sql = `${sql} AND phone='${userDto.phone}'`
     }
-
-    createUserOnSyncGateway(userDto, callback) {
-            var url = syncUserDB_URL+"_user/";
-            request({url: url,method:"POST", json: {name: userDto.userID, password: userDto.matKhau, type:"User"}}, function (error, response, body) {
-
-                if (!error && (response.statusCode === 200|| response.statusCode === 201)) {
-                    callback(null, body);
-                } else {
-                    console.log("Error when createUserOnSyncGateway" + error);
-                    callback(error, body);
-                }
-            });
+    if (userDto.email) {
+      sql = `${sql} AND email='${userDto.email}'`
     }
+    var query = N1qlQuery.fromString(sql);
 
-	upsert(userDto, callback) {
-        this.getUserByDeviceID(userDto.deviceID, (err, res) => {
+    bucket.query(query, callback);
+  }
+
+  createLoginOnSyncGateway(name, password, callback) {
+    var url = syncUserDB_URL + "_user/";
+    request({
+        url: url, method: "POST",
+        json: {name: name, password: password}
+      },
+      function (error, response, body) {
+        if (error) {
+          log.error("Error when createLoginOnSyncGateway", error, response);
+          callback(error, body);
+          return;
+        }
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+          callback(null, body);
+        } else {
+          log.error("createLoginOnSyncGateway", response.body);
+          callback({code:99, msg: response.body.reason}, null);
+        }
+      });
+  }
+
+  createUser(userDto, callback) {
+    var url = syncUserDB_URL ;
+    request({
+        url: url, method: "POST",
+        json: userDto
+      },
+      function (error, response, body) {
+        if (error) {
+          log.error("Error when createUser", error, response);
+          callback(error, body);
+          return;
+        }
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+          callback(null, body);
+        } else {
+          log.error("CreateUser - Have response but status fail:", response);
+          callback({code:99, msg: response.body}, null);
+        }
+      });
+  }
+
+  updateUser(userDto, callback) {
+    var url = syncUserDB_URL ;
+    request({
+      url: url+userDto.id,
+      method: "GET",
+    }, function(error, response, body) {
+
+      if (error) {
+        callback(error, null);
+        return;
+      }
+      const resJson = JSON.parse(body);
+      console.log(resJson);
+
+      const updateUrl = `${url}${userDto.id}?rev=${resJson._rev}`;
+      console.log("updateUrl:", updateUrl);
+
+
+      request({
+          url: updateUrl, method: "PUT",
+          json: userDto
+        },
+        function (error, response, body) {
+          if (error) {
+            log.error("Error when createUser", error, response);
+            callback(error, body);
+            return;
+          }
+
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            callback(null, body);
+          } else {
+            log.error("CreateUser - Have response but status fail:", response);
+            callback({code:99, msg: response.body}, null);
+          }
+        });
+
+    });
+  }
+
+  /**
+   * if exist return error, else create with ability to login to syncGateway
+   * @param userDto
+   *    phone/email: can only have one of these
+   *    fullName: string
+   *
+   * @param callback (err, res)
+   */
+  createUserAndLogin(userDto, callback) {
+    this.getUser(userDto, (err, res) => {
+      if (err) {
+        callback(err, res)
+      } else {
+        //console.log(res);
+        if (res.length > 0) { //exists
+          log.warn("User already existed!");
+          log.info(res);
+          callback({code:1, msg: constant.MSG.USER_EXISTS}, userDto)
+        } else {
+          //create on sync gateway, only can have phone or email
+          let loginName=userDto.phone||userDto.email;
+
+          this.createLoginOnSyncGateway(loginName, userDto.matKhau, (err, res) => {
+            //log.info("Callback createLoginOnSyncGateway:", err, res);
+
             if (err) {
-                callback(err, res)
-            } else {
-                //console.log(res);
-                if (res.length > 0) { //exists
-                    console.log("User already existed!");
-                    callback(err, {user: res[0]});
-                } else {
-                    bucket.counter("idGeneratorForUsers", 1, {initial:0}, (err, res)=>{
-                        if (err) {
-                            callback(err, res);
-                        } else {
-                            console.log(res);
-
-                            //userDto.userID = "User_" + _.padStart(res.value, 20, '0');
-                            userDto.userID = "User_" + res.value;
-
-                            userDto.type = "User";
-                            userDto.matKhau = "123";
-                            userDto.id = '_sync:user:'+userDto.userID;
-
-                            //create on sync gateway
-                            this.createUserOnSyncGateway(userDto, (err, res) => {
-                                if (!err || res.reason==="Already exists") {
-                                    bucket.get(userDto.id, (err, res) => {
-                                        if (err) {
-                                            callback(err, res);
-                                        } else {
-                                            console.log(res);
-                                            Object.assign(userDto, res.value);
-
-                                            bucket.upsert(userDto.id, userDto, (err, res) => {
-                                                if (err) {
-                                                    callback(err, res);
-                                                } else {
-                                                    callback(null, {user: userDto});
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-
-                        }
-                    });
-
-                }
+              callback(err, null);
+              return;
             }
-        });
 
-	}
+            if (res && res.reason === "Already exists") {
+              callback({code:11, msg: constant.MSG.USER_EXISTS}, userDto);
+              return;
+            }
 
-	queryAll(callBack) {
-        let query = ViewQuery.from('user', 'all_user');
+            bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
+              if (err) {
+                callback(err, res);
+              } else {
+                console.log(res);
 
-        this.myBucket.query(query, function(err, all) {
-            console.log(all);
+                const userID = "User_" + res.value;
 
-            if (!all)
-                all = [];
+                userDto.type = "User";
+                userDto.id = userID;
+                userDto._id = userID;
 
-            callBack(all);
-        });
-    }
+                this.createUser(userDto, (err, res) => {
+                  if (err) {
+                    log.warn("Error in createUserAndLogin", err);
+                    callback({code:99, msg:err.toString()})
+                  } else {
+                    log.info("user created:", res);
+
+                    callback(null, userDto);
+                  }
+                });
+              }
+            });
+          });
+        }
+      }
+    });
+
+  }
+
+  queryAll(callBack) {
+    let query = ViewQuery.from('user', 'all_user');
+
+    this.myBucket.query(query, function (err, all) {
+      console.log(all);
+
+      if (!all)
+        all = [];
+
+      callBack(all);
+    });
+  }
 }
 
 module.exports = UserModel;
