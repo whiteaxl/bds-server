@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require("lodash");
+
 var util = require("../lib/utils");
 
 var placeUtil = {};
@@ -11,8 +12,8 @@ placeUtil.getDuAnFullName = function(place) {
         return null;
     }
 
-    let ret = "";
-    let _appendIfHave = function(ret, value) {
+    var ret = "";
+    var _appendIfHave = function(ret, value) {
         if (ret)
             ret =  ret + ", " + value;
         else
@@ -52,7 +53,7 @@ placeUtil.getDiaChinhFromGooglePlace = function(place) {
         }
     }
 
-    let diaChinh = {
+    var diaChinh = {
         tinh: tinh,
         huyen: huyen,
         xa: xa
@@ -62,15 +63,15 @@ placeUtil.getDiaChinhFromGooglePlace = function(place) {
 };
 
 placeUtil.getDiaChinh = function(diaChi) {
-    let spl = diaChi.split(",");
-    let diaChinh = {};
+    var spl = diaChi.split(",");
+    var diaChinh = {};
 
-    let i = spl.length;
+    var i = spl.length;
     diaChinh.tinh = spl[--i].trim();
     if(diaChinh.tinh)
         diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
 
-    let rawHuyen = spl[--i];
+    var rawHuyen = spl[--i];
     if (rawHuyen) {
         diaChinh.huyen = rawHuyen.trim();
         if(diaChinh.huyen)
@@ -80,7 +81,7 @@ placeUtil.getDiaChinh = function(diaChi) {
     }
 
     if (i>0) {
-        let v = spl[--i].trim();
+        var v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {
             diaChinh.xa = v;
             if(diaChinh.xa)
@@ -91,7 +92,7 @@ placeUtil.getDiaChinh = function(diaChi) {
     }
 
     if (i>0) {
-        let v = spl[--i].trim();
+        var v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {
             diaChinh.duong = v;
         } else {
@@ -185,7 +186,7 @@ placeUtil.chuanHoa = function(string) {
 
     var result = util.locDau(string);
 
-    const COMMON_WORDS = {
+    var COMMON_WORDS = {
         '-district': '',
         '-vietnam':'',
         'hanoi' : 'ha-noi'
@@ -216,7 +217,7 @@ placeUtil.typeName = {
 
 
 placeUtil.isHuyen = function(place) {
-    let placeTypes=place.types;
+    var placeTypes=place.types;
 
     if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
         return true;
@@ -231,7 +232,7 @@ placeUtil.isHuyen = function(place) {
 };
 
 placeUtil.getTypeName = function(place) {
-    let placeTypes = place.types;
+    var placeTypes = place.types;
 
     if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
         return placeUtil.typeName.TINH;
@@ -257,11 +258,11 @@ placeUtil.getTypeName = function(place) {
 
 
 placeUtil.isOnePoint = function(place) {
-    let name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
     return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
 };
 
 module.exports  = placeUtil;
 
-if (typeof window !== 'undefined')
+if (typeof(window) !== 'undefined')
    window.RewayPlaceUtil = placeUtil;

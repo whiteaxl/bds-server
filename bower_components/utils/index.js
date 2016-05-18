@@ -92,5 +92,5 @@ util.popField = function (obj, field){
 
 module.exports = util;
 
-if (typeof window !== 'undefined')
+if (typeof(window) !== 'undefined')
    window.RewayUtil = util;

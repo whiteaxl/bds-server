@@ -4,8 +4,8 @@ var striptags = require('striptags');
 var util = {};
 
 util.locDau = function(str) {
-    let a1 = locDauInt(str);
-    let a2 = locDauInt(a1);
+    var a1 = locDauInt(str);
+    var a2 = locDauInt(a1);
 
     return a2;
 };
@@ -83,7 +83,7 @@ util.replaceBrToDowntoLine = function(inputString) {
 
 
 util.popField = function (obj, field){
-    let a = obj[field];
+    var a = obj[field];
     delete obj[field];
 
     return a;
@@ -92,5 +92,5 @@ util.popField = function (obj, field){
 
 module.exports = util;
 
-if (typeof window !== 'undefined')
+if (typeof(window) !== 'undefined')
    window.RewayUtil = util;

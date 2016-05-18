@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require("lodash");
+
 var util = require("utils");
 
 var placeUtil = {};
