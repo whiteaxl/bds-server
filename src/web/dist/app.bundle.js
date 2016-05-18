@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "65bc107a366e9d2cdb65"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "161252b9e867bd0013bf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1221,7 +1221,7 @@
 							resultBelow.push(res.data.list[i].default);
 						}
 						$scope.hot_ads_cat.push({
-							name: "nhà dưới mức giá 800.000.000 VND",
+							name: "Nhà dưới mức giá 800 triệu",
 							location: "Hà Nội",
 							list: resultBelow
 						})
@@ -1461,12 +1461,27 @@
 			vm.selectPlaceCallback = function(place){
 				$scope.searchPlaceSelected = place;
 	    		$scope.placeSearchId = place.place_id;
-	    		$scope.markers = [];
+	    		/*$scope.markers = [];
 	    		var marker = {
 	    				id: -1,
 	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
 	    				content: 'you are here'
 	    		}
+	    		if(place.geometry.viewport){
+	    			vm.searchData.geoBox = [  place.geometry.viewport.H.j,  place.geometry.viewport.j.j ,place.geometry.viewport.H.H, vm.map.getBounds().j.H];
+	    			vm.searchData.geoBox = [place.geometry.viewport.getSouthWest().lat(),place.geometry.viewport.getSouthWest().lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng()]
+					vm.searchData.radiusInKm = undefined;
+
+				}else{
+					var placeData = {
+				    			placeId: place.place_id,
+				 	    		relandTypeName : window.RewayPlaceUtil.getTypeName(place),
+				       			radiusInKm :  1,
+				 				currentLocation: undefined
+				 	}
+				 	vm.searchData.place = placeData;
+				    vm.searchData.geoBox = undefined;
+				}*/
 	    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
 	    		
 	    		/*$scope.markers.push(marker);
@@ -1482,8 +1497,8 @@
 	    		vm.map.setCenter(place.geometry.location);*/
 	    		// $scope.$apply();
 	    		//$scope.map.refresh();
-	    		//vm.goToPageSearch();
-	    		vm.searchPage(1);
+	    		vm.goToPageSearch();
+	    		//vm.search();
 			}
 			vm.goToPageSearch = function(){
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
@@ -1639,7 +1654,7 @@
 						          		var placeData = {
 						          			placeId: googlePlace.place_id,
 						 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-						       				radiusInKm :  10,
+						       				radiusInKm :  2,
 						 				    currentLocation: undefined
 						 			  	}
 						 			  	vm.searchData.place = placeData;

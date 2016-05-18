@@ -1988,20 +1988,15 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .block-05 .option, .block-08 .option {
-  height: 33px;
   position: relative;
+  margin-left: 5px;
 }
 
 .block-05 .option .select, .block-08 .option .select {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  margin: 0;
-  background: transparent;
+  height: 33px;
+  border: 1px solid #cdd1d4;
+  border-radius: 3px;
+  padding: 5px;
 }
 
 .block-05 .option .span, .block-08 .option .span {
@@ -2010,11 +2005,9 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .block-05 .option .span span, .block-08 .option .span span {
   display: block;
-  border-radius: 3px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 5px 30px 5px 10px;
   position: relative;
   line-height: 23px;
   cursor: pointer;
@@ -3766,7 +3759,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .box-filter .container > .row > .w-340 {
-  width: 26.08696%;
+  width: 22.6087%;
 }
 
 .box-filter .container > .row > .w-460 {
@@ -3779,6 +3772,10 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .box-filter .container > .row > .w-160 {
   width: 13.91304%;
+}
+
+.box-filter .container > .row > .w-153 {
+  width: 13.30435%;
 }
 
 .box-filter .container > .row > .w-120 {
@@ -3803,11 +3800,11 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 .box-filter .search .form-control {
   left: 0;
   padding: 5px 10px;
-  width: 71.875%;
+  width: 80.76923%;
 }
 
 .box-filter .search .btn-search {
-  width: 28.125%;
+  width: 19.23077%;
   right: 0;
   line-height: 34px;
   text-align: center;
@@ -3940,7 +3937,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 .box-filter .filter {
   display: none;
   background: #fff;
-  padding-top: 27px;
 }
 
 .box-filter .filter .row {
@@ -3966,7 +3962,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .box-filter .filter .project {
   display: none;
-  margin-top: 12px;
 }
 
 .box-filter .filter .project .head {
@@ -3979,7 +3974,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .box-filter .filter .group {
-  margin-top: 39px;
+  margin-top: 25px;
 }
 
 .box-filter .filter .group .head {
