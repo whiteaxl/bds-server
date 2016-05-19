@@ -192,7 +192,15 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
         services.getGeocoding(center.lat, center.lon,
           (res) => {
               if (res && res.formatted_address) {
-                  center.formatted_address = res.formatted_address;
+                  const adr = res.formatted_address;
+                  center.formatted_address = adr;
+                  const spl = adr.split(",");
+                try {
+                  center.name = spl[spl.length-3].trim() + ", " + spl[spl.length-2].trim()
+                } catch(e) {
+                  console.log("Error when get geoCode", e);
+                  center.name = center.lat + ',' + center.lon;
+                }
               }
               else {
                   center.formatted_address = center.lat + ',' + center.lon;

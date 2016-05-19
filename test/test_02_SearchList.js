@@ -787,6 +787,7 @@ describe("02.Find API testsuite",function(){
         }
 
         res.body.viewport.center.formatted_address.should.equal('251 Trần Khát Chân, Thanh Nhàn, Hai Bà Trưng, Hà Nội, Vietnam');
+        res.body.viewport.center.name.should.equal('Hai Bà Trưng, Hà Nội');
 
         console.log("\n testReturnBoxTitle, length:" + res.body.length);
         done();
