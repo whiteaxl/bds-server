@@ -31,7 +31,7 @@ describe("02.Find API testsuite",function(){
             .expect(200) // THis is HTTP response
             .end(function(err,res){
                 console.log("\ntestGeoBox, length:" + res.body.length);
-                res.body.length.should.equal(68);
+                res.body.length.should.equal(69);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -89,7 +89,7 @@ describe("02.Find API testsuite",function(){
             .end(function(err,res){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
 
-                res.body.length.should.equal(39); //TODO: ?40
+                res.body.length.should.equal(40); //TODO: ?40
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -150,7 +150,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc","relandTypeName":"Huyen"
                     ,"fullName":"Cầu Giấy, Hanoi","radiusInKm":0.5},
                 "limit":200
-                ,"ngayDaDang":30
+                ,"ngayDaDang":300
 
             })
             .expect("Content-type",/json/)
@@ -183,7 +183,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200,"ngayDaDang":300
 
             })
             .expect("Content-type",/json/)
@@ -768,31 +768,32 @@ describe("02.Find API testsuite",function(){
     it("Tim kiem - testImageMedium ",testImageMedium);
 
     //--- khi co' geoBox, ko dc truyen len radius
+  var testReturnBoxTitle = function(done){
+    server
+      .post("/api/find")
+      .send({ loaiTin: 0,
+        geoBox: [ 20.986007099732642,105.84372998042551,21.032107100267314,105.87777141957429] }
+      )
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
 
-    var testHung = function(done){
-        server
-            .post("/api/search")
-            .send({ loaiTin: 0,
-                radiusInKm: 0.5,
-                geoBox: [ 105.7974815, 20.9950991, 105.87644590000002, 21.0502942 ] }
-            )
-            .expect("Content-type",/json/)
-            .expect(200) // THis is HTTP response
-            .end(function(err,res){
+        console.log(res.body.viewport);
 
-                for (var e in res.body.list) {
-                    let one =res.body.list[e];
-                    //console.log(one.image);
-                }
+        for (var e in res.body.list) {
+          let one =res.body.list[e];
+          //console.log(one.image);
+        }
 
-                res.body.length.should.equal(0);
+        res.body.length.should.equal(69);
 
-                console.log("\testImageMedium, length:" + res.body.length);
-                done();
-            });
-    };
+        console.log("\n testReturnBoxTitle, length:" + res.body.length);
+        done();
+      });
+  };
 
-    it("Tim kiem - testHung ",testHung);
+  it("Tim kiem - testReturnBoxTitle ",testReturnBoxTitle);
+
 
 
 
