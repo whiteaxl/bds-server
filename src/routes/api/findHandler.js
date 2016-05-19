@@ -168,8 +168,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
     });
 
     logUtil.info("There are " + transformeds.length + " ads");
-
-    reply({
+    var response = {
         length: transformeds.length,
         viewport : {
             center: center,
@@ -177,10 +176,34 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             southwest : {lat:replyViewPort[0], lon:replyViewPort[1]}
         },
         list: transformeds
-    });
+    };
+
+    //get formatted_address of center
+    if (!center.formatted_address) {
+        services.getGeocoding(center.lat, center.lon,
+          (res) => {
+              if (res && res.formatted_address) {
+                  center.formatted_address = res.formatted_address;
+              }
+              else {
+                  center.formatted_address = center.lat + ',' + center.lon;
+              }
+              reply(response);
+          },
+          (err) => {
+              center.formatted_address = center.lat + ',' + center.lon;
+              reply(response);
+          }
+        );
+    } else {
+        reply(response);
+    }
 }
 
 function _toNgayDangTinFrom(ngayDaDang) {
+    if (!ngayDaDang) {
+        return null;
+    }
     let ret = moment().subtract(ngayDaDang, "d");
     ret = ret.format("DD-MM-YYYY");
     return ret;
@@ -333,6 +356,9 @@ function searchAds(q, reply) {
         _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply);
     };
     if (geoBox) {
+        center.lat = (geoBox[0]+geoBox[2])/2;
+        center.lon = (geoBox[1]+geoBox[3])/2;
+
         adsModel.queryAllData(
             callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
@@ -356,6 +382,8 @@ function searchAds(q, reply) {
                     //from google placedetail
                     center.lat = placeDetail.geometry.location.lat;
                     center.lon = placeDetail.geometry.location.lng;
+                    center.formatted_address = placeDetail.formatted_address;
+
                     placeDetail.fullName = placeDetail.name;
 
                     if (_isDiaDiem(relandTypeName)) {
