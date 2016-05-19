@@ -39,7 +39,7 @@ var Q_FIELD = {
 var internals = {};
 /**
  *  Co' 3 loai search:
- *      Tim kiem theo GeoBox : phuc vu MAP
+ *      Tim kiem theo GeoBox, polygon : phuc vu MAP
  *      Tim kiem theo Dia Chinh : search text
  *      Tim kiem theo Dia Diem  + Ban Kinh: search text
  *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
@@ -61,6 +61,9 @@ var internals = {};
  *  geoBox:
  *	    Arrays: [southwest_lat, southwest_lon, northeast_lat, northeast_lon]
  *		eg: [20.986007099732642,105.84372998042551,21.032107100267314,105.87777141957429]
+ *
+ *  polygon : [{lat, lon}, {}]
+ 	*
  *  place { //Object
  *      placeId:
  *          Lay tu google place
