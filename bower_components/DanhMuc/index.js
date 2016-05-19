@@ -378,7 +378,7 @@ danhMuc.getHuongNhaDisplay = function(val){
 
 module.exports = danhMuc;
 
-if (typeof window !== 'undefined')
+if (typeof(window) !== 'undefined')
    window.RewayListValue = danhMuc;
 
 

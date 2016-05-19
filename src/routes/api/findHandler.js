@@ -39,7 +39,7 @@ var Q_FIELD = {
 var internals = {};
 /**
  *  Co' 3 loai search:
- *      Tim kiem theo GeoBox : phuc vu MAP
+ *      Tim kiem theo GeoBox, polygon : phuc vu MAP
  *      Tim kiem theo Dia Chinh : search text
  *      Tim kiem theo Dia Diem  + Ban Kinh: search text
  *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
@@ -61,6 +61,9 @@ var internals = {};
  *  geoBox:
  *	    Arrays: [southwest_lat, southwest_lon, northeast_lat, northeast_lon]
  *		eg: [20.986007099732642,105.84372998042551,21.032107100267314,105.87777141957429]
+ *
+ *  polygon : [{lat, lon}, {}]
+ 	*
  *  place { //Object
  *      placeId:
  *          Lay tu google place
@@ -102,7 +105,7 @@ function _validateFindRequestParameters(req, reply) {
 }
 
 //
-function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, reply) {
+function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, reply, polygonCoords) {
     let transformeds = [];
 
     allAds.forEach((e) => {
@@ -150,9 +153,10 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
 
         Object.assign(transformed, tmp);
 
-        let place = ads.place;
+        let place = transformed.place;
         //console.log(center.lat, center.lon, place.geo.lat, place.geo.lon);
 
+        //filter by radius
         if (radiusInKm) {
             if (center.lat && center.lon && place.geo.lat && place.geo.lon) {
                 transformed.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
@@ -160,7 +164,12 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
                     transformeds.push(transformed);
                 }
             }
-        } else {
+        } if (polygonCoords && polygonCoords.length > 0) {//filter by polygon
+          if (geoUtil.isPointInside(place.geo,polygonCoords)) {
+            transformeds.push(transformed)
+          }
+        }
+        else {
             transformeds.push(transformed)
         }
 
@@ -168,8 +177,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
     });
 
     logUtil.info("There are " + transformeds.length + " ads");
-
-    reply({
+    var response = {
         length: transformeds.length,
         viewport : {
             center: center,
@@ -177,10 +185,42 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             southwest : {lat:replyViewPort[0], lon:replyViewPort[1]}
         },
         list: transformeds
-    });
+    };
+
+    //get formatted_address of center
+    if (!center.formatted_address) {
+        services.getGeocoding(center.lat, center.lon,
+          (res) => {
+              if (res && res.formatted_address) {
+                  const adr = res.formatted_address;
+                  center.formatted_address = adr;
+                  const spl = adr.split(",");
+                try {
+                  center.name = spl[spl.length-3].trim() + ", " + spl[spl.length-2].trim()
+                } catch(e) {
+                  console.log("Error when get geoCode", e);
+                  center.name = center.lat + ',' + center.lon;
+                }
+              }
+              else {
+                  center.formatted_address = center.lat + ',' + center.lon;
+              }
+              reply(response);
+          },
+          (err) => {
+              center.formatted_address = center.lat + ',' + center.lon;
+              reply(response);
+          }
+        );
+    } else {
+        reply(response);
+    }
 }
 
 function _toNgayDangTinFrom(ngayDaDang) {
+    if (!ngayDaDang) {
+        return null;
+    }
     let ret = moment().subtract(ngayDaDang, "d");
     ret = ret.format("DD-MM-YYYY");
     return ret;
@@ -244,6 +284,7 @@ function countAds(q, reply){
             countResult: data
         });
     };
+
     if(geoBox){
         count = adsModel.countForAllData(
             callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
@@ -329,10 +370,36 @@ function searchAds(q, reply) {
     var replyViewPort = geoBox;
     var pageNo = q.pageNo;
 
+    let polygon = q.polygon;
+    let polygonCoords = null;
+    if (polygon) {
+      polygonCoords = polygon.map((e) => {
+        return {latitude: e.lat, longitude: e.lon}
+      });
+    }
+
     var callback = (err, all) =>  {
-        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply);
+        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords);
     };
-    if (geoBox) {
+
+    //polygon
+    if (polygon) {
+      let ret = geoUtil.getGeoBoxOfPolygon(polygonCoords);
+      replyViewPort = ret.geoBox;
+      center = ret.center;
+
+      adsModel.queryAllData(
+        callback,replyViewPort,diaChinh, q.loaiTin, q.loaiNhaDat
+        , q.giaBETWEEN, q.dienTichBETWEEN
+        , q.soPhongNguGREATER, q.soPhongTamGREATER
+        , ngayDangTinFrom, q.huongNha
+        , orderBy, limit,pageNo
+      );
+    }
+    else if (geoBox) {
+        center.lat = (geoBox[0]+geoBox[2])/2;
+        center.lon = (geoBox[1]+geoBox[3])/2;
+
         adsModel.queryAllData(
             callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
@@ -356,6 +423,8 @@ function searchAds(q, reply) {
                     //from google placedetail
                     center.lat = placeDetail.geometry.location.lat;
                     center.lon = placeDetail.geometry.location.lng;
+                    center.formatted_address = placeDetail.formatted_address;
+
                     placeDetail.fullName = placeDetail.name;
 
                     if (_isDiaDiem(relandTypeName)) {

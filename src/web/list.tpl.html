@@ -15,7 +15,7 @@
                                     <div class="filter">
                                         <div class="label">Sắp xếp: </div>
                                         <div class="option">
-                                            <select ng-change="mc.searchPage(1);" class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
+                                            <select ng-change="mc.searchPage(1);" class="select" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
                                             </select>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                                             <a href="" title="">$1,032/mo</a>
                                                             <a href="" title="">Get Pre-Approved</a>
                                                         </div>
-                                                        <div class="desc"> Qualified discerning buyers will be happy to find this splendid Golf Course ho<wbr>me in Cal City. Property backs to t...</div>
+                                                        <div class="desc"> {{ads.title}}</div>
                                                     </div>
                                                 </div>
                                                 <div class="row">

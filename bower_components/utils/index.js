@@ -81,11 +81,6 @@ util.replaceBrToDowntoLine = function(inputString) {
     return kq;
 };
 
-util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
-    var kqRemove = striptags(inputString);
-    return (kqRemove.replace(replaceString,"")).trim();
-};
-
 
 util.popField = function (obj, field){
     var a = obj[field];

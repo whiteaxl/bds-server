@@ -9,3 +9,7 @@ require("./src/web/app/home/searchCtrl.js");
 require("./src/web/common/services/house.js");
 require("./src/web/app/home/map.js");
 
+require("./src/lib/DanhMuc.js");
+require("./src/lib/placeUtil.js");
+require("./src/lib/utils.js");
+

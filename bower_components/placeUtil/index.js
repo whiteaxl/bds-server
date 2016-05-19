@@ -2,16 +2,18 @@
 
 var _ = require("lodash");
 
-var internals = {};
+var util = require("utils");
+
+var placeUtil = {};
 
 
-internals.getDuAnFullName = function(place) {
+placeUtil.getDuAnFullName = function(place) {
     if (!place.duAn) {
         return null;
     }
 
-    let ret = "";
-    let _appendIfHave = function(ret, value) {
+    var ret = "";
+    var _appendIfHave = function(ret, value) {
         if (ret)
             ret =  ret + ", " + value;
         else
@@ -29,24 +31,68 @@ internals.getDuAnFullName = function(place) {
     return ret;
 };
 
-internals.getDiaChinh = function(diaChi) {
-    let spl = diaChi.split(",");
-    let diaChinh = {};
+placeUtil.getDiaChinhFromGooglePlace = function(place) {
+    var tinh ="";
+    var huyen ="";
+    var xa ="";
 
-    let i = spl.length;
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.TINH){
+            tinh = this.chuanHoa(addr.long_name);
+        }
+
+        if (addr.types[0] == placeUtil.type.HUYEN){
+            huyen = this.chuanHoa(addr.long_name);
+        }
+
+        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
+            xa = this.chuanHoa(addr.long_name);
+        }
+    }
+
+    var diaChinh = {
+        tinh: tinh,
+        huyen: huyen,
+        xa: xa
+    };
+
+    return diaChinh;
+};
+
+placeUtil.getDiaChinh = function(diaChi) {
+    var spl = diaChi.split(",");
+    var diaChinh = {};
+
+    var i = spl.length;
     diaChinh.tinh = spl[--i].trim();
-    diaChinh.huyen = spl[--i].trim();
+    if(diaChinh.tinh)
+        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
+
+    var rawHuyen = spl[--i];
+    if (rawHuyen) {
+        diaChinh.huyen = rawHuyen.trim();
+        if(diaChinh.huyen)
+            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
+    } else {
+        console.log("WARN -- no HUYEN information " + diaChi);
+    }
+
     if (i>0) {
-        let v = spl[--i].trim();
+        var v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {
             diaChinh.xa = v;
+            if(diaChinh.xa)
+                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
         } else {
             return diaChinh;
         }
     }
 
     if (i>0) {
-        let v = spl[--i].trim();
+        var v = spl[--i].trim();
         if (!v.startsWith("Dự án")) {
             diaChinh.duong = v;
         } else {
@@ -58,7 +104,7 @@ internals.getDiaChinh = function(diaChi) {
     return diaChinh;
 };
 
-internals.fullName = function(place) {
+placeUtil.fullName = function(place) {
     //todo: other types
     if (place.placeType === "Quan" || place.placeType  === "Huyen") {
         return place.placeName + ", " + place.parentName;
@@ -66,78 +112,157 @@ internals.fullName = function(place) {
 
     return place.placeName;
 };
+// return Quoc Gia form Place.Place is type of Google api
+placeUtil.getQuocGia = function(place) {
 
+    var getCountry ="";
 
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
 
+        if (addr.types[0] == 'country'){
+            getCountry = addr.long_name;
+        }
 
-internals.type = {
+    }
+    return getCountry;
+};
+
+// return Tinh form Place.Place is type of Google api
+placeUtil.getTinh = function(place) {
+
+    var Tinh ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.TINH){
+            Tinh = addr.long_name;
+        }
+
+    }
+    return Tinh;
+};
+
+// return Huyen form Place.Place is type of Google api
+placeUtil.getHuyen = function(place) {
+
+    var Huyen ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if (addr.types[0] == placeUtil.type.HUYEN){
+            Huyen = addr.long_name;
+        }
+
+    }
+    return Huyen;
+};
+
+// return Xa form Place.Place is type of Google api
+placeUtil.getXa = function(place) {
+
+    var Xa ="";
+
+    for (var i = 0; i < place.address_components.length; i++)
+    {
+        var addr = place.address_components[i];
+
+        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
+        {
+            Xa = addr.long_name;
+        }
+
+    }
+    return Xa;
+};
+
+// chuan hoa va bo dau 1 string
+placeUtil.chuanHoa = function(string) {
+
+    var result = util.locDau(string);
+
+    var COMMON_WORDS = {
+        '-district': '',
+        '-vietnam':'',
+        'hanoi' : 'ha-noi'
+    };
+    for (var f in COMMON_WORDS) {
+        result = result.replace(f,COMMON_WORDS[f]);
+    }
+
+    return result;
+};
+
+placeUtil.type = {
     TINH : "administrative_area_level_1",
     HUYEN : "administrative_area_level_2",
     XA : "administrative_area_level_3",
-    XA2 : "sublocality_level_1"
+    XA2 : "sublocality_level_1",
+    DUONG : "route"
 };
 
-internals.typeName = {
-    TINH : "Tinh",
-    HUYEN : "Huyen",
-    XA : "Xa",
-    DUONG : "Duong",
-    DIA_DIEM: "Dia diem"
+placeUtil.typeName = {
+    TINH : "Tỉnh",
+    HUYEN : "Huyện",
+    XA : "Xã",
+    DUONG : "Đường",
+    DIA_DIEM: "Địa điểm"
 
 };
 
-internals.isHuyen = function(place) {
-    let placeTypes=place.types;
 
-    if (_.indexOf(placeTypes, internals.type.HUYEN) > -1) {
+placeUtil.isHuyen = function(place) {
+    var placeTypes=place.types;
+
+    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
         return true;
     }
 
     if (_.indexOf(placeTypes, 'locality') > -1
         && _.indexOf(placeTypes, 'political') > -1
-        && place.description&&place.description.indexOf("tp.") > -1
+        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
     ) {
         return true;
     }
 };
 
-internals.getTypeName = function(place) {
-    let placeTypes = place.types;
+placeUtil.getTypeName = function(place) {
+    var placeTypes = place.types;
 
-    if (_.indexOf(placeTypes, internals.type.TINH) > -1) {
-        return internals.typeName.TINH;
+    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
+        return placeUtil.typeName.TINH;
     }
-    if (internals.isHuyen(place)) {
-        return internals.typeName.HUYEN;
-    }
-
-    if (_.indexOf(placeTypes, internals.type.XA) > -1) {
-        return internals.typeName.XA;
+    if (placeUtil.isHuyen(place)) {
+        return placeUtil.typeName.HUYEN;
     }
 
-    if (_.indexOf(placeTypes, internals.type.XA2) > -1) {
-        return internals.typeName.XA;
+    if (_.indexOf(placeTypes, placeUtil.type.XA) > -1) {
+        return placeUtil.typeName.XA;
     }
 
-    return internals.typeName.DIA_DIEM;
+    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+        return placeUtil.typeName.XA;
+    }
+
+    if (_.indexOf(placeTypes, placeUtil.type.DUONG) > -1) {
+        return placeUtil.typeName.DUONG;
+    }
+
+    return placeUtil.typeName.DIA_DIEM;
 };
 
 
-internals.isOnePoint = function(place) {
-    let name = internals.relandTypeName || internals.getTypeName(place);
-    return  name === internals.typeName.DIA_DIEM || name === internals.typeName.DUONG;
+placeUtil.isOnePoint = function(place) {
+    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
 };
 
+module.exports  = placeUtil;
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
-    module.exports  = internals;
-    //if(window)
-    //    window.RewayPlaceUtil = internals;
-} 
-
-if (typeof window !== 'undefined')
-   window.RewayPlaceUtil = internals;
-
-
-
-
+if (typeof(window) !== 'undefined')
+   window.RewayPlaceUtil = placeUtil;
