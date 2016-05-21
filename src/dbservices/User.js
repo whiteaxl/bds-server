@@ -194,6 +194,14 @@ class UserModel {
       callBack(all);
     });
   }
+
+  upsert(userDto) {
+    bucket.upsert(userDto.userID, userDto, function (err, res) {
+        if (err) {
+            console.log("ERROR:" + err);
+        }
+    })
+  }
 }
 
 module.exports = UserModel;
