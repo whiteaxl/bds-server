@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ab536d2d9c59e7014786"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f2b6092a70823af3df21"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18896,6 +18896,11 @@
 	            kq = kqReplaceA;
 	    }
 	    return kq;
+	};
+
+	util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
+	    var kqRemove = striptags(inputString);
+	    return (kqRemove.replace(replaceString,"")).trim();
 	};
 
 
