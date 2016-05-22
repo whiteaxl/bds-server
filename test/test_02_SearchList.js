@@ -779,6 +779,7 @@ describe("02.Find API testsuite",function(){
       .end(function(err,res){
 
         console.log(res.body.viewport);
+        console.log(res.body.length);
 
         for (var e in res.body.list) {
           let one =res.body.list[e];
@@ -786,6 +787,7 @@ describe("02.Find API testsuite",function(){
         }
 
         res.body.viewport.center.formatted_address.should.equal('251 Trần Khát Chân, Thanh Nhàn, Hai Bà Trưng, Hà Nội, Vietnam');
+        res.body.viewport.center.name.should.equal('Hai Bà Trưng, Hà Nội');
 
         console.log("\n testReturnBoxTitle, length:" + res.body.length);
         done();
@@ -793,6 +795,101 @@ describe("02.Find API testsuite",function(){
   };
 
   it("Tim kiem - testReturnBoxTitle ",testReturnBoxTitle);
+
+  //polygon
+
+  var testPolygon = function(done){
+    server
+      .post("/api/find")
+      .send({ loaiTin: 0,
+        polygon: [
+          {lat:20.986007099732642,lon:105.84372998042551},
+          {lat:21.032107100267314,lon:105.84372998042551},
+          {lat:21.032107100267314,lon:105.87777141957429},
+          {lat:20.986007099732642,lon:105.87777141957429}] }
+      )
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+
+        console.log(res.body.viewport);
+
+        for (var e in res.body.list) {
+          let one =res.body.list[e];
+          //console.log(one.image);
+        }
+
+        res.body.viewport.center.formatted_address.should.equal('251 Trần Khát Chân, Thanh Nhàn, Hai Bà Trưng, Hà Nội, Vietnam');
+        res.body.length.should.equal(69);
+
+        console.log("\n testPolygon, length:" + res.body.length);
+        done();
+      });
+  };
+
+  it("Tim kiem - testPolygon ",testPolygon);
+
+  var testPolygon1 = function(done){
+    server
+      .post("/api/find")
+      .send({ loaiTin: 0,
+        polygon: [
+          {lat:20.986007099732642,lon:105.84372998042551},
+          {lat:21.032107100267314,lon:105.84372998042551},
+          {lat:21.032107100267314,lon:105.87777141957429}] }
+      )
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+
+        console.log(res.body.viewport);
+
+        for (var e in res.body.list) {
+          let one =res.body.list[e];
+          //console.log(one.image);
+        }
+
+        res.body.viewport.center.formatted_address.should.equal('2 Lê Ngọc Hân, Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội, Vietnam');
+        res.body.length.should.equal(14);
+
+        console.log("\n testPolygon, length:" + res.body.length);
+        done();
+      });
+  };
+
+  it("Tim kiem - testPolygon1 ",testPolygon1);
+
+
+  var testPolygon2 = function(done){
+    server
+      .post("/api/find")
+      .send({ loaiTin: 0,
+        polygon: [
+          {lat:20.986007099732642,lon:105.84372998042551},
+          {lat:21.032107100267314,lon:105.87777141957429},
+          {lat:20.986007099732642,lon:105.87777141957429}] }
+      )
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+
+        console.log(res.body.viewport);
+
+        for (var e in res.body.list) {
+          let one =res.body.list[e];
+          //console.log(one.image);
+        }
+
+        res.body.viewport.center.formatted_address.should.equal('1 Lạc Trung, Vĩnh Tuy, Hai Bà Trưng, Hà Nội, Vietnam');
+        res.body.length.should.equal(55);
+
+        console.log("\n testPolygon, length:" + res.body.length);
+        done();
+      });
+  };
+
+  it("Tim kiem - testPolygon2 ",testPolygon2);
+
 
 
 
