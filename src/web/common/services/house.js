@@ -34,9 +34,25 @@
         var url = "/api/findBelowPrice";
         return $http.post(url,data);
       },
+      saveSearch: function(data){
+        var url = "/api/saveSearch";
+        return $http.post(url,data);
+      },
       //End Nhannc
+      checkUserExist: function(data){
+        var url = "/api/checkUserExist";
+        return $http.post(url,data);
+      },
       findGooglePlaceById: function(googlePlaceId){
         return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
+      },
+      login: function(data){
+        var url = "/api/login";
+        return $http.post(url,data);
+      },
+      signup: function(data){
+        var url = "/api/signup";
+        return $http.post(url,data);
       }
     };
   });

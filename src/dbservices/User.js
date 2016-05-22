@@ -27,6 +27,7 @@ class UserModel {
     if (userDto.email) {
       sql = `${sql} AND email='${userDto.email}'`
     }
+    console.log(sql);
     var query = N1qlQuery.fromString(sql);
 
     bucket.query(query, callback);
@@ -202,6 +203,29 @@ class UserModel {
         }
     })
   }
+
+  isUserExist(data, onSuccess) {
+    var sql = `select count(*) from default where type='User'`;
+
+    if (data.phone) {
+      sql = `${sql} AND phone='${data.phone}'`
+    }
+    if (data.email) {
+      sql = `${sql} AND email='${data.email}'`
+    }
+    var query = N1qlQuery.fromString(sql);
+
+    bucket.query(query, function (err, res) {
+      if (err) {
+          console.log('query failed'.red, err);
+          return;
+      }
+      // console.log('success!', res[0].cnt==1);
+      console.log("before reply count = " + res[0].$1);
+      onSuccess(res[0].$1==1);
+    });
+  }
+
 }
 
 module.exports = UserModel;

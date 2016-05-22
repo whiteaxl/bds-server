@@ -83,7 +83,7 @@ var hapiReact = require('hapi-react-views');
         'js' : hapiReact        
       },
       relativeTo: __dirname,
-      path: [Path.join(__dirname, '../web')]
+      path: [Path.join(__dirname, '../web')],
     });
     
   });
@@ -109,7 +109,8 @@ var hapiReact = require('hapi-react-views');
         directory: {
           path: Path.join(__dirname, '../assets')          
         }
-      }
+      },
+      config: { auth: false }
     },
     {
       method: 'GET',
@@ -118,7 +119,8 @@ var hapiReact = require('hapi-react-views');
         directory: {
           path: Path.join(__dirname, '../web')          
         }
-      }
+      },
+      config: { auth: false }
     },
     // {
     //   method: 'GET',
@@ -136,7 +138,8 @@ var hapiReact = require('hapi-react-views');
         directory: {
           path: Path.join(__dirname, '../lib/')          
         }
-      }
+      },
+      config: { auth: false }
     },
     {
       method: 'GET',
@@ -145,7 +148,8 @@ var hapiReact = require('hapi-react-views');
         directory: {
           path: Path.join(__dirname, '../../bower_components')          
         }
-      }
+      },
+      config: { auth: false }
     }]
     );
   });

@@ -58,6 +58,12 @@
 			if(model)
 				return model.formatted_address;
 		}
+		vm.loginbox = {};
+		vm.showDangNhap = function(){
+			vm.loginbox.resetLoginBox(vm);
+		}
+
+		
 
 		function init(){
 			//nhannc

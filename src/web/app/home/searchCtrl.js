@@ -40,6 +40,11 @@
 			vm.viewMode = "map";
 			$scope.bodyClass = "page-search";
 		}
+		vm.saveSearch = function(){
+			HouseService.saveSearch().then(function(res){
+				alert(res.data);
+			})
+		}
 
 		if(!$scope.placeId)
 			$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
@@ -152,9 +157,9 @@
 		vm.hideDetail = function() {
 			vm.map.hideInfoWindow('iw');
 		};
-
+		// window.DesignCommon.adjustPage();
 		$scope.$on('$viewContentLoaded', function(){
-			window.DesignCommon.adjustPage();
+			//window.DesignCommon.adjustPage();
 			if($state.current.data){
 				//$scope.bodyClass = $state.current.data.bodyClass;
 				$scope.bodyClass = "page-search";

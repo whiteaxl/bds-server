@@ -112,20 +112,7 @@
                                 <li>
                                     <a class="link" href="" title="">Lưu tìm kiếm</a>
                                 </li>
-                                <li>
-                                    <a class="btn" href="" title="">Đăng nhập</a>
-                                </li>
-                                <!-- <li>
-                                    <a class="link" href="" title=""><span class="user"><i class="fa fa-user"></i> Nguyễn Tiến Chung</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="" title="">Thông tin tài khoản</a>
-                                        </li>
-                                        <li class="border">
-                                            <a href="" title=""><i class="fa fa-sign-out"></i> Thoát</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
+                                <user-info-menu ></user-info-menu>
                             </ul>
                         </nav>
                     </div>
@@ -189,7 +176,7 @@
                                 </div>
                             </div>
                             <div class="col w-160">
-                                <button class="btn-find" data-find="true">
+                                <button class="btn-find" data-find="true" ng-click="mc.saveSearch();">
                                     <i class="fa fa-star"></i> <span class="text">Save search</span>
                                 </button>
                             </div>
@@ -613,6 +600,7 @@
                 </ul>
             </nav>
         </div><!-- //box-find -->
+        <login-form loginbox="$root.loginbox"></login-form>
     </div><!-- //wrapper -->
 	 <!-- <script src="asset/js/common.min.js"></script>     -->
     <!-- <script src="/web/dist/vendor.bundle.js"></script>

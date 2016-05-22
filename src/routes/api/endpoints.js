@@ -1,5 +1,6 @@
 var Handlers = require('./handlers');
 var findHandler = require('./findHandler');
+var loginHandler = require('./loginHandler');
 
 var internals = {};
 
@@ -67,7 +68,45 @@ internals.endpoints = [
             description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
             tags: ['api']
         }
+	},
+	{
+        method: 'POST',
+        path: '/api/saveSearch',
+        handler: Handlers.saveSearch,
+        config : {
+            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+            tags: ['api'],
+			auth: 'jwt'
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/checkUserExist',
+        handler: loginHandler.checkUserExist,
+        config : {
+            description: 'Kiem tra xem user da ton tai chua',
+            tags: ['api']
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/login',
+        handler: loginHandler.login,
+        config : {
+            description: 'login',
+            tags: ['api']
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/signup',
+        handler: loginHandler.signup,
+        config : {
+            description: 'login',
+            tags: ['api']
+        }
 	}
+
 
 ];
 

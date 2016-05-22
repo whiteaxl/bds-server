@@ -18,6 +18,10 @@ var services = require("../../lib/services");
 var constant = require("../../lib/constant");
 var danhMuc  = require("../../lib/DanhMuc");
 
+var UserService = require('../../dbservices/User');
+var JWT    = require('jsonwebtoken');
+
+
 var _ = require("lodash");
 var moment = require("moment");
 
@@ -26,6 +30,7 @@ var geoUtil = require("../../lib/geoUtil");
 var DEFAULT_SEARCH_RADIUS = 5; //km
 
 var adsService = new AdsService();
+var userService = new UserService();
 
 var Q_FIELD = {
 	limit : "limit",
@@ -835,5 +840,11 @@ function _transformDetailAds(ads) {
 
 
 }
+
+internals.saveSearch = function(req, reply){
+    reply("authorized to use this feature");
+}
+
+
 
 module.exports = internals;

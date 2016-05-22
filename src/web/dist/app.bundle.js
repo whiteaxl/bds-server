@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "839ccac1b995523b8223"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ab536d2d9c59e7014786"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -588,15 +588,27 @@
 	// require("./src/app/app.js");
 	__webpack_require__(1);
 	__webpack_require__(2);
+
+	//Controller
 	__webpack_require__(3);
 	__webpack_require__(4);
 	__webpack_require__(5);
+	__webpack_require__(4);
 	__webpack_require__(6);
+
+	//services
 	__webpack_require__(7);
 
+	//Directives
 	__webpack_require__(8);
 	__webpack_require__(9);
+	__webpack_require__(10);
+
+	__webpack_require__(11);
+	//Libs
 	__webpack_require__(12);
+	__webpack_require__(13);
+	__webpack_require__(16);
 
 
 
@@ -913,7 +925,7 @@
 	(function() {
 	  'use strict';
 	  window.initData = {};
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage'])
 	  .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -921,7 +933,20 @@
 	      lat: 16.0439,
 	      lng: 108.199
 	    }
+
+	    $rootScope.loginbox = {};
+	    $rootScope.showDangNhap = function(){
+	      $rootScope.loginbox.resetLoginBox();
+	    }
 	    
+	    $rootScope.postPageRendered = function(){
+	      // alert('aaa');
+	      //window.DesignCommon.adjustPage();
+	    }
+	    $rootScope.signout = function(){
+	        $rootScope.loginbox.resetLoginBox(); 
+	    }
+
 	    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
 	      //alert(toState.name);
 	      if (toState.name === 'home') {
@@ -991,9 +1016,29 @@
 	      };
 
 	  }]);
-	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider){
+	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
 	      // For any unmatched url, send to /route1
 	      $locationProvider.html5Mode(true);
+
+	      $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+	       return {
+	           'request': function (config) {
+	               config.headers = config.headers || {};
+	               if ($localStorage.relandToken) {
+	                   config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
+	               }
+	               return config;
+	           },
+	           'responseError': function (response) {
+	               if (response.status === 401 || response.status === 403) {
+	                   //$location.path('/signin');
+	                   alert("Đăng nhập hệ thống để sử dụng tính năng này");
+	               }
+	               return $q.reject(response);
+	           }
+	       };
+	      }]);
+
 	      //$urlRouterProvider.otherwise("/web/list.html")
 	      //alert('sss');
 	      // $interpolateProvider.startSymbol('{[{');
@@ -1035,6 +1080,7 @@
 	        url: "/index.html",
 	        //templateUrl: "/web/index_content.html",
 	        controller: "MainCtrl",
+	        controllerAs: 'mc',
 	        resolve: {
 	          title: function(HouseService) {
 	            //alert(HouseService);
@@ -1130,6 +1176,12 @@
 				if(model)
 					return model.formatted_address;
 			}
+			vm.loginbox = {};
+			vm.showDangNhap = function(){
+				vm.loginbox.resetLoginBox(vm);
+			}
+
+			
 
 			function init(){
 				//nhannc
@@ -1339,6 +1391,11 @@
 				vm.viewMode = "map";
 				$scope.bodyClass = "page-search";
 			}
+			vm.saveSearch = function(){
+				HouseService.saveSearch().then(function(res){
+					alert(res.data);
+				})
+			}
 
 			if(!$scope.placeId)
 				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
@@ -1451,9 +1508,9 @@
 			vm.hideDetail = function() {
 				vm.map.hideInfoWindow('iw');
 			};
-
+			// window.DesignCommon.adjustPage();
 			$scope.$on('$viewContentLoaded', function(){
-				window.DesignCommon.adjustPage();
+				//window.DesignCommon.adjustPage();
 				if($state.current.data){
 					//$scope.bodyClass = $state.current.data.bodyClass;
 					$scope.bodyClass = "page-search";
@@ -1827,6 +1884,35 @@
 /* 6 */
 /***/ function(module, exports) {
 
+	(function() {
+		'use strict';
+		var controllerId = 'LoginCtrl';
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+			var vm = this;
+			
+			vm.email = "";
+			vm.password = "";
+			vm.email="";
+			vm.signin = function(){
+				var loginForm = $('#form-login');
+				if (loginForm.valid()) {
+				  // If the form is invalid, submit it. The form won't actually submit;
+				  // this will just cause the browser to display the native HTML5 error messages.
+					alert("register/signin with email " + vm.email + " password " + vm.password);
+				}
+				vm.password = "";
+				vm.email = "";
+			}
+
+
+		});
+
+	})();
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
 	(function () {
 	  'use strict';
 	  angular
@@ -1863,9 +1949,25 @@
 	        var url = "/api/findBelowPrice";
 	        return $http.post(url,data);
 	      },
+	      saveSearch: function(data){
+	        var url = "/api/saveSearch";
+	        return $http.post(url,data);
+	      },
 	      //End Nhannc
+	      checkUserExist: function(data){
+	        var url = "/api/checkUserExist";
+	        return $http.post(url,data);
+	      },
 	      findGooglePlaceById: function(googlePlaceId){
 	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
+	      },
+	      login: function(data){
+	        var url = "/api/login";
+	        return $http.post(url,data);
+	      },
+	      signup: function(data){
+	        var url = "/api/signup";
+	        return $http.post(url,data);
 	      }
 	    };
 	  });
@@ -1873,7 +1975,149 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
+/***/ function(module, exports) {
+
+	angular.module('bds')
+	.directive("loginForm", [
+	  function() {
+	    return {
+	      restrict: 'E',
+	      scope: {email: "=", loginbox: "="},
+	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
+	        templateUrl: "/web/common/directives/loginTemplate.html",
+	        replace: 'true',
+	        controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
+	        function($scope,$rootScope, $http, $window,$localStorage, HouseService) {
+	          $scope.loginError = false;
+	          vm = this;
+	          vm.email = "";
+	          vm.password = "";
+	          vm.enterEmail = true;
+	          vm.enterPassword = false;
+	          vm.userExist = false;
+	          vm.class = "";
+
+	          var formLogin = $("#form-login");
+	          $("#form-login").validate();
+	          if(formLogin.validate){
+	              formLogin.validate({
+	                  rules: {
+	                      email: {
+	                          required: true,
+	                          email: true
+	                      }
+	                  },
+	                  messages: {
+	                      email: {
+	                          required: 'Xin nhập email',
+	                          email: 'Email không hợp lệ'
+	                      }
+	                  }
+	              });    
+	          }
+
+
+	          $scope.loginbox.resetLoginBox = function(parent){
+	            vm.enterEmail = true;
+	            vm.userExist = false;
+	            vm.enterPassword = false;
+	            vm.password = "";
+	            $localStorage.relandToken = undefined;
+	          }
+	          vm.signin = function() {
+	            var loginForm = $('#form-login');
+	            var data = {
+	              email: vm.email,
+	              password: vm.password
+	            }
+	            if (loginForm.valid()) {
+	              // If the form is invalid, submit it. The form won't actually submit;
+	              if(vm.enterEmail == true){
+	                HouseService.checkUserExist(data).then(function(res){
+	                  vm.userExist = res.data.exist;
+	                  vm.enterPassword = true;
+	                  vm.enterEmail = false;  
+	                });
+	              } else if(vm.enterPassword == true){
+	                if(vm.userExist==true){//sign in
+	                  HouseService.login(data).then(function(res){
+	                    if(res.data.login==true){
+	                      //alert("signin with email " + $scope.email + " password " + vm.password + " and token: " + res.data.token);  
+	                      $window.token = res.data.token;
+	                      $localStorage.relandToken = res.data.token;
+	                      $rootScope.userName = res.data.userName;
+	                      vm.class = "has-sub";
+
+	                      $('#box-login').click();
+	                    }else{
+	                      alert(res.data.message);
+	                    }                    
+	                  });
+	                }else{//register
+	                  HouseService.signup(data).then(function(res){
+	                    alert("register with email " + $scope.email + " password " + vm.password);
+	                  });
+	                }
+	              }
+	            }
+	          }
+	        }
+	        ],
+	        controllerAs: 'lc',
+	      }
+	    }
+	    ]);
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	angular.module('bds')
+	.directive("userInfoMenu", [
+	  function() {
+	    return {
+	      restrict: 'E',
+	      scope: {},
+	        templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
+	        replace: 'true',
+	        controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
+	        function($scope, $rootScope, $http, $window,$localStorage, HouseService) {
+	          $scope.loginError = false;
+	          vm = this;
+	          vm.profile = function() {
+	            alert("todo");
+	          }
+	          vm.signout = function(){
+	          	$localStorage.relandToken = undefined;
+	          	$rootScope.userName = undefined;
+	          }
+	        }
+	        ],
+	        controllerAs: 'uim',
+	      }
+	    }
+	    ]);
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	angular.module('bds').directive('afterRender', ['$timeout', function ($timeout) {
+	    var def = {
+	        restrict: 'A',
+	        terminal: true,
+	        transclude: false,
+	        link: function (scope, element, attrs) {
+	            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+	            //alert('ssss');
+	        }
+	    };
+	    return def;
+	}]);
+
+/***/ },
+/* 11 */
 /***/ function(module, exports) {
 
 	var app = angular.module('AngularGoogleMap', ['uiGmapgoogle-maps']);
@@ -2014,7 +2258,7 @@
 
 
 /***/ },
-/* 8 */
+/* 12 */
 /***/ function(module, exports) {
 
 	var danhMuc = {};
@@ -2404,14 +2648,14 @@
 	//import {LoaiNhaDatBan} from "danhMuc"...
 
 /***/ },
-/* 9 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _ = __webpack_require__(10);
+	var _ = __webpack_require__(14);
 
-	var util = __webpack_require__(12);
+	var util = __webpack_require__(16);
 
 	var placeUtil = {};
 
@@ -2678,7 +2922,7 @@
 
 
 /***/ },
-/* 10 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -18549,10 +18793,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module), (function() { return this; }())))
 
 /***/ },
-/* 11 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -18568,12 +18812,12 @@
 
 
 /***/ },
-/* 12 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var striptags = __webpack_require__(13);
+	var striptags = __webpack_require__(17);
 	var util = {};
 
 	util.locDau = function(str) {
@@ -18669,7 +18913,7 @@
 	   window.RewayUtil = util;
 
 /***/ },
-/* 13 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';

@@ -40,6 +40,7 @@
     <script src="/web/asset/js/jquery.bxslider.min.js"></script>
     <script src="/web/asset/js/jquery.scroll.min.js"></script>
     <script src="/web/asset/js/jquery-ui.min.js"></script>
+    <script src="/web/asset/js/jquery.validate.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places" ></script>
     <!-- <script src="/src/lib/placeUtil.js"></script> -->
     <!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
@@ -48,20 +49,25 @@
     <![endif]-->
     <script src="/web/asset/js/common.min.js"></script>
     <!-- //Script -->    
-    <!-- <script src="/web/dist/vendor.bundle.js"></script> -->
-    <script src="/bower/angular/angular.js"></script>
+    <script src="/web/dist/vendor.bundle.js"></script>
+    <!-- <script src="/bower/angular/angular.js"></script>
     <script src="/bower/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/bower/angular-cookies/angular-cookies.js"></script>
     <script src="/bower/angular-simple-logger/dist/angular-simple-logger.js"></script>
-    <script src="/bower/ngmap/build/scripts/ng-map.min.js"></script>
+    <script src="/bower/ngmap/build/scripts/ng-map.min.js"></script> -->
     <!-- <script src="/bower/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script> -->
-    <script src="/bower/angular-messages/angular-messages.js"></script>
+    <!--onunload="myFun <script src="/bower/angular-messages/angular-messages.js"></script> -->
     
     
     <!-- <script src="/bower/angular-google-maps/dist/angular-google-maps.js"></script> -->
     <!-- <script src="/bower/angular-bootstrap/ui-bootstrap.js"></script> -->
     <script src="/web/dist/rewaylib.bundle.js"></script>
     <script src="/web/dist/app.bundle.js"></script>
+    <script type="text/javascript">
+        window.onbeforeunload = function () {
+            localStorage.removeItem("ngStorage-relandToken");
+        }; 
+    </script>
     
     
     <base href="/web/">
@@ -162,6 +168,6 @@
     </style>
 </head>
 
-<body ng-class="bodyClass" ui-view>
+<body ng-class="bodyClass" onunload="alert("before unload");" ui-view>
 </body>
 </html>
