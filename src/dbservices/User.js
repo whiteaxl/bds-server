@@ -204,6 +204,7 @@ class UserModel {
     })
   }
 
+
   isUserExist(data, onSuccess) {
     var sql = `select count(*) from default where type='User'`;
 
@@ -223,6 +224,46 @@ class UserModel {
       // console.log('success!', res[0].cnt==1);
       console.log("before reply count = " + res[0].$1);
       onSuccess(res[0].$1==1);
+    });
+  }
+
+  createUserForWeb(data, callback){
+    this.isUserExist(data,function(isExist){
+      if(isExist==true){
+        reply({
+          result: undefined,
+          err: constant.DB_ERR.USER_EXISTS
+        })
+      }else{
+
+        bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
+          if (err) {
+            callback(err, res);
+          } else {
+            console.log(res);
+
+            var userID = "User_" + res.value;
+
+            data.type = "User";
+            data.id = userID;
+            data._id = userID;
+            data.name = data.email;
+            console.log("before upsert " + data.id);
+
+            bucket.upsert(data.id, data, function (err, res) {
+              if (err) {
+                console.log("ERROR:" + err);
+                callback({code:99, msg:err.toString()})
+              }else{
+                log.info("user created:", res);
+                callback(null, data);
+              }
+            });
+          }
+        });
+
+        
+      }
     });
   }
 

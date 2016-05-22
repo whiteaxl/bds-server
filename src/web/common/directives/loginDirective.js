@@ -21,20 +21,20 @@ angular.module('bds')
           var formLogin = $("#form-login");
           $("#form-login").validate();
           if(formLogin.validate){
-              formLogin.validate({
-                  rules: {
-                      email: {
-                          required: true,
-                          email: true
-                      }
-                  },
-                  messages: {
-                      email: {
-                          required: 'Xin nhập email',
-                          email: 'Email không hợp lệ'
-                      }
-                  }
-              });    
+            formLogin.validate({
+              rules: {
+                email: {
+                  required: true,
+                  email: true
+                }
+              },
+              messages: {
+                email: {
+                  required: 'Xin nhập email',
+                  email: 'Email không hợp lệ'
+                }
+              }
+            });    
           }
 
 
@@ -49,7 +49,7 @@ angular.module('bds')
             var loginForm = $('#form-login');
             var data = {
               email: vm.email,
-              password: vm.password
+              matKhau: vm.password
             }
             if (loginForm.valid()) {
               // If the form is invalid, submit it. The form won't actually submit;
@@ -64,7 +64,7 @@ angular.module('bds')
                   HouseService.login(data).then(function(res){
                     if(res.data.login==true){
                       //alert("signin with email " + $scope.email + " password " + vm.password + " and token: " + res.data.token);  
-                      $window.token = res.data.token;
+                      //$window.token = res.data.token;
                       $localStorage.relandToken = res.data.token;
                       $rootScope.userName = res.data.userName;
                       vm.class = "has-sub";
@@ -76,7 +76,10 @@ angular.module('bds')
                   });
                 }else{//register
                   HouseService.signup(data).then(function(res){
-                    alert("register with email " + $scope.email + " password " + vm.password);
+                    $localStorage.relandToken = res.data.token;
+                    $rootScope.userName = res.data.userName;
+                    vm.class = "has-sub";
+                    $('#box-login').click();
                   });
                 }
               }

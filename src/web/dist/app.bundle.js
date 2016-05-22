@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f2b6092a70823af3df21"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0103ed37a2a3ddc47102"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -594,21 +594,20 @@
 	__webpack_require__(4);
 	__webpack_require__(5);
 	__webpack_require__(4);
-	__webpack_require__(6);
 
 	//services
-	__webpack_require__(7);
+	__webpack_require__(6);
 
 	//Directives
+	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
-	__webpack_require__(10);
 
-	__webpack_require__(11);
+
 	//Libs
-	__webpack_require__(12);
-	__webpack_require__(13);
-	__webpack_require__(16);
+	__webpack_require__(10);
+	__webpack_require__(11);
+	__webpack_require__(14);
 
 
 
@@ -1884,35 +1883,6 @@
 /* 6 */
 /***/ function(module, exports) {
 
-	(function() {
-		'use strict';
-		var controllerId = 'LoginCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
-			var vm = this;
-			
-			vm.email = "";
-			vm.password = "";
-			vm.email="";
-			vm.signin = function(){
-				var loginForm = $('#form-login');
-				if (loginForm.valid()) {
-				  // If the form is invalid, submit it. The form won't actually submit;
-				  // this will just cause the browser to display the native HTML5 error messages.
-					alert("register/signin with email " + vm.email + " password " + vm.password);
-				}
-				vm.password = "";
-				vm.email = "";
-			}
-
-
-		});
-
-	})();
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
 	(function () {
 	  'use strict';
 	  angular
@@ -1975,7 +1945,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	angular.module('bds')
@@ -2001,20 +1971,20 @@
 	          var formLogin = $("#form-login");
 	          $("#form-login").validate();
 	          if(formLogin.validate){
-	              formLogin.validate({
-	                  rules: {
-	                      email: {
-	                          required: true,
-	                          email: true
-	                      }
-	                  },
-	                  messages: {
-	                      email: {
-	                          required: 'Xin nhập email',
-	                          email: 'Email không hợp lệ'
-	                      }
-	                  }
-	              });    
+	            formLogin.validate({
+	              rules: {
+	                email: {
+	                  required: true,
+	                  email: true
+	                }
+	              },
+	              messages: {
+	                email: {
+	                  required: 'Xin nhập email',
+	                  email: 'Email không hợp lệ'
+	                }
+	              }
+	            });    
 	          }
 
 
@@ -2029,7 +1999,7 @@
 	            var loginForm = $('#form-login');
 	            var data = {
 	              email: vm.email,
-	              password: vm.password
+	              matKhau: vm.password
 	            }
 	            if (loginForm.valid()) {
 	              // If the form is invalid, submit it. The form won't actually submit;
@@ -2044,7 +2014,7 @@
 	                  HouseService.login(data).then(function(res){
 	                    if(res.data.login==true){
 	                      //alert("signin with email " + $scope.email + " password " + vm.password + " and token: " + res.data.token);  
-	                      $window.token = res.data.token;
+	                      //$window.token = res.data.token;
 	                      $localStorage.relandToken = res.data.token;
 	                      $rootScope.userName = res.data.userName;
 	                      vm.class = "has-sub";
@@ -2056,7 +2026,10 @@
 	                  });
 	                }else{//register
 	                  HouseService.signup(data).then(function(res){
-	                    alert("register with email " + $scope.email + " password " + vm.password);
+	                    $localStorage.relandToken = res.data.token;
+	                    $rootScope.userName = res.data.userName;
+	                    vm.class = "has-sub";
+	                    $('#box-login').click();
 	                  });
 	                }
 	              }
@@ -2070,7 +2043,7 @@
 	    ]);
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	angular.module('bds')
@@ -2100,7 +2073,7 @@
 	    ]);
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	angular.module('bds').directive('afterRender', ['$timeout', function ($timeout) {
@@ -2117,148 +2090,7 @@
 	}]);
 
 /***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	var app = angular.module('AngularGoogleMap', ['uiGmapgoogle-maps']);
-
-	app.factory('MarkerCreatorService', function () {
-
-	    var markerId = 0;
-
-	    function create(latitude, longitude) {
-	        var marker = {
-	            options: {
-	                animation: 1,
-	                labelAnchor: "28 -5",
-	                labelClass: 'markerlabel'    
-	            },
-	            latitude: latitude,
-	            longitude: longitude,
-	            id: ++markerId          
-	        };
-	        return marker;        
-	    }
-
-	    function invokeSuccessCallback(successCallback, marker) {
-	        if (typeof successCallback === 'function') {
-	            successCallback(marker);
-	        }
-	    }
-
-	    function createByCoords(latitude, longitude, successCallback) {
-	        var marker = create(latitude, longitude);
-	        invokeSuccessCallback(successCallback, marker);
-	    }
-
-	    function createByAddress(address, successCallback) {
-	        var geocoder = new google.maps.Geocoder();
-	        geocoder.geocode({'address' : address}, function (results, status) {
-	            if (status === google.maps.GeocoderStatus.OK) {
-	                var firstAddress = results[0];
-	                var latitude = firstAddress.geometry.location.lat();
-	                var longitude = firstAddress.geometry.location.lng();
-	                var marker = create(latitude, longitude);
-	                invokeSuccessCallback(successCallback, marker);
-	            } else {
-	                alert("Unknown address: " + address);
-	            }
-	        });
-	    }
-
-	    function createByCurrentLocation(successCallback) {
-	        if (navigator.geolocation) {
-	            navigator.geolocation.getCurrentPosition(function (position) {
-	                var marker = create(position.coords.latitude, position.coords.longitude);
-	                invokeSuccessCallback(successCallback, marker);
-	            });
-	        } else {
-	            alert('Unable to locate current position');
-	        }
-	    }
-
-	    return {
-	        createByCoords: createByCoords,
-	        createByAddress: createByAddress,
-	        createByCurrentLocation: createByCurrentLocation
-	    };
-
-	});
-
-	app.controller('MapCtrl', ['MarkerCreatorService', '$scope', function (MarkerCreatorService, $scope) {
-
-	        MarkerCreatorService.createByCoords(40.454018, -3.509205, function (marker) {
-	            marker.options.labelContent = 'Autentia';
-	            $scope.autentiaMarker = marker;
-	        });
-	        
-	        $scope.address = '';
-
-	        $scope.map = {
-	            center: {
-	                latitude: $scope.autentiaMarker.latitude,
-	                longitude: $scope.autentiaMarker.longitude
-	            },
-	            zoom: 12,
-	            markers: [{
-	        id: 0,
-	        coords: {
-	            latitude: 37.7749295,
-	            longitude: -122.4194155
-	        },
-	        data: 'restaurant'
-	    }, {
-	        id: 1,
-	        coords: {
-	            latitude: 37.79,
-	            longitude: -122.42
-	        },
-	        data: 'house'
-	    }, {
-	        id: 2,
-	        coords: {
-	            latitude: 37.77,
-	            longitude: -122.41
-	        },
-	        data: 'hotel'
-	    }],
-	            control: {},
-	            options: {
-	                scrollwheel: false
-	            }
-	        };
-
-	        $scope.map.markers.push($scope.autentiaMarker);
-
-	        $scope.addCurrentLocation = function () {
-	            MarkerCreatorService.createByCurrentLocation(function (marker) {
-	                marker.options.labelContent = 'You´re here';
-	                $scope.map.markers.push(marker);
-	                refresh(marker);
-	            });
-	        };
-	        
-	        $scope.addAddress = function() {
-	            var address = $scope.address;
-	            if (address !== '') {
-	                MarkerCreatorService.createByAddress(address, function(marker) {
-	                    $scope.map.markers.push(marker);
-	                    refresh(marker);
-	                });
-	            }
-	        };
-
-	        function refresh(marker) {
-	            $scope.map.control.refresh({latitude: marker.latitude,
-	                longitude: marker.longitude});
-	        }
-
-	    }]);
-
-
-
-/***/ },
-/* 12 */
+/* 10 */
 /***/ function(module, exports) {
 
 	var danhMuc = {};
@@ -2648,14 +2480,14 @@
 	//import {LoaiNhaDatBan} from "danhMuc"...
 
 /***/ },
-/* 13 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _ = __webpack_require__(14);
+	var _ = __webpack_require__(12);
 
-	var util = __webpack_require__(16);
+	var util = __webpack_require__(14);
 
 	var placeUtil = {};
 
@@ -2922,7 +2754,7 @@
 
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -18793,10 +18625,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module), (function() { return this; }())))
 
 /***/ },
-/* 15 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -18812,12 +18644,12 @@
 
 
 /***/ },
-/* 16 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var striptags = __webpack_require__(17);
+	var striptags = __webpack_require__(15);
 	var util = {};
 
 	util.locDau = function(str) {
@@ -18918,7 +18750,7 @@
 	   window.RewayUtil = util;
 
 /***/ },
-/* 17 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';

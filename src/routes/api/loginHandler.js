@@ -44,7 +44,7 @@ Request json{
     email: email cua nguoi dung
     phone: so dien thoai
     userId: id cua user
-    password: mat khau
+    matKhau: mat khau
 }
 */
 internals.login = function(req, reply){
@@ -59,8 +59,8 @@ internals.login = function(req, reply){
 
         if(res && res.length==1){
         	console.log(res[0]);
-            if(req.payload.password){
-                if(res[0].matKhau == req.payload.password){
+            if(req.payload.matKhau){
+                if(res[0].matKhau == req.payload.matKhau){
                 	var token = JWT.sign({
 	          			uid: res[0].userId,
 	          			exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
@@ -83,9 +83,25 @@ internals.login = function(req, reply){
     })
 }
 internals.signup = function(req, reply){
-    reply({
-        exist: true
-    });
+	userService.createUserForWeb(req.payload, function(err, user){
+		if(err!=null){
+			reply(err);
+		}else{
+			var token = JWT.sign({
+				uid: user.userID,
+	          	exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
+	          	userName: user.name,
+	          	userID: user.userID
+        	}, JWT_SECRET);
+        	//console.log("token" + token);
+        	var result = {};
+        	result.login = true;
+        	result.token = token;
+        	result.userName = user.name;
+        	result.userId = user.userID;
+        	reply(result);
+		}
+	})
 }
 
 module.exports = internals;

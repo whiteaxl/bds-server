@@ -9,4 +9,11 @@ internals.MSG = {
     USER_EXISTS : "Người sử dụng đã tồn tại!"
 };
 
+internals.DB_ERR = {
+	USER_EXISTS: {
+		code: 101,
+		message: "Người sử dụng đã tồn tại"
+	}
+}
+
 module.exports  = internals;
