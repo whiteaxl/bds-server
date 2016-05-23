@@ -29,6 +29,10 @@ internals.plugins = function () {
           events: { log: '*', response: '*', request: '*' }
         }]
       }
+    },
+    {
+      register: require('hapi-auth-jwt2'),
+      options: {}
     }
   ];
 };

@@ -1,6 +1,6 @@
 window.testData =  [
 {
-  "_type": "Ads",
+  "type": "Ads",
   "image": {
     "cover": "http://file4.batdongsan.com.vn/crop/745x510/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
     "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
@@ -52,7 +52,7 @@ window.testData =  [
 ,
 
 {
-  "_type": "Ads",
+  "type": "Ads",
   "image": {
     "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/30/20160330134616-2ece.jpg",
     "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/30/20160330134616-2ece.jpg",
@@ -98,7 +98,7 @@ window.testData =  [
   "chiTiet": "Bán biệt thự, nhà phố tại KĐT EcoPark, khu Vườn Tùng - Vườn Mai - Aquabay giá tốt nhất thị trường, LH: 0912 893 882.\r\r+ Biệt thự Vườn Tùng - Vườn Mai xây thô hoàn thiện mặt ngoài.\r1. Biệt thự song lập, diện tích cơ bản 162 m2, giá bán từ 41 tr/m2.\r2. Biệt thự đơn lập, diện tích cơ bản từ 324 m2, giá bán từ 35tr/m2.\rVà còn nhiều loại diện tích khác, căn góc, mặt lõi vườn hoa, VIP vị trí đẹp theo nhu cầu của khách hàng.\r\rLH: 0974 84 8998, để mua được giá tốt nhất.\rTư vấn nhiệt tình, trung thực.\r\r+ Biệt thự - nhà phố Aqua Bay EcoPark, biệt thự Mimosa, biệt thự Marina, nhà phố Thảo Nguyên, Thủy Nguyên.\r1. Biệt thự Mimosa & Marina diện tích 189m2 - 210m2 - 400m2 - 712m2.\r2. Nhà phố Thảo Nguyên, Thủy Nguyên diện tích: 90m2 - 100m2 - 110m2 - 180m2 - 200m2 - 250m2 - 300m2.\rVị trí đẹp, giá tốt nhất thị trường, thủ tục nhanh gọn.\rMọi thông tin chi tiết xin liên hệ:\rTel: 0912 893 882 - 0974 84 8998.\rTrân trọng!\r\n        \r\n            Tìm kiếm theo từ khóa: \r\n        \r\n                Bán biệt thự Ecopark Văn Giang\r\n            \r\n                , \r\n            \r\n                Bán biệt thự Ecopark\r\n            \r\n                , \r\n            \r\n                Bán biệt thự dự án Ecopark"
 },
 {
-  "_type": "Ads",
+  "type": "Ads",
   "image": {
     "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/29/20160329100405-0146.jpg",
     "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/29/20160329100405-0146.jpg",
@@ -200,7 +200,7 @@ window.testData =  [
     },
     "duAnFullName": "Vinhomes Riverside, Long Biên, Hà Nội"
   },
-  "_type": "Ads",
+  "type": "Ads",
   "cover": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/02/20160402112917-e2aa.jpg"
 }
 ]

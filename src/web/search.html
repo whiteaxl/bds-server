@@ -2,97 +2,121 @@
     <div class="wrapper" id="wrapper">
         <div class="main" id="main">
             <header class="header">
-                <div class="header-top">
-                    <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
-                    <h1 class="logo">
-                        <a href="index.html" title="Trulia">
-                            <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
-                        </a>
-                    </h1>
-                    <nav class="nav-main">
-                        <ul>
-                            <li>
-                                <a href="" title="">Bất động sản bán</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà đất</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Chung cư</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">BDS bán gần đây</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Bất động sản cho thuê</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà ở</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Phòng trọ</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Văn phòng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Cửa hàng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tham khảo giá nhà cho thuê</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Môn giới</a>
-                            </li>
-                            <li>
-                                <a href="" title="">Mobile</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="nav-user">
-                        <ul>
-                            <li>
-                                <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
-                            </li>
-                            <li>
-                                <a class="link" href="" title="">Lưu tìm kiếm</a>
-                            </li>
-                            <!--<li>
-                                <a class="btn" href="" title="">Đăng nhập</a>
-                            </li>-->
-                            <li>
-                                <a class="link" href="" title=""><span class="user"><i class="fa fa-user"></i> Nguyễn Tiến Chung</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Thông tin tài khoản</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title=""><i class="fa fa-sign-out"></i> Thoát</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <a href="#box-saved" class="btn-close" data-close="true"><i class="fa fa-angle-right"></i></a>
-                    <a href="#search-mobile" title="Search" class="btn-search" data-search="true"><i class="fa fa-search"></i></a>
-                </div>
-            </header><!-- //header -->
+                    <div class="header-top">
+                        <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
+                        <h1 class="logo">
+                            <a href="index.html" title="Trulia">
+                                <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                            </a>
+                        </h1>
+                        <nav class="nav-main">
+                            <ul>
+                                <li>
+                                    <a ng-click="mc.goToPageSearchMenu('0','0')" title="">BĐS bán</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatBanMenu"><a ng-click="mc.goToPageSearchMenu('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a ng-click="mc.goToPageSearchMenu('1','0')" title="">BĐS cho thuê</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatThueMenu"><a ng-click="mc.goToPageSearchMenu('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a title="">Cần mua</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatCanMuaMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Cần thuê</a>
+                                    <ul>
+                                        <li ng-repeat="item in mc.loaiNhaDatCanThueMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Tin tức</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Tin thị trường</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Phân tích - Nhận định</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Chính sách - Quản lý</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Thông tin quy hoạch</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">BĐS thế giới</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tài chính - Chứng khoán - BĐS</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tư vấn luật</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Lời khuyên</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Xây dựng - Kiến trúc</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Xây dựng</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Kiến trúc</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Nội - Ngoại thất</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Nội thất</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Ngoại thất</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Tư vấn nội thất</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" title="">Tin khác</a>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">Môi giới</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">Ứng dụng mobile</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav class="nav-user">
+                            <ul>
+                                <li>
+                                    <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="" title="">Lưu tìm kiếm</a>
+                                </li>
+                                <user-info-menu ></user-info-menu>
+                            </ul>
+                        </nav>
+                    </div>
+                </header><!-- //header -->
             <div class="box-filter">
                 <div class="utility">
                     <div class="container">
@@ -100,8 +124,8 @@
                             <div class="col w-340">
                                 <form action="search.html" method="post">
                                     <div class="search">
-                                        <input type="text" placeholder="Search by neighborhood, city, zip or address" class="form-control" id="autocomplete"> </input>
-                                        <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text">Search</span></button>
+                                        <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" class="form-control" id="autocomplete"> </input>
+                                        <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text"></span></button>
 
                                         
                                     </div>
@@ -111,7 +135,8 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_min" title="Giá từ" ng-options="price.value as price.lable for price in mc.sell_price_list_from">
+                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[0]" title="Giá từ" ng-change="mc.search()"
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
                                             </select>
                                         </div>
                                     </div>
@@ -120,7 +145,8 @@
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.price_max" title="Giá đến" ng-options="price.value as price.lable for price in mc.sell_price_list_to">
+                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[1]" title="Giá đến" ng-change="mc.search()"
+                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_to">
                                                 
                                             </select>
                                         </div>
@@ -129,7 +155,8 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_min" title="Diện tích từ" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
+                                    <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" ng-change="mc.search()"
+                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
                                     </select>
                                 </div>
                             </div>
@@ -138,17 +165,18 @@
                             </div>
                             <div class="col w-120">
                                 <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.dien_tich_max" title="Diện tích đến" ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
+                                    <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" ng-change="mc.search()"
+                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
                                     </select>
                                 </div>
                             </div>
                             <div class="col w-120">
                                 <div class="handle">
-                                    <a href="#filter" data-toggle-text="Less Filters" data-action="more">More Filters</a>
+                                    <a href="#filter" data-toggle-text="Bộ lọc thu gọn" data-action="more">Bộ lọc nâng cao</a>
                                 </div>
                             </div>
                             <div class="col w-160">
-                                <button class="btn-find" data-find="true">
+                                <button class="btn-find" data-find="true" ng-click="mc.saveSearch();">
                                     <i class="fa fa-star"></i> <span class="text">Save search</span>
                                 </button>
                             </div>
@@ -171,548 +199,199 @@
                             <div class="project" data-content="sale" style="display: block">
                                 <div class="row">
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="new_listings" value="new_listings"/> New Listings, Past Week</label>
+                                        <label><input type="checkbox" name="new_listings" value="new_listings"> Danh sách mới, Tuần trước</label>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="recently_reduced" value="recently_reduced"/> Reduced Prices, Past Week</label>
+                                        <label><input type="checkbox" name="recently_reduced" value="recently_reduced"> Giá giảm, Tuần trước</label>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="new_construction" value="new_construction"/> New Construction</label>
+                                        <label><input type="checkbox" name="new_construction" value="new_construction"> Nhà mới xây</label>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="fsbo" value="fsbo"/> For Sale By Owner</label>
+                                        <label><input type="checkbox" name="fsbo" value="fsbo"> Chính chủ</label>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="resale" value="resale"/> Resale</label>
+                                        <label><input type="checkbox" name="resale" value="resale"> Bán lại</label>
                                     </div>
                                     <div class="col col-25">
-                                        <label><input type="checkbox" name="roreclosures" value="roreclosures"/> Foreclosures</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project" data-content="sold">
-                                <div class="head">SOLD WITHIN</div>
-                                <div class="row">
-                                    <div class="col col-25">
-                                        <label><input type="radio" name="sold_within" value="sold_any" disabled> Any</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="radio" name="sold_within" value="sold_3m" disabled> 3 Months</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="radio" name="sold_within" value="sold_6m" disabled> 6 Months</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="radio" name="sold_within" value="sold_9m" disabled> 9 Months</label>
+                                        <label><input type="checkbox" name="roreclosures" value="roreclosures"> Bị tịch thu</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="group">
-                                <div class="head">PROPERTY TYPE</div>
+                                <div class="head">Loại bất động sản</div>
                                 <div class="row">
-                                    <div class="col col-25">
-                                        <label> <input data-action="all" type="checkbox" name="prop_type_all" checked disabled/> All</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_1"/> Single Family Home</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_2"/> Condo</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_3"/> Townhome</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_4"/> Coop</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_5"/> Apartment</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_6"/> Loft</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_7"/> TIC</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_8"/> Apt/Condo/Twnhm</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_9"/> Mobile/Manufactured</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_10"/> Farm/Ranch</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_11"/> Lot/Land</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_12"/> Multi-Family Home</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_13"/> Income/Investment</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_14"/> Houseboat</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label> <input data-action="property" type="checkbox" name="prop_type_15"/> Unknown</label>
+                                    <div class="col col-25" ng-repeat="loaiNhaDat in mc.moreFilter.loaiNhaDat track by $index">
+                                        <label> <input  type="checkbox" ng-change="mc.changeFilterLoaiNhaDat($index);" value="{{loaiNhaDat.value}}" ng-model="loaiNhaDat.selected"> {{loaiNhaDat.lable}}</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="control">
+                            <div class="group">
+                                <div class="head">Hướng nhà</div>
                                 <div class="row">
-                                    <div class="col col-33">
-                                        <div class="head">SQUARE FEET</div>
-                                        <div class="option">
-                                            <select class="select" data-select="true" name="sqft" title="Any Property Size">
-                                                <option value="">Any Property Size</option>
-                                                <option value="250">250+ sqft</option>
-                                                <option value="500">500+ sqft</option>
-                                                <option value="750">750+ sqft</option>
-                                                <option value="1000">1,000+ sqft</option>
-                                                <option value="1250">1,250+ sqft</option>
-                                                <option value="1500">1,500+ sqft</option>
-                                                <option value="1750">1,750+ sqft</option>
-                                                <option value="2000">2,000+ sqft</option>
-                                                <option value="2250">2,250+ sqft</option>
-                                                <option value="2500">2,500+ sqft</option>
-                                                <option value="2750">2,750+ sqft</option>
-                                                <option value="3000">3,000+ sqft</option>
-                                                <option value="4000">4,000+ sqft</option>
-                                                <option value="5000">5,000+ sqft</option>
-                                                <option value="10000">10,000+ sqft</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col col-33">
-                                        <div class="head">LOT SIZE</div>
-                                        <div class="option">
-                                            <select class="select" data-select="true" name="lot_size" title="Any Lot Size">
-                                                <option value="">Any Lot Size</option>
-                                                <option value="0.0459">2,000+ sqft</option>
-                                                <option value="0.0688">3,000+ sqft</option>
-                                                <option value="0.0918">4,000+ sqft</option>
-                                                <option value="0.1147">5,000+ sqft</option>
-                                                <option value="0.1721">7,500+ sqft</option>
-                                                <option value="0.25">1/4+ acre</option>
-                                                <option value="0.5">1/2+ acre</option>
-                                                <option value="1">1+ acre</option>
-                                                <option value="2">2+ acre</option>
-                                                <option value="5">5+ acre</option>
-                                                <option value="10">10+ acre</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col col-33">
-                                        <div class="head">Year Built</div>
-                                        <div class="row">
-                                            <div class="col col-40">
-                                                <input type="number" pattern="[0-9]*" placeholder="Min Year" class="form-control"/>
-                                            </div>
-                                            <div class="col col-20">
-                                                <div class="label">to</div>
-                                            </div>
-                                            <div class="col col-40">
-                                                <input type="number" pattern="[0-9]*" placeholder="Max Year" class="form-control"/>
-                                            </div>
-                                        </div>
+                                    <div class="col col-25" ng-repeat="huongNha in mc.moreFilter.huongNha track by $index">
+                                        <label> <input ng-change="mc.changeFilterHuongNha($index);"   type="checkbox" value="{{huongNha.value}}" ng-model="huongNha.selected"> {{huongNha.lable}}</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="keyword">
+
+
+
+                            <div class="project" data-content="sale" style="display: block">
                                 <div class="row">
-                                    <div class="col col-40">
-                                        <div class="head">KEYWORDS</div>
-                                        <div class="form">
-                                            <input type="text" name="keyword" class="form-control" placeholder="Garage, pool, patio, etc" autocomplete="off"/>
-                                            <button class="btn-action" data-action="add"><i class="fa fa-plus"></i> Thêm</button>
-                                        </div>
+                                    
+
+                                    <!-- <div class="col col-25">
+                                        <label>Loại BĐS <select class="select" data-select="true" ng-model="mc.searchData.loaiNhaDat" title="Loại BĐS" ng-options="loaiNhaDat.value as loaiNhaDat.lable for loaiNhaDat in mc.loaiNhaDatList">
+                                        </select></label>
+                                    </div> -->
+                                    <div class="col col-25">
+                                        <label>Số phòng ngủ <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongNgu" title="Số phòng ngủ" ng-options="soPhongNgu.value as soPhongNgu.lable for soPhongNgu in mc.soPhongNguList">
+                                        </select></label>
                                     </div>
-                                    <div class="col col-20">&nbsp;</div>
-                                    <div class="col col-40">
-                                        <a href="#mls" class="toggle">Find by MLS</a>
-                                        <div class="form" id="mls">
-                                            <input type="text" name="mls_id" class="form-control" placeholder="MLS ID" autocomplete="off"/>
-                                            <button class="btn-action" data-action="mls"><i class="fa fa-search"></i> Thêm</button>
-                                        </div>
+                                    <div class="col col-25">
+                                        <label>Số phòng tắm <select class="select" data-select="true" ng-model="mc.moreFilter.soPhongTam" title="Số phòng tắm" ng-options="soPhongTam.value as soPhongTam.lable for soPhongTam in mc.soPhongTamList">
+                                        </select></label>
                                     </div>
+                                    <div class="col col-25">
+                                        <label>Số tầng <select class="select" data-select="true" ng-model="mc.moreFilter.soTang" title="Số tầng" ng-options="soTang.value as soTang.lable for soTang in mc.soTangList">
+                                        </select></label>
+                                    </div>
+                                    <!-- <div class="col col-25">
+                                        <label>Hướng Nhà <select class="select" data-select="true" ng-model="mc.searchData.huongNha" title="Hướng Nhà" ng-options="huongNha.value as huongNha.lable for huongNha in mc.huongNhaList">
+                                        </select></label>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                         <div class="handle" data-action="fix">
                             <div class="container">
-                                <button type="submit" class="btn-submit">Apply</button>
+                                <button type="button" ng-click="mc.filter();" class="btn-submit">Apply</button>
                                 <button type="reset" class="btn-reset">Reset</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div><!-- //box-filter -->
-            <section class="box-search">
-                <div class="row">
-                    <div class="col col-60">
-                        <div class="map is-fixed" >
-
-                            <ng-map center="{{center}}" zoom-to-include-markers="auto" class="ngmap">
-                            <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})" id="{{ads_list[$index].adsID}}" >
-                                  <div class = "my1">
-                                    {{m.content}} 
-                                  </div>
-                                </custom-marker>
-                                <!-- <marker ng-repeat="m in markers track by $index" id = "{{ads_list[$index].adsID}}" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})"> -->
-                                    
-                                    
-                                <!-- </marker> -->
-
-                                <info-window id="iw">
-                                    <div ng-non-bindable="" class="row">
-                                            <div class="col col-50">
-                                                <div class="media" style="background-image: url({{mc.highlightAds.image.cover}});height: 100px;"></div>
-                                            </div>
-                                            <div class="col col-50">
-                                                
-                                                <div class="price">gia: {{mc.highlightAds.giaFmt}}</div>
-                                                <div class="info">dientich: {{mc.highlightAds.dientichFmt}}</div>
-                                                <div class="info">Căn hộ chung cư</div>
-                                            </div>
-                                    </div>
-                                </info-window>
-
-                                <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
-                                    <div ng-non-bindable="">
-                                        id: {{$index}}<br/>
-                                        name: {{mc.highlightAds.name}}<br/>
-
-                                        <a href="#">Click Here</a>
-                                    </div>
-                                </info-window> -->
-                            </ng-map>    
-                        </div>
-
-                        <nav class="nav sp">
-                            <ul>
-                                <li>
-                                    <a href="#box-find" data-filter="open" title="Local Info">Local Info</a>
-                                </li>
-                                <li>
-                                    <a href="#" title="">Save Search</a>
-                                </li>
-                                <li>
-                                    <a href="#" title="">List</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="pc">&nbsp;</div>
-                    </div>
-                    <div class="col col-40">
-                        <div class="block-04">
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col col-50">
-                                        <a class="media" href="#" title="">
-                                            <span class="img" style="background: url(asset/img/data/img-50.jpg)">Lennar New Homes</span>
-                                        </a>
-                                    </div>
-                                    <div class="col col-50">
-                                        <h3>
-                                            <a href="#" title="">Lennar New Homes</a>
-                                        </h3>
-                                        <p>Building where you want to live! From the mid-$200's</p>
-                                        <a class="btn-more" href="" title="">Learn More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- //block-04 -->
-                        <div class="block-05">
-                            <h2 class="head">318 California City, CA Homes For Sale & Real Estate</h2>
-                            <div class="handle">
-                                <div class="filter">
-                                    <div class="label">Sắp xếp: </div>
-                                    <div class="option">
-                                        <select class="select" style="width: 100px;" title="Sắp xếp" ng-model="mc.sortBy"  ng-options="sort.value as sort.lable for sort in mc.sortOptions" >
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="group">
-                                    <a href="" ui-sref="list" title="">List</a>
-                                    <a href="" title="">Map</a>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div ng-repeat="ads in ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-mouseout="mc.hideDetail();">
-                                    <div class="item">
-                                        <a class="link" href="" title="" >
-                                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
-                                            <span class="info"  >
-                                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
-                                                <span class="line">{{ads.soTangFmt}}</span>
-                                                <span class="line">{{ads.soPhongNguFmt}}</span>
-                                            </span>
-                                        </a>
-                                        <h3>
-                                            <a href="" title=""><span class="highlight">New Homes</span><span class="name">K Hovnanian's Four Seasons</span></a>
-                                        </h3>
-                                        <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- //block-05 -->
-                        <div class="block-06">
-                            <div class="stats">1 – 60 of 279 Results</div>
-                            <ul>
-                                <li>
-                                    <span>First</span>
-                                </li>
-                                <li>
-                                    <span>Previous</span>
-                                </li>
-                                <li>
-                                    <a href="" title="">Next</a>
-                                </li>
-                                <li>
-                                    <a href="" title="">Last</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="block-07">
-                            <ul>
-                                <li>
-                                    <a href="" title="">United States</a>
-                                </li>
-                                <li>
-                                    <a href="" title="">California</a>
-                                </li>
-                                <li>
-                                    <span>California City</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section><!-- //box-search -->
+            <div ng-include="mc.viewTemplateUrl"></div>
             <footer class="footer">
                <div class="footer-bot">
                    <div class="row">
                        <div class="col col-20">
                            <h3>
-                               <a href="" title="">Top Real Estate Markets</a>
+                               <a href="" title="">Top Thị trường BĐS Hà Nội</a>
                            </h3>
                            <ul>
                                <li>
-                                   <a href="" title="">San Francisco real estate</a>
+                                   <a href="" title="">Quận Ba Đình</a>
                                </li>
                                <li>
-                                   <a href="" title="">Brooklyn real estate</a>
+                                   <a href="" title="">Quận Cầu Giấy</a>
                                </li>
                                <li>
-                                   <a href="" title="">Manhattan real estate</a>
+                                   <a href="" title="">Quận Đống Đa</a>
                                </li>
                                <li>
-                                   <a href="" title="">Los Angeles real estate</a>
+                                   <a href="" title="">Quận Hà Đông</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">San Diego real estate</a>
+                                   <a href="" title="">Quận Hai Bà Trưng</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Miami real estate</a>
+                                   <a href="" title="">Quận Hoàn Kiếm</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Chicago real estate</a>
+                                   <a href="" title="">Quận Hoàng Mai</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Las Vegas real estate</a>
+                                   <a href="" title="">Quận Long Biên</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Queens real estate</a>
+                                   <a href="" title="">Quận Tây Hồ</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Austin real estate</a>
+                                   <a href="" title="">Quận Thanh Xuân</a>
                                </li>
                            </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+                           <a class="more" href="#" data-more="true" data-parent="col" title="more">Mở rộng</a>
                        </div>
                        <div class="col col-20">
                            <h3>
-                               <a href="" title="">Top Rental Markets</a>
+                               <a href="" title="">BĐS Hà Nội cần bán</a>
                            </h3>
                            <ul>
                                <li>
-                                   <a href="" title="">Houston apartments</a>
+                                   <a href="" title="">Bán căn hộ chung cư</a>
                                </li>
                                <li>
-                                   <a href="" title="">Las Vegas apartments</a>
+                                   <a href="" title="">Bán nhà riêng, nhà mặt phố</a>
                                </li>
                                <li>
-                                   <a href="" title="">San Antonio apartments</a>
+                                   <a href="" title="">Bán biệt thự, liền kề</a>
                                </li>
                                <li>
-                                   <a href="" title="">Phoenix apartments</a>
+                                   <a href="" title="">Bán Shophouse</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
+                                   <a href="" title="">Bán đất</a>
                                </li>
                            </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+                           <a class="more" href="#" data-more="true" data-parent="col" title="more">Mở rộng</a>
                        </div>
                        <div class="col col-20">
                            <h3>
-                               <a href="" title="">Explore Trulia</a>
+                               <a href="" title="">BĐS Hà Nội cho thuê</a>
                            </h3>
                            <ul>
                                <li>
-                                   <a href="" title="">Houston apartments</a>
+                                   <a href="" title="">Cho thuê căn hộ chung cư</a>
                                </li>
                                <li>
-                                   <a href="" title="">Las Vegas apartments</a>
+                                   <a href="" title="">Cho thuê nhà riêng</a>
                                </li>
                                <li>
-                                   <a href="" title="">San Antonio apartments</a>
+                                   <a href="" title="">Cho thuê nhà mặt phố</a>
                                </li>
                                <li>
-                                   <a href="" title="">Phoenix apartments</a>
+                                   <a href="" title="">Cho thuê nhà trọ, phòng trọ</a>
                                </li>
                                <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
+                                   <a href="" title="">Cho thuê văn phòng</a>
                                </li>
                            </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">For Professionals</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">Trulia Corporate</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+                           <a class="more" href="#" data-more="true" data-parent="col" title="more">Mở rộng</a>
                        </div>
                    </div>
                    <nav class="navigation">
                        <ul>
                            <li>
-                               <a href="" title="">Buy</a>
+                               <a href="" title="">Giới thiệu</a>
                            </li>
                            <li>
-                               <a href="" title="">Sell</a>
+                               <a href="" title="">Điều khoản</a>
                            </li>
                            <li>
-                               <a href="" title="">Rent</a>
+                               <a href="" title="">Quy định đăng tin</a>
                            </li>
                            <li>
-                               <a href="" title="">Mortgage</a>
+                               <a href="" title="">Báo giá đăng tin</a>
                            </li>
                            <li>
-                               <a href="" title="">Find an Agent</a>
+                               <a href="" title="">Những câu hỏi thường gặp (FAQs)</a>
+                           </li>
+                           <li>
+                               <a href="" title="">Tuyển dụng</a>
+                           </li>
+                           <li>
+                               <a href="" title="">Liên hệ</a>
                            </li>
                        </ul>
                    </nav>
                    <div class="copyright">
-                       Copyright &copy; 2016 Trulia, Inc. All rights reserved. <a href="" rel="nofollow"><i class="fa fa-home"></i> Fair Housing and Equal Opportunity.</a> Have a Question? Visit our <a href="" rel="nofollow">Help Center</a> to find the answer.
+                       Copyright © 2016 Reway Group
                    </div>
                </div>
-            </footer><!-- //footer -->
+            </footer>
             <div class="overlay" data-overlay="true"></div>
         </div><!-- //main -->
         <div class="menu-left" id="menu-left">
@@ -921,7 +600,11 @@
                 </ul>
             </nav>
         </div><!-- //box-find -->
+        <login-form loginbox="$root.loginbox"></login-form>
     </div><!-- //wrapper -->
 	 <!-- <script src="asset/js/common.min.js"></script>     -->
     <!-- <script src="/web/dist/vendor.bundle.js"></script>
     <script src="/web/dist/app.bundle.js"></script> -->
+</body>
+
+

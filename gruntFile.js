@@ -6,8 +6,8 @@ module.exports = function (grunt) {
 			build: {
 				entry: {
 					app: './entry.js',
-					rewaylib: ["placeUtil","DanhMuc"],
-					vendor: ["lodash","jquery","angular","angular-cookies","angular-simple-logger","angular-google-maps","ngmap","angular-ui-router","angular-bootstrap"]
+					// rewaylib: ["placeUtil","DanhMuc"],
+					vendor: ["lodash","jquery","angular","angular-cookies","angular-simple-logger","angular-google-maps","ngmap","angular-ui-router","angular-bootstrap","ngstorage","angular-messages"]
 				},
 				output: {
 					path: 'src/web/dist/',

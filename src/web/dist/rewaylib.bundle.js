@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "73c46a9170f391c144f6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9dd3bd9c9a508de8cee9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -584,7 +584,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(8);
-	module.exports = __webpack_require__(11);
+	module.exports = __webpack_require__(13);
 
 
 /***/ },
@@ -602,16 +602,18 @@
 
 	var _ = __webpack_require__(9);
 
-	var internals = {};
+	var util = __webpack_require__(11);
+
+	var placeUtil = {};
 
 
-	internals.getDuAnFullName = function(place) {
+	placeUtil.getDuAnFullName = function(place) {
 	    if (!place.duAn) {
 	        return null;
 	    }
 
-	    let ret = "";
-	    let _appendIfHave = function(ret, value) {
+	    var ret = "";
+	    var _appendIfHave = function(ret, value) {
 	        if (ret)
 	            ret =  ret + ", " + value;
 	        else
@@ -629,24 +631,68 @@
 	    return ret;
 	};
 
-	internals.getDiaChinh = function(diaChi) {
-	    let spl = diaChi.split(",");
-	    let diaChinh = {};
+	placeUtil.getDiaChinhFromGooglePlace = function(place) {
+	    var tinh ="";
+	    var huyen ="";
+	    var xa ="";
 
-	    let i = spl.length;
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.TINH){
+	            tinh = this.chuanHoa(addr.long_name);
+	        }
+
+	        if (addr.types[0] == placeUtil.type.HUYEN){
+	            huyen = this.chuanHoa(addr.long_name);
+	        }
+
+	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
+	            xa = this.chuanHoa(addr.long_name);
+	        }
+	    }
+
+	    var diaChinh = {
+	        tinh: tinh,
+	        huyen: huyen,
+	        xa: xa
+	    };
+
+	    return diaChinh;
+	};
+
+	placeUtil.getDiaChinh = function(diaChi) {
+	    var spl = diaChi.split(",");
+	    var diaChinh = {};
+
+	    var i = spl.length;
 	    diaChinh.tinh = spl[--i].trim();
-	    diaChinh.huyen = spl[--i].trim();
+	    if(diaChinh.tinh)
+	        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
+
+	    var rawHuyen = spl[--i];
+	    if (rawHuyen) {
+	        diaChinh.huyen = rawHuyen.trim();
+	        if(diaChinh.huyen)
+	            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
+	    } else {
+	        console.log("WARN -- no HUYEN information " + diaChi);
+	    }
+
 	    if (i>0) {
-	        let v = spl[--i].trim();
+	        var v = spl[--i].trim();
 	        if (!v.startsWith("Dự án")) {
 	            diaChinh.xa = v;
+	            if(diaChinh.xa)
+	                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
 	        } else {
 	            return diaChinh;
 	        }
 	    }
 
 	    if (i>0) {
-	        let v = spl[--i].trim();
+	        var v = spl[--i].trim();
 	        if (!v.startsWith("Dự án")) {
 	            diaChinh.duong = v;
 	        } else {
@@ -658,7 +704,7 @@
 	    return diaChinh;
 	};
 
-	internals.fullName = function(place) {
+	placeUtil.fullName = function(place) {
 	    //todo: other types
 	    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
 	        return place.placeName + ", " + place.parentName;
@@ -666,81 +712,160 @@
 
 	    return place.placeName;
 	};
+	// return Quoc Gia form Place.Place is type of Google api
+	placeUtil.getQuocGia = function(place) {
 
+	    var getCountry ="";
 
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
 
+	        if (addr.types[0] == 'country'){
+	            getCountry = addr.long_name;
+	        }
 
-	internals.type = {
+	    }
+	    return getCountry;
+	};
+
+	// return Tinh form Place.Place is type of Google api
+	placeUtil.getTinh = function(place) {
+
+	    var Tinh ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.TINH){
+	            Tinh = addr.long_name;
+	        }
+
+	    }
+	    return Tinh;
+	};
+
+	// return Huyen form Place.Place is type of Google api
+	placeUtil.getHuyen = function(place) {
+
+	    var Huyen ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.HUYEN){
+	            Huyen = addr.long_name;
+	        }
+
+	    }
+	    return Huyen;
+	};
+
+	// return Xa form Place.Place is type of Google api
+	placeUtil.getXa = function(place) {
+
+	    var Xa ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
+	        {
+	            Xa = addr.long_name;
+	        }
+
+	    }
+	    return Xa;
+	};
+
+	// chuan hoa va bo dau 1 string
+	placeUtil.chuanHoa = function(string) {
+
+	    var result = util.locDau(string);
+
+	    var COMMON_WORDS = {
+	        '-district': '',
+	        '-vietnam':'',
+	        'hanoi' : 'ha-noi'
+	    };
+	    for (var f in COMMON_WORDS) {
+	        result = result.replace(f,COMMON_WORDS[f]);
+	    }
+
+	    return result;
+	};
+
+	placeUtil.type = {
 	    TINH : "administrative_area_level_1",
 	    HUYEN : "administrative_area_level_2",
 	    XA : "administrative_area_level_3",
-	    XA2 : "sublocality_level_1"
+	    XA2 : "sublocality_level_1",
+	    DUONG : "route"
 	};
 
-	internals.typeName = {
-	    TINH : "Tinh",
-	    HUYEN : "Huyen",
-	    XA : "Xa",
-	    DUONG : "Duong",
-	    DIA_DIEM: "Dia diem"
+	placeUtil.typeName = {
+	    TINH : "Tỉnh",
+	    HUYEN : "Huyện",
+	    XA : "Xã",
+	    DUONG : "Đường",
+	    DIA_DIEM: "Địa điểm"
 
 	};
 
-	internals.isHuyen = function(place) {
-	    let placeTypes=place.types;
 
-	    if (_.indexOf(placeTypes, internals.type.HUYEN) > -1) {
+	placeUtil.isHuyen = function(place) {
+	    var placeTypes=place.types;
+
+	    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
 	        return true;
 	    }
 
 	    if (_.indexOf(placeTypes, 'locality') > -1
 	        && _.indexOf(placeTypes, 'political') > -1
-	        && place.description&&place.description.indexOf("tp.") > -1
+	        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
 	    ) {
 	        return true;
 	    }
 	};
 
-	internals.getTypeName = function(place) {
-	    let placeTypes = place.types;
+	placeUtil.getTypeName = function(place) {
+	    var placeTypes = place.types;
 
-	    if (_.indexOf(placeTypes, internals.type.TINH) > -1) {
-	        return internals.typeName.TINH;
+	    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
+	        return placeUtil.typeName.TINH;
 	    }
-	    if (internals.isHuyen(place)) {
-	        return internals.typeName.HUYEN;
-	    }
-
-	    if (_.indexOf(placeTypes, internals.type.XA) > -1) {
-	        return internals.typeName.XA;
+	    if (placeUtil.isHuyen(place)) {
+	        return placeUtil.typeName.HUYEN;
 	    }
 
-	    if (_.indexOf(placeTypes, internals.type.XA2) > -1) {
-	        return internals.typeName.XA;
+	    if (_.indexOf(placeTypes, placeUtil.type.XA) > -1) {
+	        return placeUtil.typeName.XA;
 	    }
 
-	    return internals.typeName.DIA_DIEM;
+	    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+	        return placeUtil.typeName.XA;
+	    }
+
+	    if (_.indexOf(placeTypes, placeUtil.type.DUONG) > -1) {
+	        return placeUtil.typeName.DUONG;
+	    }
+
+	    return placeUtil.typeName.DIA_DIEM;
 	};
 
 
-	internals.isOnePoint = function(place) {
-	    let name = internals.relandTypeName || internals.getTypeName(place);
-	    return  name === internals.typeName.DIA_DIEM || name === internals.typeName.DUONG;
+	placeUtil.isOnePoint = function(place) {
+	    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+	    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
 	};
 
+	module.exports  = placeUtil;
 
-	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
-	    module.exports  = internals;
-	    //if(window)
-	    //    window.RewayPlaceUtil = internals;
-	} 
-
-	if (typeof window !== 'undefined')
-	   window.RewayPlaceUtil = internals;
-
-
-
-
+	if (typeof(window) !== 'undefined')
+	   window.RewayPlaceUtil = placeUtil;
 
 
 /***/ },
@@ -16635,6 +16760,368 @@
 
 /***/ },
 /* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var striptags = __webpack_require__(12);
+	var util = {};
+
+	util.locDau = function(str) {
+	    var a1 = locDauInt(str);
+	    var a2 = locDauInt(a1);
+
+	    return a2;
+	};
+
+	var locDauInt = function(str) {
+	    if(!str) {
+	        return str
+	    }
+	    //var str = (document.getElementById("title").value);
+	    str= str.toLowerCase();
+	    str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|à/g,"a");
+	    str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+	    str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+	    str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ộ|ớ|ợ|ở|ỡ|ọ/g,"o");
+	    str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+	    str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+	    str= str.replace(/đ/g,"d");
+	    str= str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g,"-");
+	    str= str.replace(/-+-/g,"-"); //thay thế 2- thành 1-
+	    str= str.replace(/^\-+|\-+$/g,"");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+	    return str;
+	};
+
+	util.getPriceDisplay = function(val, loaiTin) {
+	    if (!val) {
+	        return "Thỏa thuận";
+	    }
+
+	    if (loaiTin===0) { //ban
+	        if (val < 1000) {
+	            return val + " TRIỆU";
+	        }
+
+	        return (val/1000).toFixed(2) + " TỶ";
+	    } else {
+	        return val.toFixed(2) + " TRIỆU/THÁNG";
+	    }
+
+
+	};
+
+	util.getDienTichDisplay = function(val) {
+	    if (!val) {
+	        return "Không rõ";
+	    }
+
+	    return val + "m²";
+	};
+
+	util.replaceBrHtml = function(string_to_replace) {
+	    return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg,"\n\r");
+	    if (!val) {
+	        return "Không rõ";
+	    }
+
+	};
+
+
+	util.replaceBrToDowntoLine = function(inputString) {
+	    var kq = "";
+	    var Timkiem = 'Tìm kiếm theo từ khóa';
+
+	    var kqReplace = util.replaceBrHtml(inputString);
+	    var kqReplaceA = striptags(kqReplace);
+
+	     if (inputString ) {
+	       var idx = kqReplaceA.indexOf(Timkiem);
+	        if(idx >0)
+	            kq = kqReplaceA.substring(0,idx);
+	        else
+	            kq = kqReplaceA;
+	    }
+	    return kq;
+	};
+
+
+	util.popField = function (obj, field){
+	    var a = obj[field];
+	    delete obj[field];
+
+	    return a;
+	};
+
+
+	module.exports = util;
+
+	if (typeof(window) !== 'undefined')
+	   window.RewayUtil = util;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	(function (root, factory) {
+	    if (true) {
+	        // AMD. Register as an anonymous module.
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else if (typeof module === 'object' && module.exports) {
+	        // Node. Does not work with strict CommonJS, but
+	        // only CommonJS-like environments that support module.exports,
+	        // like Node.
+	        module.exports = factory();
+	    } else {
+	        // Browser globals (root is window)
+	        root.striptags = factory();
+	  }
+	}(this, function () {
+	    var STATE_OUTPUT       = 0,
+	        STATE_HTML         = 1,
+	        STATE_PRE_COMMENT  = 2,
+	        STATE_COMMENT      = 3,
+	        WHITESPACE         = /\s/,
+	        ALLOWED_TAGS_REGEX = /<(\w*)>/g;
+
+	    function striptags(html, allowableTags) {
+	        var html = html || '',
+	            state = STATE_OUTPUT,
+	            depth = 0,
+	            output = '',
+	            tagBuffer = '',
+	            inQuote = false,
+	            i, length, c;
+
+	        if (typeof allowableTags === 'string') {
+	            // Parse the string into an array of tags
+	            allowableTags = parseAllowableTags(allowableTags);
+	        } else if (!Array.isArray(allowableTags)) {
+	            // If it is not an array, explicitly set to null
+	            allowableTags = null;
+	        }
+
+	        for (i = 0, length = html.length; i < length; i++) {
+	            c = html[i];
+
+	            switch (c) {
+	                case '<': {
+	                    // ignore '<' if inside a quote
+	                    if (inQuote) {
+	                        break;
+	                    }
+
+	                    // '<' followed by a space is not a valid tag, continue
+	                    if (html[i + 1] == ' ') {
+	                        consumeCharacter(c);
+	                        break;
+	                    }
+
+	                    // change to STATE_HTML
+	                    if (state == STATE_OUTPUT) {
+	                        state = STATE_HTML;
+
+	                        consumeCharacter(c);
+	                        break;
+	                    }
+
+	                    // ignore additional '<' characters when inside a tag
+	                    if (state == STATE_HTML) {
+	                        depth++;
+	                        break;
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                case '>': {
+	                    // something like this is happening: '<<>>'
+	                    if (depth) {
+	                        depth--;
+	                        break;
+	                    }
+
+	                    // ignore '>' if inside a quote
+	                    if (inQuote) {
+	                        break;
+	                    }
+
+	                    // an HTML tag was closed
+	                    if (state == STATE_HTML) {
+	                        inQuote = state = 0;
+
+	                        if (allowableTags) {
+	                            tagBuffer += '>';
+	                            flushTagBuffer();
+	                        }
+
+	                        break;
+	                    }
+
+	                    // '<!' met its ending '>'
+	                    if (state == STATE_PRE_COMMENT) {
+	                        inQuote = state = 0;
+	                        tagBuffer = '';
+	                        break;
+	                    }
+
+	                    // if last two characters were '--', then end comment
+	                    if (state == STATE_COMMENT &&
+	                        html[i - 1] == '-' &&
+	                        html[i - 2] == '-') {
+
+	                        inQuote = state = 0;
+	                        tagBuffer = '';
+	                        break;
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                // catch both single and double quotes
+	                case '"':
+	                case '\'': {
+	                    if (state == STATE_HTML) {
+	                        if (inQuote == c) {
+	                            // end quote found
+	                            inQuote = false;
+	                        } else if (!inQuote) {
+	                            // start quote only if not already in one
+	                            inQuote = c;
+	                        }
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                case '!': {
+	                    if (state == STATE_HTML &&
+	                        html[i - 1] == '<') {
+
+	                        // looks like we might be starting a comment
+	                        state = STATE_PRE_COMMENT;
+	                        break;
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                case '-': {
+	                    // if the previous two characters were '!-', this is a comment
+	                    if (state == STATE_PRE_COMMENT &&
+	                        html[i - 1] == '-' &&
+	                        html[i - 2] == '!') {
+
+	                        state = STATE_COMMENT;
+	                        break;
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                case 'E':
+	                case 'e': {
+	                    // check for DOCTYPE, because it looks like a comment and isn't
+	                    if (state == STATE_PRE_COMMENT &&
+	                        html.substr(i - 6, 7).toLowerCase() == 'doctype') {
+
+	                        state = STATE_HTML;
+	                        break;
+	                    }
+
+	                    consumeCharacter(c);
+	                    break;
+	                }
+
+	                default: {
+	                    consumeCharacter(c);
+	                }
+	            }
+	        }
+
+	        function consumeCharacter(c) {
+	            if (state == STATE_OUTPUT) {
+	                output += c;
+	            } else if (allowableTags && state == STATE_HTML) {
+	                tagBuffer += c;
+	            }
+	        }
+
+	        function flushTagBuffer() {
+	            var normalized = '',
+	                nonWhitespaceSeen = false,
+	                i, length, c;
+
+	            normalizeTagBuffer:
+	            for (i = 0, length = tagBuffer.length; i < length; i++) {
+	                c = tagBuffer[i].toLowerCase();
+
+	                switch (c) {
+	                    case '<': {
+	                        break;
+	                    }
+
+	                    case '>': {
+	                        break normalizeTagBuffer;
+	                    }
+
+	                    case '/': {
+	                        nonWhitespaceSeen = true;
+	                        break;
+	                    }
+
+	                    default: {
+	                        if (!c.match(WHITESPACE)) {
+	                            nonWhitespaceSeen = true;
+	                            normalized += c;
+	                        } else if (nonWhitespaceSeen) {
+	                            break normalizeTagBuffer;
+	                        }
+	                    }
+	                }
+	            }
+
+	            if (allowableTags.indexOf(normalized) !== -1) {
+	                output += tagBuffer;
+	            }
+
+	            tagBuffer = '';
+	        }
+
+	        return output;
+	    }
+
+	    /**
+	     * Return an array containing tags that are allowed to pass through the
+	     * algorithm.
+	     *
+	     * @param string allowableTags A string of tags to allow (e.g. "<b><strong>").
+	     * @return array|null An array of allowed tags or null if none.
+	     */
+	    function parseAllowableTags(allowableTags) {
+	        var tagsArray = [],
+	            match;
+
+	        while ((match = ALLOWED_TAGS_REGEX.exec(allowableTags)) !== null) {
+	            tagsArray.push(match[1]);
+	        }
+
+	        return tagsArray.length !== 0 ? tagsArray : null;
+	    }
+
+	    return striptags;
+	}));
+
+
+/***/ },
+/* 13 */
 /***/ function(module, exports) {
 
 	var danhMuc = {};
@@ -16642,6 +17129,7 @@
 	var BAT_KY = "Bất kỳ";
 
 	danhMuc.BAT_KY = BAT_KY;
+	danhMuc.BIG =9999999;
 
 	danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
 
@@ -16653,22 +17141,22 @@
 	danhMuc.sortHouseOptions = [
 	    {
 	        lable: "Giá từ cao đến thấp",
-	        value: 1,
+	        value: "giaDESC",
 	        position: 1
 	    },
 	    {
 	        lable: "Giá từ thấp đến cao",
-	        value: 2,
+	        value: "giaASC",
 	        position: 2
 	    },
 	    {
 	        lable: "Diện tích từ cao đến thấp",
-	        value: 3,
+	        value: "dienTichDESC",
 	        position: 3
 	    },
 	    {
 	        lable: "Diện tích từ thấp đến cao",
-	        value: 4,
+	        value: "dienTichASC",
 	        position: 4
 	    }
 	];
@@ -16716,39 +17204,25 @@
 	    }
 	];
 
-	danhMuc.dientich_steps = [
-	    {
-	        value: 10,
-	        lable: "10 m2",
-	        position: 1
-	    },
-	    {
-	        value: 20,
-	        lable: "20 m2",
-	        position: 2
-	    },
-	    {
-	        value: 30,
-	        lable: "30 m2",
-	        position: 3
-	    },
-	    {
-	        value: 40,
-	        lable: "40 m2",
-	        position: 4
-	    },
-	    {
-	        value: 50,
-	        lable: "50 m2",
-	        position: 5
-	    }
-	];
-
 
 
 	danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
 
 	danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
+
+	danhMuc.convertDienTichStepValueToNameValueArray= function(){
+	    var result = [];
+	    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
+	        result.push({
+	            value: danhMuc.dienTichStepValues[i],
+	            lable: danhMuc.dienTichStepValues[i] + " m2",
+	            position: i
+	        });
+	    }
+	    return result;
+	}
+
+	danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
 
 	danhMuc.LoaiTin = {
 	    0 : "Bán",
@@ -16756,24 +17230,86 @@
 	};
 
 	danhMuc.LoaiNhaDatBan = {
-	    0 : BAT_KY,
 	    1  : "Bán căn hộ chung cư",
 	    2  : "Bán nhà riêng",
-	    3  : "Bán nhà mặt phố", 
-	    4  : "Bán biệt thự, liền kề", 
-	    5  : "Bán đất", 
-	    99 : "Bán các bds khác"
+	    3  : "Bán nhà mặt phố",
+	    4  : "Bán biệt thự, liền kề",
+	    6  : "Bán Shophouse",
+	    7  : "Bán đất nền dự án",
+	    5  : "Bán đất",
+	    8  : "Bán trang trại, khu nghỉ dưỡng",
+	    99 : "Bán các BDS khác",
+	    10 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
 	}
 
+	danhMuc.LoaiNhaDatBanWeb = [
+	    { value: "1", lable: "Bán căn hộ chung cư" },
+	    { value: "2", lable: "Bán nhà riêng" },
+	    { value: "3", lable: "Bán nhà mặt phố" },
+	    { value: "4", lable: "Bán biệt thự, liền kề" },
+	    { value: "6", lable: "Bán Shophouse" },
+	    { value: "7", lable: "Bán đất nền dự án" },
+	    { value: "5", lable: "Bán đất" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "99", lable: "Bán các BDS khác" },
+	    { value: "10", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	    ];
+
+	danhMuc.LoaiNhaDatCanMuaWeb = [
+	    { value: "1", lable: "Mua căn hộ chung cư" },
+	    { value: "2", lable: "Mua nhà riêng" },
+	    { value: "3", lable: "Mua biệt thự, liền kề" },
+	    { value: "4", lable: "Mua nhà mặt phố" },
+	    { value: "5", lable: "Mua đất nền dự án" },
+	    { value: "6", lable: "Mua đất" },
+	    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "9", lable: "Mua kho, nhà xưởng" },
+	    { value: "10", lable: "Mua loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
+	danhMuc.LoaiNhaDatCanThueWeb = [
+	    { value: "1", lable: "Cần thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cần thuê nhà riêng" },
+	    { value: "3", lable: "Cần thuê nhà mặt phố" },
+	    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
+	    { value: "5", lable: "Cần thuê văn phòng" },
+	    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
+	    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
+	    { value: "8", lable: "Cần thuê loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
 	danhMuc.LoaiNhaDatThue = {
-	    0 : BAT_KY,
 	    1 : "Cho Thuê căn hộ chung cư",
 	    2 : "Cho Thuê nhà riêng",
-	    3 : "Cho Thuê nhà mặt phố", 
-	    4 : "Cho Thuê văn phòng", 
+	    3 : "Cho Thuê nhà mặt phố",
+	    6 : "Cho thuê nhà trọ, phòng trọ",
+	    4 : "Cho Thuê văn phòng",
 	    5 : "Cho Thuê cửa hàng, ki-ốt",
-	    99: "Cho Thuê các bds khác"
+	    7 : "Cho thuê kho, nhà xưởng, đất",
+	    99: "Cho Thuê các BDS khác",
+	    8 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
 	}
+
+	danhMuc.LoaiNhaDatThueWeb = [
+	    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cho Thuê nhà riêng" },
+	    { value: "3", lable: "Cho Thuê nhà mặt phố" },
+	    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
+	    { value: "4", lable: "Cho Thuê văn phòng" },
+	    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
+	    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
+	    { value: "99", lable: "Cho Thuê các BDS khác" },
+	    { value: "8", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
 
 	danhMuc.SoPhongNgu = {
 	    0: BAT_KY,
@@ -16856,6 +17392,23 @@
 	    for (var k in hashDanhMuc) {
 	        result.push(k);
 	    }
+	    return result;
+	}
+
+	danhMuc.getNameValueArray = function(hashDanhMuc){
+	    console.log("getNameValueArray");
+	    console.log(hashDanhMuc);
+	    var result = [];
+	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
+	    for (var k in hashDanhMuc) {
+	        result.push(
+	            {
+	                value: k,
+	                lable: hashDanhMuc[k]
+	            }
+	        )
+	    }
+	    console.log(result);
 	    return result;
 	}
 
@@ -16942,9 +17495,16 @@
 	    return danhMuc.RadiusInKmKey[index];
 	}
 
+	danhMuc.getHuongNhaDisplay = function(val){
+	    if (!val) {
+	        return "Không rõ";
+	    }
+	    return eval('danhMuc.HuongNha['+val + ']');
+	}
+
 	module.exports = danhMuc;
 
-	if (typeof window !== 'undefined')
+	if (typeof(window) !== 'undefined')
 	   window.RewayListValue = danhMuc;
 
 

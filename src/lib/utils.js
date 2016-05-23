@@ -1,15 +1,19 @@
 'use strict';
 
+var striptags = require('striptags');
 var util = {};
 
 util.locDau = function(str) {
-    let a1 = locDauInt(str);
-    let a2 = locDauInt(a1);
+    var a1 = locDauInt(str);
+    var a2 = locDauInt(a1);
 
     return a2;
 };
 
 var locDauInt = function(str) {
+    if(!str) {
+        return str
+    }
     //var str = (document.getElementById("title").value);
     str= str.toLowerCase();
     str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|à/g,"a");
@@ -51,8 +55,40 @@ util.getDienTichDisplay = function(val) {
     return val + "m²";
 };
 
+util.replaceBrHtml = function(string_to_replace) {
+    return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg,"\n\r");
+    if (!val) {
+        return "Không rõ";
+    }
+
+};
+
+
+util.replaceBrToDowntoLine = function(inputString) {
+    var kq = "";
+    var Timkiem = 'Tìm kiếm theo từ khóa';
+
+    var kqReplace = util.replaceBrHtml(inputString);
+    var kqReplaceA = striptags(kqReplace);
+
+     if (inputString ) {
+       var idx = kqReplaceA.indexOf(Timkiem);
+        if(idx >0)
+            kq = kqReplaceA.substring(0,idx);
+        else
+            kq = kqReplaceA;
+    }
+    return kq;
+};
+
+util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
+    var kqRemove = striptags(inputString);
+    return (kqRemove.replace(replaceString,"")).trim();
+};
+
+
 util.popField = function (obj, field){
-    let a = obj[field];
+    var a = obj[field];
     delete obj[field];
 
     return a;
@@ -60,3 +96,6 @@ util.popField = function (obj, field){
 
 
 module.exports = util;
+
+if (typeof(window) !== 'undefined')
+   window.RewayUtil = util;

@@ -1,7 +1,7 @@
 [
   {
     "default": {
-      "_type" : "User",
+      "type" : "User",
       "userID" : "123456780",
       "name" : "Nguyen Van Abc",
       "email" : "abc@gmail.com",
@@ -25,7 +25,7 @@
   },
   {
     "default": {
-      "_type" : "User",
+      "type" : "User",
       "userID" : "123456781",
       "name" : "Nguyen Van Xyz",
       "email" : "xyz@gmail.com",

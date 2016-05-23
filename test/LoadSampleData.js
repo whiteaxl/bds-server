@@ -5,8 +5,9 @@ var prepare = require("./prepareData");
 var AdsService = require("../src/dbservices/Ads");
 
 var adsService = new AdsService();
-//prepare.loadAdsFromFile("testAds.json");
-prepare.loadAds();
+prepare.loadFromFile("ads.json");
+// prepare.loadUserFromFile("user.json");
+//prepare.loadAds();
 
 var times = 0;
 var timer = setInterval(

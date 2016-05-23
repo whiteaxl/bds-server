@@ -4,6 +4,8 @@ var danhMuc = require("../src/lib/DanhMuc");
 
 var server = supertest.agent("http://localhost:5000");
 
+var moment = require("moment");
+
 describe("03.Detail API testsuite",function(){
 
     it("Tra ve BadRequest - 400 khi Parameter sai ",function(done){
@@ -57,7 +59,13 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.loaiNhaDatFmt.should.equal(danhMuc.LoaiNhaDatBan[2]);
                 res.body.ads.dienTichFmt.should.equal('38.5m²');
                 res.body.ads.soPhongNgu.should.equal(2);
-                res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng 28 ngày');
+
+                const ngayDangTinDate= moment(res.body.ads.ngayDangTin, "DD-MM-YYYY");
+                const soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+
+                res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng ' + soNgayDaDangTin +' ngày');
+                
+
                 res.body.ads.ngayDangTinFmt.should.equal('29/03/2016');
                 res.body.ads.should.have.property('chiTiet');
                 res.body.ads.should.have.property('luotXem');

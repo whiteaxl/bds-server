@@ -1,13 +1,14 @@
 var Handlers = require('./handlers');
-var searchhandlers = require('./searchhandlers');
+var findHandler = require('./findHandler');
+var loginHandler = require('./loginHandler');
 
 var internals = {};
 
 internals.endpoints = [
 	{
 		method: 'POST', 
-		path: '/api/find', 
-		handler: Handlers.findPOST, 
+		path: '/api/find',
+		handler: findHandler.search,
 		config : {
 			description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
 			tags: ['api']
@@ -50,15 +51,62 @@ internals.endpoints = [
 			tags: ['api']
 		}
 	},
-{
+	{
+	        method: 'POST',
+	        path: '/api/search',
+	        handler: findHandler.search,
+	        config : {
+	            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+	            tags: ['api']
+	        }
+	},
+	{
         method: 'POST',
-        path: '/api/search',
-        handler: searchhandlers.search,
+        path: '/api/count',
+        handler: findHandler.count,
         config : {
             description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
             tags: ['api']
         }
-}
+	},
+	{
+        method: 'POST',
+        path: '/api/saveSearch',
+        handler: Handlers.saveSearch,
+        config : {
+            description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+            tags: ['api'],
+			auth: 'jwt'
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/checkUserExist',
+        handler: loginHandler.checkUserExist,
+        config : {
+            description: 'Kiem tra xem user da ton tai chua',
+            tags: ['api']
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/login',
+        handler: loginHandler.login,
+        config : {
+            description: 'login',
+            tags: ['api']
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/signup',
+        handler: loginHandler.signup,
+        config : {
+            description: 'login',
+            tags: ['api']
+        }
+	}
+
 
 ];
 

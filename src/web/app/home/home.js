@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   window.initData = {};
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage'])
   .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
@@ -9,13 +9,27 @@
       lat: 16.0439,
       lng: 108.199
     }
+
+    $rootScope.loginbox = {};
+    $rootScope.showDangNhap = function(){
+      $rootScope.loginbox.resetLoginBox();
+    }
     
+    $rootScope.postPageRendered = function(){
+      // alert('aaa');
+      //window.DesignCommon.adjustPage();
+    }
+    $rootScope.signout = function(){
+        $rootScope.loginbox.resetLoginBox(); 
+    }
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
       //alert(toState.name);
       if (toState.name === 'home') {
         toState.templateUrl = '/web/index_content.html';
       }else{
-        toState.templateUrl = '/web/'+toState.name+'.html';
+        if(!toState.templateUrl)
+          toState.templateUrl = '/web/'+toState.name+'.html';
         //toState.templateUrl = '/web/marker.html';
       }
         //if (toState.name === 'list') {
@@ -78,9 +92,29 @@
       };
 
   }]);
-  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider){
+  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
       // For any unmatched url, send to /route1
       $locationProvider.html5Mode(true);
+
+      $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+       return {
+           'request': function (config) {
+               config.headers = config.headers || {};
+               if ($localStorage.relandToken) {
+                   config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
+               }
+               return config;
+           },
+           'responseError': function (response) {
+               if (response.status === 401 || response.status === 403) {
+                   //$location.path('/signin');
+                   alert("Đăng nhập hệ thống để sử dụng tính năng này");
+               }
+               return $q.reject(response);
+           }
+       };
+      }]);
+
       //$urlRouterProvider.otherwise("/web/list.html")
       //alert('sss');
       // $interpolateProvider.startSymbol('{[{');
@@ -92,22 +126,9 @@
           libraries: 'places,geometry,visualization' // Required for SearchBox.
       });*/
       $stateProvider
-      .state('list', {
-        url: "/list",
-        //templateUrl: '/web/list.html',
-        controller: "MainCtrl",
-        resolve: {
-          title: function(HouseService) {
-            //alert(HouseService);
-            return [{'a':'a'}];
-          }
-        },
-        data: {
-            bodyClass: "page-list"
-        } 
-      }).state('search', {
-          url: "/search/:place/:loaiTin/:loaiNhaDat",
-        //templateUrl: "/web/searchContent.html",
+      .state('search', {
+          url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+        // templateUrl: "/web/search.tpl.html",
         controller: "SearchCtrl",
         controllerAs: 'mc',
         resolve: {
@@ -123,7 +144,7 @@
           }
         },
         data: {
-            bodyClass: "page-search",
+            //bodyClass: "page-search",
             //abc: title
         } 
         // ,
@@ -135,6 +156,7 @@
         url: "/index.html",
         //templateUrl: "/web/index_content.html",
         controller: "MainCtrl",
+        controllerAs: 'mc',
         resolve: {
           title: function(HouseService) {
             //alert(HouseService);

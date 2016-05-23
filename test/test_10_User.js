@@ -10,6 +10,23 @@ var userService = new UserService();
 var server = supertest.agent("http://localhost:5000");
 
 describe("10.User",function() {
+    //
+    //-------------------------------------------------
+    var createUserOnSyncGateway = function (done) {
+        var userDto = {
+            userID : "User_1",
+            matKhau: "123"
+        };
+
+        userService.createLoginOnSyncGateway(userDto, (err, res)=> {
+            console.log(res);
+            done();
+        });
+    };
+
+    it("createUserOnSyncGateway", createUserOnSyncGateway);
+
+
     var deviceID = 'device-01';
     //
     //-------------------------------------------------

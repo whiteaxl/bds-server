@@ -20,8 +20,47 @@ internals.getBox = function(point, radius) {
     sw.lat = point.lat - radius;
     sw.lon = point.lon - radius;
 
-    return [sw.lon, sw.lat, ne.lon, ne.lat];
+    return [sw.lat, sw.lon, ne.lat, ne.lon];
+};
 
+//polygon: [{lat,lon}]
+internals.getGeoBoxOfPolygon = function(coords) {
+    var tmpCenter = geolib.getCenter(coords);
+    var center = {lat: Number(tmpCenter.latitude), lon: Number(tmpCenter.longitude)};
+
+    var maxLat = 0;
+    var maxLon = 0;
+
+    coords.forEach((e) => {
+        if (maxLat < Math.abs(center.lat-e.latitude)) {
+            maxLat = Math.abs(center.lat-e.latitude);
+        }
+
+        if (maxLon < Math.abs(center.lon-e.longitude)) {
+            maxLon = Math.abs(center.lon-e.longitude);
+        }
+    });
+
+    var sw = {
+        lat : center.lat - maxLat,
+        lon : center.lon - maxLon,
+    };
+
+    var ne = {
+        lat : center.lat + maxLat,
+        lon : center.lon + maxLon,
+    };
+
+    var geoBox = [sw.lat, sw.lon, ne.lat, ne.lon];
+
+    return {geoBox: geoBox, center: center};
+};
+
+internals.isPointInside = function(geo, polygonCoords) {
+    return geolib.isPointInside({
+        latitude : geo.lat,
+        longitude : geo.lon,
+    }, polygonCoords);
 };
 
 //meters
