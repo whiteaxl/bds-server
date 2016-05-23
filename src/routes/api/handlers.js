@@ -17,6 +17,7 @@ var https = require('https');
 var services = require("../../lib/services");
 var constant = require("../../lib/constant");
 var danhMuc  = require("../../lib/DanhMuc");
+myBucket.operationTimeout = 120 * 1000;
 
 var UserService = require('../../dbservices/User');
 var JWT    = require('jsonwebtoken');

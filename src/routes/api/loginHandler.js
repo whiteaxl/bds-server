@@ -6,6 +6,7 @@ var couchbase = require('couchbase');
 var ViewQuery = couchbase.ViewQuery;
 
 var myBucket = require('../../database/mydb');
+myBucket.operationTimeout = 120 * 1000;
 var QueryOps = require('../../lib/QueryOps');
 
 var UserService = require('../../dbservices/User');
