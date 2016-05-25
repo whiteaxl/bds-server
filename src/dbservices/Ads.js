@@ -2,13 +2,18 @@
 
 var couchbase = require('couchbase');
 var util = require("../lib/utils");
+var constant = require("../lib/constant");
+
 var N1qlQuery = require('couchbase').N1qlQuery;
+
 var ViewQuery = couchbase.ViewQuery;
 var cluster = new couchbase.Cluster('couchbase://localhost:8091');
 var bucket = cluster.openBucket('default');
 bucket.enableN1ql(['127.0.0.1:8093']);
 
 bucket.operationTimeout = 120 * 1000;
+
+var moment = require('moment');
 
 
 var DEFAULT_LIMIT = 1000;
@@ -40,7 +45,8 @@ class AdsModel {
         });
     }
 
-    uncentDiaChinh(){
+    //may be for testing only
+    patchDataInDB(){
         let query = ViewQuery.from('ads', 'all_ads');
         var that = this;
         bucket.query(query, function (err, all) {
@@ -57,6 +63,15 @@ class AdsModel {
                 ads.place.diaChinh.huyenKhongDau =util.locDau(ads.place.diaChinh.huyen);
                 if (ads.place.diaChinh.xa)
                 ads.place.diaChinh.xaKhongDau =util.locDau(ads.place.diaChinh.xa);
+
+                //ngayDangTin
+                let bdsComDateFormat = 'DD-MM-YYYY';
+                if (moment(ads.ngayDangTin, bdsComDateFormat).isValid()) {
+                    let ngayDangTinDate = moment(ads.ngayDangTin, bdsComDateFormat);
+                    let ngayDangTinYMD = moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+                    ads.ngayDangTin = ngayDangTinYMD;
+                }
+
                 that.upsert(ads);
             }
             console.log("Finish");

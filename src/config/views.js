@@ -18,12 +18,14 @@
  */
 // Hoek is similar to underscore
 var Handlebars = require('handlebars'),
-Hoek = require('hoek'),
-internals = {},    
-Inert = require('inert'),
-Marked = require('marked'),
-Path = require('path'),
-Vision = require('vision');
+  Hoek = require('hoek'),
+  internals = {},
+  Inert = require('inert'),
+  Marked = require('marked'),
+  HapiSwagger = require('hapi-swagger'),
+  Path = require('path'),
+  Vision = require('vision');
+
 
 var hapiReact = require('hapi-react-views');
 
@@ -152,6 +154,30 @@ var hapiReact = require('hapi-react-views');
       config: { auth: false }
     }]
     );
+  });
+
+
+
+/**
+   * ### swagger
+   *
+   * Swagger documents the api
+   * 
+   * the /documentation endpoint displays the api docs
+   * 
+   */
+  const swaggerOptions = {
+    info: {
+      'title': 'Reland - API Documentation',
+      'version': '1.0.0'
+    }
+  };
+  server.register({
+    register: HapiSwagger,
+    options: swaggerOptions
+  }, (err) => {
+    Hoek.assert(!err,err);
+    
   });
 
 

@@ -1,6 +1,7 @@
 var supertest = require("supertest");
 var should = require("should");
 var danhMuc = require("../src/lib/DanhMuc");
+var constant = require("../src/lib/constant");
 
 var server = supertest.agent("http://localhost:5000");
 
@@ -11,10 +12,11 @@ describe("03.Detail API testsuite",function(){
     it("Tra ve BadRequest - 400 khi Parameter sai ",function(done){
         server
             .post("/api/detail")
-            .send({})
+            .send({adsID:"adsID_not_found"})
             .expect("Content-type",/json/)
             .end(function(err,res){
-                res.status.should.equal(400);
+                res.status.should.equal(200);
+                res.should.not.have.property('ads');
                 done();
             });
     });
@@ -60,7 +62,7 @@ describe("03.Detail API testsuite",function(){
                 res.body.ads.dienTichFmt.should.equal('38.5m²');
                 res.body.ads.soPhongNgu.should.equal(2);
 
-                const ngayDangTinDate= moment(res.body.ads.ngayDangTin, "DD-MM-YYYY");
+                const ngayDangTinDate= moment(res.body.ads.ngayDangTin, constant.FORMAT.DATE_IN_DB);
                 const soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
 
                 res.body.ads.soNgayDaDangTinFmt.should.equal('Tin đã đăng ' + soNgayDaDangTin +' ngày');
@@ -120,6 +122,7 @@ describe("03.Detail API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
+                console.log(res.body);
                 console.log(res.body.ads);
 
                 res.body.ads.loaiTin.should.equal(1);

@@ -2,6 +2,8 @@
 
 var supertest = require("supertest");
 var should = require("should");
+var moment = require('moment');
+var constant = require('../src/lib/constant');
 
 var server = supertest.agent("http://localhost:5000");
 
@@ -9,7 +11,7 @@ describe("02.Find API testsuite",function(){
 
     it("Tra ve BadRequest - 400 khi Parameter sai ",function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({})
             .expect("Content-type",/json/)
             .end(function(err,res){
@@ -22,7 +24,7 @@ describe("02.Find API testsuite",function(){
         var geoBox = [20.986007099732642,105.84372998042551,21.032107100267314,105.87777141957429];
 
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,
                 "geoBox":geoBox
@@ -52,7 +54,7 @@ describe("02.Find API testsuite",function(){
         var geoBox = [20.986007099732642,105.84372998042551,21.032107100267314,105.87777141957429];
 
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":1,
                 "geoBox":geoBox
@@ -77,7 +79,7 @@ describe("02.Find API testsuite",function(){
     var testCurrentLocation = function(done){
 
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,
                 "place":{"fullName":"Current Location"
@@ -109,11 +111,13 @@ describe("02.Find API testsuite",function(){
     var testDiaDiem = function(done){
 
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({"loaiTin":0
-                ,"soPhongNguGREATER":"0","soTangGREATER":"0"
+                ,"soPhongNguGREATER":0,"soTangGREATER":0
                 ,"place":{"placeId":"ChIJiyiB48BUNDERGA0xeslhAzc"
-                    ,"relandTypeName":"Dia diem","fullName":"Cau Dien Nursery School, Phú Diễn, Hanoi","radiusInKm":0.5}
+                    ,"relandTypeName":"Dia diem"
+                    ,"fullName":"Cau Dien Nursery School, Phú Diễn, Hanoi"
+                    ,"radiusInKm":0.5}
                 ,"limit":200
                 })
             .expect("Content-type",/json/)
@@ -122,7 +126,7 @@ describe("02.Find API testsuite",function(){
                 console.log("\ntestCurrentLocation, length:" + res.body.length);
                 var list = res.body.list;
 
-                res.body.length.should.equal(3);
+                res.body.length.should.equal(5);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -144,7 +148,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testDiaChinh = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc","relandTypeName":"Huyen"
@@ -157,7 +161,7 @@ describe("02.Find API testsuite",function(){
             .expect(200) // THis is HTTP response
             .end(function(err,res){
                 console.log("\ntestDiaChinh, length:" + res.body.length);
-                res.body.length.should.equal(82);
+                res.body.length.should.equal(85);
 
                 //check viewport
                 var viewport = res.body.viewport;
@@ -176,7 +180,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testLoaiNhaDat = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
@@ -189,7 +193,7 @@ describe("02.Find API testsuite",function(){
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(19);
+                res.body.length.should.equal(21);
 
                 console.log("\ntestLoaiNhaDat 2, length:" + res.body.length);
                 done();
@@ -201,7 +205,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testGia3000_4000 = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[3000,4000]
@@ -209,13 +213,13 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
 
             })
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(5);
+                res.body.length.should.equal(6);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -232,7 +236,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testDienTich40_50 = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -240,13 +244,12 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
-
+                "limit":200
             })
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -263,7 +266,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testSoPhongNgu = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":3
                 ,"giaBETWEEN":[0,9999999]
@@ -271,7 +274,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
             })
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
@@ -294,7 +297,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testSoPhongTam= function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongTamGREATER":3
                 ,"giaBETWEEN":[0,9999999]
@@ -324,7 +327,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testHuongNha= function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"huongNha":4
                 ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
@@ -353,7 +356,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testTinBan= function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"huongNha":4
                 ,"soTangGREATER":0,"dienTichBETWEEN":[0,9999999]
@@ -388,7 +391,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderDienTich = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -396,19 +399,17 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'dienTichASC'
 
             })
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
-
                 console.log(res.body.list)
 
                 res.body.list[0].dienTich.should.equal(41);
-                res.body.list[5].dienTich.should.equal(50);
+                res.body.list[5].dienTich.should.equal(48);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -425,7 +426,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testSoPhongNgu = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -433,13 +434,13 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
 
             })
             .expect("Content-type",/json/)
             .expect(200) // THis is HTTP response
             .end(function(err,res){
-                res.body.length.should.equal(6);
+                res.body.length.should.equal(7);
 
                 for (var e in res.body.list) {
                     let one =res.body.list[e];
@@ -455,8 +456,11 @@ describe("02.Find API testsuite",function(){
 
     //-----------------------------
     var testngayDaDang = function(done){
+      const ngayDangTinDate= moment('20160415', constant.FORMAT.DATE_IN_DB);
+      const soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -464,7 +468,8 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":7
+                "limit":200
+              , "ngayDaDang":soNgayDaDangTin
 
             })
             .expect("Content-type",/json/)
@@ -475,7 +480,7 @@ describe("02.Find API testsuite",function(){
                     console.log(one.ngayDangTin + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(7);
+                res.body.length.should.equal(5);
 
                 console.log("\n testngayDaDang, length:" + res.body.length);
                 done();
@@ -489,7 +494,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderGia = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -497,7 +502,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'giaASC'
 
             })
@@ -510,9 +515,8 @@ describe("02.Find API testsuite",function(){
                     console.log(one.gia + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(6);
-                res.body.list[0].gia.should.equal(4900);
-                res.body.list[5].gia.should.equal(7800);
+                res.body.list[0].gia.should.equal(3850);
+                res.body.list[5].gia.should.equal(5950);
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -524,7 +528,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderGiaDESC = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":2,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -532,7 +536,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'giaDESC'
 
             })
@@ -545,7 +549,6 @@ describe("02.Find API testsuite",function(){
                     console.log(one.gia + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(6);
                 res.body.list[0].gia.should.equal(7800);
                 res.body.list[5].gia.should.equal(4900);
 
@@ -559,7 +562,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderSoPhongNgu = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -567,7 +570,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'soPhongNguASC'
 
             })
@@ -594,7 +597,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderSoPhongNgu = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -602,7 +605,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'soPhongNguDESC'
 
             })
@@ -629,7 +632,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderNgayDang = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -637,7 +640,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'ngayDangTinDESC'
 
             })
@@ -650,9 +653,8 @@ describe("02.Find API testsuite",function(){
                     console.log(one.ngayDangTin + " -- " + one.adsID);
                 }
 
-                res.body.length.should.equal(5);
-                res.body.list[0].ngayDangTin.should.equal('25-04-2016');
-                res.body.list[4].ngayDangTin.should.equal('19-04-2016');
+                res.body.list[0].ngayDangTin.should.equal('20160425');
+                res.body.list[4].ngayDangTin.should.equal('20160419');
 
                 console.log("\ntestOrder, length:" + res.body.length);
                 done();
@@ -665,7 +667,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testOrderGiaM2 = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -673,7 +675,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'giaM2ASC'
 
             })
@@ -701,7 +703,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testPaging = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -709,7 +711,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":2,"ngayDaDang":30
+                "limit":2
                 ,"orderBy" :'giaM2ASC'
                 ,"page":2
 
@@ -735,7 +737,7 @@ describe("02.Find API testsuite",function(){
     //-----------------------------
     var testImageMedium = function(done){
         server
-            .post("/api/search")
+            .post("/api/find")
             .send({
                 "loaiTin":0,"loaiNhaDat":1,"soPhongNguGREATER":0
                 ,"giaBETWEEN":[0,9999999]
@@ -743,7 +745,7 @@ describe("02.Find API testsuite",function(){
                 ,"place":{"placeId":"ChIJMxD5VlerNTER_UtnLUQXaVc"
                     ,"relandTypeName":"Huyen","fullName":"Cầu Giấy, Hanoi"
                     ,"radiusInKm":0.5},
-                "limit":200,"ngayDaDang":30
+                "limit":200
                 ,"orderBy" :'giaM2ASC'
 
             })

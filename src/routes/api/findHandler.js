@@ -145,7 +145,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
         }
 
         if (tmp.ngayDangTin) {
-            var ngayDangTinDate= moment(tmp.ngayDangTin, "DD-MM-YYYY");
+            var ngayDangTinDate= moment(tmp.ngayDangTin, constant.FORMAT.DATE_IN_DB);
             tmp.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
         }
 
@@ -164,7 +164,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
                     transformeds.push(transformed);
                 }
             }
-        } if (polygonCoords && polygonCoords.length > 0) {//filter by polygon
+        } else if (polygonCoords && polygonCoords.length > 0) {//filter by polygon
           if (geoUtil.isPointInside(place.geo,polygonCoords)) {
             transformeds.push(transformed)
           }
@@ -222,7 +222,7 @@ function _toNgayDangTinFrom(ngayDaDang) {
         return null;
     }
     let ret = moment().subtract(ngayDaDang, "d");
-    ret = ret.format("DD-MM-YYYY");
+    ret = ret.format(constant.FORMAT.DATE_IN_DB);
     return ret;
 }
 
