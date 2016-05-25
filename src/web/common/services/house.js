@@ -16,8 +16,8 @@
         return $http.post(urlPath + 'create'); 
       },
       findAdsSpatial: function(data){
-        //var url = "/api/find";
-        var url = "/api/search";
+        var url = "/api/find";
+        // var url = "/api/search";
         return $http.post(url,data);
       },
       countAds: function(data){
