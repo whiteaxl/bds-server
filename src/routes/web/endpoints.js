@@ -45,6 +45,13 @@ internals.endpoints = [
 		reply.view('index.html', { page: 'list' });
 	}
 }
+,{ 
+	method: 'GET',
+	path: '/web/detail/{p*}', 
+	handler: function(requet,reply){
+		reply.view('index.html', { page: 'detail' });
+	}
+}
 ];
 
 module.exports = internals;

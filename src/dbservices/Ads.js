@@ -366,11 +366,11 @@ class AdsModel {
         console.log("queryRecentAds: " + sql);
 
         bucket.query(query, function(err, all) {
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            
             if (!all)
                 all = [];
-
+            console.log("number of ads:" + all.length);
+            console.log("Error:" + err);
             reply({
                 length: all.length,
                 list: all
@@ -402,11 +402,11 @@ class AdsModel {
         console.log("queryBelowPriceAds: " + sql);
 
         bucket.query(query, function(err, all) {
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            
             if (!all)
                 all = [];
-
+            console.log("number of ads:" + all.length);
+            console.log("Error:" + err);
             reply({
                 length: all.length,
                 list: all

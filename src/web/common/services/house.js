@@ -43,6 +43,10 @@
         var url = "/api/checkUserExist";
         return $http.post(url,data);
       },
+      detailAds: function(data){
+        var url = "/api/detail";
+        return $http.post(url,data);
+      },
       findGooglePlaceById: function(googlePlaceId){
         return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
       },

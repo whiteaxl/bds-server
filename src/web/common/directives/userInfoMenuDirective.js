@@ -9,7 +9,7 @@ angular.module('bds')
         controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
         function($scope, $rootScope, $http, $window,$localStorage, HouseService) {
           $scope.loginError = false;
-          vm = this;
+          let vm = this;
           vm.profile = function() {
             alert("todo");
           }

@@ -18,6 +18,8 @@ var JWT_SECRET = 'Cexk6azogyew7DoTOYKgAXtTOP+18VLDQ1MzYoEWxr6Gqbhg+CeK33MuBPdhyz
 
 var internals = {};
 
+var chatHandler = require("../../lib/ChatHandler");
+
 
 /**
     Ham nay kiem tra xem user co ton tai trong he thong theo tat ca nhung dieu kien truyen vao
@@ -72,7 +74,8 @@ internals.login = function(req, reply){
         			result.login = true;
         			result.token = token;
         			result.userName = res[0].name;
-        			result.userId = res[0].userID;
+        			result.userID = res[0].id;
+                    result.email = res[0].email;
                 }else{
                 	result.message = "Mật khẩu không đúng ";
                 }
@@ -99,7 +102,9 @@ internals.signup = function(req, reply){
         	result.login = true;
         	result.token = token;
         	result.userName = user.name;
-        	result.userId = user.userID;
+        	result.userID = user.id;
+            result.email = user.email;
+            chatHandler.addUser(user);
         	reply(result);
 		}
 	})

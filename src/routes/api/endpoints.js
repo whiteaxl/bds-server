@@ -1,6 +1,7 @@
 var Handlers = require('./handlers');
 var findHandler = require('./findHandler');
 var loginHandler = require('./loginHandler');
+var fileUploadHandler = require('./fileUploadHandler');
 
 //Joi is Hapi's validation library
 Joi = require('joi');
@@ -264,6 +265,20 @@ internals.endpoints = [
         handler: loginHandler.signup,
         config : {
             description: 'login',
+            tags: ['api']
+        }
+	},
+	{
+        method: 'POST',
+        path: '/api/upload',
+        handler: fileUploadHandler.uploadFiles,
+        config : {
+            description: 'login',
+            payload:{
+                maxBytes:209715200,
+                output:'stream',
+                parse: false
+          	}, 
             tags: ['api']
         }
 	}

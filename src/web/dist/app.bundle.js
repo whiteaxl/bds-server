@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0230fe008e96d45d68d9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "203bdcc1c08326baac03"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,23 +591,32 @@
 
 	//Controller
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(5);
-	__webpack_require__(4);
-
-	//services
-	__webpack_require__(6);
-
-	//Directives
-	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
+	__webpack_require__(8);
+	__webpack_require__(10);
+	__webpack_require__(11);
+	__webpack_require__(12);
+
+
+	//services
+	__webpack_require__(13);
+	__webpack_require__(14);
+	__webpack_require__(15);
+
+	//Directives
+	__webpack_require__(16);
+	__webpack_require__(17);
+	__webpack_require__(18);
+	__webpack_require__(19);
+
 
 
 	//Libs
-	__webpack_require__(10);
-	__webpack_require__(11);
-	__webpack_require__(14);
+	__webpack_require__(20);
+	__webpack_require__(21);
+	__webpack_require__(22);
+	__webpack_require__(24);
 
 
 
@@ -919,13 +928,20 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	(function() {
 	  'use strict';
 	  window.initData = {};
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage'])
-	  .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
+	  
+	  var postal = __webpack_require__(4);
+	  var tap = postal.addWireTap( function( d, e ) {
+	    console.log( JSON.stringify( e ) );
+	  });
+
+
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
+	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
 	    $rootScope.center  = {
@@ -934,8 +950,34 @@
 	    }
 
 	    $rootScope.loginbox = {};
+	    $rootScope.chatBoxes = [];
+
 	    $rootScope.showDangNhap = function(){
-	      $rootScope.loginbox.resetLoginBox();
+	      if($rootScope.loginbox.resetLoginBox)
+	        $rootScope.loginbox.resetLoginBox();
+	    }
+	    $rootScope.chat_visible = true;
+	    $rootScope.showChat = function(user,scope){
+	      if($rootScope.chatBoxes.hasOwnProperty(user.email)){
+	        
+	      }else{
+	        $rootScope.chatBoxes[user.email] = user;
+	        var divElement = angular.element(document.querySelector('#chat-container'));
+	        var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
+	        divElement.append(appendHtml);
+	      }
+
+	      /*if(true || $rootScope.userName){
+	        $rootScope.chat_visible = true;
+	        $rootScope.chat_user = user;
+
+	      }
+	      else{
+	        alert(window.RewayConst.MSG.LOGIN_REQUIRED);
+	      }*/
+	    }
+	    $rootScope.closeChat = function(){
+	      $rootScope.chat_visible = false;
 	    }
 	    
 	    $rootScope.postPageRendered = function(){
@@ -945,6 +987,8 @@
 	    $rootScope.signout = function(){
 	        $rootScope.loginbox.resetLoginBox(); 
 	    }
+	    $rootScope.bodyClass = "page-home";
+
 
 	    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
 	      //alert(toState.name);
@@ -1015,9 +1059,22 @@
 	      };
 
 	  }]);
-	  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
+	  bds.config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
 	      // For any unmatched url, send to /route1
 	      $locationProvider.html5Mode(true);
+
+
+	      $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
+	       Object.defineProperty($delegate.constructor.prototype, 
+	            '$bus', {
+	                value: postal,
+	                enumerable: false
+	            });
+	        return $delegate;
+	    }]);
+
+
+
 
 	      $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
 	       return {
@@ -1101,10 +1158,26 @@
 	        //   $scope.sellingHouses = adsList;
 	        //   alert(adsList.length);
 	        // }
+	      }).state('detail', {
+	        url: "/detail/:adsID",
+	        //templateUrl: "/web/index_content.html",
+	        controller: "DetailCtrl",
+	        controllerAs: 'dt',
+	        data: {
+	            bodyClass: "page-detail"
+	        }
 	      })
 	    });
-
+	  bds.factory('socket', function (socketFactory) {
+	    // var socket = io.connect("http://localhost:5000");
+	    var socket = io.connect();
+	    //socket.forward('error');
+	    // socket.connect();
+	    return socket;
+	  });
 	  })();
+
+
 
 	  hello = function (){
 	    alert('hello buddy! how are you today?');
@@ -1113,1648 +1186,687 @@
 
 /***/ },
 /* 4 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	(function() {
-		'use strict';
-		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window){
-			var vm = this;
-			//nhannc
-			$scope.loaiTin = 0;
-			$scope.loaiNhaDat;
-			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
-			init();
-			initHotAds();
-			//alert("placeSearchId: " + $scope.placeSearchId);
-			$scope.goToPageSearch = function(loaiTin, loaiBds){
-				if(loaiTin)
-					$scope.loaiTin = loaiTin;
-				if(loaiBds)
-					$scope.loaiNhaDat = loaiBds;
-				if($scope.loaiNhaDat == '0')
-					$scope.loaiNhaDat = null;
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+	 * postal - Pub/Sub library providing wildcard subscriptions, complex message handling, etc.  Works server and client-side.
+	 * Author: Jim Cowart (http://ifandelse.com)
+	 * Version: v2.0.0
+	 * Url: http://github.com/postaljs/postal.js
+	 * License(s): MIT
+	 */
 
-				console.log("$scope.loaiTin: " + $scope.loaiTin);
-				console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
-				console.log("$scope.placeId: " + $scope.placeSearchId);
-				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+	( function( root, factory ) {
+		
+		if ( true ) {
+			// AMD. Register as an anonymous module.
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(5) ], __WEBPACK_AMD_DEFINE_RESULT__ = function( _ ) {
+				return factory( _, root );
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		
+		} else if ( typeof module === "object" && module.exports ) {
+			// Node, or CommonJS-Like environments
+			module.exports = factory( require( "lodash" ), this );
+		} else {
+			// Browser globals
+			root.postal = factory( root._, root );
+		}
+	}( this, function( _, global, undefined ) {
+		var prevPostal = global && global.postal;
+		var _defaultConfig = {
+			DEFAULT_CHANNEL: "/",
+			SYSTEM_CHANNEL: "postal",
+			enableSystemMessages: true,
+			cacheKeyDelimiter: "|",
+			autoCompactResolver: false
+		};
+		var postal = {
+			configuration: _.extend( {}, _defaultConfig )
+		};
+		var _config = postal.configuration;
+
+		
+
+	var ChannelDefinition = function( channelName, bus ) {
+		this.bus = bus;
+		this.channel = channelName || _config.DEFAULT_CHANNEL;
+	};
+
+	ChannelDefinition.prototype.subscribe = function() {
+		return this.bus.subscribe( {
+			channel: this.channel,
+			topic: ( arguments.length === 1 ? arguments[ 0 ].topic : arguments[ 0 ] ),
+			callback: ( arguments.length === 1 ? arguments[ 0 ].callback : arguments[ 1 ] )
+		} );
+	};
+
+	/*
+	    publish( envelope [, callback ] );
+	    publish( topic, data [, callback ] );
+	*/
+	ChannelDefinition.prototype.publish = function() {
+		var envelope = {};
+		var callback;
+		if ( typeof arguments[ 0 ] === "string" ) {
+			envelope.topic = arguments[ 0 ];
+			envelope.data = arguments[ 1 ];
+			callback = arguments[ 2 ];
+		} else {
+			envelope = arguments[ 0 ];
+			callback = arguments[ 1 ];
+		}
+		if ( typeof envelope !== "object" ) {
+			throw new Error( "The first argument to ChannelDefinition.publish should be either an envelope object or a string topic." );
+		}
+		envelope.channel = this.channel;
+		this.bus.publish( envelope, callback );
+	};
+
+		
+	var SubscriptionDefinition = function( channel, topic, callback ) {
+		if ( arguments.length !== 3 ) {
+			throw new Error( "You must provide a channel, topic and callback when creating a SubscriptionDefinition instance." );
+		}
+		if ( topic.length === 0 ) {
+			throw new Error( "Topics cannot be empty" );
+		}
+		this.channel = channel;
+		this.topic = topic;
+		this.callback = callback;
+		this.pipeline = [];
+		this.cacheKeys = [];
+		this._context = undefined;
+	};
+
+	var ConsecutiveDistinctPredicate = function() {
+		var previous;
+		return function( data ) {
+			var eq = false;
+			if ( typeof data === "string" ) {
+				eq = data === previous;
+				previous = data;
+			} else {
+				eq = _.isEqual( data, previous );
+				previous = _.extend( {}, data );
 			}
-			vm.selectPlaceCallback = function(place){
-				$scope.searchPlaceSelected = place;
-				$scope.placeSearchId = place.place_id;
+			return !eq;
+		};
+	};
+
+	var DistinctPredicate = function DistinctPredicateFactory() {
+		var previous = [];
+		return function DistinctPredicate( data ) {
+			var isDistinct = !_.some( previous, function( p ) {
+				return _.isEqual( data, p );
+			} );
+			if ( isDistinct ) {
+				previous.push( data );
 			}
-			$scope.setLoaiTin = function(loaiTin){
-				$scope.loaiTin = loaiTin;
-			}
+			return isDistinct;
+		};
+	};
 
-			//End nhannc
-			vm.getAllAds = function(){
-				HouseService.getAllAds().then(function(res){
-					vm.sellingHouses = res.data;
-					$scope.markers = [];
-					for(var i = 0; i < res.data.length; i++) {
-			    		var ads = res.data[i];
-			    		if(res.data[i].map)
-			    			$scope.markers.push(res.data[i].map.marker);
-					}
-				});
-			}
+	SubscriptionDefinition.prototype = {
 
-			$scope.$on('$viewContentLoaded', function(){
-				//addCrudControls
-				window.DesignCommon.adjustPage();
-				if($state.current.data)
-					$scope.bodyClass = $state.current.data.bodyClass
-				// window.onresize = function() {
-				//     window.DesignCommon.resizePage();
-				// }
-			});
-
-			vm.formatLabel = function(model){
-				if(model)
-					return model.formatted_address;
-			}
-			vm.loginbox = {};
-			vm.showDangNhap = function(){
-				vm.loginbox.resetLoginBox(vm);
-			}
-
-			
-
-			function init(){
-				//nhannc
-				$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
-				$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
-				$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
-				$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
-
-				NgMap.getMap().then(function(map){
-		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-		        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autoCompleteHome",map);
-		        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-		        	$scope.PlacesService.getDetails({
-		        		placeId: $scope.placeId
-		        	}, function(place, status) {
-		        		if (status === google.maps.places.PlacesServiceStatus.OK) {
-		        			$scope.searchPlaceSelected = place;
-							        		//var map = $scope.map.control.getGMap();
-							        		var current_bounds = map.getBounds();
-							        		//$scope.map.center =  
-							        		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-							        		if(place.geometry.viewport){
-							        			//map.fitBounds(place.geometry.viewport);	
-							        			//$scope.map
-							        		} else if( !current_bounds.contains( place.geometry.location ) ){
-							        			//var new_bounds = current_bounds.extend(place.geometry.location);
-							        			//map.fitBounds(new_bounds);
-							        			//$digest();
-							        		}
-							        		$scope.$apply();
-							        		//vm.search();
-							        	}
-							        });
-
-	        	});
-				//end nhannc
-				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
-				$scope.options = {scrollwheel: false,labelContent: 'gia'};
-				$scope.markerCount = 3;
-				$scope.markers = [];
-				$scope.initData = window.initData;
-				//$scope.hot_ads_cat = window.hot_ads_cat;
-				$scope.ads_list = window.testData;
-				$scope.bodyClass= "page-home";
-				for(var i = 0; i < $scope.ads_list.length; i++) { 
-		    		var ads = $scope.ads_list[i];
-		    		if(ads.place){
-		    			if(ads.place.geo){
-			    			ads.map={
-			    				center: {
-									latitude: 	ads.place.geo.lat,
-									longitude: 	ads.place.geo.lon
-								},
-			    				marker: {
-									id: i,
-									coords: {
-										latitude: 	ads.place.geo.lat,
-										longitude: 	ads.place.geo.lon
-									},
-									options: {
-										//labelContent : ads.gia,
-										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
-									},
-									data: 'test'
-								},
-								options:{
-									scrollwheel: false
-								},
-								zoom: 14	
-			    			}
-			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
-			    			$scope.markers.push(ads.map.marker);
-			    					
-						}
-		    		}
+		"catch": function( errorHandler ) {
+			var original = this.callback;
+			var safeCallback = function() {
+				try {
+					original.apply( this, arguments );
+				} catch ( err ) {
+					errorHandler( err, arguments[ 0 ] );
 				}
+			};
+			this.callback = safeCallback;
+			return this;
+		},
 
+		defer: function defer() {
+			return this.delay( 0 );
+		},
+
+		disposeAfter: function disposeAfter( maxCalls ) {
+			if ( typeof maxCalls !== "number" || maxCalls <= 0 ) {
+				throw new Error( "The value provided to disposeAfter (maxCalls) must be a number greater than zero." );
 			}
+			var dispose = _.after( maxCalls, this.unsubscribe.bind( this ) );
+			this.pipeline.push( function( data, env, next ) {
+				next( data, env );
+				dispose();
+			} );
+			return this;
+		},
 
-			function initHotAds(){
-				console.log("---------------------initHotAds ---------------");
-				data = {
-					"gia": 800,
-					"limit": 4
-				};
+		distinct: function distinct() {
+			return this.constraint( new DistinctPredicate() );
+		},
 
-				$scope.hot_ads_cat = [];
+		distinctUntilChanged: function distinctUntilChanged() {
+			return this.constraint( new ConsecutiveDistinctPredicate() );
+		},
 
-				HouseService.findBelowPriceAds(data).then(function(res){
-					var resultBelow = [];
-					if(res.data.list){
-						for (var i = 0; i < res.data.list.length; i++) {
-							resultBelow.push(res.data.list[i].default);
-						}
-						$scope.hot_ads_cat.push({
-							name: "Nhà dưới mức giá 800 triệu",
-							location: "Hà Nội",
-							list: resultBelow
-						})
-					}
-					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
-					console.log(resultBelow);
-				});
-
-				var data = {
-					"ngayDangTin": '25-04-2016',
-					"limit": 4
-				};
-				console.log("getRecentBds + data: " + data);
-				HouseService.findRencentAds(data).then(function(res){
-					var result = [];
-					if(res.data.list){
-						for (var i = 0; i < res.data.list.length; i++) {
-							result.push(res.data.list[i].default);
-						}
-						$scope.hot_ads_cat.push({
-							name: "Bất động sản mới đăng",
-							location: "Hà Nội",
-							list: result
-						})
-					}
-					console.log("HouseService.findRencentAds: " + result.length);
-					console.log(result);
-				});
-
-			}
-			vm.getLocation = function () {
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(vm.showPosition);
+		invokeSubscriber: function invokeSubscriber( data, env ) {
+			if ( !this.inactive ) {
+				var self = this;
+				var pipeline = self.pipeline;
+				var len = pipeline.length;
+				var context = self._context;
+				var idx = -1;
+				var invoked = false;
+				if ( !len ) {
+					self.callback.call( context, data, env );
+					invoked = true;
 				} else {
-					alert("Geolocation is not supported by this browser.");
+					pipeline = pipeline.concat( [ self.callback ] );
+					var step = function step( d, e ) {
+						idx += 1;
+						if ( idx < len ) {
+							pipeline[ idx ].call( context, d, e, step );
+						} else {
+							self.callback.call( context, d, e );
+							invoked = true;
+						}
+					};
+					step( data, env, 0 );
 				}
+				return invoked;
 			}
-			vm.showPosition =  function(position) {
-				var lat = position.coords.latitude;
-				var lng = position.coords.longitude;
-				//$scope.map.center.latitude = lat;
-				//$scope.map.center.longitude = lng;
-				var marker = {
-					id: $scope.markerCount,
-					coords: {
-						latitude: lat,
-						longitude: lng
-					},
-					options: {
-						labelContent : 'You are here'
-					},
-					data: 'restaurant'
-				}
-				$scope.markers.push(marker);
-				$scope.markerCount = $scope.markerCount + 1;
-				$scope.$digest();
-			}
+		},
 
-		});
-
-		// /* @ngInject */
-		// function MainCtrl() {
+		logError: function logError() {
 			
-		// }
-	})();
+			if ( console ) {
+				var report;
+				if ( console.warn ) {
+					report = console.warn;
+				} else {
+					report = console.log;
+				}
+				this.catch( report );
+			}
+			return this;
+		},
+
+		once: function once() {
+			return this.disposeAfter( 1 );
+		},
+
+		subscribe: function subscribe( callback ) {
+			this.callback = callback;
+			return this;
+		},
+
+		unsubscribe: function unsubscribe() {
+			
+			if ( !this.inactive ) {
+				postal.unsubscribe( this );
+			}
+		},
+
+		constraint: function constraint( predicate ) {
+			if ( typeof predicate !== "function" ) {
+				throw new Error( "Predicate constraint must be a function" );
+			}
+			this.pipeline.push( function( data, env, next ) {
+				if ( predicate.call( this, data, env ) ) {
+					next( data, env );
+				}
+			} );
+			return this;
+		},
+
+		constraints: function constraints( predicates ) {
+			var self = this;
+			
+			_.each( predicates, function( predicate ) {
+				self.constraint( predicate );
+			} );
+			return self;
+		},
+
+		context: function contextSetter( context ) {
+			this._context = context;
+			return this;
+		},
+
+		debounce: function debounce( milliseconds, immediate ) {
+			if ( typeof milliseconds !== "number" ) {
+				throw new Error( "Milliseconds must be a number" );
+			}
+
+			var options = {};
+
+			if ( !!immediate === true ) { 
+				options.leading = true;
+				options.trailing = false;
+			}
+
+			this.pipeline.push(
+				_.debounce( function( data, env, next ) {
+					next( data, env );
+				},
+					milliseconds,
+					options
+				)
+			);
+			return this;
+		},
+
+		delay: function delay( milliseconds ) {
+			if ( typeof milliseconds !== "number" ) {
+				throw new Error( "Milliseconds must be a number" );
+			}
+			var self = this;
+			self.pipeline.push( function( data, env, next ) {
+				setTimeout( function() {
+					next( data, env );
+				}, milliseconds );
+			} );
+			return this;
+		},
+
+		throttle: function throttle( milliseconds ) {
+			if ( typeof milliseconds !== "number" ) {
+				throw new Error( "Milliseconds must be a number" );
+			}
+			var fn = function( data, env, next ) {
+				next( data, env );
+			};
+			this.pipeline.push( _.throttle( fn, milliseconds ) );
+			return this;
+		}
+	};
+
+		
+
+
+	var bindingsResolver = _config.resolver = {
+		cache: {},
+		regex: {},
+		enableCache: true,
+
+		compare: function compare( binding, topic, headerOptions ) {
+			var pattern;
+			var rgx;
+			var prevSegment;
+			var cacheKey = topic + _config.cacheKeyDelimiter + binding;
+			var result = ( this.cache[ cacheKey ] );
+			var opt = headerOptions || {};
+			var saveToCache = this.enableCache && !opt.resolverNoCache;
+			// result is cached?
+			if ( result === true ) {
+				return result;
+			}
+			// plain string matching?
+			if ( binding.indexOf( "#" ) === -1 && binding.indexOf( "*" ) === -1 ) {
+				result = ( topic === binding );
+				if ( saveToCache ) {
+					this.cache[ cacheKey ] = result;
+				}
+				return result;
+			}
+			// ah, regex matching, then
+			if ( !( rgx = this.regex[ binding ] ) ) {
+				pattern = "^" + _.map( binding.split( "." ), function mapTopicBinding( segment ) {
+						var res = "";
+						if ( !!prevSegment ) {
+							res = prevSegment !== "#" ? "\\.\\b" : "\\b";
+						}
+						if ( segment === "#" ) {
+							res += "[\\s\\S]*";
+						} else if ( segment === "*" ) {
+							res += "[^.]+";
+						} else {
+							res += segment;
+						}
+						prevSegment = segment;
+						return res;
+					} ).join( "" ) + "$";
+				rgx = this.regex[ binding ] = new RegExp( pattern );
+			}
+			result = rgx.test( topic );
+			if ( saveToCache ) {
+				this.cache[ cacheKey ] = result;
+			}
+			return result;
+		},
+
+		reset: function reset() {
+			this.cache = {};
+			this.regex = {};
+		},
+
+		purge: function( options ) {
+			var self = this;
+			var keyDelimiter = _config.cacheKeyDelimiter;
+			var matchPredicate = function( val, key ) {
+				var split = key.split( keyDelimiter );
+				var topic = split[ 0 ];
+				var binding = split[ 1 ];
+				if ( ( typeof options.topic === "undefined" || options.topic === topic ) &&
+						( typeof options.binding === "undefined" || options.binding === binding ) ) {
+					delete self.cache[ key ];
+				}
+			};
+
+			var compactPredicate = function( val, key ) {
+				var split = key.split( keyDelimiter );
+				if ( postal.getSubscribersFor( { topic: split[ 0 ] } ).length === 0 ) {
+					delete self.cache[ key ];
+				}
+			};
+
+			if ( typeof options === "undefined" ) {
+				this.reset();
+			} else {
+				var handler = options.compact === true ? compactPredicate : matchPredicate;
+				_.each( this.cache, handler );
+			}
+		}
+	};
+
+		
+
+
+	var pubInProgress = 0;
+	var unSubQueue = [];
+	var autoCompactIndex = 0;
+
+	function clearUnSubQueue() {
+		while ( unSubQueue.length ) {
+			postal.unsubscribe( unSubQueue.shift() );
+		}
+	}
+
+	function getCachePurger( subDef, key, cache ) {
+		return function( sub, i, list ) {
+			if ( sub === subDef ) {
+				list.splice( i, 1 );
+			}
+			if ( list.length === 0 ) {
+				delete cache[ key ];
+			}
+		};
+	}
+
+	function getCacher( topic, pubCache, cacheKey, done, envelope ) {
+		var headers = envelope && envelope.headers || {};
+		return function( subDef ) {
+			var cache;
+			if ( _config.resolver.compare( subDef.topic, topic, headers ) ) {
+				if ( !headers.resolverNoCache ) {
+					cache = pubCache[ cacheKey ] = ( pubCache[ cacheKey ] || [] );
+					cache.push( subDef );
+				}
+				subDef.cacheKeys.push( cacheKey );
+				if ( done ) {
+					done( subDef );
+				}
+			}
+		};
+	}
+
+	function getSystemMessage( kind, subDef ) {
+		return {
+			channel: _config.SYSTEM_CHANNEL,
+			topic: "subscription." + kind,
+			data: {
+				event: "subscription." + kind,
+				channel: subDef.channel,
+				topic: subDef.topic
+			}
+		};
+	}
+
+	var sysCreatedMessage = getSystemMessage.bind( undefined, "created" );
+	var sysRemovedMessage = getSystemMessage.bind( undefined, "removed" );
+
+	function getPredicate( options, resolver ) {
+		if ( typeof options === "function" ) {
+			return options;
+		} else if ( !options ) {
+			return function() {
+				return true;
+			};
+		} else {
+			return function( sub ) {
+				var compared = 0;
+				var matched = 0;
+				_.each( options, function( val, prop ) {
+					compared += 1;
+					if (
+					// We use the bindings resolver to compare the options.topic to subDef.topic
+					( prop === "topic" && resolver.compare( sub.topic, options.topic, { resolverNoCache: true } ) ) ||
+							( prop === "context" && options.context === sub._context ) ||
+							// Any other potential prop/value matching outside topic & context...
+							( sub[ prop ] === options[ prop ] ) ) {
+						matched += 1;
+					}
+				} );
+				return compared === matched;
+			};
+		}
+	}
+
+	_.extend( postal, {
+		cache: {},
+		subscriptions: {},
+		wireTaps: [],
+
+		ChannelDefinition: ChannelDefinition,
+		SubscriptionDefinition: SubscriptionDefinition,
+
+		channel: function channel( channelName ) {
+			return new ChannelDefinition( channelName, this );
+		},
+
+		addWireTap: function addWireTap( callback ) {
+			var self = this;
+			self.wireTaps.push( callback );
+			return function() {
+				var idx = self.wireTaps.indexOf( callback );
+				if ( idx !== -1 ) {
+					self.wireTaps.splice( idx, 1 );
+				}
+			};
+		},
+
+		noConflict: function noConflict() {
+			
+			if ( typeof window === "undefined" || ( typeof window !== "undefined" && "function" === "function" && __webpack_require__(7) ) ) {
+				throw new Error( "noConflict can only be used in browser clients which aren't using AMD modules" );
+			}
+			global.postal = prevPostal;
+			return this;
+		},
+
+		getSubscribersFor: function getSubscribersFor( options ) {
+			var result = [];
+			var self = this;
+			_.each( self.subscriptions, function( channel ) {
+				_.each( channel, function( subList ) {
+					result = result.concat( _.filter( subList, getPredicate( options, _config.resolver ) ) );
+				} );
+			} );
+			return result;
+		},
+
+		publish: function publish( envelope, cb ) {
+			++pubInProgress;
+			var channel = envelope.channel = envelope.channel || _config.DEFAULT_CHANNEL;
+			var topic = envelope.topic;
+			envelope.timeStamp = new Date();
+			if ( this.wireTaps.length ) {
+				_.each( this.wireTaps, function( tap ) {
+					tap( envelope.data, envelope, pubInProgress );
+				} );
+			}
+			var cacheKey = channel + _config.cacheKeyDelimiter + topic;
+			var cache = this.cache[ cacheKey ];
+			var skipped = 0;
+			var activated = 0;
+			if ( !cache ) {
+				var cacherFn = getCacher(
+					topic,
+					this.cache,
+					cacheKey,
+					function( candidate ) {
+						if ( candidate.invokeSubscriber( envelope.data, envelope ) ) {
+							activated++;
+						} else {
+							skipped++;
+						}
+					},
+					envelope
+				);
+				_.each( this.subscriptions[ channel ], function( candidates ) {
+					_.each( candidates, cacherFn );
+				} );
+			} else {
+				_.each( cache, function( subDef ) {
+					if ( subDef.invokeSubscriber( envelope.data, envelope ) ) {
+						activated++;
+					} else {
+						skipped++;
+					}
+				} );
+			}
+			if ( --pubInProgress === 0 ) {
+				clearUnSubQueue();
+			}
+			if ( cb ) {
+				cb( {
+					activated: activated,
+					skipped: skipped
+				} );
+			}
+		},
+
+		reset: function reset() {
+			this.unsubscribeFor();
+			_config.resolver.reset();
+			this.subscriptions = {};
+			this.cache = {};
+		},
+
+		subscribe: function subscribe( options ) {
+			var subscriptions = this.subscriptions;
+			var subDef = new SubscriptionDefinition( options.channel || _config.DEFAULT_CHANNEL, options.topic, options.callback );
+			var channel = subscriptions[ subDef.channel ];
+			var channelLen = subDef.channel.length;
+			var subs;
+			if ( !channel ) {
+				channel = subscriptions[ subDef.channel ] = {};
+			}
+			subs = subscriptions[ subDef.channel ][ subDef.topic ];
+			if ( !subs ) {
+				subs = subscriptions[ subDef.channel ][ subDef.topic ] = [];
+			}
+			// First, add the SubscriptionDefinition to the channel list
+			subs.push( subDef );
+			// Next, add the SubscriptionDefinition to any relevant existing cache(s)
+			var cache = this.cache;
+			_.each( _.keys( cache ), function( cacheKey ) {
+				if ( cacheKey.substr( 0, channelLen ) === subDef.channel ) {
+					getCacher(
+						cacheKey.split( _config.cacheKeyDelimiter )[1],
+						cache,
+						cacheKey )( subDef );
+				}
+			} );
+			
+			if ( _config.enableSystemMessages ) {
+				this.publish( sysCreatedMessage( subDef ) );
+			}
+			return subDef;
+		},
+
+		unsubscribe: function unsubscribe() {
+			var unSubLen = arguments.length;
+			var unSubIdx = 0;
+			var subDef;
+			var channelSubs;
+			var topicSubs;
+			var idx;
+			for ( ; unSubIdx < unSubLen; unSubIdx++ ) {
+				subDef = arguments[ unSubIdx ];
+				subDef.inactive = true;
+				if ( pubInProgress ) {
+					unSubQueue.push( subDef );
+					return;
+				}
+				channelSubs = this.subscriptions[ subDef.channel ];
+				topicSubs = channelSubs && channelSubs[ subDef.topic ];
+				
+				if ( topicSubs ) {
+					var len = topicSubs.length;
+					idx = 0;
+					// remove SubscriptionDefinition from channel list
+					while ( idx < len ) {
+						
+						if ( topicSubs[ idx ] === subDef ) {
+							topicSubs.splice( idx, 1 );
+							break;
+						}
+						idx += 1;
+					}
+					if ( topicSubs.length === 0 ) {
+						delete channelSubs[ subDef.topic ];
+						if ( !_.keys( channelSubs ).length ) {
+							delete this.subscriptions[ subDef.channel ];
+						}
+					}
+					// remove SubscriptionDefinition from postal cache
+					if ( subDef.cacheKeys && subDef.cacheKeys.length ) {
+						var key;
+						while ( key = subDef.cacheKeys.pop() ) {
+							_.each( this.cache[ key ], getCachePurger( subDef, key, this.cache ) );
+						}
+					}
+					if ( typeof _config.resolver.purge === "function" ) {
+						// check to see if relevant resolver cache entries can be purged
+						var autoCompact = _config.autoCompactResolver === true ?
+							0 : typeof _config.autoCompactResolver === "number" ?
+								( _config.autoCompactResolver - 1 ) : false;
+						if ( autoCompact >= 0 && autoCompactIndex === autoCompact ) {
+							_config.resolver.purge( { compact: true } );
+							autoCompactIndex = 0;
+						} else if ( autoCompact >= 0 && autoCompactIndex < autoCompact ) {
+							autoCompactIndex += 1;
+						}
+					}
+				}
+				if ( _config.enableSystemMessages ) {
+					this.publish( sysRemovedMessage( subDef ) );
+				}
+			}
+		},
+
+		unsubscribeFor: function unsubscribeFor( options ) {
+			var toDispose = [];
+			
+			if ( this.subscriptions ) {
+				toDispose = this.getSubscribersFor( options );
+				this.unsubscribe.apply( this, toDispose );
+			}
+		}
+	} );
+
+
+		
+		if ( global && Object.prototype.hasOwnProperty.call( global, "__postalReady__" ) && _.isArray( global.__postalReady__ ) ) {
+			while ( global.__postalReady__.length ) {
+				global.__postalReady__.shift().onReady( postal );
+			}
+		}
+		
+
+		return postal;
+	} ) );
 
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
-
-	(function() {
-		'use strict';
-		var controllerId = 'SearchCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
-			var vm = this;
-			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
-			vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
-			vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
-			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
-			//use for menu
-			vm.loaiNhaDatBanMenu = window.RewayListValue.LoaiNhaDatBanWeb;
-			vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
-			vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
-			vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
-
-			$scope.center = "Hanoi Vietnam";
-			$scope.placeId = $state.params.place;
-			$scope.loaiTin = $state.params.loaiTin;
-			$scope.loaiNhaDat = $state.params.loaiNhaDat;
-			vm.viewMode = $state.params.viewMode;
-			if(!vm.viewMode)
-				vm.viewMode = "map";
-			
-			vm.viewTemplateUrl = "search.tpl.html";//1=map 2= list
-
-			if($state.params.viewMode=="list"){
-				vm.viewTemplateUrl = "list.tpl.html";
-			}else if($state.params.viewMode=="map"){
-				vm.viewTemplateUrl = "search.tpl.html"
-			}
-			vm.showList = function(){
-				vm.viewTemplateUrl = "list.tpl.html"
-				vm.viewMode = "list";
-				$scope.bodyClass = "page-list";
-
-			}
-			vm.showMap = function(){
-				vm.viewTemplateUrl = "search.tpl.html"
-				vm.viewMode = "map";
-				$scope.bodyClass = "page-search";
-			}
-			vm.saveSearch = function(){
-				HouseService.saveSearch().then(function(res){
-					alert(res.data);
-				})
-			}
-
-			if(!$scope.placeId)
-				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
-			if(!$scope.loaiTin)
-				$scope.loaiTin = 0;
-			if(!$scope.loaiNhaDat)
-				$scope.loaiNhaDat = 0;
-			vm.loaiTin = $scope.loaiTin;
-
-			
-			console.log("placeId: " + $scope.placeId);
-			console.log("loaiTin: " + $scope.loaiTin);
-			console.log("loaiNhaDat: " + $scope.loaiNhaDat);
-			console.log("placeId: " + $scope.placeId);
-				
-			//vm.sell_price_list_from = window.RewayListValue.sell_steps;
-			vm.sell_price_list_from = [
-				{
-			        value: 0,
-			        lable: "Giá từ 0",
-			        position: 0
-			    },
-			];
-			Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);
-
-			vm.sell_price_list_to = [];
-			Array.prototype.push.apply(vm.sell_price_list_to, window.RewayListValue.sell_steps);
-			vm.sell_price_list_to.push(
-				{
-			        value: window.RewayListValue.filter_max_value.value,
-			        lable: window.RewayListValue.filter_max_value.lable,
-			        position: vm.sell_price_list_to.length
-			    }
-			);
-			vm.sell_dien_tich_list_from = [
-				{
-			        value: 0,
-			        lable: "Diện tích từ 0",
-			        position: 0
-			    },
-			];
-			Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.dientich_steps);
-			vm.sell_dien_tich_list_to = [];
-			Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.dientich_steps);
-			vm.sell_dien_tich_list_to.push(
-				{
-			        value: window.RewayListValue.filter_max_value.value,
-			        lable: window.RewayListValue.filter_max_value.lable,
-			        position: vm.sell_price_list_to.length
-			    }
-			);
-			
-			
-			 
-
-
-			vm.sortOptions = window.RewayListValue.sortHouseOptions;
-			vm.sortBy = vm.sortOptions[0].value;
-			vm.price_min = 0;
-			vm.price_max = window.RewayListValue.filter_max_value.value;
-			vm.dien_tich_min = 0;
-			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
-			vm.zoomMode = "auto";
-
-			vm.totalResultCounts = 0;
-			vm.currentPage = 0;
-			vm.lastPageNo = 0;
-			vm.startPageNo = 0;
-			vm.pageSize = 20;
-
-			vm.searchData = {
-				"loaiTin": $scope.loaiTin,
-				"loaiNhaDat": $scope.loaiNhaDat, 
-				"loaiNhaDats": [],
-			  	"giaBETWEEN": [vm.price_min,vm.price_max],
-			  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-			  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-			  	"soTangGREATER": vm.soTangList[0].value,
-			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-			  	"huongNha": vm.huongNhaList[0].value,
-			  	"huongNhas": [],
-			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-			  	"limit": vm.pageSize,
-			  	"orderBy": vm.sortOptions[0].value,
-			  	"pageNo": 1
-			}
-
-			
-
-			vm.mouseover = function(e,i) {
-	          vm.showDetail(i);
-	        };
-	        vm.mouseout = function() {
-	          //vm.hideDetail();
-	        };
-	        vm.click = function(e,i) {
-	        	console.log('click');
-	    	};
-
-	        vm.showDetail = function(i) {
-			    vm.highlightAds = vm.ads_list[i];
-			    if(vm.ads_list[i].place){
-	    			if(vm.ads_list[i].place.geo){
-	    				vm.map.showInfoWindow("iw","m_" +i);
-	    			}
-	    		}
-			};
-
-
-			vm.hideDetail = function() {
-				vm.map.hideInfoWindow('iw');
-			};
-			// window.DesignCommon.adjustPage();
-			$scope.$on('$viewContentLoaded', function(){
-				//window.DesignCommon.adjustPage();
-				if($state.current.data){
-					//$scope.bodyClass = $state.current.data.bodyClass;
-					$scope.bodyClass = "page-search";
-					if($state.current.viewMode=="list"){
-						$scope.bodyClass = "page-list";
-					} 
-				}
-			});
-			vm.selectPlaceCallback = function(place){
-				$scope.searchPlaceSelected = place;
-	    		$scope.placeSearchId = place.place_id;
-	    		/*$scope.markers = [];
-	    		var marker = {
-	    				id: -1,
-	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
-	    				content: 'you are here'
-	    		}
-	    		if(place.geometry.viewport){
-	    			vm.searchData.geoBox = [  place.geometry.viewport.H.j,  place.geometry.viewport.j.j ,place.geometry.viewport.H.H, vm.map.getBounds().j.H];
-	    			vm.searchData.geoBox = [place.geometry.viewport.getSouthWest().lat(),place.geometry.viewport.getSouthWest().lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng()]
-					vm.searchData.radiusInKm = undefined;
-
-				}else{
-					var placeData = {
-				    			placeId: place.place_id,
-				 	    		relandTypeName : window.RewayPlaceUtil.getTypeName(place),
-				       			radiusInKm :  1,
-				 				currentLocation: undefined
-				 	}
-				 	vm.searchData.place = placeData;
-				    vm.searchData.geoBox = undefined;
-				}*/
-	    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
-	    		
-	    		/*$scope.markers.push(marker);
-	    		$scope.$apply();
-
-	    		if(place.geometry.viewport){
-					vm.map.fitBounds(place.geometry.viewport);	
-					//$scope.map
-				}
-
-	    		//$scope.map.fit = false;
-	    		
-	    		vm.map.setCenter(place.geometry.location);*/
-	    		// $scope.$apply();
-	    		//$scope.map.refresh();
-	    		vm.goToPageSearch();
-	    		//vm.search();
-			}
-			vm.goToPageSearch = function(){
-				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
-				//vm.search();
-			}
-
-			vm.goToPageSearchMenu = function(loaiTin, loaiNhaDat){
-				vm.searchData.loaiTin = loaiTin;
-				vm.searchData.loaiNhaDat = loaiNhaDat;
-				vm.search();
-			}
-	  		
-			vm.firstPage = function(callback){
-				vm.searchPage(1);
-			}
-			vm.nextPage = function(callback){
-				vm.searchPage(vm.currentPage+1);
-			}
-			vm.lastPage = function(callback){
-				vm.searchPage(vm.lastPageNo);
-			}
-			vm.previousPage = function(callback){
-				vm.searchPage(vm.currentPage-1);
-			}
-			vm.searchPage = function(i, callback){
-				vm.searchData.pageNo = i;
-				HouseService.findAdsSpatial(vm.searchData).then(function(res){
-					var result = res.data.list;
-					//vm.totalResultCounts = res.data.list.length;
-					for (var i = 0; i < result.length; i++) { 
-			    		var ads = result[i];
-			    		result[i].index = i;
-			    		if(ads.huongNha){
-			    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
-			    		}else{
-			    			ads.huongNha = "";	
-			    		}
-			    		if(result[i].place){
-			    			if(result[i].place.geo){
-				    			result[i].map={
-				    				center: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
-									},
-				    				marker: {
-										id: i,
-										coords: {
-											latitude: 	result[i].place.geo.lat,
-											longitude: 	result[i].place.geo.lon
-										},
-										content: result[i].giaFmt,
-										data: 'test'
-									},
-									options:{
-										scrollwheel: false
-									},
-									zoom: 14	
-				    			}
-				    					
-							}
-			    		}
-			    		
-					}
-					vm.ads_list = res.data.list;
-					$scope.markers = [];
-					for(var i = 0; i < res.data.list.length; i++) { 
-			    		var ads = res.data.list[i];
-			    		if(res.data.list[i].map)
-			    			$scope.markers.push(res.data.list[i].map.marker);
-					}
-					/*if(vm.ads_list.length==0){
-						vm.zoomMode = "false";
-					}else{
-						vm.zoomMode = "auto";
-					}*/
-
-					vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
-					vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
-					vm.currentPage = vm.searchData.pageNo;
-
-					if(callback)
-						callback();
-				});
-			}
-
-			vm.search = function(callback){
-				HouseService.countAds(vm.searchData).then(function(res){
-	        		vm.totalResultCounts = res.data.countResult;
-	        		if(vm.totalResultCounts>0){
-	        			vm.currentPage = 1;
-	        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
-	        			vm.currentPageStart = 1;
-	        			vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
-
-	        		} else{
-	        			vm.currentPage = 0;
-						vm.lastPageNo = 0;
-						vm.startPageNo = 0;
-	        		}
-	        		vm.searchPage(1,callback);
-
-	        	});
-
-			}
-			vm.formatLabel = function(model){
-				if(model)
-					return model.formatted_address;
-			}
-			
-			var events = {
-	          places_changed: function (searchBox) {}
-	        }
-	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
-	        
-
-
-	        NgMap.getMap().then(function(map){
-	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-	        	vm.map = map;
-	        	google.maps.event.addListener(map, "dragend", function() {
-					vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-		          	vm.search();
-		        });
-
-	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
-	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-							$scope.PlacesService.getDetails({
-								placeId: $scope.placeId
-							}, function(place, status) {
-								if (status === google.maps.places.PlacesServiceStatus.OK) {
-									$scope.searchPlaceSelected = place;
-					        		//var map = $scope.map.control.getGMap();
-					        		
-					        		/*$scope.markers = [
-										{
-															id: 0,
-															coords: {
-																latitude: 	place.geometry.location.lat(),
-																longitude: 	place.geometry.location.lng()
-															},
-															content: 'you are here'
-														}
-									];*/
-									var googlePlace = $scope.searchPlaceSelected;
-									if($scope.searchPlaceSelected.geometry.viewport){
-						          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-						          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
-						          		vm.searchData.radiusInKm = undefined;
-						        	} else{
-						          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-						          		//data.radiusInKm = "10";
-						          		var placeData = {
-						          			placeId: googlePlace.place_id,
-						 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-						       				radiusInKm :  2,
-						 				    currentLocation: undefined
-						 			  	}
-						 			  	vm.searchData.place = placeData;
-						          		vm.searchData.geoBox = undefined;
-						        	}
-						        	
-									vm.search(function(){
-										vm.zoomMode = "auto";
-										var current_bounds = map.getBounds();
-						        		//$scope.map.center =  
-						        		vm.map.setCenter(place.geometry.location);
-						        		//$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-						        		if(place.geometry.viewport){
-						        			map.fitBounds(place.geometry.viewport);	
-						        			//$scope.map
-						        		} else if( !current_bounds.contains( place.geometry.location ) ){
-						        			//var new_bounds = current_bounds.extend(place.geometry.location);
-						        			//map.fitBounds(new_bounds);
-						        			//$digest();
-						        		}
-									});
-									
-									//vm.map.refresh();
-									//$scope.$apply();	
-					        	}
-					        });
-				
-	        });
-	        init();
-
-			function init(){
-				
-				// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-				//$rootScope.center = "Hanoi Vietnam";
-				vm.provinces = [
-					{
-						value: "Hanoi",
-						lable: "Hà Nội"
-					},
-					{
-						value: "Da nang",
-						lable: "Đà Nãng"
-
-					}
-				];
-
-				vm.districts = [
-					{
-						value: "Cau Giay",
-						lable: "Cầu Giấy"
-					},
-					{
-						value: "Dong Da",
-						lable: "Đống Đa"
-
-					}
-				];
-
-				vm.loaiNhaDatList = []
-				if(vm.loaiTin == 0){
-					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatBan);	
-				}else{
-					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatThue);
-				}
-				
-				
-				vm.moreFilter = {
-					loaiNhaDat: vm.loaiNhaDatList.slice(),
-					huongNha: vm.huongNhaList.slice(),
-					soPhongNgu: vm.soPhongNguList[0].value,
-					soPhongTam: vm.soPhongTamList[0].value,
-					soTang: vm.soTangList[0].value
-				}
-				vm.moreFilter.loaiNhaDat[0].selected = true;
-				vm.moreFilter.huongNha[0].selected = true;
-				vm.changeFilterLoaiNhaDat = function(k){
-					var newvalue = vm.moreFilter.loaiNhaDat[k].selected;
-					if(k==0){
-						if(newvalue==true){
-							for(var i =1; i< vm.moreFilter.loaiNhaDat.length;i++){
-								vm.moreFilter.loaiNhaDat[i].selected = false;
-							}
-						}
-					}else{
-						if(newvalue==true)
-							vm.moreFilter.loaiNhaDat[0].selected = false;	
-					}
-					
-				}
-				vm.changeFilterHuongNha = function(k){
-					var newvalue = vm.moreFilter.huongNha[k].selected;
-					if(k==0){
-						if(newvalue==true){
-							for(var i =1; i< vm.moreFilter.huongNha.length;i++){
-								vm.moreFilter.huongNha[i].selected = false;
-							}
-						}
-					}else{
-						if(newvalue==true)
-							vm.moreFilter.huongNha[0].selected = false;	
-					}
-				}
-
-				vm.filter = function(){
-					// vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
-					vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
-					vm.searchData.soTangGREATER=vm.moreFilter.soTang;
-					vm.searchData.soPhongTamGREATER=vm.moreFilter.soPhongTam;
-					vm.searchData.loaiNhaDat = [];
-					vm.searchData.huongNha = [];
-					for(var i = 0; i< vm.moreFilter.loaiNhaDat.length;i++){
-						if(vm.moreFilter.loaiNhaDat[i].selected == true){
-							vm.searchData.loaiNhaDat.push(vm.moreFilter.loaiNhaDat[i].value);
-						}
-					}
-					for(var i = 0; i< vm.moreFilter.huongNha.length;i++){
-						if(vm.moreFilter.huongNha[i].selected == true){
-							vm.searchData.huongNha.push(vm.moreFilter.huongNha[i].value);
-						}
-					}
-					// vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
-					$("a[data-action='more']").click();
-					//$('filter').trigger("click");
-					vm.search(function(){
-						vm.searchData.soPhongNguGREATER=undefined;
-						vm.searchData.soTangGREATER=undefined;
-						vm.searchData.soPhongNguGREATER=undefined;
-						vm.searchData.soPhongTamGREATER=undefined;
-						vm.searchData.huongNha=undefined;
-						vm.searchData.loaiNhaDat = vm.loaiNhaDatList[0].value;
-					});
-				}
-
-
-
-				$scope.options = {scrollwheel: false,labelContent: 'gia'};
-				$scope.markerCount = 3;
-				/*$scope.markers = [
-					{
-										id: 0,
-										coords: {
-											latitude: 	16.0439,
-											longitude: 	108.199
-										},
-										content: 'you are here'
-									}
-				];*/
-				//$scope.initData = window.initData;
-				//$scope.hot_ads_cat = window.hot_ads_cat;
-				//vm.ads_list = window.testData;
-				$scope.bodyClass= "page-home";
-
-				if(vm.viewMode == "list"){
-
-				}
-
-
-			}
-			
-
-		});
-
-	})();
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	(function () {
-	  'use strict';
-	  angular
-	  .module('bds')
-	  .factory('HouseService', function($http, $q, $rootScope){
-	    var urlPath = '/api/ads/getAllAds';
-	    return {
-	      getAllAds: function(){
-	        console.log("Get all Ads");
-	        //return $http.get(urlPath);
-	        var deferred = $q.defer()
-	        deferred.resolve({data: window.testData});
-	        return deferred.promise;
-	      },
-	      createHouse: function(desc,email,seller){
-	        return $http.post(urlPath + 'create'); 
-	      },
-	      findAdsSpatial: function(data){
-	        var url = "/api/find";
-	        // var url = "/api/search";
-	        return $http.post(url,data);
-	      },
-	      countAds: function(data){
-	        //var url = "/api/find";
-	        var url = "/api/count";
-	        return $http.post(url,data);
-	      },
-	      //Nhannc
-	      findRencentAds: function(data){
-	        var url = "/api/findRecent";
-	        return $http.post(url,data);
-	      },
-	      findBelowPriceAds: function(data){
-	        var url = "/api/findBelowPrice";
-	        return $http.post(url,data);
-	      },
-	      saveSearch: function(data){
-	        var url = "/api/saveSearch";
-	        return $http.post(url,data);
-	      },
-	      //End Nhannc
-	      checkUserExist: function(data){
-	        var url = "/api/checkUserExist";
-	        return $http.post(url,data);
-	      },
-	      findGooglePlaceById: function(googlePlaceId){
-	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
-	      },
-	      login: function(data){
-	        var url = "/api/login";
-	        return $http.post(url,data);
-	      },
-	      signup: function(data){
-	        var url = "/api/signup";
-	        return $http.post(url,data);
-	      }
-	    };
-	  });
-	})();
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	angular.module('bds')
-	.directive("loginForm", [
-	  function() {
-	    return {
-	      restrict: 'E',
-	      scope: {email: "=", loginbox: "="},
-	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
-	        templateUrl: "/web/common/directives/loginTemplate.html",
-	        replace: 'true',
-	        controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	        function($scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	          $scope.loginError = false;
-	          vm = this;
-	          vm.email = "";
-	          vm.password = "";
-	          vm.enterEmail = true;
-	          vm.enterPassword = false;
-	          vm.userExist = false;
-	          vm.class = "";
-
-	          var formLogin = $("#form-login");
-	          $("#form-login").validate();
-	          if(formLogin.validate){
-	            formLogin.validate({
-	              rules: {
-	                email: {
-	                  required: true,
-	                  email: true
-	                }
-	              },
-	              messages: {
-	                email: {
-	                  required: 'Xin nhập email',
-	                  email: 'Email không hợp lệ'
-	                }
-	              }
-	            });    
-	          }
-
-
-	          $scope.loginbox.resetLoginBox = function(parent){
-	            vm.enterEmail = true;
-	            vm.userExist = false;
-	            vm.enterPassword = false;
-	            vm.password = "";
-	            $localStorage.relandToken = undefined;
-	          }
-	          vm.signin = function() {
-	            var loginForm = $('#form-login');
-	            var data = {
-	              email: vm.email,
-	              matKhau: vm.password
-	            }
-	            if (loginForm.valid()) {
-	              // If the form is invalid, submit it. The form won't actually submit;
-	              if(vm.enterEmail == true){
-	                HouseService.checkUserExist(data).then(function(res){
-	                  vm.userExist = res.data.exist;
-	                  vm.enterPassword = true;
-	                  vm.enterEmail = false;  
-	                });
-	              } else if(vm.enterPassword == true){
-	                if(vm.userExist==true){//sign in
-	                  HouseService.login(data).then(function(res){
-	                    if(res.data.login==true){
-	                      //alert("signin with email " + $scope.email + " password " + vm.password + " and token: " + res.data.token);  
-	                      //$window.token = res.data.token;
-	                      $localStorage.relandToken = res.data.token;
-	                      $rootScope.userName = res.data.userName;
-	                      vm.class = "has-sub";
-
-	                      $('#box-login').click();
-	                    }else{
-	                      alert(res.data.message);
-	                    }                    
-	                  });
-	                }else{//register
-	                  HouseService.signup(data).then(function(res){
-	                    $localStorage.relandToken = res.data.token;
-	                    $rootScope.userName = res.data.userName;
-	                    vm.class = "has-sub";
-	                    $('#box-login').click();
-	                  });
-	                }
-	              }
-	            }
-	          }
-	        }
-	        ],
-	        controllerAs: 'lc',
-	      }
-	    }
-	    ]);
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	angular.module('bds')
-	.directive("userInfoMenu", [
-	  function() {
-	    return {
-	      restrict: 'E',
-	      scope: {},
-	        templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
-	        replace: 'true',
-	        controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	        function($scope, $rootScope, $http, $window,$localStorage, HouseService) {
-	          $scope.loginError = false;
-	          vm = this;
-	          vm.profile = function() {
-	            alert("todo");
-	          }
-	          vm.signout = function(){
-	          	$localStorage.relandToken = undefined;
-	          	$rootScope.userName = undefined;
-	          }
-	        }
-	        ],
-	        controllerAs: 'uim',
-	      }
-	    }
-	    ]);
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	angular.module('bds').directive('afterRender', ['$timeout', function ($timeout) {
-	    var def = {
-	        restrict: 'A',
-	        terminal: true,
-	        transclude: false,
-	        link: function (scope, element, attrs) {
-	            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
-	            //alert('ssss');
-	        }
-	    };
-	    return def;
-	}]);
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	var danhMuc = {};
-
-	var BAT_KY = "Bất kỳ";
-
-	danhMuc.BAT_KY = BAT_KY;
-	danhMuc.BIG =9999999;
-
-	danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
-
-	danhMuc.filter_max_value = {
-	    lable: "Bất kỳ",
-	    value: 999999999999999999,
-	}
-
-	danhMuc.sortHouseOptions = [
-	    {
-	        lable: "Giá từ cao đến thấp",
-	        value: "giaDESC",
-	        position: 1
-	    },
-	    {
-	        lable: "Giá từ thấp đến cao",
-	        value: "giaASC",
-	        position: 2
-	    },
-	    {
-	        lable: "Diện tích từ cao đến thấp",
-	        value: "dienTichDESC",
-	        position: 3
-	    },
-	    {
-	        lable: "Diện tích từ thấp đến cao",
-	        value: "dienTichASC",
-	        position: 4
-	    }
-	];
-
-	danhMuc.sell_steps = [
-	    {
-	        value: 1000,
-	        lable: "1 tỷ",
-	        position: 1
-	    },
-	    {
-	        value: 2000,
-	        lable: "2 tỷ",
-	        position: 2
-	    },
-	    {
-	        value: 3000,
-	        lable: "3 tỷ",
-	        position: 3
-	    },
-	    {
-	        value: 5000,
-	        lable: "5 tỷ",
-	        position: 4
-	    },
-	    {
-	        value: 7000,
-	        lable: "7 tỷ",
-	        position: 5
-	    },
-	    {
-	        value: 10000,
-	        lable: "10 tỷ",
-	        position: 6
-	    },
-	    {
-	        value: 20000,
-	        lable: "20 tỷ",
-	        position: 7
-	    },
-	    {
-	        value: 30000,
-	        lable: "30 tỷ",
-	        position: 8
-	    }
-	];
-
-
-
-	danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
-
-	danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
-
-	danhMuc.convertDienTichStepValueToNameValueArray= function(){
-	    var result = [];
-	    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
-	        result.push({
-	            value: danhMuc.dienTichStepValues[i],
-	            lable: danhMuc.dienTichStepValues[i] + " m2",
-	            position: i
-	        });
-	    }
-	    return result;
-	}
-
-	danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
-
-	danhMuc.LoaiTin = {
-	    0 : "Bán",
-	    1  : "Cho Thuê"
-	};
-
-	danhMuc.LoaiNhaDatBan = {
-	    1  : "Bán căn hộ chung cư",
-	    2  : "Bán nhà riêng",
-	    3  : "Bán nhà mặt phố",
-	    4  : "Bán biệt thự, liền kề",
-	    6  : "Bán Shophouse",
-	    7  : "Bán đất nền dự án",
-	    5  : "Bán đất",
-	    8  : "Bán trang trại, khu nghỉ dưỡng",
-	    99 : "Bán các BDS khác",
-	    10 : "Tìm kiếm nâng cao",
-	    0 : "Tất cả"
-	}
-
-	danhMuc.LoaiNhaDatBanWeb = [
-	    { value: "1", lable: "Bán căn hộ chung cư" },
-	    { value: "2", lable: "Bán nhà riêng" },
-	    { value: "3", lable: "Bán nhà mặt phố" },
-	    { value: "4", lable: "Bán biệt thự, liền kề" },
-	    { value: "6", lable: "Bán Shophouse" },
-	    { value: "7", lable: "Bán đất nền dự án" },
-	    { value: "5", lable: "Bán đất" },
-	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
-	    { value: "99", lable: "Bán các BDS khác" },
-	    { value: "10", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	    ];
-
-	danhMuc.LoaiNhaDatCanMuaWeb = [
-	    { value: "1", lable: "Mua căn hộ chung cư" },
-	    { value: "2", lable: "Mua nhà riêng" },
-	    { value: "3", lable: "Mua biệt thự, liền kề" },
-	    { value: "4", lable: "Mua nhà mặt phố" },
-	    { value: "5", lable: "Mua đất nền dự án" },
-	    { value: "6", lable: "Mua đất" },
-	    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
-	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
-	    { value: "9", lable: "Mua kho, nhà xưởng" },
-	    { value: "10", lable: "Mua loại BĐS khác" },
-	    { value: "11", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
-
-	danhMuc.LoaiNhaDatCanThueWeb = [
-	    { value: "1", lable: "Cần thuê căn hộ chung cư" },
-	    { value: "2", lable: "Cần thuê nhà riêng" },
-	    { value: "3", lable: "Cần thuê nhà mặt phố" },
-	    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
-	    { value: "5", lable: "Cần thuê văn phòng" },
-	    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
-	    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
-	    { value: "8", lable: "Cần thuê loại BĐS khác" },
-	    { value: "11", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
-
-	danhMuc.LoaiNhaDatThue = {
-	    1 : "Cho Thuê căn hộ chung cư",
-	    2 : "Cho Thuê nhà riêng",
-	    3 : "Cho Thuê nhà mặt phố",
-	    6 : "Cho thuê nhà trọ, phòng trọ",
-	    4 : "Cho Thuê văn phòng",
-	    5 : "Cho Thuê cửa hàng, ki-ốt",
-	    7 : "Cho thuê kho, nhà xưởng, đất",
-	    99: "Cho Thuê các BDS khác",
-	    8 : "Tìm kiếm nâng cao",
-	    0 : "Tất cả"
-	}
-
-	danhMuc.LoaiNhaDatThueWeb = [
-	    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
-	    { value: "2", lable: "Cho Thuê nhà riêng" },
-	    { value: "3", lable: "Cho Thuê nhà mặt phố" },
-	    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
-	    { value: "4", lable: "Cho Thuê văn phòng" },
-	    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
-	    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
-	    { value: "99", lable: "Cho Thuê các BDS khác" },
-	    { value: "8", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
-
-	danhMuc.SoPhongNgu = {
-	    0: BAT_KY,
-	    1: "1+",
-	    2: "2+",
-	    3: "3+",
-	    4: "4+",
-	    5: "5+"
-	}
-
-	danhMuc.SoTang = {
-	    0: BAT_KY,
-	    1: "1+",
-	    2: "2+",
-	    3: "3+",
-	    4: "4+",
-	    5: "5+"
-	}
-
-	danhMuc.SoPhongTam = {
-	    0: BAT_KY,
-	    1: "1+",
-	    2: "2+",
-	    3: "3+",
-	    4: "4+",
-	    5: "5+"
-	}
-
-	danhMuc.RadiusInKm = {
-	    0.5: "0.5",
-	    1: "1",
-	    2: "2",
-	    3: "3",
-	    4: "4",
-	    5: "5"
-	}
-
-	danhMuc.RadiusInKmKey = [
-	    0.5,
-	    1,
-	    2,
-	    3,
-	    4,
-	    5
-	]
-
-	danhMuc.NgayDaDang = {
-	    0: BAT_KY,
-	    1: "1",
-	    7: "7",
-	    14: "14",
-	    30: "30",
-	    90: "90"
-	}
-
-	danhMuc.NgayDaDangKey = [
-	    0,
-	    1,
-	    7,
-	    14,
-	    30,
-	    90
-	]
-
-	danhMuc.HuongNha = {
-	    0: BAT_KY,
-	    1: "Đông",
-	    2: "Tây",
-	    3: "Nam",
-	    4: "Bắc",
-	    5: "Đông-Bắc",
-	    6: "Tây-Bắc",
-	    7: "Đông-Nam",
-	    8: "Tây-Nam"
-	}
-
-
-	danhMuc.getDanhMucKeys = function (hashDanhMuc) {
-	    var result = [];
-	    for (var k in hashDanhMuc) {
-	        result.push(k);
-	    }
-	    return result;
-	}
-
-	danhMuc.getNameValueArray = function(hashDanhMuc){
-	    console.log("getNameValueArray");
-	    console.log(hashDanhMuc);
-	    var result = [];
-	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
-	    for (var k in hashDanhMuc) {
-	        result.push(
-	            {
-	                value: k,
-	                lable: hashDanhMuc[k]
-	            }
-	        )
-	    }
-	    console.log(result);
-	    return result;
-	}
-
-	danhMuc.getDanhMucValues = function (hashDanhMuc) {
-	    var result = [];
-	    for (var k in hashDanhMuc) {
-	        result.push(hashDanhMuc[k]);
-	    }
-	    return result;
-	}
-
-	danhMuc.getLoaiNhaDatBanValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatBan);
-	}
-
-	danhMuc.getLoaiNhaDatThueValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatThue);
-	}
-
-	danhMuc.getSoPhongNguValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.SoPhongNgu);
-	}
-
-	danhMuc.getSoTangValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.SoTang);
-	}
-
-	danhMuc.getSoPhongTamValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.SoPhongTam);
-	}
-
-	danhMuc.getHuongNhaValues = function () {
-	    return danhMuc.getDanhMucValues(danhMuc.HuongNha);
-	}
-
-	danhMuc.getRadiusInKmValues = function () {
-	    return ["0.5", "1", "2", "3", "4", "5"];
-	}
-
-	danhMuc.getNgayDaDangValues = function () {
-	    return danhMuc.NgayDaDangKey;
-	}
-
-	danhMuc.getLoaiNhaDatForDisplay = function(loaiTin, loaiNhaDatKey){
-	    var value = '';
-	    if (loaiTin == 'ban')
-	        value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
-
-	    if (loaiTin == 'thue')
-	        value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
-
-	    if (!value)
-	        value = BAT_KY;
-
-	    return value;
-	}
-
-	danhMuc.getDanhMucKeyByIndex = function (hashDanhMuc, index) {
-	    var find = '';
-	    var i = 0;
-	    for (var k in hashDanhMuc) {
-	        if (i == index) {
-	            find = k;
-	            break;
-	        }
-	        i++;
-	    }
-	    return find;
-	}
-
-	danhMuc.getSoPhongByIndex = function (index) {
-	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongNgu, index);
-	}
-
-	danhMuc.getSoTangByIndex = function (index) {
-	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoTang, index);
-	}
-
-	danhMuc.getSoPhongTamByIndex = function (index) {
-	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongTam, index);
-	}
-
-	danhMuc.getRadiusInKmByIndex = function(index) {
-	    return danhMuc.RadiusInKmKey[index];
-	}
-
-	danhMuc.getHuongNhaDisplay = function(val){
-	    if (!val) {
-	        return "Không rõ";
-	    }
-	    return eval('danhMuc.HuongNha['+val + ']');
-	}
-
-	module.exports = danhMuc;
-
-	if (typeof(window) !== 'undefined')
-	   window.RewayListValue = danhMuc;
-
-
-	//import {LoaiNhaDatBan} from "danhMuc"...
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _ = __webpack_require__(12);
-
-	var util = __webpack_require__(14);
-
-	var placeUtil = {};
-
-
-	placeUtil.getDuAnFullName = function(place) {
-	    if (!place.duAn) {
-	        return null;
-	    }
-
-	    var ret = "";
-	    var _appendIfHave = function(ret, value) {
-	        if (ret)
-	            ret =  ret + ", " + value;
-	        else
-	            ret =  value;
-
-	        return ret;
-	    };
-
-	    ret = _appendIfHave(ret, place.duAn);
-
-	    ret = _appendIfHave(ret, place.diaChinh.huyen);
-
-	    ret = _appendIfHave(ret, place.diaChinh.tinh);
-
-	    return ret;
-	};
-
-	placeUtil.getDiaChinhFromGooglePlace = function(place) {
-	    var tinh ="";
-	    var huyen ="";
-	    var xa ="";
-
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
-	        var addr = place.address_components[i];
-
-	        if (addr.types[0] == placeUtil.type.TINH){
-	            tinh = this.chuanHoa(addr.long_name);
-	        }
-
-	        if (addr.types[0] == placeUtil.type.HUYEN){
-	            huyen = this.chuanHoa(addr.long_name);
-	        }
-
-	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
-	            xa = this.chuanHoa(addr.long_name);
-	        }
-	    }
-
-	    var diaChinh = {
-	        tinh: tinh,
-	        huyen: huyen,
-	        xa: xa
-	    };
-
-	    return diaChinh;
-	};
-
-	placeUtil.getDiaChinh = function(diaChi) {
-	    var spl = diaChi.split(",");
-	    var diaChinh = {};
-
-	    var i = spl.length;
-	    diaChinh.tinh = spl[--i].trim();
-	    if(diaChinh.tinh)
-	        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
-
-	    var rawHuyen = spl[--i];
-	    if (rawHuyen) {
-	        diaChinh.huyen = rawHuyen.trim();
-	        if(diaChinh.huyen)
-	            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
-	    } else {
-	        console.log("WARN -- no HUYEN information " + diaChi);
-	    }
-
-	    if (i>0) {
-	        var v = spl[--i].trim();
-	        if (!v.startsWith("Dự án")) {
-	            diaChinh.xa = v;
-	            if(diaChinh.xa)
-	                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
-	        } else {
-	            return diaChinh;
-	        }
-	    }
-
-	    if (i>0) {
-	        var v = spl[--i].trim();
-	        if (!v.startsWith("Dự án")) {
-	            diaChinh.duong = v;
-	        } else {
-	            return diaChinh;
-	        }
-	    }
-
-
-	    return diaChinh;
-	};
-
-	placeUtil.fullName = function(place) {
-	    //todo: other types
-	    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
-	        return place.placeName + ", " + place.parentName;
-	    }
-
-	    return place.placeName;
-	};
-	// return Quoc Gia form Place.Place is type of Google api
-	placeUtil.getQuocGia = function(place) {
-
-	    var getCountry ="";
-
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
-	        var addr = place.address_components[i];
-
-	        if (addr.types[0] == 'country'){
-	            getCountry = addr.long_name;
-	        }
-
-	    }
-	    return getCountry;
-	};
-
-	// return Tinh form Place.Place is type of Google api
-	placeUtil.getTinh = function(place) {
-
-	    var Tinh ="";
-
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
-	        var addr = place.address_components[i];
-
-	        if (addr.types[0] == placeUtil.type.TINH){
-	            Tinh = addr.long_name;
-	        }
-
-	    }
-	    return Tinh;
-	};
-
-	// return Huyen form Place.Place is type of Google api
-	placeUtil.getHuyen = function(place) {
-
-	    var Huyen ="";
-
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
-	        var addr = place.address_components[i];
-
-	        if (addr.types[0] == placeUtil.type.HUYEN){
-	            Huyen = addr.long_name;
-	        }
-
-	    }
-	    return Huyen;
-	};
-
-	// return Xa form Place.Place is type of Google api
-	placeUtil.getXa = function(place) {
-
-	    var Xa ="";
-
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
-	        var addr = place.address_components[i];
-
-	        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
-	        {
-	            Xa = addr.long_name;
-	        }
-
-	    }
-	    return Xa;
-	};
-
-	// chuan hoa va bo dau 1 string
-	placeUtil.chuanHoa = function(string) {
-
-	    var result = util.locDau(string);
-
-	    var COMMON_WORDS = {
-	        '-district': '',
-	        '-vietnam':'',
-	        'hanoi' : 'ha-noi'
-	    };
-	    for (var f in COMMON_WORDS) {
-	        result = result.replace(f,COMMON_WORDS[f]);
-	    }
-
-	    return result;
-	};
-
-	placeUtil.type = {
-	    TINH : "administrative_area_level_1",
-	    HUYEN : "administrative_area_level_2",
-	    XA : "administrative_area_level_3",
-	    XA2 : "sublocality_level_1",
-	    DUONG : "route"
-	};
-
-	placeUtil.typeName = {
-	    TINH : "Tỉnh",
-	    HUYEN : "Huyện",
-	    XA : "Xã",
-	    DUONG : "Đường",
-	    DIA_DIEM: "Địa điểm"
-
-	};
-
-
-	placeUtil.isHuyen = function(place) {
-	    var placeTypes=place.types;
-
-	    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
-	        return true;
-	    }
-
-	    if (_.indexOf(placeTypes, 'locality') > -1
-	        && _.indexOf(placeTypes, 'political') > -1
-	        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
-	    ) {
-	        return true;
-	    }
-	};
-
-	placeUtil.getTypeName = function(place) {
-	    var placeTypes = place.types;
-
-	    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
-	        return placeUtil.typeName.TINH;
-	    }
-	    if (placeUtil.isHuyen(place)) {
-	        return placeUtil.typeName.HUYEN;
-	    }
-
-	    if (_.indexOf(placeTypes, placeUtil.type.XA) > -1) {
-	        return placeUtil.typeName.XA;
-	    }
-
-	    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
-	        return placeUtil.typeName.XA;
-	    }
-
-	    if (_.indexOf(placeTypes, placeUtil.type.DUONG) > -1) {
-	        return placeUtil.typeName.DUONG;
-	    }
-
-	    return placeUtil.typeName.DIA_DIEM;
-	};
-
-
-	placeUtil.isOnePoint = function(place) {
-	    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
-	    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
-	};
-
-	module.exports  = placeUtil;
-
-	if (typeof(window) !== 'undefined')
-	   window.RewayPlaceUtil = placeUtil;
-
-
-/***/ },
-/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -18625,10 +17737,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module), (function() { return this; }())))
 
 /***/ },
-/* 13 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -18644,12 +17756,2114 @@
 
 
 /***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	(function() {
+		'use strict';
+		var controllerId = 'MainCtrl';
+		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window){
+			var vm = this;
+			//nhannc
+			$scope.loaiTin = 0;
+			$scope.loaiNhaDat;
+			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			init();
+			initHotAds();
+			//alert("placeSearchId: " + $scope.placeSearchId);
+			$scope.goToPageSearch = function(loaiTin, loaiBds){
+				if(loaiTin)
+					$scope.loaiTin = loaiTin;
+				if(loaiBds)
+					$scope.loaiNhaDat = loaiBds;
+				if($scope.loaiNhaDat == '0')
+					$scope.loaiNhaDat = null;
+
+				console.log("$scope.loaiTin: " + $scope.loaiTin);
+				console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
+				console.log("$scope.placeId: " + $scope.placeSearchId);
+				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
+			}
+			vm.selectPlaceCallback = function(place){
+				$scope.searchPlaceSelected = place;
+				$scope.placeSearchId = place.place_id;
+			}
+			$scope.setLoaiTin = function(loaiTin){
+				$scope.loaiTin = loaiTin;
+			}
+
+			//End nhannc
+			vm.getAllAds = function(){
+				HouseService.getAllAds().then(function(res){
+					vm.sellingHouses = res.data;
+					$scope.markers = [];
+					for(var i = 0; i < res.data.length; i++) {
+			    		var ads = res.data[i];
+			    		if(res.data[i].map)
+			    			$scope.markers.push(res.data[i].map.marker);
+					}
+				});
+			}
+
+			$scope.$on('$viewContentLoaded', function(){
+				//addCrudControls
+				window.DesignCommon.adjustPage();
+				if($state.current.data)
+					$rootScope.bodyClass = $state.current.data.bodyClass
+				// window.onresize = function() {
+				//     window.DesignCommon.resizePage();
+				// }
+			});
+
+			vm.formatLabel = function(model){
+				if(model)
+					return model.formatted_address;
+			}
+			
+
+			
+
+			function init(){
+				//nhannc
+				$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
+				$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+				$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+				$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
+
+				NgMap.getMap().then(function(map){
+		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+		        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autoCompleteHome",map);
+		        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
+		        	$scope.PlacesService.getDetails({
+		        		placeId: $scope.placeId
+		        	}, function(place, status) {
+		        		if (status === google.maps.places.PlacesServiceStatus.OK) {
+		        			$scope.searchPlaceSelected = place;
+							        		//var map = $scope.map.control.getGMap();
+							        		var current_bounds = map.getBounds();
+							        		//$scope.map.center =  
+							        		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+							        		if(place.geometry.viewport){
+							        			//map.fitBounds(place.geometry.viewport);	
+							        			//$scope.map
+							        		} else if( !current_bounds.contains( place.geometry.location ) ){
+							        			//var new_bounds = current_bounds.extend(place.geometry.location);
+							        			//map.fitBounds(new_bounds);
+							        			//$digest();
+							        		}
+							        		$scope.$apply();
+							        		//vm.search();
+							        	}
+							        });
+
+	        	});
+				//end nhannc
+				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
+				$scope.options = {scrollwheel: false,labelContent: 'gia'};
+				$scope.markerCount = 3;
+				$scope.markers = [];
+				$scope.initData = window.initData;
+				//$scope.hot_ads_cat = window.hot_ads_cat;
+				$scope.ads_list = window.testData;
+				$scope.bodyClass= "page-home";
+				for(var i = 0; i < $scope.ads_list.length; i++) { 
+		    		var ads = $scope.ads_list[i];
+		    		if(ads.place){
+		    			if(ads.place.geo){
+			    			ads.map={
+			    				center: {
+									latitude: 	ads.place.geo.lat,
+									longitude: 	ads.place.geo.lon
+								},
+			    				marker: {
+									id: i,
+									coords: {
+										latitude: 	ads.place.geo.lat,
+										longitude: 	ads.place.geo.lon
+									},
+									options: {
+										//labelContent : ads.gia,
+										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
+									},
+									data: 'test'
+								},
+								options:{
+									scrollwheel: false
+								},
+								zoom: 14	
+			    			}
+			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
+			    			$scope.markers.push(ads.map.marker);
+			    					
+						}
+		    		}
+				}
+
+			}
+
+			function initHotAds(){
+				console.log("---------------------initHotAds ---------------");
+				data = {
+					"gia": 800,
+					"limit": 4
+				};
+
+				$scope.hot_ads_cat = [];
+
+				HouseService.findBelowPriceAds(data).then(function(res){
+					var resultBelow = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							resultBelow.push(res.data.list[i].default);
+						}
+						$scope.hot_ads_cat.push({
+							name: "Nhà dưới mức giá 800 triệu",
+							location: "Hà Nội",
+							list: resultBelow
+						})
+					}
+					console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+					console.log(resultBelow);
+				});
+
+				var data = {
+					"ngayDangTin": '25-04-2016',
+					"limit": 4
+				};
+				console.log("getRecentBds + data: " + data);
+				HouseService.findRencentAds(data).then(function(res){
+					var result = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							result.push(res.data.list[i].default);
+						}
+						$scope.hot_ads_cat.push({
+							name: "Bất động sản mới đăng",
+							location: "Hà Nội",
+							list: result
+						})
+					}
+					console.log("HouseService.findRencentAds: " + result.length);
+					console.log(result);
+				});
+
+			}
+			vm.getLocation = function () {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(vm.showPosition);
+				} else {
+					alert("Geolocation is not supported by this browser.");
+				}
+			}
+			vm.showPosition =  function(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				//$scope.map.center.latitude = lat;
+				//$scope.map.center.longitude = lng;
+				var marker = {
+					id: $scope.markerCount,
+					coords: {
+						latitude: lat,
+						longitude: lng
+					},
+					options: {
+						labelContent : 'You are here'
+					},
+					data: 'restaurant'
+				}
+				$scope.markers.push(marker);
+				$scope.markerCount = $scope.markerCount + 1;
+				$scope.$digest();
+			}
+
+		});
+
+		// /* @ngInject */
+		// function MainCtrl() {
+			
+		// }
+	})();
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	(function() {
+		'use strict';
+		var controllerId = 'SearchCtrl';
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+			var vm = this;
+			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
+			vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
+			vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
+			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+			//use for menu
+			vm.loaiNhaDatBanMenu = window.RewayListValue.LoaiNhaDatBanWeb;
+			vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
+			vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
+			vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
+
+			$scope.center = "Hanoi Vietnam";
+			$scope.placeId = $state.params.place;
+			$scope.loaiTin = $state.params.loaiTin;
+			$scope.loaiNhaDat = $state.params.loaiNhaDat;
+			vm.viewMode = $state.params.viewMode;
+			if(!vm.viewMode)
+				vm.viewMode = "map";
+			
+			vm.viewTemplateUrl = "search.tpl.html";//1=map 2= list
+
+			if($state.params.viewMode=="list"){
+				vm.viewTemplateUrl = "list.tpl.html";
+			}else if($state.params.viewMode=="map"){
+				vm.viewTemplateUrl = "search.tpl.html"
+			}
+			vm.showList = function(){
+				vm.viewTemplateUrl = "list.tpl.html"
+				vm.viewMode = "list";
+				$scope.bodyClass = "page-list";
+
+			}
+			vm.showMap = function(){
+				vm.viewTemplateUrl = "search.tpl.html"
+				vm.viewMode = "map";
+				$scope.bodyClass = "page-search";
+			}
+			vm.saveSearch = function(){
+				HouseService.saveSearch().then(function(res){
+					alert(res.data);
+				})
+			}
+
+			if(!$scope.placeId)
+				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			if(!$scope.loaiTin)
+				$scope.loaiTin = 0;
+			if(!$scope.loaiNhaDat)
+				$scope.loaiNhaDat = 0;
+			vm.loaiTin = $scope.loaiTin;
+
+			
+			console.log("placeId: " + $scope.placeId);
+			console.log("loaiTin: " + $scope.loaiTin);
+			console.log("loaiNhaDat: " + $scope.loaiNhaDat);
+			console.log("placeId: " + $scope.placeId);
+				
+			//vm.sell_price_list_from = window.RewayListValue.sell_steps;
+			vm.sell_price_list_from = [
+				{
+			        value: 0,
+			        lable: "Giá từ 0",
+			        position: 0
+			    },
+			];
+			Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);
+
+			vm.sell_price_list_to = [];
+			Array.prototype.push.apply(vm.sell_price_list_to, window.RewayListValue.sell_steps);
+			vm.sell_price_list_to.push(
+				{
+			        value: window.RewayListValue.filter_max_value.value,
+			        lable: window.RewayListValue.filter_max_value.lable,
+			        position: vm.sell_price_list_to.length
+			    }
+			);
+			vm.sell_dien_tich_list_from = [
+				{
+			        value: 0,
+			        lable: "Diện tích từ 0",
+			        position: 0
+			    },
+			];
+			Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.dientich_steps);
+			vm.sell_dien_tich_list_to = [];
+			Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.dientich_steps);
+			vm.sell_dien_tich_list_to.push(
+				{
+			        value: window.RewayListValue.filter_max_value.value,
+			        lable: window.RewayListValue.filter_max_value.lable,
+			        position: vm.sell_price_list_to.length
+			    }
+			);
+			
+			
+			 
+
+
+			vm.sortOptions = window.RewayListValue.sortHouseOptions;
+			vm.sortBy = vm.sortOptions[0].value;
+			vm.price_min = 0;
+			vm.price_max = window.RewayListValue.filter_max_value.value;
+			vm.dien_tich_min = 0;
+			vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+			vm.zoomMode = "auto";
+
+			vm.totalResultCounts = 0;
+			vm.currentPage = 0;
+			vm.lastPageNo = 0;
+			vm.startPageNo = 0;
+			vm.pageSize = 20;
+
+			vm.searchData = {
+				"loaiTin": $scope.loaiTin,
+				"loaiNhaDat": $scope.loaiNhaDat, 
+				"loaiNhaDats": [],
+			  	"giaBETWEEN": [vm.price_min,vm.price_max],
+			  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
+			  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+			  	"soTangGREATER": vm.soTangList[0].value,
+			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
+			  	"huongNha": vm.huongNhaList[0].value,
+			  	"huongNhas": [],
+			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+			  	"limit": vm.pageSize,
+			  	"orderBy": vm.sortOptions[0].value,
+			  	"pageNo": 1
+			}
+
+			
+
+			vm.mouseover = function(e,i) {
+	          vm.showDetail(i);
+	        };
+	        vm.goDetail = function(i){
+	        	$state.go('detail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+	        }
+	        vm.mouseout = function() {
+	          //vm.hideDetail();
+	        };
+	        vm.click = function(e,i) {
+	        	console.log('click');
+	    	};
+
+	        vm.showDetail = function(i) {
+			    vm.highlightAds = vm.ads_list[i];
+			    if(vm.ads_list[i].place){
+	    			if(vm.ads_list[i].place.geo){
+	    				vm.map.showInfoWindow("iw","m_" +i);
+	    			}
+	    		}
+			};
+
+
+			vm.hideDetail = function() {
+				vm.map.hideInfoWindow('iw');
+			};
+			// window.DesignCommon.adjustPage();
+			$scope.$on('$viewContentLoaded', function(){
+				window.DesignCommon.adjustPage();
+				if($state.params){
+					//$scope.bodyClass = $state.current.data.bodyClass;
+					$rootScope.bodyClass = "page-search";
+					if($state.params.viewMode=="list"){
+						$rootScope.bodyClass = "page-list";
+					} 
+				}
+			});
+			vm.selectPlaceCallback = function(place){
+				$scope.searchPlaceSelected = place;
+	    		$scope.placeSearchId = place.place_id;
+	    		/*$scope.markers = [];
+	    		var marker = {
+	    				id: -1,
+	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+	    				content: 'you are here'
+	    		}
+	    		if(place.geometry.viewport){
+	    			vm.searchData.geoBox = [  place.geometry.viewport.H.j,  place.geometry.viewport.j.j ,place.geometry.viewport.H.H, vm.map.getBounds().j.H];
+	    			vm.searchData.geoBox = [place.geometry.viewport.getSouthWest().lat(),place.geometry.viewport.getSouthWest().lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng()]
+					vm.searchData.radiusInKm = undefined;
+
+				}else{
+					var placeData = {
+				    			placeId: place.place_id,
+				 	    		relandTypeName : window.RewayPlaceUtil.getTypeName(place),
+				       			radiusInKm :  1,
+				 				currentLocation: undefined
+				 	}
+				 	vm.searchData.place = placeData;
+				    vm.searchData.geoBox = undefined;
+				}*/
+	    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
+	    		
+	    		/*$scope.markers.push(marker);
+	    		$scope.$apply();
+
+	    		if(place.geometry.viewport){
+					vm.map.fitBounds(place.geometry.viewport);	
+					//$scope.map
+				}
+
+	    		//$scope.map.fit = false;
+	    		
+	    		vm.map.setCenter(place.geometry.location);*/
+	    		// $scope.$apply();
+	    		//$scope.map.refresh();
+	    		vm.goToPageSearch();
+	    		//vm.search();
+			}
+			vm.goToPageSearch = function(){
+				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+				//vm.search();
+			}
+
+			vm.goToPageSearchMenu = function(loaiTin, loaiNhaDat){
+				vm.searchData.loaiTin = loaiTin;
+				vm.searchData.loaiNhaDat = loaiNhaDat;
+				vm.search();
+			}
+	  		
+			vm.firstPage = function(callback){
+				vm.searchPage(1);
+			}
+			vm.nextPage = function(callback){
+				vm.searchPage(vm.currentPage+1);
+			}
+			vm.lastPage = function(callback){
+				vm.searchPage(vm.lastPageNo);
+			}
+			vm.previousPage = function(callback){
+				vm.searchPage(vm.currentPage-1);
+			}
+			vm.searchPage = function(i, callback){
+				vm.searchData.pageNo = i;
+				HouseService.findAdsSpatial(vm.searchData).then(function(res){
+					var result = res.data.list;
+					//vm.totalResultCounts = res.data.list.length;
+					for (var i = 0; i < result.length; i++) { 
+			    		var ads = result[i];
+			    		result[i].index = i;
+			    		if(ads.huongNha){
+			    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+			    		}else{
+			    			ads.huongNha = "";	
+			    		}
+			    		if(result[i].place){
+			    			if(result[i].place.geo){
+				    			result[i].map={
+				    				center: {
+										latitude: 	result[i].place.geo.lat,
+										longitude: 	result[i].place.geo.lon
+									},
+				    				marker: {
+										id: i,
+										coords: {
+											latitude: 	result[i].place.geo.lat,
+											longitude: 	result[i].place.geo.lon
+										},
+										content: result[i].giaFmt,
+										data: 'test'
+									},
+									options:{
+										scrollwheel: false
+									},
+									zoom: 14	
+				    			}
+				    					
+							}
+			    		}
+			    		
+					}
+					vm.ads_list = res.data.list;
+					$scope.markers = [];
+					for(var i = 0; i < res.data.list.length; i++) { 
+			    		var ads = res.data.list[i];
+			    		if(res.data.list[i].map)
+			    			$scope.markers.push(res.data.list[i].map.marker);
+					}
+					/*if(vm.ads_list.length==0){
+						vm.zoomMode = "false";
+					}else{
+						vm.zoomMode = "auto";
+					}*/
+
+					vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
+					vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+					vm.currentPage = vm.searchData.pageNo;
+
+					if(callback)
+						callback();
+				});
+			}
+
+			vm.search = function(callback){
+				HouseService.countAds(vm.searchData).then(function(res){
+	        		vm.totalResultCounts = res.data.countResult;
+	        		if(vm.totalResultCounts>0){
+	        			vm.currentPage = 1;
+	        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+	        			vm.currentPageStart = 1;
+	        			vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
+
+	        		} else{
+	        			vm.currentPage = 0;
+						vm.lastPageNo = 0;
+						vm.startPageNo = 0;
+	        		}
+	        		vm.searchPage(1,callback);
+
+	        	});
+
+			}
+			vm.formatLabel = function(model){
+				if(model)
+					return model.formatted_address;
+			}
+			
+			var events = {
+	          places_changed: function (searchBox) {}
+	        }
+	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
+	        
+
+
+	        NgMap.getMap().then(function(map){
+	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+	        	vm.map = map;
+	        	google.maps.event.addListener(map, "dragend", function() {
+					vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+		          	vm.search();
+		        });
+
+	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
+	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
+							$scope.PlacesService.getDetails({
+								placeId: $scope.placeId
+							}, function(place, status) {
+								if (status === google.maps.places.PlacesServiceStatus.OK) {
+									$scope.searchPlaceSelected = place;
+					        		//var map = $scope.map.control.getGMap();
+					        		
+					        		/*$scope.markers = [
+										{
+															id: 0,
+															coords: {
+																latitude: 	place.geometry.location.lat(),
+																longitude: 	place.geometry.location.lng()
+															},
+															content: 'you are here'
+														}
+									];*/
+									var googlePlace = $scope.searchPlaceSelected;
+									if($scope.searchPlaceSelected.geometry.viewport){
+						          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+						          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
+						          		vm.searchData.radiusInKm = undefined;
+						        	} else{
+						          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+						          		//data.radiusInKm = "10";
+						          		var placeData = {
+						          			placeId: googlePlace.place_id,
+						 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+						       				radiusInKm :  2,
+						 				    currentLocation: undefined
+						 			  	}
+						 			  	vm.searchData.place = placeData;
+						          		vm.searchData.geoBox = undefined;
+						        	}
+						        	
+									vm.search(function(){
+										vm.zoomMode = "auto";
+										var current_bounds = map.getBounds();
+						        		//$scope.map.center =  
+						        		vm.map.setCenter(place.geometry.location);
+						        		//$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+						        		if(place.geometry.viewport){
+						        			map.fitBounds(place.geometry.viewport);	
+						        			//$scope.map
+						        		} else if( !current_bounds.contains( place.geometry.location ) ){
+						        			//var new_bounds = current_bounds.extend(place.geometry.location);
+						        			//map.fitBounds(new_bounds);
+						        			//$digest();
+						        		}
+									});
+									
+									//vm.map.refresh();
+									//$scope.$apply();	
+					        	}
+					        });
+				
+	        });
+	        init();
+
+			function init(){
+				
+				// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+				//$rootScope.center = "Hanoi Vietnam";
+				vm.provinces = [
+					{
+						value: "Hanoi",
+						lable: "Hà Nội"
+					},
+					{
+						value: "Da nang",
+						lable: "Đà Nãng"
+
+					}
+				];
+
+				vm.districts = [
+					{
+						value: "Cau Giay",
+						lable: "Cầu Giấy"
+					},
+					{
+						value: "Dong Da",
+						lable: "Đống Đa"
+
+					}
+				];
+
+				vm.loaiNhaDatList = []
+				if(vm.loaiTin == 0){
+					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatBan);	
+				}else{
+					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatThue);
+				}
+				
+				
+				vm.moreFilter = {
+					loaiNhaDat: vm.loaiNhaDatList.slice(),
+					huongNha: vm.huongNhaList.slice(),
+					soPhongNgu: vm.soPhongNguList[0].value,
+					soPhongTam: vm.soPhongTamList[0].value,
+					soTang: vm.soTangList[0].value
+				}
+				vm.moreFilter.loaiNhaDat[0].selected = true;
+				vm.moreFilter.huongNha[0].selected = true;
+				vm.changeFilterLoaiNhaDat = function(k){
+					var newvalue = vm.moreFilter.loaiNhaDat[k].selected;
+					if(k==0){
+						if(newvalue==true){
+							for(var i =1; i< vm.moreFilter.loaiNhaDat.length;i++){
+								vm.moreFilter.loaiNhaDat[i].selected = false;
+							}
+						}
+					}else{
+						if(newvalue==true)
+							vm.moreFilter.loaiNhaDat[0].selected = false;	
+					}
+					
+				}
+				vm.changeFilterHuongNha = function(k){
+					var newvalue = vm.moreFilter.huongNha[k].selected;
+					if(k==0){
+						if(newvalue==true){
+							for(var i =1; i< vm.moreFilter.huongNha.length;i++){
+								vm.moreFilter.huongNha[i].selected = false;
+							}
+						}
+					}else{
+						if(newvalue==true)
+							vm.moreFilter.huongNha[0].selected = false;	
+					}
+				}
+
+				vm.filter = function(){
+					// vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
+					vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
+					vm.searchData.soTangGREATER=vm.moreFilter.soTang;
+					vm.searchData.soPhongTamGREATER=vm.moreFilter.soPhongTam;
+					vm.searchData.loaiNhaDat = [];
+					vm.searchData.huongNha = [];
+					for(var i = 0; i< vm.moreFilter.loaiNhaDat.length;i++){
+						if(vm.moreFilter.loaiNhaDat[i].selected == true){
+							vm.searchData.loaiNhaDat.push(vm.moreFilter.loaiNhaDat[i].value);
+						}
+					}
+					for(var i = 0; i< vm.moreFilter.huongNha.length;i++){
+						if(vm.moreFilter.huongNha[i].selected == true){
+							vm.searchData.huongNha.push(vm.moreFilter.huongNha[i].value);
+						}
+					}
+					// vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
+					$("a[data-action='more']").click();
+					//$('filter').trigger("click");
+					vm.search(function(){
+						vm.searchData.soPhongNguGREATER=undefined;
+						vm.searchData.soTangGREATER=undefined;
+						vm.searchData.soPhongNguGREATER=undefined;
+						vm.searchData.soPhongTamGREATER=undefined;
+						vm.searchData.huongNha=undefined;
+						vm.searchData.loaiNhaDat = vm.loaiNhaDatList[0].value;
+					});
+				}
+
+
+
+				$scope.options = {scrollwheel: false,labelContent: 'gia'};
+				$scope.markerCount = 3;
+				/*$scope.markers = [
+					{
+										id: 0,
+										coords: {
+											latitude: 	16.0439,
+											longitude: 	108.199
+										},
+										content: 'you are here'
+									}
+				];*/
+				//$scope.initData = window.initData;
+				//$scope.hot_ads_cat = window.hot_ads_cat;
+				//vm.ads_list = window.testData;
+				$scope.bodyClass= "page-home";
+
+				if(vm.viewMode == "list"){
+
+				}
+
+
+			}
+			
+
+		});
+
+	})();
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socket, $location, $http, Upload, $timeout, sendImageService,ChatService){		// Chat Page Controller
+		// Varialbles Initialization.
+		var vm = this;
+		vm.isMsgBoxEmpty = false;
+		vm.isFileSelected = false;
+		vm.isMsg = false;
+		vm.setFocus = true;
+		vm.chatMsg = "";
+		vm.users = [];
+		vm.messeges = [];
+		vm.status_message = "";
+		var count = Object.keys($rootScope.chatBoxes).length-1;
+		vm.rightPos = (24 + Math.min(2,count)*300) + "px";
+		//vm.user = chatBoxes[$scope.useremail];
+
+		console.log("chat visible is " + $scope.visible);
+
+		var sampleMsg = {
+				emailFrom: $rootScope.userEmail
+				, userIDFrom: $rootScope.userID
+				, userNameFrom : $rootScope.userName
+				, userAvatarFrom : $rootScope.userAvatar
+				, emailTo: $scope.chatbox.user.email
+				, userIDTo: $scope.chatbox.user.userID
+				, msg : vm.chatMsg
+				, file_msg: undefined
+				, hasMsg : vm.isMsg 
+				, hasFile : vm.isFileSelected 
+				, msgTime : formatAMPM(new Date()) 
+		};
+
+		
+	    vm.sendFile = function(file, isImageFile){
+	    	vm.isFileSelected = true;
+	        // var file = files[0];
+	        var dateString = formatAMPM(new Date());            
+	        var DWid = $rootScope.userName + "dwid" + Date.now();
+
+	        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
+
+		    msg.hasFile = true;
+		    msg.hasMsg = false;
+		    msg.msg = undefined;
+		    msg.isImageFile = isImageFile;
+		    msg.file_msg = file;
+	        socket.emit('send-message',msg,function (data){      
+	        	console.log("sent image to " + $scope.chatbox.user.email);
+	        	if (data.success == true) {
+					if(data.offline==true){
+						vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+						$scope.chatbox.onlineClass = "offline";
+						//console.log("TODO: this person is offline he will receive the message next time he online");
+					}
+					vm.chatMsg = "";
+					vm.setFocus = true;				
+					msg.isImageFile = isImageFile;
+					$scope.chatbox.messages.push(msg);
+					$scope.$apply();
+					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
+				}
+
+	        });
+	    }
+
+		$scope.uploadFiles = function (files) {
+	        $scope.files = files;
+	        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
+	        if (files && files.length) {
+	        	for (var i = 0; i < files.length; i++){
+
+	        		var ft = vm.catchFile(files[i]);
+	        		var isImageFile = (ft == "image");
+	        		
+	        		Upload.upload({
+			            url: '/api/upload',
+			            data: {files: files[i]}
+			        }).then(function (resp) {
+			            console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
+			            //here we need to emit message
+			            // if(ft == "image")
+			            // 	vm.sendImage(resp.data.image_file);
+			            // else
+			            	vm.sendFile(resp.data.file,isImageFile);
+
+			        }, function (resp) {
+			            console.log('Error status: ' + resp.status);
+			        }, function (evt) {
+			            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+			            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
+			        });
+	        		
+	        	}            
+	        }
+	    };
+
+	    // message time formatting into string    
+		function formatAMPM(date) {
+			var hours = date.getHours();
+			var minutes = date.getMinutes();
+			var ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0'+minutes : minutes;
+			var strTime = hours + ':' + minutes + ' ' + ampm;
+			return strTime;
+		}
+		
+		// ====================================== Messege Sending Code ============================
+		// sending text message function
+		vm.sendMsg = function(){
+			if (vm.chatMsg) {
+				vm.isFileSelected = false;
+				vm.isMsg = true;
+				var dateString = formatAMPM(new Date());
+				var msg = {
+						emailFrom: $rootScope.userEmail
+						, userIDFrom: $rootScope.userID
+						, userNameFrom : $rootScope.userName
+						, userAvatarFrom : $rootScope.userAvatar
+						, emailTo: $scope.chatbox.user.email
+						, userIDTo: $scope.chatbox.user.userID
+						, msg : vm.chatMsg
+						, image_msg: undefined
+						, hasMsg : vm.isMsg 
+						, hasFile : vm.isFileSelected 
+						, msgTime : dateString 
+				};
+				socket.emit("send-message",msg, function(data){
+					//delivery report code goes here
+					if (data.success == true) {
+						if(data.offline==true){
+							vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+							$scope.chatbox.onlineClass = "offline";
+							//console.log("TODO: this person is offline he will receive the message next time he online");
+						}
+						vm.chatMsg = "";
+						vm.setFocus = true;				
+						$scope.chatbox.messages.push(msg);
+						$scope.$apply();
+						$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
+					}
+					
+				});
+			}else{
+				vm.isMsgBoxEmpty = true;
+			}		
+		}
+
+		
+	    vm.toggleChat = function(event){
+	    	$(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
+	    	$(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+		}
+	    vm.closeChat = function(event){
+	    	$(event.target).parent().parent().parent().remove();
+	    	$scope.$bus.publish({
+	        	channel: 'chat',
+	            topic: 'close chat',
+	            data: $scope.chatbox.user.email
+		    });
+	    }
+
+
+	    // function for checking file type
+	    vm.catchFile = function (file){
+	    	if(!file)
+	    		return "invalid format";
+	        if (file.type == "application/pdf" || file.type == "application/msword" || file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.type == "text/plain" || file.type == "application/vnd.ms-excel") {
+				return "document";
+			}else if(file.type == "audio/mp3" || file.type == "audio/mpeg"){
+				return "music";
+			}else{
+				var filetype = file.type.substring(0,file.type.indexOf('/'));
+				if (filetype == "image") {
+					return "image";
+				}else{
+					return "invalid format";
+				}
+			}
+	    }
+
+	})
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	(function() {
+		'use strict';
+		var controllerId = 'DetailCtrl';
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,ChatService){
+			var vm = this;
+			$scope.chat_visible = true;
+			$scope.$on('$viewContentLoaded', function(){
+				window.DesignCommon.adjustPage();
+				if($state.current.data){
+					$rootScope.bodyClass = "page-detail";
+				}
+			});	
+			vm.showChat = function(user){
+				$scope.$bus.publish({
+	              channel: 'chat',
+	              topic: 'new user',
+	              data: user
+		        });
+			};
+
+			vm.adsID = $state.params.adsID;
+			HouseService.detailAds({adsID: vm.adsID}).then(function(res){
+				//console.log("res.data " + res.data.ads);
+				vm.ads = res.data.ads;
+				$scope.email = vm.ads.dangBoi.email;
+			});
+
+		});
+
+	})();
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	(function() {
+		'use strict';
+		var controllerId = 'ChatPanelCtrl';
+		angular.module('bds').controller(controllerId,function (socket,$compile,$rootScope,$http, $scope,$state,HouseService,NgMap,$window,ChatService){
+			var vm = this;		
+			vm.boxPositions = [];
+			vm.chatBoxes = [];
+
+			/**
+			Handle in comming message
+			*/
+			socket.on("new message", function(data){
+				if(data.emailFrom == $rootScope.userEmail){
+					data.ownMsg = true;	
+				}else{
+					data.ownMsg = false;
+				}
+				if(!vm.chatBoxes.hasOwnProperty(data.emailFrom)){
+					//someone just start chat with you need to popup the chat box for that user
+					vm.addNewChat({email: data.emailFrom});
+				}
+				vm.chatBoxes[data.emailFrom].messages.push(data);
+				$scope.$apply();
+				//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+				$('#' + vm.chatBoxes[data.emailFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.emailFrom].position + '_chat-history')[0].scrollHeight);
+			});
+
+			vm.addNewChat = function(user){
+				if(vm.chatBoxes.hasOwnProperty(user.email)){
+	        
+		      	}else{
+		      		var count = Object.keys(vm.chatBoxes).length;
+					var rightPos = (24 + Math.min(2,count)*300);
+		        	vm.chatBoxes[user.email] = {
+		        		user: user,
+		        		onlineClass: "online",
+		        		position: rightPos,
+		        		messages: []
+		        	};
+		        	var count = Object.keys(vm.chatBoxes).length-1;
+					var rightPos = (24 + Math.min(2,count)*300);
+		        	var divElement = angular.element(document.querySelector('#chat-container'));
+		        	var appendHtml = $compile('<bds-chat chatbox="cp.chatBoxes[\'' + user.email  +  '\']" visible="$root.chat_visible" right="' + rightPos + '" useremail="\''+ user.email+'\'"></bds-chat>')($scope);
+		        	divElement.append(appendHtml);
+		      	}
+			}
+			vm.reOrderChat = function(){
+				var id = 0;
+				for (var email in vm.chatBoxes){
+					var rightPos = (24 + Math.min(2,id)*300);
+					vm.chatBoxes[email].position = rightPos;
+					id = id +1;
+				}
+			}
+			
+			$scope.$bus.subscribe({
+	            channel: 'chat',
+	            topic: 'new user',
+	            callback: function(data, envelope) {
+	                console.log('add new chat box', data, envelope);
+	                vm.addNewChat(data);
+	            }
+	        });
+	        $scope.$bus.subscribe({
+	            channel: 'chat',
+	            topic: 'close chat',
+	            callback: function(data, envelope) {
+	                console.log('close chat', data, envelope);
+	                delete vm.chatBoxes[data];
+	                vm.reOrderChat();
+	            }
+	        });
+
+	        $scope.$bus.subscribe({
+	            channel: 'chat',
+	            topic: 'new message',
+	            callback: function(data, envelope) {
+	                console.log('new message arrive', data, envelope);
+	                //vm.addNewChat(data);
+	            }
+	        });
+
+	        
+
+		});
+
+	})();
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	(function () {
+	  'use strict';
+	  angular
+	  .module('bds')
+	  .factory('HouseService', function($http, $q, $rootScope){
+	    var urlPath = '/api/ads/getAllAds';
+	    return {
+	      getAllAds: function(){
+	        console.log("Get all Ads");
+	        //return $http.get(urlPath);
+	        var deferred = $q.defer()
+	        deferred.resolve({data: window.testData});
+	        return deferred.promise;
+	      },
+	      createHouse: function(desc,email,seller){
+	        return $http.post(urlPath + 'create'); 
+	      },
+	      findAdsSpatial: function(data){
+	        var url = "/api/find";
+	        // var url = "/api/search";
+	        return $http.post(url,data);
+	      },
+	      countAds: function(data){
+	        //var url = "/api/find";
+	        var url = "/api/count";
+	        return $http.post(url,data);
+	      },
+	      //Nhannc
+	      findRencentAds: function(data){
+	        var url = "/api/findRecent";
+	        return $http.post(url,data);
+	      },
+	      findBelowPriceAds: function(data){
+	        var url = "/api/findBelowPrice";
+	        return $http.post(url,data);
+	      },
+	      saveSearch: function(data){
+	        var url = "/api/saveSearch";
+	        return $http.post(url,data);
+	      },
+	      //End Nhannc
+	      checkUserExist: function(data){
+	        var url = "/api/checkUserExist";
+	        return $http.post(url,data);
+	      },
+	      detailAds: function(data){
+	        var url = "/api/detail";
+	        return $http.post(url,data);
+	      },
+	      findGooglePlaceById: function(googlePlaceId){
+	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
+	      },
+	      login: function(data){
+	        var url = "/api/login";
+	        return $http.post(url,data);
+	      },
+	      signup: function(data){
+	        var url = "/api/signup";
+	        return $http.post(url,data);
+	      }
+	    };
+	  });
+	})();
+
+
+/***/ },
 /* 14 */
+/***/ function(module, exports) {
+
+	(function () {
+	  'use strict';
+	  angular
+	  .module('bds')
+	  .factory('ChatService', function($http, $q, $rootScope,$compile, socket){
+	    //var urlPath = '/api/ads/getAllAds';
+	    //hash map with email as key and value as a joson object
+	    //{
+	    //	onMessageCallBack
+	    //}
+	    var chatBoxes = [];
+	    var email ="";
+	    var userName ="";
+	    var userAvatar="";
+	    var vm = this;
+	    
+	 //    socket.on("new message", function(data){
+		// 	if(data.emailFrom == email){
+		// 		data.ownMsg = true;	
+		// 	}else{
+		// 		data.ownMsg = false;
+		// 	}
+		// 	if(!chatBoxes.hasOwnProperty(data.emailFrom)){
+		// 		//someone just start chat with you need to popup the chat box for that user
+		// 		this.showChat({email: data.emailFrom});
+		// 	}else if(chatBoxes[data.emailFrom].onMessageCallBack){
+		// 		chatBoxes[data.emailFrom].onMessageCallBack(data);
+		// 	}
+		// 	// vm.messeges.push(data);
+		// 	// $scope.$apply();
+		// });
+
+	    return {
+	      listen: function(email, onMessage){
+	      	chatBoxes[email].onMessageCallBack  = onMessage;
+	      },
+	      loginChat: function(email,userID, userName, userAvatar){
+	      	socket.emit('new user',{email: email, userID:  userID, username : userName, userAvatar : userAvatar},function(data){
+	          vm.email = email;
+	          vm.userID = userID;
+	          vm.userName = userName;
+	          vm.userAvatar = userAvatar;
+	          console.log("register socket user " + userName);
+	        });
+	      },
+	      logoutChat: function(email){
+	      	//socket.
+	      },
+	      closeChat: function(email){
+	      	delete chatBoxes[email];
+	      	$('#' + email).fadeOut(300);
+	      },
+	      showChat: function(user,scope){
+	      	/*if(chatBoxes.hasOwnProperty(user.email)){
+	        
+	      	}else{
+	        	chatBoxes[user.email] = user;
+	        	var divElement = angular.element(document.querySelector('#chat-container'));
+	        	var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
+	        	divElement.append(appendHtml);
+	      	}*/
+	      },
+	      sendMessage: function(msg,callBack){
+	      	socket.emit("send-message",msg, function(data){
+				callBack(data.success);
+			});
+	      }
+	    };
+	  });
+	})();
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	angular.module('bds')
+	.service('sendImageService', function ($http, $rootScope) {
+		this.sendImage = function (file) {
+			// console.log(file);
+			// var fd = new FormData();
+	        // fd.append('file', file);
+	        // fd.append('name', 'saad');
+	        // console.log("fd", fd);
+	        var fd= {name : "Ankit", 
+	        			Desg : "Developer"};
+			 return $http.post( $rootScope.baseUrl + '/v1/demo', fd, {
+	                transformRequest: angular.identity,
+	                headers: { 'Content-Type': undefined }
+	            }).then(function (response) {
+	                return response;
+	            });
+
+		};
+
+	});
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+	angular.module('bds')
+	.directive("loginForm", [
+	  function() {
+	    return {
+	      restrict: 'E',
+	      scope: {loginbox: "=loginbox"},
+	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
+	        templateUrl: "/web/common/directives/loginTemplate.html",
+	        replace: 'true',
+	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','ChatService',
+	        function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,ChatService) {
+	          $scope.loginError = false;
+	          angular.extend(this,{
+	            email: "",
+	            password: "",
+	            enterEmail: true,
+	            enterPassword: false,
+	            userExist: false,
+	            class: "",
+	            exitLoginBox: function($event){
+	              if($event.target.id == "box-login"){
+	                this.enterEmail = true;
+	                this.userExist = false;
+	                this.enterPassword = false;
+	                this.password = "";
+	                $localStorage.relandToken = undefined;  
+	              }
+	            },
+	            signin: function(){
+	              var loginForm = $('#form-login');
+	              var data = {
+	                email: this.email,
+	                matKhau: this.password
+	              }
+	              if (loginForm.valid()) {
+	                // If the form is invalid, submit it. The form won't actually submit;
+	                var vm = this;
+	                if(this.enterEmail == true){
+	                  HouseService.checkUserExist(data).then(function(res){
+	                    vm.userExist = res.data.exist;
+	                    vm.enterPassword = true;
+	                    vm.enterEmail = false;  
+	                  });
+	                } else if(this.enterPassword == true){
+	                  if(this.userExist==true){//sign in
+	                    HouseService.login(data).then(function(res){
+	                      if(res.data.login==true){
+	                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                        //$window.token = res.data.token;
+	                        $localStorage.relandToken = res.data.token;
+	                        $rootScope.userName = res.data.userName;
+	                        $rootScope.userID = res.data.userID;
+	                        $rootScope.userEmail = res.data.email;
+	                        vm.class = "has-sub";
+	                        vm.enterPassword = false;
+	                        vm.enterEmail = true;  
+	                        vm.userExist = false;
+	                        vm.password = "";
+
+	                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+	                          console.log("register socket user " + $rootScope.userName);
+	                        });
+	                        // ChatService.loginChat($rootScope.userEmail,$rootScope.userID,$rootScope.userName);
+	                        $('#box-login').hide();
+	                      }else{
+	                        alert(res.data.message);
+	                      }                    
+	                    });
+	                  }else{//register
+	                    HouseService.signup(data).then(function(res){
+	                      $localStorage.relandToken = res.data.token;
+	                      $rootScope.userName = res.data.userName;
+	                      vm.class = "has-sub";
+	                      $('#box-login').hide();
+	                    });
+	                  }
+	                }
+	              }
+	            }
+	          });          
+
+	          var formLogin = $("#form-login");
+	          $("#form-login").validate();
+	          if(formLogin.validate){
+	            formLogin.validate({
+	              rules: {
+	                email: {
+	                  required: true,
+	                  email: true
+	                }
+	              },
+	              messages: {
+	                email: {
+	                  required: 'Xin nhập email',
+	                  email: 'Email không hợp lệ'
+	                }
+	              }
+	            });    
+	          }
+
+
+	        }
+	        ],
+	        controllerAs: 'lc',
+	      }
+	    }
+	    ]);
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	angular.module('bds')
+	.directive("userInfoMenu", [
+	  function() {
+	    return {
+	      restrict: 'E',
+	      scope: {},
+	        templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
+	        replace: 'true',
+	        controller: ['$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
+	        function($scope, $rootScope, $http, $window,$localStorage, HouseService) {
+	          $scope.loginError = false;
+	          let vm = this;
+	          vm.profile = function() {
+	            alert("todo");
+	          }
+	          vm.signout = function(){
+	          	$localStorage.relandToken = undefined;
+	          	$rootScope.userName = undefined;
+	          }
+	        }
+	        ],
+	        controllerAs: 'uim',
+	      }
+	    }
+	    ]);
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	angular.module('bds').directive('afterRender', ['$timeout', function ($timeout) {
+	    var def = {
+	        restrict: 'A',
+	        terminal: true,
+	        transclude: false,
+	        link: function (scope, element, attrs) {
+	            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+	            //alert('ssss');
+	        }
+	    };
+	    return def;
+	}]);
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	angular.module('bds').directive('bdsChat', ['$timeout', function ($timeout) {
+	    var def = {
+	        restrict: 'E',
+	        scope: {visible: "=visible", useremail: "=useremail", right: "=right", chatbox: "=chatbox"},
+	        terminal: true,
+	        templateUrl: "/web/common/directives/chatTemplate.html",
+	        replace: 'true',
+	        controller: 'ChatCtrl',
+	        controllerAs: "chat"
+	    };
+	    return def;
+	}]);
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	var danhMuc = {};
+
+	var BAT_KY = "Bất kỳ";
+
+	danhMuc.BAT_KY = BAT_KY;
+	danhMuc.BIG =9999999;
+
+	danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
+
+	danhMuc.filter_max_value = {
+	    lable: "Bất kỳ",
+	    value: 999999999999999999,
+	}
+
+	danhMuc.sortHouseOptions = [
+	    {
+	        lable: "Giá từ cao đến thấp",
+	        value: "giaDESC",
+	        position: 1
+	    },
+	    {
+	        lable: "Giá từ thấp đến cao",
+	        value: "giaASC",
+	        position: 2
+	    },
+	    {
+	        lable: "Diện tích từ cao đến thấp",
+	        value: "dienTichDESC",
+	        position: 3
+	    },
+	    {
+	        lable: "Diện tích từ thấp đến cao",
+	        value: "dienTichASC",
+	        position: 4
+	    }
+	];
+
+	danhMuc.sell_steps = [
+	    {
+	        value: 1000,
+	        lable: "1 tỷ",
+	        position: 1
+	    },
+	    {
+	        value: 2000,
+	        lable: "2 tỷ",
+	        position: 2
+	    },
+	    {
+	        value: 3000,
+	        lable: "3 tỷ",
+	        position: 3
+	    },
+	    {
+	        value: 5000,
+	        lable: "5 tỷ",
+	        position: 4
+	    },
+	    {
+	        value: 7000,
+	        lable: "7 tỷ",
+	        position: 5
+	    },
+	    {
+	        value: 10000,
+	        lable: "10 tỷ",
+	        position: 6
+	    },
+	    {
+	        value: 20000,
+	        lable: "20 tỷ",
+	        position: 7
+	    },
+	    {
+	        value: 30000,
+	        lable: "30 tỷ",
+	        position: 8
+	    }
+	];
+
+
+
+	danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
+
+	danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
+
+	danhMuc.convertDienTichStepValueToNameValueArray= function(){
+	    var result = [];
+	    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
+	        result.push({
+	            value: danhMuc.dienTichStepValues[i],
+	            lable: danhMuc.dienTichStepValues[i] + " m2",
+	            position: i
+	        });
+	    }
+	    return result;
+	}
+
+	danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
+
+	danhMuc.LoaiTin = {
+	    0 : "Bán",
+	    1  : "Cho Thuê"
+	};
+
+	danhMuc.LoaiNhaDatBan = {
+	    1  : "Bán căn hộ chung cư",
+	    2  : "Bán nhà riêng",
+	    3  : "Bán nhà mặt phố",
+	    4  : "Bán biệt thự, liền kề",
+	    6  : "Bán Shophouse",
+	    7  : "Bán đất nền dự án",
+	    5  : "Bán đất",
+	    8  : "Bán trang trại, khu nghỉ dưỡng",
+	    99 : "Bán các BDS khác",
+	    10 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
+	}
+
+	danhMuc.LoaiNhaDatBanWeb = [
+	    { value: "1", lable: "Bán căn hộ chung cư" },
+	    { value: "2", lable: "Bán nhà riêng" },
+	    { value: "3", lable: "Bán nhà mặt phố" },
+	    { value: "4", lable: "Bán biệt thự, liền kề" },
+	    { value: "6", lable: "Bán Shophouse" },
+	    { value: "7", lable: "Bán đất nền dự án" },
+	    { value: "5", lable: "Bán đất" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "99", lable: "Bán các BDS khác" },
+	    { value: "10", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	    ];
+
+	danhMuc.LoaiNhaDatCanMuaWeb = [
+	    { value: "1", lable: "Mua căn hộ chung cư" },
+	    { value: "2", lable: "Mua nhà riêng" },
+	    { value: "3", lable: "Mua biệt thự, liền kề" },
+	    { value: "4", lable: "Mua nhà mặt phố" },
+	    { value: "5", lable: "Mua đất nền dự án" },
+	    { value: "6", lable: "Mua đất" },
+	    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
+	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
+	    { value: "9", lable: "Mua kho, nhà xưởng" },
+	    { value: "10", lable: "Mua loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
+	danhMuc.LoaiNhaDatCanThueWeb = [
+	    { value: "1", lable: "Cần thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cần thuê nhà riêng" },
+	    { value: "3", lable: "Cần thuê nhà mặt phố" },
+	    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
+	    { value: "5", lable: "Cần thuê văn phòng" },
+	    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
+	    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
+	    { value: "8", lable: "Cần thuê loại BĐS khác" },
+	    { value: "11", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
+	danhMuc.LoaiNhaDatThue = {
+	    1 : "Cho Thuê căn hộ chung cư",
+	    2 : "Cho Thuê nhà riêng",
+	    3 : "Cho Thuê nhà mặt phố",
+	    6 : "Cho thuê nhà trọ, phòng trọ",
+	    4 : "Cho Thuê văn phòng",
+	    5 : "Cho Thuê cửa hàng, ki-ốt",
+	    7 : "Cho thuê kho, nhà xưởng, đất",
+	    99: "Cho Thuê các BDS khác",
+	    8 : "Tìm kiếm nâng cao",
+	    0 : "Tất cả"
+	}
+
+	danhMuc.LoaiNhaDatThueWeb = [
+	    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
+	    { value: "2", lable: "Cho Thuê nhà riêng" },
+	    { value: "3", lable: "Cho Thuê nhà mặt phố" },
+	    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
+	    { value: "4", lable: "Cho Thuê văn phòng" },
+	    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
+	    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
+	    { value: "99", lable: "Cho Thuê các BDS khác" },
+	    { value: "8", lable: "Tìm kiếm nâng cao" },
+	    { value: "0", lable: "Tất cả" }
+	];
+
+	danhMuc.SoPhongNgu = {
+	    0: BAT_KY,
+	    1: "1+",
+	    2: "2+",
+	    3: "3+",
+	    4: "4+",
+	    5: "5+"
+	}
+
+	danhMuc.SoTang = {
+	    0: BAT_KY,
+	    1: "1+",
+	    2: "2+",
+	    3: "3+",
+	    4: "4+",
+	    5: "5+"
+	}
+
+	danhMuc.SoPhongTam = {
+	    0: BAT_KY,
+	    1: "1+",
+	    2: "2+",
+	    3: "3+",
+	    4: "4+",
+	    5: "5+"
+	}
+
+	danhMuc.RadiusInKm = {
+	    0.5: "0.5",
+	    1: "1",
+	    2: "2",
+	    3: "3",
+	    4: "4",
+	    5: "5"
+	}
+
+	danhMuc.RadiusInKmKey = [
+	    0.5,
+	    1,
+	    2,
+	    3,
+	    4,
+	    5
+	]
+
+	danhMuc.NgayDaDang = {
+	    0: BAT_KY,
+	    1: "1",
+	    7: "7",
+	    14: "14",
+	    30: "30",
+	    90: "90"
+	}
+
+	danhMuc.NgayDaDangKey = [
+	    0,
+	    1,
+	    7,
+	    14,
+	    30,
+	    90
+	]
+
+	danhMuc.HuongNha = {
+	    0: BAT_KY,
+	    1: "Đông",
+	    2: "Tây",
+	    3: "Nam",
+	    4: "Bắc",
+	    5: "Đông-Bắc",
+	    6: "Tây-Bắc",
+	    7: "Đông-Nam",
+	    8: "Tây-Nam"
+	}
+
+
+	danhMuc.getDanhMucKeys = function (hashDanhMuc) {
+	    var result = [];
+	    for (var k in hashDanhMuc) {
+	        result.push(k);
+	    }
+	    return result;
+	}
+
+	danhMuc.getNameValueArray = function(hashDanhMuc){
+	    console.log("getNameValueArray");
+	    console.log(hashDanhMuc);
+	    var result = [];
+	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
+	    for (var k in hashDanhMuc) {
+	        result.push(
+	            {
+	                value: k,
+	                lable: hashDanhMuc[k]
+	            }
+	        )
+	    }
+	    console.log(result);
+	    return result;
+	}
+
+	danhMuc.getDanhMucValues = function (hashDanhMuc) {
+	    var result = [];
+	    for (var k in hashDanhMuc) {
+	        result.push(hashDanhMuc[k]);
+	    }
+	    return result;
+	}
+
+	danhMuc.getLoaiNhaDatBanValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatBan);
+	}
+
+	danhMuc.getLoaiNhaDatThueValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatThue);
+	}
+
+	danhMuc.getSoPhongNguValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.SoPhongNgu);
+	}
+
+	danhMuc.getSoTangValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.SoTang);
+	}
+
+	danhMuc.getSoPhongTamValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.SoPhongTam);
+	}
+
+	danhMuc.getHuongNhaValues = function () {
+	    return danhMuc.getDanhMucValues(danhMuc.HuongNha);
+	}
+
+	danhMuc.getRadiusInKmValues = function () {
+	    return ["0.5", "1", "2", "3", "4", "5"];
+	}
+
+	danhMuc.getNgayDaDangValues = function () {
+	    return danhMuc.NgayDaDangKey;
+	}
+
+	danhMuc.getLoaiNhaDatForDisplay = function(loaiTin, loaiNhaDatKey){
+	    var value = '';
+	    if (loaiTin == 'ban')
+	        value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
+
+	    if (loaiTin == 'thue')
+	        value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
+
+	    if (!value)
+	        value = BAT_KY;
+
+	    return value;
+	}
+
+	danhMuc.getDanhMucKeyByIndex = function (hashDanhMuc, index) {
+	    var find = '';
+	    var i = 0;
+	    for (var k in hashDanhMuc) {
+	        if (i == index) {
+	            find = k;
+	            break;
+	        }
+	        i++;
+	    }
+	    return find;
+	}
+
+	danhMuc.getSoPhongByIndex = function (index) {
+	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongNgu, index);
+	}
+
+	danhMuc.getSoTangByIndex = function (index) {
+	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoTang, index);
+	}
+
+	danhMuc.getSoPhongTamByIndex = function (index) {
+	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongTam, index);
+	}
+
+	danhMuc.getRadiusInKmByIndex = function(index) {
+	    return danhMuc.RadiusInKmKey[index];
+	}
+
+	danhMuc.getHuongNhaDisplay = function(val){
+	    if (!val) {
+	        return "Không rõ";
+	    }
+	    return eval('danhMuc.HuongNha['+val + ']');
+	}
+
+	module.exports = danhMuc;
+
+	if (typeof(window) !== 'undefined')
+	   window.RewayListValue = danhMuc;
+
+
+	//import {LoaiNhaDatBan} from "danhMuc"...
+
+/***/ },
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var striptags = __webpack_require__(15);
+	var _ = __webpack_require__(5);
+
+	var util = __webpack_require__(22);
+
+	var placeUtil = {};
+
+
+	placeUtil.getDuAnFullName = function(place) {
+	    if (!place.duAn) {
+	        return null;
+	    }
+
+	    var ret = "";
+	    var _appendIfHave = function(ret, value) {
+	        if (ret)
+	            ret =  ret + ", " + value;
+	        else
+	            ret =  value;
+
+	        return ret;
+	    };
+
+	    ret = _appendIfHave(ret, place.duAn);
+
+	    ret = _appendIfHave(ret, place.diaChinh.huyen);
+
+	    ret = _appendIfHave(ret, place.diaChinh.tinh);
+
+	    return ret;
+	};
+
+	placeUtil.getDiaChinhFromGooglePlace = function(place) {
+	    var tinh ="";
+	    var huyen ="";
+	    var xa ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.TINH){
+	            tinh = this.chuanHoa(addr.long_name);
+	        }
+
+	        if (addr.types[0] == placeUtil.type.HUYEN){
+	            huyen = this.chuanHoa(addr.long_name);
+	        }
+
+	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
+	            xa = this.chuanHoa(addr.long_name);
+	        }
+	    }
+
+	    var diaChinh = {
+	        tinh: tinh,
+	        huyen: huyen,
+	        xa: xa
+	    };
+
+	    return diaChinh;
+	};
+
+	placeUtil.getDiaChinh = function(diaChi) {
+	    var spl = diaChi.split(",");
+	    var diaChinh = {};
+
+	    var i = spl.length;
+	    diaChinh.tinh = spl[--i].trim();
+	    if(diaChinh.tinh)
+	        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
+
+	    var rawHuyen = spl[--i];
+	    if (rawHuyen) {
+	        diaChinh.huyen = rawHuyen.trim();
+	        if(diaChinh.huyen)
+	            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
+	    } else {
+	        console.log("WARN -- no HUYEN information " + diaChi);
+	    }
+
+	    if (i>0) {
+	        var v = spl[--i].trim();
+	        if (!v.startsWith("Dự án")) {
+	            diaChinh.xa = v;
+	            if(diaChinh.xa)
+	                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
+	        } else {
+	            return diaChinh;
+	        }
+	    }
+
+	    if (i>0) {
+	        var v = spl[--i].trim();
+	        if (!v.startsWith("Dự án")) {
+	            diaChinh.duong = v;
+	        } else {
+	            return diaChinh;
+	        }
+	    }
+
+
+	    return diaChinh;
+	};
+
+	placeUtil.fullName = function(place) {
+	    //todo: other types
+	    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
+	        return place.placeName + ", " + place.parentName;
+	    }
+
+	    return place.placeName;
+	};
+	// return Quoc Gia form Place.Place is type of Google api
+	placeUtil.getQuocGia = function(place) {
+
+	    var getCountry ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == 'country'){
+	            getCountry = addr.long_name;
+	        }
+
+	    }
+	    return getCountry;
+	};
+
+	// return Tinh form Place.Place is type of Google api
+	placeUtil.getTinh = function(place) {
+
+	    var Tinh ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.TINH){
+	            Tinh = addr.long_name;
+	        }
+
+	    }
+	    return Tinh;
+	};
+
+	// return Huyen form Place.Place is type of Google api
+	placeUtil.getHuyen = function(place) {
+
+	    var Huyen ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if (addr.types[0] == placeUtil.type.HUYEN){
+	            Huyen = addr.long_name;
+	        }
+
+	    }
+	    return Huyen;
+	};
+
+	// return Xa form Place.Place is type of Google api
+	placeUtil.getXa = function(place) {
+
+	    var Xa ="";
+
+	    for (var i = 0; i < place.address_components.length; i++)
+	    {
+	        var addr = place.address_components[i];
+
+	        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
+	        {
+	            Xa = addr.long_name;
+	        }
+
+	    }
+	    return Xa;
+	};
+
+	// chuan hoa va bo dau 1 string
+	placeUtil.chuanHoa = function(string) {
+
+	    var result = util.locDau(string);
+
+	    var COMMON_WORDS = {
+	        '-district': '',
+	        '-vietnam':'',
+	        'hanoi' : 'ha-noi'
+	    };
+	    for (var f in COMMON_WORDS) {
+	        result = result.replace(f,COMMON_WORDS[f]);
+	    }
+
+	    return result;
+	};
+
+	placeUtil.type = {
+	    TINH : "administrative_area_level_1",
+	    HUYEN : "administrative_area_level_2",
+	    XA : "administrative_area_level_3",
+	    XA2 : "sublocality_level_1",
+	    DUONG : "route"
+	};
+
+	placeUtil.typeName = {
+	    TINH : "Tỉnh",
+	    HUYEN : "Huyện",
+	    XA : "Xã",
+	    DUONG : "Đường",
+	    DIA_DIEM: "Địa điểm"
+
+	};
+
+
+	placeUtil.isHuyen = function(place) {
+	    var placeTypes=place.types;
+
+	    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
+	        return true;
+	    }
+
+	    if (_.indexOf(placeTypes, 'locality') > -1
+	        && _.indexOf(placeTypes, 'political') > -1
+	        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
+	    ) {
+	        return true;
+	    }
+	};
+
+	placeUtil.getTypeName = function(place) {
+	    var placeTypes = place.types;
+
+	    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
+	        return placeUtil.typeName.TINH;
+	    }
+	    if (placeUtil.isHuyen(place)) {
+	        return placeUtil.typeName.HUYEN;
+	    }
+
+	    if (_.indexOf(placeTypes, placeUtil.type.XA) > -1) {
+	        return placeUtil.typeName.XA;
+	    }
+
+	    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+	        return placeUtil.typeName.XA;
+	    }
+
+	    if (_.indexOf(placeTypes, placeUtil.type.DUONG) > -1) {
+	        return placeUtil.typeName.DUONG;
+	    }
+
+	    return placeUtil.typeName.DIA_DIEM;
+	};
+
+
+	placeUtil.isOnePoint = function(place) {
+	    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+	    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
+	};
+
+	module.exports  = placeUtil;
+
+	if (typeof(window) !== 'undefined')
+	   window.RewayPlaceUtil = placeUtil;
+
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var striptags = __webpack_require__(23);
 	var util = {};
 
 	util.locDau = function(str) {
@@ -18750,7 +19964,7 @@
 	   window.RewayUtil = util;
 
 /***/ },
-/* 15 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -19009,6 +20223,39 @@
 	    return striptags;
 	}));
 
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	var internals = {};
+	internals.STS = {
+	    SUCCESS : 0,
+	    FAILURE : 1
+	};
+
+	internals.MSG = {
+	    DIA_DIEM_NOTFOUND : "Địa điểm bạn tìm kiếm không tồn tại!",
+	    USER_EXISTS : "Người sử dụng đã tồn tại!",
+	    LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
+	    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline"
+	};
+
+	internals.DB_ERR = {
+		USER_EXISTS: {
+			code: 101,
+			message: "Người sử dụng đã tồn tại"
+		}
+	};
+
+	internals.FORMAT = {
+	  DATE_IN_DB : 'YYYYMMDD',
+	  DATE_IN_GUI : 'DD/MM/YYYY'
+	};
+
+	if (typeof(window) !== 'undefined')
+	   window.RewayConst = internals;
+	module.exports  = internals;
 
 /***/ }
 /******/ ]);
