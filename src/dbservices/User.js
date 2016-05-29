@@ -19,6 +19,12 @@ var syncUserDB_URL = "http://localhost:4985/default/";
 
 
 class UserModel {
+  initBucket() {
+    bucket = cluster.openBucket('default');
+    bucket.enableN1ql(['127.0.0.1:8093']);
+    bucket.operationTimeout = 60 * 1000;
+  }
+
   getUser(userDto, callback) {
     var sql = `select default.* from default where type='User'`;
 
@@ -30,6 +36,9 @@ class UserModel {
     }
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
+
+    //why need this?
+    this.initBucket();
 
     bucket.query(query, callback);
   }
@@ -123,7 +132,7 @@ class UserModel {
    * @param userDto
    *    phone/email: can only have one of these
    *    fullName: string
-   *
+   *    matKhau: string
    * @param callback (err, res)
    */
   createUserAndLogin(userDto, callback) {
@@ -266,6 +275,55 @@ class UserModel {
         
       }
     });
+  }
+
+  //userDto.phone or userDto.email
+  deleteUser(userDto, callback) {
+    let username = userDto.phone || userDto.email;
+
+    this._deleteLoginFromSyncGateway(username, (err, res) => {
+      if (!err) {
+        this._deleteUserFromDB(userDto, callback);
+      } else {
+        callback(err, null)
+      }
+    });
+  }
+
+  _deleteLoginFromSyncGateway(name, callback) {
+    var url = syncUserDB_URL + "_user/" + name;
+    request({
+        url: url, method: "DELETE"
+      },
+      function (error, response, body) {
+        if (error) {
+          log.error("Error when _deleteLoginFromSyncGateway", error, response);
+          callback(error, body);
+          return;
+        }
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+          callback(null, body);
+        } else {
+          log.error("_deleteLoginFromSyncGateway", response.body);
+          callback({code:99, msg: response.body.reason}, null);
+        }
+      });
+  }
+
+  _deleteUserFromDB(userDto, callback) {
+    var sql = `delete from default where type='User'`;
+
+    if (userDto.phone) {
+      sql = `${sql} AND phone='${userDto.phone}'`
+    }
+    if (userDto.email) {
+      sql = `${sql} AND email='${userDto.email}'`
+    }
+    console.log(sql);
+    var query = N1qlQuery.fromString(sql);
+
+    bucket.query(query, callback);
   }
 
 }
