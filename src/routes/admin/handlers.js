@@ -8,6 +8,9 @@ var ViewQuery = couchbase.ViewQuery;
 var myBucket = require('../../database/mydb');
 myBucket.operationTimeout = 120000;//2 minutes
 
+var UserService = require("../../dbservices/User");
+var userService = new UserService();
+
 
 var Extract = require('../../lib/extract');
 
@@ -158,5 +161,34 @@ internals.deleteall = function(req, reply) {
 	});
 
 };
+internals.deleteMobileUser = function(req, reply) {
+	let userDto = {
+		phone: req.query.phone,
+		email: req.query.email
+	};
+
+	if (userDto.phone || userDto.email) {
+		userService.deleteUser(userDto, (err, res) => {
+			console.log("Callback deleteUser", err, res);
+
+			if (err) {
+				reply.view('admin/deleteMobileUser', {
+					result: 'Fail'
+				});
+			} else {
+				reply.view('admin/deleteMobileUser', {
+					result: 'Done'
+				});
+			}
+
+		});
+	} else {
+		reply.view('admin/deleteMobileUser', {
+			result: 'Init'
+		});
+	}
+};
+
+
 
 module.exports = internals;
