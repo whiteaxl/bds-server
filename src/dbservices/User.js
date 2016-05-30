@@ -237,7 +237,7 @@ class UserModel {
     });
   }
 
-  createUserForWeb(data, callback){
+  createUserForWeb(reply,data, callback){
     this.isUserExist(data,function(isExist){
       if(isExist==true){
         reply({
