@@ -6,7 +6,9 @@ internals.STS = {
 
 internals.MSG = {
     DIA_DIEM_NOTFOUND : "Địa điểm bạn tìm kiếm không tồn tại!",
-    USER_EXISTS : "Người sử dụng đã tồn tại!"
+    USER_EXISTS : "Người sử dụng đã tồn tại!",
+    LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
+    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline"
 };
 
 internals.DB_ERR = {
@@ -21,5 +23,6 @@ internals.FORMAT = {
   DATE_IN_GUI : 'DD/MM/YYYY'
 };
 
-
+if (typeof(window) !== 'undefined')
+   window.RewayConst = internals;
 module.exports  = internals;

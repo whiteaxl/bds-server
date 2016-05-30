@@ -137,6 +137,9 @@
 		vm.mouseover = function(e,i) {
           vm.showDetail(i);
         };
+        vm.goDetail = function(i){
+        	$state.go('detail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+        }
         vm.mouseout = function() {
           //vm.hideDetail();
         };
@@ -159,12 +162,12 @@
 		};
 		// window.DesignCommon.adjustPage();
 		$scope.$on('$viewContentLoaded', function(){
-			//window.DesignCommon.adjustPage();
-			if($state.current.data){
+			window.DesignCommon.adjustPage();
+			if($state.params){
 				//$scope.bodyClass = $state.current.data.bodyClass;
-				$scope.bodyClass = "page-search";
-				if($state.current.viewMode=="list"){
-					$scope.bodyClass = "page-list";
+				$rootScope.bodyClass = "page-search";
+				if($state.params.viewMode=="list"){
+					$rootScope.bodyClass = "page-list";
 				} 
 			}
 		});

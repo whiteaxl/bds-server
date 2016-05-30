@@ -9,18 +9,27 @@ require("./src/web/app/home/home.js");
 require("./src/web/app/home/homeCtrl.js");
 require("./src/web/app/home/searchCtrl.js");
 require("./src/web/app/home/homeCtrl.js");
+require("./src/web/app/home/chatCtrl.js");
+require("./src/web/app/home/detailCtrl.js");
+require("./src/web/app/home/ChatPanelCtrl.js");
+
 
 //services
 require("./src/web/common/services/house.js");
+require("./src/web/common/services/chatservice.js");
+require("./src/web/common/services/sendImageSvc.js");
 
 //Directives
 require("./src/web/common/directives/loginDirective.js");
 require("./src/web/common/directives/userInfoMenuDirective.js");
 require("./src/web/common/directives/afterRenderedDirective.js");
+require("./src/web/common/directives/chatDirective.js");
+
 
 
 //Libs
 require("./src/lib/DanhMuc.js");
 require("./src/lib/placeUtil.js");
 require("./src/lib/utils.js");
+require("./src/lib/constant.js");
 

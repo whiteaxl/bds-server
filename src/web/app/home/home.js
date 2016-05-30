@@ -1,8 +1,15 @@
 (function() {
   'use strict';
   window.initData = {};
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage'])
-  .run(['$rootScope', '$cookieStore','$http', function($rootScope, $cookieStore, $http){
+  
+  var postal = require("postal.js");
+  var tap = postal.addWireTap( function( d, e ) {
+    console.log( JSON.stringify( e ) );
+  });
+
+
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
+  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
@@ -11,8 +18,34 @@
     }
 
     $rootScope.loginbox = {};
+    $rootScope.chatBoxes = [];
+
     $rootScope.showDangNhap = function(){
-      $rootScope.loginbox.resetLoginBox();
+      if($rootScope.loginbox.resetLoginBox)
+        $rootScope.loginbox.resetLoginBox();
+    }
+    $rootScope.chat_visible = true;
+    $rootScope.showChat = function(user,scope){
+      if($rootScope.chatBoxes.hasOwnProperty(user.email)){
+        
+      }else{
+        $rootScope.chatBoxes[user.email] = user;
+        var divElement = angular.element(document.querySelector('#chat-container'));
+        var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
+        divElement.append(appendHtml);
+      }
+
+      /*if(true || $rootScope.userName){
+        $rootScope.chat_visible = true;
+        $rootScope.chat_user = user;
+
+      }
+      else{
+        alert(window.RewayConst.MSG.LOGIN_REQUIRED);
+      }*/
+    }
+    $rootScope.closeChat = function(){
+      $rootScope.chat_visible = false;
     }
     
     $rootScope.postPageRendered = function(){
@@ -22,6 +55,8 @@
     $rootScope.signout = function(){
         $rootScope.loginbox.resetLoginBox(); 
     }
+    $rootScope.bodyClass = "page-home";
+
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
       //alert(toState.name);
@@ -92,9 +127,22 @@
       };
 
   }]);
-  bds.config(function($stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
+  bds.config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
       // For any unmatched url, send to /route1
       $locationProvider.html5Mode(true);
+
+
+      $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
+       Object.defineProperty($delegate.constructor.prototype, 
+            '$bus', {
+                value: postal,
+                enumerable: false
+            });
+        return $delegate;
+    }]);
+
+
+
 
       $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
        return {
@@ -178,10 +226,26 @@
         //   $scope.sellingHouses = adsList;
         //   alert(adsList.length);
         // }
+      }).state('detail', {
+        url: "/detail/:adsID",
+        //templateUrl: "/web/index_content.html",
+        controller: "DetailCtrl",
+        controllerAs: 'dt',
+        data: {
+            bodyClass: "page-detail"
+        }
       })
     });
-
+  bds.factory('socket', function (socketFactory) {
+    // var socket = io.connect("http://localhost:5000");
+    var socket = io.connect();
+    //socket.forward('error');
+    // socket.connect();
+    return socket;
+  });
   })();
+
+
 
   hello = function (){
     alert('hello buddy! how are you today?');

@@ -98,7 +98,7 @@
                             </div>
                             <div class="row">
 
-                                <div ng-repeat="ads in mc.ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-mouseout="mc.hideDetail();">
+                                <div ng-repeat="ads in mc.ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-click="mc.goDetail($index)" ng-mouseout="mc.hideDetail();">
                                     <div class="item">
                                         <a class="link" href="" title="" >
                                             <span class="img" style="background-image: url({{ads.image.cover}})"></span>

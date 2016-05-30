@@ -48,7 +48,7 @@
 			//addCrudControls
 			window.DesignCommon.adjustPage();
 			if($state.current.data)
-				$scope.bodyClass = $state.current.data.bodyClass
+				$rootScope.bodyClass = $state.current.data.bodyClass
 			// window.onresize = function() {
 			//     window.DesignCommon.resizePage();
 			// }
@@ -58,10 +58,7 @@
 			if(model)
 				return model.formatted_address;
 		}
-		vm.loginbox = {};
-		vm.showDangNhap = function(){
-			vm.loginbox.resetLoginBox(vm);
-		}
+		
 
 		
 

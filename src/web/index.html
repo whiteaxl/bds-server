@@ -42,6 +42,16 @@
     <script src="/web/asset/js/jquery-ui.min.js"></script>
     <script src="/web/asset/js/jquery.validate.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places" ></script>
+    <script src="/web/asset/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!--chat-->
+    <script src="/web/asset/js/socket.io.js"></script>
+    <script src="/web/asset/js/chat.js"></script>
+    <!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
+    <link rel="stylesheet" href="/web/asset/css/style-chat.css" type="text/css">
+
+    <script src="/bower/postal.js/lib/postal..js"></script> 
+    <!--end chat-->
     <!-- <script src="/src/lib/placeUtil.js"></script> -->
     <!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
     <!--[if lt IE 9]>
@@ -89,6 +99,13 @@
     </style>
 </head>
 
-<body ng-class="bodyClass" onunload="alert("before unload");" ui-view>
+<body ng-class="$root.bodyClass" onunload="alert("before unload");">
+
+    <div ui-view></div> 
+    
+    <login-form loginbox="$root.loginbox"></login-form>
+    <div id="chat-container" ng-controller="ChatPanelCtrl as cp">
+
+    </div>
 </body>
 </html>
