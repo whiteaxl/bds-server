@@ -51,6 +51,8 @@ angular.module('bds')
                         $localStorage.relandToken = res.data.token;
                         $rootScope.userName = res.data.userName;
                         $rootScope.userID = res.data.userID;
+                        //hung dummy here to set userID to email so we can test chat
+                        $rootScope.userID = res.data.email;
                         $rootScope.userEmail = res.data.email;
                         vm.class = "has-sub";
                         vm.enterPassword = false;

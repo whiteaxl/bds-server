@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e9139d73d17ea1d8d167"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "98a6fcaa4b8ffe08c026"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18582,28 +18582,28 @@
 			Handle in comming message
 			*/
 			socket.on("new message", function(data){
-				if(data.emailFrom == $rootScope.userEmail){
+				if(data.From == $rootScope.userID){
 					data.ownMsg = true;	
 				}else{
 					data.ownMsg = false;
 				}
-				if(vm.chatBoxes.hasOwnProperty(data.emailFrom) == false){
+				if(vm.chatBoxes.hasOwnProperty(data.userIDFrom) == false){
 					//someone just start chat with you need to popup the chat box for that user
-					vm.addNewChat({email: data.emailFrom});
+					vm.addNewChat({userID: data.userIDFrom});
 				}
-				vm.chatBoxes[data.emailFrom].messages.push(data);
+				vm.chatBoxes[data.userIDFrom].messages.push(data);
 				$scope.$apply();
 				//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
-				$('#' + vm.chatBoxes[data.emailFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.emailFrom].position + '_chat-history')[0].scrollHeight);
+				$('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history')[0].scrollHeight);
 			});
 
 			vm.addNewChat = function(user){
-				if(vm.chatBoxes.hasOwnProperty(user.email)){
+				if(vm.chatBoxes.hasOwnProperty(user.userID)){
 	        
 		      	}else{
 		      		var count = Object.keys(vm.chatBoxes).length;
 					var rightPos = (24 + Math.min(2,count)*300);
-		        	vm.chatBoxes[user.email] = {
+		        	vm.chatBoxes[user.userID] = {
 		        		user: user,
 		        		onlineClass: "online",
 		        		position: rightPos,
@@ -18612,15 +18612,15 @@
 		        	var count = Object.keys(vm.chatBoxes).length-1;
 					var rightPos = (24 + Math.min(2,count)*300);
 		        	var divElement = angular.element(document.querySelector('#chat-container'));
-		        	var appendHtml = $compile('<bds-chat chatbox="cp.chatBoxes[\'' + user.email  +  '\']" visible="$root.chat_visible" right="' + rightPos + '" useremail="\''+ user.email+'\'"></bds-chat>')($scope);
+		        	var appendHtml = $compile('<bds-chat chatbox="cp.chatBoxes[\'' + user.userID  +  '\']" visible="$root.chat_visible" right="' + rightPos + '" useremail="\''+ user.email+'\'"></bds-chat>')($scope);
 		        	divElement.append(appendHtml);
 		      	}
 			}
 			vm.reOrderChat = function(){
 				var id = 0;
-				for (var email in vm.chatBoxes){
+				for (var userID in vm.chatBoxes){
 					var rightPos = (24 + Math.min(2,id)*300);
-					vm.chatBoxes[email].position = rightPos;
+					vm.chatBoxes[userID].position = rightPos;
 					id = id +1;
 				}
 			}
@@ -18784,6 +18784,8 @@
 	                        $localStorage.relandToken = res.data.token;
 	                        $rootScope.userName = res.data.userName;
 	                        $rootScope.userID = res.data.userID;
+	                        //hung dummy here to set userID to email so we can test chat
+	                        $rootScope.userID = res.data.email;
 	                        $rootScope.userEmail = res.data.email;
 	                        vm.class = "has-sub";
 	                        vm.enterPassword = false;
@@ -19071,7 +19073,7 @@
 	    	$scope.$bus.publish({
 	        	channel: 'chat',
 	            topic: 'close chat',
-	            data: $scope.chatbox.user.email
+	            data: $scope.chatbox.user.userID
 		    });
 	    }
 

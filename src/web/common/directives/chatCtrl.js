@@ -156,7 +156,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
     	$scope.$bus.publish({
         	channel: 'chat',
             topic: 'close chat',
-            data: $scope.chatbox.user.email
+            data: $scope.chatbox.user.userID
 	    });
     }
 

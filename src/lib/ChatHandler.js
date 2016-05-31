@@ -29,10 +29,10 @@ function processSendMsg(data){
   		success: true,
   		offline: false
   	}
-  	console.log("emit to user " + data.emailTo);
-  	if (online_users[data.emailTo]) {
-  		console.log("emit to onlin user " + data.emailTo);
-  		online_users[data.emailTo].emit('new message', data);
+  	console.log("emit to user " + data.userIDTo);
+  	if (online_users[data.userIDTo]) {
+  		console.log("emit to onlin user " + data.userIDTo);
+  		online_users[data.userIDTo].emit('new message', data);
   	}else{
   		sendMsgResult.offline = true;
   	}   
@@ -53,17 +53,17 @@ ChatHandler.init = function(server){
 		console.log("socket.io on connection");
   	// creating new user if nickname doesn't exists
   	socket.on('new user', function(data, callback){
-  		if(online_users[data.email])
+  		if(online_users[data.userID])
   		{
   			callback({success:false});
   		}else{
   			callback({success:true});
-  			console.log("socket.io got one new user " + data.email);
+  			console.log("socket.io got one new user " + data.userID);
   			socket.username = data.username;
   			socket.userID = data.userID;
   			socket.email = data.email;
   			socket.userAvatar = data.userAvatar;
-  			online_users[data.email] = socket;
+  			online_users[data.userID] = socket;
   		}
   	});
 
@@ -76,8 +76,7 @@ ChatHandler.init = function(server){
   // disconnect user handling 
   socket.on('disconnect', function (data, callback) { 
   	console.log('tim log this to prove disconnect called');
-
-    delete online_users[socket.email];
+    delete online_users[socket.userID];
     console.log(data);
     console.log(callback);
     //callback({success: true});
@@ -86,7 +85,7 @@ ChatHandler.init = function(server){
   // disconnect user handling 
   socket.on('user leave', function (data, callback) { 
   	console.log('tim log this to prove user leave called');
-    delete online_users[socket.email];
+    delete online_users[socket.userID];
     console.log(data);
     console.log(callback);
     callback({success: true});
