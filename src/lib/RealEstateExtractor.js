@@ -10,6 +10,8 @@ var DSLoaiNhaDat = require("./LoaiNhaDat");
 var logUtil = require("./logUtil");
 var placeUtil = require('./placeUtil');
 var util = require("./utils");
+var AdsModel = require("../dbservices/Ads");
+var adsModel = new AdsModel();
 
 
 var REALESTATE_NAME_MAP = {
@@ -283,6 +285,7 @@ class RealEstateExtractor {
 					if(ads.ngayDangTin == ngayDangTin){
 						console.log("Lay dung ngay dang tin");
 						console.log(ads);
+						adsModel.upsert(ads);
 					}
 				}
 			})
