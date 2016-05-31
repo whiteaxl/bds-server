@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "98a6fcaa4b8ffe08c026"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1a2f7e38fb97190599a5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18589,7 +18589,7 @@
 				}
 				if(vm.chatBoxes.hasOwnProperty(data.userIDFrom) == false){
 					//someone just start chat with you need to popup the chat box for that user
-					vm.addNewChat({userID: data.userIDFrom});
+					vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
 				}
 				vm.chatBoxes[data.userIDFrom].messages.push(data);
 				$scope.$apply();

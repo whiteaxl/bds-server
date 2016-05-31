@@ -17,7 +17,7 @@
 			}
 			if(vm.chatBoxes.hasOwnProperty(data.userIDFrom) == false){
 				//someone just start chat with you need to popup the chat box for that user
-				vm.addNewChat({userID: data.userIDFrom});
+				vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
 			}
 			vm.chatBoxes[data.userIDFrom].messages.push(data);
 			$scope.$apply();
