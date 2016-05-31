@@ -1,4 +1,4 @@
-angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socket, $location, $http, Upload, $timeout, sendImageService,ChatService){		// Chat Page Controller
+angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socket, $location, $http, Upload, $timeout){		// Chat Page Controller
 	// Varialbles Initialization.
 	var vm = this;
 	vm.isMsgBoxEmpty = false;

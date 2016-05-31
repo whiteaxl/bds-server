@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'DetailCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,ChatService){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
 		var vm = this;
 		$scope.chat_visible = true;
 		$scope.$on('$viewContentLoaded', function(){

@@ -74,19 +74,24 @@ ChatHandler.init = function(server){
   });
   
   // disconnect user handling 
-  socket.on('disconnect', function () { 
-    /*delete nickname[socket.username];
-    online_member = [];
-    x = Object.keys(nickname);
-    for(var k=0;k<x.length;k++ )
-      {
-          socket_id = x[k];
-          socket_data = nickname[socket_id];
-          temp1 = {"username": socket_data.username, "userAvatar":socket_data.userAvatar};
-            online_member.push(temp1);
-      }
-      ios.sockets.emit('online-members', online_member);*/              
+  socket.on('disconnect', function (data, callback) { 
+  	console.log('tim log this to prove disconnect called');
+
+    delete online_users[socket.email];
+    console.log(data);
+    console.log(callback);
+    //callback({success: true});
   });
+
+  // disconnect user handling 
+  socket.on('user leave', function (data, callback) { 
+  	console.log('tim log this to prove user leave called');
+    delete online_users[socket.email];
+    console.log(data);
+    console.log(callback);
+    callback({success: true});
+  });
+
 });
 
 }

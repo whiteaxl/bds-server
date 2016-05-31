@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'ChatPanelCtrl';
-	angular.module('bds').controller(controllerId,function (socket,$compile,$rootScope,$http, $scope,$state,HouseService,NgMap,$window,ChatService){
+	angular.module('bds').controller(controllerId,function (socket,$compile,$rootScope,$http, $scope,$state,HouseService,NgMap,$window){
 		var vm = this;		
 		vm.boxPositions = [];
 		vm.chatBoxes = [];
@@ -15,7 +15,7 @@
 			}else{
 				data.ownMsg = false;
 			}
-			if(!vm.chatBoxes.hasOwnProperty(data.emailFrom)){
+			if(vm.chatBoxes.hasOwnProperty(data.emailFrom) == false){
 				//someone just start chat with you need to popup the chat box for that user
 				vm.addNewChat({email: data.emailFrom});
 			}

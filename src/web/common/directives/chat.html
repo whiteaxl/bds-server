@@ -1,0 +1,74 @@
+<div id="{{chatbox.user.email}}">
+	<div id="live-chat" ng-class="chatbox.onlineClass" style='right: {{chatbox.position + "px"}}'>
+		
+		<header class="clearfix" ng-click="chat.toggleChat($event);">
+			
+			<a href="#" class="chat-close" ng-click="chat.closeChat($event);">x</a>
+
+			<h4 >{{chatbox.user.name}}</h4>
+
+			<span class="chat-message-counter">3</span>
+
+		</header>
+
+		<div class="chat">
+			
+			<div class="chat-history" id="{{chatbox.position}}_chat-history">
+				
+
+				<div class="chat-message clearfix" ng-repeat="msg in chatbox.messages track by $index" >
+					
+					<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
+
+					<div ng-hide="hasFile" class="chat-message-content clearfix">
+						
+						<span class="chat-time">{{msg.msgTime}}</span>
+
+						<h5>{{msg.userNameFrom}}</h5>
+
+						<p>{{msg.msg}}</p>
+
+					</div> 					
+					<div class="item" ng-show="msg.hasFile">
+						<div>
+                            <div ng-class="{'attachment-icon-right' : msg.ownMsg, 'attachment-icon-left' : !msg.ownMsg}">
+                            	<a href ng-click="openClickImage(msg)" ng-show="msg.showme" >
+                              		<img id="{{msg.dwid}}" width="50" height="50" ng-src="{{msg.dwimgsrc}}" alt="Open Image">
+                              	</a> <!-- Open Icon -->
+                              	<a ng-href="{{msg.file_msg.serverfilename}}" data-lightbox="{{msg.dwid}}" data-title="{{msg.file_msg.filename}}" ng-hide="msg.showme">
+                                	<img  ng-if="msg.isImageFile" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" id="{{msg.dwid+1}}" width="90" height="70" ng-src="{{msg.file_msg.serverfilename}}" alt="Image File"> <!-- Image -->
+                                	<span ng-if="!msg.isImageFile">Document</span>
+                              	</a>
+                            </div>
+                            <div ng-class="{'attachment-msg-right' : msg.ownMsg, 'attachment-msg-left' : !msg.ownMsg}" ng-hide="msg.showme">
+                                  <span class="decs-text"><b>File :</b> {{ msg.file_msg.filename}}</span>
+                                  <span class="decs-text"><b>Size :</b> {{msg.file_msg.size}}</span>
+                                  <span class="decs-text">
+                                  <a id ="{{msg.dwid}}" class="decs-text" ng-show="!msg.ownMsg" download target="_self" href="{{msg.file_msg.serverfilename}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
+                                  <a id ="{{msg.dwid}}A" class="decs-text hidden-link" href="{{ msg.file_msg.serverfilename }}"  download="{{ msg.file_msg.serverfilename }}"></a>  
+                                  </span>
+                            </div>
+                        </div>
+					</div>
+
+				</div> <!-- end chat-message -->
+
+				<!-- <hr> -->
+
+				
+
+			</div> <!-- end chat-history -->
+
+			<p class="chat-feedback">{{chat.status_message}}</p>
+
+			<form method="post" ng-submit="chat.sendMsg();">
+				<input type="text" ng-model="chat.chatMsg" placeholder="Type your message…">
+				<div class="chat-file-upload" ngf-select="uploadFiles($files)" multiple accept="image/*" >
+					<img src="asset/img/chat-attach-icon.png" style="width: 32px; height: 32px;"></img>
+				</div>
+			</form>
+
+		</div> <!-- end chat -->
+
+	</div> <!-- end live-chat -->
+</div>
