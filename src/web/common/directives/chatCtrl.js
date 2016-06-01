@@ -44,7 +44,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	    msg.isImageFile = isImageFile;
 	    msg.file_msg = file;
         socket.emit('send-message',msg,function (data){      
-        	console.log("sent image to " + $scope.chatbox.user.email);
+        	console.log("sent image to " + $scope.chatbox.user.userID);
         	if (data.success == true) {
 				if(data.offline==true){
 					vm.status_message = window.RewayConst.MSG.USER_OFFLINE;

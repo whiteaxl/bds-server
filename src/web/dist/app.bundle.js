@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1a2f7e38fb97190599a5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7ea848f8d6e5e5a4e400"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18961,7 +18961,7 @@
 		    msg.isImageFile = isImageFile;
 		    msg.file_msg = file;
 	        socket.emit('send-message',msg,function (data){      
-	        	console.log("sent image to " + $scope.chatbox.user.email);
+	        	console.log("sent image to " + $scope.chatbox.user.userID);
 	        	if (data.success == true) {
 					if(data.offline==true){
 						vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
