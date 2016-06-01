@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7ea848f8d6e5e5a4e400"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cd86527b6f5f276c6799"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18592,6 +18592,11 @@
 					vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
 				}
 				vm.chatBoxes[data.userIDFrom].messages.push(data);
+
+				/*socket.emit("confirm read",msg, function(data){
+					console.log("mark message as read");				
+				});*/
+
 				$scope.$apply();
 				//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
 				$('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history')[0].scrollHeight);
@@ -18932,19 +18937,22 @@
 
 		console.log("chat visible is " + $scope.visible);
 
-		var sampleMsg = {
-				emailFrom: $rootScope.userEmail
-				, userIDFrom: $rootScope.userID
-				, userNameFrom : $rootScope.userName
-				, userAvatarFrom : $rootScope.userAvatar
-				, emailTo: $scope.chatbox.user.email
-				, userIDTo: $scope.chatbox.user.userID
-				, msg : vm.chatMsg
-				, file_msg: undefined
-				, hasMsg : vm.isMsg 
-				, hasFile : vm.isFileSelected 
-				, msgTime : formatAMPM(new Date()) 
-		};
+		$scope.getMessage = function(){
+			return {
+				fromUserID: $rootScope.userID
+				, toUserID: $scope.chatbox.user.userID
+				, toFullName: $scope.chatbox.user.name
+				, fromFullName: $rootScope.userName
+				, relatedToAdsID: undefined
+				, content : vm.chatMsg
+				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
+				, timeStamp : undefined 
+				, type: "Chat"
+				, file: undefined
+			};
+		}
+
+		
 
 		
 	    vm.sendFile = function(file, isImageFile){
@@ -18953,13 +18961,13 @@
 	        var dateString = formatAMPM(new Date());            
 	        var DWid = $rootScope.userName + "dwid" + Date.now();
 
-	        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
-
-		    msg.hasFile = true;
-		    msg.hasMsg = false;
-		    msg.msg = undefined;
-		    msg.isImageFile = isImageFile;
-		    msg.file_msg = file;
+	        var msg = $scope.getMessage();
+	        if(isImageFile==true)
+	        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
+	        else
+	        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+		    msg.content = undefined;
+		    msg.file = file;
 	        socket.emit('send-message',msg,function (data){      
 	        	console.log("sent image to " + $scope.chatbox.user.userID);
 	        	if (data.success == true) {
@@ -18970,7 +18978,6 @@
 					}
 					vm.chatMsg = "";
 					vm.setFocus = true;				
-					msg.isImageFile = isImageFile;
 					$scope.chatbox.messages.push(msg);
 					$scope.$apply();
 					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
@@ -18981,7 +18988,7 @@
 
 		$scope.uploadFiles = function (files) {
 	        $scope.files = files;
-	        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
+	        var msg = $scope.getMessage();
 	        if (files && files.length) {
 	        	for (var i = 0; i < files.length; i++){
 
@@ -19029,19 +19036,7 @@
 				vm.isFileSelected = false;
 				vm.isMsg = true;
 				var dateString = formatAMPM(new Date());
-				var msg = {
-						emailFrom: $rootScope.userEmail
-						, userIDFrom: $rootScope.userID
-						, userNameFrom : $rootScope.userName
-						, userAvatarFrom : $rootScope.userAvatar
-						, emailTo: $scope.chatbox.user.email
-						, userIDTo: $scope.chatbox.user.userID
-						, msg : vm.chatMsg
-						, image_msg: undefined
-						, hasMsg : vm.isMsg 
-						, hasFile : vm.isFileSelected 
-						, msgTime : dateString 
-				};
+				var msg = $scope.getMessage();
 				socket.emit("send-message",msg, function(data){
 					//delivery report code goes here
 					if (data.success == true) {
@@ -33951,6 +33946,12 @@
 	internals.STS = {
 	    SUCCESS : 0,
 	    FAILURE : 1
+	};
+
+	internals.CHAT_MESSAGE_TYPE ={
+	  TEXT: 1,
+	  IMAGE:2,
+	  FILE: 3
 	};
 
 	internals.MSG = {

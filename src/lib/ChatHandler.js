@@ -15,6 +15,8 @@ var routineTime = 1;
 var online_users =[];
 var nickname = [];
 var ios = undefined;
+var ChatModel = require("../dbservices/Chat");
+var chatModel = new ChatModel();
 
 ChatHandler.addUser = function(user){
 	online_users[user.userID];
@@ -41,9 +43,11 @@ function processSendMsg(data){
 
 ChatHandler.sendImage = function(data,callback){
 	console.log("Chat service receive data " + data);
-	callback(processSendMsg(data));
-
-	// ios.sockets.emit('new message image', data);
+  var sendMsgResult = processSendMsg(data);
+  data.read = !sendMsgResult.offline;
+  chatModel.saveChat(data,function(){
+    callback(sendMsgResult);  
+  });
 }
 
 ChatHandler.init = function(server){
@@ -61,7 +65,6 @@ ChatHandler.init = function(server){
   			console.log("socket.io got one new user " + data.userID);
   			socket.username = data.username;
   			socket.userID = data.userID;
-  			socket.email = data.email;
   			socket.userAvatar = data.userAvatar;
   			online_users[data.userID] = socket;
   		}
@@ -69,8 +72,12 @@ ChatHandler.init = function(server){
 
   // sending new message
   socket.on('send-message', function(data, callback){
-  	console.log("receive message "+ JSON.stringify(data));
-  	callback(processSendMsg(data));
+  	console.log("receive message "+ JSON.stringify(data));    
+    var sendMsgResult = processSendMsg(data);
+    data.read = !sendMsgResult.offline;
+    chatModel.saveChat(data,function(){
+      callback(sendMsgResult);  
+    });
   });
   
   // disconnect user handling 

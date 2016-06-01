@@ -20,6 +20,11 @@
 				vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
 			}
 			vm.chatBoxes[data.userIDFrom].messages.push(data);
+
+			/*socket.emit("confirm read",msg, function(data){
+				console.log("mark message as read");				
+			});*/
+
 			$scope.$apply();
 			//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
 			$('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history')[0].scrollHeight);

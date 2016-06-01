@@ -15,19 +15,22 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 
 	console.log("chat visible is " + $scope.visible);
 
-	var sampleMsg = {
-			emailFrom: $rootScope.userEmail
-			, userIDFrom: $rootScope.userID
-			, userNameFrom : $rootScope.userName
-			, userAvatarFrom : $rootScope.userAvatar
-			, emailTo: $scope.chatbox.user.email
-			, userIDTo: $scope.chatbox.user.userID
-			, msg : vm.chatMsg
-			, file_msg: undefined
-			, hasMsg : vm.isMsg 
-			, hasFile : vm.isFileSelected 
-			, msgTime : formatAMPM(new Date()) 
-	};
+	$scope.getMessage = function(){
+		return {
+			fromUserID: $rootScope.userID
+			, toUserID: $scope.chatbox.user.userID
+			, toFullName: $scope.chatbox.user.name
+			, fromFullName: $rootScope.userName
+			, relatedToAdsID: undefined
+			, content : vm.chatMsg
+			, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
+			, timeStamp : undefined 
+			, type: "Chat"
+			, file: undefined
+		};
+	}
+
+	
 
 	
     vm.sendFile = function(file, isImageFile){
@@ -36,13 +39,13 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
         var dateString = formatAMPM(new Date());            
         var DWid = $rootScope.userName + "dwid" + Date.now();
 
-        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
-
-	    msg.hasFile = true;
-	    msg.hasMsg = false;
-	    msg.msg = undefined;
-	    msg.isImageFile = isImageFile;
-	    msg.file_msg = file;
+        var msg = $scope.getMessage();
+        if(isImageFile==true)
+        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
+        else
+        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+	    msg.content = undefined;
+	    msg.file = file;
         socket.emit('send-message',msg,function (data){      
         	console.log("sent image to " + $scope.chatbox.user.userID);
         	if (data.success == true) {
@@ -53,7 +56,6 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 				}
 				vm.chatMsg = "";
 				vm.setFocus = true;				
-				msg.isImageFile = isImageFile;
 				$scope.chatbox.messages.push(msg);
 				$scope.$apply();
 				$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
@@ -64,7 +66,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 
 	$scope.uploadFiles = function (files) {
         $scope.files = files;
-        var msg = (JSON.parse(JSON.stringify(sampleMsg)));
+        var msg = $scope.getMessage();
         if (files && files.length) {
         	for (var i = 0; i < files.length; i++){
 
@@ -112,19 +114,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 			vm.isFileSelected = false;
 			vm.isMsg = true;
 			var dateString = formatAMPM(new Date());
-			var msg = {
-					emailFrom: $rootScope.userEmail
-					, userIDFrom: $rootScope.userID
-					, userNameFrom : $rootScope.userName
-					, userAvatarFrom : $rootScope.userAvatar
-					, emailTo: $scope.chatbox.user.email
-					, userIDTo: $scope.chatbox.user.userID
-					, msg : vm.chatMsg
-					, image_msg: undefined
-					, hasMsg : vm.isMsg 
-					, hasFile : vm.isFileSelected 
-					, msgTime : dateString 
-			};
+			var msg = $scope.getMessage();
 			socket.emit("send-message",msg, function(data){
 				//delivery report code goes here
 				if (data.success == true) {

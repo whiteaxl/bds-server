@@ -4,6 +4,12 @@ internals.STS = {
     FAILURE : 1
 };
 
+internals.CHAT_MESSAGE_TYPE ={
+  TEXT: 1,
+  IMAGE:2,
+  FILE: 3
+};
+
 internals.MSG = {
     DIA_DIEM_NOTFOUND : "Địa điểm bạn tìm kiếm không tồn tại!",
     USER_EXISTS : "Người sử dụng đã tồn tại!",

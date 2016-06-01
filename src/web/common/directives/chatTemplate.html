@@ -26,26 +26,26 @@
 
 						<h5>{{msg.userNameFrom}}</h5>
 
-						<p>{{msg.msg}}</p>
+						<p>{{msg.content}}</p>
 
 					</div> 					
-					<div class="item" ng-show="msg.hasFile">
+					<div class="item" ng-show="msg.msgType != window.RewayConst.CHAT_MESSAGE_TYPE.TEXT">
 						<div>
                             <div ng-class="{'attachment-icon-right' : msg.ownMsg, 'attachment-icon-left' : !msg.ownMsg}">
-                            	<a href ng-click="openClickImage(msg)" ng-show="msg.showme" >
-                              		<img id="{{msg.dwid}}" width="50" height="50" ng-src="{{msg.dwimgsrc}}" alt="Open Image">
+                            	<a href ng-click="openClickImage(msg)" >
+                              		<img id="{{msg.file.dwid}}" width="50" height="50" ng-src="{{msg.file.dwimgsrc}}" alt="Open Image">
                               	</a> <!-- Open Icon -->
-                              	<a ng-href="{{msg.file_msg.serverfilename}}" data-lightbox="{{msg.dwid}}" data-title="{{msg.file_msg.filename}}" ng-hide="msg.showme">
-                                	<img  ng-if="msg.isImageFile" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" id="{{msg.dwid+1}}" width="90" height="70" ng-src="{{msg.file_msg.serverfilename}}" alt="Image File"> <!-- Image -->
-                                	<span ng-if="!msg.isImageFile">Document</span>
+                              	<a ng-href="{{msg.file.url}}" data-lightbox="{{msg.dwid}}" data-title="{{msg.file.name}}">
+                                	<img  ng-if="msg.msgType == window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" width="90" height="70" ng-src="{{msg.file.url}}" alt="Image File"> <!-- Image -->
+                                	<span ng-if="msg.msgType == window.RewayConst.CHAT_MESSAGE_TYPE.FILE">Document</span>
                               	</a>
                             </div>
                             <div ng-class="{'attachment-msg-right' : msg.ownMsg, 'attachment-msg-left' : !msg.ownMsg}" ng-hide="msg.showme">
-                                  <span class="decs-text"><b>File :</b> {{ msg.file_msg.filename}}</span>
-                                  <span class="decs-text"><b>Size :</b> {{msg.file_msg.size}}</span>
+                                  <span class="decs-text"><b>File :</b> {{ msg.file.name}}</span>
+                                  <span class="decs-text"><b>Size :</b> {{msg.file.size}}</span>
                                   <span class="decs-text">
-                                  <a id ="{{msg.dwid}}" class="decs-text" ng-show="!msg.ownMsg" download target="_self" href="{{msg.file_msg.serverfilename}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
-                                  <a id ="{{msg.dwid}}A" class="decs-text hidden-link" href="{{ msg.file_msg.serverfilename }}"  download="{{ msg.file_msg.serverfilename }}"></a>  
+                                  <a id ="{{msg.dwid}}" class="decs-text" ng-show="!msg.ownMsg" download target="_self" href="{{msg.file.url}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
+                                  <a id ="{{msg.dwid}}A" class="decs-text hidden-link" href="{{ msg.file.url }}"  download="{{ msg.file.url }}"></a>  
                                   </span>
                             </div>
                         </div>
