@@ -33,7 +33,7 @@
 						<div>
                             <div ng-class="{'attachment-icon-right' : msg.ownMsg, 'attachment-icon-left' : !msg.ownMsg}">
                             	<a href ng-click="openClickImage(msg)" >
-                              		<img id="{{msg.file.dwid}}" width="50" height="50" ng-src="{{msg.file.dwimgsrc}}" alt="Open Image">
+                              		<img id="{{msg.file.dwid}}" width="50" height="50" ng-src="{{msg.file.url}}" alt="Open Image">
                               	</a> <!-- Open Icon -->
                               	<a ng-href="{{msg.file.url}}" data-lightbox="{{msg.dwid}}" data-title="{{msg.file.name}}">
                                 	<img  ng-if="msg.msgType == window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" width="90" height="70" ng-src="{{msg.file.url}}" alt="Image File"> <!-- Image -->
