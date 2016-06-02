@@ -19,6 +19,8 @@
 				//someone just start chat with you need to popup the chat box for that user
 				vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
 			}
+			if(data.userIDFrom == $rootScope.userID)
+				data.ownMsg = true;
 			vm.chatBoxes[data.userIDFrom].messages.push(data);
 
 			/*socket.emit("confirm read",msg, function(data){
