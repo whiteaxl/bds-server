@@ -372,7 +372,7 @@ function searchAds(q, reply) {
 
     let polygon = q.polygon;
     let polygonCoords = null;
-    if (polygon) {
+    if (polygon && polygon.length > 2) {
       polygonCoords = polygon.map((e) => {
         return {latitude: e.lat, longitude: e.lon}
       });
@@ -383,7 +383,7 @@ function searchAds(q, reply) {
     };
 
     //polygon
-    if (polygon) {
+    if (polygon && polygon.length > 2) {
       let ret = geoUtil.getGeoBoxOfPolygon(polygonCoords);
       replyViewPort = ret.geoBox;
       center = ret.center;
