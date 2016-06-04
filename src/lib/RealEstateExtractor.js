@@ -282,6 +282,7 @@ class RealEstateExtractor {
 
 				if(ads.duAnID){
 					ads.duAnID  = "DA_" + (ads.duAnID).replace("/","");
+					ads.place.duAn = ads.duAnID;
 				}
 
 				if(ads.ngayDangTin){
