@@ -12,33 +12,33 @@ Joi = require('joi');
 var internals = {};
 
 const latLonModel = Joi.object({
-	lat: Joi.number(),
-	lon: Joi.number()
+  lat: Joi.number(),
+  lon: Joi.number()
 });
 
 const ListResultModel = Joi.object({
-	adsID: Joi.string(),
-	gia: Joi.number().allow(null),
-	giaFmt: Joi.string().allow(null),
-	dienTich: Joi.number().allow(null),
-	dienTichFmt: Joi.string().allow(null),
-	soPhongNgu: Joi.number().allow(null),
-	soPhongNguFmt: Joi.string().allow(null),
-	soTang: Joi.number().allow(null),
-	soTangFmt: Joi.string().allow(null),
-	image: Joi.object({
-		cover: Joi.string(),
-		images: Joi.array().items(Joi.string())
-	}),
-	diaChi: Joi.string().allow(null),
-	ngayDangTin: Joi.string().allow(null),
-	giaM2: Joi.number().allow(null),
-	loaiNhaDat: Joi.number().allow(null),
-	loaiTin: Joi.number().integer().allow(null),
-	huongNha: Joi.number().integer().allow(null),
-	chiTiet: Joi.string().allow(null),
-	soNgayDaDangTin: Joi.number().allow(null),
-	soPhongTam: Joi.number().allow(null),
+  adsID: Joi.string(),
+  gia: Joi.number().allow(null),
+  giaFmt: Joi.string().allow(null),
+  dienTich: Joi.number().allow(null),
+  dienTichFmt: Joi.string().allow(null),
+  soPhongNgu: Joi.number().allow(null),
+  soPhongNguFmt: Joi.string().allow(null),
+  soTang: Joi.number().allow(null),
+  soTangFmt: Joi.string().allow(null),
+  image: Joi.object({
+    cover: Joi.string(),
+    images: Joi.array().items(Joi.string())
+  }),
+  diaChi: Joi.string().allow(null),
+  ngayDangTin: Joi.string().allow(null),
+  giaM2: Joi.number().allow(null),
+  loaiNhaDat: Joi.number().allow(null),
+  loaiTin: Joi.number().integer().allow(null),
+  huongNha: Joi.number().integer().allow(null),
+  chiTiet: Joi.string().allow(null),
+  soNgayDaDangTin: Joi.number().allow(null),
+  soPhongTam: Joi.number().allow(null),
 
   //should not have?
   area_raw: Joi.any(),
@@ -54,69 +54,69 @@ const ListResultModel = Joi.object({
 });
 
 const DetailResultModel = Joi.object({
-	adsID: Joi.string(),
-	area_raw: Joi.string().allow(null),
-	dangBoi: Joi.object({
-		email: Joi.string().allow(null),
-		name: Joi.string().allow(null),
-		phone: Joi.string().allow(null),
-		userID: Joi.string().allow(null)
-	}),
-	gia: Joi.number(),
-	giaFmt: Joi.string(),
-	dienTich: Joi.number(),
-	dienTichFmt: Joi.string(),
-	soPhongNgu: Joi.number(),
-	soPhongNguFmt: Joi.string(),
-	soTang: Joi.number(),
-	soTangFmt: Joi.string(),
-	image: Joi.object({
-		cover: Joi.string(),
-		images: Joi.array().items(Joi.string()),
-		images_small: Joi.array().items(Joi.string()),
-	}),
-	diaChi: Joi.string(),
-	ngayDangTin: Joi.string(),
-	giaM2: Joi.number(),
-	loaiNhaDat: Joi.number(),
-	loaiTin: Joi.number().integer(),
-	huongNha: Joi.number().integer(),
-	chiTiet: Joi.string(),
-	soNgayDaDangTin: Joi.number().description('So ngay da dang tin'),
-	place: Joi.object({
-		duAn: Joi.string(),
-		diaChi: Joi.string(),
-		diaChinh: Joi.object(),
-		geo: latLonModel,
-		diaChinhFullName: Joi.string(),
-		duAnFullName: Joi.any()
-	}),
-	maSo: Joi.number(),
-	price_raw: Joi.string(),
-	ten_loaiNhaDat: Joi.string(),
-	ten_loaiTin: Joi.string(),
-	title: Joi.string(),
-	soNgayDaDangTinFmt: Joi.string(),
-	ngayDangTinFmt: Joi.string(),
-	luotXem: Joi.number(),
-	moiGioiTuongTu: Joi.array(),
-	loaiTinFmt: Joi.string(),
-	loaiNhaDatFmt: Joi.string(),
-	type: Joi.string(),
-	soPhongTam: Joi.number(),
-	soPhongTamFmt: Joi.string(),
+  adsID: Joi.string(),
+  area_raw: Joi.string().allow(null),
+  dangBoi: Joi.object({
+    email: Joi.string().allow(null),
+    name: Joi.string().allow(null),
+    phone: Joi.string().allow(null),
+    userID: Joi.string().allow(null)
+  }),
+  gia: Joi.number(),
+  giaFmt: Joi.string(),
+  dienTich: Joi.number(),
+  dienTichFmt: Joi.string(),
+  soPhongNgu: Joi.number(),
+  soPhongNguFmt: Joi.string(),
+  soTang: Joi.number(),
+  soTangFmt: Joi.string(),
+  image: Joi.object({
+    cover: Joi.string(),
+    images: Joi.array().items(Joi.string()),
+    images_small: Joi.array().items(Joi.string()),
+  }),
+  diaChi: Joi.string(),
+  ngayDangTin: Joi.string(),
+  giaM2: Joi.number(),
+  loaiNhaDat: Joi.number(),
+  loaiTin: Joi.number().integer(),
+  huongNha: Joi.number().integer(),
+  chiTiet: Joi.string(),
+  soNgayDaDangTin: Joi.number().description('So ngay da dang tin'),
+  place: Joi.object({
+    duAn: Joi.string(),
+    diaChi: Joi.string(),
+    diaChinh: Joi.object(),
+    geo: latLonModel,
+    diaChinhFullName: Joi.string(),
+    duAnFullName: Joi.any()
+  }),
+  maSo: Joi.number(),
+  price_raw: Joi.string(),
+  ten_loaiNhaDat: Joi.string(),
+  ten_loaiTin: Joi.string(),
+  title: Joi.string(),
+  soNgayDaDangTinFmt: Joi.string(),
+  ngayDangTinFmt: Joi.string(),
+  luotXem: Joi.number(),
+  moiGioiTuongTu: Joi.array(),
+  loaiTinFmt: Joi.string(),
+  loaiNhaDatFmt: Joi.string(),
+  type: Joi.string(),
+  soPhongTam: Joi.number(),
+  soPhongTamFmt: Joi.string(),
 });
 
 
 internals.endpoints = [
-{
-	method: 'POST',
-	path: '/api/find',
-	handler: findHandler.search,
-	config: {
-		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
-		tags: ['api'],
-		notes: 'Theo 4 loai: geoBox, polygon, diaDiem(banKinh), diaChinh(tinh/huyen/xa)',
+  {
+    method: 'POST',
+    path: '/api/find',
+    handler: findHandler.search,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api'],
+      notes: 'Theo 4 loai: geoBox, polygon, diaDiem(banKinh), diaChinh(tinh/huyen/xa)',
       /*
        validate: {
        payload: {
@@ -172,168 +172,168 @@ internals.endpoints = [
        }
        }
        */
-   }
-},
-{
-	method: 'POST',
-	path: '/api/findRecent',
-	handler: Handlers.findRencentAds,
-	config: {
-		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/findBelowPrice',
-	handler: Handlers.findBelowPriceAds,
-	config: {
-		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/findGooglePlaceById',
-	handler: Handlers.findGooglePlaceById,
-	config: {
-		description: 'Get google place detail by id.',
-		notes: 'api',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/detail',
-	handler: Handlers.detail,
-	config: {
-		description: 'Chi tiet cua mot bai dang',
-		tags: ['api'],
-      /*
-       response: {
-       schema: Joi.object({
-       status: Joi.number(),
-       ads: DetailResultModel
-       //ads: Joi.object()
-       })
-       },
-       validate_backup: {
-       payload: {
-       adsID: Joi.string().default('Ads_bds_2884742')
-       }
-       }
-       */
-   }
-},
-{
-	method: 'POST',
-	path: '/api/count',
-	handler: findHandler.count,
-	config: {
-		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/saveSearch',
-	handler: Handlers.saveSearch,
-	config: {
-		description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
-		tags: ['api'],
-		auth: 'jwt'
-	}
-},
-{
-	method: 'POST',
-	path: '/api/checkUserExist',
-	handler: loginHandler.checkUserExist,
-	config: {
-		description: 'Kiem tra xem user da ton tai chua',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/login',
-	handler: loginHandler.login,
-	config: {
-		description: 'login',
-		tags: ['api']
-	}
-},
-{
-	method: 'POST',
-	path: '/api/signup',
-	handler: loginHandler.signup,
-	config: {
-		description: 'login',
-		tags: ['api']
-	}
-},
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findRecent',
+    handler: Handlers.findRencentAds,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findBelowPrice',
+    handler: Handlers.findBelowPriceAds,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findGooglePlaceById',
+    handler: Handlers.findGooglePlaceById,
+    config: {
+      description: 'Get google place detail by id.',
+      notes: 'api',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/detail',
+    handler: Handlers.detail,
+    config: {
+      description: 'Chi tiet cua mot bai dang',
+      tags: ['api'],
 
-{
-	method: 'POST',
-	path: '/api/user/requestVerifyCode',
-	handler: userHandlers.requestVerifyCode,
-	config: {
-		description: 'Lay verifyCode de dang ky theo sdt (SMS)',
-		tags: ['api'],
-		validate: {
-			payload: {
-				phone: Joi.string()
-			}
-		},
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          ads: DetailResultModel
+          //ads: Joi.object()
+        })
+      },
+      validate: {
+        payload: {
+          adsID: Joi.string().default('Ads_bds_2884742')
+        }
+      }
 
-		response: {
-			schema: Joi.object({
-				status: Joi.number(),
-				verifyCode: Joi.number().min(0).max(9999),
-				msg : Joi.string()
-			})
-		}
-	}
-},
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/count',
+    handler: findHandler.count,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/saveSearch',
+    handler: Handlers.saveSearch,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/checkUserExist',
+    handler: loginHandler.checkUserExist,
+    config: {
+      description: 'Kiem tra xem user da ton tai chua',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/login',
+    handler: loginHandler.login,
+    config: {
+      description: 'login',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/signup',
+    handler: loginHandler.signup,
+    config: {
+      description: 'login',
+      tags: ['api']
+    }
+  },
 
-{
-	method: 'POST',
-	path: '/api/user/registerUser',
-	handler: userHandlers.registerUser,
-	config: {
-		description: 'Dang ky user: tao tren syncGateway',
-		tags: ['api'],
-		validate: {
-			payload: {
-				phone: Joi.string(),
-				email: Joi.string(),
-				matKhau: Joi.string().required(),
-				fullName: Joi.string().required()
-			}
-		},
+  {
+    method: 'POST',
+    path: '/api/user/requestVerifyCode',
+    handler: userHandlers.requestVerifyCode,
+    config: {
+      description: 'Lay verifyCode de dang ky theo sdt (SMS)',
+      tags: ['api'],
+      validate: {
+        payload: {
+          phone: Joi.string()
+        }
+      },
 
-		response: {
-			schema: Joi.object({
-				status: Joi.number(),
-				res: Joi.object(),
-				msg : Joi.string()
-			})
-		}
-	}
-} ,
-{
-	method: 'POST',
-	path: '/api/upload',
-	handler: fileUploadHandler.uploadFiles,
-	config : {
-		description: 'login',
-		payload:{
-			maxBytes:209715200,
-			output:'stream',
-			parse: false
-		}, 
-		tags: ['api']
-	}
-}
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          verifyCode: Joi.number().min(0).max(9999),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
+
+  {
+    method: 'POST',
+    path: '/api/user/registerUser',
+    handler: userHandlers.registerUser,
+    config: {
+      description: 'Dang ky user: tao tren syncGateway',
+      tags: ['api'],
+      validate: {
+        payload: {
+          phone: Joi.string(),
+          email: Joi.string(),
+          matKhau: Joi.string().required(),
+          fullName: Joi.string().required()
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          res: Joi.object(),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/upload',
+    handler: fileUploadHandler.uploadFiles,
+    config: {
+      description: 'login',
+      payload: {
+        maxBytes: 209715200,
+        output: 'stream',
+        parse: false
+      },
+      tags: ['api']
+    }
+  }
 ];
 
 module.exports = internals;
