@@ -7,7 +7,8 @@ internals.STS = {
 internals.CHAT_MESSAGE_TYPE ={
   TEXT: 1,
   IMAGE:2,
-  FILE: 3
+  FILE: 3,
+  SYSTEM: 4
 };
 
 internals.MSG = {

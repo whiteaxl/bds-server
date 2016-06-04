@@ -20,6 +20,7 @@ var chatModel = new ChatModel();
 
 ChatHandler.addUser = function(user){
 	online_users[user.userID];
+  
 }
 
 ChatHandler.removeUser = function(user){
@@ -31,10 +32,10 @@ function processSendMsg(data){
   		success: true,
   		offline: false
   	}
-  	console.log("emit to user " + data.userIDTo);
-  	if (online_users[data.userIDTo]) {
-  		console.log("emit to onlin user " + data.userIDTo);
-  		online_users[data.userIDTo].emit('new message', data);
+  	console.log("emit to user " + data.toUserID);
+  	if (online_users[data.toUserID]) {
+  		console.log("emit to online user " + data.toUserID);
+  		online_users[data.toUserID].emit('new message', data);
   	}else{
   		sendMsgResult.offline = true;
   	}   
@@ -49,6 +50,7 @@ ChatHandler.sendImage = function(data,callback){
     callback(sendMsgResult);  
   });
 }
+
 
 ChatHandler.init = function(server){
 	var io = require('socket.io')(server.listener);
@@ -67,8 +69,26 @@ ChatHandler.init = function(server){
   			socket.userID = data.userID;
   			socket.userAvatar = data.userAvatar;
   			online_users[data.userID] = socket;
+        chatModel.getUnreadMessages(data,function(err,res){
+          if(!err)
+            online_users[data.userID].emit('unread-messages', res);
+        });
   		}
   	});
+    socket.on('read-messages', function(data, callback){
+      for (var i = 0, len = data.length; i < len; i++) {
+        var msg = data[i].default;
+        chatModel.confirmRead(msg,function(err, res) {
+          if (err) {
+            console.log("ERROR:" + err);
+            callback({sucess: false});
+          }else
+            callback({sucess: true});
+        });
+      }
+      callback({success: true});
+    });
+    
 
   // sending new message
   socket.on('send-message', function(data, callback){
@@ -97,6 +117,28 @@ ChatHandler.init = function(server){
     console.log(callback);
     callback({success: true});
   });
+
+  //get unread message for an user
+  socket.on('get-unread-message', function(data){
+    chatModel.getUnreadMessages(data,function(err,res){
+      if(!err)
+        ios.sockets.emit('unread-messages', res);    
+    });
+  });
+
+  //emit user start typing
+  socket.on('user-start-typing', function(data){
+    if(online_users[data.toUserID]){
+      online_users[data.toUserID].emit("user-start-typing",data);
+    }
+  });
+  //emit user stop typing
+  socket.on('user-stop-typing', function(data){
+    if(online_users[data.toUserID]){
+      online_users[data.toUserID].emit("user-stop-typing",data);
+    }
+  });
+
 
 });
 

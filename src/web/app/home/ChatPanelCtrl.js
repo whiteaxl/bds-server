@@ -6,22 +6,22 @@
 		vm.boxPositions = [];
 		vm.chatBoxes = [];
 
+		vm.isSameDate
+
+
 		/**
 		Handle in comming message
 		*/
 		socket.on("new message", function(data){
-			if(data.From == $rootScope.userID){
-				data.ownMsg = true;	
-			}else{
-				data.ownMsg = false;
-			}
-			if(vm.chatBoxes.hasOwnProperty(data.userIDFrom) == false){
+			if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == false){
 				//someone just start chat with you need to popup the chat box for that user
-				vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
+				vm.addNewChat({userID: data.fromUserID,name: data.fromFullName});
+				vm.chatBoxes[data.fromUserID].hidden == true;	
 			}
-			if(data.userIDFrom == $rootScope.userID)
-				data.ownMsg = true;
-			vm.chatBoxes[data.userIDFrom].messages.push(data);
+			
+			// vm.chatBoxes[data.fromUserID].messages.push(data);
+			data.date = new Date(data.date);
+			window.RewayClientUtils.addChatMessage(vm.chatBoxes[data.fromUserID],data);
 
 			/*socket.emit("confirm read",msg, function(data){
 				console.log("mark message as read");				
@@ -29,8 +29,38 @@
 
 			$scope.$apply();
 			//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
-			$('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history')[0].scrollHeight);
+			$('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 		});
+
+		socket.on("user-start-typing",function(data){
+			if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+				vm.chatBoxes[data.fromUserID].status = vm.chatBoxes[data.fromUserID].user.name + " is typing...";
+				$scope.$apply();
+			}
+		});
+
+		socket.on("user-stop-typing",function(data){
+			if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+				vm.chatBoxes[data.fromUserID].status = "";
+				$scope.$apply();
+			}
+		});
+
+		socket.on("unread-messages", function(data){
+			for (var i = 0, len = data.length; i < len; i++) {
+			  var msg = data[i].default;
+			  msg.date = new Date(msg.date);
+			  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName});
+			  vm.chatBoxes[msg.fromUserID].hidden = true;
+			  window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID],msg);
+			  console.log("msg["+i+"] "  + msg);
+			}
+			socket.emit("read-messages",data, function(res){
+				console.log("mark messages as read " + res);				
+			});
+		});
+
+		
 
 		vm.addNewChat = function(user){
 			if(vm.chatBoxes.hasOwnProperty(user.userID)){
@@ -41,6 +71,9 @@
 	        	vm.chatBoxes[user.userID] = {
 	        		user: user,
 	        		onlineClass: "online",
+	        		hidden: false,
+	        		ads: user.ads,
+	        		status: "",
 	        		position: rightPos,
 	        		messages: []
 	        	};

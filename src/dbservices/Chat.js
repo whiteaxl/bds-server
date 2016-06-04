@@ -57,11 +57,14 @@ class ChatModel {
         var chatID = "" + res.value;
 
         chat.type = "Chat";
-        chat.id = chatID;
+        chat.chatID = chatID;
+        var date = new Date();
+        // chat.date = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
+        chat.date = date;
         console.log("before upsert " + chat.id);
         //TODO set timestamp for chat
 
-        bucket.upsert(chat.id, chat, function (err, res) {
+        bucket.upsert(chat.chatID, chat, function (err, res) {
           if (err) {
             console.log("ERROR:" + err);
             callback({code:99, msg:err.toString()})
@@ -72,6 +75,28 @@ class ChatModel {
         });
       }
     });
+  }
+  getUnreadMessages(user,callback){
+	var sql = `select * from default where type='Chat' and read = false`;
+	sql = `${sql} AND toUserID='${user.userID}'`
+    var query = N1qlQuery.fromString(sql);
+
+    bucket.query(query, function (err, all) {
+      if (err) {
+          console.log('query failed'.red, err);
+          return;
+      }
+      console.log("number of ads:" + all.length);
+      if (!all)
+        all = [];
+      callback(err,all);
+    });  	
+  }
+
+  confirmRead(chat,callback){
+  	chat.read = true;
+  	console.log(chat);
+  	bucket.upsert(chat.chatID, chat, callback);
   }
 
 	

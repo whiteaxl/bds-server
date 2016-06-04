@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "93bab12d0c89096c1e36"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c54aa929cc1f6b71ab81"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -921,7 +921,39 @@
 			},
 			getBoundsAtLatLngWithZoom: function(maps,map, center, zoom) {
 
+			},
+			isSameDate: function(date1,date2){
+				if(date1 && date2){
+					console.log(date1.getYear() + "/" + date1.getMonth() + "/" + date1.getDate());
+					console.log(date2.getYear() + "/" + date2.getMonth() + "/" + date2.getDate());
+					return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth()
+						&& date1.getDate() == date2.getDate();
+				}
+				return false;
+			},
+			addChatMessage: function(chatbox,msg){
+				var messages = chatbox.messages;
+				if(messages.length>0){
+					var lastDate = messages[messages.length-1].date;
+					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate,msg.date);
+				}else{
+					msg.showDate = true;
+					msg.date = new Date(msg.date);
+					msg.dateDisplay = this.formatDateWeekDay(msg.date);
+				}
+				messages.push(msg);
+			},
+			formatDateWeekDay: function(date){
+				if(date){
+					var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+					var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+					var day = days[ date.getDay() ];
+					var month = months[ date.getMonth() ];
+					return day + " " + month + " " + date.getFullYear();
+				}
+				return "";
 			}
+
 
 		}
 	})(jQuery);
@@ -940,7 +972,7 @@
 	  });
 
 
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngAnimate'])
 	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -18548,10 +18580,14 @@
 				}
 			});	
 			vm.showChat = function(user){
+				if(!$rootScope.userID){
+					alert("Đăng nhập để chat");
+					return;
+				}
 				$scope.$bus.publish({
 	              channel: 'chat',
 	              topic: 'new user',
-	              data: user
+	              data: {userID: user.userID,name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
 		        });
 			};
 
@@ -18578,22 +18614,22 @@
 			vm.boxPositions = [];
 			vm.chatBoxes = [];
 
+			vm.isSameDate
+
+
 			/**
 			Handle in comming message
 			*/
 			socket.on("new message", function(data){
-				if(data.From == $rootScope.userID){
-					data.ownMsg = true;	
-				}else{
-					data.ownMsg = false;
-				}
-				if(vm.chatBoxes.hasOwnProperty(data.userIDFrom) == false){
+				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == false){
 					//someone just start chat with you need to popup the chat box for that user
-					vm.addNewChat({userID: data.userIDFrom,name: data.userNameFrom});
+					vm.addNewChat({userID: data.fromUserID,name: data.fromFullName});
+					vm.chatBoxes[data.fromUserID].hidden == true;	
 				}
-				if(data.userIDFrom == $rootScope.userID)
-					data.ownMsg = true;
-				vm.chatBoxes[data.userIDFrom].messages.push(data);
+				
+				// vm.chatBoxes[data.fromUserID].messages.push(data);
+				data.date = new Date(data.date);
+				window.RewayClientUtils.addChatMessage(vm.chatBoxes[data.fromUserID],data);
 
 				/*socket.emit("confirm read",msg, function(data){
 					console.log("mark message as read");				
@@ -18601,8 +18637,38 @@
 
 				$scope.$apply();
 				//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
-				$('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.userIDFrom].position + '_chat-history')[0].scrollHeight);
+				$('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 			});
+
+			socket.on("user-start-typing",function(data){
+				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+					vm.chatBoxes[data.fromUserID].status = vm.chatBoxes[data.fromUserID].user.name + " is typing...";
+					$scope.$apply();
+				}
+			});
+
+			socket.on("user-stop-typing",function(data){
+				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+					vm.chatBoxes[data.fromUserID].status = "";
+					$scope.$apply();
+				}
+			});
+
+			socket.on("unread-messages", function(data){
+				for (var i = 0, len = data.length; i < len; i++) {
+				  var msg = data[i].default;
+				  msg.date = new Date(msg.date);
+				  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName});
+				  vm.chatBoxes[msg.fromUserID].hidden = true;
+				  window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID],msg);
+				  console.log("msg["+i+"] "  + msg);
+				}
+				socket.emit("read-messages",data, function(res){
+					console.log("mark messages as read " + res);				
+				});
+			});
+
+			
 
 			vm.addNewChat = function(user){
 				if(vm.chatBoxes.hasOwnProperty(user.userID)){
@@ -18613,6 +18679,9 @@
 		        	vm.chatBoxes[user.userID] = {
 		        		user: user,
 		        		onlineClass: "online",
+		        		hidden: false,
+		        		ads: user.ads,
+		        		status: "",
 		        		position: rightPos,
 		        		messages: []
 		        	};
@@ -18802,6 +18871,9 @@
 
 	                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
 	                          console.log("register socket user " + $rootScope.userName);
+	                          
+
+	                          
 	                        });
 	                        $('#box-login').hide();
 	                      }else{
@@ -18813,7 +18885,7 @@
 	                      $localStorage.relandToken = res.data.token;
 	                      $rootScope.userName = res.data.userName;
 	                      vm.class = "has-sub";
-	                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+	                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
 	                          console.log("register socket user " + $rootScope.userName);
 	                      });
 	                      $('#box-login').hide();
@@ -18913,7 +18985,18 @@
 	        templateUrl: "/web/common/directives/chatTemplate.html",
 	        replace: 'true',
 	        controller: 'ChatCtrl',
-	        controllerAs: "chat"
+	        controllerAs: "chat",
+	        link: function(scope, elm, attrs){
+	            console.log("after render");
+	            /*$timeout(function() {
+	                //alert(scope.chatbox.hidden);
+	                if(scope.chatbox.hidden){
+	                    angular.element("#"+scope.chatbox.position+"-chat-header").closest("div").find('.chat').slideToggle(300, 'swing');
+	                    angular.element("#"+scope.chatbox.position+"-chat-header").closest("div").find('.chat-message-counter').slideToggle(300, 'swing');    
+	                }
+	            }, 0);*/
+	            //alert('ssss');
+	        }
 	    };
 	    return def;
 	}]);
@@ -18932,12 +19015,30 @@
 		vm.chatMsg = "";
 		vm.users = [];
 		vm.messeges = [];
-		vm.status_message = "";
+		
 		var count = Object.keys($rootScope.chatBoxes).length-1;
 		vm.rightPos = (24 + Math.min(2,count)*300) + "px";
 		//vm.user = chatBoxes[$scope.useremail];
 
 		console.log("chat visible is " + $scope.visible);
+		vm.typing = false;
+
+
+
+		$scope.chatKeypress = function(event){
+			var keyCode  = event.keyCode;
+			if(vm.typing == false){
+				socket.emit('user-start-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+					console.log("emit start typing to " + $scope.chatbox.user.userID);
+				});   
+			}
+		}
+		$scope.chatBlur = function(event){
+			socket.emit('user-stop-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+				console.log("emit stop typing to " + $scope.chatbox.user.userID);
+			});   
+		}
+
 
 		$scope.getMessage = function(){
 			return {
@@ -18945,10 +19046,11 @@
 				, toUserID: $scope.chatbox.user.userID
 				, toFullName: $scope.chatbox.user.name
 				, fromFullName: $rootScope.userName
-				, relatedToAdsID: undefined
+				, relatedToAds: $scope.chatbox.ads
 				, content : vm.chatMsg
 				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
-				, timeStamp : undefined 
+				, timeStamp : formatAMPM(new Date()) 
+				, date: new Date()
 				, type: "Chat"
 				, file: undefined
 			};
@@ -18974,13 +19076,16 @@
 	        	console.log("sent image to " + $scope.chatbox.user.userID);
 	        	if (data.success == true) {
 					if(data.offline==true){
-						vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+						$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 						$scope.chatbox.onlineClass = "offline";
 						//console.log("TODO: this person is offline he will receive the message next time he online");
 					}
 					vm.chatMsg = "";
-					vm.setFocus = true;				
-					$scope.chatbox.messages.push(msg);
+					vm.setFocus = true;		
+
+					msg.timeStamp = dateString;
+					// $scope.chatbox.messages.push(msg);
+					window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
 					$scope.$apply();
 					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 				}
@@ -19043,13 +19148,15 @@
 					//delivery report code goes here
 					if (data.success == true) {
 						if(data.offline==true){
-							vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+							$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 							$scope.chatbox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
 						vm.chatMsg = "";
 						vm.setFocus = true;				
-						$scope.chatbox.messages.push(msg);
+						msg.timeStamp = dateString;
+						// $scope.chatbox.messages.push(msg);
+						window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
 						$scope.$apply();
 						$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 					}
@@ -19062,8 +19169,9 @@
 
 		
 	    vm.toggleChat = function(event){
-	    	$(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
-	    	$(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+	    	angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
+	    	angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+	    	//$scope.chatbox.hidden = !$scope.chatbox.hidden;
 		}
 	    vm.closeChat = function(event){
 	    	$(event.target).parent().parent().parent().remove();
@@ -19092,7 +19200,6 @@
 				}
 			}
 	    }
-
 	})
 
 
@@ -33953,7 +34060,8 @@
 	internals.CHAT_MESSAGE_TYPE ={
 	  TEXT: 1,
 	  IMAGE:2,
-	  FILE: 3
+	  FILE: 3,
+	  SYSTEM: 4
 	};
 
 	internals.MSG = {

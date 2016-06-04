@@ -62,6 +62,9 @@ angular.module('bds')
 
                         socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.userName);
+                          
+
+                          
                         });
                         $('#box-login').hide();
                       }else{
@@ -73,7 +76,7 @@ angular.module('bds')
                       $localStorage.relandToken = res.data.token;
                       $rootScope.userName = res.data.userName;
                       vm.class = "has-sub";
-                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.userName);
                       });
                       $('#box-login').hide();

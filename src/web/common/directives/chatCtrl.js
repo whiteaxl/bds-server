@@ -8,12 +8,30 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	vm.chatMsg = "";
 	vm.users = [];
 	vm.messeges = [];
-	vm.status_message = "";
+	
 	var count = Object.keys($rootScope.chatBoxes).length-1;
 	vm.rightPos = (24 + Math.min(2,count)*300) + "px";
 	//vm.user = chatBoxes[$scope.useremail];
 
 	console.log("chat visible is " + $scope.visible);
+	vm.typing = false;
+
+
+
+	$scope.chatKeypress = function(event){
+		var keyCode  = event.keyCode;
+		if(vm.typing == false){
+			socket.emit('user-start-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+				console.log("emit start typing to " + $scope.chatbox.user.userID);
+			});   
+		}
+	}
+	$scope.chatBlur = function(event){
+		socket.emit('user-stop-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+			console.log("emit stop typing to " + $scope.chatbox.user.userID);
+		});   
+	}
+
 
 	$scope.getMessage = function(){
 		return {
@@ -21,10 +39,11 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 			, toUserID: $scope.chatbox.user.userID
 			, toFullName: $scope.chatbox.user.name
 			, fromFullName: $rootScope.userName
-			, relatedToAdsID: undefined
+			, relatedToAds: $scope.chatbox.ads
 			, content : vm.chatMsg
 			, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
-			, timeStamp : undefined 
+			, timeStamp : formatAMPM(new Date()) 
+			, date: new Date()
 			, type: "Chat"
 			, file: undefined
 		};
@@ -50,13 +69,16 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
         	console.log("sent image to " + $scope.chatbox.user.userID);
         	if (data.success == true) {
 				if(data.offline==true){
-					vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+					$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 					$scope.chatbox.onlineClass = "offline";
 					//console.log("TODO: this person is offline he will receive the message next time he online");
 				}
 				vm.chatMsg = "";
-				vm.setFocus = true;				
-				$scope.chatbox.messages.push(msg);
+				vm.setFocus = true;		
+
+				msg.timeStamp = dateString;
+				// $scope.chatbox.messages.push(msg);
+				window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
 				$scope.$apply();
 				$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 			}
@@ -119,13 +141,15 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 				//delivery report code goes here
 				if (data.success == true) {
 					if(data.offline==true){
-						vm.status_message = window.RewayConst.MSG.USER_OFFLINE;
+						$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 						$scope.chatbox.onlineClass = "offline";
 						//console.log("TODO: this person is offline he will receive the message next time he online");
 					}
 					vm.chatMsg = "";
 					vm.setFocus = true;				
-					$scope.chatbox.messages.push(msg);
+					msg.timeStamp = dateString;
+					// $scope.chatbox.messages.push(msg);
+					window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
 					$scope.$apply();
 					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 				}
@@ -138,8 +162,9 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 
 	
     vm.toggleChat = function(event){
-    	$(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
-    	$(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+    	angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
+    	angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+    	//$scope.chatbox.hidden = !$scope.chatbox.hidden;
 	}
     vm.closeChat = function(event){
     	$(event.target).parent().parent().parent().remove();
@@ -168,5 +193,4 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 			}
 		}
     }
-
 })

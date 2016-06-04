@@ -1,13 +1,13 @@
 <div id="{{chatbox.user.userID}}">
 	<div id="live-chat" ng-class="chatbox.onlineClass" style='right: {{chatbox.position + "px"}}'>
 		
-		<header class="clearfix" ng-click="chat.toggleChat($event);">
+		<header class="clearfix" id="{{chatbox.position}}-chat-header" ng-click="chat.toggleChat($event);">
 			
 			<a href="#" class="chat-close" ng-click="chat.closeChat($event);">x</a>
 
 			<h4 >{{chatbox.user.name}}</h4>
 
-			<span class="chat-message-counter">3</span>
+			<span style="display: none;" class="chat-message-counter">3</span>
 
 		</header>
 
@@ -15,32 +15,32 @@
 			
 			<div class="chat-history" id="{{chatbox.position}}_chat-history">
 				
-
 				<div class="chat-message clearfix" ng-repeat="msg in chatbox.messages track by $index" >
+					<div ng-if="msg.showDate" class="chat-message-content clearfix">
+						{{msg.dateDisplay}}
+					</div>			
 					
 					<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
 
-					<div ng-hide="hasFile" class="chat-message-content clearfix">
+					<div  class="chat-message-content clearfix">
 						
-						<span class="chat-time">{{msg.msgTime}}</span>
+						<span class="chat-time">{{msg.timeStamp}}</span>
 
-						<h5>{{msg.userNameFrom}}</h5>
+						<h5>{{msg.fromFullName}}</h5>
 
-						<p>{{msg.content}}</p>
+						<p ng-if="msg.msgType==1">{{msg.content}}</p>
 
-					</div> 					
-					<div class="item" ng-show="msg.msgType != window.RewayConst.CHAT_MESSAGE_TYPE.TEXT">
+					</div> 		
+
+					<div class="item" ng-show="msg.msgType==2 || msg.msgType==3">
 						<div>
                             <div ng-class="{'attachment-icon-right' : msg.ownMsg, 'attachment-icon-left' : !msg.ownMsg}">
-                            	<a href ng-click="openClickImage(msg)" >
-                              		<img id="{{msg.file.dwid}}" width="50" height="50" ng-src="{{msg.file.url}}" alt="Open Image">
-                              	</a> <!-- Open Icon -->
-                              	<a ng-href="{{msg.file.url}}" data-lightbox="{{msg.dwid}}" data-title="{{msg.file.name}}">
-                                	<img  ng-if="msg.msgType == window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" width="90" height="70" ng-src="{{msg.file.url}}" alt="Image File"> <!-- Image -->
-                                	<span ng-if="msg.msgType == window.RewayConst.CHAT_MESSAGE_TYPE.FILE">Document</span>
+                              	<a ng-href="{{msg.file.url}}" data-title="{{msg.file.name}}">
+                                	<img  ng-if="msg.msgType==2" ng-class="{'multiple-borders-white' : msg.ownMsg,'multiple-borders-black' : !msg.ownMsg}" width="90" height="70" ng-src="{{msg.file.url}}" alt="Image File"> <!-- Image -->
+                                	<span ng-if="msg.msgType==3">Document</span>
                               	</a>
                             </div>
-                            <div ng-class="{'attachment-msg-right' : msg.ownMsg, 'attachment-msg-left' : !msg.ownMsg}" ng-hide="msg.showme">
+                            <div ng-class="{'attachment-msg-right' : msg.ownMsg, 'attachment-msg-left' : !msg.ownMsg}" ng-if="msg.msgType==2 || msg.msgType==3">
                                   <span class="decs-text"><b>File :</b> {{ msg.file.name}}</span>
                                   <span class="decs-text"><b>Size :</b> {{msg.file.size}}</span>
                                   <span class="decs-text">
@@ -59,10 +59,10 @@
 
 			</div> <!-- end chat-history -->
 
-			<p class="chat-feedback">{{chat.status_message}}</p>
+			<p class="chat-feedback">{{chatbox.status}}</p>
 
 			<form method="post" ng-submit="chat.sendMsg();">
-				<input type="text" ng-model="chat.chatMsg" placeholder="Type your message…">
+				<input type="text" ng-model="chat.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Type your message…">
 				<div class="chat-file-upload" ngf-select="uploadFiles($files)" multiple accept="image/*" >
 					<img src="asset/img/chat-attach-icon.png" style="width: 32px; height: 32px;"></img>
 				</div>
