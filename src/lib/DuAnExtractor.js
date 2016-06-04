@@ -46,8 +46,8 @@ class DuAnExtractor {
 		.find('.list2item2')
 		.follow('.largefont a@href')
 		.set({
-		    'name'			:'.prjinfo ul > li > h1',
-		    'diachi'		:'.prjinfo ul > li[2]',
+		    'name'			:'.prjinfo > h1',
+		    'diachi'		:'.prjinfo > div[1]',
 			'hdLat'		:'.container-default input[id="hdLat"]@value',
 			'hdLong'	:'.container-default input[id="hdLong"]@value'
 		})
