@@ -200,7 +200,7 @@
                                             <i class="fa fa-star"></i> (0)
                                         </div>
                                         <div class="sales">4 Recent Sales {{dt.ads.dangBoi.email}}
-                                            <a href="#" ng-click="dt.showChat(dt.ads.dangBoi);" >
+                                            <a href="#" ng-if="dt.ads.dangBoi.userID" ng-click="dt.showChat(dt.ads.dangBoi);" >
                                                 <img src="asset/img/small-chat-icon.png" style="width: auto;"></img>
                                             </a>
                                         </div>

@@ -258,7 +258,6 @@ internals.detail = function(req, reply) {
             var ads = result.value;
 
             ads = _transformDetailAds(ads);
-
             reply({
                 ads: ads,
                 status : constant.STS.SUCCESS
