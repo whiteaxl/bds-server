@@ -11,5 +11,5 @@ var bdsEx = new RealEstateExtractor();
 }
 
 
-extractRealEstateWithNgayDangTin("http://batdongsan.com.vn/nha-dat-ban", 1, 1,"20160604");
+extractRealEstateWithNgayDangTin("http://batdongsan.com.vn/ban-can-ho-chung-cu", 1, 1,"20160604");
 

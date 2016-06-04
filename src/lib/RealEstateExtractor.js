@@ -235,7 +235,7 @@ class RealEstateExtractor {
 					chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
 					hdLat : Number(listing.hdLat),
 					hdLong : Number(listing.hdLong),
-					duAnID  : "DA_" + (listing.duAnID).substring(1)
+					duAnID  : listing.duAnID
 				};
 
 				//var {detailLefts, detailRights, custLefts, custRights} = listing;
@@ -279,6 +279,10 @@ class RealEstateExtractor {
 				setHuongNha(ads, url); //base on url
 
 				ads.adsID = "Ads_bds_" + ads.maSo;
+
+				if(ads.duAnID){
+					ads.duAnID  = "DA_" + (ads.duAnID).replace("/","");
+				}
 
 				if(ads.ngayDangTin){
 					var ngayDang = ads.ngayDangTin;
