@@ -55,7 +55,7 @@ class DuAnExtractor {
 			let adduan = {
 				name:  duan.name,
 				nameKhongDau:  util.locDau(duan.name),
-				diachi: util.removeAllHtmlTagAndReplaceOneString(duan.diachi,"Địa chỉ:"),
+				diaChi: util.removeAllHtmlTagAndReplaceOneString(duan.diachi,"Địa chỉ:"),
 				geo:{
 					lat: Number(duan.hdLat),
 					lon: Number(duan.hdLong)
