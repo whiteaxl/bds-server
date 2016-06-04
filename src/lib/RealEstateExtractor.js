@@ -276,12 +276,11 @@ class RealEstateExtractor {
 
 				setHuongNha(ads, url); //base on url
 
+				ads.adsID = "Ads_bds_" + ads.maSo;
+
 				if(ads.ngayDangTin){
 					var ngayDang = ads.ngayDangTin;
-
 					ads.ngayDangTin = util.convertFormatDate(ngayDang);
-
-
 					if(ads.ngayDangTin == ngayDangTin){
 						console.log("Lay dung ngay dang tin");
 						console.log(ads);
