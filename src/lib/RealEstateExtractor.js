@@ -219,7 +219,8 @@ class RealEstateExtractor {
 				'detailLefts' 		:['#product-detail .left-detail .left'],
 				'chiTiet'	:'#product-detail .pm-content :source',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
-				'hdLong'	:'.container-default input[id="hdLong"]@value'
+				'hdLong'	:'.container-default input[id="hdLong"]@value',
+				'duAnID'      :'#product-detail .inproject > a@href'
 			})
 			.data(function(listing) {
 				let ads = {
@@ -233,7 +234,8 @@ class RealEstateExtractor {
 					loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
 					chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
 					hdLat : Number(listing.hdLat),
-					hdLong : Number(listing.hdLong)
+					hdLong : Number(listing.hdLong),
+					duAnID  : "DA_" + (listing.duAnID).substring(1)
 				};
 
 				//var {detailLefts, detailRights, custLefts, custRights} = listing;
