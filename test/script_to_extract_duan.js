@@ -12,6 +12,7 @@ duanEx.extractWithLimit(sub,from,to);
 
 
 extractDuan("http://batdongsan.com.vn/cao-oc-van-phong", 1, 14);
+//extractDuan("http://batdongsan.com.vn/cao-oc-van-phong", 1, 14);
 //extractDuan("http://batdongsan.com.vn/khu-can-ho", 1, 55);
 // extractDuan("http://batdongsan.com.vn/khu-do-thi-moi", 1, 23);
 // extractDuan("http://batdongsan.com.vn/khu-thuong-mai-dich-vu", 1, 4);
