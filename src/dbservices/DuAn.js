@@ -22,7 +22,7 @@ class DuAnModel {
 	upsert(duAnDto) {
 		this.initBucket();
 
-		bucket.upsert(duAnDto.id, duAnDto, function(err, res) {
+		bucket.upsert(duAnDto.duAnID, duAnDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			}

@@ -53,8 +53,8 @@ class DuAnExtractor {
 		})
 		.data(function(duan) {
 			let adduan = {
-				name:  duan.name,
-				nameKhongDau:  util.locDau(duan.name),
+				ten:  duan.name,
+				tenKhongDau:  util.locDau(duan.name),
 				diaChi: util.removeAllHtmlTagAndReplaceOneString(duan.diachi,"Địa chỉ:"),
 				geo:{
 					lat: Number(duan.hdLat),
@@ -63,7 +63,7 @@ class DuAnExtractor {
 
 			}
 
-			adduan.id = "DA_" + adduan.nameKhongDau;
+			adduan.duAnID = "DA_" + adduan.tenKhongDau;
 			adduan.type = "DuAn";
 			console.log("1111111");
 			console.log(adduan);
