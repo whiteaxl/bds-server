@@ -65,13 +65,10 @@ class DuAnExtractor {
 
 			adduan.id = "DA_" + adduan.nameKhongDau;
 			adduan.type = "DuAn";
-
 			console.log("1111111");
 			console.log(adduan);
 			duAn.upsert(adduan);
-
 			console.log("2222222");
-
 		})
 		
 		.log(console.log)
