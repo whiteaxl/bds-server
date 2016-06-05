@@ -13,6 +13,7 @@
 		vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 		vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
+		vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
 		$scope.center = "Hanoi Vietnam";
 		$scope.placeId = $state.params.place;
@@ -213,6 +214,12 @@
     		vm.goToPageSearch();
     		//vm.search();
 		}
+
+		$scope.goToPageNews = function(loaiTinTuc){
+			console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
+			$state.go('news');
+		}
+
 		vm.goToPageSearch = function(){
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 			//vm.search();

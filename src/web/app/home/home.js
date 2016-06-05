@@ -234,6 +234,8 @@
         data: {
             bodyClass: "page-detail"
         }
+      }).state('news', {
+          url: "/web/news.html"
       })
     });
   bds.factory('socket', function (socketFactory) {

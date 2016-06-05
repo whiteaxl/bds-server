@@ -103,6 +103,17 @@ danhMuc.LoaiTin = {
     1  : "Cho Thuê"
 };
 
+danhMuc.LoaiTinTuc = [
+    { value: "1", lable: "Tin thị trường" },
+    { value: "2", lable: "Phân tích - Nhận định" },
+    { value: "3", lable: "Chính sách - Quản lý" },
+    { value: "4", lable: "Thông tin quy hoạch" },
+    { value: "6", lable: "BĐS thế giới" },
+    { value: "7", lable: "Tài chính - Chứng khoán - BĐS" },
+    { value: "5", lable: "Tư vấn luật" },
+    { value: "8", lable: "Lời khuyên" }
+];
+
 danhMuc.LoaiNhaDatBan = {
     1  : "Bán căn hộ chung cư",
     2  : "Bán nhà riêng",
