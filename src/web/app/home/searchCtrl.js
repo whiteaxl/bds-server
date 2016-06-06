@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'SearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
 		var vm = this;
 		vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 		vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
@@ -163,7 +163,9 @@
 		};
 		// window.DesignCommon.adjustPage();
 		$scope.$on('$viewContentLoaded', function(){
-			window.DesignCommon.adjustPage();
+			$timeout(function() {
+				window.DesignCommon.adjustPage();
+			},0);
 			if($state.params){
 				//$scope.bodyClass = $state.current.data.bodyClass;
 				$rootScope.bodyClass = "page-search";
