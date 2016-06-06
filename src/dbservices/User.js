@@ -15,7 +15,7 @@ let log = require('../lib/logUtil');
 
 var request = require("request");
 
-var syncUserDB_URL = "http://localhost:4985/default/";
+var syncGatewayDB_URL = "http://localhost:4985/default/";
 
 
 class UserModel {
@@ -43,11 +43,16 @@ class UserModel {
     bucket.query(query, callback);
   }
 
-  createLoginOnSyncGateway(name, password, callback) {
-    var url = syncUserDB_URL + "_user/";
+  //userDto
+  createLoginOnSyncGateway(userDto, callback) {
+    var url = syncGatewayDB_URL + "_user/";
     request({
         url: url, method: "POST",
-        json: {name: name, password: password}
+        json: {
+          name: userDto.phone || userDto.email ,
+          password: userDto.matKhau,
+          admin_channels : ["chan_"+userDto.userID]
+        }
       },
       function (error, response, body) {
         if (error) {
@@ -65,15 +70,20 @@ class UserModel {
       });
   }
 
-  createUser(userDto, callback) {
-    var url = syncUserDB_URL ;
+  createDocViaSyncGateway(dto, callback) {
+    /*
+    if (!dto.timeStamp) {
+      dto.timeStamp = new Date().getTime();
+    }
+    */
+
     request({
-        url: url, method: "POST",
-        json: userDto
+        url: syncGatewayDB_URL, method: "POST",
+        json: dto
       },
       function (error, response, body) {
         if (error) {
-          log.error("Error when createUser", error, response);
+          log.error("Error when createDocViaSyncGateway", error, response);
           callback(error, body);
           return;
         }
@@ -81,14 +91,14 @@ class UserModel {
         if (response.statusCode === 200 || response.statusCode === 201) {
           callback(null, body);
         } else {
-          log.error("CreateUser - Have response but status fail:", response);
+          log.error("createDocViaSyncGateway - Have response but status fail:", response);
           callback({code:99, msg: response.body}, null);
         }
       });
   }
 
   updateUser(userDto, callback) {
-    var url = syncUserDB_URL ;
+    var url = syncGatewayDB_URL ;
     request({
       url: url+userDto.id,
       method: "GET",
@@ -148,44 +158,41 @@ class UserModel {
         } else {
           //create on sync gateway, only can have phone or email
           let loginName=userDto.phone||userDto.email;
-
-          this.createLoginOnSyncGateway(loginName, userDto.matKhau, (err, res) => {
-            //log.info("Callback createLoginOnSyncGateway:", err, res);
-
+          bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
             if (err) {
-              callback(err, null);
-              return;
-            }
+              callback(err, res);
+            } else {
+              var userID = "User_" + res.value;
+              //console.log("AAAAAAA", res);
+              userDto.type = "User";
+              userDto.userID = userID;
+              userDto._id = userID;
 
-            if (res && res.reason === "Already exists") {
-              callback({code:11, msg: constant.MSG.USER_EXISTS}, userDto);
-              return;
-            }
+              this.createLoginOnSyncGateway(userDto, (err, res) => {
+                //log.info("Callback createLoginOnSyncGateway:", err, res);
+                if (err) {
+                  callback(err, null);
+                  return;
+                }
 
-            bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
-              if (err) {
-                callback(err, res);
-              } else {
-                console.log(res);
+                if (res && res.reason === "Already exists") {
+                  callback({code: 11, msg: constant.MSG.USER_EXISTS}, userDto);
+                  return;
+                }
 
-                const userID = "User_" + res.value;
-
-                userDto.type = "User";
-                userDto.id = userID;
-                userDto._id = userID;
-
-                this.createUser(userDto, (err, res) => {
+                this.createDocViaSyncGateway(userDto, (err, res) => {
                   if (err) {
                     log.warn("Error in createUserAndLogin", err);
-                    callback({code:99, msg:err.toString()})
+                    callback({code: 99, msg: err.toString()})
                   } else {
                     log.info("user created:", res);
 
                     callback(null, userDto);
                   }
                 });
-              }
-            });
+
+              });
+            }
           });
         }
       }
@@ -291,7 +298,7 @@ class UserModel {
   }
 
   _deleteLoginFromSyncGateway(name, callback) {
-    var url = syncUserDB_URL + "_user/" + name;
+    var url = syncGatewayDB_URL + "_user/" + name;
     request({
         url: url, method: "DELETE"
       },
