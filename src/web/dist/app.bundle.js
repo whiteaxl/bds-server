@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c54aa929cc1f6b71ab81"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2018a2f6c4c0f7fb8059"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -972,7 +972,7 @@
 	  });
 
 
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngAnimate'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
 	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -18032,7 +18032,7 @@
 	(function() {
 		'use strict';
 		var controllerId = 'SearchCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
 			var vm = this;
 			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 			vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
@@ -18193,7 +18193,9 @@
 			};
 			// window.DesignCommon.adjustPage();
 			$scope.$on('$viewContentLoaded', function(){
-				window.DesignCommon.adjustPage();
+				$timeout(function() {
+					window.DesignCommon.adjustPage();
+				},0);
 				if($state.params){
 					//$scope.bodyClass = $state.current.data.bodyClass;
 					$rootScope.bodyClass = "page-search";
