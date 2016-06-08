@@ -1,7 +1,10 @@
 'use strict';
 
 var striptags = require('striptags');
+var moment = require('moment');
+var constant = require("../lib/constant");
 var util = {};
+
 
 util.locDau = function(str) {
     var a1 = locDauInt(str);
@@ -71,8 +74,8 @@ util.replaceBrToDowntoLine = function(inputString) {
     var kqReplace = util.replaceBrHtml(inputString);
     var kqReplaceA = striptags(kqReplace);
 
-     if (inputString ) {
-       var idx = kqReplaceA.indexOf(Timkiem);
+    if (inputString ) {
+        var idx = kqReplaceA.indexOf(Timkiem);
         if(idx >0)
             kq = kqReplaceA.substring(0,idx);
         else
@@ -93,9 +96,42 @@ util.popField = function (obj, field){
 
     return a;
 };
+// Input string is 25-05-2015 to Date type
+util.parseDate = function(dateStr) {
+    var parts = dateStr.split("-");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+};
 
+util.equalDate = function(date1Str,date2Str) {
+    var date1= this.parseDate(date1Str);
+    var date2= this.parseDate(date2Str);
+    if ((date1 <date2) ||(date1 >date2))
+        return false;
+    else
+        return true;
+
+};
+
+util.parseDate = function(dateStr) {
+    var parts = dateStr.split("-");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+};
+
+
+util.convertFormatDate= function(ngayDangTin) {
+    let bdsComDateFormat = 'DD-MM-YYYY';
+    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
+        let ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
+        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+    }
+
+};
+
+util.isEmail = function(str) {
+  return str && (str.indexOf('@') > -1);
+};
 
 module.exports = util;
 
 if (typeof(window) !== 'undefined')
-   window.RewayUtil = util;
+    window.RewayUtil = util;

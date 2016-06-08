@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'DetailCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,ChatService){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
 		var vm = this;
 		$scope.chat_visible = true;
 		$scope.$on('$viewContentLoaded', function(){
@@ -11,10 +11,14 @@
 			}
 		});	
 		vm.showChat = function(user){
+			if(!$rootScope.userID){
+				alert("Đăng nhập để chat");
+				return;
+			}
 			$scope.$bus.publish({
               channel: 'chat',
               topic: 'new user',
-              data: user
+              data: {userID: user.userID,name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
 	        });
 		};
 

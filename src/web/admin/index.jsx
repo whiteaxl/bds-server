@@ -25,6 +25,9 @@ export default class Component extends React.Component{
 
                 <li> <h2> LoadData </h2> </li>
                 <a href='/web/admin/loadData'> Load Data </a>
+
+                <li> <h2> Delete Mobile User </h2> </li>
+                <a href='/web/admin/deleteMobileUser'> Delete Mobile User </a>
             </Layout>
         );
     }

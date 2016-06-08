@@ -257,8 +257,7 @@ internals.detail = function(req, reply) {
 
             var ads = result.value;
 
-            _transformDetailAds(ads);
-
+            ads = _transformDetailAds(ads);
             reply({
                 ads: ads,
                 status : constant.STS.SUCCESS
@@ -268,7 +267,48 @@ internals.detail = function(req, reply) {
 };
 
 //to client format
-function _transformDetailAds(ads) {
+/*
+
+ */
+function _transformDetailAds(adsFromDb) {
+    let ads = {};
+    ads.adsID = adsFromDb.adsID;
+    ads.dangBoi = {};
+
+    ads.dangBoi.email = adsFromDb.dangBoi.email;
+    ads.dangBoi.name = adsFromDb.dangBoi.name;
+    ads.dangBoi.phone = adsFromDb.dangBoi.phone;
+    ads.dangBoi.userID = adsFromDb.dangBoi.userID;
+
+    ads.gia = Number(adsFromDb.gia);
+    ads.dienTich = adsFromDb.dienTich;
+    ads.soPhongNgu = adsFromDb.soPhongNgu;
+    ads.soTang = adsFromDb.soTang;
+
+    ads.image = {};
+    ads.image.cover = adsFromDb.image.cover;
+    ads.image.images = adsFromDb.image.images;
+
+    ads.diaChi = adsFromDb.diaChi;
+    ads.ngayDangTin = adsFromDb.ngayDangTin;
+    ads.giaM2 = adsFromDb.giaM2;
+    ads.loaiNhaDat = adsFromDb.loaiNhaDat;
+    ads.loaiTin = adsFromDb.loaiTin;
+    ads.huongNha = adsFromDb.huongNha;
+    ads.chiTiet = adsFromDb.chiTiet;
+
+    ads.place = {};
+    ads.place.duAn = adsFromDb.place.duAn;
+    ads.place.diaChi = adsFromDb.place.diaChi;
+    ads.place.diaChinh = adsFromDb.place.diaChinh;
+    ads.place.geo = adsFromDb.place.geo;
+    ads.place.diaChinhFullName = adsFromDb.place.diaChinhFullName;
+    ads.place.duAnFullName = adsFromDb.place.duAnFullName;
+
+    ads.giaM2 = adsFromDb.giaM2;
+    ads.type = adsFromDb.type;
+
+
     ads.loaiTinFmt = danhMuc.LoaiTin[ads.loaiTin];
     if (ads.loaiNhaDat) {
         ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatThue[ads.loaiNhaDat] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];
@@ -324,7 +364,7 @@ function _transformDetailAds(ads) {
 
     ads.moiGioiTuongTu = [mg1, mg2];
 
-
+    return ads;
 }
 
 internals.saveSearch = function(req, reply){

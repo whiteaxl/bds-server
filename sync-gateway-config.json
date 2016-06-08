@@ -4,44 +4,24 @@
     "default": {
       "server":"http://localhost:8091",
       "users": {
-        "moderator": {"password": "pass", "admin_channels": ["*"]},
-        "0982969669": {"password": "123"}
+        "moderator": {"password": "pass", "admin_channels": ["*"]}
       },
       "sync": `function(doc, oldDoc) {
 
-  var phone = null;
-  var email = null;
-
-  if (doc.type==="Ads" && doc.dangBoi) {
-    phone = doc.dangBoi.phone;
-    email = doc.dangBoi.email;
-  }
-
   if (doc.type==="User") {
-    phone = doc.phone;
-    email = doc.email;
+    var channelname = "chan_" + doc.userID;
+    channel(channelname);
+    access(doc.userID, channelname);
   }
 
   if (doc.type==="Chat") {
+    var channelname = "chan_" + doc.fromUserID;
+    channel(channelname);
+    access(doc.fromUserID, channelname);
 
-    var channelname = "chan_" + doc.fromUser
+    var channelname = "chan_" + doc.toUserID;
     channel(channelname);
-    access(doc.fromUser, channelname);
-
-    var channelname = "chan_" + doc.toUser
-    channel(channelname);
-    access(doc.toUser, channelname);
-  }
-
-  if (phone) {
-    var channelname = "chan_" + phone
-    channel(channelname);
-    access(phone, channelname);
-  }
-  if (email) {
-    var channelname = "chan_" + email
-    channel(channelname);
-    access(email, channelname);
+    access(doc.toUserID, channelname);
   }
 
       }`

@@ -10,7 +10,7 @@ var placeUtil = require('./placeUtil');
 var util = require("./utils");
 var DuAn = require("../dbservices/DuAn");
 var duAn = new DuAn();
-
+var striptags = require('striptags');
 class DuAnExtractor {
 	constructor() {
 	}
@@ -30,60 +30,73 @@ class DuAnExtractor {
 			this.extractOnePage(rootURL + '/p'+i, _done);
 		}
 
-		var myInterval = setInterval(function(){ 
-			 if (count==end) {
-			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
-			 	clearInterval(myInterval);
-			 	//handleDone();
-			 }
+		var myInterval = setInterval(function(){
+			if (count==end) {
+				console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
+				clearInterval(myInterval);
+				//handleDone();
+			}
 		}, 1000);
 	}
 
 
 	extractOnePage(url, handleDone) {
 		osmosis
-		.get(url)
-		.find('.list2item2')
-		.follow('.largefont a@href')
-		.set({
-		    'name'			:'.prjinfo ul > li > h1',
-		    'diachi'		:'.prjinfo ul > li[2]',
-			'hdLat'		:'.container-default input[id="hdLat"]@value',
-			'hdLong'	:'.container-default input[id="hdLong"]@value'
-		})
-		.data(function(duan) {
-			let adduan = {
-				name:  duan.name,
-				nameKhongDau:  util.locDau(duan.name),
-				diachi: util.removeAllHtmlTagAndReplaceOneString(duan.diachi,"Địa chỉ:"),
-				geo:{
-					lat: Number(duan.hdLat),
-					lon: Number(duan.hdLong)
-				},
+			.get(url)
+			.find('.list2item2')
+			.follow('.largefont a@href')
+			.set({
+				'name'			:'.prjinfo > h1',
+				'diachi'		:'.prjinfo > div[1]',
+				'hdLat'		:'.container-default input[id="hdLat"]@value',
+				'hdLong'	:'.container-default input[id="hdLong"]@value',
+				'duAnID'    :'#form1 :source'
+			})
+			.data(function(duan) {
+				let adduan = {
+					ten:  duan.name,
+					tenKhongDau:  util.locDau(duan.name),
+					diaChi: util.removeAllHtmlTagAndReplaceOneString(duan.diachi,"Địa chỉ:"),
+					geo:{
+						lat: Number(duan.hdLat),
+						lon: Number(duan.hdLong)
+					},
+					duAnID : duan.duAnID
+				}
 
-			}
 
-			adduan.id = "DA_" + adduan.nameKhongDau;
-			adduan.type = "DuAn";
+				if(adduan.duAnID){
+					var idx = (adduan.duAnID).indexOf("form1");
+					adduan.duAnID =  (adduan.duAnID).substring(1,idx-4);
+					var idx2 = (adduan.duAnID).lastIndexOf("/");
+					adduan.duAnID =  (adduan.duAnID).substring(idx2+1);
+					adduan.duAnID =  (adduan.duAnID).trim();
+					var idx3 = (adduan.duAnID).length;
+					adduan.duAnID =  (adduan.duAnID).substring(0,idx3-1);
+					adduan.duAnID =  "DA_"+ (adduan.duAnID);
 
-			console.log("1111111");
-			console.log(adduan);
-			duAn.upsert(adduan);
+				}
+				else{
+					adduan.duAnID = "DA_" + adduan.tenKhongDau;
+				}
 
-			console.log("2222222");
+				adduan.type = "DuAn";
+				console.log("1111111");
+				console.log(adduan);
+				duAn.upsert(adduan);
+				console.log("2222222");
+			})
 
-		})
-		
-		.log(console.log)
-		.error(console.log)
-		.debug(console.log)
-		.done(() => {
-			console.log("Done all!");
-			handleDone();
-		})
+			.log(console.log)
+			.error(console.log)
+			.debug(console.log)
+			.done(() => {
+				console.log("Done all!");
+				handleDone();
+			})
 	}
 
-	
+
 }
 
 module.exports = DuAnExtractor;

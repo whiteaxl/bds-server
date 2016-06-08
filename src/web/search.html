@@ -38,30 +38,7 @@
                                 <li>
                                     <a href="" title="">Tin tức</a>
                                     <ul>
-                                        <li>
-                                            <a href="" title="">Tin thị trường</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Phân tích - Nhận định</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Chính sách - Quản lý</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Thông tin quy hoạch</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">BĐS thế giới</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tài chính - Chứng khoán - BĐS</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tư vấn luật</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Lời khuyên</a>
-                                        </li>
+                                        <li ng-repeat="item in mc.loaiTinTuc"><a ng-click="goToPageNews(item.value)">{{::item.lable}}</a></li>
                                     </ul>
                                 </li>
                                 <li>

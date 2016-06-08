@@ -50,23 +50,16 @@ internals.uploadFiles = function(req,reply){
 				
 			})
 		});
-		console.log("Fields are" + fields);
+		console.log("Fields are" + JSON.stringify(fields));
 		var data = { 
-				username : fields.username, 
-				userAvatar : fields.userAvatar, 
-				repeatMsg : true, 
-				hasFile : fields.hasFile, 
-				isImageFile : fields.isImageFile, 
-				showme : fields.showme, 
-				dwimgsrc : fields.dwimgsrc, 
-				dwid : fields.dwid,
-				serverfilename : "/web/upload/" + baseName(newpath), 
-				msgTime : fields.msgTime,
-				filename : ofn,
-				filetype: fields.istype,
-				expirytime : Date.now() + (3600000 * expiryTime),           
-				size : bytesToSize(fsize)
+				url : "/web/upload/" + baseName(newpath), 
+				name : ofn,
+				size : bytesToSize(fsize),
+				showme : fields.showme,
+				dwimgsrc : fields.dwimgsrc,
+				dwid : fields.dwid
 		};
+		console.log("data are  " + JSON.stringify(data));
 		reply({
 			success: true,
 			file: data 

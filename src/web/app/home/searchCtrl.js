@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'SearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
 		var vm = this;
 		vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 		vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
@@ -13,6 +13,7 @@
 		vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 		vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
+		vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
 		$scope.center = "Hanoi Vietnam";
 		$scope.placeId = $state.params.place;
@@ -162,7 +163,9 @@
 		};
 		// window.DesignCommon.adjustPage();
 		$scope.$on('$viewContentLoaded', function(){
-			window.DesignCommon.adjustPage();
+			$timeout(function() {
+				window.DesignCommon.adjustPage();
+			},0);
 			if($state.params){
 				//$scope.bodyClass = $state.current.data.bodyClass;
 				$rootScope.bodyClass = "page-search";
@@ -213,6 +216,12 @@
     		vm.goToPageSearch();
     		//vm.search();
 		}
+
+		$scope.goToPageNews = function(loaiTinTuc){
+			console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
+			$state.go('news');
+		}
+
 		vm.goToPageSearch = function(){
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 			//vm.search();

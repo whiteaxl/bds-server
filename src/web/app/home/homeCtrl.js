@@ -23,6 +23,10 @@
 			console.log("$scope.placeId: " + $scope.placeSearchId);
 			$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 		}
+		$scope.goToPageNews = function(loaiTinTuc){
+			console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
+			$state.go('news');
+		}
 		vm.selectPlaceCallback = function(place){
 			$scope.searchPlaceSelected = place;
 			$scope.placeSearchId = place.place_id;
@@ -68,6 +72,7 @@
 			$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 			$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 			$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
+			$scope.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
 			NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};

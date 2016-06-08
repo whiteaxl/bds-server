@@ -87,7 +87,7 @@ internals.login = function(req, reply){
     })
 }
 internals.signup = function(req, reply){
-	userService.createUserForWeb(req.payload, function(err, user){
+	userService.createUserForWeb(reply,req.payload, function(err, user){
 		if(err!=null){
 			reply(err);
 		}else{

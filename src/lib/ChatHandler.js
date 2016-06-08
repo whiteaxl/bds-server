@@ -15,9 +15,12 @@ var routineTime = 1;
 var online_users =[];
 var nickname = [];
 var ios = undefined;
+var ChatModel = require("../dbservices/Chat");
+var chatModel = new ChatModel();
 
 ChatHandler.addUser = function(user){
 	online_users[user.userID];
+  
 }
 
 ChatHandler.removeUser = function(user){
@@ -29,10 +32,10 @@ function processSendMsg(data){
   		success: true,
   		offline: false
   	}
-  	console.log("emit to user " + data.emailTo);
-  	if (online_users[data.emailTo]) {
-  		console.log("emit to onlin user " + data.emailTo);
-  		online_users[data.emailTo].emit('new message', data);
+  	console.log("emit to user " + data.toUserID);
+  	if (online_users[data.toUserID]) {
+  		console.log("emit to online user " + data.toUserID);
+  		online_users[data.toUserID].emit('new message', data);
   	}else{
   		sendMsgResult.offline = true;
   	}   
@@ -41,10 +44,13 @@ function processSendMsg(data){
 
 ChatHandler.sendImage = function(data,callback){
 	console.log("Chat service receive data " + data);
-	callback(processSendMsg(data));
-
-	// ios.sockets.emit('new message image', data);
+  var sendMsgResult = processSendMsg(data);
+  data.read = !sendMsgResult.offline;
+  chatModel.saveChat(data,function(){
+    callback(sendMsgResult);  
+  });
 }
+
 
 ChatHandler.init = function(server){
 	var io = require('socket.io')(server.listener);
@@ -53,40 +59,87 @@ ChatHandler.init = function(server){
 		console.log("socket.io on connection");
   	// creating new user if nickname doesn't exists
   	socket.on('new user', function(data, callback){
-  		if(online_users[data.email])
+  		if(online_users[data.userID])
   		{
   			callback({success:false});
   		}else{
   			callback({success:true});
-  			console.log("socket.io got one new user " + data.email);
+  			console.log("socket.io got one new user " + data.userID);
   			socket.username = data.username;
   			socket.userID = data.userID;
-  			socket.email = data.email;
   			socket.userAvatar = data.userAvatar;
-  			online_users[data.email] = socket;
+  			online_users[data.userID] = socket;
+        chatModel.getUnreadMessages(data,function(err,res){
+          if(!err)
+            online_users[data.userID].emit('unread-messages', res);
+        });
   		}
   	});
+    socket.on('read-messages', function(data, callback){
+      for (var i = 0, len = data.length; i < len; i++) {
+        var msg = data[i].default;
+        chatModel.confirmRead(msg,function(err, res) {
+          if (err) {
+            console.log("ERROR:" + err);
+            callback({sucess: false});
+          }else
+            callback({sucess: true});
+        });
+      }
+      callback({success: true});
+    });
+    
 
   // sending new message
   socket.on('send-message', function(data, callback){
-  	console.log("receive message "+ JSON.stringify(data));
-  	callback(processSendMsg(data));
+  	console.log("receive message "+ JSON.stringify(data));    
+    var sendMsgResult = processSendMsg(data);
+    data.read = !sendMsgResult.offline;
+    chatModel.saveChat(data,function(){
+      callback(sendMsgResult);  
+    });
   });
   
   // disconnect user handling 
-  socket.on('disconnect', function () { 
-    /*delete nickname[socket.username];
-    online_member = [];
-    x = Object.keys(nickname);
-    for(var k=0;k<x.length;k++ )
-      {
-          socket_id = x[k];
-          socket_data = nickname[socket_id];
-          temp1 = {"username": socket_data.username, "userAvatar":socket_data.userAvatar};
-            online_member.push(temp1);
-      }
-      ios.sockets.emit('online-members', online_member);*/              
+  socket.on('disconnect', function (data, callback) { 
+  	console.log('tim log this to prove disconnect called');
+    delete online_users[socket.userID];
+    console.log(data);
+    console.log(callback);
+    //callback({success: true});
   });
+
+  // disconnect user handling 
+  socket.on('user leave', function (data, callback) { 
+  	console.log('tim log this to prove user leave called');
+    delete online_users[socket.userID];
+    console.log(data);
+    console.log(callback);
+    callback({success: true});
+  });
+
+  //get unread message for an user
+  socket.on('get-unread-message', function(data){
+    chatModel.getUnreadMessages(data,function(err,res){
+      if(!err)
+        ios.sockets.emit('unread-messages', res);    
+    });
+  });
+
+  //emit user start typing
+  socket.on('user-start-typing', function(data){
+    if(online_users[data.toUserID]){
+      online_users[data.toUserID].emit("user-start-typing",data);
+    }
+  });
+  //emit user stop typing
+  socket.on('user-stop-typing', function(data){
+    if(online_users[data.toUserID]){
+      online_users[data.toUserID].emit("user-stop-typing",data);
+    }
+  });
+
+
 });
 
 }
