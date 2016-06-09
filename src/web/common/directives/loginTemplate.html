@@ -1,6 +1,6 @@
 <div class="box-login" id="box-login" ng-click="lc.exitLoginBox($event);">
     <div class="inner">
-        <form action="index.html" method="post" id="form-login" novalidate>
+        <form ng-submit="lc.signin()" method="post" id="form-login" novalidate>
 
             <div ng-if="lc.enterEmail" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div>
             <div ng-if="lc.userExist" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div>

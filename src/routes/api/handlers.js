@@ -368,7 +368,19 @@ function _transformDetailAds(adsFromDb) {
 }
 
 internals.saveSearch = function(req, reply){
-    reply("authorized to use this feature");
+    var query = req.payload.query;
+    var userID = req.payload.userID;
+    userID = "User_6";
+    console.log("payload is" + JSON.stringify(req.payload));
+    userService.saveSearch(query,userID,function(res){
+        reply( JSON.stringify(res));    
+    });
+    
+}
+internals.likeAds = function(req, reply){
+    req.payload.userID = "User_6";
+    console.log("payload is" + JSON.stringify(req.payload));
+    userService.likeAds(req.payload,reply);    
 }
 
 

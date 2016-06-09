@@ -42,8 +42,12 @@
 			$scope.bodyClass = "page-search";
 		}
 		vm.saveSearch = function(){
-			HouseService.saveSearch().then(function(res){
-				alert(res.data);
+			var data = {
+				query: vm.searchData,
+				userID: $rootScope.userID
+			};
+			HouseService.saveSearch(data).then(function(res){				
+				alert(res.data.msg);
 			})
 		}
 

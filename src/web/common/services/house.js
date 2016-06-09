@@ -47,6 +47,10 @@
         var url = "/api/detail";
         return $http.post(url,data);
       },
+      likeAds: function(data){
+        var url = "/api/likeAds";
+        return $http.post(url,data);
+      },
       findGooglePlaceById: function(googlePlaceId){
         return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
       },

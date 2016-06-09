@@ -333,7 +333,19 @@ internals.endpoints = [
       },
       tags: ['api']
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/likeAds',
+    handler: Handlers.likeAds,
+    config: {
+      description: 'like Ads',
+      tags: ['api']
+    }
   }
+
+
+
 ];
 
 module.exports = internals;

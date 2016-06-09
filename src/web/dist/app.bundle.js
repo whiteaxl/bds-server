@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2018a2f6c4c0f7fb8059"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e99a1646cc361db2ef4b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1198,6 +1198,8 @@
 	        data: {
 	            bodyClass: "page-detail"
 	        }
+	      }).state('news', {
+	          url: "/web/news.html"
 	      })
 	    });
 	  bds.factory('socket', function (socketFactory) {
@@ -17824,6 +17826,10 @@
 				console.log("$scope.placeId: " + $scope.placeSearchId);
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
 			}
+			$scope.goToPageNews = function(loaiTinTuc){
+				console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
+				$state.go('news');
+			}
 			vm.selectPlaceCallback = function(place){
 				$scope.searchPlaceSelected = place;
 				$scope.placeSearchId = place.place_id;
@@ -17869,6 +17875,7 @@
 				$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 				$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 				$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
+				$scope.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
 				NgMap.getMap().then(function(map){
 		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
@@ -18044,6 +18051,7 @@
 			vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
 			vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 			vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
+			vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
 			$scope.center = "Hanoi Vietnam";
 			$scope.placeId = $state.params.place;
@@ -18072,8 +18080,12 @@
 				$scope.bodyClass = "page-search";
 			}
 			vm.saveSearch = function(){
-				HouseService.saveSearch().then(function(res){
-					alert(res.data);
+				var data = {
+					query: vm.searchData,
+					userID: $rootScope.userID
+				};
+				HouseService.saveSearch(data).then(function(res){				
+					alert(res.data.msg);
 				})
 			}
 
@@ -18246,6 +18258,12 @@
 	    		vm.goToPageSearch();
 	    		//vm.search();
 			}
+
+			$scope.goToPageNews = function(loaiTinTuc){
+				console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
+				$state.go('news');
+			}
+
 			vm.goToPageSearch = function(){
 				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 				//vm.search();
@@ -18574,6 +18592,7 @@
 		var controllerId = 'DetailCtrl';
 		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
 			var vm = this;
+			vm.viewMap = false;
 			$scope.chat_visible = true;
 			$scope.$on('$viewContentLoaded', function(){
 				window.DesignCommon.adjustPage();
@@ -18581,6 +18600,19 @@
 					$rootScope.bodyClass = "page-detail";
 				}
 			});	
+
+			vm.marker = {
+				id: 1,
+				coords: {
+					latitude: 	16.0439,
+					longitude: 	108.199
+				},
+				content: undefined,
+				data: 'test'
+			}
+			vm.center= [21.0363818591319,105.80105538518103];
+			
+
 			vm.showChat = function(user){
 				if(!$rootScope.userID){
 					alert("Đăng nhập để chat");
@@ -18592,13 +18624,29 @@
 	              data: {userID: user.userID,name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
 		        });
 			};
+			vm.likeAds = function(){
+				if(!$rootScope.userID){
+					alert("Đăng nhập để like");
+					return;
+				}
+				HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){
+					alert(res.data.msg);
+					console.log(res);
+				});
+			}
+
 
 			vm.adsID = $state.params.adsID;
 			HouseService.detailAds({adsID: vm.adsID}).then(function(res){
 				//console.log("res.data " + res.data.ads);
 				vm.ads = res.data.ads;
+				vm.marker.coords.latitude = vm.ads.place.geo.lat;
+				vm.marker.coords.longitude = vm.ads.place.geo.lon;
+				vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
+				vm.marker.content = vm.ads.giaFmt;
 				$scope.email = vm.ads.dangBoi.email;
 			});
+
 
 		});
 
@@ -18787,6 +18835,10 @@
 	      },
 	      detailAds: function(data){
 	        var url = "/api/detail";
+	        return $http.post(url,data);
+	      },
+	      likeAds: function(data){
+	        var url = "/api/likeAds";
 	        return $http.post(url,data);
 	      },
 	      findGooglePlaceById: function(googlePlaceId){
@@ -19313,6 +19365,17 @@
 	    0 : "Bán",
 	    1  : "Cho Thuê"
 	};
+
+	danhMuc.LoaiTinTuc = [
+	    { value: "1", lable: "Tin thị trường" },
+	    { value: "2", lable: "Phân tích - Nhận định" },
+	    { value: "3", lable: "Chính sách - Quản lý" },
+	    { value: "4", lable: "Thông tin quy hoạch" },
+	    { value: "6", lable: "BĐS thế giới" },
+	    { value: "7", lable: "Tài chính - Chứng khoán - BĐS" },
+	    { value: "5", lable: "Tư vấn luật" },
+	    { value: "8", lable: "Lời khuyên" }
+	];
 
 	danhMuc.LoaiNhaDatBan = {
 	    1  : "Bán căn hộ chung cư",
@@ -34070,7 +34133,11 @@
 	    DIA_DIEM_NOTFOUND : "Địa điểm bạn tìm kiếm không tồn tại!",
 	    USER_EXISTS : "Người sử dụng đã tồn tại!",
 	    LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
-	    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline"
+	    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline",
+	    EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
+	    SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
+	    SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
+	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước"
 	};
 
 	internals.DB_ERR = {

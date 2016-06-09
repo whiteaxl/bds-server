@@ -99,7 +99,7 @@
                         </div>
                         <div class="col col-50">
                             <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Share</a>
-                            <a href="" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Save</a>
+                            <a href="" ng-click="dt.likeAds();" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Save</a>
                             <a href="" class="btn-get" title="Get Pre-Qualified">Get Pre-Qualified</a>
                         </div>
                     </div>
@@ -121,8 +121,15 @@
                         </ul>
                     </div>
                     <div class="block-12">
-                        <div class="img" style="background-image: url(asset/img/data/img-detail-1.jpg)">
+                        <div class="img" style="background-image: url({{dt.ads.image.cover}})">
                             <a href="#box-popup" data-popup="true" data-goto="1" class="fullscreen"><i class="fa fa-arrows-alt"></i></a>
+                            <ng-map ng-if="dt.viewMap" center="{{dt.center}}"  class="ngmap">
+                                <custom-marker position="[{{dt.marker.coords.latitude}},{{dt.marker.coords.longitude}}]">
+                                  <div class = "my1">
+                                    {{dt.marker.content}} 
+                                  </div>
+                                </custom-marker>
+                            </ng-map>
                             <div class="media">
                                 <ul>
                                     <li>
@@ -133,7 +140,7 @@
                                     </li>
                                     <li>
                                         <a href="" title="">
-                                            <span class="bg" style="background-image: url(asset/img/data/map_icon_70x70_txl2.png)"></span>
+                                            <span class="bg" ng-click="dt.viewMap = !dt.viewMap;" style="background-image: url(asset/img/data/map_icon_70x70_txl2.png)"></span>
                                             <span class="txt">View Map</span>
                                         </a>
                                     </li>
