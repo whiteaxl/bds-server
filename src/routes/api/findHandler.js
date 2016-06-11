@@ -74,6 +74,11 @@ var internals = {};
  *      currentLocation: current location
  *          Array: [lat, lon]
  *  }
+ *  diaChinh{ tinh huyen xa khong dau se bi bo qua neu co place
+ *       tinh
+ *       huyen
+ *       xa
+ *  }
  *  orderBy:
  *      string: ngayDangTinDESC/giaASC/giaDESC/dienTichASC, soPhongTamASC, soPhongNguASC
  * }
@@ -275,7 +280,8 @@ function _isDiaDiem(relandTypeName) {
 function countAds(q, reply){
     var geoBox = q.geoBox;
     let limit = q.limit;
-    let diaChinh = null;
+    let diaChinh = q.diaChinh;
+    console.log("into here111");
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     var count = 0;
     var callback = (err, data) =>  {
@@ -284,8 +290,9 @@ function countAds(q, reply){
             countResult: data
         });
     };
+    console.log("into here");
 
-    if(geoBox){
+    if(geoBox || diaChinh){
         count = adsModel.countForAllData(
             callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
@@ -358,7 +365,7 @@ function countAds(q, reply){
 function searchAds(q, reply) {
     let limit = q.limit;
 
-    let diaChinh = null;
+    let diaChinh = q.diaChinh;
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     let orderBy = _toOrderBy(q.orderBy);
     let relandTypeName ;
@@ -396,10 +403,12 @@ function searchAds(q, reply) {
         , orderBy, limit,pageNo
       );
     }
-    else if (geoBox) {
-        center.lat = (geoBox[0]+geoBox[2])/2;
-        center.lon = (geoBox[1]+geoBox[3])/2;
-
+    else if(geoBox || diaChinh) {
+        if(geoBox){
+            center.lat = (geoBox[0]+geoBox[2])/2;
+            center.lon = (geoBox[1]+geoBox[3])/2;    
+        }
+        replyViewPort = [];
         adsModel.queryAllData(
             callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN

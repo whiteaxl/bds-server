@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'DetailCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window){
+	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
 		var vm = this;
 		vm.viewMap = false;
 		$scope.chat_visible = true;
@@ -45,7 +45,9 @@
 				console.log(res);
 			});
 		}
-
+		$timeout(function() {
+			$('body').scrollTop(0);
+		},0);
 
 		vm.adsID = $state.params.adsID;
 		HouseService.detailAds({adsID: vm.adsID}).then(function(res){

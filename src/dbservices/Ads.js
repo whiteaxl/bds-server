@@ -415,6 +415,13 @@ class AdsModel {
 
     }
     //End nhannc
+
+    likeAds(payload,reply){
+        var adsID = req.payload.adsID;
+        var userID = req.payload.userID;
+        
+    
+    }
 }
 
     module.exports = AdsModel;

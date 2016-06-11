@@ -110,7 +110,10 @@
                                             </span>
                                         </a>
                                         <h3>
-                                            <a href="" title=""><span class="highlight">New Homes</span><span class="name">K Hovnanian's Four Seasons</span></a>
+
+                                            <a href="" style="float: left;" title=""><span class="highlight">Nhà cần bán gấp,</span></a>
+                                            <a href="" style="float: left;" title=""><span class="highlight">chính chủ,</span></a>
+                                            <a href="" style="float: left;"title=""><span class="highlight">giảm giá</span></a>
                                         </h3>
                                         <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
                                     </div>
@@ -136,14 +139,14 @@
                         </div>
                         <div class="block-07">
                             <ul>
-                                <li>
-                                    <a href="" title="">United States</a>
+                                <li ng-if="mc.diaChinh.tinh">
+                                    <a href=""  ng-click="mc.gotoDiachinh(mc.diaChinh.tinh,1);" title="">{{mc.diaChinh.tinh}}</a>
                                 </li>
-                                <li>
-                                    <a href="" title="">California</a>
+                                <li ng-if="mc.diaChinh.huyen">
+                                    <a href=""  title="" ng-click="mc.gotoDiachinh(mc.diaChinh.huyen,2);">{{mc.diaChinh.huyen}}</a>
                                 </li>
-                                <li>
-                                    <span>California City</span>
+                                <li ng-if="mc.diaChinh.xa">
+                                    <a href=""  title="" ng-click="mc.gotoDiachinh(mc.diaChinh.xa,3);">{{mc.diaChinh.xa}}</a>
                                 </li>
                             </ul>
                         </div>
