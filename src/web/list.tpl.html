@@ -29,7 +29,7 @@
                                         <div class="row">
                                             <div class="col col-240">
                                                 <div class="media">
-                                                    <a class="link" href="" ng-click="mc.showDetail(0);" title="">
+                                                    <a class="link" href="" ng-click="mc.goDetail($index)"  title="">
                                                         <span class="img" style="background-image: url({{ads.image.cover}})"</span>
                                                          <span class="info"  >
                                                             <span class="line"><span class="price">{{ads.giaFmt}}</span> 
@@ -38,14 +38,14 @@
                                                             <span class="line">{{ads.soPhongNguFmt}}</span>
                                                         </span>
                                                     </a>
-                                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
+                                                    <a class="like" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="" title=""><span>Like</span></a>
                                                 </div>
                                             </div>
                                             <div class="col col-590">
                                                 <div class="row">
                                                     <div class="col col-60">
                                                         <h3>
-                                                            <a href="" title="">{{ads.adsID}}</a>
+                                                            <a href="" ng-click="mc.goDetail($index)"  title="">{{ads.adsID}}</a>
                                                         </h3>
                                                     </div>
                                                     <div class="col col-40">
@@ -67,7 +67,7 @@
                                                         <!-- <div class="kind">{{ads.ten_loaiNhaDat}}</div> -->
                                                     </div>
                                                     <div class="col col-60">
-                                                        <div class="type">
+                                                        <div class="type" style="visibility: hidden;" >
                                                             <a href="" title="">$1,032/mo</a>
                                                             <a href="" title="">Get Pre-Approved</a>
                                                         </div>
@@ -76,12 +76,16 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col col-40">
-                                                        <div class="estate">Full Cycle Real Estate</div>
+                                                        <div class="estate">
+                                                            <a href="" ng-click="mc.goPackage(1);" style="float: left;" title=""><span class="highlight">Nhà cần bán gấp,</span></a>
+                                                            <a href="" ng-click="mc.goPackage(2);" style="float: left;" title=""><span class="highlight">chính chủ,</span></a>
+                                                            <a href="" ng-click="mc.goPackage(3);" style="float: left;"title=""><span class="highlight">giảm giá</span></a>
+                                                        </div>
                                                     </div>
                                                     <div class="col col-60">
                                                         <div class="action">
-                                                            <a class="btn-detail" href="" title="">View Details</a>
-                                                            <a class="favorite" data-like="true" href="#" title=""><i class="fa fa-heart-o"></i></a>
+                                                            <a class="btn-detail" href="" ng-click="mc.goDetail($index)"  title="">View Details</a>
+                                                            <a class="favorite" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="#" title=""><i class="fa fa-heart-o"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -122,17 +126,7 @@
                             </ul>
                             </div>
                             <div class="block-07">
-                                <ul>
-                                    <li>
-                                        <a href="" title="">United States</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">California</a>
-                                    </li>
-                                    <li>
-                                        <span>California City</span>
-                                    </li>
-                                </ul>
+                                <bds-dia-chinh-link diachinh="mc.diaChinh" loaitin="mc.loaiTin" loainhadat="mc.loaiNhaDat" viewmode="mc.viewMode"></bds-dia-chinh-link>  
                             </div>
                         </div>
                         <div class="col col-320">

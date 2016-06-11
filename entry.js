@@ -23,6 +23,7 @@ require("./src/web/common/directives/userInfoMenuDirective.js");
 require("./src/web/common/directives/afterRenderedDirective.js");
 require("./src/web/common/directives/chatDirective.js");
 require("./src/web/common/directives/chatCtrl.js");
+require("./src/web/common/directives/diaChinhLink.js");
 
 
 

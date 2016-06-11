@@ -21,9 +21,13 @@
 		$scope.loaiNhaDat = $state.params.loaiNhaDat;
 		vm.diaChinh = {
 			tinh: $state.params.tinh,
+			tinhKhongDau: $state.params.tinh,
 			huyen: $state.params.huyen,
-			xa: $state.params.xa
+			huyenKhongDau: $state.params.huyen,
+			xa: $state.params.xa,
+			xaKhongDau: $state.params.xa,
 		}
+		vm.packageID = $state.params.packageID;
 		vm.viewMode = $state.params.viewMode;
 		if(!vm.viewMode)
 			vm.viewMode = "map";
@@ -35,6 +39,8 @@
 		if(!$scope.loaiNhaDat)
 			$scope.loaiNhaDat = 0;
 		vm.loaiTin = $scope.loaiTin;
+
+		vm.stateName = $state.current.name;
 
 		
 		console.log("placeId: " + $scope.placeId);
@@ -55,6 +61,22 @@
 			$scope.bodyClass = "page-list";
 
 		}
+
+		vm.goPackage = function(packageID){
+			$state.go('package', { "packageID" : packageID, "viewMode": vm.viewMode}, {location: true});
+		}
+
+		vm.likeAds = function(index){
+	      if(!$rootScope.userID){
+	        alert("Đăng nhập để like");
+	        return;
+	      }
+	      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.userID}).then(function(res){
+	        alert(res.data.msg);
+	        console.log(res);
+	      });
+	    };
+
 		vm.gotoDiachinh = function(diachinh,type){
 			/*if(type==1){
 				vm.diaChinh.huyen = null;
@@ -249,7 +271,7 @@
 			 	vm.searchData.place = placeData;
 			    vm.searchData.geoBox = undefined;
 			}*/
-    		//$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
+    		$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
     		
     		/*$scope.markers.push(marker);
     		$scope.$apply();
@@ -297,7 +319,7 @@
 			vm.searchPage(vm.currentPage-1);
 		}
 		vm.searchPage = function(i, callback){
-			vm.searchData.pageNo = i;
+			vm.searchData.pageNo = i;			
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
 				//vm.totalResultCounts = res.data.list.length;
@@ -406,7 +428,8 @@
 
         	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
         	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-        	if(vm.diaChinh.tinh || vm.diaChinh.huyen || vm.diaChinh.xa){
+        	if(vm.stateName == "package"){
+        		//TODO implement later wih packageID in Ads
         		vm.searchData = {
 					"loaiTin": $scope.loaiTin,
 					"loaiNhaDat": $scope.loaiNhaDat, 
@@ -426,7 +449,27 @@
 				};
 				vm.searchData.diaChinh = vm.diaChinh;
 				vm.search();
-        	}else{
+        	}else if(vm.stateName == "searchdc"){
+        		vm.searchData = {
+					"loaiTin": $scope.loaiTin,
+					"loaiNhaDat": $scope.loaiNhaDat, 
+					"loaiNhaDats": [],
+				  	"giaBETWEEN": [vm.price_min,vm.price_max],
+				  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
+				  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+				  	"soTangGREATER": vm.soTangList[0].value,
+				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
+				  	"huongNha": vm.huongNhaList[0].value,
+				  	"huongNhas": [],
+				  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+				  	"limit": vm.pageSize,
+				  	"orderBy": vm.sortOptions[0].value,
+				  	diaChinh: vm.diaChinh,
+				  	"pageNo": 1
+				};
+				vm.searchData.diaChinh = vm.diaChinh;
+				vm.search();
+        	}else if(vm.stateName=="search"){
         		$scope.PlacesService.getDetails({
 					placeId: $scope.placeId
 				}, function(place, status) {
@@ -446,6 +489,10 @@
 						];*/
 						var googlePlace = $scope.searchPlaceSelected;
 						vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(googlePlace);
+						vm.diaChinh.tinhKhongDau = vm.diaChinh.tinh;
+						vm.diaChinh.huyenKhongDau = vm.diaChinh.huyen;
+						vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
+
 						if($scope.searchPlaceSelected.geometry.viewport){
 			          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
 			          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
