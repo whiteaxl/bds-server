@@ -47,7 +47,7 @@ var chatDto1 = {
 
 
 var chatDto2 = {
-  chatID: "Chat_1_0_001",
+  chatID: "Chat_1_0_002",
   fromUserID    : "User_3",
   toUserID      : "User_4",
   fromFullName  : "User 3",
@@ -58,7 +58,7 @@ var chatDto2 = {
     title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
   },
-  content: "Chat from user 3, send to user 4 0001",
+  content: "Chat from user 3, send to user 4 0002",
   msgType : "text",
   read : false,
   date : new Date(),
