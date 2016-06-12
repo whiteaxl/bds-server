@@ -119,9 +119,9 @@ util.parseDate = function(dateStr) {
 
 
 util.convertFormatDate= function(ngayDangTin) {
-    let bdsComDateFormat = 'DD-MM-YYYY';
+    var bdsComDateFormat = 'DD-MM-YYYY';
     if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
-        let ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
+        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
         return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
     }
 

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "619afd118d5a7324b43c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1163bcb929e27469a0fa"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19178,7 +19178,7 @@
 	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
 	        function(socket,$scope, $rootScope, $http, $window,$localStorage, HouseService) {
 	          $scope.loginError = false;
-	          let vm = this;
+	          var vm = this;
 	          vm.profile = function() {
 	            alert("todo");
 	          }
@@ -20274,9 +20274,9 @@
 
 
 	util.convertFormatDate= function(ngayDangTin) {
-	    let bdsComDateFormat = 'DD-MM-YYYY';
+	    var bdsComDateFormat = 'DD-MM-YYYY';
 	    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
-	        let ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
+	        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
 	        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
 	    }
 
