@@ -48,17 +48,17 @@ var chatDto1 = {
 
 var chatDto2 = {
   chatID: "Chat_1_0_001",
-  fromUserID    : "User_1",
-  toUserID      : "User_0",
-  fromFullName  : "User 1",
-  toFullName    : "User 0",
+  fromUserID    : "User_3",
+  toUserID      : "User_4",
+  fromFullName  : "User 3",
+  toFullName    : "User 4",
   fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Nice-Success-Picture-for-facebook-profile-WhatsApp-DP-Cover-Pic.jpg",
   relatedToAds  : {
     adsID : "Ads_bds_3776104",
     title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
   },
-  content: "Khong the...",
+  content: "Chat from user 3, send to user 4 0001",
   msgType : "text",
   read : false,
   date : new Date(),
