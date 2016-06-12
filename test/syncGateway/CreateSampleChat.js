@@ -1,8 +1,8 @@
 'use strict';
 
-var UserService = require("../../src/dbservices/User");
+var SyncGW = require("../../src/dbservices/SyncGW");
 
-var userService = new UserService();
+var syncGW = new SyncGW();
 
 var chatDto = {
   //chatID: "Chat_1",
@@ -47,18 +47,18 @@ var chatDto1 = {
 
 
 var chatDto2 = {
-  //chatID: "Chat_1",
-  fromUserID    : "098004",
-  toUserID      : "098001",
-  fromFullName  : "Ba Van Dao",
-  toFullName    : "Tran Thi Thao",
+  chatID: "Chat_1_0_001",
+  fromUserID    : "User_1",
+  toUserID      : "User_0",
+  fromFullName  : "User 1",
+  toFullName    : "User 0",
   fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Nice-Success-Picture-for-facebook-profile-WhatsApp-DP-Cover-Pic.jpg",
   relatedToAds  : {
     adsID : "Ads_bds_3776104",
     title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
   },
-  content: "Giá có thể giảm thêm được không anh 02",
+  content: "Khong the...",
   msgType : "text",
   read : false,
   date : new Date(),
@@ -68,18 +68,37 @@ var chatDto2 = {
 
 
 var chatDto3 = {
-  //chatID: "Chat_1",
-  fromUserID    : "098005",
-  toUserID      : "098001",
-  fromFullName  : "Hoang Lien",
-  toFullName    : "Tran Thi Thao",
+  chatID: "Chat_010",
+  fromUserID    : "User_10",
+  toUserID      : "User_0",
+  fromFullName  : "User 10",
+  toFullName    : "User 0",
   fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Funny-Love-Quote-Best-Whatsapp-Profile-Dp-Profiledp.jpg",
   relatedToAds  : {
     adsID : "Ads_bds_3989184",
     title : "33 triệu/m² - Căn hộ chung cư - N05 Trần Duy Hưng",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20131125095109163.jpg"
   },
-  content: "Giá có thể giảm thêm được không anh 04-2",
+  content: "Giá có thể giảm thêm được không anh 20",
+  msgType : "text",
+  read : false,
+  timeStamp: "09:12 PM",
+  date : new Date(),
+  type: "Chat"
+};
+
+var chatDto30 = {
+  chatID: "Chat_002",
+  fromUserID    : "User_0",
+  toUserID      : "User_10",
+  fromFullName  : "User 0",
+  toFullName    : "User 10",
+  relatedToAds  : {
+    adsID : "Ads_bds_3989184",
+    title : "33 triệu/m² - Căn hộ chung cư - N05 Trần Duy Hưng",
+    cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20131125095109163.jpg"
+  },
+  content: "Khong the, tot nhat roi 2",
   msgType : "text",
   read : false,
   timeStamp: "09:12 PM",
@@ -93,7 +112,6 @@ userService.createLoginOnSyncGateway(userDto, (err, res)=> {
 });
 */
 
-
-userService.createDocViaSyncGateway(chatDto3, (err, res) => {
+syncGW.createDocViaSyncGateway(chatDto2, (err, res) => {
   console.log("Callback createChat", err, res);
 });

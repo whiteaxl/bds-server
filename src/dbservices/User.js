@@ -78,33 +78,6 @@ class UserModel {
       });
   }
 
-  createDocViaSyncGateway(dto, callback) {
-    /*
-    if (!dto.timeStamp) {
-      dto.timeStamp = new Date().getTime();
-    }
-    */
-
-    request({
-        url: syncGatewayDB_URL, method: "POST",
-        json: dto
-      },
-      function (error, response, body) {
-        if (error) {
-          log.error("Error when createDocViaSyncGateway", error, response);
-          callback(error, body);
-          return;
-        }
-
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          callback(null, body);
-        } else {
-          log.error("createDocViaSyncGateway - Have response but status fail:", response);
-          callback({code:99, msg: response.body}, null);
-        }
-      });
-  }
-
   updateUser(userDto, callback) {
     var url = syncGatewayDB_URL ;
     request({
