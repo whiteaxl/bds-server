@@ -111,7 +111,7 @@
                         <bds-dia-chinh-link diachinh="dt.diaChinh" loaitin="dt.loaiTin" loainhadat="dt.loaiNhaDat" viewmode="dt.viewMode"></bds-dia-chinh-link>  
                     </div>
                     <div class="block-12">
-                        <div class="img" style="background-image: url({{dt.ads.image.cover}})">
+                        <div class="img" style="background-image: url({{dt.ads.image.images[0]}})">
                             <a href="#box-popup" data-popup="true" data-goto="1" class="fullscreen"><i class="fa fa-arrows-alt"></i></a>
                             <ng-map ng-if="dt.viewMap" center="{{dt.center}}" zoom="15" class="ngmap">
                                 <custom-marker position="[{{dt.marker.coords.latitude}},{{dt.marker.coords.longitude}}]">
