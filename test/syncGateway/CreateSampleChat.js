@@ -47,7 +47,7 @@ var chatDto1 = {
 
 
 var chatDto2 = {
-  chatID: "Chat_9_10_001",
+  chatID: "Chat_9_10_002",
   fromUserID    : "User_9",
   toUserID      : "User_10",
   fromFullName  : "User 9",
@@ -67,7 +67,7 @@ var chatDto2 = {
 };
 
 var chatDto2_1 = {
-  chatID: "Chat_10_9_001",
+  chatID: "Chat_10_9_002",
   fromUserID    : "User_10",
   toUserID      : "User_9",
   fromFullName  : "User 10",
