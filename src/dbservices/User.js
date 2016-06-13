@@ -18,6 +18,10 @@ var request = require("request");
 var syncGatewayDB_URL = "http://localhost:4985/default/";
 
 
+var SyncGw = require('./SyncGW');
+var syncGw = new SyncGw();
+
+
 class UserModel {
   initBucket() {
     bucket = cluster.openBucket('default');
@@ -161,7 +165,7 @@ class UserModel {
                   return;
                 }
 
-                this.createDocViaSyncGateway(userDto, (err, res) => {
+                syncGw.createDocViaSyncGateway(userDto, (err, res) => {
                   if (err) {
                     log.warn("Error in createUserAndLogin", err);
                     callback({code: 99, msg: err.toString()})
