@@ -47,24 +47,45 @@ var chatDto1 = {
 
 
 var chatDto2 = {
-  chatID: "Chat_1_0_002",
-  fromUserID    : "User_3",
-  toUserID      : "User_4",
-  fromFullName  : "User 3",
-  toFullName    : "User 4",
+  chatID: "Chat_9_10_001",
+  fromUserID    : "User_9",
+  toUserID      : "User_10",
+  fromFullName  : "User 9",
+  toFullName    : "User 10",
   fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Nice-Success-Picture-for-facebook-profile-WhatsApp-DP-Cover-Pic.jpg",
   relatedToAds  : {
     adsID : "Ads_bds_3776104",
     title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
   },
-  content: "Chat from user 3, send to user 4 0002",
+  content: "Chat from user 9, send to user 10 001",
   msgType : "text",
   read : false,
   date : new Date(),
   timeStamp: "09:12 PM",
   type: "Chat"
 };
+
+var chatDto2_1 = {
+  chatID: "Chat_10_9_001",
+  fromUserID    : "User_10",
+  toUserID      : "User_9",
+  fromFullName  : "User 10",
+  toFullName    : "User 9",
+  fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Nice-Success-Picture-for-facebook-profile-WhatsApp-DP-Cover-Pic.jpg",
+  relatedToAds  : {
+    adsID : "Ads_bds_3776104",
+    title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
+    cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
+  },
+  content: "Chat from user 10, send to user 9 001",
+  msgType : "text",
+  read : false,
+  date : new Date(),
+  timeStamp: "09:12 PM",
+  type: "Chat"
+};
+
 
 
 var chatDto3 = {
@@ -115,3 +136,9 @@ userService.createLoginOnSyncGateway(userDto, (err, res)=> {
 syncGW.createDocViaSyncGateway(chatDto2, (err, res) => {
   console.log("Callback createChat", err, res);
 });
+
+
+setTimeout( () =>
+syncGW.createDocViaSyncGateway(chatDto2_1, (err, res) => {
+  console.log("Callback createChat 2", err, res);
+}), 5000);
