@@ -7,7 +7,7 @@ let log = require('../lib/logUtil');
 
 class SyncGW {
   _setID(dto) {
-    if (dto.type='Chat') {
+    if (dto.type==='Chat') {
       dto._id = dto.chatID;
     }
 
