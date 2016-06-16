@@ -8,6 +8,9 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	vm.chatMsg = "";
 	vm.users = [];
 	vm.messeges = [];
+	vm.menu = {
+		
+	}
 	
 	var count = Object.keys($rootScope.chatBoxes).length-1;
 	vm.rightPos = (24 + Math.min(2,count)*300) + "px";

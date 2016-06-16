@@ -19,11 +19,9 @@
 
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
+    $rootScope.menuitems = window.RewayListValue.menu;
 
-    $rootScope.showDangNhap = function(){
-      if($rootScope.loginbox.resetLoginBox)
-        $rootScope.loginbox.resetLoginBox();
-    }
+    
     $rootScope.chat_visible = true;
     $rootScope.showChat = function(user,scope){
       if($rootScope.chatBoxes.hasOwnProperty(user.email)){

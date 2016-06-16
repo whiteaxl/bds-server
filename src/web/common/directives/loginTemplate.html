@@ -2,22 +2,26 @@
     <div class="inner">
         <form ng-submit="lc.signin()" method="post" id="form-login" novalidate>
 
-            <div ng-if="lc.enterEmail" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div>
-            <div ng-if="lc.userExist" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div>
-            <div ng-if="lc.enterPassword && !lc.userExist" class="head">Tạo mật khẩu</div>
+            <div ng-if="lc.state == lc.ENTER_EMAIL" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div>
+            <div ng-if="lc.userExist && lc.state == lc.ENTER_PASSWORD" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div>
+            <div ng-if="lc.state == lc.ENTER_PASSWORD && !lc.userExist" class="head">Tạo mật khẩu</div>
+            <div ng-if="lc.state == lc.FORGOT_PASSWORD" class="head">Quên mật khẩu?</div>
+            <div class="rule" ng-if="lc.state == lc.FORGOT_PASSWORD">Hãy nhập email, Reland sẽ gửi mật khẩu tới email  </div>
+            <div class="rule" ng-if="lc.state == lc.SENT_PASSWORD">Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập</div>
             
             <a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a>
-            <div ng-if="lc.enterEmail" class="control">
+            <div ng-if="lc.state == lc.ENTER_EMAIL || lc.state == lc.FORGOT_PASSWORD" class="control">
                 <input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/>
             </div>
-            <div ng-if="lc.enterPassword" class="control">
+            <div ng-if="lc.state == lc.ENTER_PASSWORD || lc.state == lc.SENT_PASSWORD" class="control">
                 <input type="password" ng-model="lc.password" class="form-control" required> </input>
             </div>
             <div class="handle">
                 <button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button>
             </div>
             <div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div>
-            <div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div>
+            <div ng-if="!(lc.state == lc.ENTER_PASSWORD)" class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div>
+            <div class="register" ng-if="lc.state == lc.ENTER_PASSWORD"><a href="" ng-click="lc.forgotPassword()" >Quên mật khẩu?</a></div>
         </form>
     </div>
 </div>

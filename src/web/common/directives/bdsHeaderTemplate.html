@@ -1,0 +1,35 @@
+ <header class="header">
+ 	<div class="header-top">
+
+ 		<a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
+ 		<h1 class="logo">
+ 			<a href="index.html" title="Trulia">
+ 				<img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+ 			</a>
+ 		</h1> 		
+ 		<nav class="nav-main">
+ 			<ul>
+ 				<li ng-repeat="m in menuitems" class="{{m.items?'hasSub':''}}">
+ 					<a ng-click="hdr.gotoMenu(m.value)" title="">{{m.label}}</a>
+ 					<ul ng-if="m.items">
+ 						<li ng-repeat="item in m.items"><a ng-click="hdr.gotoMenu(item.value)">{{::item.label}}</a></li>
+ 					</ul>
+ 				</li>
+ 			</ul>
+
+ 		</nav>
+ 		<nav class="nav-user">
+ 			<ul>
+ 				<li>
+ 					<a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
+ 				</li>
+ 				<li>
+ 					<a class="link" href="" title="">Lưu tìm kiếm</a>
+ 				</li>
+ 				<user-info-menu ></user-info-menu>
+ 			</ul>
+ 		</nav>
+ 	</div>
+ </header><!-- //header -->
+
+

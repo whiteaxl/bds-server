@@ -11,7 +11,93 @@ angular.module('bds')
         controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
         function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
           $scope.loginError = false;
-          angular.extend(this,{
+          var vm = this;
+          vm.ENTER_EMAIL = 1;
+          vm.ENTER_PASSWORD = 2;
+          vm.LOGGED_IN = 3;
+          vm.FORGOT_PASSWORD = 4;
+          vm.SENT_PASSWORD = 5;
+          vm.state = vm.ENTER_EMAIL;
+          $scope.$bus.subscribe({
+            channel: 'login',
+            topic: 'logged out',
+            callback: function(data, envelope) {
+                vm.state = vm.ENTER_EMAIL;
+                vm.userExist = false;
+                vm.password = "";
+                $localStorage.relandToken = undefined;  
+            }
+          });
+          vm.exitLoginBox = function($event){
+            if($event.target.id == "box-login"){
+                vm.state = vm.ENTER_EMAIL;
+                vm.userExist = false;
+                vm.password = "";
+                $localStorage.relandToken = undefined;  
+              }
+          }
+          vm.forgotPassword = function(){
+            vm.state = vm.FORGOT_PASSWORD;
+          }
+
+
+          vm.signin = function(){
+            var loginForm = $('#form-login');
+              var data = {
+                email: vm.email,
+                matKhau: vm.password
+              }
+              if (loginForm.valid()) {
+                if(vm.state == vm.FORGOT_PASSWORD){
+                  alert('email sent');
+                  vm.state = vm.SENT_PASSWORD;
+                } else if(vm.state == vm.ENTER_EMAIL){
+                  HouseService.checkUserExist(data).then(function(res){
+                    vm.userExist = res.data.exist;
+                    vm.state = vm.ENTER_PASSWORD;
+                  });
+                } else if(vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD){
+                  if(vm.userExist==true){//sign in
+                    HouseService.login(data).then(function(res){
+                      if(res.data.login==true){
+                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+                        //$window.token = res.data.token;
+                        $localStorage.relandToken = res.data.token;
+                        $rootScope.userName = res.data.userName;
+                        $rootScope.userID = res.data.userID;
+                        //hung dummy here to set userID to email so we can test chat
+                        $rootScope.userID = res.data.email;
+                        $rootScope.userEmail = res.data.email;
+                        vm.class = "has-sub";
+                        vm.state = vm.LOGGED_IN;
+                        vm.userExist = false;
+                        vm.password = "";
+                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+                          console.log("register socket user " + $rootScope.userName);
+                        });
+                        $('#box-login').hide();
+                      }else{
+                        alert(res.data.message);
+                      }                    
+                    });
+                  }else{//register
+                    HouseService.signup(data).then(function(res){
+                      $localStorage.relandToken = res.data.token;
+                      $rootScope.userName = res.data.userName;
+                      vm.class = "has-sub";
+                      vm.state = vm.LOGGED_IN;
+                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
+                          console.log("register socket user " + $rootScope.userName);
+                      });
+                      $('#box-login').hide();
+                    });
+                  }
+
+                }
+              }
+          }
+
+          /*angular.extend(this,{
             email: "",
             password: "",
             enterEmail: true,
@@ -41,6 +127,7 @@ angular.module('bds')
                     vm.userExist = res.data.exist;
                     vm.enterPassword = true;
                     vm.enterEmail = false;  
+                    vm.showForgotPassword = true;
                   });
                 } else if(this.enterPassword == true){
                   if(this.userExist==true){//sign in
@@ -86,10 +173,10 @@ angular.module('bds')
               }
             }
           });          
-
+          */
           var formLogin = $("#form-login");
-          $("#form-login").validate();
-          if(formLogin.validate){
+          // $("#form-login").validate();
+          // if(formLogin.validate){
             formLogin.validate({
               rules: {
                 email: {
@@ -104,7 +191,7 @@ angular.module('bds')
                 }
               }
             });    
-          }
+          // }
 
 
         }
