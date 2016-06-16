@@ -4,7 +4,7 @@ var loginHandler = require('./loginHandler');
 var fileUploadHandler = require('./fileUploadHandler');
 
 var userHandlers = require('./userHandlers');
-
+var newsHandlers = require('./newsHandlers');
 
 //Joi is Hapi's validation library
 Joi = require('joi');
@@ -331,6 +331,33 @@ internals.endpoints = [
         output: 'stream',
         parse: false
       },
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/countNews',
+    handler: newsHandlers.countNews,
+    config: {
+    description: 'dem danh sach tintuc',
+        tags: ['api']
+  }
+  },
+  {
+    method: 'POST',
+    path: '/api/findNews',
+    handler: newsHandlers.findNews,
+    config: {
+      description: 'Lay danh sach tintuc',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findRootCategory',
+    handler: newsHandlers.findRootCategory,
+    config: {
+      description: 'get list of root category',
       tags: ['api']
     }
   }

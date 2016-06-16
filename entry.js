@@ -9,13 +9,16 @@ require("./src/web/app/home/home.js");
 require("./src/web/app/home/homeCtrl.js");
 require("./src/web/app/home/searchCtrl.js");
 require("./src/web/app/home/homeCtrl.js");
+require("./src/web/app/home/newsCtrl.js");
 
 require("./src/web/app/home/detailCtrl.js");
 require("./src/web/app/home/ChatPanelCtrl.js");
 
 
 //services
+require("./src/web/common/services/newsService.js");
 require("./src/web/common/services/house.js");
+
 
 //Directives
 require("./src/web/common/directives/loginDirective.js");
