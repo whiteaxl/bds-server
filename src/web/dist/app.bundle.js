@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "674e394203d4cebec851"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b6c0fb27c0d499d81fc6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18390,10 +18390,24 @@
 			}
 
 			vm.showStreetView = function(event){
-				var latlng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
-				vm.map.getStreetView().setPosition(latlng);
-				vm.map.getStreetView().setVisible(true);
-				event.stopPropagation();
+				var latLng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
+
+				var streetViewService = new google.maps.StreetViewService();
+				var STREETVIEW_MAX_DISTANCE = 50;
+				
+				streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
+				    if (status === google.maps.StreetViewStatus.OK) {
+				        // ok
+				        vm.map.getStreetView().setPosition(streetViewPanoramaData.location.latLng);
+						vm.map.getStreetView().setVisible(true);
+						event.stopPropagation();
+				    } else {
+				        // no street view available in this range, or some error occurred
+				        console.log('no street view in 50m');
+				    }
+				});
+
+				
 				//return false;
 
 			}
