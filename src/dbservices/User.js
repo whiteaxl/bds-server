@@ -18,6 +18,10 @@ var request = require("request");
 var syncGatewayDB_URL = "http://localhost:4985/default/";
 
 
+var SyncGw = require('./SyncGW');
+var syncGw = new SyncGw();
+
+
 class UserModel {
   initBucket() {
     bucket = cluster.openBucket('default');
@@ -74,33 +78,6 @@ class UserModel {
         } else {
           log.error("createLoginOnSyncGateway", response.body);
           callback({code:99, msg: response.body.reason}, null);
-        }
-      });
-  }
-
-  createDocViaSyncGateway(dto, callback) {
-    /*
-    if (!dto.timeStamp) {
-      dto.timeStamp = new Date().getTime();
-    }
-    */
-
-    request({
-        url: syncGatewayDB_URL, method: "POST",
-        json: dto
-      },
-      function (error, response, body) {
-        if (error) {
-          log.error("Error when createDocViaSyncGateway", error, response);
-          callback(error, body);
-          return;
-        }
-
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          callback(null, body);
-        } else {
-          log.error("createDocViaSyncGateway - Have response but status fail:", response);
-          callback({code:99, msg: response.body}, null);
         }
       });
   }
@@ -188,7 +165,7 @@ class UserModel {
                   return;
                 }
 
-                this.createDocViaSyncGateway(userDto, (err, res) => {
+                syncGw.createDocViaSyncGateway(userDto, (err, res) => {
                   if (err) {
                     log.warn("Error in createUserAndLogin", err);
                     callback({code: 99, msg: err.toString()})

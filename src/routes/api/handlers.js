@@ -257,6 +257,13 @@ internals.detail = function(req, reply) {
 
             var ads = result.value;
 
+            //increase luotXem
+            if(!ads.luotXem)
+                ads.luotXem = 0;
+            ads.luotXem = ads.luotXem + 1;
+            adsService.upsert(ads);
+            console.log("luotXem " + ads.luotXem);
+
             ads = _transformDetailAds(ads);
             reply({
                 ads: ads,
@@ -319,9 +326,8 @@ function _transformDetailAds(adsFromDb) {
 
     if (ads.ngayDangTin) {
         var ngayDangTinDate= moment(ads.ngayDangTin, constant.FORMAT.DATE_IN_DB);
-        ads.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+        ads.soNgayDaDangTin = -moment().diff(ngayDangTinDate, 'days');
         ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
-
         ads.ngayDangTinFmt = moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_GUI);
     }
     // big images:
@@ -341,7 +347,7 @@ function _transformDetailAds(adsFromDb) {
     }
 
     //dummy
-    ads.luotXem = 1232;
+    ads.luotXem = adsFromDb.luotXem;
 
     //dummy moi gioi
     var mg1 = {

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "674e394203d4cebec851"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9e862e0a78cc6b5e18dd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18390,10 +18390,24 @@
 			}
 
 			vm.showStreetView = function(event){
-				var latlng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
-				vm.map.getStreetView().setPosition(latlng);
-				vm.map.getStreetView().setVisible(true);
-				event.stopPropagation();
+				var latLng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
+
+				var streetViewService = new google.maps.StreetViewService();
+				var STREETVIEW_MAX_DISTANCE = 50;
+				
+				streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
+				    if (status === google.maps.StreetViewStatus.OK) {
+				        // ok
+				        vm.map.getStreetView().setPosition(streetViewPanoramaData.location.latLng);
+						vm.map.getStreetView().setVisible(true);
+						event.stopPropagation();
+				    } else {
+				        // no street view available in this range, or some error occurred
+				        console.log('no street view in 50m');
+				    }
+				});
+
+				
 				//return false;
 
 			}
@@ -18856,17 +18870,101 @@
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
 				vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
 				vm.marker.content = vm.ads.giaFmt;
-				vm.diaChinh = vm.ads.place.diaChinh;
+				// vm.diaChinh = vm.ads.place.diaChinh;
 				$scope.email = vm.ads.dangBoi.email;
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
-				vm.diaChinh = {
-					tinh:vm.ads.place.diaChinh.tinh,
-					tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
-					huyen: vm.ads.place.diaChinh.huyen,
-					huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau,
-					xa: vm.ads.place.diaChinh.xa,
-					xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
-				}				
+				// vm.diaChinh = {
+				// 	tinh:vm.ads.place.diaChinh.tinh,
+				// 	tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
+				// 	huyen: vm.ads.place.diaChinh.huyen,
+				// 	huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau,
+				// 	xa: vm.ads.place.diaChinh.xa,
+				// 	xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
+				// }				
+
+				var price_min = 0;
+				var price_max = window.RewayListValue.filter_max_value.value;
+				var dien_tich_min = 0;
+				var dien_tich_max = window.RewayListValue.filter_max_value.value;
+			
+				var pageSize = 8;
+
+				vm.goDetail = function(adsID){
+	        		$state.go('detail', { "adsID" : adsID}, {location: true});
+	        	}
+	        	//find bds cung loai moi dang
+				var searchDataCungLoai = {
+					"loaiTin": vm.ads.loaiTin,
+					"loaiNhaDat": vm.ads.loaiNhaDat, 
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+				  	"orderBy": "ngayDangTinDESC",
+				  	"pageNo": 1
+				};
+				
+				HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
+					vm.bdsCungLoaiMoiDang = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsCungLoaiMoiDang.length<7){
+							vm.bdsCungLoaiMoiDang.push(res.data.list[i]);
+						}
+					}
+					
+				});
+				//find bds ngang gia
+				var searchDataNgangGia  ={
+					"loaiTin": vm.ads.loaiTin,
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+					"orderBy": "ngayDangTinDESC",
+					"giaBETWEEN": [vm.ads.gia-0.1*vm.ads.gia,vm.ads.gia+0.1*vm.ads.gia],
+				  	"pageNo": 1
+				}
+				
+				HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){
+					vm.bdsNgangGia = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsNgangGia.length<7){
+							vm.bdsNgangGia.push(res.data.list[i]);
+						}
+					}
+					
+				});
+				//find bds gia nho hon
+				var searchDataGiaNhoHon  ={
+					"loaiTin": vm.ads.loaiTin,
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+					"orderBy": "ngayDangTinDESC",
+					"giaBETWEEN": [0,vm.ads.gia],
+				  	"pageNo": 1
+				}
+				HouseService.findAdsSpatial(searchDataGiaNhoHon).then(function(res){
+					vm.bdsNgangNhoHon = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsNgangNhoHon.length<7){
+							vm.bdsNgangNhoHon.push(res.data.list[i]);
+						}
+					}
+					
+				});
+
+
 			});
 			vm.selectPlaceCallback = function(place){
 				vm.searchPlaceSelected = place;
