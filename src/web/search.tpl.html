@@ -14,7 +14,16 @@
                                 <!-- <marker ng-repeat="m in markers track by $index" id = "{{mc.ads_list[$index].adsID}}" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
                                     on-click="mc.click({{$index}})"> -->
                                     
-                                    
+                                <street-view-panorama
+                                  click-to-go="false"
+                                  disable-default-u-i="false"
+                                  disable-double-click-zoom="false"
+                                  
+                                  pov="{heading: heading, pitch: pitch}"
+                                  scrollwheel="false"
+                                  enable-close-button="true"
+                                  visible="false">
+                                </street-view-panorama>    
                                 <!-- </marker> -->
 
                                 <info-window id="iw">
@@ -28,7 +37,10 @@
                                                 <div class="info"></div>
                                                 <div class="info">{{mc.highlightAds.huongNha}}</div>
                                                 <div class="info">{{mc.highlightAds.diaChi | limitTo: 20 }}
-                                                <span ng-if="mc.highlightAds.diaChi.length > 20">&hellip;</span>
+                                                    <span ng-if="mc.highlightAds.diaChi.length > 20">&hellip;</span>
+                                                </div>
+                                                <div class="info">
+                                                    <a href="" ng-click="mc.showStreetView($event);" >Street View</a>
                                                 </div>
                                                 
 

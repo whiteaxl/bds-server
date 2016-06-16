@@ -15,6 +15,8 @@
 		vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
 		vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 
+		
+		
 		$scope.center = "Hanoi Vietnam";
 		$scope.placeId = $state.params.place;
 		$scope.loaiTin = $state.params.loaiTin;
@@ -290,6 +292,15 @@
     		//vm.search();
 		}
 
+		vm.showStreetView = function(event){
+			var latlng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
+			vm.map.getStreetView().setPosition(latlng);
+			vm.map.getStreetView().setVisible(true);
+			event.stopPropagation();
+			//return false;
+
+		}
+
 		$scope.goToPageNews = function(loaiTinTuc){
 			console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
 			$state.go('news');
@@ -492,6 +503,8 @@
 						vm.diaChinh.tinhKhongDau = vm.diaChinh.tinh;
 						vm.diaChinh.huyenKhongDau = vm.diaChinh.huyen;
 						vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
+
+						vm.placeSearchText = googlePlace.formatted_address;
 
 						if($scope.searchPlaceSelected.geometry.viewport){
 			          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);

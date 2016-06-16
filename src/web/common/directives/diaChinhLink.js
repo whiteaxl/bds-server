@@ -1,7 +1,7 @@
 angular.module('bds').directive('bdsDiaChinhLink', ['$timeout', function ($timeout) {
     var def = {
         restrict: 'E',
-        scope: {diachinh: "=diachinh", tinh: "=tinh",huyen: "=huyen",xa: "=xa", loaitin: "=loaitin", loainhadat: "=loainhadat", viewmode: "=viewmode"},
+        scope: {diachinh: "=diachinh", loaitin: "=loaitin", loainhadat: "=loainhadat", viewmode: "=viewmode"},
         terminal: true,
         templateUrl: "/web/common/directives/diaChinhLinkTemplate.html",
         replace: 'true',   
@@ -16,7 +16,7 @@ angular.module('bds').directive('bdsDiaChinhLink', ['$timeout', function ($timeo
                     }else if(type==2){
                         $scope.diachinh.xaKhongDau = null;
                     }
-                    $state.go('searchdc', { "tinh" : $scope.diachinh.tinhKhongDau, "huyen" : $scope.diachinh.huyenKhongDau,"xa" : $scope.diachinh.xaKhongDau,"loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+                    $state.go('searchdc', { "tinh" : $scope.diachinh.tinhKhongDau, "huyen" : $scope.diachinh.huyenKhongDau,"xa" : $scope.diachinh.xaKhongDau,"loaiTin" : $scope.loaitin, "loaiNhaDat" : $scope.loainhadat, "viewMode": vm.viewMode}, {location: true});
                 }
             }
         ],

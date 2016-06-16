@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window,$timeout){
 		var vm = this;
 		//nhannc
 		$scope.loaiTin = 0;
@@ -50,7 +50,9 @@
 
 		$scope.$on('$viewContentLoaded', function(){
 			//addCrudControls
-			window.DesignCommon.adjustPage();
+			$timeout(function() {
+				window.DesignCommon.adjustPage();
+			},0);
 			if($state.current.data)
 				$rootScope.bodyClass = $state.current.data.bodyClass
 			// window.onresize = function() {
