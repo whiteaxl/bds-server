@@ -22,7 +22,6 @@ util.locHtml = function(str) {
     str= str.replace(/&quot;|&QUOT;|&#x00022;|&#34;/g,"\"");
     str= str.replace(/&gt;|&GT;|&#x0003E;|&#62;/g,">");
     str= str.replace(/&amp;|&AMP;|&#x00026;|&#38;/g,"&");
-    str= str.replace(/&Tab;|&AMP;|&#x00026;|&#38;/g,"&");
     return str;
 };
 

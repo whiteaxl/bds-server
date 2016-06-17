@@ -124,43 +124,110 @@
                     </div>
                     <div class="row">
                         <div class="col col-850">
-                            <div class="block-16">
-                                <article class="item" ng-repeat="item in listArticle">
-                                    <div class="row">
-                                        <div class="col col-320">
-                                            <a class="media" href="" title="" ng-click="nc.goDetail(item.articleId)">
-                                                <span class="img" style="background-image: url({{::item.avatarImage}})"></span>
-                                            </a>
-                                        </div>
-                                        <div class="col col-550">
-                                            <h3>
-                                                <a  href="" title="" ng-click="nc.goDetail(item.articleId)">
-                                                    <p ng-bind-html="item.title"></p>
-                                                </a>
-                                            </h3>
-                                            <p class="info">{{::item.postedDate}} - <a href="" title="Xây dựng kiến trúc">Xây dựng kiến trúc</a></p>
-                                            <p class="desc" ng-bind-html="item.contentDesc">
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <div class="block-09">
-                                <div class="stats">{{nc.currentPageStart}} – {{nc.currentPageEnd}} của {{nc.totalResultCounts}} kết quả</div>
-                                <ul style="float: left">
-                                    <li style="width: 99px" ng-if="nc.currentPage != 1" ng-click="nc.firstPage()">
-                                        <a href="" title="">Trang đầu</a>
+                            <article class="block-18">
+                                <h1 class="title" ng-bind-html="article.title"></h1>
+                                <h2 class="summary" ng-bind-html="article.contentDesc"></h2>
+                                <p class="info">{{article.postedDate}}</p>
+                                <div class="data">
+                                    <div ng-bind-html="article.contentDetail"></div>
+
+                                    <p>---------------------------------------</p>
+                                    <p>Quý khách có nhu cầu sử dụng dịch vụ vui lòng đăng ký tại đây:</p>
+                                    <p>Website: <a href="" title="">http://www.reland.vn/</a></p>
+                                    <p>Gọi ngay: 1900 6082 hoặc 01687 270027</p>
+                                    <p>Inbox/ Chat vào FanPage: Tên + Số ĐT + E-mail để reland.vn liên hệ lại</p>
+                                </div>
+                                <div class="tags">
+                                    <div class="label"><i class="fa fa-tag"></i> Tags:</div>
+                                    <ul>
+                                        <li>
+                                            <a href="" title="">môi giới nhà phố</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">bất động sản</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">mua bán chung cư</a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="">bất động sản đẹp</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="share">
+                                    <div class="fb-like" data-href="http://vnexpress.net" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                                </div>
+                            </article>
+                            <div class="block-19">
+                                <h3 class="head"><span>Bạn có thể quan tâm</span></h3>
+                                <ul>
+                                    <li>
+                                        <a href="" title="">Golf Park Residence chuẩn bị đón cư dân đầu tiên <span>(27/3)</span></a>
                                     </li>
-                                    <li style="width: 99px" ng-if="nc.currentPage != 1" ng-click="nc.previousPage()">
-                                        <a href="" title="">Trang trước</a>
+                                    <li>
+                                        <a href="" title="">Nhà phố có bếp nối thông vườn cây ở Hado Centrosa Garden <span>(25/3)</span></a>
                                     </li>
-                                    <li style="width: 99px" ng-if="nc.currentPage < nc.lastPageNo" ng-click="nc.nextPage()">
-                                        <a href="" title="">Trang sau</a>
+                                    <li>
+                                        <a href="" title="">Giới địa ốc hào phóng 'chia' lợi nhuận với người mua <span>(22/3)</span></a>
                                     </li>
-                                    <li style="width: 99px" ng-if="nc.currentPage < nc.lastPageNo" ng-click="nc.lastPage()">
-                                        <a href="" title="">Trang cuối</a>
+                                    <li>
+                                        <a href="" title="">Bốc thăm quyền mua shophouse Vinhomes Times City <span>(21/3)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="" title="">Ưu đãi 10% khi mua đất nền ven biển Đà Nẵng <span>(20/3)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="" title="">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence <span>(18/3)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="" title="">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản <span>(3/3)</span></a>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="block-20">
+                                <h3 class="head"><span>Tin khác</span></h3>
+                                <div class="row">
+                                    <div class="col col-25">
+                                        <div class="item">
+                                            <a href="" title="" class="media">
+                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</span>
+                                            </a>
+                                            <h3>
+                                                <a href="" title="">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col col-25">
+                                        <div class="item">
+                                            <a href="" title="" class="media">
+                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Cơ hội đầu tư biệt thự, căn hộ nghỉ dưỡng cùng Vingroup</span>
+                                            </a>
+                                            <h3>
+                                                <a href="" title="">Cơ hội đầu tư biệt thự, căn hộ nghỉ dưỡng cùng Vingroup</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col col-25">
+                                        <div class="item">
+                                            <a href="" title="" class="media">
+                                                <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</span>
+                                            </a>
+                                            <h3>
+                                                <a href="" title="">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col col-25">
+                                        <div class="item">
+                                            <a href="" title="" class="media">
+                                                <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</span>
+                                            </a>
+                                            <h3>
+                                                <a href="" title="">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col col-300">
@@ -857,3 +924,4 @@
     <script src="asset/js/common.min.js"></script>
     <!-- //Script -->
 </body>
+</html>

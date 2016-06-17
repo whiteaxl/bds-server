@@ -24,6 +24,10 @@
         //$scope.trustAsHtml1 = $sce.trustAsHtml("<span style='background-color: rgb(255, 255, 255)'>6 điều cần cân nhắc trước khi mua nhà</span>");
         //$scope.trustAsHtml = $sce.trustAsHtml("&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;6 điều cần cân nhắc trước khi mua nhà&lt;/span&gt;");
 
+        vm.goDetail = function(articleId){
+            $state.go('newsDetail', { "rootCatId" : $scope.rootCatId, "articleId" : articleId}, {location: true});
+        }
+
         function initNews() {
             console.log("---------------------initNews1 ---------------catId: " + $scope.rootCatId);
             var data = {

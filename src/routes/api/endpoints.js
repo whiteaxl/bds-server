@@ -354,6 +354,15 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/findNewsDetail',
+    handler: newsHandlers.findNewsDetail,
+    config: {
+      description: 'Lay danh sach tintuc',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/findRootCategory',
     handler: newsHandlers.findRootCategory,
     config: {

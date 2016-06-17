@@ -10,6 +10,10 @@
                 var url = '/api/findNews';
                 return $http.post(url,data);
             },
+            findNewsDetail: function(data){
+                var url = '/api/findNewsDetail';
+                return $http.post(url,data);
+            },
             findRootCategory: function(data){
                 var url = '/api/findRootCategory';
                 return $http.post(url,data);

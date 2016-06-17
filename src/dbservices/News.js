@@ -1,60 +1,86 @@
 'use strict';
 var mysql = require("mysql");
 var util = require("../lib/utils");
+/*
 var connection = mysql.createConnection({
     host : "localhost",
     user : "root",
     password : "123456",
     database : "reland"
 });
+*/
+var pool      =    mysql.createPool({
+    connectionLimit : 100, //important
+    host     : 'localhost',
+    user     : 'root',
+    password : '123456',
+    database : 'reland',
+    debug    :  false
+});
 
 class NewsModel {
-    constructor(){
-        console.log("contructor----conState: " + connection.state);
-        connection.connect(function (error) {
-            if(error){
-                console.log("Problem with connect to database Reland");
-                console.log(error);
-            } else{
-                console.log("Connect db success");
-            }
-            console.log("contructor--after connect--conState: " + connection.state);
-        });
-    }
+
     findNewsByType(newsType, callback){
         console.log("-----getNewsByType");
-        connection.query("SELECT * FROM news_article",function(err,rows){
-            if(err)
-            {
-                console.log("Problem with MySQL"+err);
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                connection.release();
+                return;
             }
-            else
-            {
-                //res.end(JSON.stringify(rows));
-                console.log("-----getNewsByType: success");
-                if (!rows)
-                    rows = [];
-                console.log(JSON.stringify(rows));
-                res.end(JSON.stringify(rows));
-                callback(err, rows);
-            }
+
+            console.log('connected as id ' + connection.threadId);
+
+            connection.query("SELECT * FROM news_article",function(err,rows){
+                connection.release();
+                if(err)
+                {
+                    console.log("Problem with MySQL"+err);
+                }
+                else
+                {
+                    //res.end(JSON.stringify(rows));
+                    console.log("-----getNewsByType: success");
+                    if (!rows)
+                        rows = [];
+                    console.log(JSON.stringify(rows));
+                    res.end(JSON.stringify(rows));
+                    callback(err, rows);
+                }
+            });
+
+            connection.on('error', function(err) {
+                res.json({"code" : 100, "status" : "Error in connection database"});
+                return;
+            });
         });
     }
     findRootCategory(callback){
         console.log("-----findRootCategory");
-        var sql = "SELECT * FROM reland.news_article_category where cat_parent_id=0";
-        connection.query(sql ,function(err,rows){
-            if(err)
-            {
-                console.log("Problem with MySQL"+err);
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                connection.release();
+                return;
             }
-            else
-            {
-                console.log("-----findRootCategory: success");
-                if (!rows)
-                    rows = [];
-                callback(err, rows);
-            }
+
+            console.log('connected as id ' + connection.threadId);
+
+            var sql = "SELECT * FROM reland.news_article_category where cat_parent_id=0";
+            connection.query(sql ,function(err,rows){
+                connection.release();
+                if(err)
+                {
+                    console.log("Problem with MySQL"+err);
+                }
+                else
+                {
+                    console.log("-----findRootCategory: success");
+                    if (!rows)
+                        rows = [];
+                    callback(err, rows);
+                }
+            });
         });
     }
 
@@ -89,11 +115,24 @@ class NewsModel {
                 catIdStr = catIdStr.substring(0,catIdStr.length -1);
             var sql = "SELECT count(*) countArticle FROM reland.news_article where cat_id in (" + catIdStr + ")";
             console.log("countAllArticleOfCat--------sql: " + sql);
-            connection.query(sql ,function(err, rows){
-                if (!rows){
-                    rows = [];
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    console.log(err);
+                    connection.release();
+                    return;
                 }
-                callback(err, rows);
+
+                console.log('connected as id ' + connection.threadId);
+
+                console.log("countAllArticleOfCat--pool--------sql: " + sql);
+
+                connection.query(sql ,function(err, rows){
+                    connection.release();
+                    if (!rows){
+                        rows = [];
+                    }
+                    callback(err, rows);
+                });
             });
         };
 
@@ -139,15 +178,52 @@ class NewsModel {
             }
             var sql = "SELECT * FROM reland.news_article where cat_id in (" + catIdStr + ")" + limitQuery;
             console.log("findAllArticleOfCat--------sql: " + sql);
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    console.log(err);
+                    connection.release();
+                    return;
+                }
+
+                console.log('connected as id ' + connection.threadId);
+
+                connection.query(sql ,function(err, rows){
+                    connection.release();
+                    if (!rows){
+                        rows = [];
+                    }
+                    callback(err, rows);
+                });
+            });
+        };
+
+        this.getAllChildOfCat(catId, callback1);
+    }
+
+    findArticleDetail(articleId, callback){
+        var sql = "SELECT news.article_id, news.title, news.content_desc, news.posted_date, pg.page_id, pg.content_detail, pg.author "
+                + " FROM reland.news_article_page_content pg, reland.news_article news"
+                + " where pg.article_id = news.article_id"
+                + " and news.article_id = " + articleId;
+        console.log("findArticleDetail--------sql: " + sql);
+
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                connection.release();
+                return;
+            }
+
+            console.log('connected as id ' + connection.threadId);
+
             connection.query(sql ,function(err, rows){
+                connection.release();
                 if (!rows){
                     rows = [];
                 }
                 callback(err, rows);
             });
-        };
-
-        this.getAllChildOfCat(catId, callback1);
+        });
     }
 
     getAllChildOfCat(catId, callback) {
@@ -160,12 +236,22 @@ class NewsModel {
                     + " WHERE t1.cat_id = " + catId;
 
         console.log("-----getAllChildOfCat----- sql : " +sql);
-
-        connection.query(sql ,function(err, rows){
-            if (!rows){
-                rows = [];
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                connection.release();
+                return;
             }
-            callback(err, rows);
+
+            console.log('connected as id ' + connection.threadId);
+
+            connection.query(sql ,function(err, rows){
+                connection.release();
+                if (!rows){
+                    rows = [];
+                }
+                callback(err, rows);
+            });
         });
     }
 }

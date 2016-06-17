@@ -54,7 +54,7 @@ internals.findNews = function(req, reply) {
             var result = [];
             if(all.length > 0){
                 for(var i=0; i < all.length; i++){
-                    result.push(_transformArticleNews(all[i]));
+                    result.push(_transformNews(all[i]));
                 }
             }
             reply({
@@ -67,6 +67,33 @@ internals.findNews = function(req, reply) {
         reply(Boom.badRequest());
     } else {
         newsModel.findAllArticleOfCat(query.catId, query.pageNo, query.pageSize, callback);
+    }
+};
+internals.findNewsDetail = function(req, reply) {
+    var query = req.payload;
+    console.log("-----------hander: findNewsDetail");
+    var callback =(err,all) => {
+        if(err){
+            console.log("err: " + err);
+        } else{
+            if (!all)
+                all = [];
+            console.log("-----findNewsDetail--success");
+            console.log("size:" + all.length);
+            var result = null;
+            if(all.length > 0){
+                    result = (_transformNewsDetail(all[0]));
+            }
+            console.log(result);
+            reply({
+                article: result
+            });
+        }
+    };
+    if (!query.hasOwnProperty('articleId')) {
+        reply(Boom.badRequest());
+    } else {
+        newsModel.findArticleDetail(query.articleId, callback);
     }
 };
 internals.findRootCategory = function(req, reply) {
@@ -87,7 +114,7 @@ internals.findRootCategory = function(req, reply) {
     newsModel.findRootCategory(callback);
 };
 
-function _transformArticleNews(article) {
+function _transformNews(article) {
     let atc = {};
     atc.articleId = article.article_id;
     atc.catId = article.cat_id;
@@ -124,6 +151,22 @@ function _transformArticleNews(article) {
     }
 
     return atc;
+}
+
+function _transformNewsDetail(articleDetail) {
+    let detail = {};
+    detail.articleId = articleDetail.article_id;
+    detail.pageId = articleDetail.page_id;
+    detail.title = util.locHtml(articleDetail.title);
+    detail.contentDesc = util.locHtml(articleDetail.content_desc);
+    detail.contentDetail = util.locHtml(articleDetail.content_detail);
+    if(articleDetail.posted_date > 0){
+        let date = new Date(articleDetail.posted_date);
+        detail.postedDate = date.toUTCString();
+    }
+    detail.author = articleDetail.author;
+
+    return detail;
 }
 
 module.exports = internals;

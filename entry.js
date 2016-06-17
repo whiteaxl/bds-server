@@ -10,6 +10,7 @@ require("./src/web/app/home/homeCtrl.js");
 require("./src/web/app/home/searchCtrl.js");
 require("./src/web/app/home/homeCtrl.js");
 require("./src/web/app/home/newsCtrl.js");
+require("./src/web/app/home/newsDetailCtrl.js");
 
 require("./src/web/app/home/detailCtrl.js");
 require("./src/web/app/home/ChatPanelCtrl.js");

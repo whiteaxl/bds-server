@@ -237,9 +237,15 @@
         }
       }).state('news', {
           url: "/news/:rootCatId",
-          //templateUrl: "/web/index_content.html",
           controller: "NewsCtrl",
           controllerAs: 'nc',
+          data: {
+
+          }
+      }).state('newsDetail', {
+          url: "/newsDetail/:rootCatId/:articleId",
+          controller: "NewsDetailCtrl",
+          controllerAs: 'ndc',
           data: {
 
           }
