@@ -60,7 +60,8 @@
     "style-loader": "^0.13.0",
     "vision": "^4.0.1",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+	"mysql": "^2.5.0"
   },
   "devDependencies": {
     "mocha": "^2.4.5",

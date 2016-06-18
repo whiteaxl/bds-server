@@ -204,48 +204,6 @@ danhMuc.menu = [
         ]
     },
     {
-    	label: "Tin Tức",
-    	value: {},
-    	visible: true,
-    	items: [
-    		{
-		        label: "Loại tin",
-		        value: {},
-		        visible: true,
-		        items: [
-		            { value: {loaiTin: "1"}, label: "Tin thị trường" },
-		            { value: {loaiTin: "2"}, label: "Phân tích - Nhận định" },
-		            { value: {loaiTin: "3"}, label: "Chính sách - Quản lý" },
-		            { value: {loaiTin: "4"}, label: "Thông tin quy hoạch" },
-		            { value: {loaiTin: "6"}, label: "BĐS thế giới" },
-		            { value: {loaiTin: "7"}, label: "Tài chính - Chứng khoán - BĐS" },
-		            { value: {loaiTin: "5"}, label: "Tư vấn luật" },
-		            { value: {loaiTin: "8"}, label: "Lời khuyên" }
-		        ]
-		    },
-		    {
-		        label: "Xây dựng - Kiến trúc",
-		        value: {},
-		        visible: true,
-		        items: [
-		            { value: {}, label: "Xây dựng" },
-		            { value: {}, label: "Kiến trúc" }
-		        ]
-
-		    },
-		    {
-		        label: "Nội - Ngoại thất",
-		        value: {},
-		        visible: true,
-		        items: [
-		            { value: {}, label: "Nội thất" },
-		            { value: {}, label: "Ngoại thất" },
-		            { value: {}, label: "Tư vấn nội thất" }
-		        ]
-		    }
-    	]
-    },
-    {
         label: "Giới Thiệu",
         value: {},
         visible: true,
@@ -254,7 +212,6 @@ danhMuc.menu = [
             { value: {}, label: "Ứng dụng Mobile" }
         ]
     }
-
 ];
 
 

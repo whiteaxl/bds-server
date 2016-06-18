@@ -12,7 +12,7 @@
  				<li ng-repeat="m in menuitems" class="{{m.items?'has-Sub':''}}">
  					<a ng-click="hdr.gotoMenu(m.value)" title="">{{m.label}}</a>
  					<ul ng-if="m.items">
- 						<li ng-repeat="item in m.items" class="{{item.items?'hasSub':''}}" >
+ 						<li ng-repeat="item in m.items" class="{{item.items?'has-Sub':''}}" >
  							<a ng-click="hdr.gotoMenu(item.value)">{{::item.label}}</a>
  							<ul ng-if="item.items">
  								<li ng-repeat="level2 in item.items">

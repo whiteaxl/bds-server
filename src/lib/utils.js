@@ -13,6 +13,18 @@ util.locDau = function(str) {
     return a2;
 };
 
+util.locHtml = function(str) {
+    if(!str) {
+        return str
+    }
+    str= str.replace(/&lt;|&LT|&#x0003C;|&#60;/g,"<");
+    str= str.replace(/&nbsp;|&#160;/g," ");
+    str= str.replace(/&quot;|&QUOT;|&#x00022;|&#34;/g,"\"");
+    str= str.replace(/&gt;|&GT;|&#x0003E;|&#62;/g,">");
+    str= str.replace(/&amp;|&AMP;|&#x00026;|&#38;/g,"&");
+    return str;
+};
+
 var locDauInt = function(str) {
     if(!str) {
         return str

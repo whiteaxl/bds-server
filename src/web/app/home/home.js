@@ -3,13 +3,14 @@
   window.initData = {};
   
   var postal = require("postal.js");
+    
   var tap = postal.addWireTap( function( d, e ) {
     console.log( JSON.stringify( e ) );
   });
 
 
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
-  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize'])
+  .run(['$rootScope', '$cookieStore','$http','$compile', '$sce', function($rootScope, $cookieStore, $http,$compile, $sce){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
@@ -20,8 +21,10 @@
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
     $rootScope.menuitems = window.RewayListValue.menu;
+      
 
     
+      
     $rootScope.chat_visible = true;
     $rootScope.showChat = function(user,scope){
       if($rootScope.chatBoxes.hasOwnProperty(user.email)){
@@ -289,7 +292,19 @@
             bodyClass: "page-detail"
         }
       }).state('news', {
-          url: "/web/news.html"
+          url: "/news/:rootCatId",
+          controller: "NewsCtrl",
+          controllerAs: 'nc',
+          data: {
+
+          }
+      }).state('newsDetail', {
+          url: "/newsDetail/:rootCatId/:articleId",
+          controller: "NewsDetailCtrl",
+          controllerAs: 'ndc',
+          data: {
+
+          }
       })
     });
   bds.factory('socket', function (socketFactory) {
