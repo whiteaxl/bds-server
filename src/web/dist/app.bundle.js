@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "674e394203d4cebec851"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2f424e9c8695afca01c7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18390,8 +18390,7 @@
 			}
 
 			vm.showStreetView = function(event){
-				var latlng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
-				vm.map.getStreetView().setPosition(latlng);
+				vm.map.getStreetView().setPosition(vm.highlightAds.streetviewLatLng);
 				vm.map.getStreetView().setVisible(true);
 				event.stopPropagation();
 				//return false;
@@ -18426,13 +18425,33 @@
 			vm.previousPage = function(callback){
 				vm.searchPage(vm.currentPage-1);
 			}
+			vm.updateStreetview = function(ads,fn){
+				var STREETVIEW_MAX_DISTANCE = 100;
+				var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
+				var streetViewService = new google.maps.StreetViewService();
+		        streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function(streetViewPanoramaData, status,res) {
+		        	if (status === google.maps.StreetViewStatus.OK) {
+						ads.streetviewLatLng = streetViewPanoramaData.location.latLng;
+					}
+				});
+				
+			}
 			vm.searchPage = function(i, callback){
 				vm.searchData.pageNo = i;			
 				HouseService.findAdsSpatial(vm.searchData).then(function(res){
 					var result = res.data.list;
 					//vm.totalResultCounts = res.data.list.length;
+					
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
+				        var length = result.length;
+				        var fn = function() {
+				            if(i < length) {
+				                vm.updateStreetview(result[i], fn);
+				            }
+				        };
+					    fn();
+
 			    		result[i].index = i;
 			    		if(ads.huongNha){
 			    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
@@ -18856,17 +18875,121 @@
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
 				vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
 				vm.marker.content = vm.ads.giaFmt;
-				vm.diaChinh = vm.ads.place.diaChinh;
+				// vm.diaChinh = vm.ads.place.diaChinh;
 				$scope.email = vm.ads.dangBoi.email;
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
-				vm.diaChinh = {
-					tinh:vm.ads.place.diaChinh.tinh,
-					tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
-					huyen: vm.ads.place.diaChinh.huyen,
-					huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau,
-					xa: vm.ads.place.diaChinh.xa,
-					xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
-				}				
+				// vm.diaChinh = {
+				// 	tinh:vm.ads.place.diaChinh.tinh,
+				// 	tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
+				// 	huyen: vm.ads.place.diaChinh.huyen,
+				// 	huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau,
+				// 	xa: vm.ads.place.diaChinh.xa,
+				// 	xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
+				// }				
+
+				var price_min = 0;
+				var price_max = window.RewayListValue.filter_max_value.value;
+				var dien_tich_min = 0;
+				var dien_tich_max = window.RewayListValue.filter_max_value.value;
+			
+				var pageSize = 8;
+
+				vm.name ="";
+				vm.phone="";
+				vm.email="";
+				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+
+				vm.requestInfo = function(){
+					if($('#form-info-request').valid()){
+						HouseService.requestInfo({
+							name: vm.name,
+							phone: vm.phone,
+							email: vm.email,
+							content: vm.content,
+							adsUrl: window.location.href
+						}).then(function(res){
+							console.log(JSON.stringify(res.data));
+							alert(res.data.msg);
+						});
+					}				
+				}
+
+				vm.goDetail = function(adsID){
+	        		$state.go('detail', { "adsID" : adsID}, {location: true});
+	        	}
+	        	//find bds cung loai moi dang
+				var searchDataCungLoai = {
+					"loaiTin": vm.ads.loaiTin,
+					"loaiNhaDat": vm.ads.loaiNhaDat, 
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+				  	"orderBy": "ngayDangTinDESC",
+				  	"pageNo": 1
+				};
+				
+				HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
+					vm.bdsCungLoaiMoiDang = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsCungLoaiMoiDang.length<7){
+							vm.bdsCungLoaiMoiDang.push(res.data.list[i]);
+						}
+					}
+					
+				});
+				//find bds ngang gia
+				var searchDataNgangGia  ={
+					"loaiTin": vm.ads.loaiTin,
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+					"orderBy": "ngayDangTinDESC",
+					"giaBETWEEN": [vm.ads.gia-0.1*vm.ads.gia,vm.ads.gia+0.1*vm.ads.gia],
+				  	"pageNo": 1
+				}
+				
+				HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){
+					vm.bdsNgangGia = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsNgangGia.length<7){
+							vm.bdsNgangGia.push(res.data.list[i]);
+						}
+					}
+					
+				});
+				//find bds gia nho hon
+				var searchDataGiaNhoHon  ={
+					"loaiTin": vm.ads.loaiTin,
+					"diaChinh": {
+						tinh: vm.ads.place.diaChinh.tinhKhongDau,
+						huyen: vm.ads.place.diaChinh.huyenKhongDau
+					},
+					"limit": pageSize,
+					"orderBy": "ngayDangTinDESC",
+					"giaBETWEEN": [0,vm.ads.gia],
+				  	"pageNo": 1
+				}
+				HouseService.findAdsSpatial(searchDataGiaNhoHon).then(function(res){
+					vm.bdsNgangNhoHon = [];
+					for(var i=0;i<res.data.length;i++){
+						if(res.data.list[i].adsID == vm.ads.adsID){
+
+						}else if(vm.bdsNgangNhoHon.length<7){
+							vm.bdsNgangNhoHon.push(res.data.list[i]);
+						}
+					}
+					
+				});
+
+
 			});
 			vm.selectPlaceCallback = function(place){
 				vm.searchPlaceSelected = place;
@@ -18903,6 +19026,43 @@
 			        });*/
 
 	        	});
+	        	
+
+	        	var formRequest = $('#form-info-request');
+	            formRequest.validate({
+	              rules: {
+	                email: {
+	                  	email: true,
+	                  	required: function(element) {
+	            			return $("#form-info-request [name = 'phone']").val()=='';
+	        			}
+	                },
+	                name:{
+	                	required: true,
+	                },
+	                phone: {
+	                	number: true,
+	                	minlength: 9,
+	                	required: function(element) {
+	            			return $("#form-info-request [name = 'email']").val()=='';
+	        			}
+	                }
+	              },
+	              messages: {
+	                email: {
+	                  required: "Nhập số điện thoại hoặc email",
+	                  email: 'Email không hợp lệ'
+	                },
+	                phone: {
+	                   	number:  'Số điện thoại không hợp lệ',
+	                    minlength: 'Số điện thoại ít nhất 9 ký tự',
+	                    required: "Nhập số điện thoại hoặc email"
+	                },
+	                name: {
+	                  required: 'Xin nhập họ tên'
+	                }
+	              }
+	            });    
 			}
 
 			vm.init();
@@ -19112,6 +19272,12 @@
 	      signup: function(data){
 	        var url = "/api/signup";
 	        return $http.post(url,data);
+	      },
+	      requestInfo: function(data){
+	        return $http.post("/api/requestInfo",data);
+	      },
+	      forgotPassword: function(data){
+	        return $http.post("/api/forgotPassword",data);
 	      }
 	    };
 	  });
@@ -19173,8 +19339,12 @@
 	              }
 	              if (loginForm.valid()) {
 	                if(vm.state == vm.FORGOT_PASSWORD){
-	                  alert('email sent');
-	                  vm.state = vm.SENT_PASSWORD;
+	                  HouseService.forgotPassword({
+	                    email: vm.email,
+	                    newPass: vm.password
+	                  }).then(function(res){                               
+	                    vm.state = vm.SENT_PASSWORD;
+	                  });
 	                } else if(vm.state == vm.ENTER_EMAIL){
 	                  HouseService.checkUserExist(data).then(function(res){
 	                    vm.userExist = res.data.exist;
@@ -19306,12 +19476,18 @@
 	                email: {
 	                  required: true,
 	                  email: true
+	                },
+	                password: {
+	                  required: true
 	                }
 	              },
 	              messages: {
 	                email: {
-	                  required: 'Xin nhập email',
+	                  required: 'Xin nhập email1',
 	                  email: 'Email không hợp lệ'
+	                },
+	                password: {
+	                  required: 'Xin nhập mật khẩu'
 	                }
 	              }
 	            });    
@@ -19880,42 +20056,49 @@
 	        ]
 	    },
 	    {
-	        label: "Loại tin",
-	        value: {},
-	        visible: true,
-	        items: [
-	            { value: {loaiTin: "1"}, label: "Tin thị trường" },
-	            { value: {loaiTin: "2"}, label: "Phân tích - Nhận định" },
-	            { value: {loaiTin: "3"}, label: "Chính sách - Quản lý" },
-	            { value: {loaiTin: "4"}, label: "Thông tin quy hoạch" },
-	            { value: {loaiTin: "6"}, label: "BĐS thế giới" },
-	            { value: {loaiTin: "7"}, label: "Tài chính - Chứng khoán - BĐS" },
-	            { value: {loaiTin: "5"}, label: "Tư vấn luật" },
-	            { value: {loaiTin: "8"}, label: "Lời khuyên" }
-	        ]
-	    },
-	    {
-	        label: "Xây dựng - Kiến trúc",
-	        value: {},
-	        visible: true,
-	        items: [
-	            { value: {}, label: "Xây dựng" },
-	            { value: {}, label: "Kiến trúc" }
-	        ]
+	    	label: "Tin Tức",
+	    	value: {},
+	    	visible: true,
+	    	items: [
+	    		{
+			        label: "Loại tin",
+			        value: {},
+			        visible: true,
+			        items: [
+			            { value: {loaiTin: "1"}, label: "Tin thị trường" },
+			            { value: {loaiTin: "2"}, label: "Phân tích - Nhận định" },
+			            { value: {loaiTin: "3"}, label: "Chính sách - Quản lý" },
+			            { value: {loaiTin: "4"}, label: "Thông tin quy hoạch" },
+			            { value: {loaiTin: "6"}, label: "BĐS thế giới" },
+			            { value: {loaiTin: "7"}, label: "Tài chính - Chứng khoán - BĐS" },
+			            { value: {loaiTin: "5"}, label: "Tư vấn luật" },
+			            { value: {loaiTin: "8"}, label: "Lời khuyên" }
+			        ]
+			    },
+			    {
+			        label: "Xây dựng - Kiến trúc",
+			        value: {},
+			        visible: true,
+			        items: [
+			            { value: {}, label: "Xây dựng" },
+			            { value: {}, label: "Kiến trúc" }
+			        ]
 
+			    },
+			    {
+			        label: "Nội - Ngoại thất",
+			        value: {},
+			        visible: true,
+			        items: [
+			            { value: {}, label: "Nội thất" },
+			            { value: {}, label: "Ngoại thất" },
+			            { value: {}, label: "Tư vấn nội thất" }
+			        ]
+			    }
+	    	]
 	    },
 	    {
-	        label: "Nội - Ngoại thất",
-	        value: {},
-	        visible: true,
-	        items: [
-	            { value: {}, label: "Nội thất" },
-	            { value: {}, label: "Ngoại thất" },
-	            { value: {}, label: "Tư vấn nội thất" }
-	        ]
-	    },
-	    {
-	        label: "Tin khác",
+	        label: "Giới Thiệu",
 	        value: {},
 	        visible: true,
 	        items: [
@@ -34674,7 +34857,10 @@
 	    EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
 	    SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
 	    SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
-	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước"
+	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
+	    USER_NOT_EXIST: "User không tồn tại",
+	    SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công",
+
 	};
 
 	internals.DB_ERR = {

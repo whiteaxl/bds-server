@@ -351,7 +351,27 @@ internals.endpoints = [
       description: 'sendEmail to nguoi dang tin', 
       tags: ['api']
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/forgotPassword',
+    handler: loginHandler.forgotPassword,
+    config: {
+      description: 'sendEmail,sms to user', 
+      tags: ['api']
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/resetPassword',
+    handler: loginHandler.resetPassword,
+    config: {
+      description: 'resetPassword', 
+      tags: ['api'],
+      auth: 'jwt'
+    }
   }
+
 
 
 

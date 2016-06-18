@@ -100,7 +100,8 @@
 						name: vm.name,
 						phone: vm.phone,
 						email: vm.email,
-						content: vm.content
+						content: vm.content,
+						adsUrl: window.location.href
 					}).then(function(res){
 						console.log(JSON.stringify(res.data));
 						alert(res.data.msg);
