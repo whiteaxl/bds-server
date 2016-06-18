@@ -389,6 +389,82 @@ internals.likeAds = function(req, reply){
     userService.likeAds(req.payload,reply);    
 }
 
+/**
+
+This function send email / sms to nguoi dang 
+
+{
+Request Data:
+{
+    name: ten nguoi gui
+    email: email muon nhan thong tin
+    phone: so dien thoai de nhan thong tin
+    content: noi dung email
+    nguoiDang: nguoi dang tin
+}
+Response Data:
+{
+    success: true/false
+    sentMail: true/false
+    sentSms: true/false
+}
+
+}
+
+*/
+
+internals.requestInfo = function(req,reply){
+    var data = req.payload;
+    var nguoiDang = data.nguoiDang;
+    //dummy
+    nguoiDang = {
+        email: "tim.hung.dao@gmail.com"
+    }
+    console.log(" log data for send mail "+JSON.stringify(data));
+    if(nguoiDang.email){
+        var generator = require('xoauth2').createXOAuth2Generator({
+            user: 'tim.hung.dao@gmail.com',
+            clientId: '695617178682-t9ojtonmgk4eiukmpksk7flfut4vl95r.apps.googleusercontent.com',
+            clientSecret: '_VcjOUp3G_83_4QVQ8bIJBL-',
+            refreshToken: '1/RQMTRG-n4hmCnziIOI00RWHFQfiOEwMAIUrH5CCYTB8'
+        });
+
+        // listen for token updates
+        // you probably want to store these to a db
+        generator.on('token', function(token){
+            console.log('New token for %s: %s', token.user, token.accessToken);
+        });
+
+        var nodemailer = require('nodemailer');
+        // login
+        var transporter = nodemailer.createTransport(({
+            service: 'gmail',
+            auth: {
+                xoauth2: generator
+            }
+        }));
+
+        // send mail
+        transporter.sendMail({
+            from: 'tim.hung.dao@gmail.com',
+            to: 'hungdq@gipxy.com',
+            subject: 'yeu cau them thong tin ve bds',
+            text: data.content+' ' + data.name,
+            html: '<b>' + data.content + ' <br> ' + data.name + '</b>'
+
+        }, function(error, response) {
+           if (error) {
+                console.log(error);
+           } else {
+                console.log('Message sent');
+           }
+        });
+
+    }else if(nguoiDang.phone){
+        //TODO
+    }
+
+}
 
 
 module.exports = internals;

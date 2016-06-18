@@ -293,24 +293,9 @@
 		}
 
 		vm.showStreetView = function(event){
-			var latLng = new google.maps.LatLng(vm.highlightAds.place.geo.lat, vm.highlightAds.place.geo.lon);
-
-			var streetViewService = new google.maps.StreetViewService();
-			var STREETVIEW_MAX_DISTANCE = 50;
-			
-			streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
-			    if (status === google.maps.StreetViewStatus.OK) {
-			        // ok
-			        vm.map.getStreetView().setPosition(streetViewPanoramaData.location.latLng);
-					vm.map.getStreetView().setVisible(true);
-					event.stopPropagation();
-			    } else {
-			        // no street view available in this range, or some error occurred
-			        console.log('no street view in 50m');
-			    }
-			});
-
-			
+			vm.map.getStreetView().setPosition(vm.highlightAds.streetviewLatLng);
+			vm.map.getStreetView().setVisible(true);
+			event.stopPropagation();
 			//return false;
 
 		}
@@ -343,13 +328,33 @@
 		vm.previousPage = function(callback){
 			vm.searchPage(vm.currentPage-1);
 		}
+		vm.updateStreetview = function(ads,fn){
+			var STREETVIEW_MAX_DISTANCE = 100;
+			var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
+			var streetViewService = new google.maps.StreetViewService();
+	        streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function(streetViewPanoramaData, status,res) {
+	        	if (status === google.maps.StreetViewStatus.OK) {
+					ads.streetviewLatLng = streetViewPanoramaData.location.latLng;
+				}
+			});
+			
+		}
 		vm.searchPage = function(i, callback){
 			vm.searchData.pageNo = i;			
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
 				//vm.totalResultCounts = res.data.list.length;
+				
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
+			        var length = result.length;
+			        var fn = function() {
+			            if(i < length) {
+			                vm.updateStreetview(result[i], fn);
+			            }
+			        };
+				    fn();
+
 		    		result[i].index = i;
 		    		if(ads.huongNha){
 		    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);

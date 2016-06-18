@@ -835,12 +835,20 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   background: #D6F9D8;
 }
 
-.block-15 .control label.error, .box-login label.error, .box-register label.error {
+.block-15 .control label.error {
   display: block;
   font-size: 13px;
   color: #f00;
   margin-top: 5px;
 }
+
+.block-12 .control label.error, .box-login label.error, .box-register label.error {
+  display: block;
+  font-size: 13px;
+  color: #f00;
+  margin-top: 5px;
+}
+
 
 .block-15 .control .btn-login, .box-login .btn-login, .box-register .btn-login {
   display: block;

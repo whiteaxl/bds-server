@@ -61,6 +61,9 @@
       signup: function(data){
         var url = "/api/signup";
         return $http.post(url,data);
+      },
+      requestInfo: function(data){
+        return $http.post("/api/requestInfo",data);
       }
     };
   });

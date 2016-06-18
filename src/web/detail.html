@@ -117,18 +117,18 @@
 
                     </div>
                     <div class="form">
-                        <form action="search.html" method="post">
+                        <form  method="post" id="form-info-request" ng-submit="dt.requestInfo();">
                             <div class="control">
-                                <input class="form-control" type="text" name="name" placeholder="Họ Tên">
+                                <input class="form-control" type="text" ng-model="dt.name" name="name" placeholder="Họ Tên" required>
                             </div>
                             <div class="control">
-                                <input class="form-control" type="email" name="email" placeholder="Địa chỉ email">
+                                <input class="form-control" type="email" ng-model="dt.email" name="email" placeholder="Địa chỉ email" \>
                             </div>
                             <div class="control">
-                                <input class="form-control" type="number" name="phone" placeholder="Số điện thoại">
+                                <input class="form-control" type="number" ng-model="dt.phone" name="phone" placeholder="Số điện thoại">
                             </div>
                             <div class="control">
-                                <textarea name="msg" rows="4" class="form-control">Tôi muốn tìm hiểu thêm thông tin về bất động sản này</textarea>
+                                <textarea name="msg" rows="4" class="form-control">{{dt.content}}</textarea>
                             </div>
                             <div class="handle">
                                 <button type="submit" data-contact="detail" class="btn-submit">Gửi yêu cầu</button>

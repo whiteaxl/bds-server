@@ -89,6 +89,24 @@
 		
 			var pageSize = 8;
 
+			vm.name ="";
+			vm.phone="";
+			vm.email="";
+			vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+
+			vm.requestInfo = function(){
+				if($('#form-info-request').valid()){
+					HouseService.requestInfo({
+						name: vm.name,
+						phone: vm.phone,
+						email: vm.email,
+						content: vm.content
+					},function(res){
+						console.log("sent mail successful");
+					});	
+				}				
+			}
+
 			vm.goDetail = function(adsID){
         		$state.go('detail', { "adsID" : adsID}, {location: true});
         	}
@@ -201,6 +219,43 @@
 		        });*/
 
         	});
+        	
+
+        	var formRequest = $('#form-info-request');
+            formRequest.validate({
+              rules: {
+                email: {
+                  	email: true,
+                  	required: function(element) {
+            			return $("#form-info-request [name = 'phone']").val()=='';
+        			}
+                },
+                name:{
+                	required: true,
+                },
+                phone: {
+                	number: true,
+                	minlength: 9,
+                	required: function(element) {
+            			return $("#form-info-request [name = 'email']").val()=='';
+        			}
+                }
+              },
+              messages: {
+                email: {
+                  required: "Nhập số điện thoại hoặc email",
+                  email: 'Email không hợp lệ'
+                },
+                phone: {
+                   	number:  'Số điện thoại không hợp lệ',
+                    minlength: 'Số điện thoại ít nhất 9 ký tự',
+                    required: "Nhập số điện thoại hoặc email"
+                },
+                name: {
+                  required: 'Xin nhập họ tên'
+                }
+              }
+            });    
 		}
 
 		vm.init();

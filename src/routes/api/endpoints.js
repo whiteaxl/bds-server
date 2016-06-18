@@ -342,7 +342,18 @@ internals.endpoints = [
       description: 'like Ads',
       tags: ['api']
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/requestInfo',
+    handler: Handlers.requestInfo,
+    config: {
+      description: 'sendEmail to nguoi dang tin', 
+      tags: ['api']
+    }
   }
+
+
 
 
 

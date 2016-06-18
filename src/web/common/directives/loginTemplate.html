@@ -14,7 +14,7 @@
                 <input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/>
             </div>
             <div ng-if="lc.state == lc.ENTER_PASSWORD || lc.state == lc.SENT_PASSWORD" class="control">
-                <input type="password" ng-model="lc.password" class="form-control" required> </input>
+                <input type="password" ng-model="lc.password" class="form-control" name="password" required> </input>
             </div>
             <div class="handle">
                 <button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button>
