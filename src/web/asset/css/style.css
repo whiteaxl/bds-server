@@ -2457,7 +2457,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .block-12 .img .media {
   position: absolute;
-  right: 10px;
+  right: 45px;
   bottom: 10px;
 }
 
@@ -2583,7 +2583,8 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .block-12 .contact .price .cel:last-child {
-  font-size: 13px;
+  font-size: 20px;
+  margin-left: 20px;
   text-align: right;
   padding-left: 5px;
   padding-right: 20px;
@@ -2746,7 +2747,8 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .block-12 .detail .type {
-  font-size: 13px;
+  font-size: 20px;
+  font-weight: bold;
   text-transform: uppercase;
   color: #1198F3;
 }

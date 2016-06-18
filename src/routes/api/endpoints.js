@@ -336,12 +336,21 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/likeAds',
+    handler: Handlers.likeAds,
+    config: {
+      description: 'like Ads',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/countNews',
     handler: newsHandlers.countNews,
     config: {
-    description: 'dem danh sach tintuc',
-        tags: ['api']
-  }
+      description: 'dem danh sach tintuc',
+      tags: ['api']
+    }
   },
   {
     method: 'POST',

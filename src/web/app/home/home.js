@@ -20,11 +20,9 @@
 
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
+    $rootScope.menuitems = window.RewayListValue.menu;
 
-    $rootScope.showDangNhap = function(){
-      if($rootScope.loginbox.resetLoginBox)
-        $rootScope.loginbox.resetLoginBox();
-    }
+    
     $rootScope.chat_visible = true;
     $rootScope.showChat = function(user,scope){
       if($rootScope.chatBoxes.hasOwnProperty(user.email)){
@@ -53,6 +51,9 @@
       // alert('aaa');
       //window.DesignCommon.adjustPage();
     }
+
+
+
     $rootScope.signout = function(){
         $rootScope.loginbox.resetLoginBox(); 
     }
@@ -175,7 +176,60 @@
           libraries: 'places,geometry,visualization' // Required for SearchBox.
       });*/
       $stateProvider
-      .state('search', {
+      .state('package', {
+        url: "/hotlist/:packageID/:viewMode",
+        templateUrl: "/web/search.html",
+        controller: "SearchCtrl",
+        controllerAs: 'mc',
+        resolve: {
+          title: function(HouseService,$stateParams,$rootScope) {
+            var result = HouseService.getAllAds();
+            //var result = $rootScope.getGoogleLocationById($stateParams.place);
+            //alert($state.params.place);
+            //var result = HouseService.findAdsSpatial($stateParams.place);
+            result.then(function(data){
+              window.initData = data.data;
+            }); 
+            return result;
+          }
+        },
+        data: {
+            //bodyClass: "page-search",
+            //abc: title
+        } 
+        // ,
+        // controller: function($scope,sellingHouses){
+        //   $scope.sellingHouses = sellingHouses;
+        //   //alert(sellingHouses.length);
+        // }
+      })
+      .state('searchdc', {
+        url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
+        templateUrl: "/web/search.html",
+        controller: "SearchCtrl",
+        controllerAs: 'mc',
+        resolve: {
+          title: function(HouseService,$stateParams,$rootScope) {
+            var result = HouseService.getAllAds();
+            //var result = $rootScope.getGoogleLocationById($stateParams.place);
+            //alert($state.params.place);
+            //var result = HouseService.findAdsSpatial($stateParams.place);
+            result.then(function(data){
+              window.initData = data.data;
+            }); 
+            return result;
+          }
+        },
+        data: {
+            //bodyClass: "page-search",
+            //abc: title
+        } 
+        // ,
+        // controller: function($scope,sellingHouses){
+        //   $scope.sellingHouses = sellingHouses;
+        //   //alert(sellingHouses.length);
+        // }
+      }).state('search', {
           url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
         // templateUrl: "/web/search.tpl.html",
         controller: "SearchCtrl",

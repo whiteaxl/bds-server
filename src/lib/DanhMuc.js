@@ -128,6 +128,130 @@ danhMuc.LoaiNhaDatBan = {
     0 : "Tất cả"
 }
 
+
+danhMuc.menu = [
+    {
+        label: "BĐS bán",
+        value: {loaiTin: "0", loaiNhaDat: "0"},
+        level: "1",
+        visible: true,
+        items: [
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "1"}, label: "Bán căn hộ chung cư" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "2"}, label: "Bán nhà riêng" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "3"}, label: "Bán nhà mặt phố" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "4"}, label: "Bán biệt thự, liền kề" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "6"}, label: "Bán Shophouse" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "7"}, label: "Bán đất nền dự án" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "5"}, label: "Bán đất" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "8"}, label: "Bán trang trại, khu nghỉ dưỡng" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "99"}, label: "Bán các BDS khác" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "10"}, label: "Tìm kiếm nâng cao" },
+            { visible: true,value: {loaiTin: "0", loaiNhaDat: "0"}, label: "Tất cả" }
+        ]                                           
+    },
+    {
+        label: "BĐS cho thuê",
+        value: {loaiTin: "1", loaiNhaDat: "0"},
+        level: "1",
+        visible: true,
+        items: [
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "1"}, label: "Mua căn hộ chung cư" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "2"}, label: "Mua nhà riêng" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "3"}, label: "Mua biệt thự, liền kề" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "4"}, label: "Mua nhà mặt phố" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "5"}, label: "Mua đất nền dự án" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "6"}, label: "Mua đất" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "7"}, label: "Mua trang trại, khu nghỉ dưỡng" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "8"}, label: "Bán trang trại, khu nghỉ dưỡng" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "9"}, label: "Mua kho, nhà xưởng" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "10"}, label: "Mua loại BĐS khác" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "11"}, label: "Tìm kiếm nâng cao" },
+            { visible: true,value: {loaiTin: "1", loaiNhaDat: "0"}, label: "Tất cả" }
+        ]                                           
+    },
+    {
+        label: "Cần bán",
+        value: {},
+        visible: true,
+        items: [
+            { value: {loaiTin: "0", loaiNhaDat: "1"}, label: "Cần thuê căn hộ chung cư" },
+            { value: {loaiTin: "0", loaiNhaDat: "2"}, label: "Cần thuê nhà riêng" },
+            { value: {loaiTin: "0", loaiNhaDat: "3"}, label: "Cần thuê nhà mặt phố" },
+            { value: {loaiTin: "0", loaiNhaDat: "4"}, label: "Cần thuê nhà trọ, phòng trọ" },
+            { value: {loaiTin: "0", loaiNhaDat: "5"}, label: "Cần thuê văn phòng" },
+            { value: {loaiTin: "0", loaiNhaDat: "6"}, label: "Cần thuê cửa hàng, ki ốt" },
+            { value: {loaiTin: "0", loaiNhaDat: "7"}, label: "Cần thuê kho, nhà xưởng, đất" },
+            { value: {loaiTin: "0", loaiNhaDat: "8"}, label: "Cần thuê loại BĐS khác" },
+            { value: {loaiTin: "0", loaiNhaDat: "11"}, label: "Tìm kiếm nâng cao" },
+            { value: {loaiTin: "0", loaiNhaDat: "0"}, label: "Tất cả" }
+        ]
+    },
+    {
+        label: "Cần thuê",
+        value: {},
+        visible: true,
+        items: [
+            { value: {loaiTin: "1", loaiNhaDat: "1"}, label: "Cần thuê căn hộ chung cư" },
+            { value: {loaiTin: "1", loaiNhaDat: "2"}, label: "Cần thuê nhà riêng" },
+            { value: {loaiTin: "1", loaiNhaDat: "3"}, label: "Cần thuê nhà mặt phố" },
+            { value: {loaiTin: "1", loaiNhaDat: "4"}, label: "Cần thuê nhà trọ, phòng trọ" },
+            { value: {loaiTin: "1", loaiNhaDat: "5"}, label: "Cần thuê văn phòng" },
+            { value: {loaiTin: "1", loaiNhaDat: "6"}, label: "Cần thuê cửa hàng, ki ốt" },
+            { value: {loaiTin: "1", loaiNhaDat: "7"}, label: "Cần thuê kho, nhà xưởng, đất" },
+            { value: {loaiTin: "1", loaiNhaDat: "8"}, label: "Cần thuê loại BĐS khác" },
+            { value: {loaiTin: "1", loaiNhaDat: "9"}, label: "Tìm kiếm nâng cao" },
+            { value: {loaiTin: "1", loaiNhaDat: "0"}, label: "Tất cả" }
+        ]
+    },
+    {
+        label: "Loại tin",
+        value: {},
+        visible: true,
+        items: [
+            { value: {loaiTin: "1"}, label: "Tin thị trường" },
+            { value: {loaiTin: "2"}, label: "Phân tích - Nhận định" },
+            { value: {loaiTin: "3"}, label: "Chính sách - Quản lý" },
+            { value: {loaiTin: "4"}, label: "Thông tin quy hoạch" },
+            { value: {loaiTin: "6"}, label: "BĐS thế giới" },
+            { value: {loaiTin: "7"}, label: "Tài chính - Chứng khoán - BĐS" },
+            { value: {loaiTin: "5"}, label: "Tư vấn luật" },
+            { value: {loaiTin: "8"}, label: "Lời khuyên" }
+        ]
+    },
+    {
+        label: "Xây dựng - Kiến trúc",
+        value: {},
+        visible: true,
+        items: [
+            { value: {}, label: "Xây dựng" },
+            { value: {}, label: "Kiến trúc" }
+        ]
+
+    },
+    {
+        label: "Nội - Ngoại thất",
+        value: {},
+        visible: true,
+        items: [
+            { value: {}, label: "Nội thất" },
+            { value: {}, label: "Ngoại thất" },
+            { value: {}, label: "Tư vấn nội thất" }
+        ]
+    },
+    {
+        label: "Tin khác",
+        value: {},
+        visible: true,
+        items: [
+            { value: {}, label: "Môi giới" },
+            { value: {}, label: "Ứng dụng Mobile" }
+        ]
+    }
+
+];
+
+
+
 danhMuc.LoaiNhaDatBanWeb = [
     { value: "1", lable: "Bán căn hộ chung cư" },
     { value: "2", lable: "Bán nhà riêng" },

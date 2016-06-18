@@ -10,12 +10,16 @@ var bucket = cluster.openBucket('default');
 bucket.enableN1ql(['127.0.0.1:8093']);
 bucket.operationTimeout = 120 * 1000;
 
-let constant = require('../lib/constant');
-let log = require('../lib/logUtil');
+var constant = require('../lib/constant');
+var log = require('../lib/logUtil');
 
 var request = require("request");
 
 var syncGatewayDB_URL = "http://localhost:4985/default/";
+
+
+var SyncGw = require('./SyncGW');
+var syncGw = new SyncGw();
 
 
 class UserModel {
@@ -43,6 +47,14 @@ class UserModel {
     bucket.query(query, callback);
   }
 
+  getUserByID(userID,callback){
+    var sql = `select default.* from default where type='User' and id='${userID}'`;
+
+    var query = N1qlQuery.fromString(sql);
+    this.initBucket();
+    bucket.query(query, callback);
+  }
+
   //userDto
   createLoginOnSyncGateway(userDto, callback) {
     var url = syncGatewayDB_URL + "_user/";
@@ -66,33 +78,6 @@ class UserModel {
         } else {
           log.error("createLoginOnSyncGateway", response.body);
           callback({code:99, msg: response.body.reason}, null);
-        }
-      });
-  }
-
-  createDocViaSyncGateway(dto, callback) {
-    /*
-    if (!dto.timeStamp) {
-      dto.timeStamp = new Date().getTime();
-    }
-    */
-
-    request({
-        url: syncGatewayDB_URL, method: "POST",
-        json: dto
-      },
-      function (error, response, body) {
-        if (error) {
-          log.error("Error when createDocViaSyncGateway", error, response);
-          callback(error, body);
-          return;
-        }
-
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          callback(null, body);
-        } else {
-          log.error("createDocViaSyncGateway - Have response but status fail:", response);
-          callback({code:99, msg: response.body}, null);
         }
       });
   }
@@ -180,7 +165,7 @@ class UserModel {
                   return;
                 }
 
-                this.createDocViaSyncGateway(userDto, (err, res) => {
+                syncGw.createDocViaSyncGateway(userDto, (err, res) => {
                   if (err) {
                     log.warn("Error in createUserAndLogin", err);
                     callback({code: 99, msg: err.toString()})
@@ -221,6 +206,91 @@ class UserModel {
     })
   }
 
+  /**
+  Ham nay se luu save search vao cuoi cung neu nhu chua co
+  Neu co save search roi tra ve 
+  {
+      success: false
+      msg: 
+  }
+  */
+
+  saveSearch(query,userID,onSuccess){
+
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          console.log(user);
+
+          if(this._checkSaveSearchExist(query,user)==true){
+            onSuccess({success: false,msg: constant.MSG.EXIST_SAVE_SEARCH});
+          }else{
+            console.log("going to push query " + JSON.stringify(query));
+            user.saveSearch.push(query);
+            bucket.upsert(user.id, user, function (err, res) {
+              if (err) {
+                  console.log("ERROR:" + err);
+              }
+              onSuccess({success:true,msg: constant.MSG.SUCCESS_SAVE_SEARCH});
+            })
+          } 
+        }
+      }
+    });
+  }
+
+  likeAds(payload,reply){
+    var adsID = payload.adsID;
+    var userID = payload.userID;
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          if(!user.adsLikes)
+            user.adsLikes = [];
+          var alreadyHasAdsID = false;
+          for(var i=0;i<user.adsLikes.length;i++){
+            if(_.isEqual(user.adsLikes[i],adsID)){
+              alreadyHasAdsID = true;
+              break;
+            }
+          }
+          if(alreadyHasAdsID==false){
+            user.adsLikes.push(adsID);
+            bucket.upsert(user.id, user, function (err, res) {
+              if (err) {
+                  console.log("ERROR:" + err);
+              }
+              reply({success:true,msg: constant.MSG.SUCCESS_LIKE_ADS});
+            })
+          }else{
+            reply({success:false, msg: constant.MSG.EXIST_LIKE_ADS});
+          }
+        }
+      }
+    });       
+  }
+
+  
+  _checkSaveSearchExist(data, user){
+    if(!user.saveSearch)
+      user.saveSearch = [];
+    if(user.saveSearch){
+      for(var i=0;i< user.saveSearch.length;i++){
+        if(_.isEqual(user.saveSearch[i],data)==true)
+          return true;
+      }
+    }else{
+      return false;  
+    }
+  }
 
   isUserExist(data, onSuccess) {
     var sql = `select count(*) from default where type='User'`;

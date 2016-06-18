@@ -1,1369 +1,876 @@
-<body class="page-detail">
-    <div class="wrapper" id="wrapper">
-        <div class="main" id="main">
-            <header class="header">
-                <div class="header-top">
-                    <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
-                    <h2 class="logo">
-                        <a href="index.html" title="Reland">
-                            <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
-                        </a>
-                    </h2>
-                    <nav class="nav-main">
-                        <ul>
-                            <li>
-                                <a href="" title="">Bất động sản bán</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà đất</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Chung cư</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">BDS bán gần đây</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Bất động sản cho thuê</a>
-                                <ul>
-                                    <li>
-                                        <a href="" title="">Nhà ở</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Phòng trọ</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Văn phòng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Cửa hàng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tham khảo giá nhà cho thuê</a>
-                                    </li>
-                                    <li class="border">
-                                        <a href="" title="">Tìm kiếm nâng cao</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Tất cả</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" title="">Môi giới</a>
-                            </li>
-                            <li>
-                                <a href="" title="">Mobile</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="nav-user">
-                        <ul>
-                            <li>
-                                <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
-                            </li>
-                            <li>
-                                <a class="link" href="" title="">Lưu tìm kiếm</a>
-                            </li>
-                            <user-info-menu ></user-info-menu>
-                        </ul>
-                    </nav>
-                    <a href="#box-saved" class="btn-close" data-close="true"><i class="fa fa-angle-right"></i></a>
-                    <a href="#search-mobile" title="Search" class="btn-search" data-search="true"><i class="fa fa-search"></i></a>
-                </div>
-            </header><!-- //header -->
-            <div class="box-control">
-                <div class="logo">
-                    <a href="index.html" title="Reland">
-                        <img src="asset/img/logo-103x92.png" width="103" height="92" alt=""/>
-                    </a>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col col-50">
-                            <div class="search">
-                                <form action="search.html" method="post">
-                                    <input type="search" class="form-control" name="search" value="New York, NY"/>
-                                    <button class="btn-submit" type="submit"><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
-                            <button data-popup="detail" class="btn-request">Request Info</button>
-                        </div>
-                        <div class="col col-50">
-                            <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Share</a>
-                            <a href="" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Save</a>
-                            <a href="" class="btn-get" title="Get Pre-Qualified">Get Pre-Qualified</a>
-                        </div>
+<div class="main" id="main">
+<div style="display: none;" >
+    <ng-map center="Hanoi Vietnam" class="ngmap">
+    </ng-map>   
+</div>
+    <bds-header menuitems="$root.menuitems"></bds-header>
+    <div class="box-control">
+        <div class="logo">
+            <a href="index.html" title="Reland">
+                <img src="asset/img/logo-103x92.png" width="103" height="92" alt=""/>
+            </a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col col-50">
+                    <div class="search">
+                        <form method="post" ng-submit="dt.goToPageSearch();">
+                            <input ng-model="dt.placeSearchText" type="search" id="autoComplete" class="form-control" name="search" />
+                            <button class="btn-submit" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
                     </div>
+                    <button data-popup="detail" class="btn-request">Request Info</button>
+                </div>
+                <div class="col col-50">
+                    <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Share</a>
+                    <a href="" ng-click="dt.likeAds();" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Save</a>
                 </div>
             </div>
-            <section class="box-detail">
-                <div class="container">
-                    <div class="block-07">
+        </div>
+    </div>
+    <section class="box-detail">
+        <div class="container">
+            <div class="block-07">
+                <bds-dia-chinh-link diachinh="dt.ads.place.diaChinh" loaitin="dt.ads.loaiTin" loainhadat="dt.ads.loaiNhaDat" viewmode="map"></bds-dia-chinh-link>  
+            </div>
+            <div class="block-12">
+                <div class="img" style="background-image: url({{dt.ads.image.images[0]?dt.ads.image.images[0]:'asset/img/logo.png';}})">
+                    <a href="#box-popup" data-popup="true" data-goto="1" class="fullscreen"><i class="fa fa-arrows-alt"></i></a>
+                    <ng-map ng-if="dt.viewMap" center="{{dt.center}}" zoom="15" class="ngmap">
+                        <custom-marker position="[{{dt.marker.coords.latitude}},{{dt.marker.coords.longitude}}]">
+                          <div class = "my1">
+                            {{dt.marker.content}} 
+                          </div>
+                        </custom-marker>
+                    </ng-map>
+                    <div class="media">
                         <ul>
                             <li>
-                                <a href="" title="">United States</a>
+                                <a href="" title="">
+                                    <span class="bg" style="background-image: url(asset/img/data/img-detail-1.jpg)"></span>
+                                    <span class="txt">Photos (5)</span>
+                                </a>
                             </li>
                             <li>
-                                <a href="" title="">California</a>
-                            </li>
-                            <li>
-                                <span>California City</span>
+                                <a href="" title="">
+                                    <span class="bg" ng-click="dt.viewMap = !dt.viewMap;" style="background-image: url(asset/img/data/map_icon_70x70_txl2.png)"></span>
+                                    <span class="txt">View Map</span>
+                                </a>
                             </li>
                         </ul>
+                        <div class="contrast">Broker: The Corcoran Group</div>
                     </div>
-                    <div class="block-12">
-                        <div class="img" style="background-image: url(asset/img/data/img-detail-1.jpg)">
-                            <a href="#box-popup" data-popup="true" data-goto="1" class="fullscreen"><i class="fa fa-arrows-alt"></i></a>
-                            <div class="media">
-                                <ul>
-                                    <li>
-                                        <a href="" title="">
-                                            <span class="bg" style="background-image: url(asset/img/data/img-detail-1.jpg)"></span>
-                                            <span class="txt">Photos (5)</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">
-                                            <span class="bg" style="background-image: url(asset/img/data/map_icon_70x70_txl2.png)"></span>
-                                            <span class="txt">View Map</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="contrast">Broker: The Corcoran Group</div>
-                            </div>
+                </div>
+                <div class="detail">
+                    <div class="bg-detail sp" style="background-image: url(asset/img/data/img-detail-1.jpg)"></div>
+                    <div class="type" >{{dt.ads.giaFmt}}</div>
+                    <div class="row row-location">
+                        <div class="col col-60">
+                            <div class="location">{{dt.ads.place.diachi}}</div>
                         </div>
-                        <div class="detail">
-                            <div class="bg-detail sp" style="background-image: url(asset/img/data/img-detail-1.jpg)"></div>
-                            <div class="type">For Sale</div>
-                            <h1 class="title pc">174 W 76th St #8G</h1>
-                            <div class="head sp"><span class="price">$1,300,000</span><span class="stats"><i class="fa fa-picture-o"></i> 5</span></div>
-                            <div class="hire">Est. Mortgage: $5,911/mo</div>
-                            <div class="row row-location">
-                                <div class="col col-60">
-                                    <div class="location">New York, NY 10023 (<a href="" title="">Upper West Side</a>)</div>
-                                </div>
-                                <div class="col col-40">
-                                    <a href="" class="times pc"><i class="fa fa-clock-o"></i> See your commute times</a>
-                                    <a href="" class="maker sp">
-                                        <span class="bg" style="background-image: url(asset/img/data/map_icon_70x70_txl2.png)"></span>
+                    </div>
+                    <div class="hr sp"></div>
+                    <div class="row row-detail">
+                        <div class="col col-33">{{dt.ads.dienTichFmt}}</div>
+                        <div class="col col-33" ng-if="dt.ads.soPhongNgu">{{dt.ads.soPhongNgu}} phòng ngủ</div>
+                        <div class="col col-33" ng-if="dt.ads.soPhongTam">{{dt.ads.soPhongTam}} phòng tắm</div>
+                        <div class="col col-33" ng-if="dt.ads.soTang">{{dt.ads.soTang}} tầng</div>
+                        <div class="col col-33" >{{dt.ads.loaiNhaDatFmt}}</div>
+                        <div class="col col-33" ng-if="dt.ads.luotXem">{{dt.ads.luotXem}} lượt xem</div>
+                        <div class="col col-33" ng-if="dt.ads.soNgayDaDangTinFmt">{{dt.ads.soNgayDaDangTinFmt}}</div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="contact">
+                    <div class="price">
+                        <div class="line">
+                            <div class="cel" style="float: left;">{{dt.ads.giaFmt}}</div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="row">
+                            <div class="col col-130">
+                                <img src="asset/img/data/img-logo.gif" width="120" height="50" alt=""/>
+                            </div>
+                            <div class="col col-168">
+                                <h3>
+                                    <a href="#" style="float: right;" ng-if="dt.ads.dangBoi.userID" ng-click="dt.showChat(dt.ads.dangBoi);" >
+                                        <img src="asset/img/small-chat-icon.png" style="width: auto;"></img>
                                     </a>
+                                    <a href="" title="">{{dt.ads.dangBoi.name}}</a>                                           
+                                </h3>
+                                <div class="phone">{{dt.ads.dangBoi.phone}}</div>
+                                <div class="rate">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> (0)
                                 </div>
-                            </div>
-                            <div class="hr sp"></div>
-                            <div class="row row-detail">
-                                <div class="col col-33">Coop</div>
-                                <div class="col col-33">2 Bedrooms</div>
-                                <div class="col col-33">1 full Bathroom</div>
-                                <div class="col col-33">Built in 1925</div>
-                                <div class="col col-33">8 Days on Reland</div>
-                            </div>
-                        </div>
-                        <div class="contact">
-                            <div class="price">
-                                <div class="line">
-                                    <div class="cel">$1,300,000</div>
-                                    <div class="cel">Est. Mortgage: $5,911/mo</div>
-                                </div>
-                            </div>
-                            <ul class="call">
-                                <li>
-                                    <a href="" title="">Get Equifax<sup>&trade;</sup> Credit Score</a>
-                                </li>
-                                <li>
-                                    <a href="" title="">Get Pre-Approved »</a>
-                                </li>
-                            </ul>
-                            <div class="group">
-                                <div class="row">
-                                    <div class="col col-130">
-                                        <img src="asset/img/data/img-logo.gif" width="120" height="50" alt=""/>
-                                    </div>
-                                    <div class="col col-168">
-                                        <h3>
-                                            <a href="" title="">{{dt.ads.dangBoi.name}}</a>
-                                        </h3>
-                                        <div class="phone">{{dt.ads.dangBoi.phone}}</div>
-                                        <div class="rate">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i> (0)
-                                        </div>
-                                        <div class="sales">4 Recent Sales {{dt.ads.dangBoi.email}}
-                                            <a href="#" ng-if="dt.ads.dangBoi.userID" ng-click="dt.showChat(dt.ads.dangBoi);" >
-                                                <img src="asset/img/small-chat-icon.png" style="width: auto;"></img>
-                                            </a>
-                                        </div>
-                                    </div>
+                                <div class="sales">{{dt.ads.dangBoi.email}}
                                     
                                 </div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    <div class="form">
+                        <form action="search.html" method="post">
+                            <div class="control">
+                                <input class="form-control" type="text" name="name" placeholder="Họ Tên">
+                            </div>
+                            <div class="control">
+                                <input class="form-control" type="email" name="email" placeholder="Địa chỉ email">
+                            </div>
+                            <div class="control">
+                                <input class="form-control" type="number" name="phone" placeholder="Số điện thoại">
+                            </div>
+                            <div class="control">
+                                <textarea name="msg" rows="4" class="form-control">Tôi muốn tìm hiểu thêm thông tin về bất động sản này</textarea>
+                            </div>
+                            <div class="handle">
+                                <button type="submit" data-contact="detail" class="btn-submit">Gửi yêu cầu</button>
 
                             </div>
-                            <div class="form">
-                                <form action="search.html" method="post">
-                                    <div class="control">
-                                        <input class="form-control" type="text" name="name" placeholder="Your Name" value="quangthanh112">
-                                    </div>
-                                    <div class="control">
-                                        <input class="form-control" type="email" name="email" placeholder="Your Email" value="quangthanh112@gmail.com">
-                                    </div>
-                                    <div class="control">
-                                        <input class="form-control" type="number" name="phone" placeholder="Phone number" value="01687270027">
-                                    </div>
-                                    <div class="control">
-                                        <textarea name="msg" rows="4" class="form-control">I am interested in 174 W 76th St #8G, New York, NY 10023.</textarea>
-                                    </div>
-                                    <div class="handle">
-                                        <button type="submit" data-contact="detail" class="btn-submit">Request Info</button>
-
-                                    </div>
-                                    <div class="legalese">
-                                        >By sending, you agree to Reland's
-                                        <a href="/terms" target="_blank">Terms of Use</a> &amp; <a href="/privacy" target="_blank">Privacy Policy</a>.
-                                    </div>
-                                </form>
+                            <div class="legalese">
+                                >Bằng việc gửi yêu cầu,tôi đồng ý với các 
+                                <a href="/terms" target="_blank">điều khoản sử dụng</a> của Reland.
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col col-830">
-                            <div class="block-13">
-                                <div class="group">
-                                    <h2 class="title">Home Details <span>for 174 W 76th St #8G</span></h2>
-                                    <p class="time">9 Days on Reland <span class="view">302 views</span></p>
-                                    <div class="detail">
-                                        You can HAVE IT ALL in this beautifully renovated 2 bedroom pre-war home in on<wbr>e of the few Rosario Candela buildings on the Upper West Side. The home offers a gracious layout with spacious rooms, a renovated kitchen, and a luxurious marble bath. Some of its many other features include open north city views from the living room and master bedroom and a window seat to enjoy them from, high ceilings with crisp crown moldings, parquet floors, custom made built-ins, a washer / dryer, plenty of storage, and brilliant light throughout. The Wellston (AKA - 161 West 75th Street) offers full-time
-                                        <span id="ellipsis">...</span>
-                                        <span id="desc" class="hidden"> doormen, a live-in superintendent, bicycle room, storage bins (for a fee), and an outdoor patio. All this in one of the city's most sought after locations - convenient to the express subway, Central Park, Riverside Park, The Museum of Natural History, shopping, and delicious restaurants. Do not miss this opportunity. Call today to schedule your appointment.</span>
-                                    </div>
-                                    <div class="action">
-                                        <a data-toggle="detail" href="#desc" class="toggle" data-toggle-text="Show less">Show more</a>
-                                    </div>
-                                </div>
-                                <div class="group">
-                                    <h2 class="head">Features <span>for 174 W 76th St #8G</span></h2>
-                                    <p class="update">Information last updated on 04/02/2016 12:00 AM:</p>
-                                    <div class="row">
-                                        <div class="col col-33">
-                                            <ul>
-                                                <li>Price: $1,300,000</li>
-                                                <li>2 Bedrooms</li>
-                                                <li>1 full Bathroom</li>
-                                                <li>Coop</li>
-                                                <li>Doorman</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col col-33">
-                                            <ul>
-                                                <li>Status: For Sale</li>
-                                                <li>Built in 1925</li>
-                                                <li>Rooms: 4.5</li>
-                                                <li>Units in Building: 130</li>
-                                                <li>Neighborhood: <a href="/NY/New_York,5261,Upper_West_Side/" onclick="o_track_ql_click('ListingInfo|Neighborhood_Link');">Upper West Side</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col col-33">
-                                            <ul>
-                                                <li>MLS/Source ID: 3651617</li>
-                                                <li>Zip: <a href="/for_sale/10023_zip/">10023</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <h3 class="free">Fees and Taxes</h3>
-                                    <p>HOA (Monthly): $1,922</p>
-                                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-830">
+                    <div class="block-13">
+                        <div class="group">
+                            <h2 class="title">Thông tin chi tiết </h2>
+                            <p class="time">{{dt.ads.soNgayDaDangTinFmt}} <span class="view">{{dt.ads.luotXem }} lượt xem</span></p>
+                            <div class="detail">
+                                {{dt.ads.chiTiet}}
+                                <span id="desc" class="hidden"> doormen, a live-in superintendent, bicycle room, storage bins (for a fee), and an outdoor patio. All this in one of the city's most sought after locations - convenient to the express subway, Central Park, Riverside Park, The Museum of Natural History, shopping, and delicious restaurants. Do not miss this opportunity. Call today to schedule your appointment.</span>
                             </div>
                         </div>
-                        <div class="col col-350">
-                            <div class="block-11">
-                                <div class="item">
-                                    <a href="#" title="">
-                                        <img src="asset/img/data/image.png" width="300" height="190" alt="">
-                                    </a>
+                        <div class="group">
+                            <h2 class="head">Đặc tính kỹ thuật </h2>
+                            <p class="update">Thông tin được cập nhật ngày {{dt.ads.ngayDangTinFmt}}</p>
+                            <div class="row">
+                                <div class="col col-33">
+                                    <ul>
+                                        <li>Giá: {{dt.ads.giaFmt}}</li>
+                                        <li ng-if="dt.ads.soPhongNgu"> {{dt.ads.soPhongNgu}} phòng ngủ</li>
+                                        <li ng-if="dt.ads.soPhongTam"> {{dt.ads.soPhongTam}} phòng tắm</li>
+                                        <li ng-if="dt.ads.soTang"> {{dt.ads.soTang}} tầng</li>
+                                        <li>Coop</li>
+                                        <li>Doorman</li>
+                                    </ul>
                                 </div>
-                                <div class="item">
-                                    <a href="#" title="">
-                                        <img src="asset/img/data/image.png" width="300" height="190" alt="">
-                                    </a>
+                                <div class="col col-33">
+                                    <ul>
+                                        <li>Trạng thái: </li>
+                                        <li>Built in 1925</li>
+                                        <li>Rooms: 4.5</li>
+                                        <li>Units in Building: 130</li>
+                                        <li>Neighborhood: <a href="/NY/New_York,5261,Upper_West_Side/" onclick="o_track_ql_click('ListingInfo|Neighborhood_Link');">Upper West Side</a></li>
+                                    </ul>
                                 </div>
+                                
                             </div>
-                        </div>
-                    </div>
-                    <div class="block-14">
-                        <h2 class="title">The Space</h2>
-                        <div class="row">
-                            <div class="col col-33">
-                                <a href="#box-popup" data-popup="true" data-goto="1">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-33">
-                                <a href="#box-popup" data-popup="true" data-goto="2">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-33">
-                                <a href="#box-popup" data-popup="true" data-goto="3">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-40">
-                                <a href="#box-popup" data-popup="true" data-goto="4">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-60">
-                                <a href="#box-popup" data-popup="true" data-goto="5">
-                                    <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-20">
-                                <a href="#box-popup" data-popup="true" data-goto="6">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-20">
-                                <a href="#box-popup" data-popup="true" data-goto="7">
-                                    <span class="img" style="background-image: url(asset/img/data/img-60-3.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-60">
-                                <a href="#box-popup" data-popup="true" data-goto="8">
-                                    <span class="img" style="background-image: url(asset/img/data/img-60-4.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-50">
-                                <a href="#box-popup" data-popup="true" data-goto="9">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                            <div class="col col-50">
-                                <a href="#box-popup" data-popup="true" data-goto="10">
-                                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block-02">
-                        <div class="title" data-scroll="true">
-                            <h2>Safe Neighborhoods</h2>
-                            <p>New York, NY</p>
-                        </div>
-                        <div class="row">
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="more sp">
-                            <a href="" title="">See All Safe Neighborhoods</a>
-                        </div>
-                    </div>
-                    <div class="block-02">
-                        <div class="title" data-scroll="true">
-                            <h2>Fixer Upper Homes</h2>
-                            <p>New York, NY</p>
-                        </div>
-                        <div class="row">
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="more sp">
-                            <a href="" title="">See All Safe Neighborhoods</a>
-                        </div>
-                    </div>
-                    <div class="block-02">
-                        <div class="title" data-scroll="true">
-                            <h2>Remodeled Kitchens</h2>
-                            <p>New York, NY</p>
-                        </div>
-                        <div class="row">
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="more sp">
-                            <a href="" title="">See All Safe Neighborhoods</a>
-                        </div>
-                    </div>
-                    <div class="block-02">
-                        <div class="title" data-scroll="true">
-                            <h2>Homes Under $1,300,000</h2>
-                            <p>New York, NY</p>
-                        </div>
-                        <div class="row">
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-2.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-25">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                            <div class="col col-33">
-                                <div class="item">
-                                    <a class="link" href="" title="">
-                                        <span class="img" style="background-image: url(asset/img/data/img-60-1.jpg)"></span>
-                                        <span class="info">
-                                            <span class="line"><span class="price">$4,850,000</span> <span>8 bd 7 ba</span></span>
-                                            <span class="line">123 W 119th St</span>
-                                            <span class="line">New York</span>
-                                        </span>
-                                    </a>
-                                    <a class="liked" data-like="true" href="#" title=""><span>Like</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="more sp">
-                            <a href="" title="">See All Safe Neighborhoods</a>
                         </div>
                     </div>
                 </div>
-            </section>
-            <footer class="footer">
-               <div class="footer-bot">
-                   <div class="row">
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">Top Real Estate Markets</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">San Francisco real estate</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Brooklyn real estate</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Manhattan real estate</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Los Angeles real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">San Diego real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Miami real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Chicago real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Las Vegas real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Queens real estate</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin real estate</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">Top Rental Markets</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">Explore Reland</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">For Professionals</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                       <div class="col col-20">
-                           <h3>
-                               <a href="" title="">Reland Corporate</a>
-                           </h3>
-                           <ul>
-                               <li>
-                                   <a href="" title="">Houston apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Las Vegas apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">San Antonio apartments</a>
-                               </li>
-                               <li>
-                                   <a href="" title="">Phoenix apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Indianapolis apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Atlanta apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Austin apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Charlotte apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title="">Dallas apartments</a>
-                               </li>
-                               <li class="hidden">
-                                   <a href="" title=""> Miami apartments</a>
-                               </li>
-                           </ul>
-                           <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
-                       </div>
-                   </div>
-                   <nav class="navigation">
-                       <ul>
-                           <li>
-                               <a href="" title="">Buy</a>
-                           </li>
-                           <li>
-                               <a href="" title="">Sell</a>
-                           </li>
-                           <li>
-                               <a href="" title="">Rent</a>
-                           </li>
-                           <li>
-                               <a href="" title="">Mortgage</a>
-                           </li>
-                           <li>
-                               <a href="" title="">Find an Agent</a>
-                           </li>
-                       </ul>
-                   </nav>
-                   <div class="copyright">
-                       Copyright &copy; 2016 Reland, Inc. All rights reserved. <a href="" rel="nofollow"><i class="fa fa-home"></i> Fair Housing and Equal Opportunity.</a> Have a Question? Visit our <a href="" rel="nofollow">Help Center</a> to find the answer.
-                   </div>
-               </div>
-            </footer><!-- //footer -->
-            <div class="overlay" data-overlay="true"></div>
-        </div><!-- //main -->
-        <div class="menu-left" id="menu-left">
-            <div class="inner">
-                <nav class="nav-mobile">
-                    <ul>
-                        <li>
-                            <a href="index.html" title="Reland">
-                                <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                <div class="col col-350">
+                    <div class="block-11">
+                        <div class="item">
+                            <a href="#" title="">
+                                <img src="asset/img/data/image.png" width="300" height="190" alt="">
                             </a>
-                        </li>
-                        <li>
-                            <a href="" title="">
-                                <span>Đăng nhập/Đăng ký</span>
-                                <span>Thông tin cá nhân/Check out</span>
+                        </div>
+                        <div class="item">
+                            <a href="#" title="">
+                                <img src="asset/img/data/image.png" width="300" height="190" alt="">
                             </a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-home"></i> Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="" title=""><i class="fa fa-search"></i> Search</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-usd"></i> What's My Home Worth?</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-users"></i> Find an Agent</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-pie-chart"></i> Mortgage</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-comments"></i> Advice</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-info-circle"></i> Local Info</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-question"></i> Help Center</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-exchange"></i> Neighborhood Guides</a>
-                        </li>
-                    </ul>
-                    <div class="more">Reland Apps</div>
-                    <ul class="nav-mobile">
-                        <li>
-                            <a href="" title=""><i class="fa fa-home"></i> Reland Real Estate App</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-life-ring"></i> Reland Rentals App</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-ticket"></i> Reland Mortgage App</a>
-                        </li>
-                        <li>
-                            <a href="" title=""><i class="fa fa-suitcase"></i> Reland Agent App</a>
-                        </li>
-                    </ul>
-                    <div class="more">More</div>
-                    <ul class="nav-mobile">
-                        <li>
-                            <a href="" title="">Leave Feedback</a>
-                        </li>
-                    </ul>
-                </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div><!-- //menu-left -->
-        <div class="box-saved" id="box-saved">
-            <ul class="nav-saved">
+            <div class="block-14">
+                <h2 class="title">Ảnh mô tả</h2>
+                <div class="row">
+                    <div class="col col-33" ng-repeat="img in dt.ads.image.images track by $index">
+                        <a href="#box-popup" data-popup="true" data-goto="1">
+                            <span class="img" style="background-image: url({{img}})">174 W 76th St #8G</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động sản cùng loại mới đăng</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsCungLoaiMoiDang track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động sản ngang giá</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsNgangGia track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động giá thấp hơn {{dt.ads.giaFmt}}</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsNgangNhoHon track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            
+    </section>
+    <footer class="footer">
+       <div class="footer-bot">
+           <div class="row">
+               <div class="col col-20">
+                   <h3>
+                       <a href="" title="">Top Real Estate Markets</a>
+                   </h3>
+                   <ul>
+                       <li>
+                           <a href="" title="">San Francisco real estate</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Brooklyn real estate</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Manhattan real estate</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Los Angeles real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">San Diego real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Miami real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Chicago real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Las Vegas real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Queens real estate</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Austin real estate</a>
+                       </li>
+                   </ul>
+                   <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+               </div>
+               <div class="col col-20">
+                   <h3>
+                       <a href="" title="">Top Rental Markets</a>
+                   </h3>
+                   <ul>
+                       <li>
+                           <a href="" title="">Houston apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Las Vegas apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">San Antonio apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Phoenix apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Indianapolis apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Atlanta apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Austin apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Charlotte apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Dallas apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title=""> Miami apartments</a>
+                       </li>
+                   </ul>
+                   <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+               </div>
+               <div class="col col-20">
+                   <h3>
+                       <a href="" title="">Explore Reland</a>
+                   </h3>
+                   <ul>
+                       <li>
+                           <a href="" title="">Houston apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Las Vegas apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">San Antonio apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Phoenix apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Indianapolis apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Atlanta apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Austin apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Charlotte apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Dallas apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title=""> Miami apartments</a>
+                       </li>
+                   </ul>
+                   <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+               </div>
+               <div class="col col-20">
+                   <h3>
+                       <a href="" title="">For Professionals</a>
+                   </h3>
+                   <ul>
+                       <li>
+                           <a href="" title="">Houston apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Las Vegas apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">San Antonio apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Phoenix apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Indianapolis apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Atlanta apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Austin apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Charlotte apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Dallas apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title=""> Miami apartments</a>
+                       </li>
+                   </ul>
+                   <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+               </div>
+               <div class="col col-20">
+                   <h3>
+                       <a href="" title="">Reland Corporate</a>
+                   </h3>
+                   <ul>
+                       <li>
+                           <a href="" title="">Houston apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Las Vegas apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">San Antonio apartments</a>
+                       </li>
+                       <li>
+                           <a href="" title="">Phoenix apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Indianapolis apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Atlanta apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Austin apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Charlotte apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title="">Dallas apartments</a>
+                       </li>
+                       <li class="hidden">
+                           <a href="" title=""> Miami apartments</a>
+                       </li>
+                   </ul>
+                   <a class="more" href="#" data-more="true" data-parent="col" title="more">More</a>
+               </div>
+           </div>
+           <nav class="navigation">
+               <ul>
+                   <li>
+                       <a href="" title="">Buy</a>
+                   </li>
+                   <li>
+                       <a href="" title="">Sell</a>
+                   </li>
+                   <li>
+                       <a href="" title="">Rent</a>
+                   </li>
+                   <li>
+                       <a href="" title="">Mortgage</a>
+                   </li>
+                   <li>
+                       <a href="" title="">Find an Agent</a>
+                   </li>
+               </ul>
+           </nav>
+           <div class="copyright">
+               Copyright &copy; 2016 Reland, Inc. All rights reserved. <a href="" rel="nofollow"><i class="fa fa-home"></i> Fair Housing and Equal Opportunity.</a> Have a Question? Visit our <a href="" rel="nofollow">Help Center</a> to find the answer.
+           </div>
+       </div>
+    </footer><!-- //footer -->
+    <div class="overlay" data-overlay="true"></div>
+</div><!-- //main -->
+<div class="menu-left" id="menu-left">
+    <div class="inner">
+        <nav class="nav-mobile">
+            <ul>
                 <li>
-                    <a class="active" href="#my-boards" data-tab="true" data-content="content" data-group="box-saved" title="My Boards">My Boards</a>
+                    <a href="index.html" title="Reland">
+                        <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                    </a>
                 </li>
                 <li>
-                    <a href="#saved-homes" data-tab="true" data-content="content" data-group="box-saved" title="Saved Homes">Saved Homes</a>
+                    <a href="" title="">
+                        <span>Đăng nhập/Đăng ký</span>
+                        <span>Thông tin cá nhân/Check out</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#saved-rentals" data-tab="true" data-content="content" data-group="box-saved" title="Saved Rentals">Saved Rentals</a>
+                    <a href="" title=""><i class="fa fa-home"></i> Home</a>
+                </li>
+                <li class="active">
+                    <a href="" title=""><i class="fa fa-search"></i> Search</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-usd"></i> What's My Home Worth?</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-users"></i> Find an Agent</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-pie-chart"></i> Mortgage</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-comments"></i> Advice</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-info-circle"></i> Local Info</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-question"></i> Help Center</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-exchange"></i> Neighborhood Guides</a>
                 </li>
             </ul>
-            <div class="content mCustomScrollbar" style="display: block" id="my-boards">
-                <div class="create">
-                    <a href="#" title=""><i class="fa fa-plus"></i> Create Board</a>
-                </div>
-                <div class="boards">
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
-                            <span class="name">Dream Homes</span>
-                            <span class="group">
-                                <span class="user">Only Me</span>
-                                <span class="type">2 homes</span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
-                            <span class="name">Home with Pools</span>
-                            <span class="group">
-                                <span class="user">Only Me</span>
-                                <span class="type">2 homes</span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
-                            <span class="name">Home with Pools</span>
-                            <span class="group">
-                                <span class="user">Only Me</span>
-                                <span class="type">2 homes</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
+            <div class="more">Reland Apps</div>
+            <ul class="nav-mobile">
+                <li>
+                    <a href="" title=""><i class="fa fa-home"></i> Reland Real Estate App</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-life-ring"></i> Reland Rentals App</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-ticket"></i> Reland Mortgage App</a>
+                </li>
+                <li>
+                    <a href="" title=""><i class="fa fa-suitcase"></i> Reland Agent App</a>
+                </li>
+            </ul>
+            <div class="more">More</div>
+            <ul class="nav-mobile">
+                <li>
+                    <a href="" title="">Leave Feedback</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div><!-- //menu-left -->
+<div class="box-saved" id="box-saved">
+    <ul class="nav-saved">
+        <li>
+            <a class="active" href="#my-boards" data-tab="true" data-content="content" data-group="box-saved" title="My Boards">My Boards</a>
+        </li>
+        <li>
+            <a href="#saved-homes" data-tab="true" data-content="content" data-group="box-saved" title="Saved Homes">Saved Homes</a>
+        </li>
+        <li>
+            <a href="#saved-rentals" data-tab="true" data-content="content" data-group="box-saved" title="Saved Rentals">Saved Rentals</a>
+        </li>
+    </ul>
+    <div class="content mCustomScrollbar" style="display: block" id="my-boards">
+        <div class="create">
+            <a href="#" title=""><i class="fa fa-plus"></i> Create Board</a>
+        </div>
+        <div class="boards">
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
+                    <span class="name">Dream Homes</span>
+                    <span class="group">
+                        <span class="user">Only Me</span>
+                        <span class="type">2 homes</span>
+                    </span>
+                </a>
             </div>
-            <div class="content mCustomScrollbar" id="saved-homes">
-                <!--<div class="notice">
-                    You haven’t added any homes yet.<br/>
-                    Start searching for properties to add now.
-                </div>
-                <div class="handle">
-                    <a href="index.html" title="Search Homes">Search Homes</a>
-                </div>-->
-                <div class="saves">
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
-                            <span class="price">$129,900</span>
-                            <span class="info">4 bd   2 ba   1744 sqft</span>
-                            <span class="loc">8912 Oleander Ave</span>
-                            <span class="loc">California City, CA</span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
-                            <span class="price">$129,900</span>
-                            <span class="info">4 bd   2 ba   1744 sqft</span>
-                            <span class="loc">8912 Oleander Ave</span>
-                            <span class="loc">California City, CA</span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Dream Homes</span>
-                            <span class="price">$129,900</span>
-                            <span class="info">4 bd   2 ba   1744 sqft</span>
-                            <span class="loc">8912 Oleander Ave</span>
-                            <span class="loc">California City, CA</span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" title="">
-                            <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">Dream Homes</span>
-                            <span class="price">$129,900</span>
-                            <span class="info">4 bd   2 ba   1744 sqft</span>
-                            <span class="loc">8912 Oleander Ave</span>
-                            <span class="loc">California City, CA</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                    <span class="name">Home with Pools</span>
+                    <span class="group">
+                        <span class="user">Only Me</span>
+                        <span class="type">2 homes</span>
+                    </span>
+                </a>
             </div>
-            <div class="content mCustomScrollbar" id="saved-rentals">
-                <div class="notice">
-                    You haven’t added any homes yet.<br/>
-                    Start searching for properties to add now.
-                </div>
-                <div class="handle">
-                    <a href="index.html" title="Search Homes">Search Homes</a>
-                </div>
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                    <span class="name">Home with Pools</span>
+                    <span class="group">
+                        <span class="user">Only Me</span>
+                        <span class="type">2 homes</span>
+                    </span>
+                </a>
             </div>
-            <div id="loading" class="loading"></div>
-        </div><!-- //box-saved -->
-        
-        <div class="box-find" id="box-find">
-            <div class="data">
-                <div class="title">
-                    <span>Local Info</span>
-                    <a href="#box-find" data-filter="close"><i class="fa fa-times"></i></a>
-                </div>
-                <form action="search.html" method="post">
-                    <div class="head">Reland Heatmap</div>
-                    <ul class="list">
+        </div>
+    </div>
+    <div class="content mCustomScrollbar" id="saved-homes">
+        <!--<div class="notice">
+            You haven’t added any homes yet.<br/>
+            Start searching for properties to add now.
+        </div>
+        <div class="handle">
+            <a href="index.html" title="Search Homes">Search Homes</a>
+        </div>-->
+        <div class="saves">
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
+                    <span class="price">$129,900</span>
+                    <span class="info">4 bd   2 ba   1744 sqft</span>
+                    <span class="loc">8912 Oleander Ave</span>
+                    <span class="loc">California City, CA</span>
+                </a>
+            </div>
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                    <span class="price">$129,900</span>
+                    <span class="info">4 bd   2 ba   1744 sqft</span>
+                    <span class="loc">8912 Oleander Ave</span>
+                    <span class="loc">California City, CA</span>
+                </a>
+            </div>
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Dream Homes</span>
+                    <span class="price">$129,900</span>
+                    <span class="info">4 bd   2 ba   1744 sqft</span>
+                    <span class="loc">8912 Oleander Ave</span>
+                    <span class="loc">California City, CA</span>
+                </a>
+            </div>
+            <div class="item">
+                <a href="" title="">
+                    <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">Dream Homes</span>
+                    <span class="price">$129,900</span>
+                    <span class="info">4 bd   2 ba   1744 sqft</span>
+                    <span class="loc">8912 Oleander Ave</span>
+                    <span class="loc">California City, CA</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="content mCustomScrollbar" id="saved-rentals">
+        <div class="notice">
+            You haven’t added any homes yet.<br/>
+            Start searching for properties to add now.
+        </div>
+        <div class="handle">
+            <a href="index.html" title="Search Homes">Search Homes</a>
+        </div>
+    </div>
+    <div id="loading" class="loading"></div>
+</div><!-- //box-saved -->
+
+<div class="box-find" id="box-find">
+    <div class="data">
+        <div class="title">
+            <span>Local Info</span>
+            <a href="#box-find" data-filter="close"><i class="fa fa-times"></i></a>
+        </div>
+        <form action="search.html" method="post">
+            <div class="head">Reland Heatmap</div>
+            <ul class="list">
+                <li>
+                    <a class="control" href="#radio_1_1" data-action="radio" data-group="group_1">Crime</a>
+                    <input type="radio" id="radio_1_1" name="group_1" value="Crime"/>
+                </li>
+                <li>
+                    <a class="accordion" href="#" data-accordion="true">Affordability</a>
+                    <ul>
                         <li>
-                            <a class="control" href="#radio_1_1" data-action="radio" data-group="group_1">Crime</a>
-                            <input type="radio" id="radio_1_1" name="group_1" value="Crime"/>
+                            <a class="control" href="#radio_2_1" data-action="radio" data-group="group_2">Listing Price</a>
+                            <input type="radio" id="radio_2_1" name="group_2" value="Listing Price"/>
                         </li>
                         <li>
-                            <a class="accordion" href="#" data-accordion="true">Affordability</a>
-                            <ul>
-                                <li>
-                                    <a class="control" href="#radio_2_1" data-action="radio" data-group="group_2">Listing Price</a>
-                                    <input type="radio" id="radio_2_1" name="group_2" value="Listing Price"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_2_2" data-action="radio" data-group="group_2">Sale Price</a>
-                                    <input type="radio" id="radio_2_2" name="group_2" value="Sale Price"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_2_3" data-action="radio" data-group="group_2">Sale Price/Sqft</a>
-                                    <input type="radio" id="radio_2_3" name="group_2" value="Sale Price/Sqft"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_2_4" data-action="radio" data-group="group_2">Reland Estimates</a>
-                                    <input type="radio" id="radio_2_4" name="group_2" value="Reland Estimates"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_2_5" data-action="radio" data-group="group_2">Rental Price</a>
-                                    <input type="radio" id="radio_2_5" name="group_2" value="Rental Price"/>
-                                </li>
-                            </ul>
+                            <a class="control" href="#radio_2_2" data-action="radio" data-group="group_2">Sale Price</a>
+                            <input type="radio" id="radio_2_2" name="group_2" value="Sale Price"/>
                         </li>
                         <li>
-                            <a class="accordion" href="#" data-accordion="true">Hazards</a>
-                            <ul>
-                                <li>
-                                    <a class="control" href="#radio_3_1" data-action="radio" data-group="group_3">Earthquake</a>
-                                    <input type="radio" id="radio_3_1" name="group_3" value="Earthquake"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_3_2" data-action="radio" data-group="group_3">Flooding</a>
-                                    <input type="radio" id="radio_3_2" name="group_3" value="Flooding"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_3_3" data-action="radio" data-group="group_3">Tornado</a>
-                                    <input type="radio" id="radio_3_3" name="group_3" value="Tornado"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#radio_3_4" data-action="radio" data-group="group_3">Hurricane</a>
-                                    <input type="radio" id="radio_3_4" name="group_3" value="Hurricane"/>
-                                </li>
-                            </ul>
+                            <a class="control" href="#radio_2_3" data-action="radio" data-group="group_2">Sale Price/Sqft</a>
+                            <input type="radio" id="radio_2_3" name="group_2" value="Sale Price/Sqft"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#radio_2_4" data-action="radio" data-group="group_2">Reland Estimates</a>
+                            <input type="radio" id="radio_2_4" name="group_2" value="Reland Estimates"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#radio_2_5" data-action="radio" data-group="group_2">Rental Price</a>
+                            <input type="radio" id="radio_2_5" name="group_2" value="Rental Price"/>
                         </li>
                     </ul>
-                    <div class="head">More</div>
-                    <ul class="list">
+                </li>
+                <li>
+                    <a class="accordion" href="#" data-accordion="true">Hazards</a>
+                    <ul>
                         <li>
-                            <a class="accordion" href="#" data-accordion="true">Schools</a>
-                            <ul>
-                                <li>
-                                    <a class="control" href="#check_1_1" data-action="check">Elementary</a>
-                                    <input type="checkbox" id="check_1_1" name="check_1_1" value="Elementary"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#check_1_2" data-action="check">Middle</a>
-                                    <input type="checkbox" id="check_1_2" name="check_1_2" value="Middle"/>
-                                </li>
-                            </ul>
+                            <a class="control" href="#radio_3_1" data-action="radio" data-group="group_3">Earthquake</a>
+                            <input type="radio" id="radio_3_1" name="group_3" value="Earthquake"/>
                         </li>
                         <li>
-                            <a class="accordion" href="#" data-accordion="true">Amenities</a>
-                            <ul>
-                                <li>
-                                    <a class="control" href="#check_2_1" data-action="check">Restaurants</a>
-                                    <input type="checkbox" id="check_2_1" name="check_2_1" value="Restaurants"/>
-                                </li>
-                                <li>
-                                    <a class="control" href="#check_2_2" data-action="check">Groceries</a>
-                                    <input type="checkbox" id="check_2_2" name="check_2_2" value="Groceries"/>
-                                </li>
-                            </ul>
+                            <a class="control" href="#radio_3_2" data-action="radio" data-group="group_3">Flooding</a>
+                            <input type="radio" id="radio_3_2" name="group_3" value="Flooding"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#radio_3_3" data-action="radio" data-group="group_3">Tornado</a>
+                            <input type="radio" id="radio_3_3" name="group_3" value="Tornado"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#radio_3_4" data-action="radio" data-group="group_3">Hurricane</a>
+                            <input type="radio" id="radio_3_4" name="group_3" value="Hurricane"/>
                         </li>
                     </ul>
-                </form>
-            </div>
-            <nav class="nav">
+                </li>
+            </ul>
+            <div class="head">More</div>
+            <ul class="list">
+                <li>
+                    <a class="accordion" href="#" data-accordion="true">Schools</a>
+                    <ul>
+                        <li>
+                            <a class="control" href="#check_1_1" data-action="check">Elementary</a>
+                            <input type="checkbox" id="check_1_1" name="check_1_1" value="Elementary"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#check_1_2" data-action="check">Middle</a>
+                            <input type="checkbox" id="check_1_2" name="check_1_2" value="Middle"/>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="accordion" href="#" data-accordion="true">Amenities</a>
+                    <ul>
+                        <li>
+                            <a class="control" href="#check_2_1" data-action="check">Restaurants</a>
+                            <input type="checkbox" id="check_2_1" name="check_2_1" value="Restaurants"/>
+                        </li>
+                        <li>
+                            <a class="control" href="#check_2_2" data-action="check">Groceries</a>
+                            <input type="checkbox" id="check_2_2" name="check_2_2" value="Groceries"/>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <nav class="nav">
+        <ul>
+            <li>
+                <a href="#box-find" data-filter="close" title="Reset">Reset</a>
+            </li>
+            <li>
+                <a href="#box-find" data-action="apply" title="Apply">Apply</a>
+            </li>
+        </ul>
+    </nav>
+</div><!-- //box-find -->
+<div class="box-sort" id="box-sort">
+    <div class="inner">
+        <a class="btn-close" data-sort="close"><i class="fa fa-times"></i></a>
+        <ul class="sorts">
+            <li data-action="sort" data-sort="">Best Match</li>
+            <li data-action="sort" data-sort="date" data-order="desc">Newest</li>
+            <li data-action="sort" data-sort="price" data-order="desc">Price (High-Low)</li>
+            <li data-action="sort" data-sort="price" data-order="asc">Price (Low-High)</li>
+            <li data-action="sort" data-sort="beds" data-order="desc">Most Bedrooms</li>
+            <li data-action="sort" data-sort="bath" data-order="acs">Most Bathrooms</li>
+            <li data-action="sort" data-sort="sqft" data-order="desc">Largest Sqft</li>
+        </ul>
+    </div>
+</div>
+<div class="box-popup" id="box-popup">
+    <div class="inner">
+        <div class="title">
+            <div class="head">
+                <div class="logo">
+                    <img src="asset/img/logo.png" width="455" height="92" alt="Logo Reland"/>
+                </div>
                 <ul>
-                    <li>
-                        <a href="#box-find" data-filter="close" title="Reset">Reset</a>
-                    </li>
-                    <li>
-                        <a href="#box-find" data-action="apply" title="Apply">Apply</a>
-                    </li>
-                </ul>
-            </nav>
-        </div><!-- //box-find -->
-        <div class="box-sort" id="box-sort">
-            <div class="inner">
-                <a class="btn-close" data-sort="close"><i class="fa fa-times"></i></a>
-                <ul class="sorts">
-                    <li data-action="sort" data-sort="">Best Match</li>
-                    <li data-action="sort" data-sort="date" data-order="desc">Newest</li>
-                    <li data-action="sort" data-sort="price" data-order="desc">Price (High-Low)</li>
-                    <li data-action="sort" data-sort="price" data-order="asc">Price (Low-High)</li>
-                    <li data-action="sort" data-sort="beds" data-order="desc">Most Bedrooms</li>
-                    <li data-action="sort" data-sort="bath" data-order="acs">Most Bathrooms</li>
-                    <li data-action="sort" data-sort="sqft" data-order="desc">Largest Sqft</li>
+                    <li>$1,300,000</li>
+                    <li>174 West 76th Street #8G, New York, NY</li>
+                    <li>2 bd, 1 ba Coop</li>
                 </ul>
             </div>
-        </div>
-        <div class="box-popup" id="box-popup">
-            <div class="inner">
-                <div class="title">
-                    <div class="head">
-                        <div class="logo">
-                            <img src="asset/img/logo.png" width="455" height="92" alt="Logo Reland"/>
-                        </div>
-                        <ul>
-                            <li>$1,300,000</li>
-                            <li>174 West 76th Street #8G, New York, NY</li>
-                            <li>2 bd, 1 ba Coop</li>
-                        </ul>
-                    </div>
-                    <div class="action">
-                        <a class="btn-hide" data-toggle="contact" href="#box-popup" title="Hide this form" data-toggle-text="Open this form"><i class="fa fa-angle-right"></i> Hide this form</a>
-                        <a class="btn-close" data-hide="popup" href="#box-popup" title="Close"><i class="fa fa-times"></i> <span class="text">Close</span></a>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="contact">
-                        <div class="head">Find out more.<br/>Contact a local agent.</div>
-                        <div class="form">
-                            <form action="search.html" method="post">
-                                <div class="control">
-                                    <input class="form-control" type="text" name="name" placeholder="Your Name" value="quangthanh112">
-                                </div>
-                                <div class="control">
-                                    <input class="form-control" type="email" name="email" placeholder="Your Email" value="quangthanh112@gmail.com">
-                                </div>
-                                <div class="control">
-                                    <input class="form-control" type="number" name="phone" placeholder="Phone number" value="01687270027">
-                                </div>
-                                <div class="control">
-                                    <textarea name="msg" rows="4" class="form-control">I am interested in 174 W 76th St #8G, New York, NY 10023.</textarea>
-                                </div>
-                                <div class="handle">
-                                    <button type="submit" data-contact="detail" class="btn-submit">Get More Info</button>
-                                </div>
-                                <div class="legalese">
-                                    &gt;By sending, you agree to Reland's
-                                    <a href="/terms" target="_blank">Terms of Use</a> &amp; <a href="/privacy" target="_blank">Privacy Policy</a>.
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <ul id="slider-popup" class="slider">
-                            <li style="background-image: url(asset/img/data/img-40-1.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-40-2.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-40-3.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-40-4.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-60-1.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-60-2.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-60-3.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-60-4.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-40-1.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                            <li style="background-image: url(asset/img/data/img-40-2.jpg)">
-                                <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
-                            </li>
-                        </ul>
-                        <div class="info">
-                            <div class="stats"><span class="pc">Photo <span id="count">1</span> of</span> <span id="total">5</span></div>
-                            <div class="group">
-                                <button class="btn"><i class="fa fa-heart-o"></i> Save</button>
-                                <button class="btn"><i class="fa fa-envelope-o"></i> Share</button>
-                            </div>
-                        </div>
-                        <a href="" class="btn-request">Request Info</a> 
-                    </div>
-                </div>
+            <div class="action">
+                <a class="btn-hide" data-toggle="contact" href="#box-popup" title="Hide this form" data-toggle-text="Open this form"><i class="fa fa-angle-right"></i> Hide this form</a>
+                <a class="btn-close" data-hide="popup" href="#box-popup" title="Close"><i class="fa fa-times"></i> <span class="text">Close</span></a>
             </div>
         </div>
-    </div><!-- //wrapper -->
-</body>
+        <div class="content">
+            <div class="contact">
+                <div class="head">Find out more.<br/>Contact a local agent.</div>
+                <div class="form">
+                    <form action="search.html" method="post">
+                        <div class="control">
+                            <input class="form-control" type="text" name="name" placeholder="Your Name" value="quangthanh112">
+                        </div>
+                        <div class="control">
+                            <input class="form-control" type="email" name="email" placeholder="Your Email" value="quangthanh112@gmail.com">
+                        </div>
+                        <div class="control">
+                            <input class="form-control" type="number" name="phone" placeholder="Phone number" value="01687270027">
+                        </div>
+                        <div class="control">
+                            <textarea name="msg" rows="4" class="form-control">I am interested in 174 W 76th St #8G, New York, NY 10023.</textarea>
+                        </div>
+                        <div class="handle">
+                            <button type="submit" data-contact="detail" class="btn-submit">Get More Info</button>
+                        </div>
+                        <div class="legalese">
+                            &gt;By sending, you agree to Reland's
+                            <a href="/terms" target="_blank">Terms of Use</a> &amp; <a href="/privacy" target="_blank">Privacy Policy</a>.
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="media">
+                <ul id="slider-popup" class="slider">
+                    <li style="background-image: url(asset/img/data/img-40-1.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-40-2.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-40-3.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-40-4.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-60-1.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-60-2.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-60-3.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-60-4.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-40-1.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                    <li style="background-image: url(asset/img/data/img-40-2.jpg)">
+                        <img src="asset/img/blank.gif" width="1" height="1" alt="Blank"/>
+                    </li>
+                </ul>
+                <div class="info">
+                    <div class="stats"><span class="pc">Photo <span id="count">1</span> of</span> <span id="total">5</span></div>
+                    <div class="group">
+                        <button class="btn"><i class="fa fa-heart-o"></i> Save</button>
+                        <button class="btn"><i class="fa fa-envelope-o"></i> Share</button>
+                    </div>
+                </div>
+                <a href="" class="btn-request">Request Info</a> 
+            </div>
+        </div>
+    </div>
+</div>

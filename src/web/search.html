@@ -1,99 +1,7 @@
 <body class="page-search">
     <div class="wrapper" id="wrapper">
         <div class="main" id="main">
-            <header class="header">
-                    <div class="header-top">
-                        <a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
-                        <h1 class="logo">
-                            <a href="index.html" title="Trulia">
-                                <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
-                            </a>
-                        </h1>
-                        <nav class="nav-main">
-                            <ul>
-                                <li>
-                                    <a ng-click="mc.goToPageSearchMenu('0','0')" title="">BĐS bán</a>
-                                    <ul>
-                                        <li ng-repeat="item in mc.loaiNhaDatBanMenu"><a ng-click="mc.goToPageSearchMenu('0',item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a ng-click="mc.goToPageSearchMenu('1','0')" title="">BĐS cho thuê</a>
-                                    <ul>
-                                        <li ng-repeat="item in mc.loaiNhaDatThueMenu"><a ng-click="mc.goToPageSearchMenu('1', item.value)" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a title="">Cần mua</a>
-                                    <ul>
-                                        <li ng-repeat="item in mc.loaiNhaDatCanMuaMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="" title="">Cần thuê</a>
-                                    <ul>
-                                        <li ng-repeat="item in mc.loaiNhaDatCanThueMenu"><a ng-click="" ng-model="msgType" data-value="{{::item.value}}">{{::item.lable}}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="" title="">Tin tức</a>
-                                    <ul>
-                                        <li ng-repeat="item in mc.loaiTinTuc"><a ng-click="goToPageNews(item.value)">{{::item.lable}}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="" title="">Xây dựng - Kiến trúc</a>
-                                    <ul>
-                                        <li>
-                                            <a href="" title="">Xây dựng</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Kiến trúc</a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="" title="">Nội - Ngoại thất</a>
-                                    <ul>
-                                        <li>
-                                            <a href="" title="">Nội thất</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Ngoại thất</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Tư vấn nội thất</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="" title="">Tin khác</a>
-                                    <ul>
-                                        <li>
-                                            <a href="" title="">Môi giới</a>
-                                        </li>
-                                        <li>
-                                            <a href="" title="">Ứng dụng mobile</a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                        <nav class="nav-user">
-                            <ul>
-                                <li>
-                                    <a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="" title="">Lưu tìm kiếm</a>
-                                </li>
-                                <user-info-menu ></user-info-menu>
-                            </ul>
-                        </nav>
-                    </div>
-                </header><!-- //header -->
+            <bds-header menuitems="$root.menuitems"></bds-header>
             <div class="box-filter">
                 <div class="utility">
                     <div class="container">
@@ -101,7 +9,7 @@
                             <div class="col w-340">
                                 <form ng-submit="goToPageSearch" method="post">
                                     <div class="search">
-                                        <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" class="form-control" id="autocomplete"> </input>
+                                        <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" ng-model="mc.placeSearchText" class="form-control" id="autocomplete"> </input>
                                         <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text"></span></button>
 
                                         
@@ -154,7 +62,7 @@
                             </div>
                             <div class="col w-160">
                                 <button class="btn-find" data-find="true" ng-click="mc.saveSearch();">
-                                    <i class="fa fa-star"></i> <span class="text">Save search</span>
+                                    <i class="fa fa-star"></i> <span class="text">Lưu tìm kiếm</span>
                                 </button>
                             </div>
                         </div>
@@ -163,38 +71,6 @@
                 <div class="filter" id="filter">
                     <form action="search.html" method="post">
                         <div class="container">
-                            <div class="type">
-                                <div class="row">
-                                    <div class="col">
-                                        <label data-action="filter" data-choice="sale" data-reset="project" data-group="filter"><input type="radio" value="for_sale" name="search_type" checked> Bán</label>
-                                    </div>
-                                    <div class="col">
-                                        <label data-action="filter" data-choice="sold" data-reset="project" data-group="filter"><input type="radio" value="sold" name="search_type"> Đã bán</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project" data-content="sale" style="display: block">
-                                <div class="row">
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="new_listings" value="new_listings"> Danh sách mới, Tuần trước</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="recently_reduced" value="recently_reduced"> Giá giảm, Tuần trước</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="new_construction" value="new_construction"> Nhà mới xây</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="fsbo" value="fsbo"> Chính chủ</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="resale" value="resale"> Bán lại</label>
-                                    </div>
-                                    <div class="col col-25">
-                                        <label><input type="checkbox" name="roreclosures" value="roreclosures"> Bị tịch thu</label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="group">
                                 <div class="head">Loại bất động sản</div>
                                 <div class="row">

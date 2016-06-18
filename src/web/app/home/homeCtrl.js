@@ -51,7 +51,9 @@
 
 		$scope.$on('$viewContentLoaded', function(){
 			//addCrudControls
-			window.DesignCommon.adjustPage();
+			$timeout(function() {
+				window.DesignCommon.adjustPage();
+			},0);
 			if($state.current.data)
 				$rootScope.bodyClass = $state.current.data.bodyClass
 			// window.onresize = function() {

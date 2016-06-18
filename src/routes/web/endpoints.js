@@ -40,6 +40,13 @@ internals.endpoints = [
 }
 ,{ 
 	method: 'GET',
+	path: '/web/searchdc/{p*}', 
+	handler: function(requet,reply){
+		reply.view('index.html');
+	}
+}
+,{ 
+	method: 'GET',
 	path: '/web/list', 
 	handler: function(requet,reply){
 		reply.view('index.html', { page: 'list' });
