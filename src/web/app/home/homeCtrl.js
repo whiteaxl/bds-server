@@ -72,6 +72,7 @@
 			$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 			$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 			$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
+			/*
 			console.log("---------nhannc--------------listCategory");
 			NewsService.findRootCategory().then(function(res){
 				var result = [];
@@ -82,7 +83,30 @@
 				}
 				console.log("---------listCategory: " + $scope.listCategory.length);
 				console.log($scope.listCategory);
-			});
+			});*/
+
+			//NhanNc add menu Tin tuc
+			if(!menuHasContainsNewsCategory()){
+				var danhMucCategory =  {
+					label: "Tin tức",
+					value: {},
+					visible: true,
+					items: []
+				};
+
+				NewsService.findRootCategory().then(function(res){
+					var result = [];
+					if(res.data.list){
+						for (var i = 0; i < res.data.list.length; i++) {
+							danhMucCategory.items.push({value: {menuType : 1, rootCatId : res.data.list[i].cat_id}, label: res.data.list[i].cat_name});
+						}
+					}
+					console.log("---------listCategory moi-------: " + $scope.listCategory.length);
+					console.log($scope.listCategory);
+				});
+				$rootScope.menuitems.push(danhMucCategory);
+			}
+			//NhanNc add menu Tin tuc
 
 			NgMap.getMap().then(function(map){
 	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
@@ -153,6 +177,15 @@
 	    		}
 			}
 
+		}
+
+		function menuHasContainsNewsCategory() {
+			for (var i = 0; i < $rootScope.menuitems.length; i++) {
+				if ($rootScope.menuitems[i].label == "Tin tức") {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		function initHotAds(){

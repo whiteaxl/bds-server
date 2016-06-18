@@ -10,7 +10,7 @@
 
 
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize'])
-  .run(['$rootScope', '$cookieStore','$http','$compile', '$sce', function($rootScope, $cookieStore, $http,$compile,$sce){
+  .run(['$rootScope', '$cookieStore','$http','$compile', '$sce', function($rootScope, $cookieStore, $http,$compile, $sce){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
@@ -21,8 +21,10 @@
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
     $rootScope.menuitems = window.RewayListValue.menu;
+      
 
     
+      
     $rootScope.chat_visible = true;
     $rootScope.showChat = function(user,scope){
       if($rootScope.chatBoxes.hasOwnProperty(user.email)){
