@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "eb848bb911e1215be2bb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fddf0577a532ac31d7f3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18906,9 +18906,10 @@
 							phone: vm.phone,
 							email: vm.email,
 							content: vm.content
-						},function(res){
-							console.log("sent mail successful");
-						});	
+						}).then(function(res){
+							console.log(JSON.stringify(res.data));
+							alert(res.data.msg);
+						});
 					}				
 				}
 

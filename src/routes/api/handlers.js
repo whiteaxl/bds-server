@@ -420,6 +420,11 @@ internals.requestInfo = function(req,reply){
     nguoiDang = {
         email: "tim.hung.dao@gmail.com"
     }
+    var result = {
+        success: false,
+        sentMail: false,
+        sentSms: false
+    }
     console.log(" log data for send mail "+JSON.stringify(data));
     if(nguoiDang.email){
         var generator = require('xoauth2').createXOAuth2Generator({
@@ -455,8 +460,14 @@ internals.requestInfo = function(req,reply){
         }, function(error, response) {
            if (error) {
                 console.log(error);
+                result.success = false;
+                reply(result);
            } else {
                 console.log('Message sent');
+                result.success = true;
+                result.sentMail = true;
+                result.msg = "Mail đã gửi thành công"
+                reply(result);
            }
         });
 

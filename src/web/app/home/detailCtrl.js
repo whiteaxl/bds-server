@@ -101,9 +101,10 @@
 						phone: vm.phone,
 						email: vm.email,
 						content: vm.content
-					},function(res){
-						console.log("sent mail successful");
-					});	
+					}).then(function(res){
+						console.log(JSON.stringify(res.data));
+						alert(res.data.msg);
+					});
 				}				
 			}
 
