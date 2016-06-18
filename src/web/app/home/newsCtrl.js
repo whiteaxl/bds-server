@@ -83,9 +83,14 @@
             NewsService.findNews(vm.searchData).then(function(res){
                 console.log(res.data.list);
                 if(res.data.list){
-                    $scope.listArticle = [];
-                    for (var i = 0; i < res.data.length; i++) {
-                        $scope.listArticle.push(res.data.list[i]);
+                    if(res.data.length > 0){
+                        $scope.firstArticle = res.data.list[0];
+                        if(res.data.length > 1){
+                            $scope.listArticle = [];
+                            for (var i = 1; i < res.data.length; i++) {
+                                $scope.listArticle.push(res.data.list[i]);
+                            }
+                        }
                     }
                 }
                 for (var i = 0; i < res.data.length; i++) {

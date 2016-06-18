@@ -141,7 +141,8 @@ function _transformNews(article) {
     atc.archived = article.archived;
     atc.ratingMarks = article.rating_marks;
     atc.ratingCount = article.rating_count;
-    atc.avatarImage = "asset/img/data/img-40-1.jpg";
+    //atc.avatarImage = "asset/img/data/img-40-1.jpg";
+    atc.avatarImage = "http://file1.batdongsan.com.vn/Images/no-photo.JPG";
     if(article.thumb_large != null && article.thumb_large.trim().length > 0){
         atc.avatarImage = article.thumb_large;
     } else if(article.thumb_small != null && article.thumb_small.trim().length > 0){

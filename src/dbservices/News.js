@@ -12,8 +12,8 @@ var connection = mysql.createConnection({
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'root',
-    password : '123456',
+    user     : 'reland',
+    password : 'Zi3Iyh0xSxPztlET',
     database : 'reland',
     debug    :  false
 });
@@ -66,7 +66,7 @@ class NewsModel {
 
             console.log('connected as id ' + connection.threadId);
 
-            var sql = "SELECT * FROM reland.news_article_category where cat_parent_id=0";
+            var sql = "SELECT * FROM reland.news_article_category where cat_parent_id=0 order by cat_order";
             connection.query(sql ,function(err,rows){
                 connection.release();
                 if(err)
