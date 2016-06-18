@@ -353,6 +353,7 @@ internals.endpoints = [
     }
   },
   {
+    method: 'POST',
     path: '/api/countNews',
     handler: newsHandlers.countNews,
     config: {
