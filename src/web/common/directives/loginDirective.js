@@ -182,12 +182,18 @@ angular.module('bds')
                 email: {
                   required: true,
                   email: true
+                },
+                password: {
+                  required: true
                 }
               },
               messages: {
                 email: {
-                  required: 'Xin nhập email',
+                  required: 'Xin nhập email1',
                   email: 'Email không hợp lệ'
+                },
+                password: {
+                  required: 'Xin nhập mật khẩu'
                 }
               }
             });    
