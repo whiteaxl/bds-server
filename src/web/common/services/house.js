@@ -64,6 +64,9 @@
       },
       requestInfo: function(data){
         return $http.post("/api/requestInfo",data);
+      },
+      forgotPassword: function(data){
+        return $http.post("/api/forgotPassword",data);
       }
     };
   });

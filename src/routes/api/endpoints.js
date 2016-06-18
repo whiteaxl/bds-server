@@ -363,6 +363,24 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/forgotPassword',
+    handler: loginHandler.forgotPassword,
+    config: {
+      description: 'sendEmail,sms to user', 
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/resetPassword',
+    handler: loginHandler.resetPassword,
+    config: {
+      description: 'resetPassword', 
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/findNews',
     handler: newsHandlers.findNews,
     config: {
@@ -388,6 +406,7 @@ internals.endpoints = [
       tags: ['api']
     }
   }
+
 ];
 
 module.exports = internals;

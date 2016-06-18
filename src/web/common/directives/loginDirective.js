@@ -49,8 +49,12 @@ angular.module('bds')
               }
               if (loginForm.valid()) {
                 if(vm.state == vm.FORGOT_PASSWORD){
-                  alert('email sent');
-                  vm.state = vm.SENT_PASSWORD;
+                  HouseService.forgotPassword({
+                    email: vm.email,
+                    newPass: vm.password
+                  }).then(function(res){                               
+                    vm.state = vm.SENT_PASSWORD;
+                  });
                 } else if(vm.state == vm.ENTER_EMAIL){
                   HouseService.checkUserExist(data).then(function(res){
                     vm.userExist = res.data.exist;

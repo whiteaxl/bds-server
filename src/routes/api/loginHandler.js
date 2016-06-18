@@ -20,6 +20,8 @@ var internals = {};
 
 var chatHandler = require("../../lib/ChatHandler");
 
+var RewayMailer = require("../../lib/RewayMailer");
+
 
 /**
     Ham nay kiem tra xem user co ton tai trong he thong theo tat ca nhung dieu kien truyen vao
@@ -108,6 +110,108 @@ internals.signup = function(req, reply){
         	reply(result);
 		}
 	})
+}
+
+/**
+
+This function send email / sms to nguoi dung voi mat khau moi
+
+{
+Request Data:
+{
+    email: email dung de dang nhap
+    phone: so dien thoai de dang nhap
+}
+Response Data:
+{
+    success: true/false
+    sentMail: true/false
+    sentSms: true/false
+}
+
+}
+
+*/
+internals.forgotPassword = function(req,reply){
+    var email = req.payload.email;
+    var phone = req.payload.phone;
+    var newPass = req.payload.newPass;
+    var result = {
+        success: false,
+        sentMail: false,
+        sentSms: false
+    }
+    if(email){
+        userService.getUser({email: email}, (err, res) => {
+          if (err) {
+            reply({
+              success: false,
+              msg: err.toString()
+            });
+            return;
+          }
+
+          if (res.length < 0) { //exists
+            log.warn("User already existed!");
+            log.info(res);
+            reply({
+              success: false,
+              msg:constant.MSG.USER_NOT_EXIST
+            });
+            return;
+          }
+          //
+          var user = res[0];
+          console.log(JSON.stringify(user));
+          var randomstring = Math.random().toString(36).slice(-8);
+          var token = JWT.sign({
+            uid: user.userID,            
+            exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
+            userName: user.name,
+            pass: randomstring,
+            userID: user.id,
+          }, JWT_SECRET);
+
+          
+    
+          var url = req.connection.info.protocol + '://' + req.info.host + "/api/resetPassword?token=" + token;      
+          console.log(url);
+          RewayMailer.sendMail({
+            to: email,
+            subject: 'Reland: Quen mat khau',
+            html: 'Hi '+ user.name + ',<br> mật khẩu mới của bạn là ' + randomstring + '. Hãy click vào link này để đặt lại mật khẩu: <a href="'+url+'"> đổi mật khẩu </a>'  
+          }, function(error, response){
+            if (error) {
+                console.log(error);
+                result.success = false;
+                reply(result);
+            } else {
+                console.log('Message sent');
+                result.success = true;
+                result.sentMail = true;
+                result.msg = "Mail đã gửi thành công! Hãy kiểm tra email và làm theo hướng dẫn để đổi mật khẩu";
+                reply(result);
+            }
+          });
+        });
+    }else if(phone){
+        result.success = true;
+        result.sentMail = true;
+        result.msg = "TODO";
+        reply(result);
+    }
+    
+
+}
+
+internals.resetPassword = function(req,reply){
+    var token = req.query.token;
+    var mydecoded = JWT.decode(req.auth.token,{complete: true});
+    console.log(JSON.stringify(mydecoded));
+    var userID = mydecoded.payload.userID;
+    var userName = mydecoded.payload.userName;
+    var pass = mydecoded.payload.pass;
+    userService.resetPassword({"userID": userID, "pass": pass}, reply)
 }
 
 module.exports = internals;

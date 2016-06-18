@@ -278,6 +278,29 @@ class UserModel {
     });       
   }
 
+  resetPassword(payload,reply){
+    var pass = payload.pass;
+    var userID = payload.userID;
+    console.log('find user for ' + userID); 
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          user.matKhau = pass;
+          bucket.upsert(user.id, user, function (err, res) {
+            if (err) {
+                console.log("ERROR:" + err);
+            }
+            reply({success:true,msg: constant.MSG.SUCCESS_UPDATE_PASSWORD});
+          })          
+        }
+      }
+    });       
+  }
+
   
   _checkSaveSearchExist(data, user){
     if(!user.saveSearch)

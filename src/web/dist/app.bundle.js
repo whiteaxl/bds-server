@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b5666f7e57f548143a6a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c46debcfa6bd128cf1c0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19111,7 +19111,8 @@
 							name: vm.name,
 							phone: vm.phone,
 							email: vm.email,
-							content: vm.content
+							content: vm.content,
+							adsUrl: window.location.href
 						}).then(function(res){
 							console.log(JSON.stringify(res.data));
 							alert(res.data.msg);
@@ -19509,6 +19510,9 @@
 	      },
 	      requestInfo: function(data){
 	        return $http.post("/api/requestInfo",data);
+	      },
+	      forgotPassword: function(data){
+	        return $http.post("/api/forgotPassword",data);
 	      }
 	    };
 	  });
@@ -19570,8 +19574,12 @@
 	              }
 	              if (loginForm.valid()) {
 	                if(vm.state == vm.FORGOT_PASSWORD){
-	                  alert('email sent');
-	                  vm.state = vm.SENT_PASSWORD;
+	                  HouseService.forgotPassword({
+	                    email: vm.email,
+	                    newPass: vm.password
+	                  }).then(function(res){                               
+	                    vm.state = vm.SENT_PASSWORD;
+	                  });
 	                } else if(vm.state == vm.ENTER_EMAIL){
 	                  HouseService.checkUserExist(data).then(function(res){
 	                    vm.userExist = res.data.exist;
@@ -35058,7 +35066,10 @@
 	    EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
 	    SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
 	    SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
-	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước"
+	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
+	    USER_NOT_EXIST: "User không tồn tại",
+	    SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công",
+
 	};
 
 	internals.DB_ERR = {

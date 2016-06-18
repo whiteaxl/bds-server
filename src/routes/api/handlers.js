@@ -33,6 +33,9 @@ var DEFAULT_SEARCH_RADIUS = 5; //km
 var adsService = new AdsService();
 var userService = new UserService();
 
+var RewayMailer = require("../../lib/RewayMailer");
+
+
 var Q_FIELD = {
 	limit : "limit",
 	orderBy : "orderBy",
@@ -426,39 +429,14 @@ internals.requestInfo = function(req,reply){
         sentSms: false
     }
     console.log(" log data for send mail "+JSON.stringify(data));
-    if(nguoiDang.email){
-        var generator = require('xoauth2').createXOAuth2Generator({
-            user: 'tim.hung.dao@gmail.com',
-            clientId: '695617178682-t9ojtonmgk4eiukmpksk7flfut4vl95r.apps.googleusercontent.com',
-            clientSecret: '_VcjOUp3G_83_4QVQ8bIJBL-',
-            refreshToken: '1/RQMTRG-n4hmCnziIOI00RWHFQfiOEwMAIUrH5CCYTB8'
-        });
-
-        // listen for token updates
-        // you probably want to store these to a db
-        generator.on('token', function(token){
-            console.log('New token for %s: %s', token.user, token.accessToken);
-        });
-
-        var nodemailer = require('nodemailer');
-        // login
-        var transporter = nodemailer.createTransport(({
-            service: 'gmail',
-            auth: {
-                xoauth2: generator
-            }
-        }));
-
-        // send mail
-        transporter.sendMail({
-            from: 'tim.hung.dao@gmail.com',
+    if(nguoiDang.email){        
+        RewayMailer.sendMail({
             to: 'hungdq@gipxy.com',
             subject: 'yeu cau them thong tin ve bds',
-            text: data.content+' ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone),
-            html: '<b>' + data.content + ' <br> ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone) + '</b>'
-
-        }, function(error, response) {
-           if (error) {
+            // text: 'Hi '+ nguoiDang.emai + '. Có một yêu cầu thông tin bds về ' + data.content+' ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone),
+            html: 'Hi '+ nguoiDang.email + ',<br> Có một yêu cầu thông tin về bất động sản <a href="' + data.adsUrl + '">' + data.adsUrl + '</a> từ ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone) + '<br> <b>"' + data.content + '"</b>'  
+        }, function(error, response){
+            if (error) {
                 console.log(error);
                 result.success = false;
                 reply(result);
@@ -476,6 +454,10 @@ internals.requestInfo = function(req,reply){
     }
 
 }
+
+
+
+
 
 
 module.exports = internals;
