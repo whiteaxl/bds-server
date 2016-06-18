@@ -9,7 +9,7 @@
  		</h1> 		
  		<nav class="nav-main">
  			<ul>
- 				<li ng-repeat="m in menuitems" class="{{m.items?'hasSub':''}}">
+ 				<li ng-repeat="m in menuitems" class="{{m.items?'has-Sub':''}}">
  					<a ng-click="hdr.gotoMenu(m.value)" title="">{{m.label}}</a>
  					<ul ng-if="m.items">
  						<li ng-repeat="item in m.items"><a ng-click="hdr.gotoMenu(item.value)">{{::item.label}}</a></li>
