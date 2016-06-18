@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window ,$timeout){
 		var vm = this;
 		//nhannc
 		$scope.loaiTin = 0;
