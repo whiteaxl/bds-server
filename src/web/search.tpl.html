@@ -18,7 +18,6 @@
                                   click-to-go="false"
                                   disable-default-u-i="false"
                                   disable-double-click-zoom="false"
-                                  
                                   pov="{heading: heading, pitch: pitch}"
                                   scrollwheel="false"
                                   enable-close-button="true"
@@ -40,7 +39,8 @@
                                                     <span ng-if="mc.highlightAds.diaChi.length > 20">&hellip;</span>
                                                 </div>
                                                 <div class="info">
-                                                    <a href="" ng-click="mc.showStreetView($event);" >Street View</a>
+                                                    <a href="" ng-if="mc.highlightAds.streetviewLatLng" ng-click="mc.showStreetView($event);" >Street View</a>
+                                                    
                                                 </div>
                                                 
 

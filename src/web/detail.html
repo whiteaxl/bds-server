@@ -117,18 +117,18 @@
 
                     </div>
                     <div class="form">
-                        <form action="search.html" method="post">
+                        <form  method="post" id="form-info-request" ng-submit="dt.requestInfo();">
                             <div class="control">
-                                <input class="form-control" type="text" name="name" placeholder="Họ Tên">
+                                <input class="form-control" type="text" ng-model="dt.name" name="name" placeholder="Họ Tên" required>
                             </div>
                             <div class="control">
-                                <input class="form-control" type="email" name="email" placeholder="Địa chỉ email">
+                                <input class="form-control" type="email" ng-model="dt.email" name="email" placeholder="Địa chỉ email" \>
                             </div>
                             <div class="control">
-                                <input class="form-control" type="number" name="phone" placeholder="Số điện thoại">
+                                <input class="form-control" type="number" ng-model="dt.phone" name="phone" placeholder="Số điện thoại">
                             </div>
                             <div class="control">
-                                <textarea name="msg" rows="4" class="form-control">Tôi muốn tìm hiểu thêm thông tin về bất động sản này</textarea>
+                                <textarea name="msg" rows="4" class="form-control">{{dt.content}}</textarea>
                             </div>
                             <div class="handle">
                                 <button type="submit" data-contact="detail" class="btn-submit">Gửi yêu cầu</button>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="group">
                             <h2 class="head">Đặc tính kỹ thuật </h2>
-                            <p class="update">Thông tin được cập nhật ngày 04/02/2016 12:00 AM:</p>
+                            <p class="update">Thông tin được cập nhật ngày {{dt.ads.ngayDangTinFmt}}</p>
                             <div class="row">
                                 <div class="col col-33">
                                     <ul>
@@ -206,6 +206,71 @@
                     </div>
                 </div>
             </div>
+
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động sản cùng loại mới đăng</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsCungLoaiMoiDang track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động sản ngang giá</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsNgangGia track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="block-02">
+              <div class="title" data-scroll="true">
+                  <h2>Bất động giá thấp hơn {{dt.ads.giaFmt}}</h2>
+                  <p>{{dt.ads.place.diaChinh.huyen}}, {{dt.ads.place.diaChinh.tinh}}</p>
+              </div>
+              <div class="row">
+                  <div ng-repeat="ads in dt.bdsNgangNhoHon track by $index" ng-click="dt.goDetail(ads.adsID)" ng-class="$index>2?'col col-25':'col col-33'">
+                      <div class="item">
+                          <a class="link" href="" title="">
+                            <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                            <span class="info">
+                                <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                <span class="line">{{ads.huongNha}}</span>
+                                <span class="line">{{ads.place.diaChi}}</span>
+                            </span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
             
     </section>
     <footer class="footer">
