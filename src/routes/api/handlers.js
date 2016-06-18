@@ -454,8 +454,8 @@ internals.requestInfo = function(req,reply){
             from: 'tim.hung.dao@gmail.com',
             to: 'hungdq@gipxy.com',
             subject: 'yeu cau them thong tin ve bds',
-            text: data.content+' ' + data.name,
-            html: '<b>' + data.content + ' <br> ' + data.name + '</b>'
+            text: data.content+' ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone),
+            html: '<b>' + data.content + ' <br> ' + data.name + ' - ' + data.email + (_.isNull(data.phone)?'':' - ' + data.phone) + '</b>'
 
         }, function(error, response) {
            if (error) {
