@@ -6,6 +6,8 @@ var fileUploadHandler = require('./fileUploadHandler');
 var userHandlers = require('./userHandlers');
 var newsHandlers = require('./newsHandlers');
 
+
+
 //Joi is Hapi's validation library
 Joi = require('joi');
 
@@ -405,7 +407,32 @@ internals.endpoints = [
       description: 'get list of root category',
       tags: ['api']
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/user/registerToken',
+    handler: userHandlers.registerToken,
+    config: {
+      description: 'Dang ky token: su dung cho Push Notification',
+      tags: ['api'],
+      validate: {
+        payload: {
+          deviceID: Joi.string().required(),
+          tokenID: Joi.string().required(),
+          tokenOs: Joi.string().required()
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          res: Joi.object(),
+          msg: Joi.string()
+        })
+      }
+    }
   }
+
 
 ];
 
