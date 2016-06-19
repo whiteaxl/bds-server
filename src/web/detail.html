@@ -159,21 +159,23 @@
                             <div class="row">
                                 <div class="col col-33">
                                     <ul>
+
                                         <li>Giá: {{dt.ads.giaFmt}}</li>
-                                        <li ng-if="dt.ads.soPhongNgu"> {{dt.ads.soPhongNgu}} phòng ngủ</li>
-                                        <li ng-if="dt.ads.soPhongTam"> {{dt.ads.soPhongTam}} phòng tắm</li>
-                                        <li ng-if="dt.ads.soTang"> {{dt.ads.soTang}} tầng</li>
-                                        <li>Coop</li>
-                                        <li>Doorman</li>
+                                        <div class="col col-33" ></div>
+                                        <li ng-if="dt.ads.loaiNhaDatFmt"> {{dt.ads.loaiNhaDatFmt}}</li>
+                                        <li ng-if="dt.ads.luotXem"> {{dt.ads.luotXem}} lượt xem</li>
+                                        <li ng-if="dt.ads.soNgayDaDangTinFmt"> {{dt.ads.soNgayDaDangTinFmt}}</li>
+                                        <li ng-if="dt.ads.dienTich"> {{dt.ads.place.diaChi}}</li>
+
                                     </ul>
                                 </div>
                                 <div class="col col-33">
                                     <ul>
-                                        <li>Trạng thái: </li>
-                                        <li>Built in 1925</li>
-                                        <li>Rooms: 4.5</li>
-                                        <li>Units in Building: 130</li>
-                                        <li>Neighborhood: <a href="/NY/New_York,5261,Upper_West_Side/" onclick="o_track_ql_click('ListingInfo|Neighborhood_Link');">Upper West Side</a></li>
+                                        <li ng-if="dt.ads.dienTich"> {{dt.ads.dienTichFmt}}</li>
+                                        <li ng-if="dt.ads.soPhongNgu"> {{dt.ads.soPhongNgu}} phòng ngủ</li>
+                                        <li ng-if="dt.ads.soPhongTam"> {{dt.ads.soPhongTam}} phòng tắm</li>
+                                        <li ng-if="dt.ads.soTang"> {{dt.ads.soTang}} tầng</li>
+                                        <li ng-if="dt.ads.giaM2"> {{dt.ads.giaM2}} triệu/m² </li>
                                     </ul>
                                 </div>
                                 
