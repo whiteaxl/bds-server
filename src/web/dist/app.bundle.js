@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2f424e9c8695afca01c7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c1515622b561ec47e1f1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -975,7 +975,7 @@
 	  });
 
 
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt'])
 	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -988,6 +988,9 @@
 	    $rootScope.chatBoxes = [];
 	    $rootScope.menuitems = window.RewayListValue.menu;
 
+	    $rootScope.showDangNhapForLike = function(){
+	        
+	    }
 	    
 	    $rootScope.chat_visible = true;
 	    $rootScope.showChat = function(user,scope){
@@ -1240,13 +1243,7 @@
 	        data: {
 	            bodyClass: "page-home",
 	            xyz: [{a:'b'}],
-	            //abc: title
 	        }
-	        // ,
-	        // controller: function($scope, adsList){
-	        //   $scope.sellingHouses = adsList;
-	        //   alert(adsList.length);
-	        // }
 	      }).state('detail', {
 	        url: "/detail/:adsID",
 	        //templateUrl: "/web/index_content.html",
@@ -1257,6 +1254,14 @@
 	        }
 	      }).state('news', {
 	          url: "/web/news.html"
+	      }).state('resetPassword', {
+	        url: "/resetPassword",
+	        templateUrl: "/web/index_content.html",
+	        controller: "MainCtrl",
+	        controllerAs: 'mc',
+	        data: {
+	            bodyClass: "page-detail"
+	        }
 	      })
 	    });
 	  bds.factory('socket', function (socketFactory) {
@@ -17861,7 +17866,7 @@
 	(function() {
 		'use strict';
 		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window,$timeout){
+		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window,$timeout,$location){
 			var vm = this;
 			//nhannc
 			$scope.loaiTin = 0;
@@ -18080,6 +18085,15 @@
 				$scope.markers.push(marker);
 				$scope.markerCount = $scope.markerCount + 1;
 				$scope.$digest();
+			}
+
+			if($state.current.name == "resetPassword"){
+				var token =  $location.search().token;			
+				$scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để chat", token: token}
+		        });
 			}
 
 		});
@@ -18843,10 +18857,16 @@
 				
 			}
 
+
+
 			vm.showChat = function(user){
 				if(!$rootScope.userID){
-					alert("Đăng nhập để chat");
-					return;
+					$scope.$bus.publish({
+		              channel: 'login',
+		              topic: 'show login',
+		              data: {label: "Đăng nhập để chat"}
+			        });
+			        return;
 				}
 				$scope.$bus.publish({
 	              channel: 'chat',
@@ -18856,7 +18876,11 @@
 			};
 			vm.likeAds = function(adsID){
 		      if(!$rootScope.userID){
-		        alert("Đăng nhập để like");
+		        $scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để like"}
+		        });
 		        return;
 		      }
 		      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){
@@ -19278,7 +19302,11 @@
 	      },
 	      forgotPassword: function(data){
 	        return $http.post("/api/forgotPassword",data);
+	      },
+	      resetPassword: function(data){
+	        return $http.post("/api/resetPassword",data);
 	      }
+
 	    };
 	  });
 	})();
@@ -19298,36 +19326,90 @@
 	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
 	        templateUrl: "/web/common/directives/loginTemplate.html",
 	        replace: 'true',
-	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	        function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
+	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','jwtHelper',
+	        function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,jwtHelper) {
 	          $scope.loginError = false;
 	          var vm = this;
+	          vm.login = true;
+	          vm.reset = false;
 	          vm.ENTER_EMAIL = 1;
 	          vm.ENTER_PASSWORD = 2;
 	          vm.LOGGED_IN = 3;
 	          vm.FORGOT_PASSWORD = 4;
 	          vm.SENT_PASSWORD = 5;
+	          vm.RESET_PASSWORD = 6;
 	          vm.state = vm.ENTER_EMAIL;
+	          vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	          vm.subHead = "";
 	          $scope.$bus.subscribe({
 	            channel: 'login',
 	            topic: 'logged out',
 	            callback: function(data, envelope) {
-	                vm.state = vm.ENTER_EMAIL;
 	                vm.userExist = false;
 	                vm.password = "";
 	                $localStorage.relandToken = undefined;  
+	                $rootScope.userID = undefined;
+	                vm.changeState(vm.ENTER_EMAIL,vm.userExist);
 	            }
 	          });
+
+	          $scope.$bus.subscribe({
+	            channel: 'login',
+	            topic: 'show login',
+	            callback: function(data, envelope) {
+	                var token = data.token;
+	                if(token){
+	                  var mydecode = jwtHelper.decodeToken(token);
+	                  vm.resetPasswordToken = token;
+	                  vm.resetUserID = mydecode.userID;
+	                  vm.resetHead = "Xin nhập mật khẩu mới"
+	                  vm.reset = true;
+	                  vm.login = false;
+	                  vm.state = vm.RESET_PASSWORD;
+	                }else{
+	                  vm.state = vm.ENTER_EMAIL;
+	                  vm.userExist = false;
+	                  vm.password = "";
+	                  $localStorage.relandToken = undefined;  
+	                  vm.head = data.label;
+	                  vm.subHead = "";  
+	                }                
+	                $('#box-login').fadeIn(500);
+	            }
+	          });
+
+
 	          vm.exitLoginBox = function($event){
 	            if($event.target.id == "box-login"){
-	                vm.state = vm.ENTER_EMAIL;
-	                vm.userExist = false;
-	                vm.password = "";
-	                $localStorage.relandToken = undefined;  
-	              }
+	              vm.userExist = false;
+	              vm.changeState(vm.ENTER_EMAIL,false);
+	            }
 	          }
 	          vm.forgotPassword = function(){
-	            vm.state = vm.FORGOT_PASSWORD;
+	            vm.changeState(vm.FORGOT_PASSWORD);
+	          }
+
+	          vm.changeState = function(state,userExist){
+	            vm.state = state;
+	            if(state == vm.FORGOT_PASSWORD){
+	              vm.head  = "Quên mật khẩu?";
+	              vm.subHead = "Hãy nhập email, Reland sẽ gửi mật khẩu tới email";
+	            }
+	            if(vm.state == vm.SENT_PASSWORD){
+	              vm.subHead = "Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập";
+	            }
+	            if(vm.state == vm.ENTER_EMAIL){
+	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	              vm.subHead = "";
+	            }
+	            if(vm.state == vm.ENTER_PASSWORD){
+	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	              if(userExist == true)
+	                vm.head = "Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu";
+	              else if(userExist == false)
+	                vm.head = "Tạo mật khẩu";
+	            }
+
 	          }
 
 
@@ -19338,17 +19420,48 @@
 	                matKhau: vm.password
 	              }
 	              if (loginForm.valid()) {
-	                if(vm.state == vm.FORGOT_PASSWORD){
+	                if(vm.state == vm.RESET_PASSWORD){
+	                  HouseService.resetPassword({token: vm.resetPasswordToken,pass: vm.resetPassword}).then(function(resp){
+	                    if(resp.data.success == true){
+	                      //need to auto login here
+	                      HouseService.login({userID: vm.resetUserID, matKhau: vm.resetPassword}).then(function(res){
+	                        if(res.data.login==true){
+	                          //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                          //$window.token = res.data.token;
+	                          $localStorage.relandToken = res.data.token;
+	                          $rootScope.userName = res.data.userName;
+	                          $rootScope.userID = res.data.userID;
+	                          //hung dummy here to set userID to email so we can test chat
+	                          $rootScope.userID = res.data.email;
+	                          $rootScope.userEmail = res.data.email;
+	                          vm.class = "has-sub";
+	                          vm.state = vm.LOGGED_IN;
+	                          vm.userExist = false;
+	                          vm.password = "";
+	                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+	                            console.log("register socket user " + $rootScope.userName);
+	                          });
+	                          $('#box-login').hide();
+	                        }else{
+	                          //alert(res.data.message);
+	                          vm.head = res.data.message;
+	                        }                    
+	                      });
+	                    }else{
+	                      alert(resp.data.msg);
+	                    }
+	                  });
+	                }else if(vm.state == vm.FORGOT_PASSWORD){
 	                  HouseService.forgotPassword({
 	                    email: vm.email,
 	                    newPass: vm.password
 	                  }).then(function(res){                               
-	                    vm.state = vm.SENT_PASSWORD;
+	                    vm.changeState(vm.SENT_PASSWORD);
 	                  });
 	                } else if(vm.state == vm.ENTER_EMAIL){
 	                  HouseService.checkUserExist(data).then(function(res){
 	                    vm.userExist = res.data.exist;
-	                    vm.state = vm.ENTER_PASSWORD;
+	                    vm.changeState(vm.ENTER_PASSWORD,vm.userExist);
 	                  });
 	                } else if(vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD){
 	                  if(vm.userExist==true){//sign in
@@ -19371,7 +19484,8 @@
 	                        });
 	                        $('#box-login').hide();
 	                      }else{
-	                        alert(res.data.message);
+	                        //alert(res.data.message);
+	                        vm.head = res.data.message;
 	                      }                    
 	                    });
 	                  }else{//register
@@ -19391,83 +19505,6 @@
 	              }
 	          }
 
-	          /*angular.extend(this,{
-	            email: "",
-	            password: "",
-	            enterEmail: true,
-	            enterPassword: false,
-	            userExist: false,
-	            class: "",
-	            exitLoginBox: function($event){
-	              if($event.target.id == "box-login"){
-	                this.enterEmail = true;
-	                this.userExist = false;
-	                this.enterPassword = false;
-	                this.password = "";
-	                $localStorage.relandToken = undefined;  
-	              }
-	            },
-	            signin: function(){
-	              var loginForm = $('#form-login');
-	              var data = {
-	                email: this.email,
-	                matKhau: this.password
-	              }
-	              if (loginForm.valid()) {
-	                // If the form is invalid, submit it. The form won't actually submit;
-	                var vm = this;
-	                if(this.enterEmail == true){
-	                  HouseService.checkUserExist(data).then(function(res){
-	                    vm.userExist = res.data.exist;
-	                    vm.enterPassword = true;
-	                    vm.enterEmail = false;  
-	                    vm.showForgotPassword = true;
-	                  });
-	                } else if(this.enterPassword == true){
-	                  if(this.userExist==true){//sign in
-	                    HouseService.login(data).then(function(res){
-	                      if(res.data.login==true){
-	                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
-	                        //$window.token = res.data.token;
-	                        $localStorage.relandToken = res.data.token;
-	                        $rootScope.userName = res.data.userName;
-	                        $rootScope.userID = res.data.userID;
-	                        //hung dummy here to set userID to email so we can test chat
-	                        $rootScope.userID = res.data.email;
-	                        $rootScope.userEmail = res.data.email;
-	                        vm.class = "has-sub";
-	                        vm.enterPassword = false;
-	                        vm.enterEmail = true;  
-	                        vm.userExist = false;
-	                        vm.password = "";
-
-	                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
-	                          console.log("register socket user " + $rootScope.userName);
-	                          
-
-	                          
-	                        });
-	                        $('#box-login').hide();
-	                      }else{
-	                        alert(res.data.message);
-	                      }                    
-	                    });
-	                  }else{//register
-	                    HouseService.signup(data).then(function(res){
-	                      $localStorage.relandToken = res.data.token;
-	                      $rootScope.userName = res.data.userName;
-	                      vm.class = "has-sub";
-	                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
-	                          console.log("register socket user " + $rootScope.userName);
-	                      });
-	                      $('#box-login').hide();
-	                    });
-	                  }
-	                }
-	              }
-	            }
-	          });          
-	          */
 	          var formLogin = $("#form-login");
 	          // $("#form-login").validate();
 	          // if(formLogin.validate){
@@ -19479,7 +19516,17 @@
 	                },
 	                password: {
 	                  required: true
-	                }
+	                },
+	                passwordConfirm: {
+	                  required: function(element){
+	                    var pass = $("#form-login [name = 'password']").val();
+	                    var passConfirm = element.value;
+	                    if(pass){
+	                      return !(pass == passConfirm);
+	                    }else
+	                      return false;
+	                  }
+	                }                
 	              },
 	              messages: {
 	                email: {
@@ -19488,6 +19535,9 @@
 	                },
 	                password: {
 	                  required: 'Xin nhập mật khẩu'
+	                },
+	                passwordConfirm: {
+	                  required: 'Mật khẩu không khớp',
 	                }
 	              }
 	            });    

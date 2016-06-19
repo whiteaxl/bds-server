@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MainCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window,$timeout){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window,$timeout,$location){
 		var vm = this;
 		//nhannc
 		$scope.loaiTin = 0;
@@ -220,6 +220,15 @@
 			$scope.markers.push(marker);
 			$scope.markerCount = $scope.markerCount + 1;
 			$scope.$digest();
+		}
+
+		if($state.current.name == "resetPassword"){
+			var token =  $location.search().token;			
+			$scope.$bus.publish({
+              channel: 'login',
+              topic: 'show login',
+              data: {label: "Đăng nhập để chat", token: token}
+	        });
 		}
 
 	});

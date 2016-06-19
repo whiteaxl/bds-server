@@ -59,6 +59,18 @@ internals.endpoints = [
 		reply.view('index.html', { page: 'detail' });
 	}
 }
+,{ 
+	method: 'GET',
+	path: '/web/resetPassword', 
+	handler: function(requet,reply){
+		reply.view('index.html', { page: 'resetPassword' });
+	},
+	config:{
+		auth: 'jwt'
+	}
+	
+}
+
 ];
 
 module.exports = internals;

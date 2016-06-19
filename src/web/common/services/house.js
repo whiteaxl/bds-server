@@ -67,7 +67,11 @@
       },
       forgotPassword: function(data){
         return $http.post("/api/forgotPassword",data);
+      },
+      resetPassword: function(data){
+        return $http.post("/api/resetPassword",data);
       }
+
     };
   });
 })();

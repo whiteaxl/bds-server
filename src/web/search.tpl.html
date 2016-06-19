@@ -38,10 +38,8 @@
                                                 <div class="info">{{mc.highlightAds.diaChi | limitTo: 20 }}
                                                     <span ng-if="mc.highlightAds.diaChi.length > 20">&hellip;</span>
                                                 </div>
-                                                <div class="info">
-                                                    <a href="" ng-if="mc.highlightAds.streetviewLatLng" ng-click="mc.showStreetView($event);" >Street View</a>
-                                                    
-                                                </div>
+                                                
+                                                <img style="margin-left: 10px; cursor: pointer;" ng-if="mc.highlightAds.streetviewLatLng" ng-click="mc.showStreetView($event);" src="asset/img/street-view-icon.png">
                                                 
 
                                             </div>
