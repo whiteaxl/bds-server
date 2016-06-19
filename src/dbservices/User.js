@@ -426,6 +426,10 @@ class UserModel {
     bucket.query(query, callback);
   }
 
+  registerToken(dto, callback) {
+    console.log('aaa', dto);
+    bucket.upsert(dto.tokenID, dto, callback)
+  }
 }
 
 module.exports = UserModel;

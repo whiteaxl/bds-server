@@ -107,6 +107,31 @@ internals.registerUser = function (req, reply) {
   });
 };
 
+internals.registerToken = function (req, reply) {
+  log.info("Call registerToken:", req.payload);
+
+  let dto = req.payload;
+
+  if (!dto.type) {
+    dto.type = 'Token'
+  }
+
+  userService.registerToken(dto, (err, res) => {
+    console.log("Callback registerToken", err, res);
+    let toClient = {};
+    if (err) {
+      toClient.status = 99;
+      toClient.msg = err.msg;
+
+    } else {
+      toClient.status = 0;
+      toClient.res = res;
+    }
+
+    reply(toClient);
+  });
+};
+
 
 module.exports = internals;
 
