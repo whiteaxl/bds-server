@@ -32,6 +32,11 @@ class UserModel {
   getUser(userDto, callback) {
     var sql = `select default.* from default where type='User'`;
 
+    if(userDto.userID){
+      this.getUserByID(userDto.userID,callback);
+      return ;
+    }
+
     if (userDto.phone) {
       sql = `${sql} AND phone='${userDto.phone}'`
     }
@@ -293,8 +298,10 @@ class UserModel {
           bucket.upsert(user.id, user, function (err, res) {
             if (err) {
                 console.log("ERROR:" + err);
-            }
-            reply({success:true,msg: constant.MSG.SUCCESS_UPDATE_PASSWORD});
+                reply({success: false, msg: err});
+            }else{
+              reply({success:true,msg: constant.MSG.SUCCESS_UPDATE_PASSWORD});  
+            }            
           })          
         }
       }

@@ -9,8 +9,8 @@
   });
 
 
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize'])
-  .run(['$rootScope', '$cookieStore','$http','$compile', '$sce', function($rootScope, $cookieStore, $http,$compile, $sce){
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize','angular-jwt'])
+  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
@@ -23,6 +23,9 @@
     $rootScope.menuitems = window.RewayListValue.menu;
       
 
+    $rootScope.showDangNhapForLike = function(){
+        
+    }
     
       
     $rootScope.chat_visible = true;
@@ -276,13 +279,7 @@
         data: {
             bodyClass: "page-home",
             xyz: [{a:'b'}],
-            //abc: title
         }
-        // ,
-        // controller: function($scope, adsList){
-        //   $scope.sellingHouses = adsList;
-        //   alert(adsList.length);
-        // }
       }).state('detail', {
         url: "/detail/:adsID",
         //templateUrl: "/web/index_content.html",
@@ -305,6 +302,14 @@
           data: {
 
           }
+      }).state('resetPassword', {
+        url: "/resetPassword",
+        templateUrl: "/web/index_content.html",
+        controller: "MainCtrl",
+        controllerAs: 'mc',
+        data: {
+            bodyClass: "page-detail"
+        }
       })
     });
   bds.factory('socket', function (socketFactory) {

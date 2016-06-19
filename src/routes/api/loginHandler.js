@@ -61,6 +61,7 @@ internals.login = function(req, reply){
     		message: undefined
     	}
     	console.log(req.payload);
+        console.log(JSON.stringify(res));
 
         if(res && res.length==1){
         	console.log(res[0]);
@@ -174,12 +175,12 @@ internals.forgotPassword = function(req,reply){
 
           
     
-          var url = req.connection.info.protocol + '://' + req.info.host + "/api/resetPassword?token=" + token;      
+          var url = req.connection.info.protocol + '://' + req.info.host + "/web/resetPassword?token=" + token;      
           console.log(url);
           RewayMailer.sendMail({
             to: email,
             subject: 'Reland: Quen mat khau',
-            html: 'Hi '+ user.name + ',<br> mật khẩu mới của bạn là ' + randomstring + '. Hãy click vào link này để đặt lại mật khẩu: <a href="'+url+'"> đổi mật khẩu </a>'  
+            html: 'Hi '+ user.name + ',<br> Hãy click vào link này để đặt lại mật khẩu: <a href="'+url+'"> đổi mật khẩu </a>'  
           }, function(error, response){
             if (error) {
                 console.log(error);
@@ -205,12 +206,15 @@ internals.forgotPassword = function(req,reply){
 }
 
 internals.resetPassword = function(req,reply){
-    var token = req.query.token;
-    var mydecoded = JWT.decode(req.auth.token,{complete: true});
+    var token = req.payload.token;
+    var pass = req.payload.pass;
+    console.log(JSON.stringify(req.payload));
+    var mydecoded = JWT.decode(token,{complete: true});
     console.log(JSON.stringify(mydecoded));
     var userID = mydecoded.payload.userID;
     var userName = mydecoded.payload.userName;
-    var pass = mydecoded.payload.pass;
+    //var pass = mydecoded.payload.pass;
+    
     userService.resetPassword({"userID": userID, "pass": pass}, reply)
 }
 

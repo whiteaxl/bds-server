@@ -38,10 +38,16 @@
 			
 		}
 
+
+
 		vm.showChat = function(user){
 			if(!$rootScope.userID){
-				alert("Đăng nhập để chat");
-				return;
+				$scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để chat"}
+		        });
+		        return;
 			}
 			$scope.$bus.publish({
               channel: 'chat',
@@ -51,7 +57,11 @@
 		};
 		vm.likeAds = function(adsID){
 	      if(!$rootScope.userID){
-	        alert("Đăng nhập để like");
+	        $scope.$bus.publish({
+              channel: 'login',
+              topic: 'show login',
+              data: {label: "Đăng nhập để like"}
+	        });
 	        return;
 	      }
 	      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){

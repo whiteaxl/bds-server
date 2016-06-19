@@ -372,13 +372,12 @@ internals.endpoints = [
     }
   },
   {
-    method: 'GET',
+    method: 'POST',
     path: '/api/resetPassword',
     handler: loginHandler.resetPassword,
     config: {
       description: 'resetPassword', 
-      tags: ['api'],
-      auth: 'jwt'
+      tags: ['api']      
     }
   },
   {
