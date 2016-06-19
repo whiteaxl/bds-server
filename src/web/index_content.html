@@ -87,16 +87,15 @@
                                     <div class="row">
                                         <div ng-repeat="ads in cat.list" ng-class-odd="'col-40'" ng-class-even="'col-60'" class="col ">
                                             <div class="item">
-                                                <a class="link" href=""  title="">
-                                                    <span class="img" style="background-image: url({{ads.image.cover}})"></span>
-                                                    <span class="info">
-                                                        <span class="line"><span>{{ads.dienTich}} m2</span></span>
-                                                        <span class="line"></span>
-                                                        <span class="line"></span>
-                                                    </span>
-                                                </a>
-                                                <a class="like" data-like="true" href="#" title=""><span>Like</span></a>
-                                            </div>
+                                              <a class="link" href="" title="">
+                                                <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                                                <span class="info">
+                                                    <span class="line"><span class="price">{{ads.giaFmt}}</span> <span>{{ads.dienTichFmt}}</span></span>
+                                                    <span class="line">{{ads.ten_loaiNhaDat}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span>
+                                                    <span class="line">{{ads.place.diaChi}}</span>
+                                                </span>
+                                              </a>
+                                          </div>
                                         </div>
                                     </div>
                                     <div class="more sp">
