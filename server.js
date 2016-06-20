@@ -18,6 +18,8 @@ require('babel-core/register')({
 var chatHandler = require('./src/lib/ChatHandler');
 chatHandler.init(HapiServer);
 
+var dbChangeHandler = require('./src/lib/dbChangeHandler');
+
 
 // var io = require('socket.io')(HapiServer.listener);
 
@@ -116,6 +118,10 @@ chatHandler.init(HapiServer);
  * When hapi starts up, some info is displayed
  */
 HapiServer.start(function () {
+  dbChangeHandler.initAPN(this);
+  dbChangeHandler.init(this);
+
   console.log('Server is running: ' + HapiServer.info.uri);
+
 });
 

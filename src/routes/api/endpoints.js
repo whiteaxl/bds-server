@@ -309,7 +309,7 @@ internals.endpoints = [
           phone: Joi.string(),
           email: Joi.string(),
           matKhau: Joi.string().required(),
-          fullName: Joi.string().required()
+          fullName: Joi.string().required(),
         }
       },
 
@@ -409,16 +409,20 @@ internals.endpoints = [
   },
   {
     method: 'POST',
-    path: '/api/user/registerToken',
-    handler: userHandlers.registerToken,
+    path: '/api/user/updateDevice',
+    handler: userHandlers.updateDevice,
     config: {
-      description: 'Dang ky token: su dung cho Push Notification',
+      description: 'Cap nhat thong tin device: se su dung cho Push Notification',
       tags: ['api'],
       validate: {
         payload: {
           deviceID: Joi.string().required(),
-          tokenID: Joi.string().required(),
-          tokenOs: Joi.string().required()
+          deviceModel: Joi.string().required(),
+          tokenID: Joi.string(),
+          tokenOs: Joi.string(),
+          phone : Joi.string(),
+          email : Joi.string(),
+          userID : Joi.string()
         }
       },
 

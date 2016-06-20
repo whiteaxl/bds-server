@@ -107,29 +107,45 @@ internals.registerUser = function (req, reply) {
   });
 };
 
-internals.registerToken = function (req, reply) {
-  log.info("Call registerToken:", req.payload);
-
+internals.updateDevice = function (req, reply) {
+  log.info("Call updateDevice:", req.payload);
   let dto = req.payload;
 
-  if (!dto.type) {
-    dto.type = 'Token'
-  }
+  dto.type = 'Device';
 
-  userService.registerToken(dto, (err, res) => {
-    console.log("Callback registerToken", err, res);
-    let toClient = {};
-    if (err) {
-      toClient.status = 99;
-      toClient.msg = err.msg;
+  const userDto = {
+    phone : dto.phone,
+    email : dto.email
+  };
 
+  userService.getUser(userDto, (err, res) => {
+    if (!err && res.length > 0) { //exists
+      //console.log("Callback getUser", err, res);
+      dto.userID = res[0].userID;
+
+      userService.updateDevice(dto, (err, res) => {
+        let toClient = {};
+        if (err) {
+          toClient.status = 99;
+          toClient.msg = err.msg;
+
+        } else {
+          toClient.status = 0;
+          toClient.res = res;
+        }
+
+        reply(toClient);
+      });
     } else {
-      toClient.status = 0;
-      toClient.res = res;
+      console.log("Callback getUser error", err, res);
+      reply({
+        status : 99,
+        msg : err.msg + " Or user does not exist!"
+      });
     }
-
-    reply(toClient);
   });
+
+
 };
 
 

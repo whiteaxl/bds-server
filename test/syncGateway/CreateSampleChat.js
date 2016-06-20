@@ -47,18 +47,18 @@ var chatDto1 = {
 
 
 var chatDto2 = {
-  chatID: "Chat_9_10_002",
-  fromUserID    : "User_9",
-  toUserID      : "User_10",
-  fromFullName  : "User 9",
-  toFullName    : "User 10",
+  chatID: "Chat_1_2_001",
+  fromUserID    : "User_1",
+  toUserID      : "User_2",
+  fromFullName  : "User 1",
+  toFullName    : "User 2",
   fromUserAvatar  : "https://techreviewpro-techreviewpro.netdna-ssl.com/wp-content/uploads//2015/03/Nice-Success-Picture-for-facebook-profile-WhatsApp-DP-Cover-Pic.jpg",
   relatedToAds  : {
     adsID : "Ads_bds_3776104",
     title : "5.5 triệu/tháng - Căn hộ chung cư - Era Town",
     cover: "http://file1.batdongsan.com.vn/guestthumb120x90.20150128093209122.jpg"
   },
-  content: "Chat from user 9, send to user 10 001",
+  content: "Chat from user 1, send to user 2 001",
   msgType : "text",
   read : false,
   date : new Date(),
@@ -137,8 +137,3 @@ syncGW.createDocViaSyncGateway(chatDto2, (err, res) => {
   console.log("Callback createChat", err, res);
 });
 
-
-setTimeout( () =>
-syncGW.createDocViaSyncGateway(chatDto2_1, (err, res) => {
-  console.log("Callback createChat 2", err, res);
-}), 5000);

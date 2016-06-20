@@ -29,6 +29,7 @@ class UserModel {
     bucket.operationTimeout = 60 * 1000;
   }
 
+  // by phone or email
   getUser(userDto, callback) {
     var sql = `select default.* from default where type='User'`;
 
@@ -46,7 +47,7 @@ class UserModel {
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
 
-    //why need this?
+    //Todo: why need this?
     this.initBucket();
 
     bucket.query(query, callback);
@@ -433,9 +434,20 @@ class UserModel {
     bucket.query(query, callback);
   }
 
-  registerToken(dto, callback) {
-    console.log('aaa', dto);
-    bucket.upsert(dto.tokenID, dto, callback)
+  updateDevice(dto, callback) {
+    console.log('updateDevice dto:', dto);
+    bucket.upsert(dto.deviceID, dto, callback)
+  }
+
+  getTokenOfUser(userID,callback){
+    var sql = `select default.* from default where type='Device' and userID='${userID}'`;
+    var query = N1qlQuery.fromString(sql);
+    //this.initBucket();
+    bucket.query(query, callback);
+  }
+
+  getDocById(id, callback) {
+    bucket.get(id, callback);
   }
 }
 
