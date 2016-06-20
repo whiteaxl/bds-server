@@ -138,9 +138,11 @@ internals.updateDevice = function (req, reply) {
       });
     } else {
       console.log("Callback getUser error", err, res);
+      let msg = err ? "Error:" + err.msg : "User does not exist!";
+
       reply({
         status : 99,
-        msg : err.msg + " Or user does not exist!"
+        msg : msg
       });
     }
   });
