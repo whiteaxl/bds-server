@@ -22,9 +22,14 @@ dbChangeHandler.initDBListen = function(lastSeq) {
     var body = '';
     response.on('data', function(d) {
       //body += d;
-      console.log('dbChangeHandler changes:', d.toString());
-      if (d) {
-        dbChangeHandler.onChanged(d.toString());
+      try {
+        let strChunk = d.toString();
+        console.log('dbChangeHandler changes:', strChunk);
+        if (strChunk) {
+          dbChangeHandler.onChanged(strChunk);
+        }
+      } catch(ex) {
+        console.log("Error ", ex);
       }
     });
     response.on('end', function() {
