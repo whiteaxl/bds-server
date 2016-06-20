@@ -134,6 +134,7 @@ dbChangeHandler._pushNotify = function(msg, tokens) {
   var note = new apn.notification();
   note.setAlertText(msg);
   note.badge = 0;
+  note.sound = "ping.aiff";
 
   dbChangeHandler.apnService.pushNotification(note, tokens);
 };
