@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/reway/bds-server#readme",
   "dependencies": {
+    "apn": "^1.7.6",
     "babel-core": "^6.4.5",
     "babel-eslint": "^5.0.0-beta8",
     "babel-loader": "^6.2.1",
