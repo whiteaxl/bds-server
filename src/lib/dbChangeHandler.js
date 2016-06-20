@@ -91,9 +91,9 @@ dbChangeHandler.onChanged = function(data) {
 dbChangeHandler.initAPN = function() {
   //var tokens = ["90e53434603079f3680f51234801b2abb4c91cb9dd69100e2e49a55570175bb8"];
   var service = new apn.connection({
-    production: false,
-    cert:'src/apn/cert.pem',
-    key:'src/apn/key.pem'
+    production: true,
+    cert:'src/apn/prod_cert.pem',
+    key:'src/apn/prod_key.pem'
   });
 
   dbChangeHandler.apnService = service;
