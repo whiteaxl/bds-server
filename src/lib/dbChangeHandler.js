@@ -6,7 +6,7 @@ var apn = require('apn');
 
 var last = 0;
 var log = require('./logUtil');
-var UserService = require('../dbservices/user');
+var UserService = require('../dbservices/User');
 var userService = new UserService();
 
 var dbChangeHandler = {};
