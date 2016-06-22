@@ -2,10 +2,13 @@
 var RewayMailer = {};
 
 var generator = require('xoauth2').createXOAuth2Generator({
-	user: 'tim.hung.dao@gmail.com',
-	clientId: '695617178682-t9ojtonmgk4eiukmpksk7flfut4vl95r.apps.googleusercontent.com',
-	clientSecret: '_VcjOUp3G_83_4QVQ8bIJBL-',
-	refreshToken: '1/RQMTRG-n4hmCnziIOI00RWHFQfiOEwMAIUrH5CCYTB8'
+	// user: 'tim.hung.dao@gmail.com',
+	user: 'support@reland.vn',
+	// clientId: '695617178682-t9ojtonmgk4eiukmpksk7flfut4vl95r.apps.googleusercontent.com',
+	// clientSecret: '_VcjOUp3G_83_4QVQ8bIJBL-',
+	clientId: '373321723504-qlpu6bf2bnhgv57o2vaqa0vtjfvmgjuq.apps.googleusercontent.com',
+	clientSecret: '8ey5xSBJHTCUMXUXj6AZCplo',
+	refreshToken: '1/trdDyvimLIMVKvpp4dy3m150qbirli4SP8MeFOu_4zM'
 });
 
 // listen for token updates
@@ -28,8 +31,10 @@ var transporter = nodemailer.createTransport(({
 
 RewayMailer.sendMail  = function(mailData,callback){
 	transporter.sendMail({
-		from: mailData.from,
-		to: mailData.to,
+		// from: mailData.from,
+		// to: mailData.to,
+		from: 'support@reland.vn',
+		to: 'support@reland.vn',
 		subject: mailData.subject,
 		text: mailData.text,
 		html: mailData.html

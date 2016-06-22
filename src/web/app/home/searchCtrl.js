@@ -125,10 +125,20 @@
 			$scope.bodyClass = "page-search";
 		}
 		vm.saveSearch = function(){
+			
+			if(!$rootScope.userID){
+				$scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để lưu tìm kiếm"}
+		        });
+		        return;
+			}
 			var data = {
 				query: vm.searchData,
 				userID: $rootScope.userID
 			};
+
 			HouseService.saveSearch(data).then(function(res){				
 				alert(res.data.msg);
 			})

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c1515622b561ec47e1f1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cfcdf8f621847909bf89"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18236,10 +18236,20 @@
 				$scope.bodyClass = "page-search";
 			}
 			vm.saveSearch = function(){
+				
+				if(!$rootScope.userID){
+					$scope.$bus.publish({
+		              channel: 'login',
+		              topic: 'show login',
+		              data: {label: "Đăng nhập để lưu tìm kiếm"}
+			        });
+			        return;
+				}
 				var data = {
 					query: vm.searchData,
 					userID: $rootScope.userID
 				};
+
 				HouseService.saveSearch(data).then(function(res){				
 					alert(res.data.msg);
 				})
