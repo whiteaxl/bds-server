@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 //extract data from bds.com
 
@@ -10,6 +10,22 @@ var placeUtil = require('./placeUtil');
 var util = require("./utils");
 var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
+
+var DACDIEM_MAP = {
+	'Mã số' : "maSo",
+	'Loại tin rao' : "loaiNhaDat",
+	'Ngày đăng tin' : "ngayDangTin",
+	'Ngày hết hạn' : "ngayHetHan",
+	'Hướng nhà' : "huongNha",
+	'Hướng ban công':"huongBanCong",
+	'Số phòng':"soPhong",
+	'Đường vào':"duongVao",
+	'Mặt tiền':"matTien",
+	'Số tầng':"soTang",
+	'Số toilet':"soPhongTam",
+	'Nội thất': "noiThat"
+};
+
 
 class DoThiExtractor {
 	constructor() {
@@ -47,13 +63,14 @@ class DoThiExtractor {
 		.follow('ul > li > a@href')
 		.set({
 			'title'			   :'.product-detail > h1',
-			'loaiTin'       :'.pd-dacdiem > table > tbody > tr[2] > td[2]',
+			'dacDiemLabel'       :['.pd-dacdiem > table > tbody > tr > td[1]'],
+			'dacDiemValue'       :['.pd-dacdiem > table > tbody > tr > td[2]'],
 			'images'		:['#myGallery > ul > img@src'],
 			'price'			:'.spanprice',
 			'area'			:'#ContentPlaceHolder1_ProductDetail1_divprice > span[2] ',
 			'chiTiet'	    :'#pd-desc-content',
-		    'name'			:'.product-detail > h1',
-		    'diachi'		:'.pd-location > a',
+			'name'			:'.product-detail > h1',
+			'diachi'		:'.pd-location > a',
 			'hdLat'		    :'.divmaps input[id="hddLatitude"]@value',
 			'hdLong'	    :'.divmaps input[id="hddLongtitude"]@value',
 			'adsID'		    :'#tbl1 > tbody > tr[1] > td[2]',
@@ -62,6 +79,11 @@ class DoThiExtractor {
 			'dangBoiPhone'	:'.pd-contact > table > tbody > tr[3] > td[2]'
 		})
 		.data(function(dothiBds) {
+			console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
+			console.log("dacDiemValue=", dothiBds.dacDiemValue);
+
+
+
 			let addothiBds = {
 				name:  dothiBds.name,
 				nameKhongDau:  util.locDau(dothiBds.name),
@@ -86,6 +108,11 @@ class DoThiExtractor {
 				},
 
 			}
+			//Extract dacDiem
+			for (var i = 0; i < dothiBds.dacDiemLabel.length; i++ ) {
+				addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
+			}
+
 			addothiBds.adsID = "Ads_" + addothiBds.adsID;
 			addothiBds.type = "Ads-DT";
 
