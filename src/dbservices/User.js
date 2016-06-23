@@ -278,14 +278,14 @@ class UserModel {
                   console.log("ERROR:" + err);
               }
               console.log("likeAds, reply SUCCESS_LIKE_ADS");
-              reply({success:true,msg: constant.MSG.SUCCESS_LIKE_ADS});
+              reply({success:true,status:0,msg: constant.MSG.SUCCESS_LIKE_ADS});
             })
           }else{
             console.log("likeAds, reply EXIST_LIKE_ADS");
-            reply({success:false, msg: constant.MSG.EXIST_LIKE_ADS});
+            reply({success:false,status:1, msg: constant.MSG.EXIST_LIKE_ADS});
           }
         } else {
-          reply({success:false, msg: constant.MSG.USER_NOT_EXIST});
+          reply({success:false,status:2, msg: constant.MSG.USER_NOT_EXIST});
         }
       }
     });       
