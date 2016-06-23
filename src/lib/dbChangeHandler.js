@@ -44,9 +44,9 @@ dbChangeHandler.init = function() {
   request('http://localhost:4985/default/', function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
-      var lastSeq = info.update_seq;
-      console.log("Startup..lastSeq=", lastSeq);
-      dbChangeHandler.initDBListen(lastSeq);
+      last = info.update_seq;
+      console.log("Startup..lastSeq=", last);
+      dbChangeHandler.initDBListen(last);
     }
   });
 };

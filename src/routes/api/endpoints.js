@@ -341,8 +341,22 @@ internals.endpoints = [
     path: '/api/likeAds',
     handler: Handlers.likeAds,
     config: {
-      description: 'like Ads',
-      tags: ['api']
+      description: 'Like Ads - Se dua adsID vao ds user.adsLikes',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+          adsID: Joi.string().required(),
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          success: Joi.boolean(),
+          msg: Joi.string()
+        })
+      }
     }
   },
   {

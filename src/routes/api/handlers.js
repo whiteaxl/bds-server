@@ -387,7 +387,7 @@ internals.saveSearch = function(req, reply){
     
 }
 internals.likeAds = function(req, reply){
-    req.payload.userID = "User_6";
+    //req.payload.userID = "User_6";
     console.log("payload is" + JSON.stringify(req.payload));
     userService.likeAds(req.payload,reply);    
 }

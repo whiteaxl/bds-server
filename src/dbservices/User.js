@@ -58,6 +58,7 @@ class UserModel {
 
     var query = N1qlQuery.fromString(sql);
     this.initBucket();
+    console.log("getUserByID");
     bucket.query(query, callback);
   }
 
@@ -158,6 +159,7 @@ class UserModel {
               userDto.type = "User";
               userDto.userID = userID;
               userDto._id = userID;
+              userDto.id = userID;
 
               this.createLoginOnSyncGateway(userDto, (err, res) => {
                 //log.info("Callback createLoginOnSyncGateway:", err, res);
@@ -233,7 +235,7 @@ class UserModel {
           console.log(user);
 
           if(this._checkSaveSearchExist(query,user)==true){
-            onSuccess({success: false,msg: constant.MSG.EXIST_SAVE_SEARCH});
+            onSuccess({success: false,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH});
           }else{
             console.log("going to push query " + JSON.stringify(query));
             user.saveSearch.push(query);
@@ -241,7 +243,7 @@ class UserModel {
               if (err) {
                   console.log("ERROR:" + err);
               }
-              onSuccess({success:true,msg: constant.MSG.SUCCESS_SAVE_SEARCH});
+              onSuccess({success:true,status:0,msg: constant.MSG.SUCCESS_SAVE_SEARCH});
             })
           } 
         }
@@ -253,6 +255,7 @@ class UserModel {
     var adsID = payload.adsID;
     var userID = payload.userID;
     this.getUserByID(userID, (err,res) => {
+      console.log("Done getUserByID");
       if (err) {
         console.log("ERROR:" + err);
       }else{
@@ -274,11 +277,15 @@ class UserModel {
               if (err) {
                   console.log("ERROR:" + err);
               }
+              console.log("likeAds, reply SUCCESS_LIKE_ADS");
               reply({success:true,msg: constant.MSG.SUCCESS_LIKE_ADS});
             })
           }else{
+            console.log("likeAds, reply EXIST_LIKE_ADS");
             reply({success:false, msg: constant.MSG.EXIST_LIKE_ADS});
           }
+        } else {
+          reply({success:false, msg: constant.MSG.USER_NOT_EXIST});
         }
       }
     });       
