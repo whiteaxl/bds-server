@@ -361,6 +361,28 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/user/getAdsLikes',
+    handler: userHandlers.getAdsLikes,
+    config: {
+      description: 'Lay ds likes cua mot user',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          data: Joi.array(),
+          status: Joi.number().required(),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/requestInfo',
     handler: Handlers.requestInfo,
     config: {

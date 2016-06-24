@@ -62,6 +62,29 @@ class UserModel {
     bucket.query(query, callback);
   }
 
+  getAdsLikes(userID,callback){
+    var sql = `select t.adsLikes from default t where type='User' and id='${userID}'`;
+
+    var query = N1qlQuery.fromString(sql);
+    this.initBucket();
+    console.log("getAdsLikes");
+    bucket.query(query, (err, res) => {
+      if (err) {
+        callback(err, res);
+      } else {
+        console.log("getAdsLikes, res:", res);
+        let adsLikes = res[0].adsLikes;
+        let sql2 = `select a.* from default a where a.type='Ads' and a.adsID in ${JSON.stringify(adsLikes)}`;
+        console.log("getAdsLikes, sql 2:", sql2);
+
+        var query2 = N1qlQuery.fromString(sql2);
+        bucket.query(query2, callback);
+      }
+    });
+  }
+
+
+
   //userDto
   createLoginOnSyncGateway(userDto, callback) {
     var url = syncGatewayDB_URL + "_user/";
