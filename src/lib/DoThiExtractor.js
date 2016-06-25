@@ -165,7 +165,7 @@ class DoThiExtractor {
 					phone: dothiBds.dangBoiPhone[0]||dothiBds.dangBoiDiDong[0]
 				},
 				place:{
-					diachi: 	dothiBds.diachi,
+					diaChi: 	dothiBds.diachi,
 					geo:{
 						lat: Number(dothiBds.hdLat),
 						lon: Number(dothiBds.hdLong)
