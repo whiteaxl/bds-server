@@ -11,5 +11,5 @@ var bdsEx = new DoThiExtractor();
 }
 
 
-extractDoThiRealEstateWithNgayDangTin("http://dothi.net/ban-nha-biet-thu-lien-ke.htm", 1, 1,"20160625");
+extractDoThiRealEstateWithNgayDangTin("http://dothi.net/ban-nha-biet-thu-lien-ke.htm", 1, 1,"20160607");
 

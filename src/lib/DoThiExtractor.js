@@ -8,6 +8,7 @@ var entities = require("entities");
 var logUtil = require("./logUtil");
 var placeUtil = require('./placeUtil');
 var util = require("./utils");
+var danhMuc = require("./DanhMuc.js");
 var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
 
@@ -26,9 +27,69 @@ var DACDIEM_MAP = {
 	'Nội thất': "noiThat"
 };
 
+var THONGTINLIENHE_MAP = {
+	'Tên liên lạc' : "tenLienLacTTLH",
+	'Địa chỉ'      : "diaChiTTLH",
+	'Điện thoại'   : "dienThoaiTTLH",
+	'Di động'      : "diDongTTLH",
+};
+
+
+
 
 class DoThiExtractor {
 	constructor() {
+	}
+
+	static convertDataLoaiNhaDat(loaiNhaDat){
+
+	if(loaiNhaDat == ('Bán nhà biệt thự, liền kề').toUpperCase())
+		return 0,4;
+	if(loaiNhaDat == ('Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)').toUpperCase())
+		return 0,4;
+	if(loaiNhaDat == ('Bán căn hộ chung cư').toUpperCase())
+		return 0,1;
+	if(loaiNhaDat == ('Bán nhà riêng').toUpperCase())
+		return 0,2;
+	if(loaiNhaDat == ('Bán nhà mặt phố').toUpperCase())
+		return 0,3;
+	if(loaiNhaDat == ('Bán đất nền dự án').toUpperCase())
+		return 0,5;
+	if(loaiNhaDat == ('Bán đất nền dự án (đất trong dự án quy hoạch)').toUpperCase())
+		return 0,5;
+	if(loaiNhaDat == ('Bán trang trại, khu nghỉ dưỡng').toUpperCase())
+		return 0,99;
+	if(loaiNhaDat == ('Bán kho, nhà xưởng').toUpperCase())
+		return 0,99;
+	if(loaiNhaDat == ('Bán loại bất động sản khác').toUpperCase())
+		return 0,99;
+	if(loaiNhaDat == ('Bán đất').toUpperCase())
+		return 0,5;
+	if(loaiNhaDat == ('Cho thuê căn hộ chung cư').toUpperCase())
+		return 1,1;
+	if(loaiNhaDat == ('Cho thuê nhà riêng').toUpperCase())
+		return 1,2;
+	if(loaiNhaDat == ('Cho thuê nhà mặt phố').toUpperCase())
+		return 2,3;
+	if(loaiNhaDat == ('Cho thuê nhà trọ, phòng trọ').toUpperCase())
+		return 1,99;
+	if(loaiNhaDat == ('Cho thuê văn phòng').toUpperCase())
+		return 1,4;
+	if(loaiNhaDat == ('Cho thuê cửa hàng - ki ốt').toUpperCase())
+		return 1,5;
+	if(loaiNhaDat == ('Cho thuê kho, nhà xưởng, đất').toUpperCase())
+		return 1,99;
+	if(loaiNhaDat == ('Cho thuê loại bất động sản khác').toUpperCase())
+		return 1,99;
+}
+
+	static convertDataHuongNha(huongNha){
+		for (var i = 0; i < 9; i++ ) {
+			if(huongNha == (danhMuc.HuongNha[i]).toUpperCase())
+				return i;
+
+		}
+		return 0 // 0 la huong Bat ky
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
@@ -65,23 +126,27 @@ class DoThiExtractor {
 			'title'			   :'.product-detail > h1',
 			'dacDiemLabel'       :['.pd-dacdiem > table > tbody > tr > td[1]'],
 			'dacDiemValue'       :['.pd-dacdiem > table > tbody > tr > td[2]'],
-			'images'		:['#myGallery > ul > img@src'],
+			'thongTinLienHeLabel'       :['.pd-contact > table > tr > td[1]'],
+			'thongTinLienHeValue'       :['.pd-contact > table  > tr > td[2]'],
+			'images'		:['#myGallery > li > img@src'],
 			'price'			:'.spanprice',
 			'area'			:'#ContentPlaceHolder1_ProductDetail1_divprice > span[2] ',
-			'chiTiet'	    :'#pd-desc-content',
+			'chiTiet'	    :['.pd-desc > div'],
 			'name'			:'.product-detail > h1',
 			'diachi'		:'.pd-location > a',
 			'hdLat'		    :'.divmaps input[id="hddLatitude"]@value',
 			'hdLong'	    :'.divmaps input[id="hddLongtitude"]@value',
 			'adsID'		    :'#tbl1 > tbody > tr[1] > td[2]',
-			'ngayDangTin'	:'.pd-dacdiem > table > tbody > tr[3] > td[2]',
-			'dangBoiName'	:'.pd-contact > table > tbody > tr[1] > td[2]',
-			'dangBoiPhone'	:'.pd-contact > table > tbody > tr[3] > td[2]'
+			'ngayDangTin'	:['.pd-dacdiem > table > tbody > tr[3] > td[2]'],
+			'dangBoiName'	:['.pd-contact > table  > tr[1] > td[2]'],
+			'dangBoiPhone'	:['.pd-contact > table  > tr[3] > td[2]'],
+			'dangBoiDiDong'	:['.pd-contact > table  > tr[4] > td[2]']
 		})
 		.data(function(dothiBds) {
 			console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
 			console.log("dacDiemValue=", dothiBds.dacDiemValue);
-
+			console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
+			console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
 
 
 			let addothiBds = {
@@ -92,12 +157,12 @@ class DoThiExtractor {
 				images:  	dothiBds.images,
 				price:  	dothiBds.price,
 				area_raw:  	dothiBds.area,
-				chiTiet:  	dothiBds.chiTiet,
+				chiTiet:  	dothiBds.chiTiet[0],
 				adsID:  	dothiBds.adsID,
 				ngayDangTin:  	dothiBds.ngayDangTin,
 				dangBoi:{
-					name: dothiBds.dangBoiName,
-					phone: dothiBds.dangBoiPhone
+					name: dothiBds.dangBoiName[0],
+					phone: dothiBds.dangBoiPhone[0]||dothiBds.dangBoiDiDong[0]
 				},
 				place:{
 					diachi: 	dothiBds.diachi,
@@ -113,17 +178,30 @@ class DoThiExtractor {
 				addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
 			}
 
-			addothiBds.adsID = "Ads_" + addothiBds.adsID;
+
+
+			addothiBds.adsID = "Ads_" + addothiBds.maSo;
 			addothiBds.type = "Ads-DT";
 
-
+			if(addothiBds.loaiNhaDat){
+				var loaiNhaDat = (addothiBds.loaiNhaDat).toUpperCase();
+				if(loaiNhaDat.indexOf("BÁN") > -1){
+					addothiBds.loaiTin = 0;
+				}
+				if(loaiNhaDat.indexOf("THUÊ") > -1){
+					addothiBds.loaiTin = 1;
+				}
+				addothiBds.loaiNhaDat = DoThiExtractor.convertDataLoaiNhaDat(loaiNhaDat);
+			}
+			if(addothiBds.huongNha){
+				var huongNha = (addothiBds.huongNha).toUpperCase();
+				addothiBds.huongNha = DoThiExtractor.convertDataHuongNha(huongNha);
+			}
 
 			if(addothiBds.ngayHetHan){
 				var ngayHetHan = addothiBds.ngayHetHan;
 				addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
 			}
-
-				console.log("11--Do THi -bds");
 
 			 if(addothiBds.ngayDangTin){
 			 	var ngayDang = addothiBds.ngayDangTin;
@@ -131,6 +209,7 @@ class DoThiExtractor {
 
 			 	if(addothiBds.ngayDangTin == ngayDangTin){
 			 		console.log("Lay dung ngay dang tin");
+					console.log("11--Do THi -bds");
 			 		console.log(addothiBds);
 					adsModel.upsert(addothiBds);
 			 	}
@@ -147,6 +226,7 @@ class DoThiExtractor {
 			handleDone();
 		})
 	}
+
 
 	
 }
