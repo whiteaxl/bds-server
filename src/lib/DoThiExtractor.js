@@ -181,7 +181,8 @@ class DoThiExtractor {
 
 
 			addothiBds.adsID = "Ads_" + addothiBds.maSo;
-			addothiBds.type = "Ads-DT";
+			addothiBds.type = "Ads";
+			addothiBds.source = "DOTHI.NET";
 
 			if(addothiBds.loaiNhaDat){
 				var loaiNhaDat = (addothiBds.loaiNhaDat).toUpperCase();
