@@ -154,7 +154,10 @@ class DoThiExtractor {
 				nameKhongDau:  util.locDau(dothiBds.name),
 				title:  	dothiBds.title,
 				loaiTin:  	dothiBds.loaiTin,
-				images:  	dothiBds.images,
+				image:{
+					cover:      dothiBds.images[0],
+					images:  	dothiBds.images
+				},
 				gia:  		dothiBds.price,
 				dienTich:  	dothiBds.area,
 				chiTiet:  	dothiBds.chiTiet[0],
