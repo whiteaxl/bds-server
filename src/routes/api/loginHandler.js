@@ -218,4 +218,24 @@ internals.resetPassword = function(req,reply){
     userService.resetPassword({"userID": userID, "pass": pass}, reply)
 }
 
+internals.profile = function(req,reply){
+    var result = {
+        success: false,
+        user: undefined
+    }
+    var userID = req.payload.userID;
+    console.log("get profile for " + userID);
+    userService.getUserByID(userID,function(err,res){
+        console.log(JSON.stringify(res));
+        if(res && res.length>0){
+            result.success = true;
+            result.user = res[0];
+            reply(result);
+        }else{
+            reply(result);
+        }
+
+    })
+}
+
 module.exports = internals;

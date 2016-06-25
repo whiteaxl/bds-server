@@ -14,6 +14,7 @@ require("./src/web/app/home/newsDetailCtrl.js");
 
 require("./src/web/app/home/detailCtrl.js");
 require("./src/web/app/home/ChatPanelCtrl.js");
+require("./src/web/app/home/ProfileCtrl.js");
 
 
 //services

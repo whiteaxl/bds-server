@@ -48,6 +48,9 @@
 				}
 			});
 		}
+		vm.goDetail = function(cat, index){
+			$state.go('detail', { "adsID" : cat.list[index].adsID}, {location: true});
+		}
 
 		$scope.$on('$viewContentLoaded', function(){
 			//addCrudControls

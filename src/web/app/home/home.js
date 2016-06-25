@@ -310,6 +310,14 @@
         data: {
             bodyClass: "page-detail"
         }
+      }).state('profile', {
+        url: "/profile/:userID",
+        templateUrl: "/web/profile.tpl.html",
+        controller: "ProfileCtrl",
+        controllerAs: 'pc',
+        data: {
+            bodyClass: "page-detail"
+        }
       })
     });
   bds.factory('socket', function (socketFactory) {

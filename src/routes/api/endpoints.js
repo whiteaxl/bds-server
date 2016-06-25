@@ -448,8 +448,17 @@ internals.endpoints = [
         })
       }
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/profile',
+    handler: loginHandler.profile,
+    config : {
+      description: 'Get the user information',
+      tags: ['api'],
+      auth: 'jwt'
+    }
   }
-
 
 ];
 

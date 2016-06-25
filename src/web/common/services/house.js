@@ -70,6 +70,9 @@
       },
       resetPassword: function(data){
         return $http.post("/api/resetPassword",data);
+      },
+      profile: function(data){
+        return $http.post("/api/profile",data);
       }
 
     };

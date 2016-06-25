@@ -58,7 +58,7 @@ class UserModel {
 
     var query = N1qlQuery.fromString(sql);
     this.initBucket();
-    console.log("getUserByID");
+    console.log("getUserByID: " + sql);
     bucket.query(query, callback);
   }
 
