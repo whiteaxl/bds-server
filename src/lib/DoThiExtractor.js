@@ -32,7 +32,7 @@ class DoThiExtractor {
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
-	extractWithLimit(rootURL, start, end) {
+	extractWithLimit(rootURL, start, end,ngayDangTin) {
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 		var count = start-1;
@@ -43,7 +43,7 @@ class DoThiExtractor {
 		var i = start;
 		for (i=start; i<=end; i++) {
 			console.log("Extracting for page: " + i);
-			this.extractOnePage(rootURL + '/p'+i, _done);
+			this.extractOnePage(rootURL + '/p'+i, _done,ngayDangTin);
 		}
 
 		var myInterval = setInterval(function(){ 
@@ -56,7 +56,7 @@ class DoThiExtractor {
 	}
 
 
-	extractOnePage(url, handleDone) {
+	extractOnePage(url, handleDone,ngayDangTin) {
 		osmosis
 		.get(url)
 		.find('.for-user')
@@ -116,20 +116,26 @@ class DoThiExtractor {
 			addothiBds.adsID = "Ads_" + addothiBds.adsID;
 			addothiBds.type = "Ads-DT";
 
-			console.log("11--Do THi -bds");
-			console.log(addothiBds);
-			adsModel.upsert(addothiBds);
-			console.log("22--Do THi -bds");
 
-			// if(ads.ngayDangTin){
-			// 	var ngayDang = ads.ngayDangTin;
-			// 	ads.ngayDangTin = util.convertFormatDate(ngayDang);
-			// 	if(ads.ngayDangTin == ngayDangTin){
-			// 		console.log("Lay dung ngay dang tin");
-			// 		console.log(ads);
-			// 		adsModel.upsert(ads);
-			// 	}
-			// }
+
+			if(addothiBds.ngayHetHan){
+				var ngayHetHan = addothiBds.ngayHetHan;
+				addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
+			}
+
+				console.log("11--Do THi -bds");
+
+			 if(addothiBds.ngayDangTin){
+			 	var ngayDang = addothiBds.ngayDangTin;
+				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
+
+			 	if(addothiBds.ngayDangTin == ngayDangTin){
+			 		console.log("Lay dung ngay dang tin");
+			 		console.log(addothiBds);
+					adsModel.upsert(addothiBds);
+			 	}
+			 }
+			console.log("22--Do THi -bds");
 
 		})
 		
