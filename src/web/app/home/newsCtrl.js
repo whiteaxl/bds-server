@@ -49,20 +49,35 @@
                 }
                 vm.searchPage(1);
             });
-            /*
-            NewsService.findNews(data).then(function(res){
-                console.log(res.data.list);
+            NewsService.findHightestArticle(data).then(function (res) {
+                console.log("------NewsService.findHightestArticle-----");
                 if(res.data.list){
-                    for (var i = 0; i < res.data.length; i++) {
-                        $scope.listArticle.push(res.data.list[i]);
+                    if(res.data.length > 0){
+                        $scope.hightestArticles = [];
+                        for (var i = 1; i < res.data.length; i++) {
+                            $scope.hightestArticles.push(res.data.list[i]);
+                        }
                     }
                 }
-                for (var i = 0; i < res.data.length; i++) {
-                    console.log($scope.listArticle[i]);
+                console.log($scope.article);
+                console.log("----NewsService.findHightestArticle finished ");
+            });
+            NewsService.findHotArticle(data).then(function (res) {
+                console.log("------NewsService.findHotArticle-----");
+                if(res.data.list){
+                    if(res.data.length > 0){
+                        $scope.defaultHotArticle = res.data.list[0];
+                        if(res.data.length > 1){
+                            $scope.hotArticles = [];
+                            for (var i = 1; i < res.data.length; i++) {
+                                $scope.hotArticles.push(res.data.list[i]);
+                            }
+                        }
+                    }
                 }
-                console.log("---------listArticle: " + $scope.listArticle.length);
-                console.log("NewsService.findNews finished ");
-            });*/
+                console.log($scope.article);
+                console.log("----NewsService.findHotArticle finished ");
+            });
         }
 
         vm.firstPage = function(callback){

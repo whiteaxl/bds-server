@@ -30,7 +30,7 @@
                                                     <p ng-bind-html="firstArticle.title"></p>
                                                 </a>
                                             </h3>
-                                            <p class="info">{{firstArticle.postedDate}} - <a href="" title="Xây dựng kiến trúc">Xây dựng kiến trúc</a></p>
+                                            <p class="info">{{firstArticle.postedDate}} - <a href="" title="Xây dựng kiến trúc">{{firstArticle.catName}}</a></p>
                                             <p class="desc" ng-bind-html="firstArticle.contentDesc">
                                             </p>
                                         </div>
@@ -49,7 +49,7 @@
                                                     <p ng-bind-html="item.title"></p>
                                                 </a>
                                             </h3>
-                                            <p class="info">{{::item.postedDate}} - <a href="" title="Xây dựng kiến trúc">Xây dựng kiến trúc</a></p>
+                                            <p class="info">{{item.postedDate}} - <a href="" title="Xây dựng kiến trúc">{{item.catName}}</a></p>
                                             <p class="desc" ng-bind-html="item.contentDesc">
                                             </p>
                                         </div>
@@ -79,79 +79,33 @@
                                 <h3 class="head"><span>Xem nhiều nhất</span></h3>
                                 <div class="data">
                                     <div class="article">
-                                        <a href="" title="" class="media">
-                                            <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</span>
+                                        <a href="" title="" class="media" ng-click="nc.goDetail(defaultHotArticle.articleId)">
+                                            <span class="img" style="background-image: url({{defaultHotArticle.avatarImage}})" ng-bind-html="defaultHotArticle.title"></span>
                                         </a>
                                         <h3>
-                                            <a href="" title="">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</a>
+                                            <a href="" title="" ng-bind-html="defaultHotArticle.title"></a>
                                         </h3>
                                     </div>
                                 </div>
                                 <ul>
-                                    <li>
-                                        <a href="" title="">Golf Park Residence chuẩn bị đón cư dân đầu tiên</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Nhà phố có bếp nối thông vườn cây ở Hado Centrosa Garden</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Giới địa ốc hào phóng 'chia' lợi nhuận với người mua</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Bốc thăm quyền mua shophouse Vinhomes Times City</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Ưu đãi 10% khi mua đất nền ven biển Đà Nẵng</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản </a>
+                                    <li ng-repeat="art in hotArticles">
+                                        <a href="" title="" ng-click="nc.goDetail(art.articleId)" ng-bind-html="art.title"></a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="block-17">
                                 <h3 class="head"><span>Xem nhiều nhất</span></h3>
                                 <div class="data">
-                                    <div class="item">
+                                    <div class="item" ng-repeat="art in hightestArticles">
                                         <div class="row">
                                             <div class="col col-130">
-                                                <a href="" title="" class="media">
-                                                    <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</span>
+                                                <a href="" title="" class="media" ng-click="nc.goDetail(art.articleId)">
+                                                    <span class="img" style="background-image: url({{art.avatarImage}})" ng-bind-html="art.title"></span>
                                                 </a>
                                             </div>
                                             <div class="col col-170">
                                                 <h3>
-                                                    <a href="" title="">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col col-130">
-                                                <a href="" title="" class="media">
-                                                    <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</span>
-                                                </a>
-                                            </div>
-                                            <div class="col col-170">
-                                                <h3>
-                                                    <a href="" title="">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col col-130">
-                                                <a href="" title="" class="media">
-                                                    <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</span>
-                                                </a>
-                                            </div>
-                                            <div class="col col-170">
-                                                <h3>
-                                                    <a href="" title="">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</a>
+                                                    <a href="" title="" ng-click="nc.goDetail(art.articleId)" ng-bind-html="art.title"></a>
                                                 </h3>
                                             </div>
                                         </div>

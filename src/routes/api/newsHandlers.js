@@ -69,6 +69,67 @@ internals.findNews = function(req, reply) {
         newsModel.findAllArticleOfCat(query.catId, query.pageNo, query.pageSize, callback);
     }
 };
+
+internals.findHotArticle = function(req, reply) {
+    var query = req.payload;
+    console.log("-----------hander: Find hot News");
+    var callback =(err,all) => {
+        if(err){
+            console.log("err: " + err);
+        } else{
+            if (!all)
+                all = [];
+            console.log("-----findHotArticle--success");
+            console.log("size:" + all.length);
+            var result = [];
+            if(all.length > 0){
+                for(var i=0; i < all.length; i++){
+                    result.push(_transformNews(all[i]));
+                }
+            }
+            reply({
+                length: result.length,
+                list: result
+            });
+        }
+    };
+    if (!query.hasOwnProperty('catId') && !query.hasOwnProperty('pageNo') && !query.hasOwnProperty('pageSize')) {
+        reply(Boom.badRequest());
+    } else {
+        newsModel.findHotArticle(query.catId, callback);
+    }
+};
+
+internals.findHightestArticle = function(req, reply) {
+    var query = req.payload;
+    console.log("-----------hander: find xem nhieu nhat");
+    var callback =(err,all) => {
+        if(err){
+            console.log("err: " + err);
+        } else{
+            if (!all)
+                all = [];
+            console.log("-----findHightestSee--success");
+            console.log("size:" + all.length);
+            var result = [];
+            if(all.length > 0){
+                for(var i=0; i < all.length; i++){
+                    result.push(_transformNews(all[i]));
+                }
+            }
+            reply({
+                length: result.length,
+                list: result
+            });
+        }
+    };
+    if (!query.hasOwnProperty('catId') && !query.hasOwnProperty('pageNo') && !query.hasOwnProperty('pageSize')) {
+        reply(Boom.badRequest());
+    } else {
+        newsModel.findHightestArticle(query.catId, callback);
+    }
+};
+
 internals.findNewsDetail = function(req, reply) {
     var query = req.payload;
     console.log("-----------hander: findNewsDetail");
@@ -96,6 +157,24 @@ internals.findNewsDetail = function(req, reply) {
         newsModel.findArticleDetail(query.articleId, callback);
     }
 };
+
+internals.increaseRating = function(req, reply) {
+    var query = req.payload;
+    console.log("-----------hander: increaseRating");
+    console.log("-----increaseRating-- with cat_id= " + query.catId + "-- and art_id= " + query.articleId);
+    var callback =(err,all) => {
+        if(err){
+            console.log("err: " + err);
+        } else{
+            console.log("-----increaseRating--success with cat_id= " + query.rootCatId + "-- and art_id= " + query.articleId);
+        }
+    };
+    if ((!query.hasOwnProperty('catId')) || (!query.hasOwnProperty('articleId')) ) {
+        reply(Boom.badRequest());
+    } else {
+        newsModel.increaseRating(query.catId, query.articleId, callback);
+    }
+};
 internals.findRootCategory = function(req, reply) {
     var callback =(err,all) => {
         if(err){
@@ -118,6 +197,7 @@ function _transformNews(article) {
     let atc = {};
     atc.articleId = article.article_id;
     atc.catId = article.cat_id;
+    atc.catName = article.cat_name;
     atc.metaKeywords = article.meta_keywords;
     atc.metaDesc = article.meta_desc;
     atc.topicId = article.topic_id;
@@ -156,6 +236,7 @@ function _transformNews(article) {
 
 function _transformNewsDetail(articleDetail) {
     let detail = {};
+    detail.catName = articleDetail.cat_name;
     detail.articleId = articleDetail.article_id;
     detail.pageId = articleDetail.page_id;
     detail.title = util.locHtml(articleDetail.title);
