@@ -96,6 +96,46 @@ util.replaceBrToDowntoLine = function(inputString) {
     return kq;
 };
 
+util.getDiaChinhFromDoThi = function(inputString,removeString,type) {
+    var kq = "";
+    var khuVuc = 'Khu vực';
+
+    var kqReplaceA = (striptags(inputString)).trim();
+
+    kqReplaceA = kqReplaceA.replace(removeString,"")
+    kqReplaceA = kqReplaceA.replace(khuVuc,"");
+
+    // kqReplaceA = kqReplaceA.toUpperCase();
+    // if (kqReplaceA.includes("QUẬN") ) {
+    //     kqReplaceA = kqReplaceA.replace("QUẬN","");
+    // }
+    // if (kqReplaceA.includes("HUYỆN") ) {
+    //     kqReplaceA = kqReplaceA.replace("HUYỆN","");
+    // }
+
+
+        if (kqReplaceA ) {
+            var idx = kqReplaceA.indexOf("-");
+            var lastIdx = kqReplaceA.lastIndexOf("-");
+
+            if(type =="HUYEN") {
+                if ((idx > 0) && (lastIdx > idx))
+                    kq = kqReplaceA.substring(idx + 1, lastIdx);
+                else
+                    kq = kqReplaceA;
+            }
+            if(type =="TINH") {
+                if ((idx > 0) && (lastIdx > idx))
+                    kq = kqReplaceA.substring(lastIdx + 1, kqReplaceA.length);
+                else
+                    kq = kqReplaceA;
+            }
+        }
+
+    return kq.trim();
+};
+
+
 util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
     var kqRemove = striptags(inputString);
     return (kqRemove.replace(replaceString,"")).trim();
@@ -150,7 +190,7 @@ util.convertFormatDatetoYYYYMMDD= function(ngayDangTin) {
 
 
 util.isEmail = function(str) {
-  return str && (str.indexOf('@') > -1);
+    return str && (str.indexOf('@') > -1);
 };
 
 module.exports = util;
