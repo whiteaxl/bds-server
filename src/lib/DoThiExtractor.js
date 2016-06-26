@@ -1,7 +1,7 @@
 'use strict';
 
 //extract data from bds.com
-
+var striptags = require('striptags');
 var osmosis = require('osmosis');
 //html entity coding
 var entities = require("entities");
@@ -134,6 +134,7 @@ class DoThiExtractor {
 			'chiTiet'	    :['.pd-desc > div'],
 			'name'			:'.product-detail > h1',
 			'diachi'		:'.pd-location > a',
+			'diachinhraw'	:'.pd-location :source',
 			'hdLat'		    :'.divmaps input[id="hddLatitude"]@value',
 			'hdLong'	    :'.divmaps input[id="hddLongtitude"]@value',
 			'adsID'		    :'#tbl1 > tbody > tr[1] > td[2]',
@@ -169,6 +170,10 @@ class DoThiExtractor {
 				},
 				place:{
 					diaChi: 	dothiBds.diachi,
+					diaChinh:{
+						huyen: util.getDiaChinhFromDoThi(dothiBds.diachinhraw,dothiBds.diachi,"HUYEN"),
+						tinh: util.getDiaChinhFromDoThi(dothiBds.diachinhraw,dothiBds.diachi,"TINH")
+					},
 					geo:{
 						lat: Number(dothiBds.hdLat),
 						lon: Number(dothiBds.hdLong)
@@ -186,6 +191,14 @@ class DoThiExtractor {
 			addothiBds.adsID = "Ads_" + addothiBds.maSo;
 			addothiBds.type = "Ads";
 			addothiBds.source = "DOTHI.NET";
+
+			if(addothiBds.place.diaChinh.huyen) {
+				addothiBds.place.diaChinh.huyenKhongDau = util.locDau(addothiBds.place.diaChinh.huyen);
+			}
+
+			if(addothiBds.place.diaChinh.tinh) {
+				addothiBds.place.diaChinh.tinhKhongDau = util.locDau(addothiBds.place.diaChinh.tinh);
+			}
 
 			if(addothiBds.loaiNhaDat){
 				var loaiNhaDat = (addothiBds.loaiNhaDat).toUpperCase();

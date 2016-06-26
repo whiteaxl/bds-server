@@ -1,0 +1,2984 @@
+[
+  {
+    "default": {
+      "diaChi": "9 Phạm Văn Đồng, Phường Mai Dịch, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_2t-corporation-pj1435",
+      "geo": {
+        "lat": 21.0385150909424,
+        "lon": 105.780174255371
+      },
+      "id": "DA_2t-corporation-pj1435",
+      "ten": "2T Corporation",
+      "tenKhongDau": "2t-corporation",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "58 Đường Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_abacus-tower-pj1992",
+      "geo": {
+        "lat": 10.7890529632568,
+        "lon": 106.699928283691
+      },
+      "id": "DA_abacus-tower-pj1992",
+      "ten": "Abacus Tower",
+      "tenKhongDau": "abacus-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_ac-building-pj1422",
+      "geo": {
+        "lat": 21.0322666168213,
+        "lon": 105.783355712891
+      },
+      "id": "DA_ac-building-pj1422",
+      "ten": "AC Building",
+      "tenKhongDau": "ac-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "10  Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_acb-office-building-pj1442",
+      "geo": {
+        "lat": 21.022424697876,
+        "lon": 105.856185913086
+      },
+      "id": "DA_acb-office-building-pj1442",
+      "ten": "ACB Office Building",
+      "tenKhongDau": "acb-office-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "249 Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
+      "duAnID": "DA_acbr-office-building-pj251",
+      "geo": {
+        "lat": 10.8017206192017,
+        "lon": 106.646011352539
+      },
+      "id": "DA_acbr-office-building-pj251",
+      "ten": "ACBR Office Building",
+      "tenKhongDau": "acbr-office-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "151 Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_alpha-tower-pj1690",
+      "geo": {
+        "lat": 10.7758264541626,
+        "lon": 106.688110351563
+      },
+      "id": "DA_alpha-tower-pj1690",
+      "ten": "Alpha Tower",
+      "tenKhongDau": "alpha-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_apex-tower-pj215",
+      "geo": {
+        "lat": 21.0145797729492,
+        "lon": 105.784286499023
+      },
+      "id": "DA_apex-tower-pj215",
+      "ten": "Apex Tower",
+      "tenKhongDau": "apex-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Trần Huy Liệu, Phường 15, Phú Nhuận, Hồ Chí Minh",
+      "duAnID": "DA_arirang-building-pj1750",
+      "geo": {
+        "lat": 10.7988309860229,
+        "lon": 106.677574157715
+      },
+      "id": "DA_arirang-building-pj1750",
+      "ten": "Arirang Building",
+      "tenKhongDau": "arirang-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 2 Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_artexport-house-pj1443",
+      "geo": {
+        "lat": 21.0223770141602,
+        "lon": 105.855819702148
+      },
+      "id": "DA_artexport-house-pj1443",
+      "ten": "Artexport House",
+      "tenKhongDau": "artexport-house",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 1 Lê Đức Thọ, Phường Mai Dịch, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_au-viet-building-pj1424",
+      "geo": {
+        "lat": 21.0368175506592,
+        "lon": 105.771751403809
+      },
+      "id": "DA_au-viet-building-pj1424",
+      "ten": "Âu Việt Building",
+      "tenKhongDau": "au-viet-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "53 Đường Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_avalon-saigon-apartments-pj1800",
+      "geo": {
+        "lat": 10.7796907424927,
+        "lon": 106.695411682129
+      },
+      "id": "DA_avalon-saigon-apartments-pj1800",
+      "ten": "Avalon Saigon Apartments",
+      "tenKhongDau": "avalon-saigon-apartments",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "62 Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_bao-anh-building-pj1421",
+      "geo": {
+        "lat": 21.0319766998291,
+        "lon": 105.788612365723
+      },
+      "id": "DA_bao-anh-building-pj1421",
+      "ten": "Bảo Anh Building",
+      "tenKhongDau": "bao-anh-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 172-174 Ký Con, quận 1, Tp.HCM",
+      "duAnID": "DA_ben-thanh-times-square-pj1566",
+      "geo": {
+        "lat": 10.7671241760254,
+        "lon": 106.698524475098
+      },
+      "id": "DA_ben-thanh-times-square-pj1566",
+      "ten": "Ben Thanh Times Square",
+      "tenKhongDau": "ben-thanh-times-square",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "194  Trần Quang Khải, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_bidv-tower-pj1406",
+      "geo": {
+        "lat": 21.0295219421387,
+        "lon": 105.857452392578
+      },
+      "id": "DA_bidv-tower-pj1406",
+      "ten": "BIDV Tower",
+      "tenKhongDau": "bidv-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_bitexco-financial-tower-pj453",
+      "geo": {
+        "lat": 10.7716207504272,
+        "lon": 106.704490661621
+      },
+      "id": "DA_bitexco-financial-tower-pj453",
+      "ten": "Bitexco Financial Tower",
+      "tenKhongDau": "bitexco-financial-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "63 Đường Võ Văn Tần, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_bitexco-nam-long-building-pj1874",
+      "geo": {
+        "lat": 10.7772407531738,
+        "lon": 106.691375732422
+      },
+      "id": "DA_bitexco-nam-long-building-pj1874",
+      "ten": "Bitexco Nam Long Building",
+      "tenKhongDau": "bitexco-nam-long-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Lý Chính Thắng, Phường 8, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-intresco-plaza-pj763",
+      "geo": {
+        "lat": 10.7888040542603,
+        "lon": 106.68537902832
+      },
+      "id": "DA_cao-oc-intresco-plaza-pj763",
+      "ten": "Cao ốc Intresco Plaza",
+      "tenKhongDau": "cao-oc-intresco-plaza",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "1017/24A Hồng Bàng, Phường 12, Quận 6, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-opc-eximland-pj1041",
+      "geo": {
+        "lat": 10.7531251907349,
+        "lon": 106.635925292969
+      },
+      "id": "DA_cao-oc-opc-eximland-pj1041",
+      "ten": "Cao ốc OPC - Eximland",
+      "tenKhongDau": "cao-oc-opc-eximland",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "123 Đường Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-pax-sky-pj1917",
+      "geo": {
+        "lat": 10.7774934768677,
+        "lon": 106.689300537109
+      },
+      "id": "DA_cao-oc-pax-sky-pj1917",
+      "ten": "Cao ốc Pax Sky",
+      "tenKhongDau": "cao-oc-pax-sky",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Phường 16, Quận 8, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-phuc-hop-sao-mai-pj1557",
+      "geo": {
+        "lat": 10.7251491546631,
+        "lon": 106.626182556152
+      },
+      "id": "DA_cao-oc-phuc-hop-sao-mai-pj1557",
+      "ten": "Cao Ốc Phức Hợp Sao Mai",
+      "tenKhongDau": "cao-oc-phuc-hop-sao-mai",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "16 Liễu Giai, Phường Liễu Giai, Ba Đình, Hà Nội",
+      "duAnID": "DA_cao-oc-van-phong-16-lieu-giai-pj245",
+      "geo": {
+        "lat": 21.0341033935547,
+        "lon": 105.814422607422
+      },
+      "id": "DA_cao-oc-van-phong-16-lieu-giai-pj245",
+      "ten": "Cao Ốc Văn Phòng 16 Liễu Giai",
+      "tenKhongDau": "cao-oc-van-phong-16-lieu-giai",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "106 Nguyễn Văn Trỗi, Phường 8, Phú Nhuận, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-van-phong-centrepoint-pj261",
+      "geo": {
+        "lat": 10.7970170974731,
+        "lon": 106.67342376709
+      },
+      "id": "DA_cao-oc-van-phong-centrepoint-pj261",
+      "ten": "Cao ốc văn phòng Centrepoint",
+      "tenKhongDau": "cao-oc-van-phong-centrepoint",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "138 – 142 Hai Bà Trưng, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-van-phong-hmtc-pj260",
+      "geo": {
+        "lat": 10.7844705581665,
+        "lon": 106.696502685547
+      },
+      "id": "DA_cao-oc-van-phong-hmtc-pj260",
+      "ten": "Cao ốc văn phòng HMTC",
+      "tenKhongDau": "cao-oc-van-phong-hmtc",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "131  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_cao-oc-van-phong-v-ikon-pj1328",
+      "geo": {
+        "lat": 10.8009328842163,
+        "lon": 106.708450317383
+      },
+      "id": "DA_cao-oc-van-phong-v-ikon-pj1328",
+      "ten": "Cao ốc văn phòng V_ikon",
+      "tenKhongDau": "cao-oc-van-phong-v_ikon",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "109 Trần Hưng Đạo, Phường Cửa Nam, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_capital-tower-pj168",
+      "geo": {
+        "lat": 21.0235328674316,
+        "lon": 105.841957092285
+      },
+      "id": "DA_capital-tower-pj168",
+      "ten": "Capital Tower",
+      "tenKhongDau": "capital-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "25 - 27  Lê Đại Hành, Phường Lê Đại Hành, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_cdc-building-pj1451",
+      "geo": {
+        "lat": 21.0104694366455,
+        "lon": 105.849159240723
+      },
+      "id": "DA_cdc-building-pj1451",
+      "ten": "CDC Building",
+      "tenKhongDau": "cdc-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "43 Quang Trung, Phường Quán Toan, Hồng Bàng, Hải Phòng",
+      "duAnID": "DA_central-tower-pj1403",
+      "geo": {
+        "lat": 20.8566608428955,
+        "lon": 106.680229187012
+      },
+      "id": "DA_central-tower-pj1403",
+      "ten": "Central Tower",
+      "tenKhongDau": "central-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_ceo-tower-pj214",
+      "geo": {
+        "lat": 21.0158176422119,
+        "lon": 105.782745361328
+      },
+      "id": "DA_ceo-tower-pj214",
+      "ten": "CEO Tower",
+      "tenKhongDau": "ceo-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 181 Cao Thắng nối dài, Phường 12, Quận 10, Tp.HCM",
+      "duAnID": "DA_charmington-la-pointe-pj2266",
+      "geo": {
+        "lat": 10.7744493484497,
+        "lon": 106.674575805664
+      },
+      "id": "DA_charmington-la-pointe-pj2266",
+      "ten": "Charmington La Pointe",
+      "tenKhongDau": "charmington-la-pointe",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "45 Võ Thị Sáu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_citilight-tower-pj1483",
+      "geo": {
+        "lat": 10.7902545928955,
+        "lon": 106.694763183594
+      },
+      "id": "DA_citilight-tower-pj1483",
+      "ten": "Citilight Tower",
+      "tenKhongDau": "citilight-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "33 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_cmc-tower-pj195",
+      "geo": {
+        "lat": 21.0307273864746,
+        "lon": 105.784332275391
+      },
+      "id": "DA_cmc-tower-pj195",
+      "ten": "CMC Tower",
+      "tenKhongDau": "cmc-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "125D Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_coma-building-pj1458",
+      "geo": {
+        "lat": 20.996467590332,
+        "lon": 105.854522705078
+      },
+      "id": "DA_coma-building-pj1458",
+      "ten": "Coma Building",
+      "tenKhongDau": "coma-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "293  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_compa-tower-pj1625",
+      "geo": {
+        "lat": 10.8012685775757,
+        "lon": 106.708480834961
+      },
+      "id": "DA_compa-tower-pj1625",
+      "ten": "Compa Tower",
+      "tenKhongDau": "compa-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "16 Phan Chu Trinh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_cornerstone-building-pj1409",
+      "geo": {
+        "lat": 21.0204963684082,
+        "lon": 105.855484008789
+      },
+      "id": "DA_cornerstone-building-pj1409",
+      "ten": "CornerStone Building",
+      "tenKhongDau": "cornerstone-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "139 Cầu Giấy, Phường Quan Hoa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_ctm-building-139-cau-giay-pj1214",
+      "geo": {
+        "lat": 21.031925201416,
+        "lon": 105.799201965332
+      },
+      "id": "DA_ctm-building-139-cau-giay-pj1214",
+      "ten": "CTM Building - 139 Cầu Giấy",
+      "tenKhongDau": "ctm-building-139-cau-giay",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "299 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_ctm-building-299-cau-giay-pj2137",
+      "geo": {
+        "lat": 21.0346202850342,
+        "lon": 105.79354095459
+      },
+      "id": "DA_ctm-building-299-cau-giay-pj2137",
+      "ten": "CTM Building - 299 Cầu Giấy",
+      "tenKhongDau": "ctm-building-299-cau-giay",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Ngõ 82 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_dai-phat-building-pj1425",
+      "geo": {
+        "lat": 21.0317344665527,
+        "lon": 105.782836914063
+      },
+      "id": "DA_dai-phat-building-pj1425",
+      "ten": "Đại Phát Building",
+      "tenKhongDau": "dai-phat-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 9 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
+      "duAnID": "DA_dao-duy-anh-tower-so-9-dao-duy-anh-pj185",
+      "geo": {
+        "lat": 21.0086936950684,
+        "lon": 105.838073730469
+      },
+      "id": "DA_dao-duy-anh-tower-so-9-dao-duy-anh-pj185",
+      "ten": "Đào Duy Anh Tower - số 9 Đào Duy Anh",
+      "tenKhongDau": "dao-duy-anh-tower-so-9-dao-duy-anh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "111 Đường Lý Chính Thắng, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_dc-tower-pj1872",
+      "geo": {
+        "lat": 10.7878265380859,
+        "lon": 106.685249328613
+      },
+      "id": "DA_dc-tower-pj1872",
+      "ten": "DC Tower",
+      "tenKhongDau": "dc-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 8 Tôn Thất Thuyết, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_detech-tower-pj220",
+      "geo": {
+        "lat": 21.0289001464844,
+        "lon": 105.781730651855
+      },
+      "id": "DA_detech-tower-pj220",
+      "ten": "Detech Tower",
+      "tenKhongDau": "detech-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_diamond-building-pj225",
+      "geo": {
+        "lat": 21.0310935974121,
+        "lon": 105.780784606934
+      },
+      "id": "DA_diamond-building-pj225",
+      "ten": "Diamond Building",
+      "tenKhongDau": "diamond-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "535 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "duAnID": "DA_dmc-tower-pj1411",
+      "geo": {
+        "lat": 21.0294075012207,
+        "lon": 105.810203552246
+      },
+      "id": "DA_dmc-tower-pj1411",
+      "ten": "DMC Tower",
+      "tenKhongDau": "dmc-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "394 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_ebm-building-pj1624",
+      "geo": {
+        "lat": 10.7994546890259,
+        "lon": 106.72257232666
+      },
+      "id": "DA_ebm-building-pj1624",
+      "ten": "EBM Building",
+      "tenKhongDau": "ebm-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "26-28 Hàm Nghi, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_empire-tower-pj254",
+      "geo": {
+        "lat": 10.7709875106812,
+        "lon": 106.70484161377
+      },
+      "id": "DA_empire-tower-pj254",
+      "ten": "Empire Tower",
+      "tenKhongDau": "empire-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
+      "duAnID": "DA_etown-building-pj1773",
+      "geo": {
+        "lat": 10.8019409179688,
+        "lon": 106.647483825684
+      },
+      "id": "DA_etown-building-pj1773",
+      "ten": "Etown Building",
+      "tenKhongDau": "etown-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "264 Đội cấn, Phường Ngọc Hà, Ba Đình, Hà Nội",
+      "duAnID": "DA_flamingo-tower-pj212",
+      "geo": {
+        "lat": 21.0352783203125,
+        "lon": 105.821311950684
+      },
+      "id": "DA_flamingo-tower-pj212",
+      "ten": "Flamingo Tower",
+      "tenKhongDau": "flamingo-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "265 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_flc-twin-towers-pj238",
+      "geo": {
+        "lat": 21.0344982147217,
+        "lon": 105.795516967773
+      },
+      "id": "DA_flc-twin-towers-pj238",
+      "ten": "FLC Twin Towers",
+      "tenKhongDau": "flc-twin-towers",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
+      "duAnID": "DA_geleximco-building-pj180",
+      "geo": {
+        "lat": 21.0184860229492,
+        "lon": 105.824279785156
+      },
+      "id": "DA_geleximco-building-pj180",
+      "ten": "Geleximco Building",
+      "tenKhongDau": "geleximco-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Đào Duy Anh, Phường 9, Phú Nhuận, Hồ Chí Minh",
+      "duAnID": "DA_gia-thy-building-pj1621",
+      "geo": {
+        "lat": 10.8068685531616,
+        "lon": 106.67586517334
+      },
+      "id": "DA_gia-thy-building-pj1621",
+      "ten": "Gia Thy Building",
+      "tenKhongDau": "gia-thy-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Phố Giảng Võ, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "duAnID": "DA_giang-vo-lake-view-building-pj1980",
+      "geo": {
+        "lat": 21.026834487915,
+        "lon": 105.820602416992
+      },
+      "id": "DA_giang-vo-lake-view-building-pj1980",
+      "ten": "Giảng Võ Lake View Building",
+      "tenKhongDau": "giang-vo-lake-view-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "21 Phố Hàng Vôi, Phường Lý Thái Tổ, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_ha-noi-tung-shing-square-pj1437",
+      "geo": {
+        "lat": 21.0294208526611,
+        "lon": 105.856834411621
+      },
+      "id": "DA_ha-noi-tung-shing-square-pj1437",
+      "ten": "Ha Noi Tung Shing Square",
+      "tenKhongDau": "ha-noi-tung-shing-square",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "288 Phạm Văn Đồng, Phường Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội",
+      "duAnID": "DA_habico-tower-pj184",
+      "geo": {
+        "lat": 21.0536403656006,
+        "lon": 105.782020568848
+      },
+      "id": "DA_habico-tower-pj184",
+      "ten": "Habico Tower",
+      "tenKhongDau": "habico-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "203 Minh Khai, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_han-viet-tower-pj1519",
+      "geo": {
+        "lat": 20.9970607757568,
+        "lon": 105.861572265625
+      },
+      "id": "DA_han-viet-tower-pj1519",
+      "ten": "Hàn Việt Tower",
+      "tenKhongDau": "han-viet-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_handico-tower-pj188",
+      "geo": {
+        "lat": 21.0166149139404,
+        "lon": 105.781608581543
+      },
+      "id": "DA_handico-tower-pj188",
+      "ten": "Handico Tower",
+      "tenKhongDau": "handico-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "18 Lý Thường Kiệt, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_hanoitourist-building-pj1447",
+      "geo": {
+        "lat": 21.0223655700684,
+        "lon": 105.855392456055
+      },
+      "id": "DA_hanoitourist-building-pj1447",
+      "ten": "Hanoitourist Building",
+      "tenKhongDau": "hanoitourist-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "4A Láng Hạ, Ba Đình, Hà Nội",
+      "duAnID": "DA_harec-building-pj1472",
+      "geo": {
+        "lat": 21.0220699310303,
+        "lon": 105.818740844727
+      },
+      "id": "DA_harec-building-pj1472",
+      "ten": "HAREC Building",
+      "tenKhongDau": "harec-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "77 Đường Trần Nhân Tôn, Phường 9, Quận 5, Hồ Chí Minh",
+      "duAnID": "DA_hcmc-lottery-tower-pj1786",
+      "geo": {
+        "lat": 10.7607507705688,
+        "lon": 106.674842834473
+      },
+      "id": "DA_hcmc-lottery-tower-pj1786",
+      "ten": "HCMC Lottery Tower",
+      "tenKhongDau": "hcmc-lottery-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Huỳnh Tấn Phát, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
+      "duAnID": "DA_hemera-building-pj1597",
+      "geo": {
+        "lat": 10.7307729721069,
+        "lon": 106.731994628906
+      },
+      "id": "DA_hemera-building-pj1597",
+      "ten": "Hemera Building",
+      "tenKhongDau": "hemera-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "đường Mễ Trì, Phường Mỹ Đình 1, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_hh3-tower-pj1465",
+      "geo": {
+        "lat": 21.0165576934814,
+        "lon": 105.779418945313
+      },
+      "id": "DA_hh3-tower-pj1465",
+      "ten": "HH3 Tower",
+      "tenKhongDau": "hh3-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "185 Giảng Võ, Ba Đình, Hà Nội",
+      "duAnID": "DA_hittc-building-pj1474",
+      "geo": {
+        "lat": 21.0308094024658,
+        "lon": 105.821533203125
+      },
+      "id": "DA_hittc-building-pj1474",
+      "ten": "HITTC Building",
+      "tenKhongDau": "hittc-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "lô A2B, Cụm TTCN và CNN Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_hoang-linh-building-pj1418",
+      "geo": {
+        "lat": 21.0319423675537,
+        "lon": 105.782890319824
+      },
+      "id": "DA_hoang-linh-building-pj1418",
+      "ten": "Hoàng Linh Building",
+      "tenKhongDau": "hoang-linh-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Phố Xã Đàn, Đống Đa, Hà Nội",
+      "duAnID": "DA_hop-nhat-building-pj213",
+      "geo": {
+        "lat": 21.0150508880615,
+        "lon": 105.834846496582
+      },
+      "id": "DA_hop-nhat-building-pj213",
+      "ten": "Hợp Nhất Building",
+      "tenKhongDau": "hop-nhat-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "159 Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_hud-building-pj1640",
+      "geo": {
+        "lat": 10.797924041748,
+        "lon": 106.703826904297
+      },
+      "id": "DA_hud-building-pj1640",
+      "ten": "HUD Building",
+      "tenKhongDau": "hud-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Lê Văn Lương, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "duAnID": "DA_hud-tower-pj163",
+      "geo": {
+        "lat": 21.0020999908447,
+        "lon": 105.800621032715
+      },
+      "id": "DA_hud-tower-pj163",
+      "ten": "HUD Tower",
+      "tenKhongDau": "hud-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "243A Đê La Thành, Phường Láng Thượng, Đống Đa, Hà Nội",
+      "duAnID": "DA_icon4-tower-pj1209",
+      "geo": {
+        "lat": 21.0281600952148,
+        "lon": 105.804313659668
+      },
+      "id": "DA_icon4-tower-pj1209",
+      "ten": "Icon4 Tower",
+      "tenKhongDau": "icon4-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "163 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_idc-building-pj1991",
+      "geo": {
+        "lat": 10.7843942642212,
+        "lon": 106.696258544922
+      },
+      "id": "DA_idc-building-pj1991",
+      "ten": "IDC Building",
+      "tenKhongDau": "idc-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "27B Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_img-building-pj1572",
+      "geo": {
+        "lat": 10.7878694534302,
+        "lon": 106.698905944824
+      },
+      "id": "DA_img-building-pj1572",
+      "ten": "IMG Building",
+      "tenKhongDau": "img-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "17 Ngô Quyền, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_international-centre-pj1408",
+      "geo": {
+        "lat": 21.0250625610352,
+        "lon": 105.855476379395
+      },
+      "id": "DA_international-centre-pj1408",
+      "ten": "International Centre",
+      "tenKhongDau": "international-centre",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "266 Đội cấn, Phường Liễu Giai, Ba Đình, Hà Nội",
+      "duAnID": "DA_itt-building-pj243",
+      "geo": {
+        "lat": 21.0366096496582,
+        "lon": 105.815658569336
+      },
+      "id": "DA_itt-building-pj243",
+      "ten": "ITT Building",
+      "tenKhongDau": "itt-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Cách Mạng Tháng Tám, Phường 7, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_jabes-2-building-pj1865",
+      "geo": {
+        "lat": 10.7764101028442,
+        "lon": 106.684799194336
+      },
+      "id": "DA_jabes-2-building-pj1865",
+      "ten": "Jabes 2 Building",
+      "tenKhongDau": "jabes-2-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "56 Bến Vân Đồn, Phường 12, Quận 4, Hồ Chí Minh",
+      "duAnID": "DA_khahomex-savico-tower-pj904",
+      "geo": {
+        "lat": 10.7662057876587,
+        "lon": 106.702659606934
+      },
+      "id": "DA_khahomex-savico-tower-pj904",
+      "ten": "Khahomex - Savico Tower",
+      "tenKhongDau": "khahomex-savico-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "193-195 Khâm Thiên, Phường Thổ Quan, Đống Đa, Hà Nội",
+      "duAnID": "DA_kham-thien-building-pj203",
+      "geo": {
+        "lat": 21.0188655853271,
+        "lon": 105.83438873291
+      },
+      "id": "DA_kham-thien-building-pj203",
+      "ten": "Khâm Thiên Building",
+      "tenKhongDau": "kham-thien-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Ngõ 28 Xuân La, Phường Xuân La, Tây Hồ, Hà Nội",
+      "duAnID": "DA_khu-chung-cu-xuan-la-pj729",
+      "geo": {
+        "lat": 21.0656661987305,
+        "lon": 105.806999206543
+      },
+      "id": "DA_khu-chung-cu-xuan-la-pj729",
+      "ten": "Khu chung cư Xuân La",
+      "tenKhongDau": "khu-chung-cu-xuan-la",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "292 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "duAnID": "DA_kinh-do-building-pj236",
+      "geo": {
+        "lat": 21.0069637298584,
+        "lon": 105.822853088379
+      },
+      "id": "DA_kinh-do-building-pj236",
+      "ten": "Kinh Do Building",
+      "tenKhongDau": "kinh-do-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "230 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_lancaster-nguyen-trai-tower-pj1094",
+      "geo": {
+        "lat": 10.7647552490234,
+        "lon": 106.686294555664
+      },
+      "id": "DA_lancaster-nguyen-trai-tower-pj1094",
+      "ten": "Lancaster Nguyễn Trãi Tower",
+      "tenKhongDau": "lancaster-nguyen-trai-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Tôn Thất Thuyết, Phường 16, Quận 4, Hồ Chí Minh",
+      "duAnID": "DA_lancaster-residences-d4-pj1097",
+      "geo": {
+        "lat": 10.753288269043,
+        "lon": 106.705299377441
+      },
+      "id": "DA_lancaster-residences-d4-pj1097",
+      "ten": "Lancaster Residences D4",
+      "tenKhongDau": "lancaster-residences-d4",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "134/1 Cách Mạng Tháng Tám, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_lien-hoa-building-pj1686",
+      "geo": {
+        "lat": 10.7722473144531,
+        "lon": 106.692337036133
+      },
+      "id": "DA_lien-hoa-building-pj1686",
+      "ten": "Lien Hoa Building",
+      "tenKhongDau": "lien-hoa-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Lê Văn Lương, Xã Trung Văn, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_lilama-10-pj1466",
+      "geo": {
+        "lat": 20.9978046417236,
+        "lon": 105.793533325195
+      },
+      "id": "DA_lilama-10-pj1466",
+      "ten": "Lilama 10",
+      "tenKhongDau": "lilama-10",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "124  Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_lilama-124-minh-khai-pj1638",
+      "geo": {
+        "lat": 20.9947128295898,
+        "lon": 105.853065490723
+      },
+      "id": "DA_lilama-124-minh-khai-pj1638",
+      "ten": "Lilama 124 Minh Khai",
+      "tenKhongDau": "lilama-124-minh-khai",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "9 - 11 Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_lim-tower-pj1502",
+      "geo": {
+        "lat": 10.7743520736694,
+        "lon": 106.70654296875
+      },
+      "id": "DA_lim-tower-pj1502",
+      "ten": "Lim Tower",
+      "tenKhongDau": "lim-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "38 Trần Thái Tông, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_lod-building-pj1436",
+      "geo": {
+        "lat": 21.031229019165,
+        "lon": 105.787841796875
+      },
+      "id": "DA_lod-building-pj1436",
+      "ten": "LOD Building",
+      "tenKhongDau": "lod-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "262 Đường Huỳnh Văn Bánh, Phường 11, Phú Nhuận, Hồ Chí Minh",
+      "duAnID": "DA_lucky-house-pj1752",
+      "geo": {
+        "lat": 10.7918148040771,
+        "lon": 106.674240112305
+      },
+      "id": "DA_lucky-house-pj1752",
+      "ten": "Lucky House",
+      "tenKhongDau": "lucky-house",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "173A Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Hồ Chí Minh",
+      "duAnID": "DA_lutaco-tower-pj1618",
+      "geo": {
+        "lat": 10.7960214614868,
+        "lon": 106.674728393555
+      },
+      "id": "DA_lutaco-tower-pj1618",
+      "ten": "Lutaco Tower",
+      "tenKhongDau": "lutaco-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "444 Hoàng Hoa Thám, Phường Bưởi, Tây Hồ, Hà Nội",
+      "duAnID": "DA_machinco-building-pj874",
+      "geo": {
+        "lat": 21.0437870025635,
+        "lon": 105.81356048584
+      },
+      "id": "DA_machinco-building-pj874",
+      "ten": "Machinco Building",
+      "tenKhongDau": "machinco-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "85 Đường Nguyễn Hữu Cầu, Phường Tân Định, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_mai-hong-que-building-pj1982",
+      "geo": {
+        "lat": 10.7904319763184,
+        "lon": 106.690956115723
+      },
+      "id": "DA_mai-hong-que-building-pj1982",
+      "ten": "Mai Hồng Quế Building",
+      "tenKhongDau": "mai-hong-que-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Ngõ 11, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_maple-tower-pj1417",
+      "geo": {
+        "lat": 21.0301380157471,
+        "lon": 105.784225463867
+      },
+      "id": "DA_maple-tower-pj1417",
+      "ten": "Maple Tower",
+      "tenKhongDau": "maple-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Cách Mạng Tháng Tám, Phường 11, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_mb-bank-tower-pj1916",
+      "geo": {
+        "lat": 10.7854194641113,
+        "lon": 106.667304992676
+      },
+      "id": "DA_mb-bank-tower-pj1916",
+      "ten": "MB Bank Tower",
+      "tenKhongDau": "mb-bank-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 2 Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_me-linh-point-tower-pj2125",
+      "geo": {
+        "lat": 10.7745132446289,
+        "lon": 106.706008911133
+      },
+      "id": "DA_me-linh-point-tower-pj2125",
+      "ten": "Mê Linh Point Tower",
+      "tenKhongDau": "me-linh-point-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "4 Vũ Ngọc Phan, Đống Đa , Hà Nội , Việt Nam",
+      "duAnID": "DA_mecanimex-building-pj1493",
+      "geo": {
+        "lat": 21.0138740539551,
+        "lon": 105.811508178711
+      },
+      "id": "DA_mecanimex-building-pj1493",
+      "ten": "Mecanimex Building",
+      "tenKhongDau": "mecanimex-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "422 Đường Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_melody-tower-pj1801",
+      "geo": {
+        "lat": 10.7987823486328,
+        "lon": 106.721252441406
+      },
+      "id": "DA_melody-tower-pj1801",
+      "ten": "Melody Tower",
+      "tenKhongDau": "melody-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "17 Bà Huyện Thanh Quan, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_minh-long-tower-pj1520",
+      "geo": {
+        "lat": 10.775221824646,
+        "lon": 106.690155029297
+      },
+      "id": "DA_minh-long-tower-pj1520",
+      "ten": "Minh Long Tower",
+      "tenKhongDau": "minh-long-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Lô E2, Khu đô thị mới Cầu Giấy, Đường Dương Đình Nghệ, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_mitec-tower-pj1431",
+      "geo": {
+        "lat": 21.0197811126709,
+        "lon": 105.784309387207
+      },
+      "id": "DA_mitec-tower-pj1431",
+      "ten": "Mitec Tower",
+      "tenKhongDau": "mitec-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "19 Bà Triệu, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_naforimex-building-pj1444",
+      "geo": {
+        "lat": 21.024694442749,
+        "lon": 105.851524353027
+      },
+      "id": "DA_naforimex-building-pj1444",
+      "ten": "Naforimex Building",
+      "tenKhongDau": "naforimex-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "KĐT Dương Nội, Phường La Khê, Hà Đông, Hà Nội",
+      "duAnID": "DA_nam-cuong-building-pj1468",
+      "geo": {
+        "lat": 20.9766731262207,
+        "lon": 105.761581420898
+      },
+      "id": "DA_nam-cuong-building-pj1468",
+      "ten": "Nam Cường Building",
+      "tenKhongDau": "nam-cuong-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Khu đô thị Vĩnh Hoàng, Đường Kim Đồng, Hoàng Mai, Hà Nội",
+      "duAnID": "DA_nam-hai-lakeview-pj1469",
+      "geo": {
+        "lat": 20.9834575653076,
+        "lon": 105.867202758789
+      },
+      "id": "DA_nam-hai-lakeview-pj1469",
+      "ten": "Nam Hải Lakeview",
+      "tenKhongDau": "nam-hai-lakeview",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "76 Cách Mạng Tháng Tám, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_ngoc-dong-duong-building-pj1683",
+      "geo": {
+        "lat": 10.7753705978394,
+        "lon": 106.686019897461
+      },
+      "id": "DA_ngoc-dong-duong-building-pj1683",
+      "ten": "Ngọc Đông Dương Building",
+      "tenKhongDau": "ngoc-dong-duong-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "278 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
+      "duAnID": "DA_ngoc-linh-building-pj223",
+      "geo": {
+        "lat": 21.0443878173828,
+        "lon": 105.814834594727
+      },
+      "id": "DA_ngoc-linh-building-pj223",
+      "ten": "Ngọc Linh Building",
+      "tenKhongDau": "ngoc-linh-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 1 Đào Duy Anh, Phường Phương Mai, Đống Đa, Hà Nội",
+      "duAnID": "DA_ocean-park-pj1941",
+      "geo": {
+        "lat": 21.0074348449707,
+        "lon": 105.840148925781
+      },
+      "id": "DA_ocean-park-pj1941",
+      "ten": "Ocean Park",
+      "tenKhongDau": "ocean-park",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "6B Tràng Tiền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_opera-business-centre-pj1440",
+      "geo": {
+        "lat": 21.0250358581543,
+        "lon": 105.859100341797
+      },
+      "id": "DA_opera-business-centre-pj1440",
+      "ten": "Opera Business Centre",
+      "tenKhongDau": "opera-business-centre",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "324 Tây Sơn, Phường Ngã Tư Sở, Đống Đa, Hà Nội",
+      "duAnID": "DA_oriental-tower-324-tay-son-pj2180",
+      "geo": {
+        "lat": 21.0055046081543,
+        "lon": 105.822113037109
+      },
+      "id": "DA_oriental-tower-324-tay-son-pj2180",
+      "ten": "Oriental Tower - 324 Tây Sơn",
+      "tenKhongDau": "oriental-tower-324-tay-son",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Đông Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_parksimex-building-pj1619",
+      "geo": {
+        "lat": 10.7766170501709,
+        "lon": 106.705116271973
+      },
+      "id": "DA_parksimex-building-pj1619",
+      "ten": "Parksimex Building",
+      "tenKhongDau": "parksimex-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "139 Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_pasteur-tower-pj1957",
+      "geo": {
+        "lat": 10.7834959030151,
+        "lon": 106.69197845459
+      },
+      "id": "DA_pasteur-tower-pj1957",
+      "ten": "Pasteur Tower",
+      "tenKhongDau": "pasteur-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Điện Biên Phủ, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_peace-building-pj1764",
+      "geo": {
+        "lat": 10.8004007339478,
+        "lon": 106.721000671387
+      },
+      "id": "DA_peace-building-pj1764",
+      "ten": "Peace Building",
+      "tenKhongDau": "peace-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "105 Trường Chinh, Phường Phương Liệt, Thanh Xuân, Hà Nội",
+      "duAnID": "DA_pearl-phuong-nam-towers-pj193",
+      "geo": {
+        "lat": 20.9987144470215,
+        "lon": 105.83699798584
+      },
+      "id": "DA_pearl-phuong-nam-towers-pj193",
+      "ten": "Pearl Phương Nam Towers",
+      "tenKhongDau": "pearl-phuong-nam-towers",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "83A  Lý Thường Kiệt, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_phu-dien-building-pj1407",
+      "geo": {
+        "lat": 21.0252819061279,
+        "lon": 105.84375
+      },
+      "id": "DA_phu-dien-building-pj1407",
+      "ten": "Phú Điền Building",
+      "tenKhongDau": "phu-dien-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "186 Đường Điện Biên Phủ, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_pjico-building-pj1730",
+      "geo": {
+        "lat": 10.7839117050171,
+        "lon": 106.691268920898
+      },
+      "id": "DA_pjico-building-pj1730",
+      "ten": "Pjico Building",
+      "tenKhongDau": "pjico-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_pmc-building-pj1738",
+      "geo": {
+        "lat": 10.7819318771362,
+        "lon": 106.694282531738
+      },
+      "id": "DA_pmc-building-pj1738",
+      "ten": "PMC Building",
+      "tenKhongDau": "pmc-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "53 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_prime-centre-pj1456",
+      "geo": {
+        "lat": 21.0183448791504,
+        "lon": 105.847625732422
+      },
+      "id": "DA_prime-centre-pj1456",
+      "ten": "Prime Centre",
+      "tenKhongDau": "prime-centre",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_pv-oil-tower-pj2075",
+      "geo": {
+        "lat": 21.0466194152832,
+        "lon": 105.790557861328
+      },
+      "id": "DA_pv-oil-tower-pj2075",
+      "ten": "PV Oil Tower",
+      "tenKhongDau": "pv-oil-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Nguyễn Gia Thiều, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_pvc-sai-gon-building-pj1688",
+      "geo": {
+        "lat": 10.7790470123291,
+        "lon": 106.689559936523
+      },
+      "id": "DA_pvc-sai-gon-building-pj1688",
+      "ten": "PVC Sai Gon Building",
+      "tenKhongDau": "pvc-sai-gon-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Trần Thái Tông, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_pvi-tower-pj242",
+      "geo": {
+        "lat": 21.0240097045898,
+        "lon": 105.788986206055
+      },
+      "id": "DA_pvi-tower-pj242",
+      "ten": "PVI Tower",
+      "tenKhongDau": "pvi-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "26  Phan Đăng Lưu, Phường 6, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_qmobile-tower-pj1628",
+      "geo": {
+        "lat": 10.8036308288574,
+        "lon": 106.689094543457
+      },
+      "id": "DA_qmobile-tower-pj1628",
+      "ten": "Qmobile Tower",
+      "tenKhongDau": "qmobile-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "885 Hồng Hà, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_red-river-building-pj235",
+      "geo": {
+        "lat": 21.0250244140625,
+        "lon": 105.860557556152
+      },
+      "id": "DA_red-river-building-pj235",
+      "ten": "Red River Building",
+      "tenKhongDau": "red-river-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Nguyễn Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_resco-building-pj1705",
+      "geo": {
+        "lat": 10.7775096893311,
+        "lon": 106.698226928711
+      },
+      "id": "DA_resco-building-pj1705",
+      "ten": "Resco Building",
+      "tenKhongDau": "resco-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "521 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "duAnID": "DA_resco-tower-pj187",
+      "geo": {
+        "lat": 21.0295467376709,
+        "lon": 105.811454772949
+      },
+      "id": "DA_resco-tower-pj187",
+      "ten": "Resco Tower",
+      "tenKhongDau": "resco-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "170 Ngọc Khánh, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "duAnID": "DA_rose-garden-pj246",
+      "geo": {
+        "lat": 21.0247993469238,
+        "lon": 105.818832397461
+      },
+      "id": "DA_rose-garden-pj246",
+      "ten": "Rose Garden",
+      "tenKhongDau": "rose-garden",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "C17-1-1 đường Nguyễn Lương Bằng, Phường Tân Phú, Quận 7, Hồ Chí Minh",
+      "duAnID": "DA_royal-tower-pj619",
+      "geo": {
+        "lat": 10.7252864837646,
+        "lon": 106.726333618164
+      },
+      "id": "DA_royal-tower-pj619",
+      "ten": "Royal Tower",
+      "tenKhongDau": "royal-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "số 66 Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_sacomreal-generalimex-pj813",
+      "geo": {
+        "lat": 10.7698841094971,
+        "lon": 106.699821472168
+      },
+      "id": "DA_sacomreal-generalimex-pj813",
+      "ten": "Sacomreal – Generalimex",
+      "tenKhongDau": "sacomreal-–-generalimex",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "7 Đường Lý Tự Trọng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_saigon-land-building-pj1707",
+      "geo": {
+        "lat": 10.7824678421021,
+        "lon": 106.705192565918
+      },
+      "id": "DA_saigon-land-building-pj1707",
+      "ten": "Saigon Land Building",
+      "tenKhongDau": "saigon-land-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "123 Đường Trương Định, Phường 7, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_saigon-software-park-pj1871",
+      "geo": {
+        "lat": 10.780818939209,
+        "lon": 106.686157226563
+      },
+      "id": "DA_saigon-software-park-pj1871",
+      "ten": "Saigon Software Park",
+      "tenKhongDau": "saigon-software-park",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "37 Phố Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_saigon-trade-center-pj1704",
+      "geo": {
+        "lat": 10.7840909957886,
+        "lon": 106.703659057617
+      },
+      "id": "DA_saigon-trade-center-pj1704",
+      "ten": "Saigon Trade Center",
+      "tenKhongDau": "saigon-trade-center",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "444  Nguyễn Chí Thanh, Phường 6, Quận 10, Hồ Chí Minh",
+      "duAnID": "DA_samco-building-pj1570",
+      "geo": {
+        "lat": 10.759072303772,
+        "lon": 106.664657592773
+      },
+      "id": "DA_samco-building-pj1570",
+      "ten": "Samco Building",
+      "tenKhongDau": "samco-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường D1, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_samland-river-view-pj982",
+      "geo": {
+        "lat": 10.8027076721191,
+        "lon": 106.721214294434
+      },
+      "id": "DA_samland-river-view-pj982",
+      "ten": "Samland River View",
+      "tenKhongDau": "samland-river-view",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "19A Cộng Hòa, Phường 12, Tân Bình, Hồ Chí Minh",
+      "duAnID": "DA_scetpa-building-pj1571",
+      "geo": {
+        "lat": 10.800856590271,
+        "lon": 106.650291442871
+      },
+      "id": "DA_scetpa-building-pj1571",
+      "ten": "Scetpa Building",
+      "tenKhongDau": "scetpa-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "137 Nguyễn Văn Cừ, Phường Bồ Đề, Long Biên, Hà Nội",
+      "duAnID": "DA_silver-wings-building-pj218",
+      "geo": {
+        "lat": 21.0427532196045,
+        "lon": 105.870552062988
+      },
+      "id": "DA_silver-wings-building-pj218",
+      "ten": "Silver Wings Building",
+      "tenKhongDau": "silver-wings-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "163 Đường Trần Hưng Đạo, Phường Cô Giang, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_smart-view-building-pj1994",
+      "geo": {
+        "lat": 10.766300201416,
+        "lon": 106.694000244141
+      },
+      "id": "DA_smart-view-building-pj1994",
+      "ten": "Smart View Building",
+      "tenKhongDau": "smart-view-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "33 Đường Mạc Đĩnh Chi, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_star-building-pj1710",
+      "geo": {
+        "lat": 10.7847423553467,
+        "lon": 106.699020385742
+      },
+      "id": "DA_star-building-pj1710",
+      "ten": "Star Building",
+      "tenKhongDau": "star-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Hạ Hồi, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_std-tower-pj1112",
+      "geo": {
+        "lat": 21.0210151672363,
+        "lon": 105.84740447998
+      },
+      "id": "DA_std-tower-pj1112",
+      "ten": "STD Tower",
+      "tenKhongDau": "std-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "13 Hai Bà Trưng, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_sun-city-building-pj1410",
+      "geo": {
+        "lat": 21.0234928131104,
+        "lon": 105.855361938477
+      },
+      "id": "DA_sun-city-building-pj1410",
+      "ten": "Sun City Building",
+      "tenKhongDau": "sun-city-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "115 Nguyễn Huệ, Phường Bến Nghé, Quận 1 , Tp.HCM , Việt Nam",
+      "duAnID": "DA_sunwah-tower-pj1677",
+      "geo": {
+        "lat": 10.7737913131714,
+        "lon": 106.70344543457
+      },
+      "id": "DA_sunwah-tower-pj1677",
+      "ten": "Sunwah Tower",
+      "tenKhongDau": "sunwah-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "225 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_tai-loc-office-building-pj1913",
+      "geo": {
+        "lat": 10.7868423461914,
+        "lon": 106.693092346191
+      },
+      "id": "DA_tai-loc-office-building-pj1913",
+      "ten": "Tài Lộc Office Building",
+      "tenKhongDau": "tai-loc-office-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "22 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "duAnID": "DA_tdl-building-pj191",
+      "geo": {
+        "lat": 21.0156078338623,
+        "lon": 105.813926696777
+      },
+      "id": "DA_tdl-building-pj191",
+      "ten": "TĐL Building",
+      "tenKhongDau": "tdl-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "111 - 121 Ngô Gia Tự, Phường 2, Quận 10, Hồ Chí Minh",
+      "duAnID": "DA_tenimex-office-building-pj256",
+      "geo": {
+        "lat": 10.7654151916504,
+        "lon": 106.673141479492
+      },
+      "id": "DA_tenimex-office-building-pj256",
+      "ten": "Tenimex Office Building",
+      "tenKhongDau": "tenimex-office-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "179 Đường Nguyễn Cư Trinh, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_thai-son-building-pj1984",
+      "geo": {
+        "lat": 10.7625875473022,
+        "lon": 106.687362670898
+      },
+      "id": "DA_thai-son-building-pj1984",
+      "ten": "Thái Sơn Building",
+      "tenKhongDau": "thai-son-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "132 Kim Mã, Phường Kim Mã, Ba Đình, Hà Nội",
+      "duAnID": "DA_thanh-dong-building-pj1481",
+      "geo": {
+        "lat": 21.0319347381592,
+        "lon": 105.825172424316
+      },
+      "id": "DA_thanh-dong-building-pj1481",
+      "ten": "Thành Đông Building",
+      "tenKhongDau": "thanh-dong-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "25 Hoàng Hoa Thám, Phường 6, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_thao-dien-building-pj1636",
+      "geo": {
+        "lat": 10.805362701416,
+        "lon": 106.691047668457
+      },
+      "id": "DA_thao-dien-building-pj1636",
+      "ten": "Thảo Điền Building",
+      "tenKhongDau": "thao-dien-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "22-22bis Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_the-lancaster-ho-chi-minh-pj526",
+      "geo": {
+        "lat": 10.7810821533203,
+        "lon": 106.704780578613
+      },
+      "id": "DA_the-lancaster-ho-chi-minh-pj526",
+      "ten": "The Lancaster - Hồ Chí Minh",
+      "tenKhongDau": "the-lancaster-ho-chi-minh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 1 Phạm Ngũ Lão, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_the-one-ho-chi-minh-pj790",
+      "geo": {
+        "lat": 10.7701625823975,
+        "lon": 106.698287963867
+      },
+      "id": "DA_the-one-ho-chi-minh-pj790",
+      "ten": "The One Ho Chi Minh",
+      "tenKhongDau": "the-one-ho-chi-minh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "13 Đường Cao Thắng, Phường 2, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_thien-hong-building-pj1914",
+      "geo": {
+        "lat": 10.7687978744507,
+        "lon": 106.683242797852
+      },
+      "id": "DA_thien-hong-building-pj1914",
+      "ten": "Thiên Hồng Building",
+      "tenKhongDau": "thien-hong-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "4 Liễu Giai, Phường Cống Vị, Ba Đình, Hà Nội",
+      "duAnID": "DA_tid-tower-pj1479",
+      "geo": {
+        "lat": 21.0369853973389,
+        "lon": 105.814758300781
+      },
+      "id": "DA_tid-tower-pj1479",
+      "ten": "TID Tower",
+      "tenKhongDau": "tid-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "126 Đường Lê Văn Sỹ, Phường 14, Quận 3, Hồ Chí Minh",
+      "duAnID": "DA_tin-nghia-building-pj1915",
+      "geo": {
+        "lat": 10.7866973876953,
+        "lon": 106.679786682129
+      },
+      "id": "DA_tin-nghia-building-pj1915",
+      "ten": "Tín nghĩa Building",
+      "tenKhongDau": "tin-nghia-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Trần Hưng Đạo, Phường Cầu Kho, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_tkt-office-building-pj1868",
+      "geo": {
+        "lat": 10.7567739486694,
+        "lon": 106.685890197754
+      },
+      "id": "DA_tkt-office-building-pj1868",
+      "ten": "TKT Office Building",
+      "tenKhongDau": "tkt-office-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 1 Lương Yên, Phường Bạch Đằng, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_tmc-tower-pj728",
+      "geo": {
+        "lat": 21.0120162963867,
+        "lon": 105.862915039063
+      },
+      "id": "DA_tmc-tower-pj728",
+      "ten": "TMC Tower",
+      "tenKhongDau": "tmc-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đầu cầu Vĩnh Tuy, Phường Long Biên, Long Biên, Hà Nội",
+      "duAnID": "DA_to-hop-incomex-pj250",
+      "geo": {
+        "lat": 21.0314464569092,
+        "lon": 105.900825500488
+      },
+      "id": "DA_to-hop-incomex-pj250",
+      "ten": "Tổ hợp Incomex",
+      "tenKhongDau": "to-hop-incomex",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "14 Lý Nam Đế, Phường Hàng Mã, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_toa-nha-14-ly-nam-de-pj1449",
+      "geo": {
+        "lat": 21.0375938415527,
+        "lon": 105.845626831055
+      },
+      "id": "DA_toa-nha-14-ly-nam-de-pj1449",
+      "ten": "Tòa nhà 14 Lý Nam Đế",
+      "tenKhongDau": "toa-nha-14-ly-nam-de",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "169 Nguyễn Ngọc Vũ, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-169-nguyen-ngoc-vu-pj1419",
+      "geo": {
+        "lat": 21.0120620727539,
+        "lon": 105.807975769043
+      },
+      "id": "DA_toa-nha-169-nguyen-ngoc-vu-pj1419",
+      "ten": "Tòa nhà 169 Nguyễn Ngọc Vũ",
+      "tenKhongDau": "toa-nha-169-nguyen-ngoc-vu",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "183 Nguyễn Lương Bằng, Phường Nam Đồng, Đống Đa, Hà Nội",
+      "duAnID": "DA_toa-nha-183-nguyen-luong-bang-pj196",
+      "geo": {
+        "lat": 21.0141201019287,
+        "lon": 105.82740020752
+      },
+      "id": "DA_toa-nha-183-nguyen-luong-bang-pj196",
+      "ten": "Tòa nhà 183 Nguyễn Lương Bằng",
+      "tenKhongDau": "toa-nha-183-nguyen-luong-bang",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Lô A1E, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-3a-pj1432",
+      "geo": {
+        "lat": 21.0321445465088,
+        "lon": 105.782600402832
+      },
+      "id": "DA_toa-nha-3a-pj1432",
+      "ten": "Tòa nhà 3A",
+      "tenKhongDau": "toa-nha-3a",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "95 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-95-cau-giay-pj1426",
+      "geo": {
+        "lat": 21.0313854217529,
+        "lon": 105.799995422363
+      },
+      "id": "DA_toa-nha-95-cau-giay-pj1426",
+      "ten": "Tòa nhà 95 Cầu Giấy",
+      "tenKhongDau": "toa-nha-95-cau-giay",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "98 Hoàng Ngân, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-98-hoang-ngan-pj1433",
+      "geo": {
+        "lat": 21.0098342895508,
+        "lon": 105.805671691895
+      },
+      "id": "DA_toa-nha-98-hoang-ngan-pj1433",
+      "ten": "Tòa nhà 98 Hoàng Ngân",
+      "tenKhongDau": "toa-nha-98-hoang-ngan",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Đại lộ Thăng Long, Thạch Thất, Hà Nội",
+      "duAnID": "DA_toa-nha-cnc-viettel-pj249",
+      "geo": {
+        "lat": 20.9972801208496,
+        "lon": 105.538993835449
+      },
+      "id": "DA_toa-nha-cnc-viettel-pj249",
+      "ten": "Tòa Nhà CNC Viettel",
+      "tenKhongDau": "toa-nha-cnc-viettel",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "59 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_toa-nha-cty-cpxd-so-1-hn-pj1453",
+      "geo": {
+        "lat": 21.0179023742676,
+        "lon": 105.847473144531
+      },
+      "id": "DA_toa-nha-cty-cpxd-so-1-hn-pj1453",
+      "ten": "Tòa nhà Cty CPXD số 1 HN",
+      "tenKhongDau": "toa-nha-cty-cpxd-so-1-hn",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "105 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "duAnID": "DA_toa-nha-ford-thang-long-pj1545",
+      "geo": {
+        "lat": 21.0130939483643,
+        "lon": 105.813087463379
+      },
+      "id": "DA_toa-nha-ford-thang-long-pj1545",
+      "ten": "Tòa nhà Ford Thăng Long",
+      "tenKhongDau": "toa-nha-ford-thang-long",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-fpt-cau-giay-pj233",
+      "geo": {
+        "lat": 21.0307483673096,
+        "lon": 105.782608032227
+      },
+      "id": "DA_toa-nha-fpt-cau-giay-pj233",
+      "ten": "Tòa Nhà FPT Cầu Giấy",
+      "tenKhongDau": "toa-nha-fpt-cau-giay",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "30 - 32 Hòa Mã, Phường Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_toa-nha-grand-building-pj205",
+      "geo": {
+        "lat": 21.0153503417969,
+        "lon": 105.854026794434
+      },
+      "id": "DA_toa-nha-grand-building-pj205",
+      "ten": "Tòa Nhà Grand Building",
+      "tenKhongDau": "toa-nha-grand-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "29 Nguyễn Đình Chiểu, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_toa-nha-green-park-pj621",
+      "geo": {
+        "lat": 21.0147171020508,
+        "lon": 105.847114562988
+      },
+      "id": "DA_toa-nha-green-park-pj621",
+      "ten": "Toà nhà Green Park",
+      "tenKhongDau": "toa-nha-green-park",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "1119 Trần Hưng Đạo, Phường 5, Quận 5, Hồ Chí Minh",
+      "duAnID": "DA_toa-nha-ha-phan-pj1696",
+      "geo": {
+        "lat": 10.7530908584595,
+        "lon": 106.673248291016
+      },
+      "id": "DA_toa-nha-ha-phan-pj1696",
+      "ten": "Tòa nhà Hà Phan",
+      "tenKhongDau": "toa-nha-ha-phan",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "152 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
+      "duAnID": "DA_toa-nha-hipt-pj1460",
+      "geo": {
+        "lat": 21.0433807373047,
+        "lon": 105.822868347168
+      },
+      "id": "DA_toa-nha-hipt-pj1460",
+      "ten": "Tòa nhà HIPT",
+      "tenKhongDau": "toa-nha-hipt",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "299 Trung Kính, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-housing-pj1416",
+      "geo": {
+        "lat": 21.0211601257324,
+        "lon": 105.790679931641
+      },
+      "id": "DA_toa-nha-housing-pj1416",
+      "ten": "Tòa nhà Housing",
+      "tenKhongDau": "toa-nha-housing",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "17 Phạm Hùng, Nam Từ Liêm , Hà Nội , Việt Nam",
+      "duAnID": "DA_toa-nha-icd-pj1467",
+      "geo": {
+        "lat": 21.0283050537109,
+        "lon": 105.780693054199
+      },
+      "id": "DA_toa-nha-icd-pj1467",
+      "ten": "Tòa nhà ICD",
+      "tenKhongDau": "toa-nha-icd",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-intracom-pj216",
+      "geo": {
+        "lat": 21.029634475708,
+        "lon": 105.785652160645
+      },
+      "id": "DA_toa-nha-intracom-pj216",
+      "ten": "Toà nhà Intracom",
+      "tenKhongDau": "toa-nha-intracom",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "101A Nguyễn Khuyến, Đống Đa , Hà Nội , Việt Nam",
+      "duAnID": "DA_toa-nha-nguyen-khuyen-pj1490",
+      "geo": {
+        "lat": 21.0284099578857,
+        "lon": 105.837738037109
+      },
+      "id": "DA_toa-nha-nguyen-khuyen-pj1490",
+      "ten": "Tòa nhà Nguyễn Khuyến",
+      "tenKhongDau": "toa-nha-nguyen-khuyen",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "27 Nguyễn Trường Tộ, Phường Nguyễn Trung Trực, Ba Đình, Hà Nội",
+      "duAnID": "DA_toa-nha-nikko-pj206",
+      "geo": {
+        "lat": 21.0419139862061,
+        "lon": 105.846801757813
+      },
+      "id": "DA_toa-nha-nikko-pj206",
+      "ten": "Toà nhà NIKKO",
+      "tenKhongDau": "toa-nha-nikko",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "562 Nguyễn Văn Cừ, Phường Gia Thụy, Long Biên, Hà Nội",
+      "duAnID": "DA_toa-nha-plaschem-plaza-pj182",
+      "geo": {
+        "lat": 21.0505504608154,
+        "lon": 105.884796142578
+      },
+      "id": "DA_toa-nha-plaschem-plaza-pj182",
+      "ten": "Tòa nhà Plaschem Plaza",
+      "tenKhongDau": "toa-nha-plaschem-plaza",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-san-nam-pj192",
+      "geo": {
+        "lat": 21.0313835144043,
+        "lon": 105.783111572266
+      },
+      "id": "DA_toa-nha-san-nam-pj192",
+      "ten": "Toà nhà San Nam",
+      "tenKhongDau": "toa-nha-san-nam",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "124 Tôn Đức Thắng , Hà Nội , Việt Nam",
+      "duAnID": "DA_toa-nha-tan-a-dai-thanh-pj1499",
+      "geo": {
+        "lat": 21.0264778137207,
+        "lon": 105.833267211914
+      },
+      "id": "DA_toa-nha-tan-a-dai-thanh-pj1499",
+      "ten": "Tòa nhà Tân Á Đại Thành",
+      "tenKhongDau": "toa-nha-tan-a-dai-thanh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 2 Đại Cồ Việt, Phường Phố Huế, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_toa-nha-thai-binh-pj1450",
+      "geo": {
+        "lat": 21.0090446472168,
+        "lon": 105.851181030273
+      },
+      "id": "DA_toa-nha-thai-binh-pj1450",
+      "ten": "Tòa nhà Thái Bình",
+      "tenKhongDau": "toa-nha-thai-binh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Phường Hoàng Văn Thụ, Hoàng Mai, Hà Nội",
+      "duAnID": "DA_toa-nha-tien-phu-pj217",
+      "geo": {
+        "lat": 20.9834175109863,
+        "lon": 105.86653137207
+      },
+      "id": "DA_toa-nha-tien-phu-pj217",
+      "ten": "Toà nhà Tiến Phú",
+      "tenKhongDau": "toa-nha-tien-phu",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "360 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-360-tay-son-pj209",
+      "geo": {
+        "lat": 21.0070781707764,
+        "lon": 105.823013305664
+      },
+      "id": "DA_toa-nha-van-phong-360-tay-son-pj209",
+      "ten": "Tòa nhà văn phòng 360 Tây Sơn",
+      "tenKhongDau": "toa-nha-van-phong-360-tay-son",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "252 Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-ats-pj228",
+      "geo": {
+        "lat": 21.0463371276855,
+        "lon": 105.782402038574
+      },
+      "id": "DA_toa-nha-van-phong-ats-pj228",
+      "ten": "Tòa Nhà Văn Phòng ATS",
+      "tenKhongDau": "toa-nha-van-phong-ats",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 147 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-cong-ty-789-pj824",
+      "geo": {
+        "lat": 21.0455894470215,
+        "lon": 105.79972076416
+      },
+      "id": "DA_toa-nha-van-phong-cong-ty-789-pj824",
+      "ten": "Tòa nhà văn phòng Công ty 789",
+      "tenKhongDau": "toa-nha-van-phong-cong-ty-789",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-elinco-pj178",
+      "geo": {
+        "lat": 21.0300884246826,
+        "lon": 105.783332824707
+      },
+      "id": "DA_toa-nha-van-phong-elinco-pj178",
+      "ten": "Toà Nhà Văn Phòng Elinco",
+      "tenKhongDau": "toa-nha-van-phong-elinco",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 21 Láng Hạ, Phường Thành Công, Ba Đình, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-newtatco-pj237",
+      "geo": {
+        "lat": 21.0210056304932,
+        "lon": 105.818267822266
+      },
+      "id": "DA_toa-nha-van-phong-newtatco-pj237",
+      "ten": "Tòa Nhà Văn Phòng Newtatco",
+      "tenKhongDau": "toa-nha-van-phong-newtatco",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "97 Lò Đúc, Phường Phạm Đình Hổ, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-tai-tam-pj204",
+      "geo": {
+        "lat": 21.0133533477783,
+        "lon": 105.857856750488
+      },
+      "id": "DA_toa-nha-van-phong-tai-tam-pj204",
+      "ten": "Toà Nhà Văn Phòng Tài Tâm",
+      "tenKhongDau": "toa-nha-van-phong-tai-tam",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 98 Ngụy Như Kon Tum, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-thang-long-pj746",
+      "geo": {
+        "lat": 21.0012817382813,
+        "lon": 105.804473876953
+      },
+      "id": "DA_toa-nha-van-phong-thang-long-pj746",
+      "ten": "Tòa nhà văn phòng Thăng Long",
+      "tenKhongDau": "toa-nha-van-phong-thang-long",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Khuất Duy Tiến, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "duAnID": "DA_toa-nha-van-phong-transmeco-pj169",
+      "geo": {
+        "lat": 20.9981365203857,
+        "lon": 105.798698425293
+      },
+      "id": "DA_toa-nha-van-phong-transmeco-pj169",
+      "ten": "Tòa nhà Văn phòng Transmeco",
+      "tenKhongDau": "toa-nha-van-phong-transmeco",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Trung Yên 9, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_toa-nha-vinahud-pj1434",
+      "geo": {
+        "lat": 21.0160541534424,
+        "lon": 105.802200317383
+      },
+      "id": "DA_toa-nha-vinahud-pj1434",
+      "ten": "Tòa nhà Vinahud",
+      "tenKhongDau": "toa-nha-vinahud",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 376 Điện Biên Phủ, Phường 11, Quận 10, Hồ Chí Minh",
+      "duAnID": "DA_toplife-tower-pj1043",
+      "geo": {
+        "lat": 10.7743053436279,
+        "lon": 106.680358886719
+      },
+      "id": "DA_toplife-tower-pj1043",
+      "ten": "Toplife Tower",
+      "tenKhongDau": "toplife-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "273 Kim Mã, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "duAnID": "DA_toserco-building-pj1478",
+      "geo": {
+        "lat": 21.0308170318604,
+        "lon": 105.820137023926
+      },
+      "id": "DA_toserco-building-pj1478",
+      "ten": "Toserco Building",
+      "tenKhongDau": "toserco-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "15 Phạm Hùng, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
+      "duAnID": "DA_toyota-my-dinh-pj1462",
+      "geo": {
+        "lat": 21.0290603637695,
+        "lon": 105.779823303223
+      },
+      "id": "DA_toyota-my-dinh-pj1462",
+      "ten": "Toyota Mỹ Đình",
+      "tenKhongDau": "toyota-my-dinh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "24 Trường Sơn, Phường 2, Tân Bình, Hồ Chí Minh",
+      "duAnID": "DA_tpa-building-pj1938",
+      "geo": {
+        "lat": 10.8084993362427,
+        "lon": 106.664840698242
+      },
+      "id": "DA_tpa-building-pj1938",
+      "ten": "TPA Building",
+      "tenKhongDau": "tpa-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "141 Hoàng Hoa Thám, Phường Ngọc Hà, Ba Đình, Hà Nội",
+      "duAnID": "DA_truc-bach-building-pj1461",
+      "geo": {
+        "lat": 21.0404472351074,
+        "lon": 105.824691772461
+      },
+      "id": "DA_truc-bach-building-pj1461",
+      "ten": "Trúc Bạch Building",
+      "tenKhongDau": "truc-bach-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Nhà G10, Nguyễn Trãi, Phường Thanh Xuân Nam, Thanh Xuân, Hà Nội",
+      "duAnID": "DA_trung-tam-tai-chinh-song-da-pj170",
+      "geo": {
+        "lat": 20.9879703521729,
+        "lon": 105.800300598145
+      },
+      "id": "DA_trung-tam-tai-chinh-song-da-pj170",
+      "ten": "Trung tâm Tài chính Sông Đà",
+      "tenKhongDau": "trung-tam-tai-chinh-song-da",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_ttc-tower-pj1393",
+      "geo": {
+        "lat": 21.0307598114014,
+        "lon": 105.781929016113
+      },
+      "id": "DA_ttc-tower-pj1393",
+      "ten": "TTC Tower",
+      "tenKhongDau": "ttc-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "125-127 Bà Triệu, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_v-building-pj1448",
+      "geo": {
+        "lat": 21.0191783905029,
+        "lon": 105.849464416504
+      },
+      "id": "DA_v-building-pj1448",
+      "ten": "V Building",
+      "tenKhongDau": "v-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "400 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "duAnID": "DA_v-building-pj1631",
+      "geo": {
+        "lat": 10.8004159927368,
+        "lon": 106.722312927246
+      },
+      "id": "DA_v-building-pj1631",
+      "ten": "V Building",
+      "tenKhongDau": "v-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "90 Đường Trần Đình Xu, Phường Cô Giang, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_v-d-building-pj1979",
+      "geo": {
+        "lat": 10.7615852355957,
+        "lon": 106.69002532959
+      },
+      "id": "DA_v-d-building-pj1979",
+      "ten": "V&D Building",
+      "tenKhongDau": "v-d-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "52 Lạc Long Quân, Phường Bưởi, Tây Hồ, Hà Nội",
+      "duAnID": "DA_van-phong-vinaconex-no-2-pj172",
+      "geo": {
+        "lat": 21.0739841461182,
+        "lon": 105.812896728516
+      },
+      "id": "DA_van-phong-vinaconex-no-2-pj172",
+      "ten": "Văn phòng Vinaconex No.2",
+      "tenKhongDau": "van-phong-vinaconex-no-2",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "09 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
+      "duAnID": "DA_vcci-tower-so-9-dao-duy-anh-pj2192",
+      "geo": {
+        "lat": 21.0087795257568,
+        "lon": 105.838584899902
+      },
+      "id": "DA_vcci-tower-so-9-dao-duy-anh-pj2192",
+      "ten": "VCCI Tower - số 9 Đào Duy Anh",
+      "tenKhongDau": "vcci-tower-so-9-dao-duy-anh",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "54 Trần Hưng Đạo, Phường Hàng Bài, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_vci-tower-pj247",
+      "geo": {
+        "lat": 21.0211067199707,
+        "lon": 105.851875305176
+      },
+      "id": "DA_vci-tower-pj247",
+      "ten": "VCI Tower",
+      "tenKhongDau": "vci-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "235 Nguyễn Trãi, Thanh Xuân , Hà Nội , Việt Nam",
+      "duAnID": "DA_vg-building-pj1500",
+      "geo": {
+        "lat": 20.993465423584,
+        "lon": 105.808219909668
+      },
+      "id": "DA_vg-building-pj1500",
+      "ten": "VG Building",
+      "tenKhongDau": "vg-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Tại lô 10E6, khu đô thị mới Cầu Giấy, Q. Cầu Giấy, TP. Hà Nội.",
+      "duAnID": "DA_vicem-tower-pj754",
+      "geo": {
+        "lat": 21.0150661468506,
+        "lon": 105.785346984863
+      },
+      "id": "DA_vicem-tower-pj754",
+      "ten": "Vicem Tower",
+      "tenKhongDau": "vicem-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "115 Trần Hưng Đạo, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_vid-tower-1-pj1445",
+      "geo": {
+        "lat": 21.0239944458008,
+        "lon": 105.841743469238
+      },
+      "id": "DA_vid-tower-1-pj1445",
+      "ten": "VID Tower 1",
+      "tenKhongDau": "vid-tower-1",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
+      "duAnID": "DA_vien-dong-building-pj229",
+      "geo": {
+        "lat": 21.0197505950928,
+        "lon": 105.82315826416
+      },
+      "id": "DA_vien-dong-building-pj229",
+      "ten": "Viễn Đông Building",
+      "tenKhongDau": "vien-dong-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_viet-a-tower-pj221",
+      "geo": {
+        "lat": 21.0303535461426,
+        "lon": 105.785026550293
+      },
+      "id": "DA_viet-a-tower-pj221",
+      "ten": "Việt Á Tower",
+      "tenKhongDau": "viet-a-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "141 Nguyễn Du, Phường Bến Thành, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_viet-dragon-tower-pj1867",
+      "geo": {
+        "lat": 10.7728395462036,
+        "lon": 106.69344329834
+      },
+      "id": "DA_viet-dragon-tower-pj1867",
+      "ten": "Viet Dragon Tower",
+      "tenKhongDau": "viet-dragon-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Số 1 Thái Hà, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "duAnID": "DA_viet-tower-pj222",
+      "geo": {
+        "lat": 21.0096607208252,
+        "lon": 105.823554992676
+      },
+      "id": "DA_viet-tower-pj222",
+      "ten": "Viet Tower",
+      "tenKhongDau": "viet-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "5 Công Trường Mê Linh, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_vietcombank-tower-hcm-pj1438",
+      "geo": {
+        "lat": 10.775577545166,
+        "lon": 106.70532989502
+      },
+      "id": "DA_vietcombank-tower-hcm-pj1438",
+      "ten": "Vietcombank Tower HCM",
+      "tenKhongDau": "vietcombank-tower-hcm",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "198 Trần Quang Khải, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_vietcombank-tower-pj1439",
+      "geo": {
+        "lat": 21.0283908843994,
+        "lon": 105.857696533203
+      },
+      "id": "DA_vietcombank-tower-pj1439",
+      "ten": "Vietcombank Tower",
+      "tenKhongDau": "vietcombank-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Lô E4-17 Khu đô thị mới Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_vietracimex-tower-pj620",
+      "geo": {
+        "lat": 21.0301666259766,
+        "lon": 105.784889221191
+      },
+      "id": "DA_vietracimex-tower-pj620",
+      "ten": "Vietracimex Tower",
+      "tenKhongDau": "vietracimex-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "2 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_viglacera-exim-building-pj1423",
+      "geo": {
+        "lat": 21.0465354919434,
+        "lon": 105.80443572998
+      },
+      "id": "DA_viglacera-exim-building-pj1423",
+      "ten": "Viglacera – Exim Building",
+      "tenKhongDau": "viglacera-–-exim-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Điện Biên Phủ, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_vinaconex-building-pj1559",
+      "geo": {
+        "lat": 10.7909288406372,
+        "lon": 106.698394775391
+      },
+      "id": "DA_vinaconex-building-pj1559",
+      "ten": "Vinaconex Building",
+      "tenKhongDau": "vinaconex-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "34 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "duAnID": "DA_vinaconex-tower-pj1476",
+      "geo": {
+        "lat": 21.0147285461426,
+        "lon": 105.813438415527
+      },
+      "id": "DA_vinaconex-tower-pj1476",
+      "ten": "Vinaconex Tower",
+      "tenKhongDau": "vinaconex-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "127 Lò Đúc, Phường Đống Mác, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_vinafor-pj1459",
+      "geo": {
+        "lat": 21.0132503509521,
+        "lon": 105.858428955078
+      },
+      "id": "DA_vinafor-pj1459",
+      "ten": "Vinafor",
+      "tenKhongDau": "vinafor",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "39A Ngô Quyền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "duAnID": "DA_vinaplast-tai-tam-pj219",
+      "geo": {
+        "lat": 21.0217514038086,
+        "lon": 105.85432434082
+      },
+      "id": "DA_vinaplast-tai-tam-pj219",
+      "ten": "Vinaplast - Tài Tâm",
+      "tenKhongDau": "vinaplast-tai-tam",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "180-192 Nguyễn Công Trứ, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_vincom-financial-tower-pj451",
+      "geo": {
+        "lat": 10.7687578201294,
+        "lon": 106.701148986816
+      },
+      "id": "DA_vincom-financial-tower-pj451",
+      "ten": "Vincom Financial Tower",
+      "tenKhongDau": "vincom-financial-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "519 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "duAnID": "DA_vit-tower-pj211",
+      "geo": {
+        "lat": 21.0295677185059,
+        "lon": 105.811798095703
+      },
+      "id": "DA_vit-tower-pj211",
+      "ten": "VIT Tower",
+      "tenKhongDau": "vit-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đào Duy Anh, Quận Phú Nhuận , Tp.HCM , Việt Nam",
+      "duAnID": "DA_vmg-building-pj1673",
+      "geo": {
+        "lat": 10.8073444366455,
+        "lon": 106.675140380859
+      },
+      "id": "DA_vmg-building-pj1673",
+      "ten": "VMG Building",
+      "tenKhongDau": "vmg-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Lô A1F, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_vmt-building-pj1420",
+      "geo": {
+        "lat": 21.0319442749023,
+        "lon": 105.781814575195
+      },
+      "id": "DA_vmt-building-pj1420",
+      "ten": "VMT Building",
+      "tenKhongDau": "vmt-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "81 - 85 Hàm Nghi, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "duAnID": "DA_vp-tower-pj258",
+      "geo": {
+        "lat": 10.7706823348999,
+        "lon": 106.702308654785
+      },
+      "id": "DA_vp-tower-pj258",
+      "ten": "VP Tower",
+      "tenKhongDau": "vp-tower",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "18 Tam Trinh, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_vtc-online-building-pj1457",
+      "geo": {
+        "lat": 20.9953918457031,
+        "lon": 105.862014770508
+      },
+      "id": "DA_vtc-online-building-pj1457",
+      "ten": "VTC Online Building",
+      "tenKhongDau": "vtc-online-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "156 Triệu Việt Vương, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
+      "duAnID": "DA_zodi-building-pj200",
+      "geo": {
+        "lat": 21.0133228302002,
+        "lon": 105.850547790527
+      },
+      "id": "DA_zodi-building-pj200",
+      "ten": "Zodi Building",
+      "tenKhongDau": "zodi-building",
+      "type": "DuAn"
+    }
+  },
+  {
+    "default": {
+      "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "duAnID": "DA_zodiac-building-pj1430",
+      "geo": {
+        "lat": 21.0308322906494,
+        "lon": 105.782112121582
+      },
+      "id": "DA_zodiac-building-pj1430",
+      "ten": "Zodiac building",
+      "tenKhongDau": "zodiac-building",
+      "type": "DuAn"
+    }
+  }
+]
