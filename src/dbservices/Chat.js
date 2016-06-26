@@ -20,6 +20,7 @@ class ChatModel {
 	}
 
 	upsert(chatDto) {
+
 		this.myBucket.upsert(chatDto.chatID, chatDto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
@@ -54,17 +55,18 @@ class ChatModel {
       } else {
         console.log(res);
 
-        var chatID = "" + res.value;
+        var chatID = "Chat_web_" + res.value;
 
         chat.type = "Chat";
         chat.chatID = chatID;
+        chat.id = chatID;
         var date = new Date();
         // chat.date = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
         chat.date = date;
         console.log("before upsert " + chat.id);
         //TODO set timestamp for chat
 
-        bucket.upsert(chat.chatID, chat, function (err, res) {
+        bucket.upsert(chat.id, chat, function (err, res) {
           if (err) {
             console.log("ERROR:" + err);
             callback({code:99, msg:err.toString()})

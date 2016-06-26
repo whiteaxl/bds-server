@@ -25,7 +25,10 @@ class AdsModel {
     }
 
     upsert(adsDto) {
-        bucket.upsert(adsDto.adsID, adsDto, function (err, res) {
+        adsDto.id = adsDto.adsID;
+        adsDto.timeModified = new Date().getTime();
+
+        bucket.upsert(adsDto.id, adsDto, function (err, res) {
             if (err) {
                 console.log("ERROR:" + err);
             }

@@ -359,6 +359,7 @@ internals.endpoints = [
       }
     }
   },
+  //todo: can viet lai bang cach truyen list adsID, de bao mat thong tin
   {
     method: 'POST',
     path: '/api/user/getAdsLikes',

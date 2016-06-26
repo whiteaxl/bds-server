@@ -13,31 +13,6 @@ var internals = {};
 
 var cache = {};
 
-/**
- * request {
-  *     deviceID : "device-ID1"
-  * }
- */
-internals.create = function (req, reply) {
-  var query = req.payload;
-
-  var deviceID = query.deviceID;
-  var userDto = {
-    deviceID: deviceID
-  };
-  userService.upsert(userDto, (err, res) => {
-    if (err) {
-      console.log(err);
-      reply(Boom.internal("Error when call create user " + deviceID + ",err:") + err)
-    } else {
-      console.log(res);
-
-      reply(res);
-    }
-  });
-};
-
-
 internals.requestVerifyCode = function (req, reply) {
   console.log("Call requestVerifyCode:", req.payload);
   const phone = req.payload.phone;
