@@ -49,41 +49,43 @@
                     <div class="inner">
                         <div class="block-15">
                             <div class="head">
-                                <h2 class="title">Edit Profile</h2>
-                                <div class="joined">Joined Apr 2, 2016</div>
+                                <h2 class="title">Thông tin tài khoản</h2>
+                                <div class="joined">Tham gia Reland từ 2, 2016</div>
                             </div>
-                            <form action="account.html" method="post" id="form-register" novalidate>
+                            <form ng-submit="pc.updateProfile();" method="post" id="form-register" novalidate>
                                 <div class="row">
                                     <div class="col col-270">
                                         <div class="media">
                                             <div class="avatar" id="avatar">
-                                                <span style="background-image: url(asset/img/data/img-avatar.jpg)"></span>
+                                                <span style="background-image: url({{pc.user.avatar}})"></span>
                                             </div>
                                             <div class="letter hidden" id="letter">
                                                 <span>Q</span>
                                             </div>
                                             <div class="action">
-                                                <a href="#avatar" data-remove="avatar" data-show="letter" title="Remove">Remove</a>
-                                                <a href="#change" data-change="avatar" title="Change Picture">Change Picture</a>
+                                                <a href="#change" data-change="avatar" title="Đổi ảnh đại diện">Đổi ảnh đại diện</a>
                                             </div>
                                             <div class="change hidden" id="change">
-                                                <a class="btn-close" href="#change" title="Close" data-close="avatar"><i class="fa fa-times"></i></a>
-                                                <div class="text">Drag &amp; drop<br>picture</div>
-                                                <div class="file">
+                                                <a class="btn-close" href="#change" title="Close" data-close="avatar"><i class="fa fa-times"></i></a>                                                
+                                                <div class="text" ngf-drop="pc.uploadFile($file)">Kéo thả <br> ảnh</div>
+                                                <div class="file" style="display: none;">
                                                     <span>Choose a File..</span>
                                                     <input type="file" class="form-control" name="userfile"/>
                                                 </div>
+                                                <div class="file" ngf-select="pc.uploadFile($file)" accept="image/*" >
+                                                    <span>Chọn file ảnh..</span>
+                                                </div>      
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col col-480">
                                         <div class="control">
                                             <label for="name-field">Họ tên</label>
-                                            <input id="name-field" type="text" name="name" ng-model="pc.user.fullName" class="form-control"/>
+                                            <input id="name-field" ng-change="pc.edit=true" type="text" name="name" ng-model="pc.user.fullName" class="form-control"/>
                                         </div>
                                         <div class="control">
                                             <label for="email-field">Email</label>
-                                            <input id="email-field" type="email" ng-model="pc.user.email" name="email" class="form-control"/>
+                                            <input id="email-field" ng-change="pc.edit=true" type="email" ng-model="pc.user.email" name="email" class="form-control"/>
                                         </div>
                                         <div class="control">
                                             <label>Mật khẩu</label>
@@ -93,47 +95,28 @@
                                             <div class="row">
                                                 <div class="col col-50">
                                                     <label for="password-field">Mật khẩu mới</label>
-                                                    <input id="password-field" type="password" name="password" class="form-control" disabled/>
+                                                    <input ng-change="pc.edit=true" id="password-field" ng-model="pc.newPass" type="password" name="password" class="form-control" disabled/>
                                                 </div>
                                                 <div class="col col-50">
                                                     <label for="re-password-field">Xác nhận mật khẩu</label>
-                                                    <input id="re-password-field" type="password" name="re_password" class="form-control" disabled/>
+                                                    <input id="re-password-field" ng-change="pc.edit=true" ng-model="pc.newPassConfirm" type="password" name="re_password" class="form-control" disabled/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="control">
                                             <label for="phone-field">Số điện thoại</label>
-                                            <input id="phone-field" type="number" ng-model="pc.user.user.phone" name="phone" class="form-control"/>
+                                            <input id="phone-field" ng-change="pc.edit=true" type="number" ng-model="pc.user.phone" name="phone" class="form-control"/>
                                         </div>
+                                       
                                         <div class="control">
-                                            <label for="user-field">USER TYPE</label>
-                                            <select name="status" id="user-field" class="form-control">
-                                                <option value="Home Buyer" selected="selected">Home Buyer</option>
-                                                <option value="Home Seller">Home Seller</option>
-                                                <option value="Both Buyer And Seller">Both Buyer and Seller</option>
-                                                <option value="Renter">Renter</option>
-                                                <option value="Real Estate Pro">Real Estate Pro</option>
-                                                <option value="Other">Other/Just Looking</option>
-                                                <option value="Home Owner">Home Owner</option>
-                                            </select>
-                                        </div>
-                                        <div class="control">
-                                            <label for="location-field">Location</label>
-                                            <input id="location-field" type="text" name="location" class="form-control"/>
-                                        </div>
-                                        <div class="control">
-                                            <div class="check" data-check="toggle" data-target="one-click">
-                                                <input type="checkbox" name="send" id="one-click" value="1"/>
-                                                <div class="checkbox"></div>
-                                                <h3>Send Property inquires with 1-Click</h3>
-                                                <p>When checked, we'll automatically resend the same info from your last inquiry</p>
-                                            </div>
-                                        </div>
+                                            <label for="location-field">Địa chỉ</label>
+                                            <input id="location-field" type="text" ng-change="pc.edit=true" ng-model="pc.user.diaChi" name="location" class="form-control"/>
+                                        </div>                                        
                                     </div>
                                 </div>
                                 <div class="handle">
-                                    <button class="btn btn-cancel">Cancel</button>
-                                    <button class="btn btn-save">Save Profile</button>
+                                    <button class="btn btn-cancel" ng-click="pc.reset();" ng-if="pc.edit">Thoát</button>
+                                    <button ng-class="pc.edit?'btn btn-save':'btn btn-cancel'" ng-disabled="!pc.edit">Cập nhật</button>
                                 </div>
                             </form>
                         </div>

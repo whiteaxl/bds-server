@@ -206,11 +206,13 @@ class UserModel {
     });
   }
 
-  upsert(userDto) {
+  upsert(userDto,callback) {
     bucket.upsert(userDto.userID, userDto, function (err, res) {
         if (err) {
             console.log("ERROR:" + err);
         }
+        if(callback)
+          callback(err,res);
     })
   }
 

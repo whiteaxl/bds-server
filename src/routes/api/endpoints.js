@@ -458,7 +458,20 @@ internals.endpoints = [
       tags: ['api'],
       auth: 'jwt'
     }
-  }
+  },
+  {
+    method: 'POST',
+    path: '/api/updateProfile',
+    handler: loginHandler.updateProfile,
+    config : {
+      description: 'update user profile information (name,phone,email,password)',
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+
+
+  
 
 ];
 

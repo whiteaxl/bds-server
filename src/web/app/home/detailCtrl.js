@@ -82,6 +82,8 @@
 			vm.marker.content = vm.ads.giaFmt;
 			// vm.diaChinh = vm.ads.place.diaChinh;
 			$scope.email = vm.ads.dangBoi.email;
+			vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
+			vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 			vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
 			// vm.diaChinh = {
 			// 	tinh:vm.ads.place.diaChinh.tinh,

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8879f64543f6b3007595"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c345b0c7faa342181816"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -981,7 +981,7 @@
 	  });
 
 
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize','angular-jwt'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt'])
 	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -19129,6 +19129,8 @@
 				vm.marker.content = vm.ads.giaFmt;
 				// vm.diaChinh = vm.ads.place.diaChinh;
 				$scope.email = vm.ads.dangBoi.email;
+				vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
+				vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
 				// vm.diaChinh = {
 				// 	tinh:vm.ads.place.diaChinh.tinh,
@@ -19464,7 +19466,7 @@
 	(function() {
 		'use strict';
 		var controllerId = 'ProfileCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
+		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,Upload,NgMap,$window,$timeout){
 			var vm = this;
 			vm.viewMap = false;
 			$scope.chat_visible = true;
@@ -19473,7 +19475,7 @@
 					window.DesignCommon.adjustPage();
 				},0);
 				if($state.current.data){
-					$rootScope.bodyClass = "page-detail";
+					$rootScope.bodyClass = "page-home";
 				}
 			});	
 			vm.init = function(){
@@ -19481,11 +19483,68 @@
 				HouseService.profile({userID: vm.userID}).then(function(res){
 					if(res.data.success == true){
 						vm.user = res.data.user;	
+						vm.original =  angular.copy(vm.user);
 					}				
 				});
 			}
 
 			vm.init();
+
+			vm.prepareUpdateProfileData = function(){
+				return {
+					newPass: vm.newPass,
+					userID: vm.user.id,
+					email: vm.user.email,
+					phone: vm.user.phone,
+					fullName: vm.user.fullName,
+					diaChi: vm.user.diaChi,
+					avatar: vm.user.avatar
+				};
+			}
+
+
+			vm.updateProfile = function(callback){
+				var data = vm.prepareUpdateProfileData();
+				HouseService.updateProfile(data).then(function(res){
+					console.log(JSON.stringify(res));
+					vm.edit = false;
+					if(callback)
+						callback(res);
+				});
+			}
+			vm.reset = function(){
+				//$('#form-register').reset();
+				vm.user = angular.copy(vm.original);
+				vm.edit = false;
+			}
+			vm.uploadFile = function(file){
+				var data = vm.prepareUpdateProfileData();
+				// var ft = vm.catchFile(files[i]);
+	   //  		var isImageFile = (ft == "image");
+	    		
+	    		Upload.upload({
+		            url: '/api/upload',
+		            data: {files: file}
+		        }).then(function (resp) {
+		            console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
+		            //here we need to emit message
+		            // if(ft == "image")
+		            // 	vm.sendImage(resp.data.image_file);
+		            // else
+		            vm.user.avatar = resp.data.file.url;
+		            vm.updateProfile(function(res){
+		            	$('[data-close="avatar"]').click();
+		            });
+
+		        }, function (resp) {
+		            console.log('Error status: ' + resp.status);
+		        }, function (evt) {
+		            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+		        });	        
+			}
+
+
 		});
 
 	})();
@@ -19598,6 +19657,9 @@
 	      },
 	      profile: function(data){
 	        return $http.post("/api/profile",data);
+	      },
+	      updateProfile: function(data){
+	        return $http.post("/api/updateProfile",data);
 	      }
 
 	    };
