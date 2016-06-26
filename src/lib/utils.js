@@ -105,13 +105,13 @@ util.getDiaChinhFromDoThi = function(inputString,removeString,type) {
     kqReplaceA = kqReplaceA.replace(removeString,"")
     kqReplaceA = kqReplaceA.replace(khuVuc,"");
 
-    // kqReplaceA = kqReplaceA.toUpperCase();
-    // if (kqReplaceA.includes("QUẬN") ) {
-    //     kqReplaceA = kqReplaceA.replace("QUẬN","");
-    // }
-    // if (kqReplaceA.includes("HUYỆN") ) {
-    //     kqReplaceA = kqReplaceA.replace("HUYỆN","");
-    // }
+    kqReplaceA = kqReplaceA.toUpperCase();
+    if (kqReplaceA.includes("QUẬN") ) {
+        kqReplaceA = kqReplaceA.replace("QUẬN","");
+    }
+    if (kqReplaceA.includes("HUYỆN") ) {
+        kqReplaceA = kqReplaceA.replace("HUYỆN","");
+    }
 
 
         if (kqReplaceA ) {
