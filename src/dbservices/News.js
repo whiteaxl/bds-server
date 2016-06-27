@@ -4,8 +4,8 @@ var util = require("../lib/utils");
 /*
 var connection = mysql.createConnection({
     host : "localhost",
-    user : "root",
-    password : "123456",
+    user : "reland",
+    password : "Zi3Iyh0xSxPztlET",
     database : "reland"
 });
 */
@@ -85,7 +85,7 @@ class NewsModel {
     }
 
     countAllArticleOfCat(catId, callback){
-        console.log("------in findAllArticleOfCat---: " + catId);
+        console.log("------in countAllArticleOfCat---: " + catId);
         var listCat = [];
         var catIdStr = "";
         var callback1 =(err,all) => {
@@ -176,7 +176,8 @@ class NewsModel {
             } else{
                 limitQuery = " limit " + pageSize;
             }
-            var sql = "SELECT * FROM reland.news_article where cat_id in (" + catIdStr + ")" + limitQuery;
+            var sql = "SELECT news.*, cat.cat_name FROM reland.news_article news, reland.news_article_category cat " +
+                      "where news.cat_id in (" + catIdStr + ") and news.cat_id = cat.cat_id " + limitQuery;
             console.log("findAllArticleOfCat--------sql: " + sql);
             pool.getConnection(function(err,connection){
                 if (err) {
@@ -200,10 +201,119 @@ class NewsModel {
         this.getAllChildOfCat(catId, callback1);
     }
 
+    findHightestArticle(catId, callback){
+        console.log("------in findHightestArticle---catId : " + catId);
+        var listCat = [];
+        var catIdStr = "";
+        var callback1 =(err,all) => {
+            if(err){
+                console.log("Problem with MySQL"+err);
+            } else{
+                console.log("-----getAllChildOfCat--success");
+                console.log("size:" + all.length);
+                for (var i = 0; i < all.length; i++) {
+
+                    if((listCat.indexOf(all[i].lev1) == -1) && (all[i].lev1 != null))
+                        listCat.push(all[i].lev1);
+                    if((listCat.indexOf(all[i].lev2) == -1) && (all[i].lev2 != null))
+                        listCat.push(all[i].lev2);
+                    if((listCat.indexOf(all[i].lev3) == -1) && (all[i].lev3 != null))
+                        listCat.push(all[i].lev3);
+                    if((listCat.indexOf(all[i].lev4) == -1) && (all[i].lev4 != null))
+                        listCat.push(all[i].lev4);
+                }
+            }
+            if(listCat.length > 0){
+                for(var i=0; i<listCat.length; i++){
+                    catIdStr += listCat[i] + ",";
+                }
+            }
+            if(catIdStr.length > 1)
+                catIdStr = catIdStr.substring(0,catIdStr.length -1);
+
+            var sql = "SELECT * FROM reland.news_article where cat_id in (" + catIdStr + ") order by rating_count desc limit 5";
+            console.log("findHightestArticle--------sql: " + sql);
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    console.log(err);
+                    connection.release();
+                    return;
+                }
+
+                console.log('connected as id ' + connection.threadId);
+
+                connection.query(sql ,function(err, rows){
+                    connection.release();
+                    if (!rows){
+                        rows = [];
+                    }
+                    callback(err, rows);
+                });
+            });
+        };
+
+        this.getAllChildOfCat(catId, callback1);
+    }
+
+    findHotArticle(catId, callback){
+        console.log("------in findHotArticle---catId : " + catId);
+        var listCat = [];
+        var catIdStr = "";
+        var callback1 =(err,all) => {
+            if(err){
+                console.log("Problem with MySQL"+err);
+            } else{
+                console.log("-----getAllChildOfCat--success");
+                console.log("size:" + all.length);
+                for (var i = 0; i < all.length; i++) {
+
+                    if((listCat.indexOf(all[i].lev1) == -1) && (all[i].lev1 != null))
+                        listCat.push(all[i].lev1);
+                    if((listCat.indexOf(all[i].lev2) == -1) && (all[i].lev2 != null))
+                        listCat.push(all[i].lev2);
+                    if((listCat.indexOf(all[i].lev3) == -1) && (all[i].lev3 != null))
+                        listCat.push(all[i].lev3);
+                    if((listCat.indexOf(all[i].lev4) == -1) && (all[i].lev4 != null))
+                        listCat.push(all[i].lev4);
+                }
+            }
+            if(listCat.length > 0){
+                for(var i=0; i<listCat.length; i++){
+                    catIdStr += listCat[i] + ",";
+                }
+            }
+            if(catIdStr.length > 1)
+                catIdStr = catIdStr.substring(0,catIdStr.length -1);
+
+            var sql = "SELECT * FROM reland.news_article where cat_id in (" + catIdStr + ") and is_hot = 1 order by rating_count desc limit 5";
+            console.log("findHotArticle--------sql: " + sql);
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    console.log(err);
+                    connection.release();
+                    return;
+                }
+
+                console.log('connected as id ' + connection.threadId);
+
+                connection.query(sql ,function(err, rows){
+                    connection.release();
+                    if (!rows){
+                        rows = [];
+                    }
+                    callback(err, rows);
+                });
+            });
+        };
+
+        this.getAllChildOfCat(catId, callback1);
+    }
+
     findArticleDetail(articleId, callback){
-        var sql = "SELECT news.article_id, news.title, news.content_desc, news.posted_date, pg.page_id, pg.content_detail, pg.author "
-                + " FROM reland.news_article_page_content pg, reland.news_article news"
+        var sql = "SELECT cat.cat_name, news.article_id, news.title, news.content_desc, news.posted_date, pg.page_id, pg.content_detail, pg.author "
+                + " FROM reland.news_article_page_content pg, reland.news_article news, reland.news_article_category cat"
                 + " where pg.article_id = news.article_id"
+                + " and news.cat_id = cat.cat_id"
                 + " and news.article_id = " + articleId;
         console.log("findArticleDetail--------sql: " + sql);
 
@@ -221,6 +331,28 @@ class NewsModel {
                 if (!rows){
                     rows = [];
                 }
+                callback(err, rows);
+            });
+        });
+    }
+
+    increaseRating(rootCatId, articleId, callback){
+        var sql = "UPDATE reland.news_article "
+            + " SET rating_count = IFNULL(rating_count, 0) + 1"
+            + " where article_id = " + articleId;
+        console.log("findArticleDetail--------sql: " + sql);
+
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                connection.release();
+                return;
+            }
+
+            console.log('connected as id ' + connection.threadId);
+
+            connection.query(sql ,function(err, rows){
+                connection.release();
                 callback(err, rows);
             });
         });

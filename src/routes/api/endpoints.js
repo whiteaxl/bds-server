@@ -359,6 +359,7 @@ internals.endpoints = [
       }
     }
   },
+  //todo: can viet lai bang cach truyen list adsID, de bao mat thong tin
   {
     method: 'POST',
     path: '/api/user/getAdsLikes',
@@ -422,6 +423,33 @@ internals.endpoints = [
     handler: newsHandlers.findNews,
     config: {
       description: 'Lay danh sach tintuc',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/increaseRating',
+    handler: newsHandlers.increaseRating,
+    config: {
+      description: 'Lay danh sach tintuc',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findHightestArticle',
+    handler: newsHandlers.findHightestArticle,
+    config: {
+      description: 'Lay danh sach tintuc xem nhieu nhat',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findHotArticle',
+    handler: newsHandlers.findHotArticle,
+    config: {
+      description: 'Lay danh sach tintuc hot',
       tags: ['api']
     }
   },

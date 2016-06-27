@@ -25,7 +25,10 @@ class AdsModel {
     }
 
     upsert(adsDto) {
-        bucket.upsert(adsDto.adsID, adsDto, function (err, res) {
+        adsDto.id = adsDto.adsID;
+        adsDto.timeModified = new Date().getTime();
+
+        bucket.upsert(adsDto.id, adsDto, function (err, res) {
             if (err) {
                 console.log("ERROR:" + err);
             }
@@ -142,6 +145,7 @@ class AdsModel {
                 sql = `${sql} AND place.diaChinh.tinhKhongDau='${diaChinh.tinh}'`;
             }
 
+            //todo: need remove "Quan" "Huyen" in prefix
             if (diaChinh.huyen) {
                 sql = `${sql} AND place.diaChinh.huyenKhongDau='${diaChinh.huyen}'`;
             }

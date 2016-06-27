@@ -13,31 +13,6 @@ var internals = {};
 
 var cache = {};
 
-/**
- * request {
-  *     deviceID : "device-ID1"
-  * }
- */
-internals.create = function (req, reply) {
-  var query = req.payload;
-
-  var deviceID = query.deviceID;
-  var userDto = {
-    deviceID: deviceID
-  };
-  userService.upsert(userDto, (err, res) => {
-    if (err) {
-      console.log(err);
-      reply(Boom.internal("Error when call create user " + deviceID + ",err:") + err)
-    } else {
-      console.log(res);
-
-      reply(res);
-    }
-  });
-};
-
-
 internals.requestVerifyCode = function (req, reply) {
   console.log("Call requestVerifyCode:", req.payload);
   const phone = req.payload.phone;
@@ -194,23 +169,33 @@ internals.getAdsLikes = function (req, reply) {
   log.info("Call getAdsLikes:", req.payload);
   let userID = req.payload.userID;
 
-  userService.getAdsLikes(userID, (err, res) => {
-    if (!err) { //exists
-      console.log("Callback getAdsLikes", err, res);
-      let listAds = res.map(e => {
-        return convertAds(e);
-      });
-      reply({
-        data : listAds,
-        status : 0,
-      });
-    } else {
-      reply({
-        status : 99,
-        msg : err.msg
-      });
-    }
-  });
+  try {
+    userService.getAdsLikes(userID, (err, res) => {
+      if (!err) { //exists
+        console.log("Callback getAdsLikes", err, res);
+        let listAds = res.map(e => {
+          return convertAds(e);
+        });
+        reply({
+          data : listAds,
+          status : 0,
+        });
+      } else {
+        reply({
+          status : 99,
+          msg : err.msg
+        });
+      }
+    });
+  } catch (ex) {
+    log.error(ex);
+    reply({
+      status : 99,
+      msg : ex.toString()
+    });
+  }
+
+
 };
 
 
