@@ -79,43 +79,13 @@
                             <div class="block-20">
                                 <h3 class="head"><span>Tin khác</span></h3>
                                 <div class="row">
-                                    <div class="col col-25">
+                                    <div class="col col-25" ng-repeat="item in listArticle">
                                         <div class="item">
-                                            <a href="" title="" class="media">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</span>
+                                            <a class="media" href="" title="" ng-click="nc.goDetail(item.articleId)">
+                                                <span class="img" style="background-image: url({{item.avatarImage}})" ng-bind-html="item.title"></span>
                                             </a>
                                             <h3>
-                                                <a href="" title="">Sắp mở bán giai đoạn 2 dự án Cát Tường Phú Nguyên Residence</a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="col col-25">
-                                        <div class="item">
-                                            <a href="" title="" class="media">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Cơ hội đầu tư biệt thự, căn hộ nghỉ dưỡng cùng Vingroup</span>
-                                            </a>
-                                            <h3>
-                                                <a href="" title="">Cơ hội đầu tư biệt thự, căn hộ nghỉ dưỡng cùng Vingroup</a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="col col-25">
-                                        <div class="item">
-                                            <a href="" title="" class="media">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</span>
-                                            </a>
-                                            <h3>
-                                                <a href="" title="">Vingroup chi 5.700 tỷ đồng mua một công ty bất động sản</a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="col col-25">
-                                        <div class="item">
-                                            <a href="" title="" class="media">
-                                                <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</span>
-                                            </a>
-                                            <h3>
-                                                <a href="" title="">Săn nhà phố mặt tiền cho thuê tại Sài Gòn</a>
+                                                <a href="" title="" ng-bind-html="item.title"></a>
                                             </h3>
                                         </div>
                                     </div>

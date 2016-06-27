@@ -145,7 +145,7 @@ internals.findNewsDetail = function(req, reply) {
             if(all.length > 0){
                     result = (_transformNewsDetail(all[0]));
             }
-            console.log(result);
+            //console.log(result);
             reply({
                 article: result
             });

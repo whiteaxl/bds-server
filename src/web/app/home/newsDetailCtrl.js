@@ -24,6 +24,25 @@
                 console.log("------NewsService.increaseRating-----");
             });
 
+            vm.searchData = {
+                "catId": $scope.rootCatId,
+                "pageNo": 1,
+                "pageSize": 4
+            };
+
+            NewsService.findNews(vm.searchData).then(function(res){
+                console.log(res.data.list);
+                if(res.data.list){
+                    if(res.data.length > 0){
+                        $scope.listArticle = [];
+                        for (var i = 0; i < res.data.length; i++) {
+                            $scope.listArticle.push(res.data.list[i]);
+                        }
+                    }
+                }
+                console.log("NewsService.findNews finished ");
+            });
+
             NewsService.findNewsDetail(data).then(function (res) {
                 console.log("------newsDetailCtrl.findNewsDetail-----");
                 if (res.data.article) {
