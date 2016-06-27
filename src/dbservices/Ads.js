@@ -145,6 +145,7 @@ class AdsModel {
                 sql = `${sql} AND place.diaChinh.tinhKhongDau='${diaChinh.tinh}'`;
             }
 
+            //todo: need remove "Quan" "Huyen" in prefix
             if (diaChinh.huyen) {
                 sql = `${sql} AND place.diaChinh.huyenKhongDau='${diaChinh.huyen}'`;
             }

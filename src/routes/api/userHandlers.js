@@ -169,23 +169,33 @@ internals.getAdsLikes = function (req, reply) {
   log.info("Call getAdsLikes:", req.payload);
   let userID = req.payload.userID;
 
-  userService.getAdsLikes(userID, (err, res) => {
-    if (!err) { //exists
-      console.log("Callback getAdsLikes", err, res);
-      let listAds = res.map(e => {
-        return convertAds(e);
-      });
-      reply({
-        data : listAds,
-        status : 0,
-      });
-    } else {
-      reply({
-        status : 99,
-        msg : err.msg
-      });
-    }
-  });
+  try {
+    userService.getAdsLikes(userID, (err, res) => {
+      if (!err) { //exists
+        console.log("Callback getAdsLikes", err, res);
+        let listAds = res.map(e => {
+          return convertAds(e);
+        });
+        reply({
+          data : listAds,
+          status : 0,
+        });
+      } else {
+        reply({
+          status : 99,
+          msg : err.msg
+        });
+      }
+    });
+  } catch (ex) {
+    log.error(ex);
+    reply({
+      status : 99,
+      msg : ex.toString()
+    });
+  }
+
+
 };
 
 

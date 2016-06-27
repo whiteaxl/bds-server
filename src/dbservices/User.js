@@ -67,7 +67,7 @@ class UserModel {
 
     var query = N1qlQuery.fromString(sql);
     this.initBucket();
-    console.log("getAdsLikes");
+    console.log("getAdsLikes, sql=", sql);
     bucket.query(query, (err, res) => {
       if (err) {
         callback(err, res);
