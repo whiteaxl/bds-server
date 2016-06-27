@@ -12,8 +12,8 @@ var connection = mysql.createConnection({
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'root',
-    password : '123456',
+    user     : 'reland',
+    password : 'Zi3Iyh0xSxPztlET',
     database : 'reland',
     debug    :  false
 });
