@@ -139,6 +139,16 @@ util.convertFormatDate= function(ngayDangTin) {
 
 };
 
+util.convertFormatDatetoYYYYMMDD= function(ngayDangTin) {
+    var bdsComDateFormat = 'DD/MM/YYYY';
+    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
+        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
+        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+    }
+
+};
+
+
 util.isEmail = function(str) {
   return str && (str.indexOf('@') > -1);
 };

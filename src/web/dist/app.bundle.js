@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c345b0c7faa342181816"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7c57fdf907dc3ee8da39"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18307,7 +18307,14 @@
 				vm.viewMode = "map";
 				$scope.bodyClass = "page-search";
 			}
+			vm.blankName = false;
 			vm.saveSearch = function(){
+
+				if(!vm.saveSearchName){
+					vm.blankName = true;
+					return;
+				}
+
 				
 				if(!$rootScope.userID){
 					$scope.$bus.publish({
@@ -18319,11 +18326,17 @@
 				}
 				var data = {
 					query: vm.searchData,
-					userID: $rootScope.userID
+					userID: $rootScope.userID,
+					saveSearchName: vm.saveSearchName
 				};
 
 				HouseService.saveSearch(data).then(function(res){				
-					alert(res.data.msg);
+					//alert(res.data.msg);
+					if(res.data.success){
+						vm.blankName = false;
+						vm.saveSearchName = '';					
+						vm.nameSaveSearch = false;
+					}
 				})
 			}
 
@@ -19054,7 +19067,7 @@
 			$scope.chat_visible = true;
 			$scope.$on('$viewContentLoaded', function(){
 				$timeout(function() {
-					window.DesignCommon.adjustPage();
+					window.DesignCommon.adjustPage();				
 				},0);
 				if($state.current.data){
 					$rootScope.bodyClass = "page-detail";
@@ -19099,7 +19112,7 @@
 				$scope.$bus.publish({
 	              channel: 'chat',
 	              topic: 'new user',
-	              data: {userID: user.userID,name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
+	              data: {userID: user.userID,avatar: user.avatar, name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
 		        });
 			};
 			vm.likeAds = function(adsID){
@@ -19152,9 +19165,33 @@
 				vm.phone="";
 				vm.email="";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+				vm.requestInfoClass = "btn-submit";
+				vm.clearInfoRequest = function(){
+					vm.name ="";
+					vm.phone="";
+					vm.email="";
+					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+				}
 
 				vm.requestInfo = function(){
 					if($('#form-info-request').valid()){
+						vm.requestInfoClass = 'btn-submit-disabled';
+						HouseService.requestInfo({
+							name: vm.name,
+							phone: vm.phone,
+							email: vm.email,
+							content: vm.content,
+							adsUrl: window.location.href
+						}).then(function(res){
+							console.log(JSON.stringify(res.data));						
+							vm.requestInfoClass = 'btn-submit';
+							vm.clearInfoRequest();
+						});
+					}				
+				}
+				vm.requestInfoPopup = function(){
+					if($('#form-info-request-popup').valid()){
+						vm.requestInfoClass = 'btn-submit-disabled';
 						HouseService.requestInfo({
 							name: vm.name,
 							phone: vm.phone,
@@ -19163,10 +19200,12 @@
 							adsUrl: window.location.href
 						}).then(function(res){
 							console.log(JSON.stringify(res.data));
-							alert(res.data.msg);
+							vm.requestInfoClass = 'btn-submit';
+							vm.clearInfoRequest();
 						});
-					}				
+					}		
 				}
+
 
 				vm.goDetail = function(adsID){
 	        		$state.go('detail', { "adsID" : adsID}, {location: true});
@@ -19281,28 +19320,25 @@
 
 	        	});
 	        	
-
-	        	var formRequest = $('#form-info-request');
-	            formRequest.validate({
-	              rules: {
-	                email: {
-	                  	email: true,
-	                  	required: function(element) {
-	            			return $("#form-info-request [name = 'phone']").val()=='';
-	        			}
-	                },
-	                name:{
-	                	required: true,
-	                },
-	                phone: {
-	                	number: true,
-	                	minlength: 9,
-	                	required: function(element) {
-	            			return $("#form-info-request [name = 'email']").val()=='';
-	        			}
-	                }
-	              },
-	              messages: {
+	        	var infoRequestRules = {
+		            email: {
+		              	email: true,
+		              	required: function(element) {
+		        			return $("#form-info-request [name = 'phone']").val()=='';
+		    			}
+		            },
+		            name:{
+		            	required: true,
+		            },
+		            phone: {
+		            	number: true,
+		            	minlength: 9,
+		            	required: function(element) {
+		        			return $("#form-info-request [name = 'email']").val()=='';
+		    			}
+		            }
+		        };
+		        var infoRequestMessages = {
 	                email: {
 	                  required: "Nhập số điện thoại hoặc email",
 	                  email: 'Email không hợp lệ'
@@ -19315,13 +19351,72 @@
 	                name: {
 	                  required: 'Xin nhập họ tên'
 	                }
-	              }
-	            });    
+	            };
+
+	        	var formRequest = $('#form-info-request');
+	            formRequest.validate({
+	              rules: infoRequestRules,
+	              messages: infoRequestMessages
+	            });  
+	            formRequest = $('#form-info-request-popup');
+	            formRequest.validate({
+	              rules: infoRequestRules,
+	              messages: infoRequestMessages
+	            });      
 			}
 
 			vm.init();
 
+			vm.showPopupImage = function(e){
+				e.preventDefault();
+	            $('#box-popup').fadeIn(500, function(){
+	                $('#total').html(vm.getSlider().getSlideCount());
+	                vm.getSlider().reloadSlider();
+	                vm.getSlider().goToSlide(0);
+	            })
+			}
+			vm.hidePopup = function(e){
+				e.preventDefault();            
+	            $('#box-popup').fadeOut(500, function(){
+	                vm.getSlider().destroySlider();
+	            })
+			}
+			vm.showPopupRequestForm = true;
+			vm.toggleContactPopup = function(e){
+				e.preventDefault();
+	            var target = $(e.target).attr('href'),
+	                text = $(e.target).text(),
+	                change = $(e.target).data('toggle-text');
+	            $('#box-popup').toggleClass('open');
+	            vm.showPopupRequestForm = !vm.showPopupRequestForm;
+	            //$(this).data('toggle-text', text).html('<i class="fa fa-angle-right"></i> ' + change).attr('title', change);
+	            vm.getSlider().reloadSlider();
+			}
 
+			vm.getSlider = function(){
+	            if(vm.slider)
+	                return vm.slider;
+	            var slider_popup = $('#slider-popup');
+	            vm.slider = slider_popup.bxSlider({
+	                //mode: 'fade',
+	                preloadImages: 'visible',
+	                auto: false,
+	                speed: 1000,
+	                autoHover: true,
+	                pause: 5000,
+	                pager: false,
+	                minSlides: 1,
+	                maxSlides: 1,
+	                controls: true,
+	                onSliderLoad: function(currentIndex){
+	                    $('#count').html(currentIndex + 1);
+	                },
+	                onSlideAfter: function($slideElement, oldIndex, newIndex){
+	                    $('#count').html(newIndex + 1);
+	                }
+	            });
+	            return vm.slider;
+	        }
 
 		});
 
@@ -19540,7 +19635,7 @@
 		            console.log('Error status: ' + resp.status);
 		        }, function (evt) {
 		            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-		            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+		            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
 		        });	        
 			}
 
@@ -19786,6 +19881,7 @@
 	                          $localStorage.relandToken = res.data.token;
 	                          $rootScope.userName = res.data.userName;
 	                          $rootScope.userID = res.data.userID;
+	                          $rootScope.userAvatar = res.data.avatar;
 	                          //hung dummy here to set userID to email so we can test chat
 	                          //$rootScope.userID = res.data.email;
 	                          $rootScope.userEmail = res.data.email;
@@ -19793,7 +19889,7 @@
 	                          vm.state = vm.LOGGED_IN;
 	                          vm.userExist = false;
 	                          vm.password = "";
-	                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+	                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
 	                            console.log("register socket user " + $rootScope.userName);
 	                          });
 	                          $('#box-login').hide();
@@ -19827,6 +19923,7 @@
 	                        $localStorage.relandToken = res.data.token;
 	                        $rootScope.userName = res.data.userName;
 	                        $rootScope.userID = res.data.userID;
+	                        $rootScope.userAvatar = res.data.avatar;
 	                        //hung dummy here to set userID to email so we can test chat
 	                        //$rootScope.userID = res.data.email;
 	                        $rootScope.userEmail = res.data.email;
@@ -19834,7 +19931,7 @@
 	                        vm.state = vm.LOGGED_IN;
 	                        vm.userExist = false;
 	                        vm.password = "";
-	                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+	                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
 	                          console.log("register socket user " + $rootScope.userName);
 	                        });
 	                        $('#box-login').hide();
@@ -20035,6 +20132,7 @@
 		$scope.getMessage = function(){
 			return {
 				fromUserID: $rootScope.userID
+				, fromUserAvatar: $rootScope.userAvatar
 				, toUserID: $scope.chatbox.user.userID
 				, toFullName: $scope.chatbox.user.name
 				, fromFullName: $rootScope.userName
@@ -21163,6 +21261,16 @@
 	    }
 
 	};
+
+	util.convertFormatDatetoYYYYMMDD= function(ngayDangTin) {
+	    var bdsComDateFormat = 'DD/MM/YYYY';
+	    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
+	        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
+	        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+	    }
+
+	};
+
 
 	util.isEmail = function(str) {
 	  return str && (str.indexOf('@') > -1);

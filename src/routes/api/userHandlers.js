@@ -5,7 +5,7 @@ var Boom = require('boom');
 var moment = require('moment');
 var log = require("../../lib/logUtil");
 var constant = require("../../lib/constant");
-
+var util = require("../../lib/utils");
 
 var userService = new User();
 
@@ -146,8 +146,71 @@ internals.updateDevice = function (req, reply) {
       });
     }
   });
+};
+
+function convertAds(ads) {
+  //images:
+  var targetSize = "745x510"; //350x280
+
+  let tmp = {
+    adsID : ads.adsID,
+    gia : ads.gia,
+    giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
+    dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
+    soPhongNgu: ads.soPhongNgu,
+    soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
+    soTang: ads.soTang,
+    soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+    image : {
+      cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize):null,
+      images : ads.image.images ? ads.image.images.map((e) => {
+        return e.replace("80x60", targetSize);
+      }) : null
+    },
+    diaChi : ads.place.diaChi,
+    ngayDangTin : ads.ngayDangTin,
+    giaM2 : ads.giaM2,
+    loaiNhaDat: ads.loaiNhaDat,
+    loaiTin: ads.loaiTin,
+    huongNha: ads.huongNha
+  };
 
 
+
+  if (tmp.chiTiet) {
+    var idx = val.chiTiet.indexOf("Tìm kiếm theo từ khóa");
+    tmp.chiTiet =  tmp.chiTiet.substring(0, idx);
+  }
+
+  if (tmp.ngayDangTin) {
+    var ngayDangTinDate= moment(tmp.ngayDangTin, constant.FORMAT.DATE_IN_DB);
+    tmp.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
+  }
+
+  return tmp;
+}
+
+internals.getAdsLikes = function (req, reply) {
+  log.info("Call getAdsLikes:", req.payload);
+  let userID = req.payload.userID;
+
+  userService.getAdsLikes(userID, (err, res) => {
+    if (!err) { //exists
+      console.log("Callback getAdsLikes", err, res);
+      let listAds = res.map(e => {
+        return convertAds(e);
+      });
+      reply({
+        data : listAds,
+        status : 0,
+      });
+    } else {
+      reply({
+        status : 99,
+        msg : err.msg
+      });
+    }
+  });
 };
 
 

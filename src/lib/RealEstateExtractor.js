@@ -279,6 +279,7 @@ class RealEstateExtractor {
 				setHuongNha(ads, url); //base on url
 
 				ads.adsID = "Ads_bds_" + ads.maSo;
+				ads.source = "BATDONGSAN.COM.VN";
 
 				if(ads.duAnID){
 					ads.duAnID  = "DA_" + (ads.duAnID).replace("/","");

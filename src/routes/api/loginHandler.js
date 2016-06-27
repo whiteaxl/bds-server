@@ -79,6 +79,7 @@ internals.login = function(req, reply){
         			result.userName = res[0].name;
         			result.userID = res[0].id;
                     result.email = res[0].email;
+                    result.avatar = res[0].avatar;
                 }else{
                 	result.message = "Mật khẩu không đúng ";
                 }

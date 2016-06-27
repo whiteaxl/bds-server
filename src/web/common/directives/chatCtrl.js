@@ -39,6 +39,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	$scope.getMessage = function(){
 		return {
 			fromUserID: $rootScope.userID
+			, fromUserAvatar: $rootScope.userAvatar
 			, toUserID: $scope.chatbox.user.userID
 			, toFullName: $scope.chatbox.user.name
 			, fromFullName: $rootScope.userName
