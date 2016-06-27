@@ -428,6 +428,33 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/increaseRating',
+    handler: newsHandlers.increaseRating,
+    config: {
+      description: 'Lay danh sach tintuc',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findHightestArticle',
+    handler: newsHandlers.findHightestArticle,
+    config: {
+      description: 'Lay danh sach tintuc xem nhieu nhat',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findHotArticle',
+    handler: newsHandlers.findHotArticle,
+    config: {
+      description: 'Lay danh sach tintuc hot',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/findNewsDetail',
     handler: newsHandlers.findNewsDetail,
     config: {

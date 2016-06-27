@@ -10,8 +10,20 @@
                 var url = '/api/findNews';
                 return $http.post(url,data);
             },
+            findHotArticle: function(data){
+                var url = '/api/findHotArticle';
+                return $http.post(url,data);
+            },
+            findHightestArticle: function(data){
+                var url = '/api/findHightestArticle';
+                return $http.post(url,data);
+            },
             findNewsDetail: function(data){
                 var url = '/api/findNewsDetail';
+                return $http.post(url,data);
+            },
+            increaseRating: function(data){
+                var url = '/api/increaseRating';
                 return $http.post(url,data);
             },
             findRootCategory: function(data){
