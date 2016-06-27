@@ -20,7 +20,9 @@
 						{{msg.dateDisplay}}
 					</div>			
 					
-					<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
+					<!-- <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32"> -->
+					<img src="{{msg.fromUserAvatar}}" width="32" height="32">
+
 
 					<div  class="chat-message-content clearfix">
 						
@@ -65,7 +67,7 @@
 				<input type="text" ng-model="chat.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Type your message…">
 				<div class="chat-file-upload" ngf-select="uploadFiles($files)" multiple accept="image/*" >
 					<img src="asset/img/chat-attach-icon.png" style="width: 32px; height: 32px;"></img>
-				</div>
+				</div>				
 			</form>
 
 		</div> <!-- end chat -->

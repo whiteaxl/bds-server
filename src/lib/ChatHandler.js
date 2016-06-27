@@ -18,6 +18,9 @@ var ios = undefined;
 var ChatModel = require("../dbservices/Chat");
 var chatModel = new ChatModel();
 
+var UserModel = require("../dbservices/User");
+var userModel = new UserModel();
+
 ChatHandler.addUser = function(user){
 	online_users[user.userID];
   
@@ -92,12 +95,42 @@ ChatHandler.init = function(server){
 
   // sending new message
   socket.on('send-message', function(data, callback){
-  	console.log("receive message "+ JSON.stringify(data));    
-    var sendMsgResult = processSendMsg(data);
-    data.read = !sendMsgResult.offline;
-    chatModel.saveChat(data,function(){
-      callback(sendMsgResult);  
-    });
+  	console.log("receive message "+ JSON.stringify(data));   
+    var async = require("async");
+    var updateUserID = function(data,callback){
+      if(data.toUserID.indexOf("@")==-1){
+        callback(null,data)
+        return;
+      }
+      userModel.getUser({email:data.toUserID}, (err, res) => {
+        if (err) {
+          callback(err, data)
+        } else {
+          //console.log(res);
+          if (res.length > 0) { //exists
+            data.toUserID = res[0].id;
+            callback(null,data);
+          } else {
+            callback(null,data)
+          }
+        }
+      });      
+    }
+    var pMessage = function(data,callback){
+      var sendMsgResult = processSendMsg(data)
+      data.read = !sendMsgResult;
+      callback(null,data);
+    } 
+    var fn = async.compose(pMessage, updateUserID);
+    fn(data,function(err,result){
+      console.log(JSON.stringify(result));
+      chatModel.saveChat(result,function(){
+        callback({success: true, offline: result.read});  
+      });
+    })
+
+    //var sendMsgResult = processSendMsg(data);
+    
   });
   
   // disconnect user handling 

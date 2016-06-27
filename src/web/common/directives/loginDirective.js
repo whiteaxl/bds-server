@@ -113,14 +113,15 @@ angular.module('bds')
                           $localStorage.relandToken = res.data.token;
                           $rootScope.userName = res.data.userName;
                           $rootScope.userID = res.data.userID;
+                          $rootScope.userAvatar = res.data.avatar;
                           //hung dummy here to set userID to email so we can test chat
-                          $rootScope.userID = res.data.email;
+                          //$rootScope.userID = res.data.email;
                           $rootScope.userEmail = res.data.email;
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
                           vm.userExist = false;
                           vm.password = "";
-                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
                             console.log("register socket user " + $rootScope.userName);
                           });
                           $('#box-login').hide();
@@ -154,14 +155,15 @@ angular.module('bds')
                         $localStorage.relandToken = res.data.token;
                         $rootScope.userName = res.data.userName;
                         $rootScope.userID = res.data.userID;
+                        $rootScope.userAvatar = res.data.avatar;
                         //hung dummy here to set userID to email so we can test chat
-                        $rootScope.userID = res.data.email;
+                        //$rootScope.userID = res.data.email;
                         $rootScope.userEmail = res.data.email;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;
                         vm.password = "";
-                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
                           console.log("register socket user " + $rootScope.userName);
                         });
                         $('#box-login').hide();

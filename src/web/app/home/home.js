@@ -9,7 +9,7 @@
   });
 
 
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','ngSanitize','angular-jwt'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt'])
   .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
@@ -307,6 +307,14 @@
         templateUrl: "/web/index_content.html",
         controller: "MainCtrl",
         controllerAs: 'mc',
+        data: {
+            bodyClass: "page-detail"
+        }
+      }).state('profile', {
+        url: "/profile/:userID",
+        templateUrl: "/web/profile.tpl.html",
+        controller: "ProfileCtrl",
+        controllerAs: 'pc',
         data: {
             bodyClass: "page-detail"
         }

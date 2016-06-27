@@ -79,6 +79,7 @@ internals.login = function(req, reply){
         			result.userName = res[0].name;
         			result.userID = res[0].id;
                     result.email = res[0].email;
+                    result.avatar = res[0].avatar;
                 }else{
                 	result.message = "Mật khẩu không đúng ";
                 }
@@ -216,6 +217,80 @@ internals.resetPassword = function(req,reply){
     //var pass = mydecoded.payload.pass;
     
     userService.resetPassword({"userID": userID, "pass": pass}, reply)
+}
+
+/**
+
+This function get the user by userID 
+*/
+
+internals.profile = function(req,reply){
+    var result = {
+        success: false,
+        user: undefined
+    }
+    var userID = req.payload.userID;
+    console.log("get profile for " + userID);
+    userService.getUserByID(userID,function(err,res){
+        console.log(JSON.stringify(res));
+        if(res && res.length>0){
+            result.success = true;
+            result.user = res[0];
+            reply(result);
+        }else{
+            reply(result);
+        }
+
+    })
+}
+
+/**
+
+This function update user profile
+Request:{
+    newPass,
+    email,
+    phone,
+    fullName,
+    diaChi,
+    userID
+}
+*/
+
+internals.updateProfile = function(req,reply){
+    var result = {
+        success: false,
+        msg: ""
+    }
+    console.log("update profile " + JSON.stringify(req.payload));
+    var userID = req.payload.userID;
+
+    userService.getUserByID(userID,function(err,res){
+        console.log(JSON.stringify(res));
+        if(res && res.length>0){
+            var user = res[0];
+            user.userID = user.id;
+            user.fullName = req.payload.fullName;
+            user.email = req.payload.email;
+            user.phone = req.payload.phone;
+            user.diaChi = req.payload.diaChi;
+            user.avatar = req.payload.avatar;
+            if(req.payload.newPass)
+                user.matKhau = req.payload.newPass;
+
+            userService.upsert(user,function(uerr,ures){
+                if(uerr){
+                    result.msg = uerr;
+                }else{
+                    result.success = true;
+                }
+                reply(result);
+            });
+        }else{
+            reply(result);
+        }
+
+    })
 }
 
 module.exports = internals;

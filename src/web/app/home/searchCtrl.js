@@ -124,7 +124,14 @@
 			vm.viewMode = "map";
 			$scope.bodyClass = "page-search";
 		}
+		vm.blankName = false;
 		vm.saveSearch = function(){
+
+			if(!vm.saveSearchName){
+				vm.blankName = true;
+				return;
+			}
+
 			
 			if(!$rootScope.userID){
 				$scope.$bus.publish({
@@ -136,11 +143,17 @@
 			}
 			var data = {
 				query: vm.searchData,
-				userID: $rootScope.userID
+				userID: $rootScope.userID,
+				saveSearchName: vm.saveSearchName
 			};
 
 			HouseService.saveSearch(data).then(function(res){				
-				alert(res.data.msg);
+				//alert(res.data.msg);
+				if(res.data.success){
+					vm.blankName = false;
+					vm.saveSearchName = '';					
+					vm.nameSaveSearch = false;
+				}
 			})
 		}
 

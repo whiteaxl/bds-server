@@ -6,12 +6,12 @@ angular.module('bds')
       scope: {},
         templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
         replace: 'true',
-        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-        function(socket,$scope, $rootScope, $http, $window,$localStorage, HouseService) {
+        controller: ['socket','$scope','$state','$rootScope', '$http', '$window','$localStorage','HouseService',
+        function(socket,$scope, $state, $rootScope, $http, $window,$localStorage, HouseService) {
           $scope.loginError = false;
           var vm = this;
           vm.profile = function() {
-            alert("todo");
+            $state.go('profile', { userID: $rootScope.userID}, {location: true});
           }
           vm.signout = function(){
           	$localStorage.relandToken = undefined;

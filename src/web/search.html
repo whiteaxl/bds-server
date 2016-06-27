@@ -55,15 +55,26 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col w-120">
+                            <div class="col w-153">
                                 <div class="handle">
                                     <a href="#filter" data-toggle-text="Bộ lọc thu gọn" data-action="more">Bộ lọc nâng cao</a>
                                 </div>
                             </div>
                             <div class="col w-160">
-                                <button class="btn-find" data-find="true" ng-click="mc.saveSearch();">
+                                <button class="btn-find" data-find="true" ng-click="mc.nameSaveSearch = true">
                                     <i class="fa fa-star"></i> <span class="text">Lưu tìm kiếm</span>
                                 </button>
+                                <div id="saved" ng-if="mc.nameSaveSearch" class="saved">
+                                    <button class="close" ng-click="mc.nameSaveSearch = false"><i class="fa fa-times"></i></button>
+                                    <h6 class="head">Tên tìm kiếm</h6>
+                                    <div class="control" style="padding: 2px;">
+                                        <input class="form-control" type="text" name="search_name" placeholder="Tên tìm kiếm của bạn" ng-model="mc.saveSearchName"/><br>
+                                        <label ng-if="mc.blankName == true" style="color: red;">Xin nhập tên</label>
+                                    </div>
+                                    <div class="action">
+                                        <button class="btn-update" ng-click="mc.saveSearch();">Cập nhật tên</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

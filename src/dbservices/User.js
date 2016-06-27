@@ -58,7 +58,7 @@ class UserModel {
 
     var query = N1qlQuery.fromString(sql);
     this.initBucket();
-    console.log("getUserByID");
+    console.log("getUserByID: " + sql);
     bucket.query(query, callback);
   }
 
@@ -229,11 +229,13 @@ class UserModel {
     });
   }
 
-  upsert(userDto) {
+  upsert(userDto,callback) {
     bucket.upsert(userDto.userID, userDto, function (err, res) {
         if (err) {
             console.log("ERROR:" + err);
         }
+        if(callback)
+          callback(err,res);
     })
   }
 
@@ -246,7 +248,7 @@ class UserModel {
   }
   */
 
-  saveSearch(query,userID,onSuccess){
+  saveSearch(data,userID,onSuccess){
 
     this.getUserByID(userID, (err,res) => {
       if (err) {
@@ -257,11 +259,11 @@ class UserModel {
           var user = res[0];
           console.log(user);
 
-          if(this._checkSaveSearchExist(query,user)==true){
-            onSuccess({success: false,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH});
+          if(this._checkSaveSearchExist(data,user)==true){
+            onSuccess({success: true,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH});
           }else{
-            console.log("going to push query " + JSON.stringify(query));
-            user.saveSearch.push(query);
+            console.log("going to push query " + JSON.stringify(data));            
+            user.saveSearch.push(data);
             bucket.upsert(user.id, user, function (err, res) {
               if (err) {
                   console.log("ERROR:" + err);

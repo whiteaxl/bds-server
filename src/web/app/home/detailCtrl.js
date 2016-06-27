@@ -7,7 +7,7 @@
 		$scope.chat_visible = true;
 		$scope.$on('$viewContentLoaded', function(){
 			$timeout(function() {
-				window.DesignCommon.adjustPage();
+				window.DesignCommon.adjustPage();				
 			},0);
 			if($state.current.data){
 				$rootScope.bodyClass = "page-detail";
@@ -52,7 +52,7 @@
 			$scope.$bus.publish({
               channel: 'chat',
               topic: 'new user',
-              data: {userID: user.userID,name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
+              data: {userID: user.userID,avatar: user.avatar, name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
 	        });
 		};
 		vm.likeAds = function(adsID){
@@ -82,6 +82,8 @@
 			vm.marker.content = vm.ads.giaFmt;
 			// vm.diaChinh = vm.ads.place.diaChinh;
 			$scope.email = vm.ads.dangBoi.email;
+			vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
+			vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 			vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
 			// vm.diaChinh = {
 			// 	tinh:vm.ads.place.diaChinh.tinh,
@@ -103,9 +105,33 @@
 			vm.phone="";
 			vm.email="";
 			vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+			vm.requestInfoClass = "btn-submit";
+			vm.clearInfoRequest = function(){
+				vm.name ="";
+				vm.phone="";
+				vm.email="";
+				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+			}
 
 			vm.requestInfo = function(){
 				if($('#form-info-request').valid()){
+					vm.requestInfoClass = 'btn-submit-disabled';
+					HouseService.requestInfo({
+						name: vm.name,
+						phone: vm.phone,
+						email: vm.email,
+						content: vm.content,
+						adsUrl: window.location.href
+					}).then(function(res){
+						console.log(JSON.stringify(res.data));						
+						vm.requestInfoClass = 'btn-submit';
+						vm.clearInfoRequest();
+					});
+				}				
+			}
+			vm.requestInfoPopup = function(){
+				if($('#form-info-request-popup').valid()){
+					vm.requestInfoClass = 'btn-submit-disabled';
 					HouseService.requestInfo({
 						name: vm.name,
 						phone: vm.phone,
@@ -114,10 +140,12 @@
 						adsUrl: window.location.href
 					}).then(function(res){
 						console.log(JSON.stringify(res.data));
-						alert(res.data.msg);
+						vm.requestInfoClass = 'btn-submit';
+						vm.clearInfoRequest();
 					});
-				}				
+				}		
 			}
+
 
 			vm.goDetail = function(adsID){
         		$state.go('detail', { "adsID" : adsID}, {location: true});
@@ -232,28 +260,25 @@
 
         	});
         	
-
-        	var formRequest = $('#form-info-request');
-            formRequest.validate({
-              rules: {
-                email: {
-                  	email: true,
-                  	required: function(element) {
-            			return $("#form-info-request [name = 'phone']").val()=='';
-        			}
-                },
-                name:{
-                	required: true,
-                },
-                phone: {
-                	number: true,
-                	minlength: 9,
-                	required: function(element) {
-            			return $("#form-info-request [name = 'email']").val()=='';
-        			}
-                }
-              },
-              messages: {
+        	var infoRequestRules = {
+	            email: {
+	              	email: true,
+	              	required: function(element) {
+	        			return $("#form-info-request [name = 'phone']").val()=='';
+	    			}
+	            },
+	            name:{
+	            	required: true,
+	            },
+	            phone: {
+	            	number: true,
+	            	minlength: 9,
+	            	required: function(element) {
+	        			return $("#form-info-request [name = 'email']").val()=='';
+	    			}
+	            }
+	        };
+	        var infoRequestMessages = {
                 email: {
                   required: "Nhập số điện thoại hoặc email",
                   email: 'Email không hợp lệ'
@@ -266,13 +291,72 @@
                 name: {
                   required: 'Xin nhập họ tên'
                 }
-              }
-            });    
+            };
+
+        	var formRequest = $('#form-info-request');
+            formRequest.validate({
+              rules: infoRequestRules,
+              messages: infoRequestMessages
+            });  
+            formRequest = $('#form-info-request-popup');
+            formRequest.validate({
+              rules: infoRequestRules,
+              messages: infoRequestMessages
+            });      
 		}
 
 		vm.init();
 
+		vm.showPopupImage = function(e){
+			e.preventDefault();
+            $('#box-popup').fadeIn(500, function(){
+                $('#total').html(vm.getSlider().getSlideCount());
+                vm.getSlider().reloadSlider();
+                vm.getSlider().goToSlide(0);
+            })
+		}
+		vm.hidePopup = function(e){
+			e.preventDefault();            
+            $('#box-popup').fadeOut(500, function(){
+                vm.getSlider().destroySlider();
+            })
+		}
+		vm.showPopupRequestForm = true;
+		vm.toggleContactPopup = function(e){
+			e.preventDefault();
+            var target = $(e.target).attr('href'),
+                text = $(e.target).text(),
+                change = $(e.target).data('toggle-text');
+            $('#box-popup').toggleClass('open');
+            vm.showPopupRequestForm = !vm.showPopupRequestForm;
+            //$(this).data('toggle-text', text).html('<i class="fa fa-angle-right"></i> ' + change).attr('title', change);
+            vm.getSlider().reloadSlider();
+		}
 
+		vm.getSlider = function(){
+            if(vm.slider)
+                return vm.slider;
+            var slider_popup = $('#slider-popup');
+            vm.slider = slider_popup.bxSlider({
+                //mode: 'fade',
+                preloadImages: 'visible',
+                auto: false,
+                speed: 1000,
+                autoHover: true,
+                pause: 5000,
+                pager: false,
+                minSlides: 1,
+                maxSlides: 1,
+                controls: true,
+                onSliderLoad: function(currentIndex){
+                    $('#count').html(currentIndex + 1);
+                },
+                onSlideAfter: function($slideElement, oldIndex, newIndex){
+                    $('#count').html(newIndex + 1);
+                }
+            });
+            return vm.slider;
+        }
 
 	});
 

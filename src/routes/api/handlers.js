@@ -378,10 +378,14 @@ function _transformDetailAds(adsFromDb) {
 
 internals.saveSearch = function(req, reply){
     var query = req.payload.query;
-    var userID = req.payload.userID;
-    userID = "User_6";
+    var userID = req.payload.userID;    
+    var name = req.payload.saveSearchName;
     console.log("payload is" + JSON.stringify(req.payload));
-    userService.saveSearch(query,userID,function(res){
+    var data = {
+        name: name,
+        query: query
+    }
+    userService.saveSearch(data,userID,function(res){
         reply( JSON.stringify(res));    
     });
     

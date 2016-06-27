@@ -1,0 +1,318 @@
+<div class="wrapper" id="wrapper">
+        <div class="main" id="main">
+            <bds-header menuitems="$root.menuitems"></bds-header>                
+            <section class="box-profile">
+                <div class="col-left">
+                    <div class="profile">
+                        <div class="avatar">
+                            <img src="asset/img/data/img-avatar.jpg" width="256" height="256" alt=""/>
+                        </div>
+                        <div class="name">Tiến Chung</div>
+                        <div class="type">Home Buyer</div>
+                    </div>
+                    <nav class="nav-profile">
+                        <ul>
+                            <li>
+                                <a class="active" href="" title="">
+                                    <i class="fa fa-cog"></i>
+                                    <span class="phs">Edit Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span class="v">My Boards</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fa fa-credit-card"></i>
+                                    <span class="v">Rental Resume</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fa fa-search"></i>
+                                    <span class="text">Saved Searches</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="text">Email Preferences</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-right">
+                    <div class="inner">
+                        <div class="block-15">
+                            <div class="head">
+                                <h2 class="title">Thông tin tài khoản</h2>
+                                <div class="joined">Tham gia Reland từ 2, 2016</div>
+                            </div>
+                            <form ng-submit="pc.updateProfile();" method="post" id="form-register" novalidate>
+                                <div class="row">
+                                    <div class="col col-270">
+                                        <div class="media">
+                                            <div class="avatar" id="avatar">
+                                                <span style="background-image: url({{pc.user.avatar}})"></span>
+                                            </div>
+                                            <div class="letter hidden" id="letter">
+                                                <span>Q</span>
+                                            </div>
+                                            <div class="action">
+                                                <a href="#change" data-change="avatar" title="Đổi ảnh đại diện">Đổi ảnh đại diện</a>
+                                            </div>
+                                            <div class="change hidden" id="change">
+                                                <a class="btn-close" href="#change" title="Close" data-close="avatar"><i class="fa fa-times"></i></a>                                                
+                                                <div class="text" ngf-drop="pc.uploadFile($file)">Kéo thả <br> ảnh</div>
+                                                <div class="file" style="display: none;">
+                                                    <span>Choose a File..</span>
+                                                    <input type="file" class="form-control" name="userfile"/>
+                                                </div>
+                                                <div class="file" ngf-select="pc.uploadFile($file)" accept="image/*" >
+                                                    <span>Chọn file ảnh..</span>
+                                                </div>      
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col col-480">
+                                        <div class="control">
+                                            <label for="name-field">Họ tên</label>
+                                            <input id="name-field" ng-change="pc.edit=true" type="text" name="name" ng-model="pc.user.fullName" class="form-control"/>
+                                        </div>
+                                        <div class="control">
+                                            <label for="email-field">Email</label>
+                                            <input id="email-field" ng-change="pc.edit=true" type="email" ng-model="pc.user.email" name="email" class="form-control"/>
+                                        </div>
+                                        <div class="control">
+                                            <label>Mật khẩu</label>
+                                            <button class="btn-open" data-change="password" data-target="change-password">Đổi mật khẩu</button>
+                                        </div>
+                                        <div class="control hidden" id="change-password">
+                                            <div class="row">
+                                                <div class="col col-50">
+                                                    <label for="password-field">Mật khẩu mới</label>
+                                                    <input ng-change="pc.edit=true" id="password-field" ng-model="pc.newPass" type="password" name="password" class="form-control" disabled/>
+                                                </div>
+                                                <div class="col col-50">
+                                                    <label for="re-password-field">Xác nhận mật khẩu</label>
+                                                    <input id="re-password-field" ng-change="pc.edit=true" ng-model="pc.newPassConfirm" type="password" name="re_password" class="form-control" disabled/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control">
+                                            <label for="phone-field">Số điện thoại</label>
+                                            <input id="phone-field" ng-change="pc.edit=true" type="number" ng-model="pc.user.phone" name="phone" class="form-control"/>
+                                        </div>
+                                       
+                                        <div class="control">
+                                            <label for="location-field">Địa chỉ</label>
+                                            <input id="location-field" type="text" ng-change="pc.edit=true" ng-model="pc.user.diaChi" name="location" class="form-control"/>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                <div class="handle">
+                                    <button class="btn btn-cancel" ng-click="pc.reset();" ng-if="pc.edit">Thoát</button>
+                                    <button ng-class="pc.edit?'btn btn-save':'btn btn-cancel'" ng-disabled="!pc.edit">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="overlay" data-overlay="true"></div>
+        </div><!-- //main -->
+        <div class="menu-left" id="menu-left">
+            <div class="inner">
+                <nav class="nav-mobile">
+                    <ul>
+                        <li>
+                            <a href="index.html" title="Reland">
+                                <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" title="">
+                                <span>Đăng nhập/Đăng ký</span>
+                                <span>Thông tin cá nhân/Check out</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-home"></i> Home</a>
+                        </li>
+                        <li class="active">
+                            <a href="" title=""><i class="fa fa-search"></i> Search</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-usd"></i> What's My Home Worth?</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-users"></i> Find an Agent</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-pie-chart"></i> Mortgage</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-comments"></i> Advice</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-info-circle"></i> Local Info</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-question"></i> Help Center</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-exchange"></i> Neighborhood Guides</a>
+                        </li>
+                    </ul>
+                    <div class="more">Reland Apps</div>
+                    <ul class="nav-mobile">
+                        <li>
+                            <a href="" title=""><i class="fa fa-home"></i> Reland Real Estate App</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-life-ring"></i> Reland Rentals App</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-ticket"></i> Reland Mortgage App</a>
+                        </li>
+                        <li>
+                            <a href="" title=""><i class="fa fa-suitcase"></i> Reland Agent App</a>
+                        </li>
+                    </ul>
+                    <div class="more">More</div>
+                    <ul class="nav-mobile">
+                        <li>
+                            <a href="" title="">Leave Feedback</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div><!-- //menu-left -->
+        <div class="box-saved" id="box-saved">
+            <ul class="nav-saved">
+                <li>
+                    <a class="active" href="#my-boards" data-tab="true" data-content="content" data-group="box-saved" title="My Boards">My Boards</a>
+                </li>
+                <li>
+                    <a href="#saved-homes" data-tab="true" data-content="content" data-group="box-saved" title="Saved Homes">Saved Homes</a>
+                </li>
+                <li>
+                    <a href="#saved-rentals" data-tab="true" data-content="content" data-group="box-saved" title="Saved Rentals">Saved Rentals</a>
+                </li>
+            </ul>
+            <div class="content mCustomScrollbar" style="display: block" id="my-boards">
+                <div class="create">
+                    <a href="#" title=""><i class="fa fa-plus"></i> Create Board</a>
+                </div>
+                <div class="boards">
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
+                            <span class="name">Dream Homes</span>
+                            <span class="group">
+                                <span class="user">Only Me</span>
+                                <span class="type">2 homes</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                            <span class="name">Home with Pools</span>
+                            <span class="group">
+                                <span class="user">Only Me</span>
+                                <span class="type">2 homes</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                            <span class="name">Home with Pools</span>
+                            <span class="group">
+                                <span class="user">Only Me</span>
+                                <span class="type">2 homes</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="content mCustomScrollbar" id="saved-homes">
+                <!--<div class="notice">
+                    You haven’t added any homes yet.<br/>
+                    Start searching for properties to add now.
+                </div>
+                <div class="handle">
+                    <a href="index.html" title="Search Homes">Search Homes</a>
+                </div>-->
+                <div class="saves">
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-1.jpg)">Dream Homes</span>
+                            <span class="price">$129,900</span>
+                            <span class="info">4 bd   2 ba   1744 sqft</span>
+                            <span class="loc">8912 Oleander Ave</span>
+                            <span class="loc">California City, CA</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-2.jpg)">Dream Homes</span>
+                            <span class="price">$129,900</span>
+                            <span class="info">4 bd   2 ba   1744 sqft</span>
+                            <span class="loc">8912 Oleander Ave</span>
+                            <span class="loc">California City, CA</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-3.jpg)">Dream Homes</span>
+                            <span class="price">$129,900</span>
+                            <span class="info">4 bd   2 ba   1744 sqft</span>
+                            <span class="loc">8912 Oleander Ave</span>
+                            <span class="loc">California City, CA</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" title="">
+                            <span class="img" style="background-image: url(asset/img/data/img-40-4.jpg)">Dream Homes</span>
+                            <span class="price">$129,900</span>
+                            <span class="info">4 bd   2 ba   1744 sqft</span>
+                            <span class="loc">8912 Oleander Ave</span>
+                            <span class="loc">California City, CA</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="content mCustomScrollbar" id="saved-rentals">
+                <div class="notice">
+                    You haven’t added any homes yet.<br/>
+                    Start searching for properties to add now.
+                </div>
+                <div class="handle">
+                    <a href="index.html" title="Search Homes">Search Homes</a>
+                </div>
+            </div>
+            <div id="loading" class="loading"></div>
+        </div><!-- //box-saved -->
+        <div class="box-login" id="box-login">
+            <div class="inner">
+                <form action="index.html" method="post" id="form-login" novalidate>
+                    <div class="head">Sign in or register<br/>to save your favorite homes</div>
+                    <a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a>
+                    <div class="control">
+                        <input type="email" placeholder="Enter email address" class="form-control" name="email" required/>
+                    </div>
+                    <div class="handle">
+                        <button type="submit" class="btn-login">Submit</button>
+                    </div>
+                    <div class="rule">I accept Trulia's <a href="/terms/" target="_blank">Terms of Use</a> and <a href="/privacy/" target="_blank">Privacy Policy</a>.</div>
+                    <div class="register">Are you a Real Estate Professional? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Register here.</a></div>
+                </form>
+            </div>
+        </div><!-- //box-login -->
+    </div><!-- //wrapper -->
