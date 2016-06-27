@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7c57fdf907dc3ee8da39"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3ecefdac22edf0651818"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18963,20 +18963,35 @@
 	                }
 	                vm.searchPage(1);
 	            });
-	            /*
-	            NewsService.findNews(data).then(function(res){
-	                console.log(res.data.list);
+	            NewsService.findHightestArticle(data).then(function (res) {
+	                console.log("------NewsService.findHightestArticle-----");
 	                if(res.data.list){
-	                    for (var i = 0; i < res.data.length; i++) {
-	                        $scope.listArticle.push(res.data.list[i]);
+	                    if(res.data.length > 0){
+	                        $scope.hightestArticles = [];
+	                        for (var i = 1; i < res.data.length; i++) {
+	                            $scope.hightestArticles.push(res.data.list[i]);
+	                        }
 	                    }
 	                }
-	                for (var i = 0; i < res.data.length; i++) {
-	                    console.log($scope.listArticle[i]);
+	                console.log($scope.article);
+	                console.log("----NewsService.findHightestArticle finished ");
+	            });
+	            NewsService.findHotArticle(data).then(function (res) {
+	                console.log("------NewsService.findHotArticle-----");
+	                if(res.data.list){
+	                    if(res.data.length > 0){
+	                        $scope.defaultHotArticle = res.data.list[0];
+	                        if(res.data.length > 1){
+	                            $scope.hotArticles = [];
+	                            for (var i = 1; i < res.data.length; i++) {
+	                                $scope.hotArticles.push(res.data.list[i]);
+	                            }
+	                        }
+	                    }
 	                }
-	                console.log("---------listArticle: " + $scope.listArticle.length);
-	                console.log("NewsService.findNews finished ");
-	            });*/
+	                console.log($scope.article);
+	                console.log("----NewsService.findHotArticle finished ");
+	            });
 	        }
 
 	        vm.firstPage = function(callback){
@@ -19036,19 +19051,76 @@
 	        console.log("----------newsDetail: " +$scope.rootCatId + "----" + $scope.articleId);
 	        initNewsDetail();
 
+	        vm.goDetail = function(articleId){
+	            $state.go('newsDetail', { "rootCatId" : $scope.rootCatId, "articleId" : articleId}, {location: true});
+	        }
+
 	        function initNewsDetail() {
 	            console.log("---------------------initNews ---------------catId: " + $scope.articleId);
 	            var data = {
+	                catId: $scope.rootCatId,
 	                articleId: $scope.articleId
 	            };
 
+	            NewsService.increaseRating(data).then(function (res) {
+	                console.log("------NewsService.increaseRating-----");
+	            });
+
+	            vm.searchData = {
+	                "catId": $scope.rootCatId,
+	                "pageNo": 1,
+	                "pageSize": 4
+	            };
+
+	            NewsService.findNews(vm.searchData).then(function(res){
+	                console.log(res.data.list);
+	                if(res.data.list){
+	                    if(res.data.length > 0){
+	                        $scope.listArticle = [];
+	                        for (var i = 0; i < res.data.length; i++) {
+	                            $scope.listArticle.push(res.data.list[i]);
+	                        }
+	                    }
+	                }
+	                console.log("NewsService.findNews finished ");
+	            });
+
 	            NewsService.findNewsDetail(data).then(function (res) {
-	                console.log("------NewsService.findNewsDetail-----");
+	                console.log("------newsDetailCtrl.findNewsDetail-----");
 	                if (res.data.article) {
 	                    $scope.article = res.data.article;
 	                }
+	                //console.log($scope.article);
+	                console.log("----newsDetailCtrl.findNewsDetail finished ");
+	            });
+	            NewsService.findHightestArticle(data).then(function (res) {
+	                console.log("------newsDetailCtrl.findHightestArticle-----");
+	                if(res.data.list){
+	                    if(res.data.length > 0){
+	                        $scope.hightestArticles = [];
+	                        for (var i = 1; i < res.data.length; i++) {
+	                            $scope.hightestArticles.push(res.data.list[i]);
+	                        }
+	                    }
+	                }
 	                console.log($scope.article);
-	                console.log("----NewsService.findNewsDetail finished ");
+	                console.log("----newsDetailCtrl.findHightestArticle finished ");
+	            });
+	            NewsService.findHotArticle(data).then(function (res) {
+	                console.log("------newsDetailCtrl.findHotArticle-----");
+	                if(res.data.list){
+	                    if(res.data.length > 0){
+	                        $scope.defaultHotArticle = res.data.list[0];
+	                        if(res.data.length > 1){
+	                            $scope.hotArticles = [];
+	                            for (var i = 1; i < res.data.length; i++) {
+	                                $scope.hotArticles.push(res.data.list[i]);
+	                            }
+	                        }
+	                    }
+	                }
+	                console.log($scope.article);
+	                console.log("----newsDetailCtrl.findHotArticle finished ");
 	            });
 	        }
 	    })
@@ -19660,8 +19732,20 @@
 	                var url = '/api/findNews';
 	                return $http.post(url,data);
 	            },
+	            findHotArticle: function(data){
+	                var url = '/api/findHotArticle';
+	                return $http.post(url,data);
+	            },
+	            findHightestArticle: function(data){
+	                var url = '/api/findHightestArticle';
+	                return $http.post(url,data);
+	            },
 	            findNewsDetail: function(data){
 	                var url = '/api/findNewsDetail';
+	                return $http.post(url,data);
+	            },
+	            increaseRating: function(data){
+	                var url = '/api/increaseRating';
 	                return $http.post(url,data);
 	            },
 	            findRootCategory: function(data){
@@ -21219,6 +21303,46 @@
 	    return kq;
 	};
 
+	util.getDiaChinhFromDoThi = function(inputString,removeString,type) {
+	    var kq = "";
+	    var khuVuc = 'Khu vực';
+
+	    var kqReplaceA = (striptags(inputString)).trim();
+
+	    kqReplaceA = kqReplaceA.replace(removeString,"")
+	    kqReplaceA = kqReplaceA.replace(khuVuc,"");
+
+	    kqReplaceA = kqReplaceA.toUpperCase();
+	    if (kqReplaceA.includes("QUẬN") ) {
+	        kqReplaceA = kqReplaceA.replace("QUẬN","");
+	    }
+	    if (kqReplaceA.includes("HUYỆN") ) {
+	        kqReplaceA = kqReplaceA.replace("HUYỆN","");
+	    }
+
+
+	        if (kqReplaceA ) {
+	            var idx = kqReplaceA.indexOf("-");
+	            var lastIdx = kqReplaceA.lastIndexOf("-");
+
+	            if(type =="HUYEN") {
+	                if ((idx > 0) && (lastIdx > idx))
+	                    kq = kqReplaceA.substring(idx + 1, lastIdx);
+	                else
+	                    kq = kqReplaceA;
+	            }
+	            if(type =="TINH") {
+	                if ((idx > 0) && (lastIdx > idx))
+	                    kq = kqReplaceA.substring(lastIdx + 1, kqReplaceA.length);
+	                else
+	                    kq = kqReplaceA;
+	            }
+	        }
+
+	    return kq.trim();
+	};
+
+
 	util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
 	    var kqRemove = striptags(inputString);
 	    return (kqRemove.replace(replaceString,"")).trim();
@@ -21273,7 +21397,7 @@
 
 
 	util.isEmail = function(str) {
-	  return str && (str.indexOf('@') > -1);
+	    return str && (str.indexOf('@') > -1);
 	};
 
 	module.exports = util;
