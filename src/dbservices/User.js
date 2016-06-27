@@ -73,6 +73,10 @@ class UserModel {
         callback(err, res);
       } else {
         console.log("getAdsLikes, res:", res);
+        if (res.length == 0) {
+          callback(err, res);
+          return;
+        }
         let adsLikes = res[0].adsLikes;
         let sql2 = `select a.* from default a where a.type='Ads' and a.adsID in ${JSON.stringify(adsLikes)}`;
         console.log("getAdsLikes, sql 2:", sql2);

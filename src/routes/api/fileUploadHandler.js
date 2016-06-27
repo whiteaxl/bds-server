@@ -38,7 +38,7 @@ internals.uploadFiles = function(req,reply){
 		var fp = files[Object.keys(files)[0]][0].path;
 		var ofn = files[Object.keys(files)[0]][0].originalFilename; 
 		var fsize = files[Object.keys(files)[0]][0].size; 
-		var newpath = __dirname + "../../../web/upload/"+ofn;
+		var newpath = __dirname + "/../../web/upload/"+ofn;
 		
 		fs.readFile(fp,function(err,data){
 			
