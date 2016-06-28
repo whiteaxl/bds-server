@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b95c41437e83974e11e7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0221ad90eb8b758b6b6c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19972,6 +19972,7 @@
 	                          $rootScope.userAvatar = res.data.avatar;
 	                          //hung dummy here to set userID to email so we can test chat
 	                          //$rootScope.userID = res.data.email;
+	                          $rootScope.userID = res.data.userID;
 	                          $rootScope.userEmail = res.data.email;
 	                          vm.class = "has-sub";
 	                          vm.state = vm.LOGGED_IN;
@@ -20017,6 +20018,7 @@
 	                        $rootScope.userAvatar = res.data.avatar;
 	                        //hung dummy here to set userID to email so we can test chat
 	                        //$rootScope.userID = res.data.email;
+	                        $rootScope.userID = res.data.userID;
 	                        $rootScope.userEmail = res.data.email;
 	                        vm.class = "has-sub";
 	                        vm.state = vm.LOGGED_IN;
