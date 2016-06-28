@@ -120,6 +120,7 @@ angular.module('bds')
                           $rootScope.userAvatar = res.data.avatar;
                           //hung dummy here to set userID to email so we can test chat
                           //$rootScope.userID = res.data.email;
+                          $rootScope.userID = res.data.userID;
                           $rootScope.userEmail = res.data.email;
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
@@ -165,6 +166,7 @@ angular.module('bds')
                         $rootScope.userAvatar = res.data.avatar;
                         //hung dummy here to set userID to email so we can test chat
                         //$rootScope.userID = res.data.email;
+                        $rootScope.userID = res.data.userID;
                         $rootScope.userEmail = res.data.email;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
