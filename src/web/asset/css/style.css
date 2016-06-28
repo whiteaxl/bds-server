@@ -7918,8 +7918,8 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 tim added 
 */
 
-.block-12 .img li a{
-  right: 40px;
+.block-12 .img .media{
+  right: 50px;
 }
 .error {
   color: red;

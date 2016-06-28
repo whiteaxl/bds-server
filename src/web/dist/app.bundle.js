@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3ecefdac22edf0651818"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b95c41437e83974e11e7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19192,7 +19192,7 @@
 		        $scope.$bus.publish({
 	              channel: 'login',
 	              topic: 'show login',
-	              data: {label: "Đăng nhập để like"}
+	              data: {label: "Đăng nhập để lưu BĐS"}
 		        });
 		        return;
 		      }
@@ -19914,7 +19914,7 @@
 
 
 	          vm.exitLoginBox = function($event){
-	            if($event.target.id == "box-login"){
+	            if(!$event || $event.target.id == "box-login"){
 	              vm.userExist = false;
 	              vm.changeState(vm.ENTER_EMAIL,false);
 	            }
@@ -19953,6 +19953,10 @@
 	                email: vm.email,
 	                matKhau: vm.password
 	              }
+	              if(vm.email && vm.email.indexOf("@")==-1){
+	                data.email = undefined;
+	                data.phone = vm.email;
+	              }
 	              if (loginForm.valid()) {
 	                if(vm.state == vm.RESET_PASSWORD){
 	                  HouseService.resetPassword({token: vm.resetPasswordToken,pass: vm.resetPassword}).then(function(resp){
@@ -19990,8 +19994,11 @@
 	                  HouseService.forgotPassword({
 	                    email: vm.email,
 	                    newPass: vm.password
-	                  }).then(function(res){                               
-	                    vm.changeState(vm.SENT_PASSWORD);
+	                  }).then(function(res){ 
+	                    if(res.data.success == true)                              
+	                      vm.changeState(vm.SENT_PASSWORD);
+	                    else
+	                       vm.subHead = res.data.msg;
 	                  });
 	                } else if(vm.state == vm.ENTER_EMAIL){
 	                  HouseService.checkUserExist(data).then(function(res){
@@ -20044,11 +20051,17 @@
 	          var formLogin = $("#form-login");
 	          // $("#form-login").validate();
 	          // if(formLogin.validate){
+	            $.validator.addMethod("mailorphone", function(value, element) {
+	              var mail = jQuery.validator.methods.email.call(this, value, element);
+	              var digits = jQuery.validator.methods.digits.call(this, value, element);
+	              var minlength = jQuery.validator.methods.minlength.call(this, value, element,8);
+	              return mail || (digits && minlength);
+	            });
 	            formLogin.validate({
 	              rules: {
-	                email: {
-	                  required: true,
-	                  email: true
+	                mailorphone: {
+	                  required: true,                  
+	                  mailorphone: true
 	                },
 	                password: {
 	                  required: true
@@ -20065,9 +20078,9 @@
 	                }                
 	              },
 	              messages: {
-	                email: {
-	                  required: 'Xin nhập email1',
-	                  email: 'Email không hợp lệ'
+	                mailorphone: {
+	                  mailorphone: 'Xin nhập email hoặc số điện thoại',
+	                  required: 'Xin nhập email hoặc số điện thoại'
 	                },
 	                password: {
 	                  required: 'Xin nhập mật khẩu'
@@ -20106,6 +20119,11 @@
 	          vm.profile = function() {
 	            $state.go('profile', { userID: $rootScope.userID}, {location: true});
 	          }
+	          vm.showLogin = function(){
+	            //var target = $(this).attr('href');
+	            $('#box-login').fadeIn(500);
+	          }
+
 	          vm.signout = function(){
 	          	$localStorage.relandToken = undefined;
 	          	$rootScope.userName = undefined;

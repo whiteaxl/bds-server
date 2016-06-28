@@ -13,6 +13,11 @@ angular.module('bds')
           vm.profile = function() {
             $state.go('profile', { userID: $rootScope.userID}, {location: true});
           }
+          vm.showLogin = function(){
+            //var target = $(this).attr('href');
+            $('#box-login').fadeIn(500);
+          }
+
           vm.signout = function(){
           	$localStorage.relandToken = undefined;
           	$rootScope.userName = undefined;

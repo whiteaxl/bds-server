@@ -1,5 +1,5 @@
 <li class="{{$root.userName?'has-sub':''}}">
-    <a ng-if="!$root.userName" class="btn" href="#box-login" data-action="login" title="Đăng nhập">Đăng nhập</a>
+    <a ng-if="!$root.userName" class="btn" href="#" ng-click="uim.showLogin();" title="Đăng nhập">Đăng nhập</a>
     <a ng-if="$root.userName" class="link" href="" title=""><span class="user"><i class="fa fa-user"></i> {{$root.userName}}</span></a>
     <ul ng-if="$root.userName">
         <li>

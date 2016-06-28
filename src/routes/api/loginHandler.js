@@ -8,6 +8,7 @@ var ViewQuery = couchbase.ViewQuery;
 var myBucket = require('../../database/mydb');
 myBucket.operationTimeout = 120 * 1000;
 var QueryOps = require('../../lib/QueryOps');
+var constant = require("../../lib/constant");
 
 var UserService = require('../../dbservices/User');
 var JWT    = require('jsonwebtoken');
@@ -153,17 +154,16 @@ internals.forgotPassword = function(req,reply){
             return;
           }
 
-          if (res.length < 0) { //exists
-            log.warn("User already existed!");
-            log.info(res);
+          if (res.length <= 0) { //exists
             reply({
               success: false,
-              msg:constant.MSG.USER_NOT_EXIST
+              msg:constant.MSG.USER_NOT_EXIST + ". Xin nhập địa chỉ email"
             });
             return;
           }
           //
           var user = res[0];
+
           console.log(JSON.stringify(user));
           var randomstring = Math.random().toString(36).slice(-8);
           var token = JWT.sign({
@@ -272,7 +272,7 @@ internals.updateProfile = function(req,reply){
             user.userID = user.id;
             user.fullName = req.payload.fullName;
             user.email = req.payload.email;
-            user.phone = req.payload.phone;
+            user.phone = ""+req.payload.phone;
             user.diaChi = req.payload.diaChi;
             user.avatar = req.payload.avatar;
             if(req.payload.newPass)

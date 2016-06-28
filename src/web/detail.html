@@ -22,8 +22,8 @@
                     <button data-popup="detail" class="btn-request">Request Info</button>
                 </div>
                 <div class="col col-50">
-                    <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Share</a>
-                    <a href="" ng-click="dt.likeAds();" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Save</a>
+                    <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Chia sẻ</a>
+                    <a href="" ng-click="dt.likeAds();" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Lưu BĐS</a>
                 </div>
             </div>
         </div>
@@ -795,9 +795,7 @@
                 <ul>
                     <li>{{dt.ads.giaFmt}}</li>
                     <li>{{dt.ads.place.diaChi}}</li>
-                    <li ng-if="dt.ads.soPhongNgu"> {{dt.ads.soPhongNgu}} phòng ngủ</li>
-                    <li ng-if="dt.ads.soPhongTam"> {{dt.ads.soPhongTam}} phòng tắm</li>
-                    <li ng-if="dt.ads.soTang"> {{dt.ads.soTang}} tầng</li>
+                    
                     <!-- <li>2 bd, 1 ba Coop</li> -->
                 </ul>
             </div>
@@ -870,8 +868,8 @@
                 <div class="info">
                     <div class="stats"><span class="pc">Ảnh <span id="count">1</span> /</span> <span id="total">5</span></div>
                     <div class="group">
-                        <button class="btn" ng-click="dt.likeAds();"><i class="fa fa-heart-o"></i> Save</button>
-                        <button class="btn"><i class="fa fa-envelope-o"></i> Share</button>
+                        <button class="btn" ng-click="dt.likeAds();"><i class="fa fa-heart-o"></i> Lưu BĐS</button>
+                        <button class="btn"><i class="fa fa-envelope-o"></i> Chia sẻ</button>
                     </div>
                 </div>
                 <a href="" class="btn-request">Request Info</a> 

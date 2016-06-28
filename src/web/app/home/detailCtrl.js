@@ -60,7 +60,7 @@
 	        $scope.$bus.publish({
               channel: 'login',
               topic: 'show login',
-              data: {label: "Đăng nhập để like"}
+              data: {label: "Đăng nhập để lưu BĐS"}
 	        });
 	        return;
 	      }
