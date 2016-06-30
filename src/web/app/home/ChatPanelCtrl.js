@@ -15,7 +15,7 @@
 		socket.on("new message", function(data){
 			if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == false){
 				//someone just start chat with you need to popup the chat box for that user
-				vm.addNewChat({userID: data.fromUserID,name: data.fromFullName});
+				vm.addNewChat({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
 				vm.chatBoxes[data.fromUserID].hidden == true;	
 			}
 			
@@ -50,7 +50,7 @@
 			for (var i = 0, len = data.length; i < len; i++) {
 			  var msg = data[i].default;
 			  msg.date = new Date(msg.date);
-			  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName});
+			  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName,avatar: msg.fromUserAvatar});
 			  vm.chatBoxes[msg.fromUserID].hidden = true;
 			  window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID],msg);
 			  console.log("msg["+i+"] "  + msg);

@@ -5,8 +5,8 @@
 
                             <ng-map center="{{center}}" zoom-to-include-markers="{{mc.zoomMode}}" custom-zoom-to-include-markers="{{mc.zoomMode}}" class="ngmap">
                             <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})" id="m_{{$index}}" >
+                                <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()" on-click="mc.goDetail({{$index}});"
+                                     id="m_{{$index}}" >
                                   <div class = "my1">
                                     {{m.content}} 
                                   </div>
@@ -26,8 +26,8 @@
                                 <!-- </marker> -->
 
                                 <info-window id="iw">
-                                    <div ng-non-bindable="" class="row">
-                                            <div class="col col-50">
+                                    <div ng-non-bindable="" class="row" style="cursor: pointer;" ng-click="mc.goDetailHighlight();">
+                                            <div class="col col-50" >
                                                 <div class="media" style="background-image: url({{mc.highlightAds.image.cover}});height: 100px;"></div>
                                             </div>
                                             <div class="col col-50">
@@ -108,7 +108,7 @@
                             </div>
                             <div class="row">
 
-                                <div ng-repeat="ads in mc.ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-click="mc.goDetail($index)" ng-mouseout="mc.hideDetail();">
+                                <div ng-repeat="ads in mc.ads_list track by $index" class="col col-50" ng-mouseover="mc.showDetail($index)" ng-click="mc.goDetail($event,$index)" ng-mouseout="mc.hideDetail();">
                                     <div class="item">
                                         <a class="link" href="" title="" >
                                             <span class="img" style="background-image: url({{ads.image.cover}})"></span>

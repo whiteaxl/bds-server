@@ -236,8 +236,11 @@
 		vm.mouseover = function(e,i) {
           vm.showDetail(i);
         };
-        vm.goDetail = function(i){
+        vm.goDetail = function(event,i){
         	$state.go('detail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+        }
+        vm.goDetailHighlight = function(){
+        	$state.go('detail', { "adsID" : vm.highlightAds.adsID}, {location: true});
         }
         vm.mouseout = function() {
           //vm.hideDetail();

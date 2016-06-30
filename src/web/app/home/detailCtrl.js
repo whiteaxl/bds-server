@@ -5,6 +5,7 @@
 		var vm = this;
 		vm.viewMap = false;
 		$scope.chat_visible = true;
+		vm.likeAdsClass ="fa-heart-o";
 		$scope.$on('$viewContentLoaded', function(){
 			$timeout(function() {
 				window.DesignCommon.adjustPage();				
@@ -65,8 +66,11 @@
 	        return;
 	      }
 	      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){
-	        alert(res.data.msg);
-	        console.log(res);
+	        //alert(res.data.msg);
+	        //console.log(res);
+	        if(res.data.success == true || res.data.status==1){
+	        	vm.likeAdsClass ="fa-heart";
+	        }
 	      });
 	    };
 		$timeout(function() {

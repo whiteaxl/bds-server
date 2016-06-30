@@ -23,7 +23,7 @@
                 </div>
                 <div class="col col-50">
                     <a href="" class="btn-share" title="Share"><i class="fa-envelope-o fa"></i> Chia sẻ</a>
-                    <a href="" ng-click="dt.likeAds();" class="btn-save" title="Save"><i class="fa fa-heart-o"></i> Lưu BĐS</a>
+                    <a href="" ng-click="dt.likeAds();" class="btn-save active" title="Save"><i class="fa {{dt.likeAdsClass}}"></i> Lưu BĐS</a>
                 </div>
             </div>
         </div>
@@ -34,8 +34,7 @@
                 <bds-dia-chinh-link diachinh="dt.ads.place.diaChinh" loaitin="dt.ads.loaiTin" loainhadat="dt.ads.loaiNhaDat" viewmode="map"></bds-dia-chinh-link>  
             </div>
             <div class="block-12">
-                <div class="img" style="background-image: url({{dt.ads.image.images[0]?dt.ads.image.images[0]:'asset/img/logo.png';}})">
-                    <a href="#box-popup" data-popup="true" ng-click="dt.showPopupImage($event);" data-goto="1" class="fullscreen"><i class="fa fa-arrows-alt"></i></a>
+                <div class="map-detail" style="background-image: url({{dt.ads.image.images[0]?dt.ads.image.images[0]:'asset/img/logo.png';}})">
                     <ng-map ng-if="dt.viewMap" center="{{dt.center}}" zoom="15" class="ngmap">
                         <custom-marker position="[{{dt.marker.coords.latitude}},{{dt.marker.coords.longitude}}]">
                           <div class = "my1">
@@ -43,6 +42,7 @@
                           </div>
                         </custom-marker>
                     </ng-map>
+                    
                     <div class="media">
                         <ul>
                             <li>
@@ -59,7 +59,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div>               
                 <div class="detail">
                     <div class="bg-detail sp" style="background-image: url(asset/img/data/img-detail-1.jpg)"></div>
                     <div class="type" >{{dt.ads.giaFmt}}</div>
@@ -201,7 +201,7 @@
                 <h2 class="title">Ảnh mô tả</h2>
                 <div class="row">
                     <div class="col col-33" ng-repeat="img in dt.ads.image.images track by $index">
-                        <a href="#box-popup" data-popup="true" data-goto="1">
+                        <a href="#box-popup" ng-click="dt.showPopupImage($event);" data-popup="true" data-goto="1">
                             <span class="img" style="background-image: url({{img}})">174 W 76th St #8G</span>
                         </a>
                     </div>
@@ -868,7 +868,7 @@
                 <div class="info">
                     <div class="stats"><span class="pc">Ảnh <span id="count">1</span> /</span> <span id="total">5</span></div>
                     <div class="group">
-                        <button class="btn" ng-click="dt.likeAds();"><i class="fa fa-heart-o"></i> Lưu BĐS</button>
+                        <button class="btn" ng-click="dt.likeAds();"><i class="fa {{dt.likeAdsClass}}"></i> Lưu BĐS</button>
                         <button class="btn"><i class="fa fa-envelope-o"></i> Chia sẻ</button>
                     </div>
                 </div>

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0221ad90eb8b758b6b6c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "53f24261872f497d3a1a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18419,8 +18419,11 @@
 			vm.mouseover = function(e,i) {
 	          vm.showDetail(i);
 	        };
-	        vm.goDetail = function(i){
+	        vm.goDetail = function(event,i){
 	        	$state.go('detail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+	        }
+	        vm.goDetailHighlight = function(){
+	        	$state.go('detail', { "adsID" : vm.highlightAds.adsID}, {location: true});
 	        }
 	        vm.mouseout = function() {
 	          //vm.hideDetail();
@@ -19137,6 +19140,7 @@
 			var vm = this;
 			vm.viewMap = false;
 			$scope.chat_visible = true;
+			vm.likeAdsClass ="fa-heart-o";
 			$scope.$on('$viewContentLoaded', function(){
 				$timeout(function() {
 					window.DesignCommon.adjustPage();				
@@ -19197,8 +19201,11 @@
 		        return;
 		      }
 		      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){
-		        alert(res.data.msg);
-		        console.log(res);
+		        //alert(res.data.msg);
+		        //console.log(res);
+		        if(res.data.success == true || res.data.status==1){
+		        	vm.likeAdsClass ="fa-heart";
+		        }
 		      });
 		    };
 			$timeout(function() {
@@ -19515,7 +19522,7 @@
 			socket.on("new message", function(data){
 				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == false){
 					//someone just start chat with you need to popup the chat box for that user
-					vm.addNewChat({userID: data.fromUserID,name: data.fromFullName});
+					vm.addNewChat({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
 					vm.chatBoxes[data.fromUserID].hidden == true;	
 				}
 				
@@ -19550,7 +19557,7 @@
 				for (var i = 0, len = data.length; i < len; i++) {
 				  var msg = data[i].default;
 				  msg.date = new Date(msg.date);
-				  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName});
+				  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName,avatar: msg.fromUserAvatar});
 				  vm.chatBoxes[msg.fromUserID].hidden = true;
 				  window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID],msg);
 				  console.log("msg["+i+"] "  + msg);
