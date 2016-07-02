@@ -8,10 +8,17 @@
       },
       "sync": `function(doc, oldDoc) {
 
+  if (doc.type==="Ads" && doc.dangBoi.userID) {
+    var userID = doc.dangBoi.userID;
+    var channelname = "chan_" + userID;
+    channel(channelname);
+    access(userID, channelname);
+  }
+
   if (doc.type==="User") {
     var channelname = "chan_" + doc.userID;
     channel(channelname);
-    access(doc.userID, channelname);
+   access(doc.userID, channelname);
   }
 
   if (doc.type==="Chat") {
