@@ -329,7 +329,7 @@ function _transformDetailAds(adsFromDb) {
 
     if (ads.ngayDangTin) {
         var ngayDangTinDate= moment(ads.ngayDangTin, constant.FORMAT.DATE_IN_DB);
-        ads.soNgayDaDangTin = -moment().diff(ngayDangTinDate, 'days');
+        ads.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
         ads.soNgayDaDangTinFmt =  "Tin đã đăng " + ads.soNgayDaDangTin + " ngày";
         ads.ngayDangTinFmt = moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_GUI);
     }

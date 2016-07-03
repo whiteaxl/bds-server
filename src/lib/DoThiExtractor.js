@@ -188,7 +188,7 @@ class DoThiExtractor {
 
 
 
-			addothiBds.adsID = "Ads_" + addothiBds.maSo;
+			addothiBds.adsID = "Ads_dothi_" + addothiBds.maSo;
 			addothiBds.type = "Ads";
 			addothiBds.source = "DOTHI.NET";
 

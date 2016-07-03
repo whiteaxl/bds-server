@@ -57,12 +57,12 @@ const ListResultModel = Joi.object({
 
 const DetailResultModel = Joi.object({
   adsID: Joi.string(),
-  area_raw: Joi.string().allow(null),
+  area_raw: Joi.string().allow(null).allow(''),
   dangBoi: Joi.object({
-    email: Joi.string().allow(null),
-    name: Joi.string().allow(null),
-    phone: Joi.string().allow(null),
-    userID: Joi.string().allow(null)
+    email: Joi.string().allow(null).allow(''),
+    name: Joi.string().allow(null).allow(''),
+    phone: Joi.string().allow(null).allow(''),
+    userID: Joi.string().allow(null).allow('')
   }),
   gia: Joi.number(),
   giaFmt: Joi.string(),
@@ -77,27 +77,27 @@ const DetailResultModel = Joi.object({
     images: Joi.array().items(Joi.string()),
     images_small: Joi.array().items(Joi.string()),
   }),
-  diaChi: Joi.string(),
+  diaChi: Joi.string().allow(null).allow(''),
   ngayDangTin: Joi.string(),
   giaM2: Joi.number(),
   loaiNhaDat: Joi.number(),
   loaiTin: Joi.number().integer(),
   huongNha: Joi.number().integer(),
-  chiTiet: Joi.string(),
+  chiTiet: Joi.string().allow(null).allow(''),
   soNgayDaDangTin: Joi.number().description('So ngay da dang tin'),
   place: Joi.object({
-    duAn: Joi.string(),
-    diaChi: Joi.string(),
+    duAn: Joi.string().allow(null).allow(''),
+    diaChi: Joi.string().allow(null).allow(''),
     diaChinh: Joi.object(),
     geo: latLonModel,
-    diaChinhFullName: Joi.string(),
+    diaChinhFullName: Joi.string().allow(null).allow(''),
     duAnFullName: Joi.any()
   }),
   maSo: Joi.number(),
-  price_raw: Joi.string(),
-  ten_loaiNhaDat: Joi.string(),
-  ten_loaiTin: Joi.string(),
-  title: Joi.string(),
+  price_raw: Joi.string().allow(null).allow(''),
+  ten_loaiNhaDat: Joi.string().allow(null).allow(''),
+  ten_loaiTin: Joi.string().allow(null).allow(''),
+  title: Joi.string().allow(null).allow(''),
   soNgayDaDangTinFmt: Joi.string(),
   ngayDangTinFmt: Joi.string(),
   luotXem: Joi.number(),
@@ -106,7 +106,7 @@ const DetailResultModel = Joi.object({
   loaiNhaDatFmt: Joi.string(),
   type: Joi.string(),
   soPhongTam: Joi.number(),
-  soPhongTamFmt: Joi.string(),
+  soPhongTamFmt: Joi.string().allow(null).allow(''),
 });
 
 

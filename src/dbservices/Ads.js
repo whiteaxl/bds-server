@@ -163,9 +163,9 @@ class AdsModel {
             sql = `${sql} AND (gia BETWEEN ${gia[0]} AND ${gia[1]})`;
         }
 
-        sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+        sql = sql + (soPhongNguGREATER != 0 ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
 
-        sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
+        sql = sql + (soPhongTamGREATER != 0 ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
 
         if ((dienTich) && (dienTich[0] > 1 || dienTich[1] < 9999999)) {
             sql = `${sql} AND (dienTich BETWEEN  ${dienTich[0]} AND ${dienTich[1]})`;

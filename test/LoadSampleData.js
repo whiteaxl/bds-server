@@ -5,7 +5,7 @@ var prepare = require("./prepareData");
 var AdsService = require("../src/dbservices/Ads");
 
 var adsService = new AdsService();
-prepare.loadFromFile("ads.json");
+prepare.loadFromFile("ads_5108.json");
 // prepare.loadUserFromFile("user.json");
 //prepare.loadAds();
 
