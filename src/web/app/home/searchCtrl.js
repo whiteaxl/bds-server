@@ -8,12 +8,14 @@
 		vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
 		vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+
 		//use for menu
 		vm.loaiNhaDatBanMenu = window.RewayListValue.LoaiNhaDatBanWeb;
 		vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.loaiNhaDatCanMuaMenu = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 		vm.loaiNhaDatCanThueMenu = window.RewayListValue.LoaiNhaDatCanThueWeb;
 		vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
+		vm.onePoint = false;
 
 		
 		
@@ -169,6 +171,14 @@
 		];
 		Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);
 
+		vm.radius_steps = [{
+			value: 2,
+			lable: "Bán kính 2km",
+			position: 0
+		}];
+		Array.prototype.push.apply(vm.radius_steps, vm.radiusInKmList);
+		
+
 		vm.sell_price_list_to = [];
 		Array.prototype.push.apply(vm.sell_price_list_to, window.RewayListValue.sell_steps);
 		vm.sell_price_list_to.push(
@@ -225,6 +235,7 @@
 		  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 		  	"huongNha": vm.huongNhaList[0].value,
 		  	"huongNhas": [],
+		  	"radiusInKm": 2,
 		  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 		  	"limit": vm.pageSize,
 		  	"orderBy": vm.sortOptions[0].value,
@@ -366,7 +377,9 @@
 			
 		}
 		vm.searchPage = function(i, callback){
-			vm.searchData.pageNo = i;			
+			vm.searchData.pageNo = i;		
+			if(vm.searchData.place)
+				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;	
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
 				//vm.totalResultCounts = res.data.list.length;
@@ -441,6 +454,8 @@
 		}
 
 		vm.search = function(callback){
+			if(vm.searchData.place)
+				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
 			HouseService.countAds(vm.searchData).then(function(res){
         		vm.totalResultCounts = res.data.countResult;
         		$scope.markers =[];
@@ -551,17 +566,22 @@
 
 						vm.placeSearchText = googlePlace.formatted_address;
 
-						if($scope.searchPlaceSelected.geometry.viewport){
+						
+
+						vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);
+
+						// if($scope.searchPlaceSelected.geometry.viewport){
+						if(vm.onePoint == false){
 			          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
 			          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
-			          		vm.searchData.radiusInKm = undefined;
+			          		//vm.searchData.radiusInKm = undefined;
 			        	} else{
 			          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
 			          		//data.radiusInKm = "10";
 			          		var placeData = {
 			          			placeId: googlePlace.place_id,
 			 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-			       				radiusInKm :  2,
+			       				radiusInKm :  vm.searchData.radiusInKm,
 			 				    currentLocation: undefined
 			 			  	}
 			 			  	vm.searchData.place = placeData;

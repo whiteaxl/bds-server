@@ -6,17 +6,22 @@
                 <div class="utility">
                     <div class="container">
                         <div class="row" id = "mybox">
-                            <div class="col w-340">
+                            <div class="col w-240">
                                 <form ng-submit="goToPageSearch" method="post">
                                     <div class="search">
                                         <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" ng-model="mc.placeSearchText" class="form-control" id="autocomplete"> </input>
                                         <button class="btn-search" ng-click="mc.goToPageSearch();" type="button"><i class="fa fa-search"></i> <span class="text"></span></button>
-
-                                        
                                     </div>
                                 </form>
                             </div>
-                            <div class="col w-290">
+                            <div class="col w-130">
+                                <div class="option">
+                                    <select ng-disabled="mc.onePoint == false" ng-change="mc.search()" ng-model="mc.searchData.radiusInKm" ng-options="rad.value as rad.lable for rad in mc.radius_steps" class="select" data-select="true" name="round" title="Bán kính">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col w-240">
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
@@ -26,7 +31,7 @@
                                         </div>
                                     </div>
                                     <div class="col w-50">
-                                        <div class="label">To</div>
+                                        <div class="label">đến</div>
                                     </div>
                                     <div class="col w-115">
                                         <div class="option">
@@ -38,29 +43,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col w-120">
-                                <div class="option">
+                            <div class="col w-240">
+                              <div class="row">
+                                <div class="col w-115">
+                                  <div class="option">
                                     <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[0]" title="Diện tích từ" ng-change="mc.search()"
                                             ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_from">
                                     </select>
+                                  </div>
                                 </div>
-                            </div>
-                            <div class="col w-50">
-                                <div class="label">To</div>
-                            </div>
-                            <div class="col w-120">
-                                <div class="option">
-                                    <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" ng-change="mc.search()"
-                                            ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
-                                    </select>
+                                <div class="col w-50">
+                                  <div class="label">đến</div>
                                 </div>
+                                <div class="col w-115">
+                                    <div class="option">
+                                        <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" ng-change="mc.search()"
+                                                ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="col w-153">
+                            <div class="col w-130">
                                 <div class="handle">
                                     <a href="#filter" data-toggle-text="Bộ lọc thu gọn" data-action="more">Bộ lọc nâng cao</a>
                                 </div>
                             </div>
-                            <div class="col w-160">
+                            <div class="col w-150">
                                 <button class="btn-find" data-find="true" ng-click="mc.nameSaveSearch = true">
                                     <i class="fa fa-star"></i> <span class="text">Lưu tìm kiếm</span>
                                 </button>

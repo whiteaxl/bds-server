@@ -225,7 +225,7 @@ placeUtil.isHuyen = function(place) {
 
     if (_.indexOf(placeTypes, 'locality') > -1
         && _.indexOf(placeTypes, 'political') > -1
-        && ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
+        //&& ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
     ) {
         return true;
     }

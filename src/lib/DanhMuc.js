@@ -96,6 +96,8 @@ danhMuc.convertDienTichStepValueToNameValueArray= function(){
     return result;
 }
 
+
+
 danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
 
 danhMuc.LoaiTin = {
@@ -312,12 +314,12 @@ danhMuc.SoPhongTam = {
 }
 
 danhMuc.RadiusInKm = {
-    0.5: "0.5",
-    1: "1",
-    2: "2",
-    3: "3",
-    4: "4",
-    5: "5"
+    0.5: "0.5km",
+    1: "1km",
+    2: "2km",
+    3: "3km",
+    4: "4km",
+    5: "5km"
 }
 
 danhMuc.RadiusInKmKey = [
@@ -474,6 +476,7 @@ danhMuc.getHuongNhaDisplay = function(val){
     }
     return eval('danhMuc.HuongNha['+val + ']');
 }
+
 
 module.exports = danhMuc;
 
