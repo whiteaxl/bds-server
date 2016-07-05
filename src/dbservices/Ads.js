@@ -295,7 +295,6 @@ class AdsModel {
 
         bucket.query(query, function(err, all) {
             console.log("err=", err);
-            console.log("number of ads:" + all.length);
             if (!all)
                 all = [];
             callback(err, all);
