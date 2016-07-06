@@ -50,7 +50,8 @@ class DuAnExtractor {
 				'diachi'		:'.prjinfo > div[1]',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
-				'duAnID'    :'#form1 :source'
+				'duAnID'    :'#form1 :source',
+				'image'    :'.prjava > img@src'
 			})
 			.data(function(duan) {
 				let adduan = {
@@ -61,7 +62,8 @@ class DuAnExtractor {
 						lat: Number(duan.hdLat),
 						lon: Number(duan.hdLong)
 					},
-					duAnID : duan.duAnID
+					duAnID : duan.duAnID,
+					image :  duan.image
 				}
 
 
