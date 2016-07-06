@@ -80,6 +80,10 @@ class DuAnExtractor {
 					adduan.duAnID = "DA_" + adduan.tenKhongDau;
 				}
 
+				if(adduan.diaChi){
+					adduan.diaChinh = placeUtil.getDiaChinh(adduan.diaChi);
+				}
+
 				adduan.type = "DuAn";
 				console.log("1111111");
 				console.log(adduan);
