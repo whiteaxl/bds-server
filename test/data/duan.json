@@ -2,6 +2,15 @@
   {
     "default": {
       "diaChi": "9 Phạm Văn Đồng, Phường Mai Dịch, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "9 Phạm Văn Đồng",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Mai Dịch",
+        "xaKhongDau": "phuong-mai-dich"
+      },
       "duAnID": "DA_2t-corporation-pj1435",
       "geo": {
         "lat": 21.0385150909424,
@@ -16,6 +25,15 @@
   {
     "default": {
       "diaChi": "58 Đường Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "58 Đường Nguyễn Đình Chiểu",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_abacus-tower-pj1992",
       "geo": {
         "lat": 10.7890529632568,
@@ -30,6 +48,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_ac-building-pj1422",
       "geo": {
         "lat": 21.0322666168213,
@@ -44,6 +71,15 @@
   {
     "default": {
       "diaChi": "10  Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "10  Phạm Sư Mạnh",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_acb-office-building-pj1442",
       "geo": {
         "lat": 21.022424697876,
@@ -58,6 +94,15 @@
   {
     "default": {
       "diaChi": "249 Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "249 Cộng Hòa",
+        "huyen": "Tân Bình",
+        "huyenKhongDau": "tan-binh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 13",
+        "xaKhongDau": "phuong-13"
+      },
       "duAnID": "DA_acbr-office-building-pj251",
       "geo": {
         "lat": 10.8017206192017,
@@ -72,6 +117,15 @@
   {
     "default": {
       "diaChi": "151 Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "151 Nguyễn Đình Chiểu",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_alpha-tower-pj1690",
       "geo": {
         "lat": 10.7758264541626,
@@ -86,6 +140,15 @@
   {
     "default": {
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Phạm Hùng",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Xã Mễ Trì",
+        "xaKhongDau": "xa-me-tri"
+      },
       "duAnID": "DA_apex-tower-pj215",
       "geo": {
         "lat": 21.0145797729492,
@@ -100,6 +163,15 @@
   {
     "default": {
       "diaChi": "Đường Trần Huy Liệu, Phường 15, Phú Nhuận, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Trần Huy Liệu",
+        "huyen": "Phú Nhuận",
+        "huyenKhongDau": "phu-nhuan",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 15",
+        "xaKhongDau": "phuong-15"
+      },
       "duAnID": "DA_arirang-building-pj1750",
       "geo": {
         "lat": 10.7988309860229,
@@ -114,6 +186,15 @@
   {
     "default": {
       "diaChi": "Số 2 Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 2 Phạm Sư Mạnh",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_artexport-house-pj1443",
       "geo": {
         "lat": 21.0223770141602,
@@ -128,6 +209,15 @@
   {
     "default": {
       "diaChi": "Số 1 Lê Đức Thọ, Phường Mai Dịch, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 1 Lê Đức Thọ",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Mai Dịch",
+        "xaKhongDau": "phuong-mai-dich"
+      },
       "duAnID": "DA_au-viet-building-pj1424",
       "geo": {
         "lat": 21.0368175506592,
@@ -142,6 +232,15 @@
   {
     "default": {
       "diaChi": "53 Đường Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "53 Đường Nguyễn Thị Minh Khai",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_avalon-saigon-apartments-pj1800",
       "geo": {
         "lat": 10.7796907424927,
@@ -156,6 +255,15 @@
   {
     "default": {
       "diaChi": "62 Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "62 Trần Thái Tông",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_bao-anh-building-pj1421",
       "geo": {
         "lat": 21.0319766998291,
@@ -170,6 +278,14 @@
   {
     "default": {
       "diaChi": "Số 172-174 Ký Con, quận 1, Tp.HCM",
+      "diaChinh": {
+        "huyen": "quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Tp.HCM",
+        "tinhKhongDau": "tp-hcm",
+        "xa": "Số 172-174 Ký Con",
+        "xaKhongDau": "so-172-174-ky-con"
+      },
       "duAnID": "DA_ben-thanh-times-square-pj1566",
       "geo": {
         "lat": 10.7671241760254,
@@ -184,6 +300,14 @@
   {
     "default": {
       "diaChi": "194  Trần Quang Khải, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "194  Trần Quang Khải",
+        "xaKhongDau": "194-tran-quang-khai"
+      },
       "duAnID": "DA_bidv-tower-pj1406",
       "geo": {
         "lat": 21.0295219421387,
@@ -198,6 +322,15 @@
   {
     "default": {
       "diaChi": "Đường Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Ngô Đức Kế",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_bitexco-financial-tower-pj453",
       "geo": {
         "lat": 10.7716207504272,
@@ -212,6 +345,15 @@
   {
     "default": {
       "diaChi": "63 Đường Võ Văn Tần, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "63 Đường Võ Văn Tần",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_bitexco-nam-long-building-pj1874",
       "geo": {
         "lat": 10.7772407531738,
@@ -226,6 +368,15 @@
   {
     "default": {
       "diaChi": "Đường Lý Chính Thắng, Phường 8, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Lý Chính Thắng",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 8",
+        "xaKhongDau": "phuong-8"
+      },
       "duAnID": "DA_cao-oc-intresco-plaza-pj763",
       "geo": {
         "lat": 10.7888040542603,
@@ -240,6 +391,15 @@
   {
     "default": {
       "diaChi": "1017/24A Hồng Bàng, Phường 12, Quận 6, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "1017/24A Hồng Bàng",
+        "huyen": "Quận 6",
+        "huyenKhongDau": "quan-6",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 12",
+        "xaKhongDau": "phuong-12"
+      },
       "duAnID": "DA_cao-oc-opc-eximland-pj1041",
       "geo": {
         "lat": 10.7531251907349,
@@ -254,6 +414,15 @@
   {
     "default": {
       "diaChi": "123 Đường Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "123 Đường Nguyễn Đình Chiểu",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_cao-oc-pax-sky-pj1917",
       "geo": {
         "lat": 10.7774934768677,
@@ -268,6 +437,14 @@
   {
     "default": {
       "diaChi": "Phường 16, Quận 8, Hồ Chí Minh",
+      "diaChinh": {
+        "huyen": "Quận 8",
+        "huyenKhongDau": "quan-8",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 16",
+        "xaKhongDau": "phuong-16"
+      },
       "duAnID": "DA_cao-oc-phuc-hop-sao-mai-pj1557",
       "geo": {
         "lat": 10.7251491546631,
@@ -282,6 +459,15 @@
   {
     "default": {
       "diaChi": "16 Liễu Giai, Phường Liễu Giai, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "16 Liễu Giai",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Liễu Giai",
+        "xaKhongDau": "phuong-liẽu-giai"
+      },
       "duAnID": "DA_cao-oc-van-phong-16-lieu-giai-pj245",
       "geo": {
         "lat": 21.0341033935547,
@@ -296,6 +482,15 @@
   {
     "default": {
       "diaChi": "106 Nguyễn Văn Trỗi, Phường 8, Phú Nhuận, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "106 Nguyễn Văn Trỗi",
+        "huyen": "Phú Nhuận",
+        "huyenKhongDau": "phu-nhuan",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 8",
+        "xaKhongDau": "phuong-8"
+      },
       "duAnID": "DA_cao-oc-van-phong-centrepoint-pj261",
       "geo": {
         "lat": 10.7970170974731,
@@ -310,6 +505,15 @@
   {
     "default": {
       "diaChi": "138 – 142 Hai Bà Trưng, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "138 – 142 Hai Bà Trưng",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_cao-oc-van-phong-hmtc-pj260",
       "geo": {
         "lat": 10.7844705581665,
@@ -324,6 +528,15 @@
   {
     "default": {
       "diaChi": "131  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "131  Điện Biên Phủ",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 15",
+        "xaKhongDau": "phuong-15"
+      },
       "duAnID": "DA_cao-oc-van-phong-v-ikon-pj1328",
       "geo": {
         "lat": 10.8009328842163,
@@ -338,6 +551,15 @@
   {
     "default": {
       "diaChi": "109 Trần Hưng Đạo, Phường Cửa Nam, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "109 Trần Hưng Đạo",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Cửa Nam",
+        "xaKhongDau": "phuong-của-nam"
+      },
       "duAnID": "DA_capital-tower-pj168",
       "geo": {
         "lat": 21.0235328674316,
@@ -352,6 +574,15 @@
   {
     "default": {
       "diaChi": "25 - 27  Lê Đại Hành, Phường Lê Đại Hành, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "25 - 27  Lê Đại Hành",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Lê Đại Hành",
+        "xaKhongDau": "phuong-le-dại-hanh"
+      },
       "duAnID": "DA_cdc-building-pj1451",
       "geo": {
         "lat": 21.0104694366455,
@@ -366,6 +597,15 @@
   {
     "default": {
       "diaChi": "43 Quang Trung, Phường Quán Toan, Hồng Bàng, Hải Phòng",
+      "diaChinh": {
+        "duong": "43 Quang Trung",
+        "huyen": "Hồng Bàng",
+        "huyenKhongDau": "hong-bang",
+        "tinh": "Hải Phòng",
+        "tinhKhongDau": "hai-phong",
+        "xa": "Phường Quán Toan",
+        "xaKhongDau": "phuong-quan-toan"
+      },
       "duAnID": "DA_central-tower-pj1403",
       "geo": {
         "lat": 20.8566608428955,
@@ -380,6 +620,15 @@
   {
     "default": {
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Phạm Hùng",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Xã Mễ Trì",
+        "xaKhongDau": "xa-me-tri"
+      },
       "duAnID": "DA_ceo-tower-pj214",
       "geo": {
         "lat": 21.0158176422119,
@@ -394,6 +643,15 @@
   {
     "default": {
       "diaChi": "Số 181 Cao Thắng nối dài, Phường 12, Quận 10, Tp.HCM",
+      "diaChinh": {
+        "duong": "Số 181 Cao Thắng nối dài",
+        "huyen": "Quận 10",
+        "huyenKhongDau": "quan-10",
+        "tinh": "Tp.HCM",
+        "tinhKhongDau": "tp-hcm",
+        "xa": "Phường 12",
+        "xaKhongDau": "phuong-12"
+      },
       "duAnID": "DA_charmington-la-pointe-pj2266",
       "geo": {
         "lat": 10.7744493484497,
@@ -408,6 +666,15 @@
   {
     "default": {
       "diaChi": "45 Võ Thị Sáu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "45 Võ Thị Sáu",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_citilight-tower-pj1483",
       "geo": {
         "lat": 10.7902545928955,
@@ -422,6 +689,15 @@
   {
     "default": {
       "diaChi": "33 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "33 Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_cmc-tower-pj195",
       "geo": {
         "lat": 21.0307273864746,
@@ -436,6 +712,15 @@
   {
     "default": {
       "diaChi": "125D Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "125D Minh Khai",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Minh Khai",
+        "xaKhongDau": "phuong-minh-khai"
+      },
       "duAnID": "DA_coma-building-pj1458",
       "geo": {
         "lat": 20.996467590332,
@@ -450,6 +735,15 @@
   {
     "default": {
       "diaChi": "293  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "293  Điện Biên Phủ",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 15",
+        "xaKhongDau": "phuong-15"
+      },
       "duAnID": "DA_compa-tower-pj1625",
       "geo": {
         "lat": 10.8012685775757,
@@ -464,6 +758,15 @@
   {
     "default": {
       "diaChi": "16 Phan Chu Trinh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "16 Phan Chu Trinh",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_cornerstone-building-pj1409",
       "geo": {
         "lat": 21.0204963684082,
@@ -478,6 +781,15 @@
   {
     "default": {
       "diaChi": "139 Cầu Giấy, Phường Quan Hoa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "139 Cầu Giấy",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Quan Hoa",
+        "xaKhongDau": "phuong-quan-hoa"
+      },
       "duAnID": "DA_ctm-building-139-cau-giay-pj1214",
       "geo": {
         "lat": 21.031925201416,
@@ -492,6 +804,15 @@
   {
     "default": {
       "diaChi": "299 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "299 Cầu Giấy",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng",
+        "xaKhongDau": "phuong-dich-vong"
+      },
       "duAnID": "DA_ctm-building-299-cau-giay-pj2137",
       "geo": {
         "lat": 21.0346202850342,
@@ -506,6 +827,15 @@
   {
     "default": {
       "diaChi": "Ngõ 82 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Ngõ 82 Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_dai-phat-building-pj1425",
       "geo": {
         "lat": 21.0317344665527,
@@ -520,6 +850,15 @@
   {
     "default": {
       "diaChi": "Số 9 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 9 Đào Duy Anh",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phương Liên",
+        "xaKhongDau": "phuong-phuong-lien"
+      },
       "duAnID": "DA_dao-duy-anh-tower-so-9-dao-duy-anh-pj185",
       "geo": {
         "lat": 21.0086936950684,
@@ -534,6 +873,14 @@
   {
     "default": {
       "diaChi": "111 Đường Lý Chính Thắng, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "111 Đường Lý Chính Thắng",
+        "xaKhongDau": "111-duong-ly-chinh-thang"
+      },
       "duAnID": "DA_dc-tower-pj1872",
       "geo": {
         "lat": 10.7878265380859,
@@ -548,6 +895,15 @@
   {
     "default": {
       "diaChi": "Số 8 Tôn Thất Thuyết, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 8 Tôn Thất Thuyết",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Mỹ Đình 2",
+        "xaKhongDau": "phuong-my-dinh-2"
+      },
       "duAnID": "DA_detech-tower-pj220",
       "geo": {
         "lat": 21.0289001464844,
@@ -562,6 +918,14 @@
   {
     "default": {
       "diaChi": "Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_diamond-building-pj225",
       "geo": {
         "lat": 21.0310935974121,
@@ -576,6 +940,15 @@
   {
     "default": {
       "diaChi": "535 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "535 Kim Mã",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngọc Khánh",
+        "xaKhongDau": "phuong-ngoc-khánh"
+      },
       "duAnID": "DA_dmc-tower-pj1411",
       "geo": {
         "lat": 21.0294075012207,
@@ -590,6 +963,15 @@
   {
     "default": {
       "diaChi": "394 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "394 Ung Văn Khiêm",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 25",
+        "xaKhongDau": "phuong-25"
+      },
       "duAnID": "DA_ebm-building-pj1624",
       "geo": {
         "lat": 10.7994546890259,
@@ -604,6 +986,15 @@
   {
     "default": {
       "diaChi": "26-28 Hàm Nghi, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "26-28 Hàm Nghi",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_empire-tower-pj254",
       "geo": {
         "lat": 10.7709875106812,
@@ -618,6 +1009,15 @@
   {
     "default": {
       "diaChi": "Đường Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Cộng Hòa",
+        "huyen": "Tân Bình",
+        "huyenKhongDau": "tan-binh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 13",
+        "xaKhongDau": "phuong-13"
+      },
       "duAnID": "DA_etown-building-pj1773",
       "geo": {
         "lat": 10.8019409179688,
@@ -632,6 +1032,15 @@
   {
     "default": {
       "diaChi": "264 Đội cấn, Phường Ngọc Hà, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "264 Đội cấn",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngọc Hà",
+        "xaKhongDau": "phuong-ngoc-ha"
+      },
       "duAnID": "DA_flamingo-tower-pj212",
       "geo": {
         "lat": 21.0352783203125,
@@ -646,6 +1055,15 @@
   {
     "default": {
       "diaChi": "265 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "265 Cầu Giấy",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng",
+        "xaKhongDau": "phuong-dich-vong"
+      },
       "duAnID": "DA_flc-twin-towers-pj238",
       "geo": {
         "lat": 21.0344982147217,
@@ -660,6 +1078,15 @@
   {
     "default": {
       "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "36 Hoàng Cầu",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ô Chợ Dừa",
+        "xaKhongDau": "phuong-o-cho-dùa"
+      },
       "duAnID": "DA_geleximco-building-pj180",
       "geo": {
         "lat": 21.0184860229492,
@@ -674,6 +1101,15 @@
   {
     "default": {
       "diaChi": "Đường Đào Duy Anh, Phường 9, Phú Nhuận, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Đào Duy Anh",
+        "huyen": "Phú Nhuận",
+        "huyenKhongDau": "phu-nhuan",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 9",
+        "xaKhongDau": "phuong-9"
+      },
       "duAnID": "DA_gia-thy-building-pj1621",
       "geo": {
         "lat": 10.8068685531616,
@@ -688,6 +1124,15 @@
   {
     "default": {
       "diaChi": "Phố Giảng Võ, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "Phố Giảng Võ",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Giảng Võ",
+        "xaKhongDau": "phuong-giảng-võ"
+      },
       "duAnID": "DA_giang-vo-lake-view-building-pj1980",
       "geo": {
         "lat": 21.026834487915,
@@ -702,6 +1147,15 @@
   {
     "default": {
       "diaChi": "21 Phố Hàng Vôi, Phường Lý Thái Tổ, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "21 Phố Hàng Vôi",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Lý Thái Tổ",
+        "xaKhongDau": "phuong-lý-thái-tỏ"
+      },
       "duAnID": "DA_ha-noi-tung-shing-square-pj1437",
       "geo": {
         "lat": 21.0294208526611,
@@ -716,6 +1170,15 @@
   {
     "default": {
       "diaChi": "288 Phạm Văn Đồng, Phường Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "288 Phạm Văn Đồng",
+        "huyen": "Bắc Từ Liêm",
+        "huyenKhongDau": "bac-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Cổ Nhuế 1",
+        "xaKhongDau": "phuong-co-nhue-1"
+      },
       "duAnID": "DA_habico-tower-pj184",
       "geo": {
         "lat": 21.0536403656006,
@@ -730,6 +1193,14 @@
   {
     "default": {
       "diaChi": "203 Minh Khai, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "203 Minh Khai",
+        "xaKhongDau": "203-minh-khai"
+      },
       "duAnID": "DA_han-viet-tower-pj1519",
       "geo": {
         "lat": 20.9970607757568,
@@ -744,6 +1215,15 @@
   {
     "default": {
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Phạm Hùng",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Xã Mễ Trì",
+        "xaKhongDau": "xa-me-tri"
+      },
       "duAnID": "DA_handico-tower-pj188",
       "geo": {
         "lat": 21.0166149139404,
@@ -758,6 +1238,15 @@
   {
     "default": {
       "diaChi": "18 Lý Thường Kiệt, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "18 Lý Thường Kiệt",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_hanoitourist-building-pj1447",
       "geo": {
         "lat": 21.0223655700684,
@@ -772,6 +1261,14 @@
   {
     "default": {
       "diaChi": "4A Láng Hạ, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "4A Láng Hạ",
+        "xaKhongDau": "4a-lang-ha"
+      },
       "duAnID": "DA_harec-building-pj1472",
       "geo": {
         "lat": 21.0220699310303,
@@ -786,6 +1283,15 @@
   {
     "default": {
       "diaChi": "77 Đường Trần Nhân Tôn, Phường 9, Quận 5, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "77 Đường Trần Nhân Tôn",
+        "huyen": "Quận 5",
+        "huyenKhongDau": "quan-5",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 9",
+        "xaKhongDau": "phuong-9"
+      },
       "duAnID": "DA_hcmc-lottery-tower-pj1786",
       "geo": {
         "lat": 10.7607507705688,
@@ -800,6 +1306,15 @@
   {
     "default": {
       "diaChi": "Đường Huỳnh Tấn Phát, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Huỳnh Tấn Phát",
+        "huyen": "Quận 7",
+        "huyenKhongDau": "quan-7",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Phú Thuận",
+        "xaKhongDau": "phuong-phu-thuan"
+      },
       "duAnID": "DA_hemera-building-pj1597",
       "geo": {
         "lat": 10.7307729721069,
@@ -814,6 +1329,15 @@
   {
     "default": {
       "diaChi": "đường Mễ Trì, Phường Mỹ Đình 1, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "đường Mễ Trì",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Mỹ Đình 1",
+        "xaKhongDau": "phuong-my-dinh-1"
+      },
       "duAnID": "DA_hh3-tower-pj1465",
       "geo": {
         "lat": 21.0165576934814,
@@ -828,6 +1352,14 @@
   {
     "default": {
       "diaChi": "185 Giảng Võ, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "185 Giảng Võ",
+        "xaKhongDau": "185-giang-vo"
+      },
       "duAnID": "DA_hittc-building-pj1474",
       "geo": {
         "lat": 21.0308094024658,
@@ -842,6 +1374,15 @@
   {
     "default": {
       "diaChi": "lô A2B, Cụm TTCN và CNN Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_hoang-linh-building-pj1418",
       "geo": {
         "lat": 21.0319423675537,
@@ -856,6 +1397,14 @@
   {
     "default": {
       "diaChi": "Phố Xã Đàn, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phố Xã Đàn",
+        "xaKhongDau": "pho-xa-dan"
+      },
       "duAnID": "DA_hop-nhat-building-pj213",
       "geo": {
         "lat": 21.0150508880615,
@@ -870,6 +1419,15 @@
   {
     "default": {
       "diaChi": "159 Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "159 Điện Biên Phủ",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 15",
+        "xaKhongDau": "phuong-15"
+      },
       "duAnID": "DA_hud-building-pj1640",
       "geo": {
         "lat": 10.797924041748,
@@ -884,6 +1442,15 @@
   {
     "default": {
       "diaChi": "Đường Lê Văn Lương, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Lê Văn Lương",
+        "huyen": "Thanh Xuân",
+        "huyenKhongDau": "thanh-xuan",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nhân Chính",
+        "xaKhongDau": "phuong-nhan-chinh"
+      },
       "duAnID": "DA_hud-tower-pj163",
       "geo": {
         "lat": 21.0020999908447,
@@ -898,6 +1465,15 @@
   {
     "default": {
       "diaChi": "243A Đê La Thành, Phường Láng Thượng, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "243A Đê La Thành",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Láng Thượng",
+        "xaKhongDau": "phuong-láng-thuong"
+      },
       "duAnID": "DA_icon4-tower-pj1209",
       "geo": {
         "lat": 21.0281600952148,
@@ -912,6 +1488,15 @@
   {
     "default": {
       "diaChi": "163 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "163 Phố Hai Bà Trưng",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_idc-building-pj1991",
       "geo": {
         "lat": 10.7843942642212,
@@ -926,6 +1511,15 @@
   {
     "default": {
       "diaChi": "27B Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "27B Nguyễn Đình Chiểu",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_img-building-pj1572",
       "geo": {
         "lat": 10.7878694534302,
@@ -940,6 +1534,14 @@
   {
     "default": {
       "diaChi": "17 Ngô Quyền, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "17 Ngô Quyền",
+        "xaKhongDau": "17-ngo-quyen"
+      },
       "duAnID": "DA_international-centre-pj1408",
       "geo": {
         "lat": 21.0250625610352,
@@ -954,6 +1556,15 @@
   {
     "default": {
       "diaChi": "266 Đội cấn, Phường Liễu Giai, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "266 Đội cấn",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Liễu Giai",
+        "xaKhongDau": "phuong-liẽu-giai"
+      },
       "duAnID": "DA_itt-building-pj243",
       "geo": {
         "lat": 21.0366096496582,
@@ -968,6 +1579,15 @@
   {
     "default": {
       "diaChi": "Đường Cách Mạng Tháng Tám, Phường 7, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Cách Mạng Tháng Tám",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 7",
+        "xaKhongDau": "phuong-7"
+      },
       "duAnID": "DA_jabes-2-building-pj1865",
       "geo": {
         "lat": 10.7764101028442,
@@ -982,6 +1602,15 @@
   {
     "default": {
       "diaChi": "56 Bến Vân Đồn, Phường 12, Quận 4, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "56 Bến Vân Đồn",
+        "huyen": "Quận 4",
+        "huyenKhongDau": "quan-4",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 12",
+        "xaKhongDau": "phuong-12"
+      },
       "duAnID": "DA_khahomex-savico-tower-pj904",
       "geo": {
         "lat": 10.7662057876587,
@@ -996,6 +1625,15 @@
   {
     "default": {
       "diaChi": "193-195 Khâm Thiên, Phường Thổ Quan, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "193-195 Khâm Thiên",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Thổ Quan",
+        "xaKhongDau": "phuong-thỏ-quan"
+      },
       "duAnID": "DA_kham-thien-building-pj203",
       "geo": {
         "lat": 21.0188655853271,
@@ -1010,6 +1648,15 @@
   {
     "default": {
       "diaChi": "Ngõ 28 Xuân La, Phường Xuân La, Tây Hồ, Hà Nội",
+      "diaChinh": {
+        "duong": "Ngõ 28 Xuân La",
+        "huyen": "Tây Hồ",
+        "huyenKhongDau": "tay-ho",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Xuân La",
+        "xaKhongDau": "phuong-xuan-la"
+      },
       "duAnID": "DA_khu-chung-cu-xuan-la-pj729",
       "geo": {
         "lat": 21.0656661987305,
@@ -1024,6 +1671,15 @@
   {
     "default": {
       "diaChi": "292 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "292 Tây Sơn",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Liệt",
+        "xaKhongDau": "phuong-trung-liẹt"
+      },
       "duAnID": "DA_kinh-do-building-pj236",
       "geo": {
         "lat": 21.0069637298584,
@@ -1038,6 +1694,15 @@
   {
     "default": {
       "diaChi": "230 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "230 Nguyễn Trãi",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Cư Trinh",
+        "xaKhongDau": "phuong-nguyen-cu-trinh"
+      },
       "duAnID": "DA_lancaster-nguyen-trai-tower-pj1094",
       "geo": {
         "lat": 10.7647552490234,
@@ -1052,6 +1717,15 @@
   {
     "default": {
       "diaChi": "Đường Tôn Thất Thuyết, Phường 16, Quận 4, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Tôn Thất Thuyết",
+        "huyen": "Quận 4",
+        "huyenKhongDau": "quan-4",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 16",
+        "xaKhongDau": "phuong-16"
+      },
       "duAnID": "DA_lancaster-residences-d4-pj1097",
       "geo": {
         "lat": 10.753288269043,
@@ -1066,6 +1740,14 @@
   {
     "default": {
       "diaChi": "134/1 Cách Mạng Tháng Tám, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "134/1 Cách Mạng Tháng Tám",
+        "xaKhongDau": "134-1-cach-mang-thang-tam"
+      },
       "duAnID": "DA_lien-hoa-building-pj1686",
       "geo": {
         "lat": 10.7722473144531,
@@ -1080,6 +1762,15 @@
   {
     "default": {
       "diaChi": "Đường Lê Văn Lương, Xã Trung Văn, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Lê Văn Lương",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Xã Trung Văn",
+        "xaKhongDau": "xa-trung-van"
+      },
       "duAnID": "DA_lilama-10-pj1466",
       "geo": {
         "lat": 20.9978046417236,
@@ -1094,6 +1785,15 @@
   {
     "default": {
       "diaChi": "124  Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "124  Minh Khai",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Minh Khai",
+        "xaKhongDau": "phuong-minh-khai"
+      },
       "duAnID": "DA_lilama-124-minh-khai-pj1638",
       "geo": {
         "lat": 20.9947128295898,
@@ -1108,6 +1808,15 @@
   {
     "default": {
       "diaChi": "9 - 11 Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "9 - 11 Tôn Đức Thắng",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_lim-tower-pj1502",
       "geo": {
         "lat": 10.7743520736694,
@@ -1122,6 +1831,15 @@
   {
     "default": {
       "diaChi": "38 Trần Thái Tông, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "38 Trần Thái Tông",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng",
+        "xaKhongDau": "phuong-dich-vong"
+      },
       "duAnID": "DA_lod-building-pj1436",
       "geo": {
         "lat": 21.031229019165,
@@ -1136,6 +1854,15 @@
   {
     "default": {
       "diaChi": "262 Đường Huỳnh Văn Bánh, Phường 11, Phú Nhuận, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "262 Đường Huỳnh Văn Bánh",
+        "huyen": "Phú Nhuận",
+        "huyenKhongDau": "phu-nhuan",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 11",
+        "xaKhongDau": "phuong-11"
+      },
       "duAnID": "DA_lucky-house-pj1752",
       "geo": {
         "lat": 10.7918148040771,
@@ -1150,6 +1877,15 @@
   {
     "default": {
       "diaChi": "173A Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "173A Nguyễn Văn Trỗi",
+        "huyen": "Phú Nhuận",
+        "huyenKhongDau": "phu-nhuan",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 11",
+        "xaKhongDau": "phuong-11"
+      },
       "duAnID": "DA_lutaco-tower-pj1618",
       "geo": {
         "lat": 10.7960214614868,
@@ -1164,6 +1900,15 @@
   {
     "default": {
       "diaChi": "444 Hoàng Hoa Thám, Phường Bưởi, Tây Hồ, Hà Nội",
+      "diaChinh": {
+        "duong": "444 Hoàng Hoa Thám",
+        "huyen": "Tây Hồ",
+        "huyenKhongDau": "tay-ho",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bưởi",
+        "xaKhongDau": "phuong-buoi"
+      },
       "duAnID": "DA_machinco-building-pj874",
       "geo": {
         "lat": 21.0437870025635,
@@ -1178,6 +1923,15 @@
   {
     "default": {
       "diaChi": "85 Đường Nguyễn Hữu Cầu, Phường Tân Định, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "85 Đường Nguyễn Hữu Cầu",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Tân Định",
+        "xaKhongDau": "phuong-tan-dinh"
+      },
       "duAnID": "DA_mai-hong-que-building-pj1982",
       "geo": {
         "lat": 10.7904319763184,
@@ -1192,6 +1946,15 @@
   {
     "default": {
       "diaChi": "Ngõ 11, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_maple-tower-pj1417",
       "geo": {
         "lat": 21.0301380157471,
@@ -1206,6 +1969,15 @@
   {
     "default": {
       "diaChi": "Đường Cách Mạng Tháng Tám, Phường 11, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Cách Mạng Tháng Tám",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 11",
+        "xaKhongDau": "phuong-11"
+      },
       "duAnID": "DA_mb-bank-tower-pj1916",
       "geo": {
         "lat": 10.7854194641113,
@@ -1220,6 +1992,15 @@
   {
     "default": {
       "diaChi": "Số 2 Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Số 2 Ngô Đức Kế",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_me-linh-point-tower-pj2125",
       "geo": {
         "lat": 10.7745132446289,
@@ -1234,6 +2015,15 @@
   {
     "default": {
       "diaChi": "4 Vũ Ngọc Phan, Đống Đa , Hà Nội , Việt Nam",
+      "diaChinh": {
+        "duong": "4 Vũ Ngọc Phan",
+        "huyen": "Hà Nội",
+        "huyenKhongDau": "ha-noi",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Đống Đa",
+        "xaKhongDau": "dong-da"
+      },
       "duAnID": "DA_mecanimex-building-pj1493",
       "geo": {
         "lat": 21.0138740539551,
@@ -1248,6 +2038,15 @@
   {
     "default": {
       "diaChi": "422 Đường Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "422 Đường Ung Văn Khiêm",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 25",
+        "xaKhongDau": "phuong-25"
+      },
       "duAnID": "DA_melody-tower-pj1801",
       "geo": {
         "lat": 10.7987823486328,
@@ -1262,6 +2061,15 @@
   {
     "default": {
       "diaChi": "17 Bà Huyện Thanh Quan, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "17 Bà Huyện Thanh Quan",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_minh-long-tower-pj1520",
       "geo": {
         "lat": 10.775221824646,
@@ -1276,6 +2084,15 @@
   {
     "default": {
       "diaChi": "Lô E2, Khu đô thị mới Cầu Giấy, Đường Dương Đình Nghệ, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Dương Đình Nghệ",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Yên Hòa",
+        "xaKhongDau": "phuong-yen-hoa"
+      },
       "duAnID": "DA_mitec-tower-pj1431",
       "geo": {
         "lat": 21.0197811126709,
@@ -1290,6 +2107,15 @@
   {
     "default": {
       "diaChi": "19 Bà Triệu, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "19 Bà Triệu",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Tràng Tiền",
+        "xaKhongDau": "phuong-trang-tièn"
+      },
       "duAnID": "DA_naforimex-building-pj1444",
       "geo": {
         "lat": 21.024694442749,
@@ -1304,6 +2130,15 @@
   {
     "default": {
       "diaChi": "KĐT Dương Nội, Phường La Khê, Hà Đông, Hà Nội",
+      "diaChinh": {
+        "duong": "KĐT Dương Nội",
+        "huyen": "Hà Đông",
+        "huyenKhongDau": "ha-dong",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường La Khê",
+        "xaKhongDau": "phuong-la-khe"
+      },
       "duAnID": "DA_nam-cuong-building-pj1468",
       "geo": {
         "lat": 20.9766731262207,
@@ -1318,6 +2153,15 @@
   {
     "default": {
       "diaChi": "Khu đô thị Vĩnh Hoàng, Đường Kim Đồng, Hoàng Mai, Hà Nội",
+      "diaChinh": {
+        "duong": "Khu đô thị Vĩnh Hoàng",
+        "huyen": "Hoàng Mai",
+        "huyenKhongDau": "hoang-mai",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Đường Kim Đồng",
+        "xaKhongDau": "duong-kim-dong"
+      },
       "duAnID": "DA_nam-hai-lakeview-pj1469",
       "geo": {
         "lat": 20.9834575653076,
@@ -1332,6 +2176,15 @@
   {
     "default": {
       "diaChi": "76 Cách Mạng Tháng Tám, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "76 Cách Mạng Tháng Tám",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_ngoc-dong-duong-building-pj1683",
       "geo": {
         "lat": 10.7753705978394,
@@ -1346,6 +2199,15 @@
   {
     "default": {
       "diaChi": "278 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
+      "diaChinh": {
+        "duong": "278 Thụy Khuê",
+        "huyen": "Tây Hồ",
+        "huyenKhongDau": "tay-ho",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Thụy Khuê",
+        "xaKhongDau": "phuong-thuy-khue"
+      },
       "duAnID": "DA_ngoc-linh-building-pj223",
       "geo": {
         "lat": 21.0443878173828,
@@ -1360,6 +2222,15 @@
   {
     "default": {
       "diaChi": "Số 1 Đào Duy Anh, Phường Phương Mai, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 1 Đào Duy Anh",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phương Mai",
+        "xaKhongDau": "phuong-phuong-mai"
+      },
       "duAnID": "DA_ocean-park-pj1941",
       "geo": {
         "lat": 21.0074348449707,
@@ -1374,6 +2245,15 @@
   {
     "default": {
       "diaChi": "6B Tràng Tiền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "6B Tràng Tiền",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_opera-business-centre-pj1440",
       "geo": {
         "lat": 21.0250358581543,
@@ -1388,6 +2268,15 @@
   {
     "default": {
       "diaChi": "324 Tây Sơn, Phường Ngã Tư Sở, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "324 Tây Sơn",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngã Tư Sở",
+        "xaKhongDau": "phuong-ngã-tu-sỏ"
+      },
       "duAnID": "DA_oriental-tower-324-tay-son-pj2180",
       "geo": {
         "lat": 21.0055046081543,
@@ -1402,6 +2291,15 @@
   {
     "default": {
       "diaChi": "Đường Đông Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Đông Du",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_parksimex-building-pj1619",
       "geo": {
         "lat": 10.7766170501709,
@@ -1416,6 +2314,15 @@
   {
     "default": {
       "diaChi": "139 Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "139 Pasteur",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_pasteur-tower-pj1957",
       "geo": {
         "lat": 10.7834959030151,
@@ -1430,6 +2337,15 @@
   {
     "default": {
       "diaChi": "Đường Điện Biên Phủ, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Điện Biên Phủ",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 25",
+        "xaKhongDau": "phuong-25"
+      },
       "duAnID": "DA_peace-building-pj1764",
       "geo": {
         "lat": 10.8004007339478,
@@ -1444,6 +2360,15 @@
   {
     "default": {
       "diaChi": "105 Trường Chinh, Phường Phương Liệt, Thanh Xuân, Hà Nội",
+      "diaChinh": {
+        "duong": "105 Trường Chinh",
+        "huyen": "Thanh Xuân",
+        "huyenKhongDau": "thanh-xuan",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phương Liệt",
+        "xaKhongDau": "phuong-phuong-liet"
+      },
       "duAnID": "DA_pearl-phuong-nam-towers-pj193",
       "geo": {
         "lat": 20.9987144470215,
@@ -1458,6 +2383,15 @@
   {
     "default": {
       "diaChi": "83A  Lý Thường Kiệt, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "83A  Lý Thường Kiệt",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trần Hưng Đạo",
+        "xaKhongDau": "phuong-tran-hung-dạo"
+      },
       "duAnID": "DA_phu-dien-building-pj1407",
       "geo": {
         "lat": 21.0252819061279,
@@ -1472,6 +2406,15 @@
   {
     "default": {
       "diaChi": "186 Đường Điện Biên Phủ, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "186 Đường Điện Biên Phủ",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_pjico-building-pj1730",
       "geo": {
         "lat": 10.7839117050171,
@@ -1486,6 +2429,15 @@
   {
     "default": {
       "diaChi": "Đường Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Pasteur",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_pmc-building-pj1738",
       "geo": {
         "lat": 10.7819318771362,
@@ -1500,6 +2452,15 @@
   {
     "default": {
       "diaChi": "53 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "53 Quang Trung",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nguyễn Du",
+        "xaKhongDau": "phuong-nguyẽn-du"
+      },
       "duAnID": "DA_prime-centre-pj1456",
       "geo": {
         "lat": 21.0183448791504,
@@ -1514,6 +2475,14 @@
   {
     "default": {
       "diaChi": "Đường Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Đường Hoàng Quốc Việt",
+        "xaKhongDau": "duong-hoang-quoc-viet"
+      },
       "duAnID": "DA_pv-oil-tower-pj2075",
       "geo": {
         "lat": 21.0466194152832,
@@ -1528,6 +2497,15 @@
   {
     "default": {
       "diaChi": "Đường Nguyễn Gia Thiều, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Nguyễn Gia Thiều",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_pvc-sai-gon-building-pj1688",
       "geo": {
         "lat": 10.7790470123291,
@@ -1542,6 +2520,15 @@
   {
     "default": {
       "diaChi": "Đường Trần Thái Tông, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Trần Thái Tông",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Yên Hòa",
+        "xaKhongDau": "phuong-yen-hoa"
+      },
       "duAnID": "DA_pvi-tower-pj242",
       "geo": {
         "lat": 21.0240097045898,
@@ -1556,6 +2543,15 @@
   {
     "default": {
       "diaChi": "26  Phan Đăng Lưu, Phường 6, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "26  Phan Đăng Lưu",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_qmobile-tower-pj1628",
       "geo": {
         "lat": 10.8036308288574,
@@ -1570,6 +2566,14 @@
   {
     "default": {
       "diaChi": "885 Hồng Hà, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "885 Hồng Hà",
+        "xaKhongDau": "885-hong-ha"
+      },
       "duAnID": "DA_red-river-building-pj235",
       "geo": {
         "lat": 21.0250244140625,
@@ -1584,6 +2588,15 @@
   {
     "default": {
       "diaChi": "Đường Nguyễn Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Nguyễn Du",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_resco-building-pj1705",
       "geo": {
         "lat": 10.7775096893311,
@@ -1598,6 +2611,15 @@
   {
     "default": {
       "diaChi": "521 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "521 Kim Mã",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngọc Khánh",
+        "xaKhongDau": "phuong-ngoc-khánh"
+      },
       "duAnID": "DA_resco-tower-pj187",
       "geo": {
         "lat": 21.0295467376709,
@@ -1612,6 +2634,15 @@
   {
     "default": {
       "diaChi": "170 Ngọc Khánh, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "170 Ngọc Khánh",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Giảng Võ",
+        "xaKhongDau": "phuong-giảng-võ"
+      },
       "duAnID": "DA_rose-garden-pj246",
       "geo": {
         "lat": 21.0247993469238,
@@ -1626,6 +2657,15 @@
   {
     "default": {
       "diaChi": "C17-1-1 đường Nguyễn Lương Bằng, Phường Tân Phú, Quận 7, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "C17-1-1 đường Nguyễn Lương Bằng",
+        "huyen": "Quận 7",
+        "huyenKhongDau": "quan-7",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Tân Phú",
+        "xaKhongDau": "phuong-tan-phu"
+      },
       "duAnID": "DA_royal-tower-pj619",
       "geo": {
         "lat": 10.7252864837646,
@@ -1640,6 +2680,15 @@
   {
     "default": {
       "diaChi": "số 66 Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "số 66 Phó Đức Chính",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Thái Bình",
+        "xaKhongDau": "phuong-nguyen-thai-binh"
+      },
       "duAnID": "DA_sacomreal-generalimex-pj813",
       "geo": {
         "lat": 10.7698841094971,
@@ -1654,6 +2703,15 @@
   {
     "default": {
       "diaChi": "7 Đường Lý Tự Trọng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "7 Đường Lý Tự Trọng",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_saigon-land-building-pj1707",
       "geo": {
         "lat": 10.7824678421021,
@@ -1668,6 +2726,15 @@
   {
     "default": {
       "diaChi": "123 Đường Trương Định, Phường 7, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "123 Đường Trương Định",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 7",
+        "xaKhongDau": "phuong-7"
+      },
       "duAnID": "DA_saigon-software-park-pj1871",
       "geo": {
         "lat": 10.780818939209,
@@ -1682,6 +2749,15 @@
   {
     "default": {
       "diaChi": "37 Phố Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "37 Phố Tôn Đức Thắng",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_saigon-trade-center-pj1704",
       "geo": {
         "lat": 10.7840909957886,
@@ -1696,6 +2772,15 @@
   {
     "default": {
       "diaChi": "444  Nguyễn Chí Thanh, Phường 6, Quận 10, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "444  Nguyễn Chí Thanh",
+        "huyen": "Quận 10",
+        "huyenKhongDau": "quan-10",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_samco-building-pj1570",
       "geo": {
         "lat": 10.759072303772,
@@ -1710,6 +2795,15 @@
   {
     "default": {
       "diaChi": "Đường D1, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường D1",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 25",
+        "xaKhongDau": "phuong-25"
+      },
       "duAnID": "DA_samland-river-view-pj982",
       "geo": {
         "lat": 10.8027076721191,
@@ -1724,6 +2818,15 @@
   {
     "default": {
       "diaChi": "19A Cộng Hòa, Phường 12, Tân Bình, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "19A Cộng Hòa",
+        "huyen": "Tân Bình",
+        "huyenKhongDau": "tan-binh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 12",
+        "xaKhongDau": "phuong-12"
+      },
       "duAnID": "DA_scetpa-building-pj1571",
       "geo": {
         "lat": 10.800856590271,
@@ -1738,6 +2841,15 @@
   {
     "default": {
       "diaChi": "137 Nguyễn Văn Cừ, Phường Bồ Đề, Long Biên, Hà Nội",
+      "diaChinh": {
+        "duong": "137 Nguyễn Văn Cừ",
+        "huyen": "Long Biên",
+        "huyenKhongDau": "long-bien",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bồ Đề",
+        "xaKhongDau": "phuong-bo-de"
+      },
       "duAnID": "DA_silver-wings-building-pj218",
       "geo": {
         "lat": 21.0427532196045,
@@ -1752,6 +2864,15 @@
   {
     "default": {
       "diaChi": "163 Đường Trần Hưng Đạo, Phường Cô Giang, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "163 Đường Trần Hưng Đạo",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Cô Giang",
+        "xaKhongDau": "phuong-co-giang"
+      },
       "duAnID": "DA_smart-view-building-pj1994",
       "geo": {
         "lat": 10.766300201416,
@@ -1766,6 +2887,15 @@
   {
     "default": {
       "diaChi": "33 Đường Mạc Đĩnh Chi, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "33 Đường Mạc Đĩnh Chi",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_star-building-pj1710",
       "geo": {
         "lat": 10.7847423553467,
@@ -1780,6 +2910,15 @@
   {
     "default": {
       "diaChi": "Đường Hạ Hồi, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Hạ Hồi",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trần Hưng Đạo",
+        "xaKhongDau": "phuong-tran-hung-dạo"
+      },
       "duAnID": "DA_std-tower-pj1112",
       "geo": {
         "lat": 21.0210151672363,
@@ -1794,6 +2933,15 @@
   {
     "default": {
       "diaChi": "13 Hai Bà Trưng, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "13 Hai Bà Trưng",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Tràng Tiền",
+        "xaKhongDau": "phuong-trang-tièn"
+      },
       "duAnID": "DA_sun-city-building-pj1410",
       "geo": {
         "lat": 21.0234928131104,
@@ -1808,6 +2956,15 @@
   {
     "default": {
       "diaChi": "115 Nguyễn Huệ, Phường Bến Nghé, Quận 1 , Tp.HCM , Việt Nam",
+      "diaChinh": {
+        "duong": "Phường Bến Nghé",
+        "huyen": "Tp.HCM",
+        "huyenKhongDau": "tp-hcm",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Quận 1",
+        "xaKhongDau": "quan-1"
+      },
       "duAnID": "DA_sunwah-tower-pj1677",
       "geo": {
         "lat": 10.7737913131714,
@@ -1822,6 +2979,15 @@
   {
     "default": {
       "diaChi": "225 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "225 Phố Hai Bà Trưng",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_tai-loc-office-building-pj1913",
       "geo": {
         "lat": 10.7868423461914,
@@ -1836,6 +3002,15 @@
   {
     "default": {
       "diaChi": "22 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "22 Láng Hạ",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Láng Hạ",
+        "xaKhongDau": "phuong-láng-hạ"
+      },
       "duAnID": "DA_tdl-building-pj191",
       "geo": {
         "lat": 21.0156078338623,
@@ -1850,6 +3025,15 @@
   {
     "default": {
       "diaChi": "111 - 121 Ngô Gia Tự, Phường 2, Quận 10, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "111 - 121 Ngô Gia Tự",
+        "huyen": "Quận 10",
+        "huyenKhongDau": "quan-10",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 2",
+        "xaKhongDau": "phuong-2"
+      },
       "duAnID": "DA_tenimex-office-building-pj256",
       "geo": {
         "lat": 10.7654151916504,
@@ -1864,6 +3048,15 @@
   {
     "default": {
       "diaChi": "179 Đường Nguyễn Cư Trinh, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "179 Đường Nguyễn Cư Trinh",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Cư Trinh",
+        "xaKhongDau": "phuong-nguyen-cu-trinh"
+      },
       "duAnID": "DA_thai-son-building-pj1984",
       "geo": {
         "lat": 10.7625875473022,
@@ -1878,6 +3071,15 @@
   {
     "default": {
       "diaChi": "132 Kim Mã, Phường Kim Mã, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "132 Kim Mã",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Kim Mã",
+        "xaKhongDau": "phuong-kim-mã"
+      },
       "duAnID": "DA_thanh-dong-building-pj1481",
       "geo": {
         "lat": 21.0319347381592,
@@ -1892,6 +3094,15 @@
   {
     "default": {
       "diaChi": "25 Hoàng Hoa Thám, Phường 6, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "25 Hoàng Hoa Thám",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 6",
+        "xaKhongDau": "phuong-6"
+      },
       "duAnID": "DA_thao-dien-building-pj1636",
       "geo": {
         "lat": 10.805362701416,
@@ -1906,6 +3117,15 @@
   {
     "default": {
       "diaChi": "22-22bis Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "22-22bis Lê Thánh Tôn",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_the-lancaster-ho-chi-minh-pj526",
       "geo": {
         "lat": 10.7810821533203,
@@ -1920,6 +3140,15 @@
   {
     "default": {
       "diaChi": "Số 1 Phạm Ngũ Lão, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Số 1 Phạm Ngũ Lão",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Thái Bình",
+        "xaKhongDau": "phuong-nguyen-thai-binh"
+      },
       "duAnID": "DA_the-one-ho-chi-minh-pj790",
       "geo": {
         "lat": 10.7701625823975,
@@ -1934,6 +3163,15 @@
   {
     "default": {
       "diaChi": "13 Đường Cao Thắng, Phường 2, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "13 Đường Cao Thắng",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 2",
+        "xaKhongDau": "phuong-2"
+      },
       "duAnID": "DA_thien-hong-building-pj1914",
       "geo": {
         "lat": 10.7687978744507,
@@ -1948,6 +3186,15 @@
   {
     "default": {
       "diaChi": "4 Liễu Giai, Phường Cống Vị, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "4 Liễu Giai",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Cống Vị",
+        "xaKhongDau": "phuong-cóng-vị"
+      },
       "duAnID": "DA_tid-tower-pj1479",
       "geo": {
         "lat": 21.0369853973389,
@@ -1962,6 +3209,15 @@
   {
     "default": {
       "diaChi": "126 Đường Lê Văn Sỹ, Phường 14, Quận 3, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "126 Đường Lê Văn Sỹ",
+        "huyen": "Quận 3",
+        "huyenKhongDau": "quan-3",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 14",
+        "xaKhongDau": "phuong-14"
+      },
       "duAnID": "DA_tin-nghia-building-pj1915",
       "geo": {
         "lat": 10.7866973876953,
@@ -1976,6 +3232,15 @@
   {
     "default": {
       "diaChi": "Đường Trần Hưng Đạo, Phường Cầu Kho, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Trần Hưng Đạo",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Cầu Kho",
+        "xaKhongDau": "phuong-cau-kho"
+      },
       "duAnID": "DA_tkt-office-building-pj1868",
       "geo": {
         "lat": 10.7567739486694,
@@ -1990,6 +3255,15 @@
   {
     "default": {
       "diaChi": "Số 1 Lương Yên, Phường Bạch Đằng, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 1 Lương Yên",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bạch Đằng",
+        "xaKhongDau": "phuong-bạch-dang"
+      },
       "duAnID": "DA_tmc-tower-pj728",
       "geo": {
         "lat": 21.0120162963867,
@@ -2004,6 +3278,15 @@
   {
     "default": {
       "diaChi": "Đầu cầu Vĩnh Tuy, Phường Long Biên, Long Biên, Hà Nội",
+      "diaChinh": {
+        "duong": "Đầu cầu Vĩnh Tuy",
+        "huyen": "Long Biên",
+        "huyenKhongDau": "long-bien",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Long Biên",
+        "xaKhongDau": "phuong-long-bien"
+      },
       "duAnID": "DA_to-hop-incomex-pj250",
       "geo": {
         "lat": 21.0314464569092,
@@ -2018,6 +3301,15 @@
   {
     "default": {
       "diaChi": "14 Lý Nam Đế, Phường Hàng Mã, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "14 Lý Nam Đế",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Hàng Mã",
+        "xaKhongDau": "phuong-hang-mã"
+      },
       "duAnID": "DA_toa-nha-14-ly-nam-de-pj1449",
       "geo": {
         "lat": 21.0375938415527,
@@ -2032,6 +3324,15 @@
   {
     "default": {
       "diaChi": "169 Nguyễn Ngọc Vũ, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "169 Nguyễn Ngọc Vũ",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Hòa",
+        "xaKhongDau": "phuong-trung-hoa"
+      },
       "duAnID": "DA_toa-nha-169-nguyen-ngoc-vu-pj1419",
       "geo": {
         "lat": 21.0120620727539,
@@ -2046,6 +3347,15 @@
   {
     "default": {
       "diaChi": "183 Nguyễn Lương Bằng, Phường Nam Đồng, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "183 Nguyễn Lương Bằng",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nam Đồng",
+        "xaKhongDau": "phuong-nam-dòng"
+      },
       "duAnID": "DA_toa-nha-183-nguyen-luong-bang-pj196",
       "geo": {
         "lat": 21.0141201019287,
@@ -2060,6 +3370,15 @@
   {
     "default": {
       "diaChi": "Lô A1E, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_toa-nha-3a-pj1432",
       "geo": {
         "lat": 21.0321445465088,
@@ -2074,6 +3393,15 @@
   {
     "default": {
       "diaChi": "95 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "95 Cầu Giấy",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng",
+        "xaKhongDau": "phuong-dich-vong"
+      },
       "duAnID": "DA_toa-nha-95-cau-giay-pj1426",
       "geo": {
         "lat": 21.0313854217529,
@@ -2088,6 +3416,15 @@
   {
     "default": {
       "diaChi": "98 Hoàng Ngân, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "98 Hoàng Ngân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Hòa",
+        "xaKhongDau": "phuong-trung-hoa"
+      },
       "duAnID": "DA_toa-nha-98-hoang-ngan-pj1433",
       "geo": {
         "lat": 21.0098342895508,
@@ -2102,6 +3439,14 @@
   {
     "default": {
       "diaChi": "Đường Đại lộ Thăng Long, Thạch Thất, Hà Nội",
+      "diaChinh": {
+        "huyen": "Thạch Thất",
+        "huyenKhongDau": "thach-that",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Đường Đại lộ Thăng Long",
+        "xaKhongDau": "duong-dai-lo-thang-long"
+      },
       "duAnID": "DA_toa-nha-cnc-viettel-pj249",
       "geo": {
         "lat": 20.9972801208496,
@@ -2116,6 +3461,15 @@
   {
     "default": {
       "diaChi": "59 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "59 Quang Trung",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nguyễn Du",
+        "xaKhongDau": "phuong-nguyẽn-du"
+      },
       "duAnID": "DA_toa-nha-cty-cpxd-so-1-hn-pj1453",
       "geo": {
         "lat": 21.0179023742676,
@@ -2130,6 +3484,15 @@
   {
     "default": {
       "diaChi": "105 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "105 Láng Hạ",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Láng Hạ",
+        "xaKhongDau": "phuong-láng-hạ"
+      },
       "duAnID": "DA_toa-nha-ford-thang-long-pj1545",
       "geo": {
         "lat": 21.0130939483643,
@@ -2144,6 +3507,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_toa-nha-fpt-cau-giay-pj233",
       "geo": {
         "lat": 21.0307483673096,
@@ -2158,6 +3530,15 @@
   {
     "default": {
       "diaChi": "30 - 32 Hòa Mã, Phường Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "30 - 32 Hòa Mã",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngô Thì Nhậm",
+        "xaKhongDau": "phuong-ngo-thì-nhạm"
+      },
       "duAnID": "DA_toa-nha-grand-building-pj205",
       "geo": {
         "lat": 21.0153503417969,
@@ -2172,6 +3553,15 @@
   {
     "default": {
       "diaChi": "29 Nguyễn Đình Chiểu, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "29 Nguyễn Đình Chiểu",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nguyễn Du",
+        "xaKhongDau": "phuong-nguyẽn-du"
+      },
       "duAnID": "DA_toa-nha-green-park-pj621",
       "geo": {
         "lat": 21.0147171020508,
@@ -2186,6 +3576,15 @@
   {
     "default": {
       "diaChi": "1119 Trần Hưng Đạo, Phường 5, Quận 5, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "1119 Trần Hưng Đạo",
+        "huyen": "Quận 5",
+        "huyenKhongDau": "quan-5",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 5",
+        "xaKhongDau": "phuong-5"
+      },
       "duAnID": "DA_toa-nha-ha-phan-pj1696",
       "geo": {
         "lat": 10.7530908584595,
@@ -2200,6 +3599,15 @@
   {
     "default": {
       "diaChi": "152 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
+      "diaChinh": {
+        "duong": "152 Thụy Khuê",
+        "huyen": "Tây Hồ",
+        "huyenKhongDau": "tay-ho",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Thụy Khuê",
+        "xaKhongDau": "phuong-thuy-khue"
+      },
       "duAnID": "DA_toa-nha-hipt-pj1460",
       "geo": {
         "lat": 21.0433807373047,
@@ -2214,6 +3622,15 @@
   {
     "default": {
       "diaChi": "299 Trung Kính, Phường Yên Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "299 Trung Kính",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Yên Hòa",
+        "xaKhongDau": "phuong-yen-hoa"
+      },
       "duAnID": "DA_toa-nha-housing-pj1416",
       "geo": {
         "lat": 21.0211601257324,
@@ -2228,6 +3645,15 @@
   {
     "default": {
       "diaChi": "17 Phạm Hùng, Nam Từ Liêm , Hà Nội , Việt Nam",
+      "diaChinh": {
+        "duong": "17 Phạm Hùng",
+        "huyen": "Hà Nội",
+        "huyenKhongDau": "ha-noi",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Nam Từ Liêm",
+        "xaKhongDau": "nam-tu-liem"
+      },
       "duAnID": "DA_toa-nha-icd-pj1467",
       "geo": {
         "lat": 21.0283050537109,
@@ -2242,6 +3668,15 @@
   {
     "default": {
       "diaChi": "Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Trần Thái Tông",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_toa-nha-intracom-pj216",
       "geo": {
         "lat": 21.029634475708,
@@ -2256,6 +3691,15 @@
   {
     "default": {
       "diaChi": "101A Nguyễn Khuyến, Đống Đa , Hà Nội , Việt Nam",
+      "diaChinh": {
+        "duong": "101A Nguyễn Khuyến",
+        "huyen": "Hà Nội",
+        "huyenKhongDau": "ha-noi",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Đống Đa",
+        "xaKhongDau": "dong-da"
+      },
       "duAnID": "DA_toa-nha-nguyen-khuyen-pj1490",
       "geo": {
         "lat": 21.0284099578857,
@@ -2270,6 +3714,15 @@
   {
     "default": {
       "diaChi": "27 Nguyễn Trường Tộ, Phường Nguyễn Trung Trực, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "27 Nguyễn Trường Tộ",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nguyễn Trung Trực",
+        "xaKhongDau": "phuong-nguyẽn-trung-trục"
+      },
       "duAnID": "DA_toa-nha-nikko-pj206",
       "geo": {
         "lat": 21.0419139862061,
@@ -2284,6 +3737,15 @@
   {
     "default": {
       "diaChi": "562 Nguyễn Văn Cừ, Phường Gia Thụy, Long Biên, Hà Nội",
+      "diaChinh": {
+        "duong": "562 Nguyễn Văn Cừ",
+        "huyen": "Long Biên",
+        "huyenKhongDau": "long-bien",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Gia Thụy",
+        "xaKhongDau": "phuong-gia-thuy"
+      },
       "duAnID": "DA_toa-nha-plaschem-plaza-pj182",
       "geo": {
         "lat": 21.0505504608154,
@@ -2298,6 +3760,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_toa-nha-san-nam-pj192",
       "geo": {
         "lat": 21.0313835144043,
@@ -2312,6 +3783,14 @@
   {
     "default": {
       "diaChi": "124 Tôn Đức Thắng , Hà Nội , Việt Nam",
+      "diaChinh": {
+        "huyen": "Hà Nội",
+        "huyenKhongDau": "ha-noi",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "124 Tôn Đức Thắng",
+        "xaKhongDau": "124-ton-duc-thang"
+      },
       "duAnID": "DA_toa-nha-tan-a-dai-thanh-pj1499",
       "geo": {
         "lat": 21.0264778137207,
@@ -2326,6 +3805,15 @@
   {
     "default": {
       "diaChi": "Số 2 Đại Cồ Việt, Phường Phố Huế, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 2 Đại Cồ Việt",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phố Huế",
+        "xaKhongDau": "phuong-phó-hué"
+      },
       "duAnID": "DA_toa-nha-thai-binh-pj1450",
       "geo": {
         "lat": 21.0090446472168,
@@ -2340,6 +3828,14 @@
   {
     "default": {
       "diaChi": "Phường Hoàng Văn Thụ, Hoàng Mai, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hoàng Mai",
+        "huyenKhongDau": "hoang-mai",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Hoàng Văn Thụ",
+        "xaKhongDau": "phuong-hoang-van-thu"
+      },
       "duAnID": "DA_toa-nha-tien-phu-pj217",
       "geo": {
         "lat": 20.9834175109863,
@@ -2354,6 +3850,15 @@
   {
     "default": {
       "diaChi": "360 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "360 Tây Sơn",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Liệt",
+        "xaKhongDau": "phuong-trung-liẹt"
+      },
       "duAnID": "DA_toa-nha-van-phong-360-tay-son-pj209",
       "geo": {
         "lat": 21.0070781707764,
@@ -2368,6 +3873,14 @@
   {
     "default": {
       "diaChi": "252 Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "252 Hoàng Quốc Việt",
+        "xaKhongDau": "252-hoang-quoc-viet"
+      },
       "duAnID": "DA_toa-nha-van-phong-ats-pj228",
       "geo": {
         "lat": 21.0463371276855,
@@ -2382,6 +3895,15 @@
   {
     "default": {
       "diaChi": "Số 147 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 147 Hoàng Quốc Việt",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nghĩa Đô",
+        "xaKhongDau": "phuong-nghia-do"
+      },
       "duAnID": "DA_toa-nha-van-phong-cong-ty-789-pj824",
       "geo": {
         "lat": 21.0455894470215,
@@ -2396,6 +3918,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_toa-nha-van-phong-elinco-pj178",
       "geo": {
         "lat": 21.0300884246826,
@@ -2410,6 +3941,15 @@
   {
     "default": {
       "diaChi": "Số 21 Láng Hạ, Phường Thành Công, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 21 Láng Hạ",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Thành Công",
+        "xaKhongDau": "phuong-thanh-cong"
+      },
       "duAnID": "DA_toa-nha-van-phong-newtatco-pj237",
       "geo": {
         "lat": 21.0210056304932,
@@ -2424,6 +3964,15 @@
   {
     "default": {
       "diaChi": "97 Lò Đúc, Phường Phạm Đình Hổ, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "97 Lò Đúc",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phạm Đình Hổ",
+        "xaKhongDau": "phuong-phạm-dình-hỏ"
+      },
       "duAnID": "DA_toa-nha-van-phong-tai-tam-pj204",
       "geo": {
         "lat": 21.0133533477783,
@@ -2438,6 +3987,15 @@
   {
     "default": {
       "diaChi": "Số 98 Ngụy Như Kon Tum, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 98 Ngụy Như Kon Tum",
+        "huyen": "Thanh Xuân",
+        "huyenKhongDau": "thanh-xuan",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nhân Chính",
+        "xaKhongDau": "phuong-nhan-chinh"
+      },
       "duAnID": "DA_toa-nha-van-phong-thang-long-pj746",
       "geo": {
         "lat": 21.0012817382813,
@@ -2452,6 +4010,15 @@
   {
     "default": {
       "diaChi": "Đường Khuất Duy Tiến, Phường Nhân Chính, Thanh Xuân, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Khuất Duy Tiến",
+        "huyen": "Thanh Xuân",
+        "huyenKhongDau": "thanh-xuan",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nhân Chính",
+        "xaKhongDau": "phuong-nhan-chinh"
+      },
       "duAnID": "DA_toa-nha-van-phong-transmeco-pj169",
       "geo": {
         "lat": 20.9981365203857,
@@ -2466,6 +4033,15 @@
   {
     "default": {
       "diaChi": "Đường Trung Yên 9, Phường Trung Hòa, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Trung Yên 9",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Hòa",
+        "xaKhongDau": "phuong-trung-hoa"
+      },
       "duAnID": "DA_toa-nha-vinahud-pj1434",
       "geo": {
         "lat": 21.0160541534424,
@@ -2480,6 +4056,15 @@
   {
     "default": {
       "diaChi": "Số 376 Điện Biên Phủ, Phường 11, Quận 10, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Số 376 Điện Biên Phủ",
+        "huyen": "Quận 10",
+        "huyenKhongDau": "quan-10",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 11",
+        "xaKhongDau": "phuong-11"
+      },
       "duAnID": "DA_toplife-tower-pj1043",
       "geo": {
         "lat": 10.7743053436279,
@@ -2494,6 +4079,15 @@
   {
     "default": {
       "diaChi": "273 Kim Mã, Phường Giảng Võ, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "273 Kim Mã",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Giảng Võ",
+        "xaKhongDau": "phuong-giảng-võ"
+      },
       "duAnID": "DA_toserco-building-pj1478",
       "geo": {
         "lat": 21.0308170318604,
@@ -2508,6 +4102,15 @@
   {
     "default": {
       "diaChi": "15 Phạm Hùng, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
+      "diaChinh": {
+        "duong": "15 Phạm Hùng",
+        "huyen": "Nam Từ Liêm",
+        "huyenKhongDau": "nam-tu-liem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Mỹ Đình 2",
+        "xaKhongDau": "phuong-my-dinh-2"
+      },
       "duAnID": "DA_toyota-my-dinh-pj1462",
       "geo": {
         "lat": 21.0290603637695,
@@ -2522,6 +4125,15 @@
   {
     "default": {
       "diaChi": "24 Trường Sơn, Phường 2, Tân Bình, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "24 Trường Sơn",
+        "huyen": "Tân Bình",
+        "huyenKhongDau": "tan-binh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 2",
+        "xaKhongDau": "phuong-2"
+      },
       "duAnID": "DA_tpa-building-pj1938",
       "geo": {
         "lat": 10.8084993362427,
@@ -2536,6 +4148,15 @@
   {
     "default": {
       "diaChi": "141 Hoàng Hoa Thám, Phường Ngọc Hà, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "141 Hoàng Hoa Thám",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngọc Hà",
+        "xaKhongDau": "phuong-ngoc-ha"
+      },
       "duAnID": "DA_truc-bach-building-pj1461",
       "geo": {
         "lat": 21.0404472351074,
@@ -2550,6 +4171,15 @@
   {
     "default": {
       "diaChi": "Nhà G10, Nguyễn Trãi, Phường Thanh Xuân Nam, Thanh Xuân, Hà Nội",
+      "diaChinh": {
+        "duong": "Nguyễn Trãi",
+        "huyen": "Thanh Xuân",
+        "huyenKhongDau": "thanh-xuan",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Thanh Xuân Nam",
+        "xaKhongDau": "phuong-thanh-xuan-nam"
+      },
       "duAnID": "DA_trung-tam-tai-chinh-song-da-pj170",
       "geo": {
         "lat": 20.9879703521729,
@@ -2564,6 +4194,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_ttc-tower-pj1393",
       "geo": {
         "lat": 21.0307598114014,
@@ -2578,6 +4217,15 @@
   {
     "default": {
       "diaChi": "125-127 Bà Triệu, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "125-127 Bà Triệu",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bùi Thị Xuân",
+        "xaKhongDau": "phuong-bùi-thị-xuan"
+      },
       "duAnID": "DA_v-building-pj1448",
       "geo": {
         "lat": 21.0191783905029,
@@ -2592,6 +4240,15 @@
   {
     "default": {
       "diaChi": "400 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "400 Ung Văn Khiêm",
+        "huyen": "Bình Thạnh",
+        "huyenKhongDau": "binh-thanh",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường 25",
+        "xaKhongDau": "phuong-25"
+      },
       "duAnID": "DA_v-building-pj1631",
       "geo": {
         "lat": 10.8004159927368,
@@ -2606,6 +4263,15 @@
   {
     "default": {
       "diaChi": "90 Đường Trần Đình Xu, Phường Cô Giang, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "90 Đường Trần Đình Xu",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Cô Giang",
+        "xaKhongDau": "phuong-co-giang"
+      },
       "duAnID": "DA_v-d-building-pj1979",
       "geo": {
         "lat": 10.7615852355957,
@@ -2620,6 +4286,15 @@
   {
     "default": {
       "diaChi": "52 Lạc Long Quân, Phường Bưởi, Tây Hồ, Hà Nội",
+      "diaChinh": {
+        "duong": "52 Lạc Long Quân",
+        "huyen": "Tây Hồ",
+        "huyenKhongDau": "tay-ho",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bưởi",
+        "xaKhongDau": "phuong-buoi"
+      },
       "duAnID": "DA_van-phong-vinaconex-no-2-pj172",
       "geo": {
         "lat": 21.0739841461182,
@@ -2634,6 +4309,15 @@
   {
     "default": {
       "diaChi": "09 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "09 Đào Duy Anh",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phương Liên",
+        "xaKhongDau": "phuong-phuong-lien"
+      },
       "duAnID": "DA_vcci-tower-so-9-dao-duy-anh-pj2192",
       "geo": {
         "lat": 21.0087795257568,
@@ -2648,6 +4332,15 @@
   {
     "default": {
       "diaChi": "54 Trần Hưng Đạo, Phường Hàng Bài, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "54 Trần Hưng Đạo",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Hàng Bài",
+        "xaKhongDau": "phuong-hang-bai"
+      },
       "duAnID": "DA_vci-tower-pj247",
       "geo": {
         "lat": 21.0211067199707,
@@ -2662,6 +4355,15 @@
   {
     "default": {
       "diaChi": "235 Nguyễn Trãi, Thanh Xuân , Hà Nội , Việt Nam",
+      "diaChinh": {
+        "duong": "235 Nguyễn Trãi",
+        "huyen": "Hà Nội",
+        "huyenKhongDau": "ha-noi",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Thanh Xuân",
+        "xaKhongDau": "thanh-xuan"
+      },
       "duAnID": "DA_vg-building-pj1500",
       "geo": {
         "lat": 20.993465423584,
@@ -2676,6 +4378,15 @@
   {
     "default": {
       "diaChi": "Tại lô 10E6, khu đô thị mới Cầu Giấy, Q. Cầu Giấy, TP. Hà Nội.",
+      "diaChinh": {
+        "duong": "Tại lô 10E6",
+        "huyen": "Q. Cầu Giấy",
+        "huyenKhongDau": "q-cau-giay",
+        "tinh": "TP. Hà Nội.",
+        "tinhKhongDau": "tp-ha-noi",
+        "xa": "khu đô thị mới Cầu Giấy",
+        "xaKhongDau": "khu-do-thi-moi-cau-giay"
+      },
       "duAnID": "DA_vicem-tower-pj754",
       "geo": {
         "lat": 21.0150661468506,
@@ -2690,6 +4401,15 @@
   {
     "default": {
       "diaChi": "115 Trần Hưng Đạo, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "115 Trần Hưng Đạo",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trần Hưng Đạo",
+        "xaKhongDau": "phuong-tran-hung-dạo"
+      },
       "duAnID": "DA_vid-tower-1-pj1445",
       "geo": {
         "lat": 21.0239944458008,
@@ -2704,6 +4424,15 @@
   {
     "default": {
       "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "36 Hoàng Cầu",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ô Chợ Dừa",
+        "xaKhongDau": "phuong-o-cho-dùa"
+      },
       "duAnID": "DA_vien-dong-building-pj229",
       "geo": {
         "lat": 21.0197505950928,
@@ -2718,6 +4447,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_viet-a-tower-pj221",
       "geo": {
         "lat": 21.0303535461426,
@@ -2732,6 +4470,15 @@
   {
     "default": {
       "diaChi": "141 Nguyễn Du, Phường Bến Thành, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "141 Nguyễn Du",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Thành",
+        "xaKhongDau": "phuong-ben-thanh"
+      },
       "duAnID": "DA_viet-dragon-tower-pj1867",
       "geo": {
         "lat": 10.7728395462036,
@@ -2746,6 +4493,15 @@
   {
     "default": {
       "diaChi": "Số 1 Thái Hà, Phường Trung Liệt, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "Số 1 Thái Hà",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Trung Liệt",
+        "xaKhongDau": "phuong-trung-liẹt"
+      },
       "duAnID": "DA_viet-tower-pj222",
       "geo": {
         "lat": 21.0096607208252,
@@ -2760,6 +4516,15 @@
   {
     "default": {
       "diaChi": "5 Công Trường Mê Linh, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "5 Công Trường Mê Linh",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Bến Nghé",
+        "xaKhongDau": "phuong-ben-nghe"
+      },
       "duAnID": "DA_vietcombank-tower-hcm-pj1438",
       "geo": {
         "lat": 10.775577545166,
@@ -2774,6 +4539,14 @@
   {
     "default": {
       "diaChi": "198 Trần Quang Khải, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "198 Trần Quang Khải",
+        "xaKhongDau": "198-tran-quang-khai"
+      },
       "duAnID": "DA_vietcombank-tower-pj1439",
       "geo": {
         "lat": 21.0283908843994,
@@ -2788,6 +4561,15 @@
   {
     "default": {
       "diaChi": "Lô E4-17 Khu đô thị mới Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_vietracimex-tower-pj620",
       "geo": {
         "lat": 21.0301666259766,
@@ -2802,6 +4584,15 @@
   {
     "default": {
       "diaChi": "2 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "2 Hoàng Quốc Việt",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Nghĩa Đô",
+        "xaKhongDau": "phuong-nghia-do"
+      },
       "duAnID": "DA_viglacera-exim-building-pj1423",
       "geo": {
         "lat": 21.0465354919434,
@@ -2816,6 +4607,15 @@
   {
     "default": {
       "diaChi": "Đường Điện Biên Phủ, Phường Đa Kao, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "Đường Điện Biên Phủ",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Đa Kao",
+        "xaKhongDau": "phuong-da-kao"
+      },
       "duAnID": "DA_vinaconex-building-pj1559",
       "geo": {
         "lat": 10.7909288406372,
@@ -2830,6 +4630,15 @@
   {
     "default": {
       "diaChi": "34 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
+      "diaChinh": {
+        "duong": "34 Láng Hạ",
+        "huyen": "Đống Đa",
+        "huyenKhongDau": "dong-da",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Láng Hạ",
+        "xaKhongDau": "phuong-láng-hạ"
+      },
       "duAnID": "DA_vinaconex-tower-pj1476",
       "geo": {
         "lat": 21.0147285461426,
@@ -2844,6 +4653,15 @@
   {
     "default": {
       "diaChi": "127 Lò Đúc, Phường Đống Mác, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "127 Lò Đúc",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Đống Mác",
+        "xaKhongDau": "phuong-dóng-mác"
+      },
       "duAnID": "DA_vinafor-pj1459",
       "geo": {
         "lat": 21.0132503509521,
@@ -2858,6 +4676,15 @@
   {
     "default": {
       "diaChi": "39A Ngô Quyền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
+      "diaChinh": {
+        "duong": "39A Ngô Quyền",
+        "huyen": "Hoàn Kiếm",
+        "huyenKhongDau": "hoan-kiem",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Phan Chu Trinh",
+        "xaKhongDau": "phuong-phan-chu-trinh"
+      },
       "duAnID": "DA_vinaplast-tai-tam-pj219",
       "geo": {
         "lat": 21.0217514038086,
@@ -2872,6 +4699,15 @@
   {
     "default": {
       "diaChi": "180-192 Nguyễn Công Trứ, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "180-192 Nguyễn Công Trứ",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Thái Bình",
+        "xaKhongDau": "phuong-nguyen-thai-binh"
+      },
       "duAnID": "DA_vincom-financial-tower-pj451",
       "geo": {
         "lat": 10.7687578201294,
@@ -2886,6 +4722,15 @@
   {
     "default": {
       "diaChi": "519 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
+      "diaChinh": {
+        "duong": "519 Kim Mã",
+        "huyen": "Ba Đình",
+        "huyenKhongDau": "ba-dinh",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Ngọc Khánh",
+        "xaKhongDau": "phuong-ngoc-khánh"
+      },
       "duAnID": "DA_vit-tower-pj211",
       "geo": {
         "lat": 21.0295677185059,
@@ -2900,6 +4745,15 @@
   {
     "default": {
       "diaChi": "Đào Duy Anh, Quận Phú Nhuận , Tp.HCM , Việt Nam",
+      "diaChinh": {
+        "duong": "Đào Duy Anh",
+        "huyen": "Tp.HCM",
+        "huyenKhongDau": "tp-hcm",
+        "tinh": "Việt Nam",
+        "tinhKhongDau": "viet-nam",
+        "xa": "Quận Phú Nhuận",
+        "xaKhongDau": "quan-phu-nhuan"
+      },
       "duAnID": "DA_vmg-building-pj1673",
       "geo": {
         "lat": 10.8073444366455,
@@ -2914,6 +4768,15 @@
   {
     "default": {
       "diaChi": "Lô A1F, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_vmt-building-pj1420",
       "geo": {
         "lat": 21.0319442749023,
@@ -2928,6 +4791,15 @@
   {
     "default": {
       "diaChi": "81 - 85 Hàm Nghi, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
+      "diaChinh": {
+        "duong": "81 - 85 Hàm Nghi",
+        "huyen": "Quận 1",
+        "huyenKhongDau": "quan-1",
+        "tinh": "Hồ Chí Minh",
+        "tinhKhongDau": "ho-chi-minh",
+        "xa": "Phường Nguyễn Thái Bình",
+        "xaKhongDau": "phuong-nguyen-thai-binh"
+      },
       "duAnID": "DA_vp-tower-pj258",
       "geo": {
         "lat": 10.7706823348999,
@@ -2942,6 +4814,15 @@
   {
     "default": {
       "diaChi": "18 Tam Trinh, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "18 Tam Trinh",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Minh Khai",
+        "xaKhongDau": "phuong-minh-khai"
+      },
       "duAnID": "DA_vtc-online-building-pj1457",
       "geo": {
         "lat": 20.9953918457031,
@@ -2956,6 +4837,15 @@
   {
     "default": {
       "diaChi": "156 Triệu Việt Vương, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
+      "diaChinh": {
+        "duong": "156 Triệu Việt Vương",
+        "huyen": "Hai Bà Trưng",
+        "huyenKhongDau": "hai-ba-trung",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Bùi Thị Xuân",
+        "xaKhongDau": "phuong-bùi-thị-xuan"
+      },
       "duAnID": "DA_zodi-building-pj200",
       "geo": {
         "lat": 21.0133228302002,
@@ -2970,6 +4860,15 @@
   {
     "default": {
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
+      "diaChinh": {
+        "duong": "Đường Duy Tân",
+        "huyen": "Cầu Giấy",
+        "huyenKhongDau": "cau-giay",
+        "tinh": "Hà Nội",
+        "tinhKhongDau": "ha-noi",
+        "xa": "Phường Dịch Vọng Hậu",
+        "xaKhongDau": "phuong-dich-vong-hau"
+      },
       "duAnID": "DA_zodiac-building-pj1430",
       "geo": {
         "lat": 21.0308322906494,
