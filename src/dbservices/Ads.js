@@ -147,7 +147,11 @@ class AdsModel {
 
             //todo: need remove "Quan" "Huyen" in prefix
             if (diaChinh.huyen) {
+              if (diaChinh.huyen=='tu-liem') {
+                sql = sql + " and (place.diaChinh.huyenKhongDau = 'nam-tu-liem' or place.diaChinh.huyenKhongDau = 'bac-tu-liem')";
+              } else {
                 sql = `${sql} AND place.diaChinh.huyenKhongDau='${diaChinh.huyen}'`;
+              }
             }
 
             if (diaChinh.xa) {
@@ -163,9 +167,12 @@ class AdsModel {
             sql = `${sql} AND (gia BETWEEN ${gia[0]} AND ${gia[1]})`;
         }
 
-        sql = sql + (soPhongNguGREATER != 0 ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+        soPhongNguGREATER = Number(soPhongNguGREATER);
+        soPhongTamGREATER = Number(soPhongTamGREATER);
 
-        sql = sql + (soPhongTamGREATER != 0 ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
+        sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+
+        sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
 
         if ((dienTich) && (dienTich[0] > 1 || dienTich[1] < 9999999)) {
             sql = `${sql} AND (dienTich BETWEEN  ${dienTich[0]} AND ${dienTich[1]})`;
@@ -233,7 +240,7 @@ class AdsModel {
         console.log(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
-            console.log("err=", err, all);
+            //console.log("err=", err, all);
             console.log("count " + all[0].$1);
             callback(err,all[0].$1);
         });
@@ -294,7 +301,7 @@ class AdsModel {
         var query = N1qlQuery.fromString(sql);
 
         bucket.query(query, function(err, all) {
-            console.log("err=", err);
+            //console.log("err=", err);
             if (!all)
                 all = [];
             callback(err, all);
@@ -314,7 +321,12 @@ class AdsModel {
         }
 
         if (huyen) {
+          //todo: exceptional case for Tu-Liem:
+          if (huyen=='tu-liem') {
+            sql = sql + " and (place.diaChinh.huyenKhongDau = 'nam-tu-liem' or place.diaChinh.huyenKhongDau = 'bac-tu-liem')";
+          } else {
             sql = sql + " and place.diaChinh.huyenKhongDau = '" + huyen + "'";
+          }
         }
 
         if (xa) {

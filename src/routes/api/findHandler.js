@@ -128,6 +128,8 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
             soTang: ads.soTang,
             soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+            soPhongTam: ads.soPhongTam,
+            soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "pt" : null,
             image : {
                 cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize):null,
                 images : ads.image.images ? ads.image.images.map((e) => {
@@ -228,7 +230,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
 }
 
 function _toNgayDangTinFrom(ngayDaDang) {
-    if (!ngayDaDang) {
+    if (ngayDaDang == null || ngayDaDang == undefined) {
         return null;
     }
     let ret = moment().subtract(ngayDaDang, "d");
@@ -366,8 +368,7 @@ function countAds(q, reply){
     
 }
 
-
-function searchAds(q, reply) {
+internals.searchAds = function(q, reply) {
     let limit = q.limit;
 
     let diaChinh = q.diaChinh;
@@ -491,8 +492,10 @@ function searchAds(q, reply) {
 internals.search = function(req, reply) {
     console.log(req.payload);
     if (_validateFindRequestParameters(req, reply)) {
+        console.log(req.payload);
+
         try {
-            searchAds(req.payload, reply)
+          internals.searchAds(req.payload, reply)
         } catch (e) {
             logUtil.error(e);
             console.log(e, e.stack.split("\n"));
@@ -514,4 +517,7 @@ internals.count = function(req,reply){
         }
     }
 };
+
+
+
 module.exports = internals;
