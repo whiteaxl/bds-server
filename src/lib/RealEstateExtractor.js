@@ -13,6 +13,7 @@ var util = require("./utils");
 var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
 
+var headerCache = {};
 
 var REALESTATE_NAME_MAP = {
 	'Thuộc dự án' :'duAn',
@@ -47,6 +48,7 @@ var REALESTATE_TYPE_NAME_MAP = {
 	'Bán kho, nhà xưởng' : '0,99',
 	'Bán loại bất động sản khác' : '0,99',
 	'Bán đất' : '0,5',
+  'Bán nhà mặt phố (nhà mặt tiền trên các tuyến phố)' : '0,3',
 	//thue
 	'Cho thuê căn hộ chung cư' : '1,1',
 	'Cho thuê nhà riêng' : '1,2',
@@ -55,8 +57,9 @@ var REALESTATE_TYPE_NAME_MAP = {
 	'Cho thuê văn phòng' : '1,4',
 	'Cho thuê cửa hàng - ki ốt' : '1,5',
 	'Cho thuê kho, nhà xưởng, đất' : '1,99',
-	'Cho thuê loại bất động sản khác' : '1,99'
-}
+	'Cho thuê loại bất động sản khác' : '1,99',
+  'Cho thuê cửa hàng, ki ốt' :  '1,5'
+};
 
 
 var parseEmail = function(encEmail) {
@@ -113,7 +116,7 @@ function _parseHuyenFullName(huyenFullName) {
 	return place;
 }
 
-function _buildPlace(adsDto) {
+function buildPlace(adsDto) {
 	adsDto.place = {};
 
 	adsDto.place.duAn = adsDto.duAn;
@@ -135,6 +138,10 @@ function _buildPlace(adsDto) {
 }
 
 function convertGia(ads) {
+	if (!ads.price_unit) {
+		return;
+	}
+
 	if (ads.price_unit==='tỷ') {
 		ads.gia = ads.price_value*1000;
 		return;
@@ -150,10 +157,8 @@ function convertGia(ads) {
 		return;
 	}
 
-
 	ads.gia = ads.price_value*1;
 }
-
 
 var setHuongNha = function (ads, url) {
 	for (var i=1; i<=8; i++) {
@@ -163,74 +168,134 @@ var setHuongNha = function (ads, url) {
 	}
 };
 
+function _saveData(adsDto) {
+  let adsObj = {};
+
+  adsObj.type = "Ads";
+  let coverSmall = headerCache[adsDto.title] ? headerCache[adsDto.title].cover : null;
+  /*
+   let images = [];
+   if (adsDto.images_small) {
+   for (var i in adsDto.images_small) {
+   images[i] = adsDto.images_small[i].replace("80x60", "745x510");
+   }
+   }
+   */
+
+  adsObj.image = {
+    //cover: coverSmall.replace("120x90", "745x510"),
+    cover: coverSmall,
+    //cover_small : coverSmall,
+    //images_small : adsDto.images_small,
+    images : adsDto.images_small
+  };
+
+  adsObj.title = adsDto.title;
+
+  adsObj.dangBoi = {
+    userID : undefined,
+    email: adsDto.cust_email,
+    name: adsDto.cust_dangBoi,
+    phone: adsDto.cust_phone || adsDto.cust_mobile
+  };
+  adsObj.ngayDangTin = adsDto.ngayDangTin;
+  adsObj.gia = adsDto.gia;
+  adsObj.price_raw = adsDto.price_raw;
+  adsObj.dienTich = adsDto.dienTich;
+  adsObj.area_raw = adsDto.area_raw;
+  adsObj.place = adsDto.place;
+  adsObj.place.diaChinhFullName = adsDto.diaChi;
+  adsObj.soPhongNgu = adsDto.soPhongNgu;
+  adsObj.soPhongTam = adsDto.soPhongTam;
+  adsObj.soTang = adsDto.soTang;
+  adsObj.loaiTin = adsDto.loaiTin;
+  adsObj.loaiNhaDat = adsDto.loaiNhaDat;
+  adsObj.ten_loaiTin = adsDto.ten_loaiTin;
+  adsObj.ten_loaiNhaDat = adsDto.ten_loaiNhaDat;
+  adsObj.chiTiet = adsDto.chiTiet;
+  adsObj.huongNha = adsDto.huongNha;
+  adsObj.maSo = Number(adsDto.maSo);
+  adsObj.adsUrl = headerCache[adsDto.title].adsUrl;
+
+  if (adsObj.gia && adsObj.dienTich) {
+    adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
+  }
+
+  adsObj.adsID = "Ads_bds_" + adsObj.maSo;
+  adsObj.id = adsObj.adsID;
+
+  adsModel.upsert(adsObj);
+}
 
 class RealEstateExtractor {
-	constructor() {
-	}
-
-
-//rootURL = http://batdongsan.com.vn/nha-dat-ban ; nha-dat-cho-thue
+  //rootURL = http://batdongsan.com.vn/nha-dat-ban ; nha-dat-cho-thue
 	extractRealEstateWithLimit(rootURL,start, end,ngayDangTin) {
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 
-		var count = start-1;
+		var count = start;
 
-		var _done = () => {
-			count++;
-		};
+    var _done = () => {
+      count++;
+      if (count>end) {
+        return;
+      }
 
+      this.extractOnePage(rootURL + '/p'+count, _done,ngayDangTin);
+    };
 
+    this.extractOnePage(rootURL + '/p'+count, _done,ngayDangTin);
+
+    /*
 		var i = start;
 		for (i=start; i<=end; i++) {
-			console.log("Extracting for page: " + i);
-			this.extractOnePage(rootURL + '/p'+i, _done,ngayDangTin);
+			console.log("Extracting for page: " + rootURL + '/p'+i);
+      this.extractOnePage(rootURL + '/p'+x, _done,ngayDangTin);
 		}
 
-		var myInterval = setInterval(function(){
-			if (count==end) {
-				console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
-				clearInterval(myInterval);
-				//handleDone();
-			}
-		}, 1000);
+		*/
 	}
-
-
 
 	extractOnePage(url, handleDone,ngayDangTin) {
 		osmosis
 			.get(url)
 			.find('.search-productItem')
 			.set({
-				'title' : '.p-title a',
+				'adsUrl' : '.p-title > a@href',
+        'title' : '.p-title a',
 				'cover' : '.p-main > div > a > img@src',
 			})
-			.follow('.p-title a@href')
+      .data((dto) => {
+        headerCache[dto.title] = dto;
+      })
+			.follow('.p-title > a@href')
 			.set({
 				'title'			:'#product-detail .pm-title > h1',
 				'images'		:['#product-detail .list-img > ul > li > img@src'],
-				'price'			:'#product-detail .gia-title[1] > strong ',
+				'prices'			:['#product-detail .gia-title > strong'],
 				'area'			:'#product-detail .gia-title[2] > strong ',
 				'loc'			:'#product-detail .diadiem-title',
 				'custRights'	:['#divCustomerInfo .right'],
 				'custLefts'		:['#divCustomerInfo .left'],
 				'detailRights' 		:['#product-detail .left-detail .right'],
 				'detailLefts' 		:['#product-detail .left-detail .left'],
-				'chiTiet'	:'#product-detail .pm-content :source',
+				'chiTiet'	:'#product-detail .pm-content:source',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
 				'duAnID'      :'#product-detail .inproject > a@href'
 			})
 			.data(function(listing) {
+				//console.log("listing:", listing);
+        let price = listing.prices[0];
+        let dienTich = listing.prices[1];
 				let ads = {
-					title: listing.title,
+					title: listing.title[0],
 					images_small: listing.images,
 					price_raw: listing.price,
-					price_value: listing.price.split(' ')[0],
-					price_unit: listing.price.split(' ')[1],
-					dienTich: Number(listing.area.substr(0, listing.area.length-2)),
-					area_raw: listing.area,
+					price_value: price && price.split(' ')[0],
+					price_unit: price && price.split(' ')[1],
+					dienTich: dienTich && Number(dienTich.substr(0, dienTich.length-2)),
+					area_raw: dienTich,
 					loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
 					chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
 					hdLat : Number(listing.hdLat),
@@ -274,41 +339,35 @@ class RealEstateExtractor {
 				//convert gia'
 				convertGia(ads);
 
-				_buildPlace(ads);
+				buildPlace(ads);
 
 				setHuongNha(ads, url); //base on url
 
-				ads.adsID = "Ads_bds_" + ads.maSo;
 				ads.source = "BATDONGSAN.COM.VN";
 
 				if(ads.duAnID){
 					ads.duAnID  = "DA_" + (ads.duAnID).replace("/","");
-					ads.place.duAn = ads.duAnID;
 				}
 
-				if(ads.ngayDangTin){
-					var ngayDang = ads.ngayDangTin;
-					ads.ngayDangTin = util.convertFormatDate(ngayDang);
-					if(ads.ngayDangTin == ngayDangTin){
-						console.log("Lay dung ngay dang tin");
-						console.log(ads);
-						adsModel.upsert(ads);
-					}
-				}
+        ads.ngayDangTin = ads.ngayDangTin && util.convertFormatDate(ads.ngayDangTin);
+
+        if (ngayDangTin) {
+          if(ads.ngayDangTin == ngayDangTin){
+            console.log("Lay dung ngay dang tin");
+            _saveData(ads);
+          }
+        } else {
+          _saveData(ads);
+        }
 			})
 
 			.log(console.log)
 			.error(console.log)
-			.debug(console.log)
 			.done(() => {
 				console.log("Done all!");
 				handleDone();
 			})
 	}
-
-	
-
-
 }
 
 module.exports = RealEstateExtractor;
