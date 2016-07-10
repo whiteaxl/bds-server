@@ -51,7 +51,7 @@ util.getPriceDisplay = function(val, loaiTin) {
 
     if (loaiTin===0) { //ban
         if (val < 1000) {
-            return val + " TRIỆU";
+            return val.toFixed(2)+ " TRIỆU";
         }
 
         return (val/1000).toFixed(2) + " TỶ";

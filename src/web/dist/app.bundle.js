@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dc26b2cb84b13956e03c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "320e901d0634d8909ec9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21170,22 +21170,25 @@
 	        var addr = place.address_components[i];
 
 	        if (addr.types[0] == placeUtil.type.TINH){
-	            tinh = this.chuanHoa(addr.long_name);
+	            tinh = addr.long_name;
 	        }
 
 	        if (addr.types[0] == placeUtil.type.HUYEN){
-	            huyen = this.chuanHoa(addr.long_name);
+	            huyen = addr.long_name;
 	        }
 
 	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
-	            xa = this.chuanHoa(addr.long_name);
+	            xa = addr.long_name;
 	        }
 	    }
 
 	    var diaChinh = {
-	        tinh: tinh,
-	        huyen: huyen,
-	        xa: xa
+	        tinh: this.chuanHoa(tinh),
+	        huyen: this.chuanHoa(huyen),
+	        xa: this.chuanHoa(xa),
+	        tinhCoDau : tinh,
+	        huyenCoDau : huyen,
+	        xaCoDau : xa
 	    };
 
 	    return diaChinh;
@@ -21454,7 +21457,7 @@
 
 	    if (loaiTin===0) { //ban
 	        if (val < 1000) {
-	            return val + " TRIỆU";
+	            return val.toFixed(2)+ " TRIỆU";
 	        }
 
 	        return (val/1000).toFixed(2) + " TỶ";
