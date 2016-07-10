@@ -16,6 +16,13 @@ var constant = require("../../lib/constant");
 var moment = require("moment");
 var geoUtil = require("../../lib/geoUtil");
 
+var UserService = require('../../dbservices/User');
+var userService = new UserService();
+
+var DuAnService = require('../../dbservices/DuAn');
+var duAnService = new DuAnService();
+
+
 var DEFAULT_SEARCH_RADIUS = 5; //km
 
 var _ = require("lodash");
@@ -366,7 +373,6 @@ function countAds(q, reply){
     
 }
 
-
 function searchAds(q, reply) {
     let limit = q.limit;
 
@@ -388,6 +394,19 @@ function searchAds(q, reply) {
       polygonCoords = polygon.map((e) => {
         return {latitude: e.lat, longitude: e.lon}
       });
+    }
+
+    if(q.userID) {
+        userService.getUserByID(q.userID, function(err,res){
+            if(err || res.length ==0)
+                console.log(err);
+            else { 
+                console.log(JSON.stringify(res));
+                var user = res[0];
+                user.lastSearch = q;
+                userService.upsert(user);
+            }
+        });
     }
 
     var callback = (err, all) =>  {
@@ -514,4 +533,170 @@ internals.count = function(req,reply){
         }
     }
 };
+
+internals.findBdsCungLoaiMoidang = function(req,reply){
+    var userID = req.payload.userID;
+    var result = {
+        msg: "",
+        list: []
+    }
+    reply(result);
+}
+internals.findBdsLoaiKhacNgangGia = function(req,reply){
+    var userID = req.payload.userID;
+    var result = {
+        msg: "",
+        list: []
+    }
+    reply(result);
+}
+
+internals.findBdsGiaThapHon = function(req,reply){
+    var userID = req.payload.userID;
+    var result = {
+        msg: "",
+        list: []
+    }
+    reply(result);
+}
+
+internals.findAdsAndDuanForHomePage = function(q, reply){
+    var limit = q.limit;
+    var userID = q.userID;
+    var async = require("async");
+    var result = {
+        msg: "",
+        list: []
+    }
+    if(userID){
+        userService.getUserByID(userID, function(err,res){
+            if(err || res.length ==0)
+                console.log(err);
+            else { 
+                console.log(JSON.stringify(res));
+                var user = res[0];
+                if(user.lastSearch){
+                    async.series([
+                        function(callback){
+                            var searchDataCungLoai = {
+                                "loaiTin": user.lastSearch.loaiTin,
+                                "loaiNhaDat": user.lastSearch.loaiNhaDat, 
+                                "limit": 10,
+                                "orderBy": "ngayDangTinDESC",
+                                "pageNo": 1
+                            };
+
+                            duAnService.findDuAn(q,function(err,res){
+                                if(err || res.length<=0){
+                                     callback(null,res); 
+                                }else{
+                                    callback(null,{
+                                        name: "Dự án nổi bật tại Hà nội",
+                                        location: "Hà Nội",
+                                        type: "DU_AN",
+                                        list: res
+                                    }); 
+                                }
+                            });               
+                        },
+                        function(callback){
+                            q.tinhKhongDau = 'ho-chi-minh';
+                            duAnService.findDuAn(q,function(err,res){
+                                if(err || res.length<=0){
+                                     callback(null,null); 
+                                }else{
+                                    callback(null,{
+                                        name: "Dự án nổi bật tại Hồ Chí Minh",
+                                        location: "Hồ Chí Minh",
+                                        type: "DU_AN",
+                                        list: res
+                                    }); 
+                                }
+                            });      
+                        }
+                    ],
+                    // optional callback
+                    function(err, results){
+                        // results is now equal to ['one', 'two']
+                        /*_(results).forEach(function(value) {
+                            console.log(value);
+                        });*/
+                        result.list = results;
+                        reply(result);
+                    });
+
+                }else{
+
+                }
+            }
+        });
+
+    }else{
+        var data = {
+            limit: q.limit,
+            hot: true,
+        };
+        q.tinhKhongDau = 'ha-noi';
+        async.series([
+            function(callback){
+                q.tinhKhongDau = 'ha-noi';
+                duAnService.findDuAn(q,function(err,res){
+                    if(err || res.length<=0){
+                         callback(null,res); 
+                    }else{
+                        callback(null,{
+                            name: "Dự án nổi bật tại Hà nội",
+                            location: "Hà Nội",
+                            type: "DU_AN",
+                            list: res
+                        }); 
+                    }
+                });               
+            },
+            function(callback){
+                q.tinhKhongDau = 'ho-chi-minh';
+                duAnService.findDuAn(q,function(err,res){
+                    if(err || res.length<=0){
+                         callback(null,null); 
+                    }else{
+                        callback(null,{
+                            name: "Dự án nổi bật tại Hồ Chí Minh",
+                            location: "Hồ Chí Minh",
+                            type: "DU_AN",
+                            list: res
+                        }); 
+                    }
+                });      
+            }
+        ],
+        // optional callback
+        function(err, results){
+            // results is now equal to ['one', 'two']
+            /*_(results).forEach(function(value) {
+                console.log(value);
+            });*/
+            result.list = results;
+            reply(result);
+        });
+
+        /*duAnService.findDuAn(q,function(err,res){
+            if(err || res.length<=0){
+                   
+            }else{
+                var hn = {
+                    name: "Dự án nổi bật tại Hà nội",
+                    list: res
+                }
+                result.list.push(hn);
+                var hcm = {
+                    name: "Dự án nổi bật tại Hồ Chí Minh",
+                    list: res
+                }
+                 result.list.push(hcm);
+            }
+            reply(result);
+            
+        });*/
+    }
+}
 module.exports = internals;

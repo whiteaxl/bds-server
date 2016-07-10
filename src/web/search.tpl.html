@@ -122,7 +122,7 @@
                                             <img src="/web/asset/img/nhaChinhChu.png" style="max-height: 80px; max-width: 80px;margin-top:5px;">
                                             <img src="/web/asset/img/nhaMoiGiamGia.png" style="max-height: 80px; max-width: 80px;margin-top:5px;">
                                         </h3>
-                                        <a class="like" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="" title=""><span>Like</span></a>
+                                        <a ng-class="ads.liked==true?'liked':'like'" ng-click="mc.likeAds($index,ads.adsID); $event.stopPropagation();" data-like="true" href="" title=""><span>Like</span></a>
                                     </div>
                                 </div>
                             </div>

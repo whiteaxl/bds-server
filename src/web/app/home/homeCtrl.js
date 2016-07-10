@@ -11,6 +11,16 @@
 		init();
 		initHotAds();
 		//alert("placeSearchId: " + $scope.placeSearchId);
+
+		$scope.$bus.subscribe({
+            channel: 'user',
+            topic: 'logged-in',
+            callback: function(data, envelope) {
+                //console.log('add new chat box', data, envelope);
+                initHotAds();
+            }
+        });
+
 		$scope.goToPageSearch = function(loaiTin, loaiBds){
 			if(loaiTin)
 				$scope.loaiTin = loaiTin;
@@ -191,51 +201,112 @@
 			return false;
 		}
 
+		$scope.getClass = function(i){
+			var reverse = false;	
+			var j = Math.floor(i/2);
+
+			if(i%2==0){
+				if(j%2==0)					
+					return "col col-40";
+				else
+					return "col col-60";
+			}else{
+				if(j%2==0)					
+					return "col col-60";
+				else
+					return "col col-40";	
+			}
+		}
 		function initHotAds(){
 			console.log("---------------------initHotAds ---------------");
-			data = {
-				"gia": 800,
-				"limit": 4
-			};
+			$scope.hot_ads_cat =[];
+			if($rootScope.user.userID){
+				HouseService.profile({userID: 'User_2'}).then(function(res){
+					if(res.data.success == true){
+						var lastSearch = res.data.user.lastSearch;	
+						if(lastSearch){
+							var searchDataCungLoai = {
+								"loaiTin": lastSearch.loaiTin,
+								"loaiNhaDat": lastSearch.loaiNhaDat, 
+								"limit": 10,
+								"soPhongNguGREATER": 0,
+					  			"soPhongTamGREATER": 0,
+					  			"soTangGREATER": 0,
+								"diaChinh": lastSearch.diaChinh,
+								"geoBox": lastSearch.geoBox,
+							  	"orderBy": "ngayDangTinDESC",
+							  	"pageNo": 1
+							};
+							HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
+								var bdsCungLoaiMoiDang = [];
+								for(var i=0;i<res.data.length;i++){
+									bdsCungLoaiMoiDang.push(res.data.list[i]);
+								}	
+								var cat = {
+									name: "",
+									location: "",
+									list: bdsCungLoaiMoiDang
+								}
+								if(lastSearch.loaiNhaDat==0 ){
+									cat.name = "Bất động sản mới đăng";
+								}else{
+									cat.name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
+								}
+								$scope.hot_ads_cat.push(cat);														
+							});
 
-			$scope.hot_ads_cat = [];
+						}
+					}				
+				});
+			}else{
+				HouseService.findAdsAndDuanForHomePage({limit:8}).then(function(res){
+					Array.prototype.push.apply($scope.hot_ads_cat, res.data.list);
+					console.log(res);
+				});		
+			}		
+			// data = {
+			// 	"gia": 800,
+			// 	"limit": 4
+			// };
 
-			HouseService.findBelowPriceAds(data).then(function(res){
-				var resultBelow = [];
-				if(res.data.list){
-					for (var i = 0; i < res.data.list.length; i++) {
-						resultBelow.push(res.data.list[i].default);
-					}
-					$scope.hot_ads_cat.push({
-						name: "Nhà dưới mức giá 800 triệu",
-						location: "Hà Nội",
-						list: resultBelow
-					})
-				}
-				console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
-				console.log(resultBelow);
-			});
+			// $scope.hot_ads_cat = [];
 
-			var data = {
-				"ngayDangTin": '25-04-2016',
-				"limit": 4
-			};
-			console.log("getRecentBds + data: " + data);
-			HouseService.findRencentAds(data).then(function(res){
-				var result = [];
-				if(res.data.list){
-					for (var i = 0; i < res.data.list.length; i++) {
-						result.push(res.data.list[i].default);
-					}
-					$scope.hot_ads_cat.push({
-						name: "Bất động sản mới đăng",
-						location: "Hà Nội",
-						list: result
-					})
-				}
-				console.log("HouseService.findRencentAds: " + result.length);
-				console.log(result);
-			});
+			// HouseService.findBelowPriceAds(data).then(function(res){
+			// 	var resultBelow = [];
+			// 	if(res.data.list){
+			// 		for (var i = 0; i < res.data.list.length; i++) {
+			// 			resultBelow.push(res.data.list[i].default);
+			// 		}
+			// 		$scope.hot_ads_cat.push({
+			// 			name: "Nhà dưới mức giá 800 triệu",
+			// 			location: "Hà Nội",
+			// 			list: resultBelow
+			// 		})
+			// 	}
+			// 	console.log("HouseService.findBelowPriceAds: " + resultBelow.length);
+			// 	console.log(resultBelow);
+			// });
+
+			// var data = {
+			// 	"ngayDangTin": '25-04-2016',
+			// 	"limit": 4
+			// };
+			// console.log("getRecentBds + data: " + data);
+			// HouseService.findRencentAds(data).then(function(res){
+			// 	var result = [];
+			// 	if(res.data.list){
+			// 		for (var i = 0; i < res.data.list.length; i++) {
+			// 			result.push(res.data.list[i].default);
+			// 		}
+			// 		$scope.hot_ads_cat.push({
+			// 			name: "Bất động sản mới đăng",
+			// 			location: "Hà Nội",
+			// 			list: result
+			// 		})
+			// 	}
+			// 	console.log("HouseService.findRencentAds: " + result.length);
+			// 	console.log(result);
+			// });
 
 		}
 		vm.getLocation = function () {

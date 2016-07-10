@@ -38,7 +38,7 @@
                                                             <span class="line">{{ads.soPhongNguFmt}}</span>
                                                         </span>
                                                     </a>
-                                                    <a class="like" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="" title=""><span>Like</span></a>
+                                                    <a ng-class="ads.liked==true?'liked':'like'" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="" title=""><span>Like</span></a>
                                                 </div>
                                             </div>
                                             <div class="col col-590">
@@ -85,7 +85,7 @@
                                                     <div class="col col-60">
                                                         <div class="action">
                                                             <a class="btn-detail" href="" ng-click="mc.goDetail($index)"  title="">View Details</a>
-                                                            <a class="favorite" ng-click="mc.likeAds($index); $event.stopPropagation();" data-like="true" href="" title=""><i class="fa fa-heart-o"></i></a>
+                                                            <a class="favorite" ng-click="mc.likeAds($index,ads.adsID); $event.stopPropagation();" data-like="true" href="" title=""><i ng-class="(ads.liked==true?'fa fa-heart':'fa fa-heart-o')"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

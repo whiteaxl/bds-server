@@ -76,8 +76,19 @@
       },
       updateProfile: function(data){
         return $http.post("/api/updateProfile",data);
+      },
+      findAdsAndDuanForHomePage: function(data){
+        return $http.post("/api/findAdsAndDuanForHomePage",data);
+      },
+      findBdsCungLoaiMoidang: function(data){
+        return $http.post("/api/findBdsCungLoaiMoidang",data);
+      },
+      findBdsLoaiKhacNgangGia: function(data){
+        return $http.post("/api/findBdsLoaiKhacNgangGia",data);
+      },
+      findBdsGiaThapHon: function(data){
+        return $http.post("/api/findBdsGiaThapHon",data);
       }
-
     };
   });
 })();

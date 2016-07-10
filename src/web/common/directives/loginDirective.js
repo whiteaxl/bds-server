@@ -30,7 +30,7 @@ angular.module('bds')
                 vm.userExist = false;
                 vm.password = "";
                 $localStorage.relandToken = undefined;  
-                $rootScope.userID = undefined;
+                $rootScope.user.userID = undefined;
                 vm.changeState(vm.ENTER_EMAIL,vm.userExist);
             }
           });
@@ -116,18 +116,24 @@ angular.module('bds')
                           //$window.token = res.data.token;
                           $localStorage.relandToken = res.data.token;
                           $rootScope.userName = res.data.userName;
-                          $rootScope.userID = res.data.userID;
+                          $rootScope.user.userID = res.data.userID;
                           $rootScope.userAvatar = res.data.avatar;
                           //hung dummy here to set userID to email so we can test chat
-                          //$rootScope.userID = res.data.email;
-                          $rootScope.userID = res.data.userID;
-                          $rootScope.userEmail = res.data.email;
+                          //$rootScope.user.userID = res.data.email;
+                          $rootScope.user.userID = res.data.userID;
+                          $rootScope.user.adsLikes = res.data.adsLikes;
+                          $rootScope.user.userEmail = res.data.email;
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
                           vm.userExist = false;
                           vm.password = "";
-                          socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
+                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
                             console.log("register socket user " + $rootScope.userName);
+                          });
+                          $scope.$bus.publish({
+                            channel: 'user',
+                            topic: 'logged-in',
+                            data: null
                           });
                           $('#box-login').hide();
                         }else{
@@ -162,18 +168,24 @@ angular.module('bds')
                         //$window.token = res.data.token;
                         $localStorage.relandToken = res.data.token;
                         $rootScope.userName = res.data.userName;
-                        $rootScope.userID = res.data.userID;
+                        $rootScope.user.userID = res.data.userID;
                         $rootScope.userAvatar = res.data.avatar;
                         //hung dummy here to set userID to email so we can test chat
-                        //$rootScope.userID = res.data.email;
-                        $rootScope.userID = res.data.userID;
-                        $rootScope.userEmail = res.data.email;
+                        //$rootScope.user.userID = res.data.email;
+                        $rootScope.user.userID = res.data.userID;
+                        $rootScope.user.adsLikes = res.data.adsLikes;
+                        $rootScope.user.userEmail = res.data.email;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;
                         vm.password = "";
-                        socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
+                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
                           console.log("register socket user " + $rootScope.userName);
+                        });
+                        $scope.$bus.publish({
+                            channel: 'user',
+                            topic: 'logged-in',
+                            data: null
                         });
                         $('#box-login').hide();
                       }else{
@@ -187,7 +199,7 @@ angular.module('bds')
                       $rootScope.userName = res.data.userName;
                       vm.class = "has-sub";
                       vm.state = vm.LOGGED_IN;
-                      socket.emit('new user',{email: $rootScope.userEmail, userID:  $rootScope.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
+                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.userName);
                       });
                       $('#box-login').hide();

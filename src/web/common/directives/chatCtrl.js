@@ -24,13 +24,13 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	$scope.chatKeypress = function(event){
 		var keyCode  = event.keyCode;
 		if(vm.typing == false){
-			socket.emit('user-start-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+			socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){   
 				console.log("emit start typing to " + $scope.chatbox.user.userID);
 			});   
 		}
 	}
 	$scope.chatBlur = function(event){
-		socket.emit('user-stop-typing',{fromUserID: $rootScope.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+		socket.emit('user-stop-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){   
 			console.log("emit stop typing to " + $scope.chatbox.user.userID);
 		});   
 	}
@@ -38,7 +38,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 
 	$scope.getMessage = function(){
 		return {
-			fromUserID: $rootScope.userID
+			fromUserID: $rootScope.user.userID
 			, fromUserAvatar: $rootScope.userAvatar
 			, toUserID: $scope.chatbox.user.userID
 			, toFullName: $scope.chatbox.user.name

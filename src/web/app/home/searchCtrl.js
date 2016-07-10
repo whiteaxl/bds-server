@@ -70,17 +70,34 @@
 			$state.go('package', { "packageID" : packageID, "viewMode": vm.viewMode}, {location: true});
 		}
 
-		vm.likeAds = function(index){
-	      if(!$rootScope.userID){
-	        alert("Đăng nhập để like");
+		// vm.likeAds = function(index){
+	 //      if(!$rootScope.user.userID){
+	 //        alert("Đăng nhập để like");
+	 //        return;
+	 //      }
+	 //      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.user.userID}).then(function(res){
+	 //        alert(res.data.msg);
+	 //        console.log(res);
+	 //      });
+	 //    };
+	    vm.likeAdsClass ="like";
+		vm.likeAds = function(index,adsID){
+	      if(!$rootScope.user.userID){
+	        $scope.$bus.publish({
+              channel: 'login',
+              topic: 'show login',
+              data: {label: "Đăng nhập để lưu BĐS"}
+	        });
 	        return;
 	      }
-	      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.userID}).then(function(res){
-	        alert(res.data.msg);
-	        console.log(res);
+	      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.user.userID}).then(function(res){
+	        //alert(res.data.msg);
+	        //console.log(res);
+	        if(res.data.success == true || res.data.status==1){
+	        	vm.ads_list[index].liked =true;
+	        }
 	      });
 	    };
-
 		vm.gotoDiachinh = function(diachinh,type){
 			/*if(type==1){
 				vm.diaChinh.huyen = null;
@@ -135,7 +152,7 @@
 			}
 
 			
-			if(!$rootScope.userID){
+			if(!$rootScope.user.userID){
 				$scope.$bus.publish({
 	              channel: 'login',
 	              topic: 'show login',
@@ -145,7 +162,7 @@
 			}
 			var data = {
 				query: vm.searchData,
-				userID: $rootScope.userID,
+				userID: $rootScope.user.userID,
 				saveSearchName: vm.saveSearchName
 			};
 
@@ -236,6 +253,7 @@
 		  	"huongNha": vm.huongNhaList[0].value,
 		  	"huongNhas": [],
 		  	"radiusInKm": 2,
+		  	"userID": $rootScope.user.userID,
 		  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 		  	"limit": vm.pageSize,
 		  	"orderBy": vm.sortOptions[0].value,
@@ -380,12 +398,15 @@
 			vm.searchData.pageNo = i;		
 			if(vm.searchData.place)
 				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;	
+			vm.searchData.userID = $rootScope.user.userID;
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
 				//vm.totalResultCounts = res.data.list.length;
 				
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
+		    		if($rootScope.alreadyLike(ads.adsID) ==  true)
+						ads.liked =true;
 			        var length = result.length;
 			        var fn = function() {
 			            if(i < length) {
@@ -456,6 +477,7 @@
 		vm.search = function(callback){
 			if(vm.searchData.place)
 				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
+			vm.searchData.userID = $rootScope.user.userID;
 			HouseService.countAds(vm.searchData).then(function(res){
         		vm.totalResultCounts = res.data.countResult;
         		$scope.markers =[];
@@ -512,6 +534,7 @@
 				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 				  	"huongNha": vm.huongNhaList[0].value,
 				  	"huongNhas": [],
+				  	"userID": $rootScope.user.userID,
 				  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 				  	"limit": vm.pageSize,
 				  	"orderBy": vm.sortOptions[0].value,
@@ -532,6 +555,7 @@
 				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 				  	"huongNha": vm.huongNhaList[0].value,
 				  	"huongNhas": [],
+				  	"userID": $rootScope.user.userID,
 				  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 				  	"limit": vm.pageSize,
 				  	"orderBy": vm.sortOptions[0].value,

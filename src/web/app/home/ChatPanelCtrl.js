@@ -98,7 +98,7 @@
             topic: 'new user',
             callback: function(data, envelope) {
                 console.log('add new chat box', data, envelope);
-                vm.addNewChat(data);
+                vm.addNewChat(data);                
             }
         });
         $scope.$bus.subscribe({

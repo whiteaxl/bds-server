@@ -519,6 +519,42 @@ internals.endpoints = [
       auth: 'jwt'
     }
   },
+  {
+    method: 'POST',
+    path: '/api/findAdsAndDuanForHomePage',
+    handler: findHandler.findAdsAndDuanForHomePage,
+    config : {
+      description: 'get ads duan noi bat show tren homepage',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findBdsGiaThapHon',
+    handler: findHandler.findBdsGiaThapHon,
+    config : {
+      description: 'get ads duan noi bat show tren homepage',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findBdsLoaiKhacNgangGia',
+    handler: findHandler.findBdsGiaThapHon,
+    config : {
+      description: 'get ads duan noi bat show tren homepage',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/findBdsCungLoaiMoidang',
+    handler: findHandler.findBdsGiaThapHon,
+    config : {
+      description: 'get ads duan noi bat show tren homepage',
+      tags: ['api']
+    }
+  }
 
 
   

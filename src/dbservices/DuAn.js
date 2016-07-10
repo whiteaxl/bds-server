@@ -30,6 +30,36 @@ class DuAnModel {
 			}
 		})
 	}
+
+	findDuAn(q,callback){
+		var sql = "SELECT t.* FROM `default` t  where t.type='DuAn' ";
+
+        if (q.hot) {
+            sql = sql + " and t.hot=" + q.hot;
+        }
+        if(q.tinhKhongDau) {
+        	sql = sql + " and t.diaChinh.tinhKhongDau='" + q.tinhKhongDau + "'";
+        }
+        if (q.limit) {
+            sql = sql + " limit  " + q.limit;
+        }
+        else {
+            sql = sql + " limit 4 ";
+        }
+
+        console.log("sql:" + sql );
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            
+            if (!all)
+                all = [];
+            console.log("number of ads:" + all.length);
+            console.log("Error:" + err);
+            callback(err,all);            
+        });
+
+	}
+
 }
 
 module.exports = DuAnModel;

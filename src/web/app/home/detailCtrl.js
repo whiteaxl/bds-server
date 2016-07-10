@@ -42,7 +42,7 @@
 
 
 		vm.showChat = function(user){
-			if(!$rootScope.userID){
+			if(!$rootScope.user.userID){
 				$scope.$bus.publish({
 	              channel: 'login',
 	              topic: 'show login',
@@ -57,7 +57,7 @@
 	        });
 		};
 		vm.likeAds = function(adsID){
-	      if(!$rootScope.userID){
+	      if(!$rootScope.user.userID){
 	        $scope.$bus.publish({
               channel: 'login',
               topic: 'show login',
@@ -65,7 +65,7 @@
 	        });
 	        return;
 	      }
-	      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.userID}).then(function(res){
+	      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.user.userID}).then(function(res){
 	        //alert(res.data.msg);
 	        //console.log(res);
 	        if(res.data.success == true || res.data.status==1){
@@ -97,7 +97,8 @@
 			// 	xa: vm.ads.place.diaChinh.xa,
 			// 	xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
 			// }				
-
+			if($rootScope.alreadyLike(vm.ads.adsID) ==  true)
+				vm.likeAdsClass ="fa-heart";
 			var price_min = 0;
 			var price_max = window.RewayListValue.filter_max_value.value;
 			var dien_tich_min = 0;
@@ -116,6 +117,7 @@
 				vm.email="";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
 			}
+			if($rootScope.user.userID)
 
 			vm.requestInfo = function(){
 				if($('#form-info-request').valid()){

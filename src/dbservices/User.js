@@ -402,6 +402,7 @@ class UserModel {
             data.id = userID;
             data._id = userID;
             data.name = data.email;
+            data.userID = data.id;
             console.log("before upsert " + data.id);
 
             bucket.upsert(data.id, data, function (err, res) {

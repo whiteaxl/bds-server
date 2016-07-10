@@ -441,6 +441,20 @@ danhMuc.getLoaiNhaDatForDisplay = function(loaiTin, loaiNhaDatKey){
     return value;
 }
 
+danhMuc.getLoaiNhaDatForDisplayNew = function(loaiTin, loaiNhaDatKey){
+    var value = '';
+    if (loaiTin == '0')
+        value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
+
+    if (loaiTin == '1')
+        value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
+
+    if (!value)
+        value = BAT_KY;
+
+    return value;
+}
+
 danhMuc.getDanhMucKeyByIndex = function (hashDanhMuc, index) {
     var find = '';
     var i = 0;

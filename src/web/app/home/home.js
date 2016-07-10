@@ -21,10 +21,22 @@
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
     $rootScope.menuitems = window.RewayListValue.menu;
-      
+    $rootScope.user = {
+      userID: null,
+      adsLikes: [],
+      lastSearch: null
+    }     
+
+    $rootScope.alreadyLike = function(adsID){
+      return _.indexOf($rootScope.user.adsLikes,adsID) >=0;
+    } 
 
     $rootScope.showDangNhapForLike = function(){
         
+    }
+
+    $rootScope.isLoggedIn = function(){
+      return $rootScope.user.userID;
     }
     
       

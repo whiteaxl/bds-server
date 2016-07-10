@@ -11,7 +11,7 @@ angular.module('bds')
           $scope.loginError = false;
           var vm = this;
           vm.profile = function() {
-            $state.go('profile', { userID: $rootScope.userID}, {location: true});
+            $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
           }
           vm.showLogin = function(){
             //var target = $(this).attr('href');
@@ -26,7 +26,7 @@ angular.module('bds')
               topic: 'logged out',
               data: {}
             });
-            socket.emit('user leave',{email: $rootScope.userEmail, userID:  $rootScope.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
+            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
                 console.log("disconect socket user " + $rootScope.userName);
             });
 
