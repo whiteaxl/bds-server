@@ -139,7 +139,7 @@ internals.homeData4App = function(req, reply) {
       let collections = [];
       doSearchAds(collections,
         "Nhà gần vị trí của bạn",
-        diaChinh.huyenCoDau + "," + diaChinh.tinhCoDau,
+        diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
         queryNearBy,
         doneNearBy
       );
