@@ -579,7 +579,7 @@ internals.endpoints = [
           status: Joi.number(),
           data: Joi.array().items(Joi.object({
             title1 : Joi.string(),
-            title2 : Joi.string(),
+            title2 : Joi.string().allow(null),
             data : Joi.array().items(Joi.object({
               adsID : Joi.string(),
               giaFmt : Joi.string(),
