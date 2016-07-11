@@ -92,13 +92,12 @@ internals.homeData4App = function(req, reply) {
       }
 
       //if no history, defaul if current Tinh and loaiTin=BAN
-      if (!query.loaiTin) {
+      if (query.loaiTin == null || query.loaiTin == undefined) {
         query.loaiTin = 0;
         query.diaChinh = {
           tinh : diaChinh.tinh
         }
       }
-
 
       //Dang hom nay:
       var doneDuoiGia = (collections) => {

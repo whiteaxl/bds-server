@@ -45,20 +45,25 @@ var locDauInt = function(str) {
 };
 
 util.getPriceDisplay = function(val, loaiTin) {
-    if (!val) {
-        return "Thỏa thuận";
-    }
-
-    if (loaiTin===0) { //ban
-        if (val < 1000) {
-            return val.toFixed(2)+ " TRIỆU";
+    try {
+        if (!val) {
+            return "Thỏa thuận";
         }
 
-        return (val/1000).toFixed(2) + " TỶ";
-    } else {
-        return val.toFixed(2) + " TRIỆU/THÁNG";
-    }
+        val = Number(val);
 
+        if (loaiTin===0) { //ban
+            if (val < 1000) {
+                return val.toFixed(2)+ " TRIỆU";
+            }
+
+            return (val/1000).toFixed(2) + " TỶ";
+        } else {
+            return val.toFixed(2) + " TRIỆU/THÁNG";
+        }
+    } catch(ex) {
+        console.log("Error when getPriceDisplay of " + val, ex)
+    }
 
 };
 
