@@ -51,7 +51,7 @@
         divElement.append(appendHtml);
       }
 
-      /*if(true || $rootScope.userName){
+      /*if(true || $rootScope.user.userName){
         $rootScope.chat_visible = true;
         $rootScope.chat_user = user;
 

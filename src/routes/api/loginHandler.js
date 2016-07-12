@@ -77,12 +77,13 @@ internals.login = function(req, reply){
         			//console.log("token" + token);
         			result.login = true;
         			result.token = token;
-        			result.userName = res[0].name;
+        			result.userName = res[0].fullName;
         			result.userID = res[0].id;
                     result.email = res[0].email;
                     result.avatar = res[0].avatar;
                     result.lastSearch = res[0].lastSearch;
                     result.adsLikes = res[0].adsLikes;
+                    result.phone = res[0].phone;
                 }else{
                 	result.message = "Mật khẩu không đúng ";
                 }

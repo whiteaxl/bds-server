@@ -20,14 +20,14 @@ angular.module('bds')
 
           vm.signout = function(){
           	$localStorage.relandToken = undefined;
-          	$rootScope.userName = undefined;
+          	$rootScope.user.userName = undefined;
             $scope.$bus.publish({
               channel: 'login',
               topic: 'logged out',
               data: {}
             });
-            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
-                console.log("disconect socket user " + $rootScope.userName);
+            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
+                console.log("disconect socket user " + $rootScope.user.userName);
             });
 
           }

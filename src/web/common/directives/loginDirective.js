@@ -115,20 +115,21 @@ angular.module('bds')
                           //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                           //$window.token = res.data.token;
                           $localStorage.relandToken = res.data.token;
-                          $rootScope.userName = res.data.userName;
+                          $rootScope.user.userName = res.data.userName;
                           $rootScope.user.userID = res.data.userID;
-                          $rootScope.userAvatar = res.data.avatar;
+                          $rootScope.user.userAvatar = res.data.avatar;
                           //hung dummy here to set userID to email so we can test chat
                           //$rootScope.user.userID = res.data.email;
                           $rootScope.user.userID = res.data.userID;
                           $rootScope.user.adsLikes = res.data.adsLikes;
                           $rootScope.user.userEmail = res.data.email;
+                          $rootScope.user.phone = res.data.phone;
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
                           vm.userExist = false;
                           vm.password = "";
-                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
-                            console.log("register socket user " + $rootScope.userName);
+                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+                            console.log("register socket user " + $rootScope.user.userName);
                           });
                           $scope.$bus.publish({
                             channel: 'user',
@@ -167,20 +168,21 @@ angular.module('bds')
                         //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                         //$window.token = res.data.token;
                         $localStorage.relandToken = res.data.token;
-                        $rootScope.userName = res.data.userName;
+                        $rootScope.user.userName = res.data.userName;
                         $rootScope.user.userID = res.data.userID;
-                        $rootScope.userAvatar = res.data.avatar;
+                        $rootScope.user.userAvatar = res.data.avatar;
                         //hung dummy here to set userID to email so we can test chat
                         //$rootScope.user.userID = res.data.email;
                         $rootScope.user.userID = res.data.userID;
                         $rootScope.user.adsLikes = res.data.adsLikes;
                         $rootScope.user.userEmail = res.data.email;
+                        $rootScope.user.phone = res.data.phone;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;
                         vm.password = "";
-                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
-                          console.log("register socket user " + $rootScope.userName);
+                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+                          console.log("register socket user " + $rootScope.user.userName);
                         });
                         $scope.$bus.publish({
                             channel: 'user',
@@ -196,11 +198,11 @@ angular.module('bds')
                   }else{//register
                     HouseService.signup(data).then(function(res){
                       $localStorage.relandToken = res.data.token;
-                      $rootScope.userName = res.data.userName;
+                      $rootScope.user.userName = res.data.userName;
                       vm.class = "has-sub";
                       vm.state = vm.LOGGED_IN;
-                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
-                          console.log("register socket user " + $rootScope.userName);
+                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
+                          console.log("register socket user " + $rootScope.user.userName);
                       });
                       $('#box-login').hide();
                     });

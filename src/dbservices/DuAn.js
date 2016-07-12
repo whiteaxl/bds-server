@@ -8,7 +8,30 @@ var bucket = cluster.openBucket('default');
 bucket.enableN1ql(['127.0.0.1:8093']);
 
 bucket.operationTimeout = 120 * 1000;
-
+/**
+{
+  "diaChi": "9 Phạm Văn Đồng, Phường Mai Dịch, Cầu Giấy, Hà Nội",
+  "diaChinh": {
+    "duong": "9 Phạm Văn Đồng",
+    "huyen": "Cầu Giấy",
+    "huyenKhongDau": "cau-giay",
+    "tinh": "Hà Nội",
+    "tinhKhongDau": "ha-noi",
+    "xa": "Phường Mai Dịch",
+    "xaKhongDau": "phuong-mai-dich"
+  },
+  "duAnID": "DA_2t-corporation-pj1435",
+  "geo": {
+    "lat": 21.0385150909424,
+    "lon": 105.780174255371
+  },
+  "id": "DA_2t-corporation-pj1435",
+  "image": "http://file1.batdongsan.com.vn/thumb200x150.365519.jpg",
+  "ten": "2T Corporation",
+  "tenKhongDau": "2t-corporation",
+  "type": "DuAn"
+}
+*/
 
 class DuAnModel {
 

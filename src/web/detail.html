@@ -75,7 +75,7 @@
                         <div class="col col-33" ng-if="dt.ads.soPhongTam">{{dt.ads.soPhongTam}} phòng tắm</div>
                         <div class="col col-33" ng-if="dt.ads.soTang">{{dt.ads.soTang}} tầng</div>
                         <div class="col col-33" >{{dt.ads.loaiNhaDatFmt}}</div>
-                        <div class="col col-33" ng-if="dt.ads.luotXem">{{dt.ads.luotXem}} lượt xem</div>
+                        <div ng-if="dt.showLuotXem" class="col col-33" ng-if="dt.ads.luotXem">{{dt.ads.luotXem}} lượt xem</div>
                         <div class="col col-33" ng-if="dt.ads.soNgayDaDangTinFmt">{{dt.ads.soNgayDaDangTinFmt}}</div>
                         
                         

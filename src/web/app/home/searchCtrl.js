@@ -59,6 +59,8 @@
 		}else if($state.params.viewMode=="map"){
 			vm.viewTemplateUrl = "search.tpl.html"
 		}
+
+
 		vm.showList = function(){
 			vm.viewTemplateUrl = "list.tpl.html"
 			vm.viewMode = "list";
@@ -239,7 +241,7 @@
 		vm.currentPage = 0;
 		vm.lastPageNo = 0;
 		vm.startPageNo = 0;
-		vm.pageSize = 20;
+		vm.pageSize = 30;
 
 		vm.searchData = {
 			"loaiTin": $scope.loaiTin,
@@ -405,6 +407,7 @@
 				
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
+		    		ads.giaFmt = ads.giaFmtForWeb;
 		    		if($rootScope.alreadyLike(ads.adsID) ==  true)
 						ads.liked =true;
 			        var length = result.length;
@@ -665,6 +668,15 @@
 
 				}
 			];
+
+			vm.findDuAnHot = function(){
+				HouseService.findDuAnHotByDiaChinhForSearchPage(vm.searchData).then(function(res){
+					if(res.data.success==true){
+						vm.duAnHot =  res.data.duAn;
+					}			
+				});
+			}
+			vm.findDuAnHot();
 
 			vm.loaiNhaDatList = []
 			if(vm.loaiTin == 0){

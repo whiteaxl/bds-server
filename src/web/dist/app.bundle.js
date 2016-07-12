@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "320e901d0634d8909ec9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c469c11893bb87ecf234"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1023,7 +1023,7 @@
 	        divElement.append(appendHtml);
 	      }
 
-	      /*if(true || $rootScope.userName){
+	      /*if(true || $rootScope.user.userName){
 	        $rootScope.chat_visible = true;
 	        $rootScope.chat_user = user;
 
@@ -18325,6 +18325,8 @@
 			}else if($state.params.viewMode=="map"){
 				vm.viewTemplateUrl = "search.tpl.html"
 			}
+
+
 			vm.showList = function(){
 				vm.viewTemplateUrl = "list.tpl.html"
 				vm.viewMode = "list";
@@ -18505,7 +18507,7 @@
 			vm.currentPage = 0;
 			vm.lastPageNo = 0;
 			vm.startPageNo = 0;
-			vm.pageSize = 20;
+			vm.pageSize = 30;
 
 			vm.searchData = {
 				"loaiTin": $scope.loaiTin,
@@ -18671,6 +18673,7 @@
 					
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
+			    		ads.giaFmt = ads.giaFmtForWeb;
 			    		if($rootScope.alreadyLike(ads.adsID) ==  true)
 							ads.liked =true;
 				        var length = result.length;
@@ -18931,6 +18934,15 @@
 
 					}
 				];
+
+				vm.findDuAnHot = function(){
+					HouseService.findDuAnHotByDiaChinhForSearchPage(vm.searchData).then(function(res){
+						if(res.data.success==true){
+							vm.duAnHot =  res.data.duAn;
+						}			
+					});
+				}
+				vm.findDuAnHot();
 
 				vm.loaiNhaDatList = []
 				if(vm.loaiTin == 0){
@@ -19365,6 +19377,7 @@
 				var price_max = window.RewayListValue.filter_max_value.value;
 				var dien_tich_min = 0;
 				var dien_tich_max = window.RewayListValue.filter_max_value.value;
+
 			
 				var pageSize = 8;
 
@@ -19379,7 +19392,26 @@
 					vm.email="";
 					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
 				}
-				if($rootScope.user.userID)
+
+				vm.userLoggedIn = function(){
+					vm.name = $rootScope.user.userName;
+		                if($rootScope.user.phone)
+							vm.phone = parseInt($rootScope.user.phone);
+						vm.email = $rootScope.user.userEmail;
+					vm.showLuotXem = true;
+				}
+				
+				$scope.$bus.subscribe({
+	            	channel: 'user',
+		            topic: 'logged-in',
+		            callback: function(data, envelope) {
+		                //console.log('add new chat box', data, envelope);
+		                vm.userLoggedIn();
+		            }
+		        });
+		        if($rootScope.isLoggedIn()){	        	
+		        	vm.userLoggedIn();
+		        }
 
 				vm.requestInfo = function(){
 					if($('#form-info-request').valid()){
@@ -19527,6 +19559,14 @@
 			        });*/
 
 	        	});
+	        	vm.findDuAnHot = function(){
+					HouseService.findDuAnHotByDiaChinhForDetailPage(vm.searchData).then(function(res){
+						if(res.data.success==true){
+							vm.listDuAnHot =  res.data.listDuAnHot;
+						}			
+					});
+				}
+				vm.findDuAnHot();
 	        	
 	        	var infoRequestRules = {
 		            email: {
@@ -19979,14 +20019,11 @@
 	      findAdsAndDuanForHomePage: function(data){
 	        return $http.post("/api/findAdsAndDuanForHomePage",data);
 	      },
-	      findBdsCungLoaiMoidang: function(data){
-	        return $http.post("/api/findBdsCungLoaiMoidang",data);
+	      findDuAnHotByDiaChinhForSearchPage: function(data){
+	        return $http.post("/api/findDuAnHotByDiaChinhForSearchPage",data);
 	      },
-	      findBdsLoaiKhacNgangGia: function(data){
-	        return $http.post("/api/findBdsLoaiKhacNgangGia",data);
-	      },
-	      findBdsGiaThapHon: function(data){
-	        return $http.post("/api/findBdsGiaThapHon",data);
+	      findDuAnHotByDiaChinhForDetailPage: function(data){
+	        return $http.post("/api/findDuAnHotByDiaChinhForDetailPage",data);
 	      }
 	    };
 	  });
@@ -20114,20 +20151,21 @@
 	                          //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
 	                          //$window.token = res.data.token;
 	                          $localStorage.relandToken = res.data.token;
-	                          $rootScope.userName = res.data.userName;
+	                          $rootScope.user.userName = res.data.userName;
 	                          $rootScope.user.userID = res.data.userID;
-	                          $rootScope.userAvatar = res.data.avatar;
+	                          $rootScope.user.userAvatar = res.data.avatar;
 	                          //hung dummy here to set userID to email so we can test chat
 	                          //$rootScope.user.userID = res.data.email;
 	                          $rootScope.user.userID = res.data.userID;
 	                          $rootScope.user.adsLikes = res.data.adsLikes;
 	                          $rootScope.user.userEmail = res.data.email;
+	                          $rootScope.user.phone = res.data.phone;
 	                          vm.class = "has-sub";
 	                          vm.state = vm.LOGGED_IN;
 	                          vm.userExist = false;
 	                          vm.password = "";
-	                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
-	                            console.log("register socket user " + $rootScope.userName);
+	                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+	                            console.log("register socket user " + $rootScope.user.userName);
 	                          });
 	                          $scope.$bus.publish({
 	                            channel: 'user',
@@ -20166,20 +20204,21 @@
 	                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
 	                        //$window.token = res.data.token;
 	                        $localStorage.relandToken = res.data.token;
-	                        $rootScope.userName = res.data.userName;
+	                        $rootScope.user.userName = res.data.userName;
 	                        $rootScope.user.userID = res.data.userID;
-	                        $rootScope.userAvatar = res.data.avatar;
+	                        $rootScope.user.userAvatar = res.data.avatar;
 	                        //hung dummy here to set userID to email so we can test chat
 	                        //$rootScope.user.userID = res.data.email;
 	                        $rootScope.user.userID = res.data.userID;
 	                        $rootScope.user.adsLikes = res.data.adsLikes;
 	                        $rootScope.user.userEmail = res.data.email;
+	                        $rootScope.user.phone = res.data.phone;
 	                        vm.class = "has-sub";
 	                        vm.state = vm.LOGGED_IN;
 	                        vm.userExist = false;
 	                        vm.password = "";
-	                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, avatar : res.data.avatar},function(data){
-	                          console.log("register socket user " + $rootScope.userName);
+	                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+	                          console.log("register socket user " + $rootScope.user.userName);
 	                        });
 	                        $scope.$bus.publish({
 	                            channel: 'user',
@@ -20195,11 +20234,11 @@
 	                  }else{//register
 	                    HouseService.signup(data).then(function(res){
 	                      $localStorage.relandToken = res.data.token;
-	                      $rootScope.userName = res.data.userName;
+	                      $rootScope.user.userName = res.data.userName;
 	                      vm.class = "has-sub";
 	                      vm.state = vm.LOGGED_IN;
-	                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.userName, userAvatar : undefined},function(data){
-	                          console.log("register socket user " + $rootScope.userName);
+	                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
+	                          console.log("register socket user " + $rootScope.user.userName);
 	                      });
 	                      $('#box-login').hide();
 	                    });
@@ -20287,14 +20326,14 @@
 
 	          vm.signout = function(){
 	          	$localStorage.relandToken = undefined;
-	          	$rootScope.userName = undefined;
+	          	$rootScope.user.userName = undefined;
 	            $scope.$bus.publish({
 	              channel: 'login',
 	              topic: 'logged out',
 	              data: {}
 	            });
-	            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.userName, userAvatar : undefined},function(data){
-	                console.log("disconect socket user " + $rootScope.userName);
+	            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
+	                console.log("disconect socket user " + $rootScope.user.userName);
 	            });
 
 	          }
@@ -20395,10 +20434,10 @@
 		$scope.getMessage = function(){
 			return {
 				fromUserID: $rootScope.user.userID
-				, fromUserAvatar: $rootScope.userAvatar
+				, fromUserAvatar: $rootScope.user.userAvatar
 				, toUserID: $scope.chatbox.user.userID
 				, toFullName: $scope.chatbox.user.name
-				, fromFullName: $rootScope.userName
+				, fromFullName: $rootScope.user.userName
 				, relatedToAds: $scope.chatbox.ads
 				, content : vm.chatMsg
 				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
@@ -20416,7 +20455,7 @@
 	    	vm.isFileSelected = true;
 	        // var file = files[0];
 	        var dateString = formatAMPM(new Date());            
-	        var DWid = $rootScope.userName + "dwid" + Date.now();
+	        var DWid = $rootScope.user.userName + "dwid" + Date.now();
 
 	        var msg = $scope.getMessage();
 	        if(isImageFile==true)
@@ -21450,7 +21489,7 @@
 	    return str;
 	};
 
-	util.getPriceDisplay = function(val, loaiTin) {
+	util.getPriceDisplay = function(val, loaiTin, forWeb) {
 	    if (!val) {
 	        return "Thỏa thuận";
 	    }
@@ -21462,7 +21501,7 @@
 
 	        return (val/1000).toFixed(2) + " TỶ";
 	    } else {
-	        return val.toFixed(2) + " TRIỆU/THÁNG";
+	        return val.toFixed(2) +  (forWeb?"triệu":" TRIỆU/THÁNG");
 	    }
 
 

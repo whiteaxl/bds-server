@@ -103,6 +103,7 @@
 			var price_max = window.RewayListValue.filter_max_value.value;
 			var dien_tich_min = 0;
 			var dien_tich_max = window.RewayListValue.filter_max_value.value;
+
 		
 			var pageSize = 8;
 
@@ -117,7 +118,26 @@
 				vm.email="";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
 			}
-			if($rootScope.user.userID)
+
+			vm.userLoggedIn = function(){
+				vm.name = $rootScope.user.userName;
+	                if($rootScope.user.phone)
+						vm.phone = parseInt($rootScope.user.phone);
+					vm.email = $rootScope.user.userEmail;
+				vm.showLuotXem = true;
+			}
+			
+			$scope.$bus.subscribe({
+            	channel: 'user',
+	            topic: 'logged-in',
+	            callback: function(data, envelope) {
+	                //console.log('add new chat box', data, envelope);
+	                vm.userLoggedIn();
+	            }
+	        });
+	        if($rootScope.isLoggedIn()){	        	
+	        	vm.userLoggedIn();
+	        }
 
 			vm.requestInfo = function(){
 				if($('#form-info-request').valid()){
@@ -265,6 +285,14 @@
 		        });*/
 
         	});
+        	vm.findDuAnHot = function(){
+				HouseService.findDuAnHotByDiaChinhForDetailPage(vm.searchData).then(function(res){
+					if(res.data.success==true){
+						vm.listDuAnHot =  res.data.listDuAnHot;
+					}			
+				});
+			}
+			vm.findDuAnHot();
         	
         	var infoRequestRules = {
 	            email: {

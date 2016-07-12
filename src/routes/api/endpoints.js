@@ -531,28 +531,18 @@ internals.endpoints = [
   },
   {
     method: 'POST',
-    path: '/api/findBdsGiaThapHon',
-    handler: findHandler.findBdsGiaThapHon,
+    path: '/api/findDuAnHotByDiaChinhForSearchPage',
+    handler: findHandler.findDuAnHotByDiaChinhForSearchPage,
     config : {
-      description: 'get ads duan noi bat show tren homepage',
+      description: 'get ads duan noi bat show tren search page',
       tags: ['api']
     }
-  },
-  {
+  },{
     method: 'POST',
-    path: '/api/findBdsLoaiKhacNgangGia',
-    handler: findHandler.findBdsGiaThapHon,
+    path: '/api/findDuAnHotByDiaChinhForDetailPage',
+    handler: findHandler.findDuAnHotByDiaChinhForDetailPage,
     config : {
-      description: 'get ads duan noi bat show tren homepage',
-      tags: ['api']
-    }
-  },
-  {
-    method: 'POST',
-    path: '/api/findBdsCungLoaiMoidang',
-    handler: findHandler.findBdsGiaThapHon,
-    config : {
-      description: 'get ads duan noi bat show tren homepage',
+      description: 'get ads duan noi bat show tren detail page',
       tags: ['api']
     }
   },

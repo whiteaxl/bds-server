@@ -44,7 +44,7 @@ var locDauInt = function(str) {
     return str;
 };
 
-util.getPriceDisplay = function(val, loaiTin) {
+util.getPriceDisplay = function(val, loaiTin, forWeb) {
     if (!val) {
         return "Thỏa thuận";
     }
@@ -56,7 +56,7 @@ util.getPriceDisplay = function(val, loaiTin) {
 
         return (val/1000).toFixed(2) + " TỶ";
     } else {
-        return val.toFixed(2) + " TRIỆU/THÁNG";
+        return val.toFixed(2) +  (forWeb?"triệu":" TRIỆU/THÁNG");
     }
 
 

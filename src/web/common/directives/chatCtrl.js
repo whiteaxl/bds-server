@@ -39,10 +39,10 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
 	$scope.getMessage = function(){
 		return {
 			fromUserID: $rootScope.user.userID
-			, fromUserAvatar: $rootScope.userAvatar
+			, fromUserAvatar: $rootScope.user.userAvatar
 			, toUserID: $scope.chatbox.user.userID
 			, toFullName: $scope.chatbox.user.name
-			, fromFullName: $rootScope.userName
+			, fromFullName: $rootScope.user.userName
 			, relatedToAds: $scope.chatbox.ads
 			, content : vm.chatMsg
 			, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
@@ -60,7 +60,7 @@ angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socke
     	vm.isFileSelected = true;
         // var file = files[0];
         var dateString = formatAMPM(new Date());            
-        var DWid = $rootScope.userName + "dwid" + Date.now();
+        var DWid = $rootScope.user.userName + "dwid" + Date.now();
 
         var msg = $scope.getMessage();
         if(isImageFile==true)

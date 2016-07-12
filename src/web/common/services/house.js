@@ -80,14 +80,11 @@
       findAdsAndDuanForHomePage: function(data){
         return $http.post("/api/findAdsAndDuanForHomePage",data);
       },
-      findBdsCungLoaiMoidang: function(data){
-        return $http.post("/api/findBdsCungLoaiMoidang",data);
+      findDuAnHotByDiaChinhForSearchPage: function(data){
+        return $http.post("/api/findDuAnHotByDiaChinhForSearchPage",data);
       },
-      findBdsLoaiKhacNgangGia: function(data){
-        return $http.post("/api/findBdsLoaiKhacNgangGia",data);
-      },
-      findBdsGiaThapHon: function(data){
-        return $http.post("/api/findBdsGiaThapHon",data);
+      findDuAnHotByDiaChinhForDetailPage: function(data){
+        return $http.post("/api/findDuAnHotByDiaChinhForDetailPage",data);
       }
     };
   });

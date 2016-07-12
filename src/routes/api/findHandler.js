@@ -130,6 +130,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             adsID : ads.adsID,
             gia : ads.gia,
             giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
+            giaFmtForWeb: util.getPriceDisplay(ads.gia, ads.loaiTin,true),
             dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
             soPhongNgu: ads.soPhongNgu,
             soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
@@ -702,5 +703,41 @@ internals.findAdsAndDuanForHomePage = function(q, reply){
             
         });*/
     }
+}
+
+internals.findDuAnHotByDiaChinhForSearchPage = function(req,reply){
+    var result = {
+        msg: "",
+        success: false,
+        duAn: undefined
+    };
+    result.duAn = {
+
+    }
+    q.tinhKhongDau = 'ho-chi-minh';
+    duAnService.findDuAn(q,function(err,res){
+        if(err || res.length<=0){
+             callback(null,null); 
+        }else{
+            callback(null,{
+                name: "Dự án nổi bật tại Hồ Chí Minh",
+                location: "Hồ Chí Minh",
+                type: "DU_AN",
+                list: res
+            }); 
+        }
+    });
+    result.success = true;
+    reply(result);
+}
+
+internals.findDuAnHotByDiaChinhForDetailPage = function(req,reply){
+    var result = {
+        msg: "",
+        success: false,
+        duAn: []
+    };
+    result.success = true;
+    reply(result);
 }
 module.exports = internals;
