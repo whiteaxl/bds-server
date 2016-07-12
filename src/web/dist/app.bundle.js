@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5b411e59b18ae5d32b26"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6ec1fbf0589dae076377"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19398,7 +19398,10 @@
 		                if($rootScope.user.phone)
 							vm.phone = parseInt($rootScope.user.phone);
 						vm.email = $rootScope.user.userEmail;
-					vm.showLuotXem = true;
+					if(vm.ads.dangBoi.userID == $rootScope.user.userID)
+						vm.showLuotXem = true;
+					if(vm.ads.dangBoi.email == $rootScope.user.userEmail)
+						vm.showLuotXem = true;
 				}
 				
 				$scope.$bus.subscribe({
