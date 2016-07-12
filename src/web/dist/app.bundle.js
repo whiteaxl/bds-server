@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c469c11893bb87ecf234"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5b411e59b18ae5d32b26"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21489,21 +21489,26 @@
 	    return str;
 	};
 
-	util.getPriceDisplay = function(val, loaiTin, forWeb) {
-	    if (!val) {
-	        return "Thỏa thuận";
-	    }
-
-	    if (loaiTin===0) { //ban
-	        if (val < 1000) {
-	            return val.toFixed(2)+ " TRIỆU";
+	util.getPriceDisplay = function(val, loaiTin,forWeb) {
+	    try {
+	        if (!val) {
+	            return "Thỏa thuận";
 	        }
 
-	        return (val/1000).toFixed(2) + " TỶ";
-	    } else {
-	        return val.toFixed(2) +  (forWeb?"triệu":" TRIỆU/THÁNG");
-	    }
+	        val = Number(val);
 
+	        if (loaiTin===0) { //ban
+	            if (val < 1000) {
+	                return val.toFixed(2)+ " TRIỆU";
+	            }
+
+	            return (val/1000).toFixed(2) + " TỶ";
+	        } else {
+	            return val.toFixed(2) +  (forWeb?"triệu":" TRIỆU/THÁNG");
+	        }
+	    } catch(ex) {
+	        console.log("Error when getPriceDisplay of " + val, ex)
+	    }
 
 	};
 
