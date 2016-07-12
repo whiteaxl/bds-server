@@ -75,18 +75,18 @@
                     <div class="col col-40">
                         <div class="block-04">
                             <div class="item">
-                                <div class="row">
+                                <div class="row" ng-if="mc.duAnNoiBat">
                                     <div class="col col-50">
-                                        <a class="media" href="#" title="">
-                                            <span class="img" style="background: url(asset/img/data/img-50.jpg)">Lennar New Homes</span>
+                                        <a class="media" href="#" title="" ng-click="mc.gotoDuAn(mc.duAnNoiBat)">
+                                            <span class="img" style="background: url({{mc.duAnNoiBat.anhDuAn}})">{{mc.duAnNoiBat.tenDuAn}}</span>
                                         </a>
                                     </div>
                                     <div class="col col-50">
                                         <h3>
-                                            <a href="#" title="">Lennar New Homes</a>
+                                            <a href="#" title="">{{mc.duAnNoiBat.tenDuAn}}</a>
                                         </h3>
-                                        <p>Building where you want to live! From the mid-$200's</p>
-                                        <a class="btn-more" href="" title="">Learn More</a>
+                                        <p>{{mc.duAnNoiBat.gioiThieuDuAn}}</p>
+                                        <a class="btn-more" ng-click="mc.gotoDuAn(mc.duAnNoiBat)" href="" title="">Xem nhà</a>
                                     </div>
                                 </div>
                             </div>

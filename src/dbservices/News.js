@@ -60,7 +60,8 @@ class NewsModel {
         pool.getConnection(function(err,connection){
             if (err) {
                 console.log(err);
-                connection.release();
+                if(connection)
+                    connection.release();
                 return;
             }
 

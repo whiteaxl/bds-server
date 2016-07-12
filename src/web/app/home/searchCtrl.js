@@ -309,6 +309,7 @@
 		vm.selectPlaceCallback = function(place){
 			$scope.searchPlaceSelected = place;
     		$scope.placeSearchId = place.place_id;
+    		vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
     		/*$scope.markers = [];
     		var marker = {
     				id: -1,
@@ -408,6 +409,7 @@
 				for (var i = 0; i < result.length; i++) { 
 		    		var ads = result[i];
 		    		ads.giaFmt = ads.giaFmtForWeb;
+
 		    		if($rootScope.alreadyLike(ads.adsID) ==  true)
 						ads.liked =true;
 			        var length = result.length;
@@ -471,11 +473,23 @@
 					$('body').scrollTop(0);
 				},0);
 				
+				if($rootScope.isLoggedIn()){
+					$rootScope.user.lastSearch = vm.searchData;
+				}
+				
+				if(vm.ads_list && vm.ads_list.length>0){					
+					if(vm.diaChinh)
+						HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
+							if(res.data.success==true)
+								vm.duAnNoiBat = res.data.duAnNoiBat;
+						});
+				}
 
 				if(callback)
 					callback();
 			});
 		}
+
 
 		vm.search = function(callback){
 			if(vm.searchData.place)
@@ -497,7 +511,6 @@
 					vm.startPageNo = 0;
         		}
         		vm.searchPage(1,callback);
-
         	});
 
 		}

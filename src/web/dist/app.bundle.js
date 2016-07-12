@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6ec1fbf0589dae076377"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13eabc10b38ac616e5d0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18125,49 +18125,87 @@
 			function initHotAds(){
 				console.log("---------------------initHotAds ---------------");
 				$scope.hot_ads_cat =[];
-				if($rootScope.user.userID){
-					HouseService.profile({userID: 'User_2'}).then(function(res){
-						if(res.data.success == true){
-							var lastSearch = res.data.user.lastSearch;	
-							if(lastSearch){
-								var searchDataCungLoai = {
-									"loaiTin": lastSearch.loaiTin,
-									"loaiNhaDat": lastSearch.loaiNhaDat, 
-									"limit": 10,
-									"soPhongNguGREATER": 0,
-						  			"soPhongTamGREATER": 0,
-						  			"soTangGREATER": 0,
-									"diaChinh": lastSearch.diaChinh,
-									"geoBox": lastSearch.geoBox,
-								  	"orderBy": "ngayDangTinDESC",
-								  	"pageNo": 1
-								};
-								HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
-									var bdsCungLoaiMoiDang = [];
-									for(var i=0;i<res.data.length;i++){
-										bdsCungLoaiMoiDang.push(res.data.list[i]);
-									}	
-									var cat = {
-										name: "",
-										location: "",
-										list: bdsCungLoaiMoiDang
-									}
-									if(lastSearch.loaiNhaDat==0 ){
-										cat.name = "Bất động sản mới đăng";
-									}else{
-										cat.name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
-									}
-									$scope.hot_ads_cat.push(cat);														
-								});
-
+				if($rootScope.user && $rootScope.user.userID && $rootScope.user.lastSearch){				
+					var lastSearch = $rootScope.user.lastSearch;	
+					if(lastSearch){
+						var searchDataCungLoai = {
+							"loaiTin": lastSearch.loaiTin,
+							"loaiNhaDat": lastSearch.loaiNhaDat, 
+							"limit": 10,
+							"soPhongNguGREATER": 0,
+				  			"soPhongTamGREATER": 0,
+				  			"soTangGREATER": 0,
+							"diaChinh": lastSearch.diaChinh,
+							"geoBox": lastSearch.geoBox,
+						  	"orderBy": "ngayDangTinDESC",
+						  	"pageNo": 1
+						};
+						HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
+							var bdsCungLoaiMoiDang = [];
+							for(var i=0;i<res.data.length;i++){
+								bdsCungLoaiMoiDang.push(res.data.list[i]);
+							}	
+							var cat = {
+								name: "",
+								location: "",
+								list: bdsCungLoaiMoiDang
 							}
-						}				
-					});
+							if(lastSearch.loaiNhaDat==0 ){
+								cat.name = "Bất động sản mới đăng";
+							}else{
+								cat.name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
+							}
+							$scope.hot_ads_cat.push(cat);														
+						});
+
+					}
 				}else{
 					HouseService.findAdsAndDuanForHomePage({limit:8}).then(function(res){
 						Array.prototype.push.apply($scope.hot_ads_cat, res.data.list);
 						console.log(res);
-					});		
+					});	
+					var searchNhaXemNhieuNhatTaiHanoi = {
+						"loaiTin": 0,
+						"loaiNhaDat": 0, 
+						"limit": 4,
+						"soPhongNguGREATER": 0,
+			  			"soPhongTamGREATER": 0,
+			  			"soTangGREATER": 0,
+						"diaChinh": {
+							tinh: "ha-noi"
+						},				
+					  	"orderBy": "luotXemDESC",
+					  	"pageNo": 1
+					};
+					HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHanoi).then(function(res){					
+						var cat = {
+							name: "Bất động sản xem nhiều nhất tại Hà Nội",
+							location: "",
+							list: res.data.list
+						}					
+						$scope.hot_ads_cat.push(cat);														
+					});	
+					var searchNhaXemNhieuNhatTaiHcm = {
+						"loaiTin": 0,
+						"loaiNhaDat": 0, 
+						"limit": 4,
+						"soPhongNguGREATER": 0,
+			  			"soPhongTamGREATER": 0,
+			  			"soTangGREATER": 0,
+						"diaChinh": {
+							tinh: "ho-chi-minh"
+						},				
+					  	"orderBy": "luotXemDESC",
+					  	"pageNo": 1
+					};
+					HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHcm).then(function(res){					
+						var cat = {
+							name: "Bất động sản xem nhiều nhất tại thành phố Hồ Chí Minh",
+							location: "",
+							list: res.data.list
+						}					
+						$scope.hot_ads_cat.push(cat);														
+					});	
 				}		
 				// data = {
 				// 	"gia": 800,
@@ -18575,6 +18613,7 @@
 			vm.selectPlaceCallback = function(place){
 				$scope.searchPlaceSelected = place;
 	    		$scope.placeSearchId = place.place_id;
+	    		vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
 	    		/*$scope.markers = [];
 	    		var marker = {
 	    				id: -1,
@@ -18674,6 +18713,7 @@
 					for (var i = 0; i < result.length; i++) { 
 			    		var ads = result[i];
 			    		ads.giaFmt = ads.giaFmtForWeb;
+
 			    		if($rootScope.alreadyLike(ads.adsID) ==  true)
 							ads.liked =true;
 				        var length = result.length;
@@ -18737,11 +18777,23 @@
 						$('body').scrollTop(0);
 					},0);
 					
+					if($rootScope.isLoggedIn()){
+						$rootScope.user.lastSearch = vm.searchData;
+					}
+					
+					if(vm.ads_list && vm.ads_list.length>0){					
+						if(vm.diaChinh)
+							HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
+								if(res.data.success==true)
+									vm.duAnNoiBat = res.data.duAnNoiBat;
+							});
+					}
 
 					if(callback)
 						callback();
 				});
 			}
+
 
 			vm.search = function(callback){
 				if(vm.searchData.place)
@@ -18763,7 +18815,6 @@
 						vm.startPageNo = 0;
 	        		}
 	        		vm.searchPage(1,callback);
-
 	        	});
 
 			}
@@ -19392,6 +19443,13 @@
 					vm.email="";
 					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
 				}
+				if(vm.ads.place.diaChinh){
+					HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){
+						if(res.data.success==true)
+							vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
+					});
+				}
+					
 
 				vm.userLoggedIn = function(){
 					vm.name = $rootScope.user.userName;
@@ -20163,6 +20221,7 @@
 	                          $rootScope.user.adsLikes = res.data.adsLikes;
 	                          $rootScope.user.userEmail = res.data.email;
 	                          $rootScope.user.phone = res.data.phone;
+	                          $rootScope.user.lastSearch = res.data.lastSearch;
 	                          vm.class = "has-sub";
 	                          vm.state = vm.LOGGED_IN;
 	                          vm.userExist = false;
@@ -20216,6 +20275,7 @@
 	                        $rootScope.user.adsLikes = res.data.adsLikes;
 	                        $rootScope.user.userEmail = res.data.email;
 	                        $rootScope.user.phone = res.data.phone;
+	                        $rootScope.user.lastSearch = res.data.lastSearch;
 	                        vm.class = "has-sub";
 	                        vm.state = vm.LOGGED_IN;
 	                        vm.userExist = false;

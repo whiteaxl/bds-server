@@ -124,6 +124,7 @@ angular.module('bds')
                           $rootScope.user.adsLikes = res.data.adsLikes;
                           $rootScope.user.userEmail = res.data.email;
                           $rootScope.user.phone = res.data.phone;
+                          $rootScope.user.lastSearch = res.data.lastSearch;
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
                           vm.userExist = false;
@@ -177,6 +178,7 @@ angular.module('bds')
                         $rootScope.user.adsLikes = res.data.adsLikes;
                         $rootScope.user.userEmail = res.data.email;
                         $rootScope.user.phone = res.data.phone;
+                        $rootScope.user.lastSearch = res.data.lastSearch;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;

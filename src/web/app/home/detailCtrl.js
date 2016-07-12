@@ -118,6 +118,13 @@
 				vm.email="";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
 			}
+			if(vm.ads.place.diaChinh){
+				HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){
+					if(res.data.success==true)
+						vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
+				});
+			}
+				
 
 			vm.userLoggedIn = function(){
 				vm.name = $rootScope.user.userName;

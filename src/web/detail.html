@@ -183,16 +183,34 @@
                     </div>
                 </div>
                 <div class="col col-350">
-                    <div class="block-11">
-                        <div class="item">
-                            <a href="#" title="">
-                                <img src="asset/img/data/image.png" width="300" height="190" alt="">
-                            </a>
+                    <div class="block-11" ng-if="dt.listDuAnNoiBat">
+                        <div class="row" style="width: 300px; height: 190px;" ng-if="dt.listDuAnNoiBat[0]">
+                            <div class="col col-50">
+                                <a class="media" href="#" title="" ng-click="dt.gotoDuAn(dt.duAnNoiBat)">
+                                    <span class="img" style="background: url({{dt.listDuAnNoiBat[1].anhDuAn}})">{{dt.listDuAnNoiBat[0].tenDuAn}}</span>
+                                </a>
+                            </div>
+                            <div class="col col-50">
+                                <h3>
+                                    <a href="#" title="">{{dt.listDuAnNoiBat[0].tenDuAn}}</a>
+                                </h3>
+                                <p>{{dt.listDuAnNoiBat[0].gioiThieuDuAn}}</p>
+                                <a class="btn-more" ng-click="dt.gotoDuAn(dt.duAnNoiBat)" href="" title="">Xem nhà</a>
+                            </div>
                         </div>
-                        <div class="item">
-                            <a href="#" title="">
-                                <img src="asset/img/data/image.png" width="300" height="190" alt="">
-                            </a>
+                        <div class="row" style="width: 300px; height: 190px;" ng-if="dt.listDuAnNoiBat[1]">
+                            <div class="col col-50">
+                                <a class="media" href="#" title="" ng-click="dt.gotoDuAn(dt.duAnNoiBat)">
+                                    <span class="img" style="background: url({{dt.listDuAnNoiBat[1].anhDuAn}})">{{dt.listDuAnNoiBat[1].tenDuAn}}</span>s
+                                </a>
+                            </div>
+                            <div class="col col-50">
+                                <h3>
+                                    <a href="#" title="">{{dt.listDuAnNoiBat[1].tenDuAn}}</a>
+                                </h3>
+                                <p>{{dt.listDuAnNoiBat[1].gioiThieuDuAn}}</p>
+                                <a class="btn-more" ng-click="dt.gotoDuAn(dt.duAnNoiBat)" href="" title="">Xem nhà</a>
+                            </div>
                         </div>
                     </div>
                 </div>

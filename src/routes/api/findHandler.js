@@ -21,6 +21,8 @@ var userService = new UserService();
 
 var DuAnService = require('../../dbservices/DuAn');
 var duAnService = new DuAnService();
+var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
+var duAnNoiBatService = new DuAnNoiBatService();
 
 
 var DEFAULT_SEARCH_RADIUS = 5; //km
@@ -709,35 +711,44 @@ internals.findDuAnHotByDiaChinhForSearchPage = function(req,reply){
     var result = {
         msg: "",
         success: false,
-        duAn: undefined
+        duAnNoiBat: undefined
     };
-    result.duAn = {
-
-    }
-    q.tinhKhongDau = 'ho-chi-minh';
-    duAnService.findDuAn(q,function(err,res){
+    
+    var q = req.payload.diaChinh;
+    q.limit = 1;
+    q.level = 1;
+    duAnNoiBatService.findDuAnNoiBat(q,function(err,res){
         if(err || res.length<=0){
-             callback(null,null); 
+            result.msg = err;
+            reply(result);
         }else{
-            callback(null,{
-                name: "Dự án nổi bật tại Hồ Chí Minh",
-                location: "Hồ Chí Minh",
-                type: "DU_AN",
-                list: res
-            }); 
+            result.success = true;
+            result.duAnNoiBat = res[0];
+            reply(result); 
         }
     });
-    result.success = true;
-    reply(result);
+    
 }
 
 internals.findDuAnHotByDiaChinhForDetailPage = function(req,reply){
     var result = {
         msg: "",
         success: false,
-        duAn: []
+        listDuAnNoiBat: undefined
     };
-    result.success = true;
-    reply(result);
+    
+    var q = req.payload.diaChinh;
+    q.limit = 2;
+    q.level = 2;
+    duAnNoiBatService.findDuAnNoiBat(q,function(err,res){
+        if(err || res.length<=0){
+            result.msg = err;
+            reply(result);
+        }else{
+            result.success = true;
+            result.listDuAnNoiBat = res;
+            reply(result); 
+        }
+    });
 }
 module.exports = internals;
