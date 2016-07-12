@@ -315,7 +315,7 @@ function _transformDetailAds(adsFromDb) {
     ads.place.diaChinhFullName = adsFromDb.place.diaChinhFullName;
     ads.place.duAnFullName = adsFromDb.place.duAnFullName;
 
-    ads.giaM2 = adsFromDb.giaM2;
+    ads.giaM2 = adsFromDb.giaM2 || 0;
     ads.type = adsFromDb.type;
 
 
