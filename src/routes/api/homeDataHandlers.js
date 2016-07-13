@@ -122,9 +122,9 @@ internals.homeData4App = function(req, reply) {
 
       var doneNearBy = (collections) => {
         let queryToday = {}; Object.assign(queryToday, query);
-        queryToday.ngayDaDang = 1;
+        queryToday.ngayDaDang = 7;
         doSearchAds(collections,
-          "Nhà vừa đăng hôm nay",
+          "Nhà mới đăng",
           query.fullName || diaChinh.tinhCoDau,
           queryToday,
           doneToday
