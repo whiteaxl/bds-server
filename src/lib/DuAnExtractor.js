@@ -51,7 +51,8 @@ class DuAnExtractor {
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
 				'duAnID'    :'#form1 :source',
-				'image'    :'.prjava > img@src'
+				'image'    :'.prjava > img@src',
+				'bigImage'    :'#detail .a1  img@src'
 			})
 			.data(function(duan) {
 				let adduan = {
@@ -63,7 +64,8 @@ class DuAnExtractor {
 						lon: Number(duan.hdLong)
 					},
 					duAnID : duan.duAnID,
-					image :  duan.image
+					image :  duan.image,
+					bigImage :  duan.bigImage
 				}
 
 
@@ -85,7 +87,9 @@ class DuAnExtractor {
 				if(adduan.diaChi){
 					adduan.diaChinh = placeUtil.getDiaChinh(adduan.diaChi);
 				}
-
+				// if(adduan.image){
+				// 	adduan.bigImage = (adduan.image).replace("resize/200x150/", "");
+				// }
 				adduan.type = "DuAn";
 				console.log("1111111");
 				console.log(adduan);
