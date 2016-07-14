@@ -35,13 +35,19 @@
             </div>
             <div class="block-12">
                 <div class="map-detail" style="background-image: url({{dt.ads.image.images[0]?dt.ads.image.images[0]:'/web/asset/img/reland_house_large.jpg';}})">
-                    <ng-map ng-if="dt.viewMap" center="{{dt.center}}" zoom="15" class="ngmap">
+                    <div class="map">
+                        <ng-map ng-if="dt.viewMap" center="{{dt.center}}" zoom="15" class="ngmap">
                         <custom-marker position="[{{dt.marker.coords.latitude}},{{dt.marker.coords.longitude}}]">
                           <div class = "my1">
                             {{dt.marker.content}} 
                           </div>
                         </custom-marker>
                     </ng-map>
+                    </div>
+
+                    
+                    
+
                     
                     <div class="media">
                         <ul>

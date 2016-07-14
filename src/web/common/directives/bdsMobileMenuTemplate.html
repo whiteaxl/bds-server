@@ -1,0 +1,36 @@
+<div class="menu-left" id="menu-left">
+                <div class="inner">
+                    <nav class="nav-mobile">
+                        <ul>
+                            <li>
+                                <a href="index.html" title="Trulia">
+                                    <img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
+                                </a>
+                            </li>
+                            
+                            <li ng-if="!$root.user.userID">
+                                <a href="" title="" ng-click="mmn.showLogin($event);">
+                                    <span>Đăng nhập/Đăng ký</span>
+                                    <span>Thông tin cá nhân/Check out</span>
+                                </a>
+                            </li>
+                            <li ng-if="$root.user.userID">
+                                <a class="plm" ng-click="mmn.profile();">
+                                  <p class="">Tim.hung.dao</p>
+                                  <p class=""><span>Profile </span></p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="" ng-click="mmn.gotoHomePage($event);"><i class="fa fa-home"></i> Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="" title="" ng-click="mmn.gotoSearchPage($event);"><i class="fa fa-search" ></i> Tìm kiếm</a>
+                            </li>
+                            <li>
+                                <a href="" title=""><i class="fa fa-usd" ng-click="mmn.gotoRelandApp($event);"></i> Reland App</a>
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+            </div><!-- //menu-left -->

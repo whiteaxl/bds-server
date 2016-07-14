@@ -252,6 +252,40 @@
 						}
 						$scope.hot_ads_cat.push(cat);														
 					});
+					var giaBETWEEN = lastSearch.giaBETWEEN;
+
+					if(giaBETWEEN){
+						var mean = (giaBETWEEN[0] + giaBETWEEN[1])/2;
+						giaBETWEEN[0] = mean - mean*0.1;
+						giaBETWEEN[1] = mean + mean * 0.1;
+					}else{
+						giaBETWEEN = [1000000000, 2000000000]
+					}
+					var searchDataNgangGia = {
+						"loaiTin": 0,
+						"loaiNhaDat": 0, 
+						"limit": 10,
+						"soPhongNguGREATER": 0,
+			  			"soPhongTamGREATER": 0,
+			  			"soTangGREATER": 0,
+			  			"giaBETWEEN": giaBETWEEN,
+						"diaChinh": lastSearch.diaChinh,
+						"geoBox": lastSearch.geoBox,
+					  	"orderBy": "ngayDangTinDESC",
+					  	"pageNo": 1
+					};
+					HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
+						var cat = {
+							name: "",
+							location: "",
+							list: res.data.list
+						}
+						
+						cat.name = "Bất động ngang giá";
+						
+						$scope.hot_ads_cat.push(cat);														
+					});
+
 
 				}
 			}else{

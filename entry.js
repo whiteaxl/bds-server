@@ -30,6 +30,8 @@ require("./src/web/common/directives/chatDirective.js");
 require("./src/web/common/directives/chatCtrl.js");
 require("./src/web/common/directives/diaChinhLink.js");
 require("./src/web/common/directives/bdsHeaderDirective.js");
+require("./src/web/common/directives/bdsMobileMenuDirective.js");
+
 
 
 

@@ -714,7 +714,8 @@ internals.findDuAnHotByDiaChinhForSearchPage = function(req,reply){
         duAnNoiBat: undefined
     };
     
-    var q = req.payload.diaChinh;
+    var q = req.payload.diaChinh || {};
+    
     q.limit = 1;
     q.level = 1;
     duAnNoiBatService.findDuAnNoiBat(q,function(err,res){
@@ -737,7 +738,7 @@ internals.findDuAnHotByDiaChinhForDetailPage = function(req,reply){
         listDuAnNoiBat: undefined
     };
     
-    var q = req.payload.diaChinh;
+    var q = req.payload.diaChinh || {};
     q.limit = 2;
     q.level = 2;
     duAnNoiBatService.findDuAnNoiBat(q,function(err,res){

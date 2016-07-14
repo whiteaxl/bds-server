@@ -30,7 +30,7 @@
 				newPass: vm.newPass,
 				userID: vm.user.id,
 				email: vm.user.email,
-				phone: vm.user.phone,
+				phone: "'" + vm.user.phone + "'" ,
 				fullName: vm.user.fullName,
 				diaChi: vm.user.diaChi,
 				avatar: vm.user.avatar

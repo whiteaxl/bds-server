@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&subset=latin,vietnamese);
 .block-23 .head:before, .box-post:before, .block-25 .head:before, .block-25 .option:before, .block-25 .data .position:before, .block-25 .paging:before, .block-23 .head:after, .box-post:after, .block-25 .head:after, .block-25 .option:after, .block-25 .data .position:after, .block-25 .paging:after {
   content: " ";
   display: table;
@@ -76,7 +75,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, summary,
+footer, header, menu, nav, section, summary,
 time, mark, audio, video, button {
   margin: 0;
   padding: 0;
@@ -88,10 +87,8 @@ time, mark, audio, video, button {
 }
 
 body {
-  line-height: 1;
-  font-family: 'Open Sans', serif;
+  font: 400 14px/1 Arial, Helvetica, Tahoma, Verdana, sans-serif;
   color: #3b4144;
-  font-size: 14px;
   -webkit-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
@@ -102,7 +99,7 @@ body > img, body > iframe, body > noscript {
 }
 
 article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+footer, header, menu, nav, section {
   display: block;
 }
 
@@ -545,7 +542,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   padding-left: 10px;
   padding-right: 10px;
   color: #fff;
-  font-weight: 600;
 }
 
 .nav-main > ul > li > ul:before, .nav-user > ul > li > ul:before {
@@ -647,7 +643,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .nav-main > ul > li ul li, .nav-user > ul > li ul li {
   position: relative;
-  transition: all 0.5s;
 }
 
 .nav-main > ul > li > ul > li:last-child a, .nav-user > ul > li > ul > li:last-child a {
@@ -828,10 +823,10 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   left: 0;
   bottom: 0;
   right: 0;
-  padding: 10px;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.1) 26%, rgba(0, 0, 0, 0.39) 74%, rgba(0, 0, 0, 0.5) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#80000000',GradientType=0 );
+  padding: 50px 10px 10px;
+  text-shadow: 0 0 3px #000;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.24) 35%, rgba(0, 0, 0, 0.35) 50%, rgba(0, 0, 0, 0.7) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#b3000000',GradientType=0 );
 }
 
 .block-02 .link .line, .block-05 .link .line {
@@ -842,7 +837,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .block-02 .link .price, .block-05 .link .price {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .block-02 .like, .block-05 .like, .block-02 .liked, .block-05 .liked {
@@ -1768,7 +1763,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
 }
 
 .block-01 .group {
@@ -1871,24 +1865,24 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .block-01 .form-control::-webkit-input-placeholder {
   color: #999999;
-  font-family: "Open Sans", serif;
+  font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
 }
 
 .block-01 .form-control:-moz-placeholder {
   color: #999999;
-  font-family: "Open Sans", serif;
+  font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
   opacity: 1;
 }
 
 .block-01 .form-control::-moz-placeholder {
   color: #999999;
-  font-family: "Open Sans", serif;
+  font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
   opacity: 1;
 }
 
 .block-01 .form-control:-ms-input-placeholder {
   color: #999999;
-  font-family: "Open Sans", serif;
+  font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
 }
 
 .block-01 .btn-search {
@@ -2637,13 +2631,24 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   transition: all 0.3s;
 }
 
-.block-12 .map-detail li {
+.block-12 .map-detail {
+  padding-left: 350px;
+  position: relative;
+}
+
+.block-12 .map-detail .media {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.block-12 .map-detail .media li {
   float: left;
   width: 71px;
   margin-left: 10px;
 }
 
-.block-12 .map-detail li a {
+.block-12 .map-detail .media li a {
   display: block;
   border: 3px solid #fff;
   position: relative;
@@ -2652,24 +2657,24 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   transition: color 0.3s;
 }
 
-.block-12 .map-detail li a:hover {
-  color: #ccc;
-}
-
-.block-12 .map-detail li a:before {
+.block-12 .map-detail .media li a:before {
   display: block;
   content: "";
   padding-top: 100%;
 }
 
-.block-12 .map-detail li a span {
+.block-12 .map-detail .media li a:hover {
+  color: #ccc;
+}
+
+.block-12 .map-detail .media li a span {
   display: block;
   position: absolute;
   left: 0;
   width: 100%;
 }
 
-.block-12 .map-detail li a .bg {
+.block-12 .map-detail .media li a .bg {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2677,7 +2682,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
   height: 100%;
 }
 
-.block-12 .map-detail li a .txt {
+.block-12 .map-detail .media li a .txt {
   bottom: 0;
   background: rgba(71, 78, 82, 0.7);
   font-size: 10px;
@@ -5320,7 +5325,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 
 .box-profile {
   padding-left: 240px;
-  padding-right: 240px;
+  padding-right: 20px;
   background: #efefef;
   min-height: 100vh;
 }
@@ -5362,11 +5367,6 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 .box-profile .col-right {
   float: left;
   width: 100%;
-}
-
-.box-profile .col-right .inner {
-  max-width: 730px;
-  margin: 0 auto;
 }
 
 .box-profile .block-15, .box-profile .block-23 {
@@ -6854,7 +6854,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 }
 
 .block-23 .title {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.42;
   float: left;
@@ -6863,7 +6863,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 .block-23 .nav-link {
   float: right;
   list-style: none;
-  margin-top: 13px;
+  margin-top: 3px;
 }
 
 .block-23 .nav-link li {
@@ -6911,16 +6911,11 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 .block-23 .tbl-search th {
   font-weight: 600;
   vertical-align: middle;
-  background: #f5f5f5;
 }
 
 .block-23 .tbl-search th, .block-23 .tbl-search td {
   padding: 8px 5px;
   border-bottom: 1px solid #cdd0d2;
-}
-
-.block-23 .tbl-search tbody tr:hover td {
-  background: #f5f5f5;
 }
 
 .block-23 .tbl-search tbody tr:last-child td {
@@ -8365,6 +8360,10 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
     border-radius: 0;
     border-top: none;
   }
+  .block-12 .map-detail {
+    padding-left: 0;
+    height: auto;
+  }
   .block-12 .img {
     height: auto;
     position: relative;
@@ -8947,7 +8946,7 @@ button, [type="button"], [type="text"], [type="email"], [type="search"], [type="
 tim added 
 */
 
-.block-12 .img .media{
+.block-12 .map-detail .media{
   right: 50px;
 }
 .error {

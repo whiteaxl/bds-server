@@ -1,7 +1,7 @@
  <header class="header">
  	<div class="header-top">
 
- 		<a href="#menu-left" title="Menu" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
+ 		<a href="#menu-left" title="Menu" ng-click="hdr.onMobileMenu();" class="btn-menu" id="btn-menu" data-menu="true">Menu</a>
  		<h1 class="logo">
  			<a href="index.html" title="Trulia">
  				<img src="asset/img/logo.png" width="455" height="92" alt="Logo"/>
@@ -28,6 +28,8 @@
  				<user-info-menu ></user-info-menu>
  			</ul>
  		</nav>
+ 		<a href="#box-saved" class="btn-close" data-close="true"><i class="fa fa-angle-right"></i></a>
+        <a href="#search-mobile" title="Search" class="btn-search" data-search="true"><i class="fa fa-search"></i></a>
  	</div>
  </header><!-- //header -->
 
