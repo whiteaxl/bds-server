@@ -63,7 +63,8 @@ internals.registerUser = function (req, reply) {
     phone: req.payload.phone,
     email: req.payload.email,
     matKhau: req.payload.matKhau,
-    fullName: req.payload.fullName
+    fullName: req.payload.fullName,
+    avatar: req.payload.avatar
   };
 
   userService.createUserAndLogin(userDto, (err, res) => {

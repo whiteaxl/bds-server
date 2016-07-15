@@ -311,6 +311,7 @@ internals.endpoints = [
           email: Joi.string(),
           matKhau: Joi.string().required(),
           fullName: Joi.string().required(),
+          avatar: Joi.string()
         }
       },
 
