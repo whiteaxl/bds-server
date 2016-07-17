@@ -29,16 +29,16 @@ function bytesToSize(bytes) {
 internals.uploadFiles = function(req,reply){
 	var form = new multiparty.Form();
 	form.parse(req.payload, function(err, fields, files) {
-		
+
 		console.log(files);
 
 		
     	var newFileMaps = [];
 
 		var fp = files[Object.keys(files)[0]][0].path;
-		var ofn = files[Object.keys(files)[0]][0].originalFilename; 
+		var fn = files[Object.keys(files)[0]][0].fieldName;
 		var fsize = files[Object.keys(files)[0]][0].size; 
-		var newpath = __dirname + "/../../web/upload/"+ofn;
+		var newpath = __dirname + "/../../web/upload/"+fn;
 		
 		fs.readFile(fp,function(err,data){
 			
@@ -53,7 +53,7 @@ internals.uploadFiles = function(req,reply){
 		console.log("Fields are" + JSON.stringify(fields));
 		var data = { 
 				url : "/web/upload/" + baseName(newpath), 
-				name : ofn,
+				name : fn,
 				size : bytesToSize(fsize),
 				showme : fields.showme,
 				dwimgsrc : fields.dwimgsrc,
