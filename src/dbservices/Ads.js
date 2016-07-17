@@ -11,6 +11,7 @@
  gia: number
  dienTich: number
  place : {
+     duAnID : string
      duAn : string (ten cua du an),
      duAnFullName (ten + dia chi),
      diaChi,
@@ -33,6 +34,15 @@
  otoDoCua: true/false/null
  source : string (vi du: bds.com, dothi.net, reland)
  timeModified : number (ms)
+ status : Number (0 = approved, 1 = Pending }
+ goiViTri : {
+   level: Number (0: khong co, 1: Dac biet, 2: Cao cap, 3: Tieu chuan)
+   startDateTime : Number (from 1970)
+   length : Number (7 ngày, 14 ngày, 30 ngày...)
+ }
+ goiTrangChu : {tuong tu goiViTri}
+ goiLogo : {tuong tu goiViTri}
+ 
  */
 
 var couchbase = require('couchbase');
