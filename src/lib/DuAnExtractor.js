@@ -50,7 +50,7 @@ class DuAnExtractor {
 				'diachi'		:'.prjinfo > div[1]',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
-				'duAnID'    :'#form1 :source',
+				'duAnID'    :'#form1:source',
 				'image'    :'.prjava > img@src',
 				'bigImage'    :'#detail .a1  img@src'
 			})
