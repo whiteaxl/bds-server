@@ -322,6 +322,15 @@
 			$scope.searchPlaceSelected = place;
     		$scope.placeSearchId = place.place_id;
     		vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
+    		//$scope.markers = [];
+    		/*vm.marker = {
+    				id: -1,
+    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+    				content: 'you are here'
+    		};*/
+    		//$scope.markers.push(marker);
+    		//$scope.markers.push
+
     		/*$scope.markers = [];
     		var marker = {
     				id: -1,
@@ -356,7 +365,7 @@
     		//$scope.map.fit = false;
     		
     		vm.map.setCenter(place.geometry.location);*/
-    		// $scope.$apply();
+    		//$scope.$apply();
     		//$scope.map.refresh();
     		vm.goToPageSearch();
     		//vm.search();
@@ -632,6 +641,12 @@
 						vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
 
 						vm.placeSearchText = googlePlace.formatted_address;
+
+						vm.marker = {
+			    			id: -1,
+			    			coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+			    			content: 'you are here'
+			    		};
 
 						
 

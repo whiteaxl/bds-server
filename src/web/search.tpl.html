@@ -11,8 +11,7 @@
                                     {{m.content}} 
                                   </div>
                                 </custom-marker>
-                                <!-- <marker ng-repeat="m in markers track by $index" id = "{{mc.ads_list[$index].adsID}}" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" on-mouseout="mc.mouseout()"
-                                    on-click="mc.click({{$index}})"> -->
+                                <marker animation="BOUNCE" position="[{{mc.marker.coords.latitude}},{{mc.marker.coords.longitude}}]"></marker>
                                     
                                 <street-view-panorama
                                   click-to-go="false"
