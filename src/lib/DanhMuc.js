@@ -82,6 +82,220 @@ danhMuc.sell_steps = [
 
 danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
 
+danhMuc.khoangDienTich = [
+    {
+        value: {
+            min:  0,
+            max:  30,
+            id: 1     
+        },
+        label: "<= 30m2",
+        position: 2
+    },
+    {
+        value: {
+            min:  30,
+            max:  50,
+            id: 2     
+        },
+        label: "30 - 50m2",
+        position: 3
+    },
+    {
+        value: {
+            min:  50,
+            max:  50,
+            id: 3     
+        },
+        label: "50 - 80m2",
+        position: 4
+    },
+    {
+        value: {
+            min:  80,
+            max:  100,
+            id: 4     
+        },
+        label: "80 - 100m2",
+        position: 4
+    },
+    {
+        value: {
+            min:  100,
+            max:  150,
+            id: 5     
+        },
+        label: "100 - 150m2",
+        position: 5
+    },
+    {
+        value: {
+            min:  150,
+            max:  200,
+            id: 6     
+        },
+        label: "150 - 200m2",
+        position: 6
+    },
+    {
+        value: {
+            min:  200,
+            max:  250,
+            id: 7     
+        },
+        label: "200 - 250m2",
+        position: 7
+    },
+    {
+        value: {
+            min:  250,
+            max:  300,
+            id: 8     
+        },
+        label: "250 - 300m2",
+        position: 8
+    },
+    {
+        value: {
+            min:  300,
+            max:  500,
+            id: 9     
+        },
+        label: "300 - 500m2",
+        position: 9
+    },
+    {
+        value: {
+            min:  500,
+            max:  999999999999999,
+            id: 10     
+        },
+        label: ">= 500m2",
+        position: 10
+    },
+    {
+        value: {
+            min:  0,
+            max:  999999999999999,
+            id: 11     
+        },
+        label: "Diện tích bất kỳ",
+        position: 11
+    }
+];
+danhMuc.khoangGia = [
+    {
+        value: {
+            min:  0,
+            max:  500,
+            id:1     
+        },
+        label: "<= 500 triệu",
+        position: 2
+    },
+    {
+        value: {
+            min:  500,
+            max:  800,
+            id:2
+        },
+        label: "500 - 800 triệu",
+        position: 3
+    },
+    {
+        value: {
+            min:  800,
+            max:  1000,
+            id:3
+        },
+        label: "800 triệu - 1 tỷ",
+        position: 4
+    },
+    {
+        value: {
+            min:  1000,
+            max:  2000,
+            id:4     
+        },
+        label: "1 - 2 tỷ",
+        position: 5
+    },
+    {
+        value: {
+            min:  2000,
+            max:  3000,
+            id:5     
+        },
+        label: "2 - 3 tỷ",
+        position: 6
+    },
+    {
+        value: {
+            min:  3000,
+            max:  5000,
+            id:6     
+        },
+        label: "3 - 5 tỷ",
+        position: 7
+    },
+    {
+        value: {
+            min:  5000,
+            max:  7000,
+            id:7     
+        },
+        label: "5 - 7 tỷ",
+        position: 8
+    },
+    {
+        value: {
+            min:  7000,
+            max:  10000,
+            id:8     
+        },
+        label: "7 - 10 tỷ",
+        position: 9
+    },
+    {
+        value: {
+            min:  10000,
+            max:  20000,
+            id:9     
+        },
+        label: "10 - 20 tỷ",
+        position: 10
+    },
+    {
+        value: {
+            min:  20000,
+            max:  30000,
+            id:10     
+        },
+        label: "20 - 30 tỷ",
+        position: 11
+    },
+    {
+        value: {
+            min:  30000,
+            max:  999999999999,
+            id:11    
+        },
+        label: ">= 30 tỷ",
+        position: 12
+    },
+    {
+        value: {
+            min:  0,
+            max:  999999999999,
+            id:12    
+        },
+        label: "Giá bất kỳ",
+        position: 13
+    }
+
+
+];
+
 danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
 
 danhMuc.convertDienTichStepValueToNameValueArray= function(){
@@ -206,7 +420,7 @@ danhMuc.menu = [
         ]
     },
     {
-        label: "Giới Thiệu",
+        label: "Giới thiệu",
         value: {},
         visible: true,
         items: [

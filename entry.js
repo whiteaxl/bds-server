@@ -15,6 +15,7 @@ require("./src/web/app/home/newsDetailCtrl.js");
 require("./src/web/app/home/detailCtrl.js");
 require("./src/web/app/home/ChatPanelCtrl.js");
 require("./src/web/app/home/ProfileCtrl.js");
+require("./src/web/app/home/DangTinCtrl.js");
 
 
 //services
@@ -31,6 +32,7 @@ require("./src/web/common/directives/chatCtrl.js");
 require("./src/web/common/directives/diaChinhLink.js");
 require("./src/web/common/directives/bdsHeaderDirective.js");
 require("./src/web/common/directives/bdsMobileMenuDirective.js");
+require("./src/web/common/directives/bdsProfileLeftDirective.js");
 
 
 

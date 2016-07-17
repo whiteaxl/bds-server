@@ -1,0 +1,259 @@
+<div class="main" id="main">
+    <bds-header menuitems="$root.menuitems"></bds-header>
+    <section class="box-post">
+        <bds-profile-left></bds-profile-left>
+        <div class="col-right">
+            <div class="inner">
+                <div class="block-25">
+                    <div class="head">
+                        <h2 class="title">Đăng tin</h2>
+                    </div>
+                    <form action="dang-tin.html" method="post" novalidate>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">LOẠI BẤT ĐỘNG SẢN</div>
+                                </div>
+                                <div class="col col-910">
+                                    <div class="option">
+                                        <div class="item">
+                                            <input type="radio" id="for_sale" name="type" value="for_sale" class="radio" checked="">
+                                            <label for="for_sale">Bán</label>
+                                        </div>
+                                        <div class="item">
+                                            <input type="radio" id="for_rent" name="type" value="for_rent" class="radio">
+                                            <label for="for_rent">Cho thuê</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">Đặc điểm</div>
+                                </div>
+                                <div class="col col-910">
+                                    <div class="group">
+                                        <div class="label">Loại nhà</div>
+                                        <div class="row">
+                                            <div class="col col-33" ng-repeat="loaiNhaDat in dt.loaiNhaDatBan track by $index">
+                                                <label class="checkbox"><input data-action="property" type="radio" name="prop_type_1"> {{loaiNhaDat.lable}}</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="radio" name="prop_type_1"> Bán nhà riêng, nhà mặt phố</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="row">
+                                            <div class="col col-50">
+                                                <label class="label" for="post_acreage">Diện tích</label>
+                                                <select class="form-control" name="acreage" id="post_acreage">
+                                                    <option value="">Bất kỳ</option>
+                                                    <option value="1">10 m2</option>
+                                                    <option value="2">20 m2</option>
+                                                    <option value="3">30 m2</option>
+                                                    <option value="4">40 m2</option>
+                                                    <option value="5">50 m2</option>
+                                                    <option value="6">60 m2</option>
+                                                    <option value="7">70 m2</option>
+                                                    <option value="8">80 m2</option>
+                                                    <option value="9">90 m2</option>
+                                                    <option value="10">100 m2</option>
+                                                    <option value="15">150 m2</option>
+                                                    <option value="20">200 m2</option>
+                                                    <option value="25">250 m2</option>
+                                                    <option value="30">300 m2</option>
+                                                    <option value="40">400 m2</option>
+                                                    <option value="50">500 m2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col col-50">
+                                                <label class="label" for="post_bed">Số phòng ngủ</label>
+                                                <select class="form-control" name="bed" ng-model="dt.ads.soPhongNgu" id="post_bed" ng-options="soPn.value as soPn.lable for soPn in dt.soPhongNguList track by soPn.value">
+                                                </select>
+                                        </select>
+                                            </div>
+                                            <div class="col col-50">
+                                                <label class="label" for="post_shower">Số phòng tắm</label>
+                                                <select class="form-control" name="bed" id="post_shower" ng-model="dt.ads.soPhongTam" ng-options="soPt.value as soPt.lable for soPt in dt.soPhongTamList track by soPt.value">
+                                                </select>
+                                            </div>
+                                            <div class="col col-50">
+                                                <label class="label" for="post_floors">Số tầng</label>
+                                                <select class="form-control" name="floors" id="post_floors" ng-model="dt.ads.soTang" ng-options="soTang.value as soTang.lable for soTang in dt.soTangList track by soTang.value">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">Ảnh</div>
+                                </div>
+                                <div class="col col-910">
+                                    <div class="group">
+                                        <div class="upload">
+                                            <div class="text"><i class="fa fa-camera"></i> Upload ảnh</div>
+                                            <div class="file"><input name="avatar" onchange="readURL(this)" type="file"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-media">
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-3.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-4.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-3.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col col-25">
+                                            <div class="images">
+                                                <span style="background-image: url(asset/img/data/img-40-4.jpg)">174 W 76th St #8G</span>
+                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">Vị trí</div>
+                                </div>
+                                <div class="col col-910">
+                                    <div class="group">
+                                        <div class="label">Hướng nhà</div>
+                                        <div class="row">
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="all" type="checkbox" name="prop_type_all" checked disabled> Tất cả</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_1"> Đông</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_2"> Tây</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_3"> Nam</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_4"> Bắc</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_5"> Đông Bắc</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_6"> Đông Nam</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_7"> Tây Bắc</label>
+                                            </div>
+                                            <div class="col col-33">
+                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_8"> Tây Nam</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="row">
+                                            <div class="col col-50">
+                                                <label class="label" for="post_project">Thuộc dự án</label>
+                                                <select class="form-control" name="project" id="post_project">
+                                                    <option value="">Chọn dự án</option>
+                                                    <option value="0">Times City</option>
+                                                    <option value="1">Green Star</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <label class="label" for="post_address">Địa chỉ</label>
+                                        <textarea name="address" class="form-control" id="post_address"></textarea>
+                                    </div>
+                                    <div class="group">
+                                        <div class="label">Bản đồ</div>
+                                        <div class="map">
+                                            <div id="google-map"></div>
+                                            <!--<img src="asset/img/img-map.jpg" width="730"  height="480" alt=""/>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">Giá và liên hệ</div>
+                                </div>
+                                <div class="col col-910">
+                                    <div class="group">
+                                        <label class="label" for="post_price">Giá</label>
+                                        <input type="text" name="price" class="form-control" id="post_price"/>
+                                    </div>
+                                    <div class="group">
+                                        <label class="label" for="post_contact">Liên hệ</label>
+                                        <input type="text" name="contact" class="form-control" id="post_contact"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="row">
+                                <div class="col col-220">
+                                    <div class="type">Thông tin chi tiết</div>
+                                </div>
+                                <div class="col col-910">
+                                    <textarea name="content" class="form-control" id="post_content"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="handle">
+                            <button class="btn btn-cancel">Hủy bỏ</button>
+                            <button class="btn btn-save">Đăng tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="overlay" data-overlay="true"></div>
+</div><!-- //main -->

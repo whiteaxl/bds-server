@@ -330,6 +330,14 @@
         data: {
             bodyClass: "page-detail"
         }
+      }).state('dangtin', {
+        url: "/dangtin",
+        templateUrl: "/web/dang-tin.html",
+        controller: "DangTinCtrl",
+        controllerAs: 'dt',
+        data: {
+            bodyClass: "page-detail"
+        }
       })
     });
   bds.factory('socket', function (socketFactory) {

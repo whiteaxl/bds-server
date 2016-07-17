@@ -9,6 +9,14 @@
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
 		vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
 
+		vm.khoangGiaList = window.RewayListValue.khoangGia;
+		vm.khoangGia = vm.khoangGiaList[vm.khoangGiaList.length-1];
+
+
+		vm.khoangDienTichList = window.RewayListValue.khoangDienTich;
+		vm.khoangDienTich = vm.khoangDienTichList[vm.khoangDienTichList.length-1];
+		//vm.khoangGiaSelected = {};
+
 		//use for menu
 		vm.loaiNhaDatBanMenu = window.RewayListValue.LoaiNhaDatBanWeb;
 		vm.loaiNhaDatThueMenu = window.RewayListValue.LoaiNhaDatThueWeb;
@@ -181,14 +189,15 @@
 		
 			
 		//vm.sell_price_list_from = window.RewayListValue.sell_steps;
-		vm.sell_price_list_from = [
+		/*vm.sell_price_list_from = [
 			{
 		        value: 0,
 		        lable: "Giá từ 0",
 		        position: 0
 		    },
 		];
-		Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);
+		Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);*/
+		vm.sell_price_list_from = window.RewayListValue.khoangGia;
 
 		vm.radius_steps = [{
 			value: 2,
@@ -248,6 +257,8 @@
 			"loaiNhaDat": $scope.loaiNhaDat, 
 			"loaiNhaDats": [],
 		  	"giaBETWEEN": [vm.price_min,vm.price_max],
+		  	"khoangGia": vm.khoangGia, 
+		  	"khoangDienTich": vm.khoangDienTich,
 		  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
 		  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
 		  	"soTangGREATER": vm.soTangList[0].value,
@@ -297,6 +308,7 @@
 		$scope.$on('$viewContentLoaded', function(){
 			$timeout(function() {
 				window.DesignCommon.adjustPage();
+
 			},0);
 			if($state.params){
 				//$scope.bodyClass = $state.current.data.bodyClass;
@@ -402,6 +414,13 @@
 			if(vm.searchData.place)
 				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;	
 			vm.searchData.userID = $rootScope.user.userID;
+			vm.searchData.giaBETWEEN[0] = vm.searchData.khoangGia.value.min;
+			vm.searchData.giaBETWEEN[1] = vm.searchData.khoangGia.value.max;
+			vm.searchData.dienTichBETWEEN[0] = vm.searchData.khoangDienTich.value.min;
+			vm.searchData.dienTichBETWEEN[1] = vm.searchData.khoangDienTich.value.max;
+
+			// vm.khoangGiaList[]
+			// vm.searchData.khoangGia
 			HouseService.findAdsSpatial(vm.searchData).then(function(res){
 				var result = res.data.list;
 				//vm.totalResultCounts = res.data.list.length;
@@ -495,6 +514,10 @@
 			if(vm.searchData.place)
 				vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
 			vm.searchData.userID = $rootScope.user.userID;
+			vm.searchData.giaBETWEEN[0] = vm.searchData.khoangGia.value.min;
+			vm.searchData.giaBETWEEN[1] = vm.searchData.khoangGia.value.max;
+			vm.searchData.dienTichBETWEEN[0] = vm.searchData.khoangDienTich.value.min;
+			vm.searchData.dienTichBETWEEN[1] = vm.searchData.khoangDienTich.value.max;
 			HouseService.countAds(vm.searchData).then(function(res){
         		vm.totalResultCounts = res.data.countResult;
         		$scope.markers =[];
@@ -546,6 +569,8 @@
 				  	"giaBETWEEN": [vm.price_min,vm.price_max],
 				  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
 				  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+				  	"khoangGia": vm.khoangGia, 
+		  			"khoangDienTich": vm.khoangDienTich,
 				  	"soTangGREATER": vm.soTangList[0].value,
 				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 				  	"huongNha": vm.huongNhaList[0].value,
@@ -567,6 +592,8 @@
 				  	"giaBETWEEN": [vm.price_min,vm.price_max],
 				  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
 				  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+				  	"khoangGia": vm.khoangGia, 
+		  			"khoangDienTich": vm.khoangDienTich,
 				  	"soTangGREATER": vm.soTangList[0].value,
 				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
 				  	"huongNha": vm.huongNhaList[0].value,

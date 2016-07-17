@@ -255,6 +255,7 @@
 					var giaBETWEEN = lastSearch.giaBETWEEN;
 
 					if(giaBETWEEN){
+						if(giaBETWEEN[0] ==0)
 						var mean = (giaBETWEEN[0] + giaBETWEEN[1])/2;
 						giaBETWEEN[0] = mean - mean*0.1;
 						giaBETWEEN[1] = mean + mean * 0.1;

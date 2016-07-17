@@ -58,8 +58,8 @@ internals.endpoints = [
 	handler: function(requet,reply){
 		reply.view('index.html', { page: 'detail' });
 	}
-}
-,{ 
+},
+{ 
 	method: 'GET',
 	path: '/web/resetPassword', 
 	handler: function(requet,reply){
@@ -69,7 +69,19 @@ internals.endpoints = [
 		auth: 'jwt'
 	}
 	
+},
+{ 
+	method: 'GET',
+	path: '/web/dangtin', 
+	handler: function(requet,reply){
+		reply.view('index.html', { page: 'dangtin' });
+	}
+	// ,
+	// config:{
+	// 	auth: 'jwt'
+	// }	
 }
+
 
 ];
 

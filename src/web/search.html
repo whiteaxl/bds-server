@@ -25,25 +25,21 @@
                                 <div class="row">
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[0]" title="Giá từ" ng-change="mc.search()"
-                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_from">
+                                            <select class="select"   data-select="true" ng-model="mc.searchData.khoangGia" title="Chọn giá" ng-change="mc.search()"
+                                                    ng-options="price as price.label for price in mc.khoangGiaList track by price.value.id">
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col w-50">
-                                        <div class="label">đến</div>
-                                    </div>
                                     <div class="col w-115">
                                         <div class="option">
-                                            <select class="select" data-select="true" ng-model="mc.searchData.giaBETWEEN[1]" title="Giá đến" ng-change="mc.search()"
-                                                    ng-options="price.value as price.lable for price in mc.sell_price_list_to">
-                                                
+                                            <select class="select" data-select="true" ng-model="mc.searchData.khoangDienTich" title="Chọn diện tích" ng-change="mc.search()"
+                                                    ng-options="dienTich as dienTich.label for dienTich in mc.khoangDienTichList track by dienTich.value.id">                         
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col w-240">
+                            <div class="col w-240" style="display: none;">
                               <div class="row">
                                 <div class="col w-115">
                                   <div class="option">
@@ -55,13 +51,7 @@
                                 <div class="col w-50">
                                   <div class="label">đến</div>
                                 </div>
-                                <div class="col w-115">
-                                    <div class="option">
-                                        <select class="select" data-select="true" ng-model="mc.searchData.dienTichBETWEEN[1]" title="Diện tích đến" ng-change="mc.search()"
-                                                ng-options="square.value as square.lable for square in mc.sell_dien_tich_list_to">
-                                        </select>
-                                    </div>
-                                </div>
+                                
                               </div>
                             </div>
                             <div class="col w-130">

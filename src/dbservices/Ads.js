@@ -19,6 +19,12 @@ var moment = require('moment');
 var DEFAULT_LIMIT = 1000;
 
 
+/**
+id,adsID,
+....
+
+*/
+
 class AdsModel {
     constructor(myBucket) {
         this.myBucket = myBucket;
