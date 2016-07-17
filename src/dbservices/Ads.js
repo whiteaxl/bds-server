@@ -1,5 +1,40 @@
 'use strict';
 
+/*
+ adsID: string (
+     bds: Ads_bds_<maso>
+     dothi: Ads_dothi_<maso>
+     reland: Ads_reland_<UserID>_<createdTimeFrom1970>
+ )
+ dangBoi: {email, name, phone, userID}
+ ngayDangTin: string (format: YYYYMMDD)
+ gia: number
+ dienTich: number
+ place : {
+     duAn : string (ten cua du an),
+     duAnFullName (ten + dia chi),
+     diaChi,
+     diaChiFullName,
+     diaChinh:{tinh, huyen, xa, tinhKhongDau, huyenKongDau, xaKhongDau},
+     geo:{lat, lon}
+ }
+ soPhongNgu: number
+ soPhongTam: number
+ soTang: number
+ loaiTin: number (ban=0, thue=1)
+ loaiNhaDat: number (1,2,..)
+ image: {cover, cover_small, images:[], images_small:[]}
+ chiTiet: string
+ comments: [{timeStamp, content, userID}]
+ giaM2: number
+ huongNha: number
+ chinhChu: true/false/null
+ nhaMoiXay: true/false/null
+ otoDoCua: true/false/null
+ source : string (vi du: bds.com, dothi.net, reland)
+ timeModified : number (ms)
+ */
+
 var couchbase = require('couchbase');
 var util = require("../lib/utils");
 var constant = require("../lib/constant");
