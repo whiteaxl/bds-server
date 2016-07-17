@@ -71,18 +71,18 @@
                                             </div>
                                             <div class="col col-50">
                                                 <label class="label" for="post_bed">Số phòng ngủ</label>
-                                                <select class="form-control" name="bed" ng-model="dt.ads.soPhongNgu" id="post_bed" ng-options="soPn.value as soPn.lable for soPn in dt.soPhongNguList track by soPn.value">
+                                                <select class="form-control" ng-model="dt.ads.soPhongNgu" id="post_beds" ng-change="dt.changePn({{dt.ads.soPhongNgu}});" ng-options="soPn as soPn.lable for soPn in dt.soPhongNguList track by soPn.value">
                                                 </select>
                                         </select>
                                             </div>
                                             <div class="col col-50">
                                                 <label class="label" for="post_shower">Số phòng tắm</label>
-                                                <select class="form-control" name="bed" id="post_shower" ng-model="dt.ads.soPhongTam" ng-options="soPt.value as soPt.lable for soPt in dt.soPhongTamList track by soPt.value">
+                                                <select class="form-control" name="bed" id="post_shower" ng-model="dt.ads.soPhongTam" ng-options="soPt as soPt.lable for soPt in dt.soPhongTamList track by soPt.value">
                                                 </select>
                                             </div>
                                             <div class="col col-50">
                                                 <label class="label" for="post_floors">Số tầng</label>
-                                                <select class="form-control" name="floors" id="post_floors" ng-model="dt.ads.soTang" ng-options="soTang.value as soTang.lable for soTang in dt.soTangList track by soTang.value">
+                                                <select class="form-control" name="floors" id="post_floors" ng-model="dt.ads.soTang" ng-options="soTang as soTang.lable for soTang in dt.soTangList track by soTang.value">
                                                 </select>
                                             </div>
                                         </div>
@@ -97,60 +97,22 @@
                                 </div>
                                 <div class="col col-910">
                                     <div class="group">
-                                        <div class="upload">
+                                        <div class="upload" style="display: none;">
                                             <div class="text"><i class="fa fa-camera"></i> Upload ảnh</div>
                                             <div class="file"><input name="avatar" onchange="readURL(this)" type="file"></div>
                                         </div>
+                                        <div class="upload" ngf-select="dt.uploadFiles($files)" multiple accept="image/*" >
+                                            <img src="asset/img/chat-attach-icon.png" style="width: 32px; height: 32px;"></img>
+                                        </div>  
                                     </div>
                                     <div class="row row-media">
-                                        <div class="col col-25">
+                                        <div class="col col-25" ng-repeat="image in dt.ads.images track by $index">
                                             <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
+                                                <span style="background-image: url('{{image.url}}')">174 W 76th St #8G</span>
+                                                <button type="button" class="remove" ng-click="dt.removeImage($index)"><i class="fa fa-trash"></i></button>
                                             </div>
                                         </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-3.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-4.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-1.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-2.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-3.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col col-25">
-                                            <div class="images">
-                                                <span style="background-image: url(asset/img/data/img-40-4.jpg)">174 W 76th St #8G</span>
-                                                <button class="remove"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -164,32 +126,8 @@
                                     <div class="group">
                                         <div class="label">Hướng nhà</div>
                                         <div class="row">
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="all" type="checkbox" name="prop_type_all" checked disabled> Tất cả</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_1"> Đông</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_2"> Tây</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_3"> Nam</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_4"> Bắc</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_5"> Đông Bắc</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_6"> Đông Nam</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_7"> Tây Bắc</label>
-                                            </div>
-                                            <div class="col col-33">
-                                                <label class="checkbox"><input data-action="property" type="checkbox" name="prop_type_8"> Tây Nam</label>
+                                            <div class="col col-33" ng-repeat="hn in dt.huongNhaList track by $index">
+                                                <label class="checkbox"><input data-action="all" type="radio" name="prop_type_all" ng-model="dt.ads.huongNha" checked> {{hn.lable}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -207,12 +145,18 @@
                                     </div>
                                     <div class="group">
                                         <label class="label" for="post_address">Địa chỉ</label>
-                                        <textarea name="address" class="form-control" id="post_address"></textarea>
+                                        <textarea name="address" ng-model="dt.ads.place.diaChi" class="form-control" id="post_address"></textarea>
                                     </div>
                                     <div class="group">
-                                        <div class="label">Bản đồ</div>
+                                        <div class="label">Bản đồ: <input type="text" placeholder="Tìm kiếm theo địa chính, địa chỉ" ng-model="dt.placeSearchText" class="form-control" id="autocomplete"> </input></div>
                                         <div class="map">
-                                            <div id="google-map"></div>
+                                            <div id="google-map">
+                                                <ng-map center="{{dt.center}}" class="ngmap" on-click="dt.getMapPos($event)">
+                                                <marker ng-repeat="m in dt.markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="mc.mouseover({{$index}})" animation="BOUNCE" on-mouseout="dt.mouseout()"
+                                                    on-click="dt.click({{$index}})">
+                                                </ng-map>  
+                                            </div>
+                                                         
                                             <!--<img src="asset/img/img-map.jpg" width="730"  height="480" alt=""/>-->
                                         </div>
                                     </div>
@@ -248,7 +192,7 @@
                         </div>
                         <div class="handle">
                             <button class="btn btn-cancel">Hủy bỏ</button>
-                            <button class="btn btn-save">Đăng tin</button>
+                            <button class="btn btn-save" ng-click="dt.dangTin();">Đăng tin</button>
                         </div>
                     </form>
                 </div>
@@ -257,3 +201,4 @@
     </section>
     <div class="overlay" data-overlay="true"></div>
 </div><!-- //main -->
+<footer class="footer"></footer>

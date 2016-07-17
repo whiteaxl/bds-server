@@ -100,8 +100,5 @@ window.RewayClientUtils = (function($) {
 			}
 			return "";
 		}
-
-
-
 	}
 })(jQuery);

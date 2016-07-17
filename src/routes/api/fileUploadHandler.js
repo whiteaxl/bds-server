@@ -37,6 +37,10 @@ internals.uploadFiles = function(req,reply){
 
 		var fp = files[Object.keys(files)[0]][0].path;
 		var fn = files[Object.keys(files)[0]][0].fieldName;
+		if(!fn || fn == "file" || fn == "files"){
+			fn = fields.filename;
+		}
+
 		var fsize = files[Object.keys(files)[0]][0].size; 
 		var newpath = __dirname + "/../../web/upload/"+fn;
 		
