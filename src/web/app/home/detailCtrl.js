@@ -110,13 +110,13 @@
 			vm.name ="";
 			vm.phone="";
 			vm.email="";
-			vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+			vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 			vm.requestInfoClass = "btn-submit";
 			vm.clearInfoRequest = function(){
 				vm.name ="";
 				vm.phone="";
 				vm.email="";
-				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 			}
 			if(vm.ads.place.diaChinh){
 				HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){

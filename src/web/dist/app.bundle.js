@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f5c08ec512ff78bd0768"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "43fb96e974ad20ed5d7c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19521,13 +19521,13 @@
 				vm.name ="";
 				vm.phone="";
 				vm.email="";
-				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 				vm.requestInfoClass = "btn-submit";
 				vm.clearInfoRequest = function(){
 					vm.name ="";
 					vm.phone="";
 					vm.email="";
-					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản này";
+					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 				}
 				if(vm.ads.place.diaChinh){
 					HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){
