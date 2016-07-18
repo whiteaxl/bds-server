@@ -20,7 +20,30 @@ var syncGatewayDB_URL = "http://localhost:4985/default/";
 
 var SyncGw = require('./SyncGW');
 var syncGw = new SyncGw();
-
+/*
+ userID: string
+ fullName: string
+ email: string - unique
+ phone: string -- Unique
+ adsLikes: [adsID]
+ matKhau: string
+ chatBlockedList: [userID]
+ diemDanhGia: number
+ saveSearch : [{
+   name: string,
+   timeModified: number (from 1970),
+   query: {gia, soPhongNguGREATER, ...}}]
+ avatar: string (image url) -- image de trong Upload cua Web
+ timeCreated: number (ms from 1970)
+ timeModified : number (ms)
+ serviceOrders: [{serviceID, adsID, beginDate, endDate}]
+ virtualCash: {
+   totalAmount: number
+   usedAmount: number
+   details: [{paymentTypeID, amount, dml: U/D, approved: true/false, createDate}]
+ }
+ lastViewAdsID : string
+ */
 
 class UserModel {
   initBucket() {
