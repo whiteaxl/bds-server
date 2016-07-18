@@ -10,7 +10,7 @@
  		<nav class="nav-main">
 			<ul>
 				<li ng-repeat="m in menuitems" class="{{m.items?'has-sub':''}}">
-					<a ng-click="hdr.gotoMenu(m.value)" title="">{{m.label}}</a>
+					<a ng-click="hdr.gotoMenu(m.value)" title=""><b>{{m.label}}</b></a>
 					<ul ng-if="m.items">
 						<li ng-repeat="item in m.items"><a ng-click="hdr.gotoMenu(item.value)">{{::item.label}}</a></li>
 					</ul>
@@ -20,10 +20,10 @@
  		<nav class="nav-user">
  			<ul>
  				<li>
- 					<a class="link" href="#box-saved" data-open="true" title="">Lưu nhà</a>
+ 					<a class="link" href="#box-saved" data-open="true" title=""><b>Lưu nhà</b></a>
  				</li>
  				<li>
- 					<a class="link" href="" title="">Lưu tìm kiếm</a>
+ 					<a class="link" href="" title=""><b>Lưu tìm kiếm</b></a>
  				</li>
  				<li ng-if="$root.user.userID">
  					<a class="link" href="/web/dangtin" data-open="true" title="">Đăng tin</a>
