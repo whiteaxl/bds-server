@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c2d68518819be6bde468"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f5c08ec512ff78bd0768"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -19488,7 +19488,7 @@
 				$('body').scrollTop(0);
 			},0);
 			vm.adsID = $state.params.adsID;
-			HouseService.detailAds({adsID: vm.adsID}).then(function(res){
+			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
 				//console.log("res.data " + res.data.ads);
 				vm.ads = res.data.ads;
 				vm.marker.coords.latitude = vm.ads.place.geo.lat;
@@ -19706,14 +19706,14 @@
 			        });*/
 
 	        	});
-	        	vm.findDuAnHot = function(){
+	        	/*vm.findDuAnHot = function(){
 					HouseService.findDuAnHotByDiaChinhForDetailPage(vm.searchData).then(function(res){
 						if(res.data.success==true){
 							vm.listDuAnHot =  res.data.listDuAnHot;
 						}			
 					});
 				}
-				vm.findDuAnHot();
+				vm.findDuAnHot();*/
 	        	
 	        	var infoRequestRules = {
 		            email: {

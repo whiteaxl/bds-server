@@ -244,6 +244,21 @@ internals.detail = function(req, reply) {
         reply(Boom.badRequest());
     } else {
         let adsID =  query.adsID;
+        console.log("tim log "+JSON.stringify(query));
+        if(query.userID) {
+            userService.getUserByID(query.userID, function(err,res){
+                if(err || res.length ==0)
+                    console.log(err);
+                else { 
+                    console.log(JSON.stringify(res));
+                    var user = res[0];
+                    user.lastViewAds = adsID;
+                    console.log("user with last view");
+                    console.log(JSON.stringify(user));
+                    userService.upsert(user);
+                }
+            });
+        }
         adsService.getAds(adsID, (err, result) => {
             if (err) {
                 console.log("Erorr when getting detail data:", err);
