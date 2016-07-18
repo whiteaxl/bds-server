@@ -21363,7 +21363,7 @@
 	        label: "BĐS cho thuê",
 	        value: {loaiTin: "1", loaiNhaDat: "0"},
 	        level: "1",
-	        visible: false,
+	        visible: true,
 	        items: [
 	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "1"}, label: "Mua căn hộ chung cư" },
 	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "2"}, label: "Mua nhà riêng" },
@@ -21378,6 +21378,40 @@
 	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "11"}, label: "Tìm kiếm nâng cao" },
 	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "0"}, label: "Tất cả" }
 	        ]                                           
+	    },
+	    {
+	        label: "Cần bán",
+	        value: {},
+	        visible: true,
+	        items: [
+	            { value: {loaiTin: "0", loaiNhaDat: "1"}, label: "Cần thuê căn hộ chung cư" },
+	            { value: {loaiTin: "0", loaiNhaDat: "2"}, label: "Cần thuê nhà riêng" },
+	            { value: {loaiTin: "0", loaiNhaDat: "3"}, label: "Cần thuê nhà mặt phố" },
+	            { value: {loaiTin: "0", loaiNhaDat: "4"}, label: "Cần thuê nhà trọ, phòng trọ" },
+	            { value: {loaiTin: "0", loaiNhaDat: "5"}, label: "Cần thuê văn phòng" },
+	            { value: {loaiTin: "0", loaiNhaDat: "6"}, label: "Cần thuê cửa hàng, ki ốt" },
+	            { value: {loaiTin: "0", loaiNhaDat: "7"}, label: "Cần thuê kho, nhà xưởng, đất" },
+	            { value: {loaiTin: "0", loaiNhaDat: "8"}, label: "Cần thuê loại BĐS khác" },
+	            { value: {loaiTin: "0", loaiNhaDat: "11"}, label: "Tìm kiếm nâng cao" },
+	            { value: {loaiTin: "0", loaiNhaDat: "0"}, label: "Tất cả" }
+	        ]
+	    },
+	    {
+	        label: "Cần thuê",
+	        value: {},
+	        visible: true,
+	        items: [
+	            { value: {loaiTin: "1", loaiNhaDat: "1"}, label: "Cần thuê căn hộ chung cư" },
+	            { value: {loaiTin: "1", loaiNhaDat: "2"}, label: "Cần thuê nhà riêng" },
+	            { value: {loaiTin: "1", loaiNhaDat: "3"}, label: "Cần thuê nhà mặt phố" },
+	            { value: {loaiTin: "1", loaiNhaDat: "4"}, label: "Cần thuê nhà trọ, phòng trọ" },
+	            { value: {loaiTin: "1", loaiNhaDat: "5"}, label: "Cần thuê văn phòng" },
+	            { value: {loaiTin: "1", loaiNhaDat: "6"}, label: "Cần thuê cửa hàng, ki ốt" },
+	            { value: {loaiTin: "1", loaiNhaDat: "7"}, label: "Cần thuê kho, nhà xưởng, đất" },
+	            { value: {loaiTin: "1", loaiNhaDat: "8"}, label: "Cần thuê loại BĐS khác" },
+	            { value: {loaiTin: "1", loaiNhaDat: "9"}, label: "Tìm kiếm nâng cao" },
+	            { value: {loaiTin: "1", loaiNhaDat: "0"}, label: "Tất cả" }
+	        ]
 	    },
 	    {
 	        label: "Giới thiệu",
