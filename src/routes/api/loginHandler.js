@@ -82,6 +82,7 @@ internals.login = function(req, reply){
                     result.email = res[0].email;
                     result.avatar = res[0].avatar;
                     result.lastSearch = res[0].lastSearch;
+                    result.lastViewAds = res[0].lastViewAds;
                     result.adsLikes = res[0].adsLikes;
                     result.phone = res[0].phone;
                 }else{

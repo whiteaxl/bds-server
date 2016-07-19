@@ -79,6 +79,7 @@
 		vm.adsID = $state.params.adsID;
 		HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
 			//console.log("res.data " + res.data.ads);
+			$rootScope.user.lastViewAds = vm.adsID;
 			vm.ads = res.data.ads;
 			vm.marker.coords.latitude = vm.ads.place.geo.lat;
 			vm.marker.coords.longitude = vm.ads.place.geo.lon;

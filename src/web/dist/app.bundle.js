@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "43fb96e974ad20ed5d7c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0ff2aed54e9e70d2b765"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18134,9 +18134,25 @@
 			function initHotAds(){
 				console.log("---------------------initHotAds ---------------");
 				$scope.hot_ads_cat =[];
-				if($rootScope.user && $rootScope.user.userID && $rootScope.user.lastSearch){				
+				
+				if($rootScope.user && $rootScope.user.userID && $rootScope.user.lastSearch){
 					var lastSearch = $rootScope.user.lastSearch;	
 					if(lastSearch){
+						$scope.hot_ads_cat.push( {
+							name: "",
+							location: "",
+							list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+						});	
+						$scope.hot_ads_cat.push( {
+							name: "",
+							location: "",
+							list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+						});	
+						$scope.hot_ads_cat.push( {
+							name: "",
+							location: "",
+							list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+						});	
 						var searchDataCungLoai = {
 							"loaiTin": lastSearch.loaiTin,
 							"loaiNhaDat": lastSearch.loaiNhaDat, 
@@ -18146,38 +18162,21 @@
 				  			"soTangGREATER": 0,
 							"diaChinh": lastSearch.diaChinh,
 							"geoBox": lastSearch.geoBox,
+							"updateLastSearch": false,
 						  	"orderBy": "ngayDangTinDESC",
 						  	"pageNo": 1
 						};
 						HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
-							var bdsCungLoaiMoiDang = [];
-							for(var i=0;i<res.data.length;i++){
-								bdsCungLoaiMoiDang.push(res.data.list[i]);
-							}	
-							var cat = {
-								name: "",
-								location: "",
-								list: bdsCungLoaiMoiDang
-							}
 							if(lastSearch.loaiNhaDat==0 ){
-								cat.name = "Bất động sản mới đăng";
+								$scope.hot_ads_cat[0].name = "Bất động sản mới đăng";
 							}else{
-								cat.name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
+								$scope.hot_ads_cat[0].name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
 							}
-							$scope.hot_ads_cat.push(cat);														
+							$scope.hot_ads_cat[0].list = res.data.list;														
 						});
 						var giaBETWEEN = lastSearch.giaBETWEEN;
-
-						if(giaBETWEEN){
-							if(giaBETWEEN[0] ==0)
-							var mean = (giaBETWEEN[0] + giaBETWEEN[1])/2;
-							giaBETWEEN[0] = mean - mean*0.1;
-							giaBETWEEN[1] = mean + mean * 0.1;
-						}else{
-							giaBETWEEN = [1000000000, 2000000000]
-						}
 						var searchDataNgangGia = {
-							"loaiTin": 0,
+							"loaiTin": lastSearch.loaiTin,
 							"loaiNhaDat": 0, 
 							"limit": 10,
 							"soPhongNguGREATER": 0,
@@ -18187,26 +18186,104 @@
 							"diaChinh": lastSearch.diaChinh,
 							"geoBox": lastSearch.geoBox,
 						  	"orderBy": "ngayDangTinDESC",
+						  	
 						  	"pageNo": 1
 						};
-						HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
-							var cat = {
-								name: "",
-								location: "",
-								list: res.data.list
+						var searchDataDuoiGia = {
+							"loaiTin": lastSearch.loaiTin,
+							"loaiNhaDat": 0, 
+							"limit": 10,
+							"soPhongNguGREATER": 0,
+				  			"soPhongTamGREATER": 0,
+				  			"soTangGREATER": 0,
+				  			"giaBETWEEN": giaBETWEEN,
+							"diaChinh": lastSearch.diaChinh,
+							"geoBox": lastSearch.geoBox,
+						  	"orderBy": "ngayDangTinDESC",
+						  	
+						  	"pageNo": 1
+						};
+
+						if(giaBETWEEN && !(giaBETWEEN[1]> 99999999999 && giaBETWEEN[0]==0)){
+							var mean = (giaBETWEEN[0] + giaBETWEEN[1])/2;
+							giaBETWEEN[0] = mean - mean*0.1;
+							giaBETWEEN[1] = mean + mean * 0.1;
+							searchDataNgangGia.giaBETWEEN = giaBETWEEN;
+							HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
+								if(searchDataNgangGia.loaiTin == 0){
+									$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN[0]/1000  + " đến "+ giaBETWEEN[1]/1000 + " tỷ";
+								}else{
+									$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN + " đến "+ giaBETWEEN[1] + " triệu/tháng";								
+								}
+								
+								$scope.hot_ads_cat[1].list = res.data.list;	
+							});
+							searchDataDuoiGia.giaBETWEEN[0] = 0;
+							searchDataDuoiGia.giaBETWEEN[1] = mean;
+							HouseService.findAdsSpatial(searchDataDuoiGia).then(function(res){							
+								if(searchDataDuoiGia.loaiTin==0){
+									$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean/1000 + " tỷ";
+								}else{
+									$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean + " triệu/tháng";								
+								}
+								
+								$scope.hot_ads_cat[2].list = res.data.list;	
+							});
+						}else{
+							if($rootScope.user.lastViewAds){
+								HouseService.detailAds({adsID: $rootScope.user.lastViewAds}).then(function(res){
+									if(res.data.status == 0){
+										giaBETWEEN[0] = res.data.ads.gia - res.data.ads.gia*0.1;
+										giaBETWEEN[1] = res.data.ads.gia + res.data.ads.gia*0.1;
+										searchDataNgangGia.giaBETWEEN = giaBETWEEN;
+										$scope.hot_ads_cat[1].name = "Bất động ngang giá " + res.data.ads.giaFmt;
+										HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
+											$scope.hot_ads_cat[1].list = res.data.list;	
+										});
+										searchDataDuoiGia.giaBETWEEN[0] = 0;
+										searchDataDuoiGia.giaBETWEEN[1] = res.data.ads.gia;
+										$scope.hot_ads_cat[2].name = "Bất động giá dưới " + res.data.ads.giaFmt;
+										HouseService.findAdsSpatial(searchDataDuoiGia).then(function(res){							
+											$scope.hot_ads_cat[2].list = res.data.list;	
+										});
+
+
+									}
+								});
 							}
-							
-							cat.name = "Bất động ngang giá";
-							
-							$scope.hot_ads_cat.push(cat);														
-						});
+							// giaBETWEEN = [1000000000, 2000000000]
+						}
+						
+						
 
 
 					}
 				}else{
+					$scope.hot_ads_cat.push( {
+						name: "",
+						location: "",
+						list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+					});
+					$scope.hot_ads_cat.push( {
+						name: "",
+						location: "",
+						list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+					});
+					$scope.hot_ads_cat.push( {
+						name: "",
+						location: "",
+						list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+					});
+					$scope.hot_ads_cat.push( {
+						name: "",
+						location: "",
+						list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
+					});
 					HouseService.findAdsAndDuanForHomePage({limit:8}).then(function(res){
-						Array.prototype.push.apply($scope.hot_ads_cat, res.data.list);
-						console.log(res);
+						$scope.hot_ads_cat[0]= res.data.list[0]
+						$scope.hot_ads_cat[1] = res.data.list[1]
+						//Array.prototype.push.apply($scope.hot_ads_cat, res.data.list);
+						//console.log(res);
 					});	
 					var searchNhaXemNhieuNhatTaiHanoi = {
 						"loaiTin": 0,
@@ -18221,13 +18298,9 @@
 					  	"orderBy": "luotXemDESC",
 					  	"pageNo": 1
 					};
-					HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHanoi).then(function(res){					
-						var cat = {
-							name: "Bất động sản xem nhiều nhất tại Hà Nội",
-							location: "",
-							list: res.data.list
-						}					
-						$scope.hot_ads_cat.push(cat);														
+					HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHanoi).then(function(res){										
+						$scope.hot_ads_cat[2].name = "Bất động sản xem nhiều nhất tại Hà Nội";				
+						$scope.hot_ads_cat[2].list = res.data.list;
 					});	
 					var searchNhaXemNhieuNhatTaiHcm = {
 						"loaiTin": 0,
@@ -18243,12 +18316,8 @@
 					  	"pageNo": 1
 					};
 					HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHcm).then(function(res){					
-						var cat = {
-							name: "Bất động sản xem nhiều nhất tại thành phố Hồ Chí Minh",
-							location: "",
-							list: res.data.list
-						}					
-						$scope.hot_ads_cat.push(cat);														
+						$scope.hot_ads_cat[3].name = "Bất động sản xem nhiều nhất tại thành phố Hồ Chí Minh";				
+						$scope.hot_ads_cat[3].list = res.data.list;													
 					});	
 				}		
 				// data = {
@@ -19490,6 +19559,7 @@
 			vm.adsID = $state.params.adsID;
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
 				//console.log("res.data " + res.data.ads);
+				$rootScope.user.lastViewAds = vm.adsID;
 				vm.ads = res.data.ads;
 				vm.marker.coords.latitude = vm.ads.place.geo.lat;
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
@@ -20417,6 +20487,8 @@
 	                          $rootScope.user.userEmail = res.data.email;
 	                          $rootScope.user.phone = res.data.phone;
 	                          $rootScope.user.lastSearch = res.data.lastSearch;
+	                          $rootScope.user.lastViewAds = res.data.lastViewAds;
+
 	                          vm.class = "has-sub";
 	                          vm.state = vm.LOGGED_IN;
 	                          vm.userExist = false;
@@ -20471,6 +20543,7 @@
 	                        $rootScope.user.userEmail = res.data.email;
 	                        $rootScope.user.phone = res.data.phone;
 	                        $rootScope.user.lastSearch = res.data.lastSearch;
+	                        $rootScope.user.lastViewAds = res.data.lastViewAds;
 	                        vm.class = "has-sub";
 	                        vm.state = vm.LOGGED_IN;
 	                        vm.userExist = false;

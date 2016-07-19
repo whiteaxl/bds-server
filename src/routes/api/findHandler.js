@@ -402,6 +402,7 @@ internals.searchAds = function(q, reply) {
     }
 
     if(q.userID) {
+        //console.log(JSON.stringify(q));
         userService.getUserByID(q.userID, function(err,res){
             if(err || res.length ==0)
                 console.log(err);
