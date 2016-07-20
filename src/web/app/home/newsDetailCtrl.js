@@ -13,6 +13,11 @@
             $state.go('newsDetail', { "rootCatId" : $scope.rootCatId, "articleId" : articleId}, {location: true});
         }
 
+        vm.formatHtml = function(doc){
+            if(doc)
+                return $sce.trustAsHtml(doc);
+        }
+
         function initNewsDetail() {
             console.log("---------------------initNews ---------------catId: " + $scope.articleId);
             var data = {

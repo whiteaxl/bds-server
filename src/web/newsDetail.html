@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col col-850">
                             <article class="block-18">
-                                <h1 class="title" ng-bind-html="article.title"></h1>
-                                <h2 class="summary" ng-bind-html="article.contentDesc"></h2>
+                                <h1 class="title" ng-bind-html="ndc.formatHtml(article.title)"></h1>
+                                <h2 class="summary" ng-bind-html="ndc.formatHtml(article.contentDesc)"></h2>
                                 <p class="info">{{article.postedDate}}</p>
                                 <div class="data">
-                                    <div ng-bind-html="article.contentDetail"></div>
+                                    <div ng-bind-html="ndc.formatHtml(article.contentDetail)"></div>
 
                                     <p>---------------------------------------</p>
                                     <p>Quý khách có nhu cầu sử dụng dịch vụ vui lòng đăng ký tại đây:</p>
@@ -65,10 +65,10 @@
                                     <div class="col col-25" ng-repeat="item in listArticle">
                                         <div class="item">
                                             <a class="media" href="" title="" ng-click="nc.goDetail(item.articleId)">
-                                                <span class="img" style="background-image: url({{item.avatarImage}})" ng-bind-html="item.title"></span>
+                                                <span class="img" style="background-image: url({{item.avatarImage}})" ng-bind-html="ndc.formatHtml(item.title)"></span>
                                             </a>
                                             <h3>
-                                                <a href="" title="" ng-bind-html="item.title"></a>
+                                                <a href="" title="" ng-bind-html="ndc.formatHtml(item.title)"></a>
                                             </h3>
                                         </div>
                                     </div>
@@ -81,16 +81,16 @@
                                 <div class="data">
                                     <div class="article">
                                         <a href="" title="" class="media" ng-click="ndc.goDetail(defaultHotArticle.articleId)">
-                                            <span class="img" style="background-image: url({{defaultHotArticle.avatarImage}})" ng-bind-html="defaultHotArticle.title"></span>
+                                            <span class="img" style="background-image: url({{defaultHotArticle.avatarImage}})" ng-bind-html="ndc.formatHtml(defaultHotArticle.title)"></span>
                                         </a>
                                         <h3>
-                                            <a href="" title="" ng-bind-html="defaultHotArticle.title"></a>
+                                            <a href="" title="" ng-bind-html="ndc.formatHtml(defaultHotArticle.title)"></a>
                                         </h3>
                                     </div>
                                 </div>
                                 <ul>
                                     <li ng-repeat="art in hotArticles">
-                                        <a href="" title="" ng-click="ndc.goDetail(art.articleId)" ng-bind-html="art.title"></a>
+                                        <a href="" title="" ng-click="ndc.goDetail(art.articleId)" ng-bind-html="ndc.formatHtml(art.title)"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -101,12 +101,12 @@
                                         <div class="row">
                                             <div class="col col-130">
                                                 <a href="" title="" class="media" ng-click="ndc.goDetail(art.articleId)">
-                                                    <span class="img" style="background-image: url({{art.avatarImage}})" ng-bind-html="art.title"></span>
+                                                    <span class="img" style="background-image: url({{art.avatarImage}})" ng-bind-html="ndc.formatHtml(art.title)"></span>
                                                 </a>
                                             </div>
                                             <div class="col col-170">
                                                 <h3>
-                                                    <a href="" title="" ng-click="ndc.goDetail(art.articleId)" ng-bind-html="art.title"></a>
+                                                    <a href="" title="" ng-click="ndc.goDetail(art.articleId)" ng-bind-html="ndc.formatHtml(art.title)"></a>
                                                 </h3>
                                             </div>
                                         </div>
