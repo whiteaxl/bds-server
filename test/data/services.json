@@ -1,0 +1,255 @@
+[
+  {
+    "type" : "Service",
+    "id" : "Service_001",
+    "category" : "trangChu",
+    "name" : "Đặc biệt",
+    "level" : 1,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 65000
+      },
+      {
+        "days" : 7,
+        "price" : 455000
+      },
+      {
+        "days" : 15,
+        "price" : 926250
+      },
+      {
+        "days" : 30,
+        "price" : 1755000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_002",
+    "category" : "trangChu",
+    "name" : "Cao cấp",
+    "level" : 2,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 30000
+      },
+      {
+        "days" : 7,
+        "price" : 210000
+      },
+      {
+        "days" : 15,
+        "price" :417500
+      },
+      {
+        "days" : 90,
+        "price" : 810000
+      }
+    ]
+  },
+
+  {
+    "type" : "Service",
+    "id" : "Service_003",
+    "category" : "trangChu",
+    "name" : "Basic",
+    "level" : 3,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 10000
+      },
+      {
+        "days" : 7,
+        "price" : 70000
+      },
+      {
+        "days" : 15,
+        "price" :142500
+      },
+      {
+        "days" : 30,
+        "price" : 270000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_010",
+    "category" : "viTri",
+    "name" : "Basic",
+    "level" : 3,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 12000
+      },
+      {
+        "days" : 7,
+        "price" : 84000
+      },
+      {
+        "days" : 15,
+        "price" :171000
+      },
+      {
+        "days" : 30,
+        "price" : 324000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_011",
+    "category" : "viTri",
+    "name" : "Cao cấp",
+    "level" : 2,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 45000
+      },
+      {
+        "days" : 7,
+        "price" : 315000
+      },
+      {
+        "days" : 15,
+        "price" :641250
+      },
+      {
+        "days" : 30,
+        "price" : 1215000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_012",
+    "category" : "viTri",
+    "name" : "Đặc biệt",
+    "level" : 1,
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 105000
+      },
+      {
+        "days" : 7,
+        "price" : 735000
+      },
+      {
+        "days" : 15,
+        "price" :1496250
+      },
+      {
+        "days" : 30,
+        "price" : 2835000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_020",
+    "category" : "logo",
+    "name" : "Mới giảm giá",
+    "logoUrl" : "http://1.bp.blogspot.com/-2itV1Jag7D4/VXuQcHf8jXI/AAAAAAAAAX8/7LvvAuj8DY4/s1600/Indonesia-Garuda1.jpg",
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 10000
+      },
+      {
+        "days" : 7,
+        "price" : 70000
+      },
+      {
+        "days" : 15,
+        "price" :142500
+      },
+      {
+        "days" : 30,
+        "price" : 270000
+      }
+    ]
+  },
+  {
+    "type" : "Service",
+    "id" : "Service_021",
+    "category" : "logo",
+    "name" : "Cần bán gấp",
+    "logoUrl" : "http://2.bp.blogspot.com/-ykPZDwjfO04/VXuSMJevyhI/AAAAAAAAAYk/v1lT3_tP8lU/s1600/philipphine%2Bjpg%2B256.jpg",
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 10000
+      },
+      {
+        "days" : 7,
+        "price" : 70000
+      },
+      {
+        "days" : 15,
+        "price" :142500
+      },
+      {
+        "days" : 30,
+        "price" : 270000
+      }
+    ]
+  },
+
+  {
+    "type" : "Service",
+    "id" : "Service_021",
+    "category" : "logo",
+    "name" : "Mới xây",
+    "logoUrl" : "http://2.bp.blogspot.com/-5mIwMzcMlVw/VXuRMa6vBCI/AAAAAAAAAYQ/Os7Z9z1gViE/s1600/thailand%2Bjpg%2B256.jpg",
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 10000
+      },
+      {
+        "days" : 7,
+        "price" : 70000
+      },
+      {
+        "days" : 15,
+        "price" :142500
+      },
+      {
+        "days" : 30,
+        "price" : 270000
+      }
+    ]
+  },
+
+  {
+    "type" : "Service",
+    "id" : "Service_021",
+    "category" : "logo",
+    "name" : "Full nội thất",
+    "logoUrl" : "http://1.bp.blogspot.com/-ITazj2Kc-V8/VXuRgHB96AI/AAAAAAAAAYc/bubJgOsWAoQ/s1600/harimau%2Bmalaya%2Bjpg%2B256.jpg",
+    "fees" : [
+      {
+        "days" : 1,
+        "price" : 10000
+      },
+      {
+        "days" : 7,
+        "price" : 70000
+      },
+      {
+        "days" : 15,
+        "price" :142500
+      },
+      {
+        "days" : 30,
+        "price" : 270000
+      }
+    ]
+  }
+]

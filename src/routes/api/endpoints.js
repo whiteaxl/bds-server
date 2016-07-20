@@ -222,7 +222,7 @@ internals.endpoints = [
       },
       validate: {
         payload: {
-          adsID: Joi.string().default('Ads_bds_2884742'),
+          adsID: Joi.string(),
           userID: Joi.string().allow(null)
         }
       }
