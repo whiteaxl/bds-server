@@ -3,6 +3,11 @@
 	var controllerId = 'SearchCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
 		var vm = this;
+		$scope.center = "Hanoi Vietnam";
+		$scope.placeId = $state.params.place;
+		$scope.loaiTin = $state.params.loaiTin;
+		$scope.loaiNhaDat = $state.params.loaiNhaDat;
+
 		vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 		vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
 		vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
@@ -10,6 +15,9 @@
 		vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
 
 		vm.khoangGiaList = window.RewayListValue.khoangGia;
+		if($scope.loaiTin==1){
+			vm.khoangGiaList = window.RewayListValue.khoangGiaThue;
+		}
 		vm.khoangGia = vm.khoangGiaList[vm.khoangGiaList.length-1];
 
 
@@ -27,10 +35,7 @@
 
 		
 		
-		$scope.center = "Hanoi Vietnam";
-		$scope.placeId = $state.params.place;
-		$scope.loaiTin = $state.params.loaiTin;
-		$scope.loaiNhaDat = $state.params.loaiNhaDat;
+		
 		vm.diaChinh = {
 			tinh: $state.params.tinh,
 			tinhKhongDau: $state.params.tinh,

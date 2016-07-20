@@ -54,12 +54,12 @@ util.getPriceDisplay = function(val, loaiTin,forWeb) {
 
         if (loaiTin===0) { //ban
             if (val < 1000) {
-                return val.toFixed(2)+ " TRIỆU";
+                return val.toFixed(2)+ " triệu";
             }
 
-            return (val/1000).toFixed(2) + " TỶ";
+            return (val/1000).toFixed(2) + " tỷ";
         } else {
-            return val.toFixed(2) +  (forWeb?"triệu":" TRIỆU/THÁNG");
+            return val.toFixed(2) +  (forWeb?"triệu":"triệu");
         }
     } catch(ex) {
         console.log("Error when getPriceDisplay of " + val, ex)

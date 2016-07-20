@@ -338,6 +338,32 @@
         data: {
             bodyClass: "page-detail"
         }
+      }).state('searchda', {
+        url: "/searchdc/:duAnID/:viewMode",
+        templateUrl: "/web/search.html",
+        controller: "SearchCtrl",
+        controllerAs: 'mc',
+        resolve: {
+          title: function(HouseService,$stateParams,$rootScope) {
+            var result = HouseService.getAllAds();
+            //var result = $rootScope.getGoogleLocationById($stateParams.place);
+            //alert($state.params.place);
+            //var result = HouseService.findAdsSpatial($stateParams.place);
+            result.then(function(data){
+              window.initData = data.data;
+            }); 
+            return result;
+          }
+        },
+        data: {
+            //bodyClass: "page-search",
+            //abc: title
+        } 
+        // ,
+        // controller: function($scope,sellingHouses){
+        //   $scope.sellingHouses = sellingHouses;
+        //   //alert(sellingHouses.length);
+        // }
       })
     });
   bds.factory('socket', function (socketFactory) {

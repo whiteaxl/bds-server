@@ -296,6 +296,92 @@ danhMuc.khoangGia = [
 
 ];
 
+danhMuc.khoangGiaThue = [
+    {
+        value: {
+            min:  0,
+            max:  1,
+            id:1     
+        },
+        label: "<= 1 triệu",
+        position: 2
+    },
+    {
+        value: {
+            min:  1,
+            max:  3,
+            id:2
+        },
+        label: "1 - 3 triệu",
+        position: 3
+    },
+    {
+        value: {
+            min:  3,
+            max:  5,
+            id:3
+        },
+        label: "3 - 5 triệu",
+        position: 4
+    },
+    {
+        value: {
+            min:  5,
+            max:  10,
+            id:4     
+        },
+        label: "5 - 10 triệu",
+        position: 5
+    },
+    {
+        value: {
+            min:  10,
+            max:  40,
+            id:5     
+        },
+        label: "10 - 40 triệu",
+        position: 6
+    },
+    {
+        value: {
+            min:  40,
+            max:  70,
+            id:6     
+        },
+        label: "40 - 70 triệu",
+        position: 7
+    },
+    {
+        value: {
+            min:  70,
+            max:  100,
+            id:7     
+        },
+        label: "70 - 100 triệu",
+        position: 8
+    },
+    {
+        value: {
+            min:  100,
+            max:  999999999999,
+            id:8     
+        },
+        label: "> 100 triệu",
+        position: 9
+    },
+    {
+        value: {
+            min:  0,
+            max:  999999999999,
+            id:9    
+        },
+        label: "Giá bất kỳ",
+        position: 10
+    }
+
+
+];
+
 danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
 
 danhMuc.convertDienTichStepValueToNameValueArray= function(){
