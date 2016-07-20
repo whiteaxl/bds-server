@@ -3,7 +3,7 @@
     "type" : "Service",
     "id" : "Service_001",
     "category" : "trangChu",
-    "name" : "Đặc biệt",
+    "name" : "Trang chủ đặc biệt",
     "level" : 1,
     "fees" : [
       {
@@ -28,7 +28,7 @@
     "type" : "Service",
     "id" : "Service_002",
     "category" : "trangChu",
-    "name" : "Cao cấp",
+    "name" : "Trang chủ cao cấp",
     "level" : 2,
     "fees" : [
       {
@@ -54,7 +54,7 @@
     "type" : "Service",
     "id" : "Service_003",
     "category" : "trangChu",
-    "name" : "Basic",
+    "name" : "Trang chủ tiêu chuẩn",
     "level" : 3,
     "fees" : [
       {
@@ -79,7 +79,7 @@
     "type" : "Service",
     "id" : "Service_010",
     "category" : "viTri",
-    "name" : "Basic",
+    "name" : "Vị trí tiêu chuẩn",
     "level" : 3,
     "fees" : [
       {
@@ -104,7 +104,7 @@
     "type" : "Service",
     "id" : "Service_011",
     "category" : "viTri",
-    "name" : "Cao cấp",
+    "name" : "Vị trí cao cấp",
     "level" : 2,
     "fees" : [
       {
@@ -129,7 +129,7 @@
     "type" : "Service",
     "id" : "Service_012",
     "category" : "viTri",
-    "name" : "Đặc biệt",
+    "name" : "Vị trí đặc biệt",
     "level" : 1,
     "fees" : [
       {
@@ -154,7 +154,7 @@
     "type" : "Service",
     "id" : "Service_020",
     "category" : "logo",
-    "name" : "Mới giảm giá",
+    "name" : "Logo mới giảm giá",
     "logoUrl" : "http://1.bp.blogspot.com/-2itV1Jag7D4/VXuQcHf8jXI/AAAAAAAAAX8/7LvvAuj8DY4/s1600/Indonesia-Garuda1.jpg",
     "fees" : [
       {
@@ -179,7 +179,7 @@
     "type" : "Service",
     "id" : "Service_021",
     "category" : "logo",
-    "name" : "Cần bán gấp",
+    "name" : "Logo cần bán gấp",
     "logoUrl" : "http://2.bp.blogspot.com/-ykPZDwjfO04/VXuSMJevyhI/AAAAAAAAAYk/v1lT3_tP8lU/s1600/philipphine%2Bjpg%2B256.jpg",
     "fees" : [
       {
@@ -205,7 +205,7 @@
     "type" : "Service",
     "id" : "Service_021",
     "category" : "logo",
-    "name" : "Mới xây",
+    "name" : "Logo mới xây",
     "logoUrl" : "http://2.bp.blogspot.com/-5mIwMzcMlVw/VXuRMa6vBCI/AAAAAAAAAYQ/Os7Z9z1gViE/s1600/thailand%2Bjpg%2B256.jpg",
     "fees" : [
       {
@@ -231,7 +231,7 @@
     "type" : "Service",
     "id" : "Service_021",
     "category" : "logo",
-    "name" : "Full nội thất",
+    "name" : "Logo Full nội thất",
     "logoUrl" : "http://1.bp.blogspot.com/-ITazj2Kc-V8/VXuRgHB96AI/AAAAAAAAAYc/bubJgOsWAoQ/s1600/harimau%2Bmalaya%2Bjpg%2B256.jpg",
     "fees" : [
       {
