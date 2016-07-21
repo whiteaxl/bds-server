@@ -11,7 +11,7 @@ bucket.operationTimeout = 120 * 1000;
 /**
 {
   category: string (viTri/trangChu/logo)
-  name: string (dacBiet, CaoCap...)
+  name: string (dac Biet, Cao Cap...)
   fees:
   [{
     days : Number (1 Ngay, 7 ngay, ...),
@@ -20,7 +20,7 @@ bucket.operationTimeout = 120 * 1000;
   validFrom: number (from 1970)
   validTo: number (from 1970)
   level : number (1:dacBiet, 2:capCap, 3:chuan) - only for ViTri and TrangChu
-  logoUrl : string - only for Logo
+  logoPosition : number (1 : line 1, 2 : line 2)
   timeModified: number
 }
 */

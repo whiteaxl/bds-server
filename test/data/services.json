@@ -155,7 +155,7 @@
     "id" : "Service_020",
     "category" : "logo",
     "name" : "Logo mới giảm giá",
-    "logoUrl" : "http://1.bp.blogspot.com/-2itV1Jag7D4/VXuQcHf8jXI/AAAAAAAAAX8/7LvvAuj8DY4/s1600/Indonesia-Garuda1.jpg",
+    "logoPosition" : 2,
     "fees" : [
       {
         "days" : 1,
@@ -180,7 +180,7 @@
     "id" : "Service_021",
     "category" : "logo",
     "name" : "Logo cần bán gấp",
-    "logoUrl" : "http://2.bp.blogspot.com/-ykPZDwjfO04/VXuSMJevyhI/AAAAAAAAAYk/v1lT3_tP8lU/s1600/philipphine%2Bjpg%2B256.jpg",
+    "logoUrl" : 1,
     "fees" : [
       {
         "days" : 1,
@@ -206,7 +206,7 @@
     "id" : "Service_021",
     "category" : "logo",
     "name" : "Logo mới xây",
-    "logoUrl" : "http://2.bp.blogspot.com/-5mIwMzcMlVw/VXuRMa6vBCI/AAAAAAAAAYQ/Os7Z9z1gViE/s1600/thailand%2Bjpg%2B256.jpg",
+    "logoUrl" : 1,
     "fees" : [
       {
         "days" : 1,
@@ -232,7 +232,7 @@
     "id" : "Service_021",
     "category" : "logo",
     "name" : "Logo Full nội thất",
-    "logoUrl" : "http://1.bp.blogspot.com/-ITazj2Kc-V8/VXuRgHB96AI/AAAAAAAAAYc/bubJgOsWAoQ/s1600/harimau%2Bmalaya%2Bjpg%2B256.jpg",
+    "logoUrl" : 1,
     "fees" : [
       {
         "days" : 1,
