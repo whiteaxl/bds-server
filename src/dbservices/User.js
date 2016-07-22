@@ -37,10 +37,9 @@ var syncGw = new SyncGw();
  timeCreated: number (ms from 1970)
  timeModified : number (ms)
  serviceOrders: [{serviceID, adsID, beginDate, endDate}]
- virtualCash: {
-   totalAmount: number
-   usedAmount: number
-   details: [{paymentTypeID, amount, dml: U/D, approved: true/false, createDate}]
+ account: {
+  main: number - Tai khoan chinh
+  bonus: number - Tai khoan khuyen mai
  }
  lastViewAdsID : string
  */
