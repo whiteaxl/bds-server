@@ -1,6 +1,7 @@
 [
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365516.jpg",
       "diaChi": "9 Phạm Văn Đồng, Phường Mai Dịch, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "9 Phạm Văn Đồng",
@@ -17,6 +18,7 @@
         "lon": 105.780174255371
       },
       "id": "DA_2t-corporation-pj1435",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365519.jpg",
       "ten": "2T Corporation",
       "tenKhongDau": "2t-corporation",
       "type": "DuAn"
@@ -24,6 +26,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.470483.jpg",
       "diaChi": "58 Đường Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "58 Đường Nguyễn Đình Chiểu",
@@ -40,6 +43,7 @@
         "lon": 106.699928283691
       },
       "id": "DA_abacus-tower-pj1992",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.470483.jpg",
       "ten": "Abacus Tower",
       "tenKhongDau": "abacus-tower",
       "type": "DuAn"
@@ -47,6 +51,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363935.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -63,6 +68,7 @@
         "lon": 105.783355712891
       },
       "id": "DA_ac-building-pj1422",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363934.jpg",
       "ten": "AC Building",
       "tenKhongDau": "ac-building",
       "type": "DuAn"
@@ -70,6 +76,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367189.jpg",
       "diaChi": "10  Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "10  Phạm Sư Mạnh",
@@ -86,6 +93,7 @@
         "lon": 105.856185913086
       },
       "id": "DA_acb-office-building-pj1442",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367185.jpg",
       "ten": "ACB Office Building",
       "tenKhongDau": "acb-office-building",
       "type": "DuAn"
@@ -93,6 +101,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100710/CKE/images/ACBR OfficeB.jpg",
       "diaChi": "249 Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
       "diaChinh": {
         "duong": "249 Cộng Hòa",
@@ -109,6 +118,7 @@
         "lon": 106.646011352539
       },
       "id": "DA_acbr-office-building-pj251",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113548.jpg",
       "ten": "ACBR Office Building",
       "tenKhongDau": "acbr-office-building",
       "type": "DuAn"
@@ -116,6 +126,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.397165.jpg",
       "diaChi": "151 Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "151 Nguyễn Đình Chiểu",
@@ -132,6 +143,7 @@
         "lon": 106.688110351563
       },
       "id": "DA_alpha-tower-pj1690",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.397165.jpg",
       "ten": "Alpha Tower",
       "tenKhongDau": "alpha-tower",
       "type": "DuAn"
@@ -139,6 +151,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/ApexT.jpg",
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "Đường Phạm Hùng",
@@ -155,6 +168,7 @@
         "lon": 105.784286499023
       },
       "id": "DA_apex-tower-pj215",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113515.jpg",
       "ten": "Apex Tower",
       "tenKhongDau": "apex-tower",
       "type": "DuAn"
@@ -162,6 +176,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.402755.jpg",
       "diaChi": "Đường Trần Huy Liệu, Phường 15, Phú Nhuận, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Trần Huy Liệu",
@@ -178,6 +193,7 @@
         "lon": 106.677574157715
       },
       "id": "DA_arirang-building-pj1750",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.402757.jpg",
       "ten": "Arirang Building",
       "tenKhongDau": "arirang-building",
       "type": "DuAn"
@@ -185,6 +201,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367208.jpg",
       "diaChi": "Số 2 Phạm Sư Mạnh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "Số 2 Phạm Sư Mạnh",
@@ -201,6 +218,7 @@
         "lon": 105.855819702148
       },
       "id": "DA_artexport-house-pj1443",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367207.jpg",
       "ten": "Artexport House",
       "tenKhongDau": "artexport-house",
       "type": "DuAn"
@@ -208,6 +226,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363989.jpg",
       "diaChi": "Số 1 Lê Đức Thọ, Phường Mai Dịch, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Số 1 Lê Đức Thọ",
@@ -224,6 +243,7 @@
         "lon": 105.771751403809
       },
       "id": "DA_au-viet-building-pj1424",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363989.jpg",
       "ten": "Âu Việt Building",
       "tenKhongDau": "au-viet-building",
       "type": "DuAn"
@@ -231,6 +251,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.415437.jpg",
       "diaChi": "53 Đường Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "53 Đường Nguyễn Thị Minh Khai",
@@ -247,6 +268,7 @@
         "lon": 106.695411682129
       },
       "id": "DA_avalon-saigon-apartments-pj1800",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.415526.jpg",
       "ten": "Avalon Saigon Apartments",
       "tenKhongDau": "avalon-saigon-apartments",
       "type": "DuAn"
@@ -254,6 +276,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363859.jpg",
       "diaChi": "62 Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "62 Trần Thái Tông",
@@ -270,6 +293,7 @@
         "lon": 105.788612365723
       },
       "id": "DA_bao-anh-building-pj1421",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363849.jpg",
       "ten": "Bảo Anh Building",
       "tenKhongDau": "bao-anh-building",
       "type": "DuAn"
@@ -277,6 +301,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.380319.jpg",
       "diaChi": "Số 172-174 Ký Con, quận 1, Tp.HCM",
       "diaChinh": {
         "huyen": "quận 1",
@@ -292,6 +317,7 @@
         "lon": 106.698524475098
       },
       "id": "DA_ben-thanh-times-square-pj1566",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.380318.jpg",
       "ten": "Ben Thanh Times Square",
       "tenKhongDau": "ben-thanh-times-square",
       "type": "DuAn"
@@ -299,6 +325,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.361075.jpg",
       "diaChi": "194  Trần Quang Khải, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "huyen": "Hoàn Kiếm",
@@ -314,6 +341,7 @@
         "lon": 105.857452392578
       },
       "id": "DA_bidv-tower-pj1406",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.361072.jpg",
       "ten": "BIDV Tower",
       "tenKhongDau": "bidv-tower",
       "type": "DuAn"
@@ -321,6 +349,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100812/CKE/images/The Financial T.jpg",
       "diaChi": "Đường Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Ngô Đức Kế",
@@ -337,6 +366,7 @@
         "lon": 106.704490661621
       },
       "id": "DA_bitexco-financial-tower-pj453",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113672.jpg",
       "ten": "Bitexco Financial Tower",
       "tenKhongDau": "bitexco-financial-tower",
       "type": "DuAn"
@@ -344,6 +374,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.442201.jpg",
       "diaChi": "63 Đường Võ Văn Tần, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "63 Đường Võ Văn Tần",
@@ -360,6 +391,7 @@
         "lon": 106.691375732422
       },
       "id": "DA_bitexco-nam-long-building-pj1874",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.442201.jpg",
       "ten": "Bitexco Nam Long Building",
       "tenKhongDau": "bitexco-nam-long-building",
       "type": "DuAn"
@@ -367,6 +399,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Enterprises/100726/CKE/images/tt.jpg",
       "diaChi": "Đường Lý Chính Thắng, Phường 8, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Lý Chính Thắng",
@@ -383,6 +416,7 @@
         "lon": 106.68537902832
       },
       "id": "DA_cao-oc-intresco-plaza-pj763",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113957.jpg",
       "ten": "Cao ốc Intresco Plaza",
       "tenKhongDau": "cao-oc-intresco-plaza",
       "type": "DuAn"
@@ -390,6 +424,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Enterprises/120228/CKE/images/OPC eximland.jpg",
       "diaChi": "1017/24A Hồng Bàng, Phường 12, Quận 6, Hồ Chí Minh",
       "diaChinh": {
         "duong": "1017/24A Hồng Bàng",
@@ -406,6 +441,7 @@
         "lon": 106.635925292969
       },
       "id": "DA_cao-oc-opc-eximland-pj1041",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114217.jpg",
       "ten": "Cao ốc OPC - Eximland",
       "tenKhongDau": "cao-oc-opc-eximland",
       "type": "DuAn"
@@ -413,6 +449,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.446626.jpg",
       "diaChi": "123 Đường Nguyễn Đình Chiểu, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "123 Đường Nguyễn Đình Chiểu",
@@ -429,6 +466,7 @@
         "lon": 106.689300537109
       },
       "id": "DA_cao-oc-pax-sky-pj1917",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.446626.jpg",
       "ten": "Cao ốc Pax Sky",
       "tenKhongDau": "cao-oc-pax-sky",
       "type": "DuAn"
@@ -436,6 +474,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.379669.jpg",
       "diaChi": "Phường 16, Quận 8, Hồ Chí Minh",
       "diaChinh": {
         "huyen": "Quận 8",
@@ -451,6 +490,7 @@
         "lon": 106.626182556152
       },
       "id": "DA_cao-oc-phuc-hop-sao-mai-pj1557",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.379672.jpg",
       "ten": "Cao Ốc Phức Hợp Sao Mai",
       "tenKhongDau": "cao-oc-phuc-hop-sao-mai",
       "type": "DuAn"
@@ -458,6 +498,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100710/CKE/images/vp16_lieugiai.jpg",
       "diaChi": "16 Liễu Giai, Phường Liễu Giai, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "16 Liễu Giai",
@@ -474,6 +515,7 @@
         "lon": 105.814422607422
       },
       "id": "DA_cao-oc-van-phong-16-lieu-giai-pj245",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113542.jpg",
       "ten": "Cao Ốc Văn Phòng 16 Liễu Giai",
       "tenKhongDau": "cao-oc-van-phong-16-lieu-giai",
       "type": "DuAn"
@@ -481,6 +523,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100712/CKE/images/Centrepoint.jpg",
       "diaChi": "106 Nguyễn Văn Trỗi, Phường 8, Phú Nhuận, Hồ Chí Minh",
       "diaChinh": {
         "duong": "106 Nguyễn Văn Trỗi",
@@ -497,6 +540,7 @@
         "lon": 106.67342376709
       },
       "id": "DA_cao-oc-van-phong-centrepoint-pj261",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113555.jpg",
       "ten": "Cao ốc văn phòng Centrepoint",
       "tenKhongDau": "cao-oc-van-phong-centrepoint",
       "type": "DuAn"
@@ -504,6 +548,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100712/CKE/images/vpHMTC.jpg",
       "diaChi": "138 – 142 Hai Bà Trưng, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "138 – 142 Hai Bà Trưng",
@@ -520,6 +565,7 @@
         "lon": 106.696502685547
       },
       "id": "DA_cao-oc-van-phong-hmtc-pj260",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113554.jpg",
       "ten": "Cao ốc văn phòng HMTC",
       "tenKhongDau": "cao-oc-van-phong-hmtc",
       "type": "DuAn"
@@ -527,6 +573,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.345820.jpg",
       "diaChi": "131  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "131  Điện Biên Phủ",
@@ -543,6 +590,7 @@
         "lon": 106.708450317383
       },
       "id": "DA_cao-oc-van-phong-v-ikon-pj1328",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.342041.jpg",
       "ten": "Cao ốc văn phòng V_ikon",
       "tenKhongDau": "cao-oc-van-phong-v_ikon",
       "type": "DuAn"
@@ -550,6 +598,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100703/CKE/images/CapitalT.jpg",
       "diaChi": "109 Trần Hưng Đạo, Phường Cửa Nam, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "109 Trần Hưng Đạo",
@@ -566,6 +615,7 @@
         "lon": 105.841957092285
       },
       "id": "DA_capital-tower-pj168",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113476.jpg",
       "ten": "Capital Tower",
       "tenKhongDau": "capital-tower",
       "type": "DuAn"
@@ -573,6 +623,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367845.jpg",
       "diaChi": "25 - 27  Lê Đại Hành, Phường Lê Đại Hành, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "25 - 27  Lê Đại Hành",
@@ -589,6 +640,7 @@
         "lon": 105.849159240723
       },
       "id": "DA_cdc-building-pj1451",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367841.jpg",
       "ten": "CDC Building",
       "tenKhongDau": "cdc-building",
       "type": "DuAn"
@@ -596,6 +648,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.360088.jpg",
       "diaChi": "43 Quang Trung, Phường Quán Toan, Hồng Bàng, Hải Phòng",
       "diaChinh": {
         "duong": "43 Quang Trung",
@@ -612,6 +665,7 @@
         "lon": 106.680229187012
       },
       "id": "DA_central-tower-pj1403",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.360089.jpg",
       "ten": "Central Tower",
       "tenKhongDau": "central-tower",
       "type": "DuAn"
@@ -619,6 +673,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2016/05/24/0I4XNtd4/20160524154227-a22d.jpg",
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "Đường Phạm Hùng",
@@ -635,6 +690,7 @@
         "lon": 105.782745361328
       },
       "id": "DA_ceo-tower-pj214",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2016/05/24/0I4XNtd4/20160524154227-a22d.jpg",
       "ten": "CEO Tower",
       "tenKhongDau": "ceo-tower",
       "type": "DuAn"
@@ -642,6 +698,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/10/20/0I4XNtd4/20151020112738-e9a5.jpg",
       "diaChi": "Số 181 Cao Thắng nối dài, Phường 12, Quận 10, Tp.HCM",
       "diaChinh": {
         "duong": "Số 181 Cao Thắng nối dài",
@@ -658,6 +715,7 @@
         "lon": 106.674575805664
       },
       "id": "DA_charmington-la-pointe-pj2266",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/10/20/0I4XNtd4/20151020112738-e9a5.jpg",
       "ten": "Charmington La Pointe",
       "tenKhongDau": "charmington-la-pointe",
       "type": "DuAn"
@@ -665,6 +723,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371941.jpg",
       "diaChi": "45 Võ Thị Sáu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "45 Võ Thị Sáu",
@@ -681,6 +740,7 @@
         "lon": 106.694763183594
       },
       "id": "DA_citilight-tower-pj1483",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371949.jpg",
       "ten": "Citilight Tower",
       "tenKhongDau": "citilight-tower",
       "type": "DuAn"
@@ -688,6 +748,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100706/CKE/images/thap_cmc.jpg",
       "diaChi": "33 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "33 Duy Tân",
@@ -704,6 +765,7 @@
         "lon": 105.784332275391
       },
       "id": "DA_cmc-tower-pj195",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113500.jpg",
       "ten": "CMC Tower",
       "tenKhongDau": "cmc-tower",
       "type": "DuAn"
@@ -711,6 +773,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368516.jpg",
       "diaChi": "125D Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "125D Minh Khai",
@@ -727,6 +790,7 @@
         "lon": 105.854522705078
       },
       "id": "DA_coma-building-pj1458",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368503.jpg",
       "ten": "Coma Building",
       "tenKhongDau": "coma-building",
       "type": "DuAn"
@@ -734,6 +798,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.392853.jpg",
       "diaChi": "293  Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "293  Điện Biên Phủ",
@@ -750,6 +815,7 @@
         "lon": 106.708480834961
       },
       "id": "DA_compa-tower-pj1625",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.392854.jpg",
       "ten": "Compa Tower",
       "tenKhongDau": "compa-tower",
       "type": "DuAn"
@@ -757,6 +823,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.361565.jpg",
       "diaChi": "16 Phan Chu Trinh, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "16 Phan Chu Trinh",
@@ -773,6 +840,7 @@
         "lon": 105.855484008789
       },
       "id": "DA_cornerstone-building-pj1409",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.361564.jpg",
       "ten": "CornerStone Building",
       "tenKhongDau": "cornerstone-building",
       "type": "DuAn"
@@ -780,6 +848,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.291458.jpg",
       "diaChi": "139 Cầu Giấy, Phường Quan Hoa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "139 Cầu Giấy",
@@ -796,6 +865,7 @@
         "lon": 105.799201965332
       },
       "id": "DA_ctm-building-139-cau-giay-pj1214",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.291452.jpg",
       "ten": "CTM Building - 139 Cầu Giấy",
       "tenKhongDau": "ctm-building-139-cau-giay",
       "type": "DuAn"
@@ -803,6 +873,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/04/16/JGcIp0rf/20150416085810-53e6.jpg",
       "diaChi": "299 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "299 Cầu Giấy",
@@ -819,6 +890,7 @@
         "lon": 105.79354095459
       },
       "id": "DA_ctm-building-299-cau-giay-pj2137",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/04/16/JGcIp0rf/20150416085810-53e6.jpg",
       "ten": "CTM Building - 299 Cầu Giấy",
       "tenKhongDau": "ctm-building-299-cau-giay",
       "type": "DuAn"
@@ -826,6 +898,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.364022.jpg",
       "diaChi": "Ngõ 82 Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Ngõ 82 Duy Tân",
@@ -842,6 +915,7 @@
         "lon": 105.782836914063
       },
       "id": "DA_dai-phat-building-pj1425",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.364022.jpg",
       "ten": "Đại Phát Building",
       "tenKhongDau": "dai-phat-building",
       "type": "DuAn"
@@ -849,6 +923,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100705/CKE/images/TNGD_daoduyanh.jpg",
       "diaChi": "Số 9 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "Số 9 Đào Duy Anh",
@@ -865,6 +940,7 @@
         "lon": 105.838073730469
       },
       "id": "DA_dao-duy-anh-tower-so-9-dao-duy-anh-pj185",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113490.jpg",
       "ten": "Đào Duy Anh Tower - số 9 Đào Duy Anh",
       "tenKhongDau": "dao-duy-anh-tower-so-9-dao-duy-anh",
       "type": "DuAn"
@@ -872,6 +948,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.442173.jpg",
       "diaChi": "111 Đường Lý Chính Thắng, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "huyen": "Quận 3",
@@ -887,6 +964,7 @@
         "lon": 106.685249328613
       },
       "id": "DA_dc-tower-pj1872",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.442173.jpg",
       "ten": "DC Tower",
       "tenKhongDau": "dc-tower",
       "type": "DuAn"
@@ -894,6 +972,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/100708/CKE/images/Detech towertt.JPG",
       "diaChi": "Số 8 Tôn Thất Thuyết, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "Số 8 Tôn Thất Thuyết",
@@ -910,6 +989,7 @@
         "lon": 105.781730651855
       },
       "id": "DA_detech-tower-pj220",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.352556.jpg",
       "ten": "Detech Tower",
       "tenKhongDau": "detech-tower",
       "type": "DuAn"
@@ -917,6 +997,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/DiamondB.jpg",
       "diaChi": "Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "huyen": "Cầu Giấy",
@@ -932,6 +1013,7 @@
         "lon": 105.780784606934
       },
       "id": "DA_diamond-building-pj225",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113524.jpg",
       "ten": "Diamond Building",
       "tenKhongDau": "diamond-building",
       "type": "DuAn"
@@ -939,6 +1021,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.362099.jpg",
       "diaChi": "535 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "535 Kim Mã",
@@ -955,6 +1038,7 @@
         "lon": 105.810203552246
       },
       "id": "DA_dmc-tower-pj1411",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.362078.jpg",
       "ten": "DMC Tower",
       "tenKhongDau": "dmc-tower",
       "type": "DuAn"
@@ -962,6 +1046,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.392829.jpg",
       "diaChi": "394 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "394 Ung Văn Khiêm",
@@ -978,6 +1063,7 @@
         "lon": 106.72257232666
       },
       "id": "DA_ebm-building-pj1624",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.392833.jpg",
       "ten": "EBM Building",
       "tenKhongDau": "ebm-building",
       "type": "DuAn"
@@ -985,6 +1071,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100712/CKE/images/EmpireTower1.JPG",
       "diaChi": "26-28 Hàm Nghi, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "26-28 Hàm Nghi",
@@ -1001,6 +1088,7 @@
         "lon": 106.70484161377
       },
       "id": "DA_empire-tower-pj254",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113550.jpg",
       "ten": "Empire Tower",
       "tenKhongDau": "empire-tower",
       "type": "DuAn"
@@ -1008,6 +1096,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.408953.jpg",
       "diaChi": "Đường Cộng Hòa, Phường 13, Tân Bình, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Cộng Hòa",
@@ -1024,6 +1113,7 @@
         "lon": 106.647483825684
       },
       "id": "DA_etown-building-pj1773",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.408952.jpg",
       "ten": "Etown Building",
       "tenKhongDau": "etown-building",
       "type": "DuAn"
@@ -1031,6 +1121,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/FlamingoT.jpg",
       "diaChi": "264 Đội cấn, Phường Ngọc Hà, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "264 Đội cấn",
@@ -1047,6 +1138,7 @@
         "lon": 105.821311950684
       },
       "id": "DA_flamingo-tower-pj212",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113512.jpg",
       "ten": "Flamingo Tower",
       "tenKhongDau": "flamingo-tower",
       "type": "DuAn"
@@ -1054,6 +1146,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/08/10/0I4XNtd4/20150810090238-4527.jpg",
       "diaChi": "265 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "265 Cầu Giấy",
@@ -1070,6 +1163,7 @@
         "lon": 105.795516967773
       },
       "id": "DA_flc-twin-towers-pj238",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/08/10/0I4XNtd4/20150810090238-4527.jpg",
       "ten": "FLC Twin Towers",
       "tenKhongDau": "flc-twin-towers",
       "type": "DuAn"
@@ -1077,6 +1171,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.440350.jpg",
       "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "36 Hoàng Cầu",
@@ -1093,6 +1188,7 @@
         "lon": 105.824279785156
       },
       "id": "DA_geleximco-building-pj180",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113487.jpg",
       "ten": "Geleximco Building",
       "tenKhongDau": "geleximco-building",
       "type": "DuAn"
@@ -1100,6 +1196,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.392698.jpg",
       "diaChi": "Đường Đào Duy Anh, Phường 9, Phú Nhuận, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Đào Duy Anh",
@@ -1116,6 +1213,7 @@
         "lon": 106.67586517334
       },
       "id": "DA_gia-thy-building-pj1621",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.392668.jpg",
       "ten": "Gia Thy Building",
       "tenKhongDau": "gia-thy-building",
       "type": "DuAn"
@@ -1123,6 +1221,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.466045.jpg",
       "diaChi": "Phố Giảng Võ, Phường Giảng Võ, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "Phố Giảng Võ",
@@ -1139,6 +1238,7 @@
         "lon": 105.820602416992
       },
       "id": "DA_giang-vo-lake-view-building-pj1980",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.466041.jpg",
       "ten": "Giảng Võ Lake View Building",
       "tenKhongDau": "giang-vo-lake-view-building",
       "type": "DuAn"
@@ -1146,6 +1246,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365824.jpg",
       "diaChi": "21 Phố Hàng Vôi, Phường Lý Thái Tổ, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "21 Phố Hàng Vôi",
@@ -1162,6 +1263,7 @@
         "lon": 105.856834411621
       },
       "id": "DA_ha-noi-tung-shing-square-pj1437",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365812.jpg",
       "ten": "Ha Noi Tung Shing Square",
       "tenKhongDau": "ha-noi-tung-shing-square",
       "type": "DuAn"
@@ -1169,6 +1271,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100705/CKE/images/habicoT.jpeg",
       "diaChi": "288 Phạm Văn Đồng, Phường Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "288 Phạm Văn Đồng",
@@ -1185,6 +1288,7 @@
         "lon": 105.782020568848
       },
       "id": "DA_habico-tower-pj184",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.353195.jpg",
       "ten": "Habico Tower",
       "tenKhongDau": "habico-tower",
       "type": "DuAn"
@@ -1192,6 +1296,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.376598.jpg",
       "diaChi": "203 Minh Khai, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "huyen": "Hai Bà Trưng",
@@ -1207,6 +1312,7 @@
         "lon": 105.861572265625
       },
       "id": "DA_han-viet-tower-pj1519",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.376597.jpg",
       "ten": "Hàn Việt Tower",
       "tenKhongDau": "han-viet-tower",
       "type": "DuAn"
@@ -1214,6 +1320,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2016/02/17/lGk9zKqg/20160217155025-c1e6.jpg",
       "diaChi": "Đường Phạm Hùng, Xã Mễ Trì, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "Đường Phạm Hùng",
@@ -1230,6 +1337,7 @@
         "lon": 105.781608581543
       },
       "id": "DA_handico-tower-pj188",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.353115.jpg",
       "ten": "Handico Tower",
       "tenKhongDau": "handico-tower",
       "type": "DuAn"
@@ -1237,6 +1345,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367439.jpg",
       "diaChi": "18 Lý Thường Kiệt, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "18 Lý Thường Kiệt",
@@ -1253,6 +1362,7 @@
         "lon": 105.855392456055
       },
       "id": "DA_hanoitourist-building-pj1447",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367442.jpg",
       "ten": "Hanoitourist Building",
       "tenKhongDau": "hanoitourist-building",
       "type": "DuAn"
@@ -1260,6 +1370,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371376.jpg",
       "diaChi": "4A Láng Hạ, Ba Đình, Hà Nội",
       "diaChinh": {
         "huyen": "Ba Đình",
@@ -1275,6 +1386,7 @@
         "lon": 105.818740844727
       },
       "id": "DA_harec-building-pj1472",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371404.jpg",
       "ten": "HAREC Building",
       "tenKhongDau": "harec-building",
       "type": "DuAn"
@@ -1282,6 +1394,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.412719.jpg",
       "diaChi": "77 Đường Trần Nhân Tôn, Phường 9, Quận 5, Hồ Chí Minh",
       "diaChinh": {
         "duong": "77 Đường Trần Nhân Tôn",
@@ -1298,6 +1411,7 @@
         "lon": 106.674842834473
       },
       "id": "DA_hcmc-lottery-tower-pj1786",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.412718.jpg",
       "ten": "HCMC Lottery Tower",
       "tenKhongDau": "hcmc-lottery-tower",
       "type": "DuAn"
@@ -1305,6 +1419,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.390928.jpg",
       "diaChi": "Đường Huỳnh Tấn Phát, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Huỳnh Tấn Phát",
@@ -1321,6 +1436,7 @@
         "lon": 106.731994628906
       },
       "id": "DA_hemera-building-pj1597",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.390927.jpg",
       "ten": "Hemera Building",
       "tenKhongDau": "hemera-building",
       "type": "DuAn"
@@ -1328,6 +1444,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/11/11/JGcIp0rf/20151111102916-2907.jpg",
       "diaChi": "đường Mễ Trì, Phường Mỹ Đình 1, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "đường Mễ Trì",
@@ -1344,6 +1461,7 @@
         "lon": 105.779418945313
       },
       "id": "DA_hh3-tower-pj1465",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.370731.jpg",
       "ten": "HH3 Tower",
       "tenKhongDau": "hh3-tower",
       "type": "DuAn"
@@ -1351,6 +1469,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371454.jpg",
       "diaChi": "185 Giảng Võ, Ba Đình, Hà Nội",
       "diaChinh": {
         "huyen": "Ba Đình",
@@ -1366,6 +1485,7 @@
         "lon": 105.821533203125
       },
       "id": "DA_hittc-building-pj1474",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371457.jpg",
       "ten": "HITTC Building",
       "tenKhongDau": "hittc-building",
       "type": "DuAn"
@@ -1373,6 +1493,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363734.jpg",
       "diaChi": "lô A2B, Cụm TTCN và CNN Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -1389,6 +1510,7 @@
         "lon": 105.782890319824
       },
       "id": "DA_hoang-linh-building-pj1418",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363732.jpg",
       "ten": "Hoàng Linh Building",
       "tenKhongDau": "hoang-linh-building",
       "type": "DuAn"
@@ -1396,6 +1518,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/hop nhatB.jpg",
       "diaChi": "Phố Xã Đàn, Đống Đa, Hà Nội",
       "diaChinh": {
         "huyen": "Đống Đa",
@@ -1411,6 +1534,7 @@
         "lon": 105.834846496582
       },
       "id": "DA_hop-nhat-building-pj213",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113513.jpg",
       "ten": "Hợp Nhất Building",
       "tenKhongDau": "hop-nhat-building",
       "type": "DuAn"
@@ -1418,6 +1542,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.393413.jpg",
       "diaChi": "159 Điện Biên Phủ, Phường 15, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "159 Điện Biên Phủ",
@@ -1434,6 +1559,7 @@
         "lon": 106.703826904297
       },
       "id": "DA_hud-building-pj1640",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.393413.jpg",
       "ten": "HUD Building",
       "tenKhongDau": "hud-building",
       "type": "DuAn"
@@ -1441,6 +1567,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100702/CKE/images/hudT(1).jpg",
       "diaChi": "Đường Lê Văn Lương, Phường Nhân Chính, Thanh Xuân, Hà Nội",
       "diaChinh": {
         "duong": "Đường Lê Văn Lương",
@@ -1457,6 +1584,7 @@
         "lon": 105.800621032715
       },
       "id": "DA_hud-tower-pj163",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113472.jpg",
       "ten": "HUD Tower",
       "tenKhongDau": "hud-tower",
       "type": "DuAn"
@@ -1464,6 +1592,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.348163.jpg",
       "diaChi": "243A Đê La Thành, Phường Láng Thượng, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "243A Đê La Thành",
@@ -1480,6 +1609,7 @@
         "lon": 105.804313659668
       },
       "id": "DA_icon4-tower-pj1209",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.342042.jpg",
       "ten": "Icon4 Tower",
       "tenKhongDau": "icon4-tower",
       "type": "DuAn"
@@ -1487,6 +1617,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.470442.jpg",
       "diaChi": "163 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "163 Phố Hai Bà Trưng",
@@ -1503,6 +1634,7 @@
         "lon": 106.696258544922
       },
       "id": "DA_idc-building-pj1991",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.470442.jpg",
       "ten": "IDC Building",
       "tenKhongDau": "idc-building",
       "type": "DuAn"
@@ -1510,6 +1642,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.380899.jpg",
       "diaChi": "27B Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "27B Nguyễn Đình Chiểu",
@@ -1526,6 +1659,7 @@
         "lon": 106.698905944824
       },
       "id": "DA_img-building-pj1572",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.380898.jpg",
       "ten": "IMG Building",
       "tenKhongDau": "img-building",
       "type": "DuAn"
@@ -1533,6 +1667,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.361463.jpg",
       "diaChi": "17 Ngô Quyền, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "huyen": "Hoàn Kiếm",
@@ -1548,6 +1683,7 @@
         "lon": 105.855476379395
       },
       "id": "DA_international-centre-pj1408",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.361469.jpg",
       "ten": "International Centre",
       "tenKhongDau": "international-centre",
       "type": "DuAn"
@@ -1555,6 +1691,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100709/CKE/images/ITT building.jpg",
       "diaChi": "266 Đội cấn, Phường Liễu Giai, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "266 Đội cấn",
@@ -1571,6 +1708,7 @@
         "lon": 105.815658569336
       },
       "id": "DA_itt-building-pj243",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113540.jpg",
       "ten": "ITT Building",
       "tenKhongDau": "itt-building",
       "type": "DuAn"
@@ -1578,6 +1716,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.440926.jpg",
       "diaChi": "Đường Cách Mạng Tháng Tám, Phường 7, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Cách Mạng Tháng Tám",
@@ -1594,6 +1733,7 @@
         "lon": 106.684799194336
       },
       "id": "DA_jabes-2-building-pj1865",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.440925.jpg",
       "ten": "Jabes 2 Building",
       "tenKhongDau": "jabes-2-building",
       "type": "DuAn"
@@ -1601,6 +1741,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110909/CKE/images/Khahomex Savico Tower .jpg",
       "diaChi": "56 Bến Vân Đồn, Phường 12, Quận 4, Hồ Chí Minh",
       "diaChinh": {
         "duong": "56 Bến Vân Đồn",
@@ -1617,6 +1758,7 @@
         "lon": 106.702659606934
       },
       "id": "DA_khahomex-savico-tower-pj904",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114089.jpg",
       "ten": "Khahomex - Savico Tower",
       "tenKhongDau": "khahomex-savico-tower",
       "type": "DuAn"
@@ -1624,6 +1766,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/193-195khamthienB.jpg",
       "diaChi": "193-195 Khâm Thiên, Phường Thổ Quan, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "193-195 Khâm Thiên",
@@ -1640,6 +1783,7 @@
         "lon": 105.83438873291
       },
       "id": "DA_kham-thien-building-pj203",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113505.jpg",
       "ten": "Khâm Thiên Building",
       "tenKhongDau": "kham-thien-building",
       "type": "DuAn"
@@ -1647,6 +1791,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2016/06/04/0I4XNtd4/20160604091805-d412.jpg",
       "diaChi": "Ngõ 28 Xuân La, Phường Xuân La, Tây Hồ, Hà Nội",
       "diaChinh": {
         "duong": "Ngõ 28 Xuân La",
@@ -1663,6 +1808,7 @@
         "lon": 105.806999206543
       },
       "id": "DA_khu-chung-cu-xuan-la-pj729",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.470179.jpg",
       "ten": "Khu chung cư Xuân La",
       "tenKhongDau": "khu-chung-cu-xuan-la",
       "type": "DuAn"
@@ -1670,6 +1816,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.372388.jpg",
       "diaChi": "292 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "292 Tây Sơn",
@@ -1686,6 +1833,7 @@
         "lon": 105.822853088379
       },
       "id": "DA_kinh-do-building-pj236",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.372391.jpg",
       "ten": "Kinh Do Building",
       "tenKhongDau": "kinh-do-building",
       "type": "DuAn"
@@ -1693,6 +1841,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/120616/CKE/images/LancasterNguyenTrai_Phoicanh.jpg",
       "diaChi": "230 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "230 Nguyễn Trãi",
@@ -1709,6 +1858,7 @@
         "lon": 106.686294555664
       },
       "id": "DA_lancaster-nguyen-trai-tower-pj1094",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114266.jpg",
       "ten": "Lancaster Nguyễn Trãi Tower",
       "tenKhongDau": "lancaster-nguyen-trai-tower",
       "type": "DuAn"
@@ -1716,6 +1866,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/120622/CKE/images/LancasterResidenceD4_Phoicanh.jpg",
       "diaChi": "Đường Tôn Thất Thuyết, Phường 16, Quận 4, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Tôn Thất Thuyết",
@@ -1732,6 +1883,7 @@
         "lon": 106.705299377441
       },
       "id": "DA_lancaster-residences-d4-pj1097",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114269.jpg",
       "ten": "Lancaster Residences D4",
       "tenKhongDau": "lancaster-residences-d4",
       "type": "DuAn"
@@ -1739,6 +1891,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.396787.jpg",
       "diaChi": "134/1 Cách Mạng Tháng Tám, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "huyen": "Quận 3",
@@ -1754,6 +1907,7 @@
         "lon": 106.692337036133
       },
       "id": "DA_lien-hoa-building-pj1686",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.396787.jpg",
       "ten": "Lien Hoa Building",
       "tenKhongDau": "lien-hoa-building",
       "type": "DuAn"
@@ -1761,6 +1915,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.370806.jpg",
       "diaChi": "Đường Lê Văn Lương, Xã Trung Văn, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "Đường Lê Văn Lương",
@@ -1777,6 +1932,7 @@
         "lon": 105.793533325195
       },
       "id": "DA_lilama-10-pj1466",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.370823.jpg",
       "ten": "Lilama 10",
       "tenKhongDau": "lilama-10",
       "type": "DuAn"
@@ -1784,6 +1940,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.393425.jpg",
       "diaChi": "124  Minh Khai, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "124  Minh Khai",
@@ -1800,6 +1957,7 @@
         "lon": 105.853065490723
       },
       "id": "DA_lilama-124-minh-khai-pj1638",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.393425.jpg",
       "ten": "Lilama 124 Minh Khai",
       "tenKhongDau": "lilama-124-minh-khai",
       "type": "DuAn"
@@ -1807,6 +1965,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.373704.jpg",
       "diaChi": "9 - 11 Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "9 - 11 Tôn Đức Thắng",
@@ -1823,6 +1982,7 @@
         "lon": 106.70654296875
       },
       "id": "DA_lim-tower-pj1502",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.373699.jpg",
       "ten": "Lim Tower",
       "tenKhongDau": "lim-tower",
       "type": "DuAn"
@@ -1830,6 +1990,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365612.jpg",
       "diaChi": "38 Trần Thái Tông, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "38 Trần Thái Tông",
@@ -1846,6 +2007,7 @@
         "lon": 105.787841796875
       },
       "id": "DA_lod-building-pj1436",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365658.jpg",
       "ten": "LOD Building",
       "tenKhongDau": "lod-building",
       "type": "DuAn"
@@ -1853,6 +2015,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.402840.jpg",
       "diaChi": "262 Đường Huỳnh Văn Bánh, Phường 11, Phú Nhuận, Hồ Chí Minh",
       "diaChinh": {
         "duong": "262 Đường Huỳnh Văn Bánh",
@@ -1869,6 +2032,7 @@
         "lon": 106.674240112305
       },
       "id": "DA_lucky-house-pj1752",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.402839.jpg",
       "ten": "Lucky House",
       "tenKhongDau": "lucky-house",
       "type": "DuAn"
@@ -1876,6 +2040,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.392545.jpg",
       "diaChi": "173A Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Hồ Chí Minh",
       "diaChinh": {
         "duong": "173A Nguyễn Văn Trỗi",
@@ -1892,6 +2057,7 @@
         "lon": 106.674728393555
       },
       "id": "DA_lutaco-tower-pj1618",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.392537.jpg",
       "ten": "Lutaco Tower",
       "tenKhongDau": "lutaco-tower",
       "type": "DuAn"
@@ -1899,6 +2065,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110901/CKE/images/tong the.jpg",
       "diaChi": "444 Hoàng Hoa Thám, Phường Bưởi, Tây Hồ, Hà Nội",
       "diaChinh": {
         "duong": "444 Hoàng Hoa Thám",
@@ -1915,6 +2082,7 @@
         "lon": 105.81356048584
       },
       "id": "DA_machinco-building-pj874",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114061.jpg",
       "ten": "Machinco Building",
       "tenKhongDau": "machinco-building",
       "type": "DuAn"
@@ -1922,6 +2090,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.466641.jpg",
       "diaChi": "85 Đường Nguyễn Hữu Cầu, Phường Tân Định, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "85 Đường Nguyễn Hữu Cầu",
@@ -1938,6 +2107,7 @@
         "lon": 106.690956115723
       },
       "id": "DA_mai-hong-que-building-pj1982",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.466639.jpg",
       "ten": "Mai Hồng Quế Building",
       "tenKhongDau": "mai-hong-que-building",
       "type": "DuAn"
@@ -1945,6 +2115,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363597.jpg",
       "diaChi": "Ngõ 11, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -1961,6 +2132,7 @@
         "lon": 105.784225463867
       },
       "id": "DA_maple-tower-pj1417",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363597.jpg",
       "ten": "Maple Tower",
       "tenKhongDau": "maple-tower",
       "type": "DuAn"
@@ -1968,6 +2140,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.446619.jpg",
       "diaChi": "Đường Cách Mạng Tháng Tám, Phường 11, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Cách Mạng Tháng Tám",
@@ -1984,6 +2157,7 @@
         "lon": 106.667304992676
       },
       "id": "DA_mb-bank-tower-pj1916",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.446619.jpg",
       "ten": "MB Bank Tower",
       "tenKhongDau": "mb-bank-tower",
       "type": "DuAn"
@@ -1991,6 +2165,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/04/02/JGcIp0rf/20150402114801-367b.jpg",
       "diaChi": "Số 2 Ngô Đức Kế, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Số 2 Ngô Đức Kế",
@@ -2007,6 +2182,7 @@
         "lon": 106.706008911133
       },
       "id": "DA_me-linh-point-tower-pj2125",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/04/02/JGcIp0rf/20150402114801-367b.jpg",
       "ten": "Mê Linh Point Tower",
       "tenKhongDau": "me-linh-point-tower",
       "type": "DuAn"
@@ -2014,6 +2190,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.372679.jpg",
       "diaChi": "4 Vũ Ngọc Phan, Đống Đa , Hà Nội , Việt Nam",
       "diaChinh": {
         "duong": "4 Vũ Ngọc Phan",
@@ -2030,6 +2207,7 @@
         "lon": 105.811508178711
       },
       "id": "DA_mecanimex-building-pj1493",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.372691.jpg",
       "ten": "Mecanimex Building",
       "tenKhongDau": "mecanimex-building",
       "type": "DuAn"
@@ -2037,6 +2215,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.415715.jpg",
       "diaChi": "422 Đường Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "422 Đường Ung Văn Khiêm",
@@ -2053,6 +2232,7 @@
         "lon": 106.721252441406
       },
       "id": "DA_melody-tower-pj1801",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.415713.jpg",
       "ten": "Melody Tower",
       "tenKhongDau": "melody-tower",
       "type": "DuAn"
@@ -2060,6 +2240,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.376632.jpg",
       "diaChi": "17 Bà Huyện Thanh Quan, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "17 Bà Huyện Thanh Quan",
@@ -2076,6 +2257,7 @@
         "lon": 106.690155029297
       },
       "id": "DA_minh-long-tower-pj1520",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.376640.jpg",
       "ten": "Minh Long Tower",
       "tenKhongDau": "minh-long-tower",
       "type": "DuAn"
@@ -2083,6 +2265,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.364992.jpg",
       "diaChi": "Lô E2, Khu đô thị mới Cầu Giấy, Đường Dương Đình Nghệ, Phường Yên Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Dương Đình Nghệ",
@@ -2099,6 +2282,7 @@
         "lon": 105.784309387207
       },
       "id": "DA_mitec-tower-pj1431",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.364992.jpg",
       "ten": "Mitec Tower",
       "tenKhongDau": "mitec-tower",
       "type": "DuAn"
@@ -2106,6 +2290,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367377.jpg",
       "diaChi": "19 Bà Triệu, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "19 Bà Triệu",
@@ -2122,6 +2307,7 @@
         "lon": 105.851524353027
       },
       "id": "DA_naforimex-building-pj1444",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367375.jpg",
       "ten": "Naforimex Building",
       "tenKhongDau": "naforimex-building",
       "type": "DuAn"
@@ -2129,6 +2315,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371291.jpg",
       "diaChi": "KĐT Dương Nội, Phường La Khê, Hà Đông, Hà Nội",
       "diaChinh": {
         "duong": "KĐT Dương Nội",
@@ -2145,6 +2332,7 @@
         "lon": 105.761581420898
       },
       "id": "DA_nam-cuong-building-pj1468",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371296.jpg",
       "ten": "Nam Cường Building",
       "tenKhongDau": "nam-cuong-building",
       "type": "DuAn"
@@ -2152,6 +2340,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371329.jpg",
       "diaChi": "Khu đô thị Vĩnh Hoàng, Đường Kim Đồng, Hoàng Mai, Hà Nội",
       "diaChinh": {
         "duong": "Khu đô thị Vĩnh Hoàng",
@@ -2168,6 +2357,7 @@
         "lon": 105.867202758789
       },
       "id": "DA_nam-hai-lakeview-pj1469",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371328.jpg",
       "ten": "Nam Hải Lakeview",
       "tenKhongDau": "nam-hai-lakeview",
       "type": "DuAn"
@@ -2175,6 +2365,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.396623.jpg",
       "diaChi": "76 Cách Mạng Tháng Tám, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "76 Cách Mạng Tháng Tám",
@@ -2191,6 +2382,7 @@
         "lon": 106.686019897461
       },
       "id": "DA_ngoc-dong-duong-building-pj1683",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.396623.jpg",
       "ten": "Ngọc Đông Dương Building",
       "tenKhongDau": "ngoc-dong-duong-building",
       "type": "DuAn"
@@ -2198,6 +2390,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/Ngoc LinhB2.JPG",
       "diaChi": "278 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
       "diaChinh": {
         "duong": "278 Thụy Khuê",
@@ -2214,6 +2407,7 @@
         "lon": 105.814834594727
       },
       "id": "DA_ngoc-linh-building-pj223",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113523.jpg",
       "ten": "Ngọc Linh Building",
       "tenKhongDau": "ngoc-linh-building",
       "type": "DuAn"
@@ -2221,6 +2415,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.450039.jpg",
       "diaChi": "Số 1 Đào Duy Anh, Phường Phương Mai, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "Số 1 Đào Duy Anh",
@@ -2237,6 +2432,7 @@
         "lon": 105.840148925781
       },
       "id": "DA_ocean-park-pj1941",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.450039.jpg",
       "ten": "Ocean Park",
       "tenKhongDau": "ocean-park",
       "type": "DuAn"
@@ -2244,6 +2440,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.366282.jpg",
       "diaChi": "6B Tràng Tiền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "6B Tràng Tiền",
@@ -2260,6 +2457,7 @@
         "lon": 105.859100341797
       },
       "id": "DA_opera-business-centre-pj1440",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.366279.jpg",
       "ten": "Opera Business Centre",
       "tenKhongDau": "opera-business-centre",
       "type": "DuAn"
@@ -2267,6 +2465,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/06/17/JGcIp0rf/20150617142220-d65d.jpg",
       "diaChi": "324 Tây Sơn, Phường Ngã Tư Sở, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "324 Tây Sơn",
@@ -2283,6 +2482,7 @@
         "lon": 105.822113037109
       },
       "id": "DA_oriental-tower-324-tay-son-pj2180",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/06/17/JGcIp0rf/20150617142220-d65d.jpg",
       "ten": "Oriental Tower - 324 Tây Sơn",
       "tenKhongDau": "oriental-tower-324-tay-son",
       "type": "DuAn"
@@ -2290,6 +2490,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.392591.jpg",
       "diaChi": "Đường Đông Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Đông Du",
@@ -2306,6 +2507,7 @@
         "lon": 106.705116271973
       },
       "id": "DA_parksimex-building-pj1619",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.392589.jpg",
       "ten": "Parksimex Building",
       "tenKhongDau": "parksimex-building",
       "type": "DuAn"
@@ -2313,6 +2515,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.457658.jpg",
       "diaChi": "139 Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "139 Pasteur",
@@ -2329,6 +2532,7 @@
         "lon": 106.69197845459
       },
       "id": "DA_pasteur-tower-pj1957",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.457658.jpg",
       "ten": "Pasteur Tower",
       "tenKhongDau": "pasteur-tower",
       "type": "DuAn"
@@ -2336,6 +2540,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.407028.jpg",
       "diaChi": "Đường Điện Biên Phủ, Phường 25, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Điện Biên Phủ",
@@ -2352,6 +2557,7 @@
         "lon": 106.721000671387
       },
       "id": "DA_peace-building-pj1764",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.407001.jpg",
       "ten": "Peace Building",
       "tenKhongDau": "peace-building",
       "type": "DuAn"
@@ -2359,6 +2565,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100706/CKE/images/Pearl phuongnamT.png",
       "diaChi": "105 Trường Chinh, Phường Phương Liệt, Thanh Xuân, Hà Nội",
       "diaChinh": {
         "duong": "105 Trường Chinh",
@@ -2375,6 +2582,7 @@
         "lon": 105.83699798584
       },
       "id": "DA_pearl-phuong-nam-towers-pj193",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.353014.jpg",
       "ten": "Pearl Phương Nam Towers",
       "tenKhongDau": "pearl-phuong-nam-towers",
       "type": "DuAn"
@@ -2382,6 +2590,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.361340.jpg",
       "diaChi": "83A  Lý Thường Kiệt, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "83A  Lý Thường Kiệt",
@@ -2398,6 +2607,7 @@
         "lon": 105.84375
       },
       "id": "DA_phu-dien-building-pj1407",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.361341.jpg",
       "ten": "Phú Điền Building",
       "tenKhongDau": "phu-dien-building",
       "type": "DuAn"
@@ -2405,6 +2615,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.399895.jpg",
       "diaChi": "186 Đường Điện Biên Phủ, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "186 Đường Điện Biên Phủ",
@@ -2421,6 +2632,7 @@
         "lon": 106.691268920898
       },
       "id": "DA_pjico-building-pj1730",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.399893.jpg",
       "ten": "Pjico Building",
       "tenKhongDau": "pjico-building",
       "type": "DuAn"
@@ -2428,6 +2640,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.401918.jpg",
       "diaChi": "Đường Pasteur, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Pasteur",
@@ -2444,6 +2657,7 @@
         "lon": 106.694282531738
       },
       "id": "DA_pmc-building-pj1738",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.401908.jpg",
       "ten": "PMC Building",
       "tenKhongDau": "pmc-building",
       "type": "DuAn"
@@ -2451,6 +2665,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368416.jpg",
       "diaChi": "53 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "53 Quang Trung",
@@ -2467,6 +2682,7 @@
         "lon": 105.847625732422
       },
       "id": "DA_prime-centre-pj1456",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368409.jpg",
       "ten": "Prime Centre",
       "tenKhongDau": "prime-centre",
       "type": "DuAn"
@@ -2474,6 +2690,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.509963.jpg",
       "diaChi": "Đường Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "huyen": "Cầu Giấy",
@@ -2489,6 +2706,7 @@
         "lon": 105.790557861328
       },
       "id": "DA_pv-oil-tower-pj2075",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.509963.jpg",
       "ten": "PV Oil Tower",
       "tenKhongDau": "pv-oil-tower",
       "type": "DuAn"
@@ -2496,6 +2714,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.396823.jpg",
       "diaChi": "Đường Nguyễn Gia Thiều, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Nguyễn Gia Thiều",
@@ -2512,6 +2731,7 @@
         "lon": 106.689559936523
       },
       "id": "DA_pvc-sai-gon-building-pj1688",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.396823.jpg",
       "ten": "PVC Sai Gon Building",
       "tenKhongDau": "pvc-sai-gon-building",
       "type": "DuAn"
@@ -2519,6 +2739,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100709/CKE/images/pviT.jpg",
       "diaChi": "Đường Trần Thái Tông, Phường Yên Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Trần Thái Tông",
@@ -2535,6 +2756,7 @@
         "lon": 105.788986206055
       },
       "id": "DA_pvi-tower-pj242",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113539.jpg",
       "ten": "PVI Tower",
       "tenKhongDau": "pvi-tower",
       "type": "DuAn"
@@ -2542,6 +2764,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.393172.jpg",
       "diaChi": "26  Phan Đăng Lưu, Phường 6, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "26  Phan Đăng Lưu",
@@ -2558,6 +2781,7 @@
         "lon": 106.689094543457
       },
       "id": "DA_qmobile-tower-pj1628",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.393173.jpg",
       "ten": "Qmobile Tower",
       "tenKhongDau": "qmobile-tower",
       "type": "DuAn"
@@ -2565,6 +2789,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/11/04/JGcIp0rf/20151104154714-db02.jpg",
       "diaChi": "885 Hồng Hà, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "huyen": "Hoàn Kiếm",
@@ -2580,6 +2805,7 @@
         "lon": 105.860557556152
       },
       "id": "DA_red-river-building-pj235",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113532.jpg",
       "ten": "Red River Building",
       "tenKhongDau": "red-river-building",
       "type": "DuAn"
@@ -2587,6 +2813,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.398091.jpg",
       "diaChi": "Đường Nguyễn Du, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Nguyễn Du",
@@ -2603,6 +2830,7 @@
         "lon": 106.698226928711
       },
       "id": "DA_resco-building-pj1705",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.398091.jpg",
       "ten": "Resco Building",
       "tenKhongDau": "resco-building",
       "type": "DuAn"
@@ -2610,6 +2838,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100529/CKE/images/rescoT.jpg",
       "diaChi": "521 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "521 Kim Mã",
@@ -2626,6 +2855,7 @@
         "lon": 105.811454772949
       },
       "id": "DA_resco-tower-pj187",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113492.jpg",
       "ten": "Resco Tower",
       "tenKhongDau": "resco-tower",
       "type": "DuAn"
@@ -2633,6 +2863,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.431478.jpg",
       "diaChi": "170 Ngọc Khánh, Phường Giảng Võ, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "170 Ngọc Khánh",
@@ -2649,6 +2880,7 @@
         "lon": 105.818832397461
       },
       "id": "DA_rose-garden-pj246",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113543.jpg",
       "ten": "Rose Garden",
       "tenKhongDau": "rose-garden",
       "type": "DuAn"
@@ -2656,6 +2888,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/110105/CKE/images/06_RoyalTower.jpg",
       "diaChi": "C17-1-1 đường Nguyễn Lương Bằng, Phường Tân Phú, Quận 7, Hồ Chí Minh",
       "diaChinh": {
         "duong": "C17-1-1 đường Nguyễn Lương Bằng",
@@ -2672,6 +2905,7 @@
         "lon": 106.726333618164
       },
       "id": "DA_royal-tower-pj619",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113830.jpg",
       "ten": "Royal Tower",
       "tenKhongDau": "royal-tower",
       "type": "DuAn"
@@ -2679,6 +2913,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Enterprises/100728/CKE/images/sacomreal complex.jpg",
       "diaChi": "số 66 Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "số 66 Phó Đức Chính",
@@ -2695,6 +2930,7 @@
         "lon": 106.699821472168
       },
       "id": "DA_sacomreal-generalimex-pj813",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114004.jpg",
       "ten": "Sacomreal – Generalimex",
       "tenKhongDau": "sacomreal-–-generalimex",
       "type": "DuAn"
@@ -2702,6 +2938,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.398221.jpg",
       "diaChi": "7 Đường Lý Tự Trọng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "7 Đường Lý Tự Trọng",
@@ -2718,6 +2955,7 @@
         "lon": 106.705192565918
       },
       "id": "DA_saigon-land-building-pj1707",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.398222.jpg",
       "ten": "Saigon Land Building",
       "tenKhongDau": "saigon-land-building",
       "type": "DuAn"
@@ -2725,6 +2963,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.442128.jpg",
       "diaChi": "123 Đường Trương Định, Phường 7, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "123 Đường Trương Định",
@@ -2741,6 +2980,7 @@
         "lon": 106.686157226563
       },
       "id": "DA_saigon-software-park-pj1871",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.442128.jpg",
       "ten": "Saigon Software Park",
       "tenKhongDau": "saigon-software-park",
       "type": "DuAn"
@@ -2748,6 +2988,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.398055.jpg",
       "diaChi": "37 Phố Tôn Đức Thắng, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "37 Phố Tôn Đức Thắng",
@@ -2764,6 +3005,7 @@
         "lon": 106.703659057617
       },
       "id": "DA_saigon-trade-center-pj1704",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.398055.jpg",
       "ten": "Saigon Trade Center",
       "tenKhongDau": "saigon-trade-center",
       "type": "DuAn"
@@ -2771,6 +3013,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.380750.jpg",
       "diaChi": "444  Nguyễn Chí Thanh, Phường 6, Quận 10, Hồ Chí Minh",
       "diaChinh": {
         "duong": "444  Nguyễn Chí Thanh",
@@ -2787,6 +3030,7 @@
         "lon": 106.664657592773
       },
       "id": "DA_samco-building-pj1570",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.380778.jpg",
       "ten": "Samco Building",
       "tenKhongDau": "samco-building",
       "type": "DuAn"
@@ -2794,6 +3038,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2016/04/28/0I4XNtd4/20160428084016-1170.jpg",
       "diaChi": "Đường D1, Phường 25, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường D1",
@@ -2810,6 +3055,7 @@
         "lon": 106.721214294434
       },
       "id": "DA_samland-river-view-pj982",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114159.jpg",
       "ten": "Samland River View",
       "tenKhongDau": "samland-river-view",
       "type": "DuAn"
@@ -2817,6 +3063,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.380832.jpg",
       "diaChi": "19A Cộng Hòa, Phường 12, Tân Bình, Hồ Chí Minh",
       "diaChinh": {
         "duong": "19A Cộng Hòa",
@@ -2833,6 +3080,7 @@
         "lon": 106.650291442871
       },
       "id": "DA_scetpa-building-pj1571",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.380830.jpg",
       "ten": "Scetpa Building",
       "tenKhongDau": "scetpa-building",
       "type": "DuAn"
@@ -2840,6 +3088,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.479844.jpg",
       "diaChi": "137 Nguyễn Văn Cừ, Phường Bồ Đề, Long Biên, Hà Nội",
       "diaChinh": {
         "duong": "137 Nguyễn Văn Cừ",
@@ -2856,6 +3105,7 @@
         "lon": 105.870552062988
       },
       "id": "DA_silver-wings-building-pj218",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.479843.jpg",
       "ten": "Silver Wings Building",
       "tenKhongDau": "silver-wings-building",
       "type": "DuAn"
@@ -2863,6 +3113,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.470507.jpg",
       "diaChi": "163 Đường Trần Hưng Đạo, Phường Cô Giang, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "163 Đường Trần Hưng Đạo",
@@ -2879,6 +3130,7 @@
         "lon": 106.694000244141
       },
       "id": "DA_smart-view-building-pj1994",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.470507.jpg",
       "ten": "Smart View Building",
       "tenKhongDau": "smart-view-building",
       "type": "DuAn"
@@ -2886,6 +3138,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.398332.jpg",
       "diaChi": "33 Đường Mạc Đĩnh Chi, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "33 Đường Mạc Đĩnh Chi",
@@ -2902,6 +3155,7 @@
         "lon": 106.699020385742
       },
       "id": "DA_star-building-pj1710",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.398332.jpg",
       "ten": "Star Building",
       "tenKhongDau": "star-building",
       "type": "DuAn"
@@ -2909,6 +3163,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/120630/CKE/images/STDTower_Phoicanh.jpg",
       "diaChi": "Đường Hạ Hồi, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "Đường Hạ Hồi",
@@ -2925,6 +3180,7 @@
         "lon": 105.84740447998
       },
       "id": "DA_std-tower-pj1112",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.114284.jpg",
       "ten": "STD Tower",
       "tenKhongDau": "std-tower",
       "type": "DuAn"
@@ -2932,6 +3188,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.361705.jpg",
       "diaChi": "13 Hai Bà Trưng, Phường Tràng Tiền, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "13 Hai Bà Trưng",
@@ -2948,6 +3205,7 @@
         "lon": 105.855361938477
       },
       "id": "DA_sun-city-building-pj1410",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.361707.jpg",
       "ten": "Sun City Building",
       "tenKhongDau": "sun-city-building",
       "type": "DuAn"
@@ -2955,29 +3213,7 @@
   },
   {
     "default": {
-      "diaChi": "115 Nguyễn Huệ, Phường Bến Nghé, Quận 1 , Tp.HCM , Việt Nam",
-      "diaChinh": {
-        "duong": "Phường Bến Nghé",
-        "huyen": "Tp.HCM",
-        "huyenKhongDau": "tp-hcm",
-        "tinh": "Việt Nam",
-        "tinhKhongDau": "viet-nam",
-        "xa": "Quận 1",
-        "xaKhongDau": "quan-1"
-      },
-      "duAnID": "DA_sunwah-tower-pj1677",
-      "geo": {
-        "lat": 10.7737913131714,
-        "lon": 106.70344543457
-      },
-      "id": "DA_sunwah-tower-pj1677",
-      "ten": "Sunwah Tower",
-      "tenKhongDau": "sunwah-tower",
-      "type": "DuAn"
-    }
-  },
-  {
-    "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.446426.jpg",
       "diaChi": "225 Phố Hai Bà Trưng, Phường 6, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "225 Phố Hai Bà Trưng",
@@ -2994,6 +3230,7 @@
         "lon": 106.693092346191
       },
       "id": "DA_tai-loc-office-building-pj1913",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.446426.jpg",
       "ten": "Tài Lộc Office Building",
       "tenKhongDau": "tai-loc-office-building",
       "type": "DuAn"
@@ -3001,6 +3238,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100706/CKE/images/TDLBuilding.jpg",
       "diaChi": "22 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "22 Láng Hạ",
@@ -3017,6 +3255,7 @@
         "lon": 105.813926696777
       },
       "id": "DA_tdl-building-pj191",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113496.jpg",
       "ten": "TĐL Building",
       "tenKhongDau": "tdl-building",
       "type": "DuAn"
@@ -3024,6 +3263,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100712/CKE/images/Tenimex Office Building 1.JPG",
       "diaChi": "111 - 121 Ngô Gia Tự, Phường 2, Quận 10, Hồ Chí Minh",
       "diaChinh": {
         "duong": "111 - 121 Ngô Gia Tự",
@@ -3040,6 +3280,7 @@
         "lon": 106.673141479492
       },
       "id": "DA_tenimex-office-building-pj256",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113552.jpg",
       "ten": "Tenimex Office Building",
       "tenKhongDau": "tenimex-office-building",
       "type": "DuAn"
@@ -3047,6 +3288,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.466697.jpg",
       "diaChi": "179 Đường Nguyễn Cư Trinh, Phường Nguyễn Cư Trinh, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "179 Đường Nguyễn Cư Trinh",
@@ -3063,6 +3305,7 @@
         "lon": 106.687362670898
       },
       "id": "DA_thai-son-building-pj1984",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.466697.jpg",
       "ten": "Thái Sơn Building",
       "tenKhongDau": "thai-son-building",
       "type": "DuAn"
@@ -3070,6 +3313,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371982.jpg",
       "diaChi": "132 Kim Mã, Phường Kim Mã, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "132 Kim Mã",
@@ -3086,6 +3330,7 @@
         "lon": 105.825172424316
       },
       "id": "DA_thanh-dong-building-pj1481",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371986.jpg",
       "ten": "Thành Đông Building",
       "tenKhongDau": "thanh-dong-building",
       "type": "DuAn"
@@ -3093,6 +3338,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.393395.jpg",
       "diaChi": "25 Hoàng Hoa Thám, Phường 6, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "25 Hoàng Hoa Thám",
@@ -3109,6 +3355,7 @@
         "lon": 106.691047668457
       },
       "id": "DA_thao-dien-building-pj1636",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.393395.jpg",
       "ten": "Thảo Điền Building",
       "tenKhongDau": "thao-dien-building",
       "type": "DuAn"
@@ -3116,6 +3363,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.347550.jpg",
       "diaChi": "22-22bis Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "22-22bis Lê Thánh Tôn",
@@ -3132,6 +3380,7 @@
         "lon": 106.704780578613
       },
       "id": "DA_the-lancaster-ho-chi-minh-pj526",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113741.jpg",
       "ten": "The Lancaster - Hồ Chí Minh",
       "tenKhongDau": "the-lancaster-ho-chi-minh",
       "type": "DuAn"
@@ -3139,6 +3388,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110625/CKE/images/Ben Thanh Towers3.jpg",
       "diaChi": "Số 1 Phạm Ngũ Lão, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Số 1 Phạm Ngũ Lão",
@@ -3155,6 +3405,7 @@
         "lon": 106.698287963867
       },
       "id": "DA_the-one-ho-chi-minh-pj790",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113982.jpg",
       "ten": "The One Ho Chi Minh",
       "tenKhongDau": "the-one-ho-chi-minh",
       "type": "DuAn"
@@ -3162,6 +3413,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.446533.jpg",
       "diaChi": "13 Đường Cao Thắng, Phường 2, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "13 Đường Cao Thắng",
@@ -3178,6 +3430,7 @@
         "lon": 106.683242797852
       },
       "id": "DA_thien-hong-building-pj1914",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.446548.jpg",
       "ten": "Thiên Hồng Building",
       "tenKhongDau": "thien-hong-building",
       "type": "DuAn"
@@ -3185,6 +3438,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371803.jpg",
       "diaChi": "4 Liễu Giai, Phường Cống Vị, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "4 Liễu Giai",
@@ -3201,6 +3455,7 @@
         "lon": 105.814758300781
       },
       "id": "DA_tid-tower-pj1479",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371807.jpg",
       "ten": "TID Tower",
       "tenKhongDau": "tid-tower",
       "type": "DuAn"
@@ -3208,6 +3463,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.446604.jpg",
       "diaChi": "126 Đường Lê Văn Sỹ, Phường 14, Quận 3, Hồ Chí Minh",
       "diaChinh": {
         "duong": "126 Đường Lê Văn Sỹ",
@@ -3224,6 +3480,7 @@
         "lon": 106.679786682129
       },
       "id": "DA_tin-nghia-building-pj1915",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.446604.jpg",
       "ten": "Tín nghĩa Building",
       "tenKhongDau": "tin-nghia-building",
       "type": "DuAn"
@@ -3231,6 +3488,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.441320.jpg",
       "diaChi": "Đường Trần Hưng Đạo, Phường Cầu Kho, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Trần Hưng Đạo",
@@ -3247,6 +3505,7 @@
         "lon": 106.685890197754
       },
       "id": "DA_tkt-office-building-pj1868",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.441322.jpg",
       "ten": "TKT Office Building",
       "tenKhongDau": "tkt-office-building",
       "type": "DuAn"
@@ -3254,6 +3513,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.413767.jpg",
       "diaChi": "Số 1 Lương Yên, Phường Bạch Đằng, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "Số 1 Lương Yên",
@@ -3270,6 +3530,7 @@
         "lon": 105.862915039063
       },
       "id": "DA_tmc-tower-pj728",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113926.jpg",
       "ten": "TMC Tower",
       "tenKhongDau": "tmc-tower",
       "type": "DuAn"
@@ -3277,6 +3538,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100710/CKE/images/tmai_vpct(incomex).jpg",
       "diaChi": "Đầu cầu Vĩnh Tuy, Phường Long Biên, Long Biên, Hà Nội",
       "diaChinh": {
         "duong": "Đầu cầu Vĩnh Tuy",
@@ -3293,6 +3555,7 @@
         "lon": 105.900825500488
       },
       "id": "DA_to-hop-incomex-pj250",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113547.jpg",
       "ten": "Tổ hợp Incomex",
       "tenKhongDau": "to-hop-incomex",
       "type": "DuAn"
@@ -3300,6 +3563,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367591.jpg",
       "diaChi": "14 Lý Nam Đế, Phường Hàng Mã, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "14 Lý Nam Đế",
@@ -3316,6 +3580,7 @@
         "lon": 105.845626831055
       },
       "id": "DA_toa-nha-14-ly-nam-de-pj1449",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367598.jpg",
       "ten": "Tòa nhà 14 Lý Nam Đế",
       "tenKhongDau": "toa-nha-14-ly-nam-de",
       "type": "DuAn"
@@ -3323,6 +3588,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363790.jpg",
       "diaChi": "169 Nguyễn Ngọc Vũ, Phường Trung Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "169 Nguyễn Ngọc Vũ",
@@ -3339,6 +3605,7 @@
         "lon": 105.807975769043
       },
       "id": "DA_toa-nha-169-nguyen-ngoc-vu-pj1419",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363782.jpg",
       "ten": "Tòa nhà 169 Nguyễn Ngọc Vũ",
       "tenKhongDau": "toa-nha-169-nguyen-ngoc-vu",
       "type": "DuAn"
@@ -3346,6 +3613,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100706/CKE/images/vpnguyen_luong_bang2.jpg",
       "diaChi": "183 Nguyễn Lương Bằng, Phường Nam Đồng, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "183 Nguyễn Lương Bằng",
@@ -3362,6 +3630,7 @@
         "lon": 105.82740020752
       },
       "id": "DA_toa-nha-183-nguyen-luong-bang-pj196",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113501.jpg",
       "ten": "Tòa nhà 183 Nguyễn Lương Bằng",
       "tenKhongDau": "toa-nha-183-nguyen-luong-bang",
       "type": "DuAn"
@@ -3369,6 +3638,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365034.jpg",
       "diaChi": "Lô A1E, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -3385,6 +3655,7 @@
         "lon": 105.782600402832
       },
       "id": "DA_toa-nha-3a-pj1432",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365033.jpg",
       "ten": "Tòa nhà 3A",
       "tenKhongDau": "toa-nha-3a",
       "type": "DuAn"
@@ -3392,6 +3663,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.364340.jpg",
       "diaChi": "95 Cầu Giấy, Phường Dịch Vọng, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "95 Cầu Giấy",
@@ -3408,6 +3680,7 @@
         "lon": 105.799995422363
       },
       "id": "DA_toa-nha-95-cau-giay-pj1426",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.364340.jpg",
       "ten": "Tòa nhà 95 Cầu Giấy",
       "tenKhongDau": "toa-nha-95-cau-giay",
       "type": "DuAn"
@@ -3415,6 +3688,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365233.jpg",
       "diaChi": "98 Hoàng Ngân, Phường Trung Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "98 Hoàng Ngân",
@@ -3431,6 +3705,7 @@
         "lon": 105.805671691895
       },
       "id": "DA_toa-nha-98-hoang-ngan-pj1433",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365233.jpg",
       "ten": "Tòa nhà 98 Hoàng Ngân",
       "tenKhongDau": "toa-nha-98-hoang-ngan",
       "type": "DuAn"
@@ -3438,6 +3713,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100710/CKE/images/cnc_viettel2.gif",
       "diaChi": "Đường Đại lộ Thăng Long, Thạch Thất, Hà Nội",
       "diaChinh": {
         "huyen": "Thạch Thất",
@@ -3453,6 +3729,7 @@
         "lon": 105.538993835449
       },
       "id": "DA_toa-nha-cnc-viettel-pj249",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.342039.jpg",
       "ten": "Tòa Nhà CNC Viettel",
       "tenKhongDau": "toa-nha-cnc-viettel",
       "type": "DuAn"
@@ -3460,6 +3737,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367898.jpg",
       "diaChi": "59 Quang Trung, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "59 Quang Trung",
@@ -3476,6 +3754,7 @@
         "lon": 105.847473144531
       },
       "id": "DA_toa-nha-cty-cpxd-so-1-hn-pj1453",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367896.jpg",
       "ten": "Tòa nhà Cty CPXD số 1 HN",
       "tenKhongDau": "toa-nha-cty-cpxd-so-1-hn",
       "type": "DuAn"
@@ -3483,6 +3762,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.378887.jpg",
       "diaChi": "105 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "105 Láng Hạ",
@@ -3499,6 +3779,7 @@
         "lon": 105.813087463379
       },
       "id": "DA_toa-nha-ford-thang-long-pj1545",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.378885.jpg",
       "ten": "Tòa nhà Ford Thăng Long",
       "tenKhongDau": "toa-nha-ford-thang-long",
       "type": "DuAn"
@@ -3506,6 +3787,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100709/CKE/images/FPT caugiay.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -3522,6 +3804,7 @@
         "lon": 105.782608032227
       },
       "id": "DA_toa-nha-fpt-cau-giay-pj233",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113531.jpg",
       "ten": "Tòa Nhà FPT Cầu Giấy",
       "tenKhongDau": "toa-nha-fpt-cau-giay",
       "type": "DuAn"
@@ -3529,6 +3812,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/Grand Building.jpg",
       "diaChi": "30 - 32 Hòa Mã, Phường Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "30 - 32 Hòa Mã",
@@ -3545,6 +3829,7 @@
         "lon": 105.854026794434
       },
       "id": "DA_toa-nha-grand-building-pj205",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113507.jpg",
       "ten": "Tòa Nhà Grand Building",
       "tenKhongDau": "toa-nha-grand-building",
       "type": "DuAn"
@@ -3552,6 +3837,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/110105/CKE/images/06_RoyalTower.jpg",
       "diaChi": "29 Nguyễn Đình Chiểu, Phường Nguyễn Du, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "29 Nguyễn Đình Chiểu",
@@ -3568,6 +3854,7 @@
         "lon": 105.847114562988
       },
       "id": "DA_toa-nha-green-park-pj621",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113832.jpg",
       "ten": "Toà nhà Green Park",
       "tenKhongDau": "toa-nha-green-park",
       "type": "DuAn"
@@ -3575,6 +3862,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.397508.jpg",
       "diaChi": "1119 Trần Hưng Đạo, Phường 5, Quận 5, Hồ Chí Minh",
       "diaChinh": {
         "duong": "1119 Trần Hưng Đạo",
@@ -3591,6 +3879,7 @@
         "lon": 106.673248291016
       },
       "id": "DA_toa-nha-ha-phan-pj1696",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.397508.jpg",
       "ten": "Tòa nhà Hà Phan",
       "tenKhongDau": "toa-nha-ha-phan",
       "type": "DuAn"
@@ -3598,6 +3887,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368761.jpg",
       "diaChi": "152 Thụy Khuê, Phường Thụy Khuê, Tây Hồ, Hà Nội",
       "diaChinh": {
         "duong": "152 Thụy Khuê",
@@ -3614,6 +3904,7 @@
         "lon": 105.822868347168
       },
       "id": "DA_toa-nha-hipt-pj1460",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368767.jpg",
       "ten": "Tòa nhà HIPT",
       "tenKhongDau": "toa-nha-hipt",
       "type": "DuAn"
@@ -3621,6 +3912,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363520.jpg",
       "diaChi": "299 Trung Kính, Phường Yên Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "299 Trung Kính",
@@ -3637,6 +3929,7 @@
         "lon": 105.790679931641
       },
       "id": "DA_toa-nha-housing-pj1416",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363527.jpg",
       "ten": "Tòa nhà Housing",
       "tenKhongDau": "toa-nha-housing",
       "type": "DuAn"
@@ -3644,6 +3937,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.370830.jpg",
       "diaChi": "17 Phạm Hùng, Nam Từ Liêm , Hà Nội , Việt Nam",
       "diaChinh": {
         "duong": "17 Phạm Hùng",
@@ -3660,6 +3954,7 @@
         "lon": 105.780693054199
       },
       "id": "DA_toa-nha-icd-pj1467",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.370831.jpg",
       "ten": "Tòa nhà ICD",
       "tenKhongDau": "toa-nha-icd",
       "type": "DuAn"
@@ -3667,6 +3962,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/Intracom.jpg",
       "diaChi": "Trần Thái Tông, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Trần Thái Tông",
@@ -3683,6 +3979,7 @@
         "lon": 105.785652160645
       },
       "id": "DA_toa-nha-intracom-pj216",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113516.jpg",
       "ten": "Toà nhà Intracom",
       "tenKhongDau": "toa-nha-intracom",
       "type": "DuAn"
@@ -3690,6 +3987,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.372527.jpg",
       "diaChi": "101A Nguyễn Khuyến, Đống Đa , Hà Nội , Việt Nam",
       "diaChinh": {
         "duong": "101A Nguyễn Khuyến",
@@ -3706,6 +4004,7 @@
         "lon": 105.837738037109
       },
       "id": "DA_toa-nha-nguyen-khuyen-pj1490",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.372536.jpg",
       "ten": "Tòa nhà Nguyễn Khuyến",
       "tenKhongDau": "toa-nha-nguyen-khuyen",
       "type": "DuAn"
@@ -3713,6 +4012,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/Nikko.jpg",
       "diaChi": "27 Nguyễn Trường Tộ, Phường Nguyễn Trung Trực, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "27 Nguyễn Trường Tộ",
@@ -3729,6 +4029,7 @@
         "lon": 105.846801757813
       },
       "id": "DA_toa-nha-nikko-pj206",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113508.jpg",
       "ten": "Toà nhà NIKKO",
       "tenKhongDau": "toa-nha-nikko",
       "type": "DuAn"
@@ -3736,6 +4037,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100705/CKE/images/PlaschemP.jpg",
       "diaChi": "562 Nguyễn Văn Cừ, Phường Gia Thụy, Long Biên, Hà Nội",
       "diaChinh": {
         "duong": "562 Nguyễn Văn Cừ",
@@ -3752,6 +4054,7 @@
         "lon": 105.884796142578
       },
       "id": "DA_toa-nha-plaschem-plaza-pj182",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113488.jpg",
       "ten": "Tòa nhà Plaschem Plaza",
       "tenKhongDau": "toa-nha-plaschem-plaza",
       "type": "DuAn"
@@ -3759,6 +4062,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100706/CKE/images/San Nam.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -3775,6 +4079,7 @@
         "lon": 105.783111572266
       },
       "id": "DA_toa-nha-san-nam-pj192",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113497.jpg",
       "ten": "Toà nhà San Nam",
       "tenKhongDau": "toa-nha-san-nam",
       "type": "DuAn"
@@ -3782,6 +4087,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.373214.jpg",
       "diaChi": "124 Tôn Đức Thắng , Hà Nội , Việt Nam",
       "diaChinh": {
         "huyen": "Hà Nội",
@@ -3797,6 +4103,7 @@
         "lon": 105.833267211914
       },
       "id": "DA_toa-nha-tan-a-dai-thanh-pj1499",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.373218.jpg",
       "ten": "Tòa nhà Tân Á Đại Thành",
       "tenKhongDau": "toa-nha-tan-a-dai-thanh",
       "type": "DuAn"
@@ -3804,6 +4111,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367757.jpg",
       "diaChi": "Số 2 Đại Cồ Việt, Phường Phố Huế, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "Số 2 Đại Cồ Việt",
@@ -3820,6 +4128,7 @@
         "lon": 105.851181030273
       },
       "id": "DA_toa-nha-thai-binh-pj1450",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367756.jpg",
       "ten": "Tòa nhà Thái Bình",
       "tenKhongDau": "toa-nha-thai-binh",
       "type": "DuAn"
@@ -3827,6 +4136,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/Tien Phu.jpg",
       "diaChi": "Phường Hoàng Văn Thụ, Hoàng Mai, Hà Nội",
       "diaChinh": {
         "huyen": "Hoàng Mai",
@@ -3842,6 +4152,7 @@
         "lon": 105.86653137207
       },
       "id": "DA_toa-nha-tien-phu-pj217",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113517.jpg",
       "ten": "Toà nhà Tiến Phú",
       "tenKhongDau": "toa-nha-tien-phu",
       "type": "DuAn"
@@ -3849,6 +4160,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/360 tayson.JPG",
       "diaChi": "360 Tây Sơn, Phường Trung Liệt, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "360 Tây Sơn",
@@ -3865,6 +4177,7 @@
         "lon": 105.823013305664
       },
       "id": "DA_toa-nha-van-phong-360-tay-son-pj209",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113509.jpg",
       "ten": "Tòa nhà văn phòng 360 Tây Sơn",
       "tenKhongDau": "toa-nha-van-phong-360-tay-son",
       "type": "DuAn"
@@ -3872,6 +4185,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/vp_ATS.jpg",
       "diaChi": "252 Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "huyen": "Cầu Giấy",
@@ -3887,6 +4201,7 @@
         "lon": 105.782402038574
       },
       "id": "DA_toa-nha-van-phong-ats-pj228",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113527.jpg",
       "ten": "Tòa Nhà Văn Phòng ATS",
       "tenKhongDau": "toa-nha-van-phong-ats",
       "type": "DuAn"
@@ -3894,6 +4209,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110819/CKE/images/147 2 up.jpg",
       "diaChi": "Số 147 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Số 147 Hoàng Quốc Việt",
@@ -3910,6 +4226,7 @@
         "lon": 105.79972076416
       },
       "id": "DA_toa-nha-van-phong-cong-ty-789-pj824",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.342469.jpg",
       "ten": "Tòa nhà văn phòng Công ty 789",
       "tenKhongDau": "toa-nha-van-phong-cong-ty-789",
       "type": "DuAn"
@@ -3917,6 +4234,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100705/CKE/images/vpElinco.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -3933,6 +4251,7 @@
         "lon": 105.783332824707
       },
       "id": "DA_toa-nha-van-phong-elinco-pj178",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113485.jpg",
       "ten": "Toà Nhà Văn Phòng Elinco",
       "tenKhongDau": "toa-nha-van-phong-elinco",
       "type": "DuAn"
@@ -3940,6 +4259,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100709/CKE/images/newtatco2.jpg",
       "diaChi": "Số 21 Láng Hạ, Phường Thành Công, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "Số 21 Láng Hạ",
@@ -3956,6 +4276,7 @@
         "lon": 105.818267822266
       },
       "id": "DA_toa-nha-van-phong-newtatco-pj237",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113534.jpg",
       "ten": "Tòa Nhà Văn Phòng Newtatco",
       "tenKhongDau": "toa-nha-van-phong-newtatco",
       "type": "DuAn"
@@ -3963,6 +4284,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/vp taitam.JPG",
       "diaChi": "97 Lò Đúc, Phường Phạm Đình Hổ, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "97 Lò Đúc",
@@ -3979,6 +4301,7 @@
         "lon": 105.857856750488
       },
       "id": "DA_toa-nha-van-phong-tai-tam-pj204",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113506.jpg",
       "ten": "Toà Nhà Văn Phòng Tài Tâm",
       "tenKhongDau": "toa-nha-van-phong-tai-tam",
       "type": "DuAn"
@@ -3986,6 +4309,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110511/CKE/images/thanglong.jpg",
       "diaChi": "Số 98 Ngụy Như Kon Tum, Phường Nhân Chính, Thanh Xuân, Hà Nội",
       "diaChinh": {
         "duong": "Số 98 Ngụy Như Kon Tum",
@@ -4002,6 +4326,7 @@
         "lon": 105.804473876953
       },
       "id": "DA_toa-nha-van-phong-thang-long-pj746",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113940.jpg",
       "ten": "Tòa nhà văn phòng Thăng Long",
       "tenKhongDau": "toa-nha-van-phong-thang-long",
       "type": "DuAn"
@@ -4009,6 +4334,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100703/CKE/images/Transmeco.jpg",
       "diaChi": "Đường Khuất Duy Tiến, Phường Nhân Chính, Thanh Xuân, Hà Nội",
       "diaChinh": {
         "duong": "Đường Khuất Duy Tiến",
@@ -4025,6 +4351,7 @@
         "lon": 105.798698425293
       },
       "id": "DA_toa-nha-van-phong-transmeco-pj169",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113477.jpg",
       "ten": "Tòa nhà Văn phòng Transmeco",
       "tenKhongDau": "toa-nha-van-phong-transmeco",
       "type": "DuAn"
@@ -4032,6 +4359,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365286.jpg",
       "diaChi": "Đường Trung Yên 9, Phường Trung Hòa, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Trung Yên 9",
@@ -4048,6 +4376,7 @@
         "lon": 105.802200317383
       },
       "id": "DA_toa-nha-vinahud-pj1434",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365286.jpg",
       "ten": "Tòa nhà Vinahud",
       "tenKhongDau": "toa-nha-vinahud",
       "type": "DuAn"
@@ -4055,6 +4384,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2016/03/22/0I4XNtd4/20160322110906-cf28.jpg",
       "diaChi": "Số 376 Điện Biên Phủ, Phường 11, Quận 10, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Số 376 Điện Biên Phủ",
@@ -4071,6 +4401,7 @@
         "lon": 106.680358886719
       },
       "id": "DA_toplife-tower-pj1043",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2016/03/22/0I4XNtd4/20160322110906-cf28.jpg",
       "ten": "Toplife Tower",
       "tenKhongDau": "toplife-tower",
       "type": "DuAn"
@@ -4078,6 +4409,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371709.jpg",
       "diaChi": "273 Kim Mã, Phường Giảng Võ, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "273 Kim Mã",
@@ -4094,6 +4426,7 @@
         "lon": 105.820137023926
       },
       "id": "DA_toserco-building-pj1478",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371716.jpg",
       "ten": "Toserco Building",
       "tenKhongDau": "toserco-building",
       "type": "DuAn"
@@ -4101,6 +4434,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368900.jpg",
       "diaChi": "15 Phạm Hùng, Phường Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
       "diaChinh": {
         "duong": "15 Phạm Hùng",
@@ -4117,6 +4451,7 @@
         "lon": 105.779823303223
       },
       "id": "DA_toyota-my-dinh-pj1462",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368901.jpg",
       "ten": "Toyota Mỹ Đình",
       "tenKhongDau": "toyota-my-dinh",
       "type": "DuAn"
@@ -4124,6 +4459,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.449281.jpg",
       "diaChi": "24 Trường Sơn, Phường 2, Tân Bình, Hồ Chí Minh",
       "diaChinh": {
         "duong": "24 Trường Sơn",
@@ -4140,6 +4476,7 @@
         "lon": 106.664840698242
       },
       "id": "DA_tpa-building-pj1938",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.449275.jpg",
       "ten": "TPA Building",
       "tenKhongDau": "tpa-building",
       "type": "DuAn"
@@ -4147,6 +4484,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368785.jpg",
       "diaChi": "141 Hoàng Hoa Thám, Phường Ngọc Hà, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "141 Hoàng Hoa Thám",
@@ -4163,6 +4501,7 @@
         "lon": 105.824691772461
       },
       "id": "DA_truc-bach-building-pj1461",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368787.jpg",
       "ten": "Trúc Bạch Building",
       "tenKhongDau": "truc-bach-building",
       "type": "DuAn"
@@ -4170,6 +4509,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100703/CKE/images/TCsong da.png",
       "diaChi": "Nhà G10, Nguyễn Trãi, Phường Thanh Xuân Nam, Thanh Xuân, Hà Nội",
       "diaChinh": {
         "duong": "Nguyễn Trãi",
@@ -4186,6 +4526,7 @@
         "lon": 105.800300598145
       },
       "id": "DA_trung-tam-tai-chinh-song-da-pj170",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.354169.jpg",
       "ten": "Trung tâm Tài chính Sông Đà",
       "tenKhongDau": "trung-tam-tai-chinh-song-da",
       "type": "DuAn"
@@ -4193,6 +4534,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.357714.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -4209,6 +4551,7 @@
         "lon": 105.781929016113
       },
       "id": "DA_ttc-tower-pj1393",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.357721.jpg",
       "ten": "TTC Tower",
       "tenKhongDau": "ttc-tower",
       "type": "DuAn"
@@ -4216,6 +4559,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367484.jpg",
       "diaChi": "125-127 Bà Triệu, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "125-127 Bà Triệu",
@@ -4232,6 +4576,7 @@
         "lon": 105.849464416504
       },
       "id": "DA_v-building-pj1448",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367501.jpg",
       "ten": "V Building",
       "tenKhongDau": "v-building",
       "type": "DuAn"
@@ -4239,6 +4584,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.393339.jpg",
       "diaChi": "400 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh",
       "diaChinh": {
         "duong": "400 Ung Văn Khiêm",
@@ -4255,6 +4601,7 @@
         "lon": 106.722312927246
       },
       "id": "DA_v-building-pj1631",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.393340.jpg",
       "ten": "V Building",
       "tenKhongDau": "v-building",
       "type": "DuAn"
@@ -4262,6 +4609,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.464207.jpg",
       "diaChi": "90 Đường Trần Đình Xu, Phường Cô Giang, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "90 Đường Trần Đình Xu",
@@ -4278,6 +4626,7 @@
         "lon": 106.69002532959
       },
       "id": "DA_v-d-building-pj1979",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.464207.jpg",
       "ten": "V&D Building",
       "tenKhongDau": "v-d-building",
       "type": "DuAn"
@@ -4285,6 +4634,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100703/CKE/images/vinaconexNo2.png",
       "diaChi": "52 Lạc Long Quân, Phường Bưởi, Tây Hồ, Hà Nội",
       "diaChinh": {
         "duong": "52 Lạc Long Quân",
@@ -4301,6 +4651,7 @@
         "lon": 105.812896728516
       },
       "id": "DA_van-phong-vinaconex-no-2-pj172",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113479.jpg",
       "ten": "Văn phòng Vinaconex No.2",
       "tenKhongDau": "van-phong-vinaconex-no-2",
       "type": "DuAn"
@@ -4308,6 +4659,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/07/02/JGcIp0rf/20150702151424-90d2.jpg",
       "diaChi": "09 Đào Duy Anh, Phường Phương Liên, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "09 Đào Duy Anh",
@@ -4324,6 +4676,7 @@
         "lon": 105.838584899902
       },
       "id": "DA_vcci-tower-so-9-dao-duy-anh-pj2192",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/07/02/JGcIp0rf/20150702152052-aa2d.jpg",
       "ten": "VCCI Tower - số 9 Đào Duy Anh",
       "tenKhongDau": "vcci-tower-so-9-dao-duy-anh",
       "type": "DuAn"
@@ -4331,6 +4684,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.451066.jpg",
       "diaChi": "54 Trần Hưng Đạo, Phường Hàng Bài, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "54 Trần Hưng Đạo",
@@ -4347,6 +4701,7 @@
         "lon": 105.851875305176
       },
       "id": "DA_vci-tower-pj247",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.252570.jpg",
       "ten": "VCI Tower",
       "tenKhongDau": "vci-tower",
       "type": "DuAn"
@@ -4354,6 +4709,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.373447.jpg",
       "diaChi": "235 Nguyễn Trãi, Thanh Xuân , Hà Nội , Việt Nam",
       "diaChinh": {
         "duong": "235 Nguyễn Trãi",
@@ -4370,6 +4726,7 @@
         "lon": 105.808219909668
       },
       "id": "DA_vg-building-pj1500",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.373451.jpg",
       "ten": "VG Building",
       "tenKhongDau": "vg-building",
       "type": "DuAn"
@@ -4377,6 +4734,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110516/CKE/images/16634_4_KSP_Vicem_Streetview_south.jpg",
       "diaChi": "Tại lô 10E6, khu đô thị mới Cầu Giấy, Q. Cầu Giấy, TP. Hà Nội.",
       "diaChinh": {
         "duong": "Tại lô 10E6",
@@ -4393,6 +4751,7 @@
         "lon": 105.785346984863
       },
       "id": "DA_vicem-tower-pj754",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113948.jpg",
       "ten": "Vicem Tower",
       "tenKhongDau": "vicem-tower",
       "type": "DuAn"
@@ -4400,6 +4759,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.367411.jpg",
       "diaChi": "115 Trần Hưng Đạo, Phường Trần Hưng Đạo, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "115 Trần Hưng Đạo",
@@ -4416,6 +4776,7 @@
         "lon": 105.841743469238
       },
       "id": "DA_vid-tower-1-pj1445",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.367410.jpg",
       "ten": "VID Tower 1",
       "tenKhongDau": "vid-tower-1",
       "type": "DuAn"
@@ -4423,6 +4784,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/viendongB.jpg",
       "diaChi": "36 Hoàng Cầu, Phường Ô Chợ Dừa, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "36 Hoàng Cầu",
@@ -4439,6 +4801,7 @@
         "lon": 105.82315826416
       },
       "id": "DA_vien-dong-building-pj229",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113528.jpg",
       "ten": "Viễn Đông Building",
       "tenKhongDau": "vien-dong-building",
       "type": "DuAn"
@@ -4446,6 +4809,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/VA-Tower.gif",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -4462,6 +4826,7 @@
         "lon": 105.785026550293
       },
       "id": "DA_viet-a-tower-pj221",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.352542.jpg",
       "ten": "Việt Á Tower",
       "tenKhongDau": "viet-a-tower",
       "type": "DuAn"
@@ -4469,6 +4834,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.441263.jpg",
       "diaChi": "141 Nguyễn Du, Phường Bến Thành, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "141 Nguyễn Du",
@@ -4485,6 +4851,7 @@
         "lon": 106.69344329834
       },
       "id": "DA_viet-dragon-tower-pj1867",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.441264.jpg",
       "ten": "Viet Dragon Tower",
       "tenKhongDau": "viet-dragon-tower",
       "type": "DuAn"
@@ -4492,6 +4859,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100708/CKE/images/vietT.jpg",
       "diaChi": "Số 1 Thái Hà, Phường Trung Liệt, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "Số 1 Thái Hà",
@@ -4508,6 +4876,7 @@
         "lon": 105.823554992676
       },
       "id": "DA_viet-tower-pj222",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113522.jpg",
       "ten": "Viet Tower",
       "tenKhongDau": "viet-tower",
       "type": "DuAn"
@@ -4515,6 +4884,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.365918.jpg",
       "diaChi": "5 Công Trường Mê Linh, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "5 Công Trường Mê Linh",
@@ -4531,6 +4901,7 @@
         "lon": 106.70532989502
       },
       "id": "DA_vietcombank-tower-hcm-pj1438",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.365918.jpg",
       "ten": "Vietcombank Tower HCM",
       "tenKhongDau": "vietcombank-tower-hcm",
       "type": "DuAn"
@@ -4538,6 +4909,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.366242.jpg",
       "diaChi": "198 Trần Quang Khải, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "huyen": "Hoàn Kiếm",
@@ -4553,6 +4925,7 @@
         "lon": 105.857696533203
       },
       "id": "DA_vietcombank-tower-pj1439",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.366240.jpg",
       "ten": "Vietcombank Tower",
       "tenKhongDau": "vietcombank-tower",
       "type": "DuAn"
@@ -4560,6 +4933,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn//Projects/110105/CKE/images/Vietracimex.jpg",
       "diaChi": "Lô E4-17 Khu đô thị mới Cầu Giấy, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -4576,6 +4950,7 @@
         "lon": 105.784889221191
       },
       "id": "DA_vietracimex-tower-pj620",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113831.jpg",
       "ten": "Vietracimex Tower",
       "tenKhongDau": "vietracimex-tower",
       "type": "DuAn"
@@ -4583,6 +4958,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363953.jpg",
       "diaChi": "2 Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "2 Hoàng Quốc Việt",
@@ -4599,6 +4975,7 @@
         "lon": 105.80443572998
       },
       "id": "DA_viglacera-exim-building-pj1423",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363956.jpg",
       "ten": "Viglacera – Exim Building",
       "tenKhongDau": "viglacera-–-exim-building",
       "type": "DuAn"
@@ -4606,6 +4983,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.379780.jpg",
       "diaChi": "Đường Điện Biên Phủ, Phường Đa Kao, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "Đường Điện Biên Phủ",
@@ -4622,6 +5000,7 @@
         "lon": 106.698394775391
       },
       "id": "DA_vinaconex-building-pj1559",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.379782.jpg",
       "ten": "Vinaconex Building",
       "tenKhongDau": "vinaconex-building",
       "type": "DuAn"
@@ -4629,6 +5008,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.371654.jpg",
       "diaChi": "34 Láng Hạ, Phường Láng Hạ, Đống Đa, Hà Nội",
       "diaChinh": {
         "duong": "34 Láng Hạ",
@@ -4645,6 +5025,7 @@
         "lon": 105.813438415527
       },
       "id": "DA_vinaconex-tower-pj1476",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.371656.jpg",
       "ten": "Vinaconex Tower",
       "tenKhongDau": "vinaconex-tower",
       "type": "DuAn"
@@ -4652,6 +5033,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368727.jpg",
       "diaChi": "127 Lò Đúc, Phường Đống Mác, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "127 Lò Đúc",
@@ -4668,6 +5050,7 @@
         "lon": 105.858428955078
       },
       "id": "DA_vinafor-pj1459",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.368704.jpg",
       "ten": "Vinafor",
       "tenKhongDau": "vinafor",
       "type": "DuAn"
@@ -4675,6 +5058,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file4.batdongsan.com.vn/2015/11/04/JGcIp0rf/20151104164240-73f3.jpg",
       "diaChi": "39A Ngô Quyền, Phường Phan Chu Trinh, Hoàn Kiếm, Hà Nội",
       "diaChinh": {
         "duong": "39A Ngô Quyền",
@@ -4691,6 +5075,7 @@
         "lon": 105.85432434082
       },
       "id": "DA_vinaplast-tai-tam-pj219",
+      "image": "http://file4.batdongsan.com.vn/resize/200x150/2015/11/04/JGcIp0rf/20151104164240-73f3.jpg",
       "ten": "Vinaplast - Tài Tâm",
       "tenKhongDau": "vinaplast-tai-tam",
       "type": "DuAn"
@@ -4698,6 +5083,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100809/CKE/images/Duan_NCT_1.jpg",
       "diaChi": "180-192 Nguyễn Công Trứ, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "180-192 Nguyễn Công Trứ",
@@ -4714,6 +5100,7 @@
         "lon": 106.701148986816
       },
       "id": "DA_vincom-financial-tower-pj451",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113670.jpg",
       "ten": "Vincom Financial Tower",
       "tenKhongDau": "vincom-financial-tower",
       "type": "DuAn"
@@ -4721,6 +5108,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/vitT.jpg",
       "diaChi": "519 Kim Mã, Phường Ngọc Khánh, Ba Đình, Hà Nội",
       "diaChinh": {
         "duong": "519 Kim Mã",
@@ -4737,6 +5125,7 @@
         "lon": 105.811798095703
       },
       "id": "DA_vit-tower-pj211",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113511.jpg",
       "ten": "VIT Tower",
       "tenKhongDau": "vit-tower",
       "type": "DuAn"
@@ -4744,6 +5133,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.396145.jpg",
       "diaChi": "Đào Duy Anh, Quận Phú Nhuận , Tp.HCM , Việt Nam",
       "diaChinh": {
         "duong": "Đào Duy Anh",
@@ -4760,6 +5150,7 @@
         "lon": 106.675140380859
       },
       "id": "DA_vmg-building-pj1673",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.396144.jpg",
       "ten": "VMG Building",
       "tenKhongDau": "vmg-building",
       "type": "DuAn"
@@ -4767,6 +5158,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.363834.jpg",
       "diaChi": "Lô A1F, Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -4783,6 +5175,7 @@
         "lon": 105.781814575195
       },
       "id": "DA_vmt-building-pj1420",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.363831.jpg",
       "ten": "VMT Building",
       "tenKhongDau": "vmt-building",
       "type": "DuAn"
@@ -4790,6 +5183,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100712/CKE/images/VpTower.jpg",
       "diaChi": "81 - 85 Hàm Nghi, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh",
       "diaChinh": {
         "duong": "81 - 85 Hàm Nghi",
@@ -4806,6 +5200,7 @@
         "lon": 106.702308654785
       },
       "id": "DA_vp-tower-pj258",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113553.jpg",
       "ten": "VP Tower",
       "tenKhongDau": "vp-tower",
       "type": "DuAn"
@@ -4813,6 +5208,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.368467.jpg",
       "diaChi": "18 Tam Trinh, Phường Minh Khai, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "18 Tam Trinh",
@@ -4829,6 +5225,7 @@
         "lon": 105.862014770508
       },
       "id": "DA_vtc-online-building-pj1457",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.369010.jpg",
       "ten": "VTC Online Building",
       "tenKhongDau": "vtc-online-building",
       "type": "DuAn"
@@ -4836,6 +5233,7 @@
   },
   {
     "default": {
+      "bigImage": "http://data.batdongsan.com.vn/Projects/100707/CKE/images/Zodi Building.JPG",
       "diaChi": "156 Triệu Việt Vương, Phường Bùi Thị Xuân, Hai Bà Trưng, Hà Nội",
       "diaChinh": {
         "duong": "156 Triệu Việt Vương",
@@ -4852,6 +5250,7 @@
         "lon": 105.850547790527
       },
       "id": "DA_zodi-building-pj200",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.113504.jpg",
       "ten": "Zodi Building",
       "tenKhongDau": "zodi-building",
       "type": "DuAn"
@@ -4859,6 +5258,7 @@
   },
   {
     "default": {
+      "bigImage": "http://file1.batdongsan.com.vn/file.364902.jpg",
       "diaChi": "Đường Duy Tân, Phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội",
       "diaChinh": {
         "duong": "Đường Duy Tân",
@@ -4875,6 +5275,7 @@
         "lon": 105.782112121582
       },
       "id": "DA_zodiac-building-pj1430",
+      "image": "http://file1.batdongsan.com.vn/thumb200x150.364902.jpg",
       "ten": "Zodiac building",
       "tenKhongDau": "zodiac-building",
       "type": "DuAn"
