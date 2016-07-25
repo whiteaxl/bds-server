@@ -83,8 +83,8 @@
                             <div class="pc">&nbsp;</div>
                         </div>
                         <div class="col col-50">
-                            <div class="block-02" ng-repeat="cat in hot_ads_cat">
-                                <div data-scroll="true" class="title">
+                            <div class="block-02" id="cat_{{$index}}" ng-repeat="cat in hot_ads_cat track by $index">
+                                <!-- <div data-scroll="true" class="title">
                                     <h2>{{cat.name}}</h2>
                                     <p>{{cat.location}}</p>
                                     <div class="row">
@@ -111,18 +111,21 @@
                                             
                                         </div>
                                     </div>    
+                                    
                                     <div ng-class="cat.hasMore==true?'more':'more sp'" >
                                         <a href="" ng-click="mc.showMoreCat(cat)" title="">Xem thêm</a>
                                     </div>                                
-                                </div>
+                                </div> -->
+                                <bds-ads-box-list cat="cat" header="true" more="true"></bds-ads-box-list>
                             </div><!-- //block-02 -->
+
                             <!-- //block-02 -->
                         </div>
                     </div>
                 </section><!-- //box-homepage -->
                 <footer class="footer">
                     <div class="footer-top">
-                        <img src="asset/img/data/discovery-ill.svg" width="200" height="125" alt=""/>
+                        <img src="asset/img/data/RelandAppLogo.jpg" width="200" height="125" alt=""/>
                         <h3>Hãy bắt đầu việc tìm kiếm các BĐS với Reland - số 1 về BĐS của Việt Nam</h3>
                         <p>Reland là website/ứng dụng về bất động sản chuyên cung cấp các thông tin về BĐS đang bán, căn hộ cho thuê, đặc điểm khu vực lân cận, xu hướng và thị trường BĐS. Từ đây, Bạn sẽ có cơ sở để quyết định nên mua, bán hay thuê/cho thuê BĐS nào, ở đâu và trong thời gian nào là hợp lý. Bạn cũng có thể gặp gỡ một nhà môi giới BĐS, xem giá các BĐS bán gần đây hay so sánh giá trị các BĐS tương tự. Ngoài ra, Bạn cũng sẽ nhận được các ý kiến và lời khuyên từ các các nhà môi giới hay các chuyên gia trong ngành trên Cộng đồng Reland</p>
                     </div>

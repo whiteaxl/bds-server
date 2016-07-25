@@ -338,8 +338,8 @@
         data: {
             bodyClass: "page-detail"
         }
-      }).state('searchda', {
-        url: "/searchdc/:duAnID/:viewMode",
+      }).state('topview', {
+        url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
         templateUrl: "/web/search.html",
         controller: "SearchCtrl",
         controllerAs: 'mc',
@@ -354,16 +354,7 @@
             }); 
             return result;
           }
-        },
-        data: {
-            //bodyClass: "page-search",
-            //abc: title
-        } 
-        // ,
-        // controller: function($scope,sellingHouses){
-        //   $scope.sellingHouses = sellingHouses;
-        //   //alert(sellingHouses.length);
-        // }
+        }
       })
     });
   bds.factory('socket', function (socketFactory) {

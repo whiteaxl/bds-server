@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>Reland</title>
+	
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/swiper.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.min.css" rel="stylesheet" type="text/css" />
+
+	<script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+	<script src="js/hammer.fakemultitouch.js"></script>
+    <script src="js/drum.min.js"></script>
+	<script src="js/javascript.min.js"></script>
+</head>
+<body class="hfixed both">
+    <header class="main blue">
+        <a href="list.html" class="nav_mobile header-icon"><i class="iconLeftOpen"></i></a>
+        <a href="javascript:void(0)" class="pull-right header-icon iconShareContent">
+        	<svg xmlns="http://www.w3.org/2000/svg" fill="white" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
+			  <g id="_x37_02-share_x40_2x.png_1_">
+				<g>
+				  <path d="M164.6 200h-127c-6.1 0-11.2-5.1-11.2-11.2V66c0-6.1 5.1-11.2 11.2-11.2h33.6c4.5 0 7.8 3.4 7.8 7.8s-3.4 7.8-7.8 7.8H42.1V184h118.3V70.2h-29.1c-4.5 0-7.8-3.4-7.8-7.8 0-4.5 3.4-7.8 7.8-7.8h33.3c6.3 0 11.2 5 11.2 11.5v122.8C175.8 194.9 170.7 200 164.6 200zM101.1 131.7c-4.5 0-7.8-3.4-7.8-7.8v-97L80.1 40.3c-1.3 1.7-3.4 2.7-5.7 2.7 -2.4 0-4.5-1-5.9-2.7 -1.2-1.5-1.8-3.3-1.6-5.2 0.1-2.7 1.2-4.4 2.1-5.4l26.4-27C96.8 1 98.8 0 101.1 0c2.9 0 4.7 1.2 5.7 2.2l27 27.6 0.2 0.3c1.1 1.6 1.6 3.3 1.6 5 0 4.5-3.4 7.8-7.8 7.8 -2.6 0-4.5-1.5-5.4-2.4l-13.4-13.6v97C108.9 128.4 105.6 131.7 101.1 131.7z"></path>
+				</g>
+			  </g>
+			</svg>
+        </a>
+    </header>
+    <div class="wapper">
+    	<div class="detail">
+        	<div class="img" style="background-image:url(images/big.jpg)"><a href="javascript:void(0)"><i class="iconCamera"></i> 3/16</a></div>
+            <div class="desSort">
+            	<div class="price">10, 5 tỷ</div>
+                <div class="address">KDT Xa La, Hà Đông, Hà Nội</div>
+                <div class="note">
+                	<ul>
+                    	<li><label>Bán</label></li>
+                        <li><label>Biệt thự</label></li>
+                        <li><label>200 m2</label></li>
+                        <li><label>6 phòng ngủ</label></li>
+                        <li><label>4 phòng tắm</label></li>
+                        <li><label>Tin đã đăng 4 ngày</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="desDetail ovh clb">
+            	<h3 class="collapse-title">Chi tiết</h3>
+                Dự án đầu tư xây dựng Khu đô thị mới Xa La có tổng diện tích đất quy hoạch là 209.480m2, được đầu tư xây dựng đồng bộ với chất lượng tiêu chuẩn đô thị loại I, đáp ứng nhu cầu về nhà ở của đông đảo khách hàng có đa dạng mức độ thu nhập.
+                <div class="detailMore" style="display:none">
+                	Theo cấp phép của cơ quan có thẩm quyền, Xí nghiệp Xây dựng tư nhân số I Lai Châu đầu tư xây dựng 10 toà nhà chung cư từ 21 tầng đến 34 tầng và các công trình hạ tầng xã hội như: trường học, trường mầm non, nhà trẻ, trung tâm thương mại, khách sạn, khu sân vận động bóng đá thể thao, bãi đỗ xe, công viên cây xanh, các cơ sở đầu mối, đáp ứng quy mô dân số 5.560 người.
+                </div>
+                <a href="javascript:void(0)" onClick="detailMore(this, '.detailMore', '... Xem thêm', '... Thu gọn')">... Xem thêm</a>
+            </div>
+            <div class="dir-box collapse-box">
+                <a role="button" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>
+            </div>
+            <div class="area-box collapse-box">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconDownOpen"></i></span></a>
+                <div class="areaBox spinner spinner-hide">
+                    <div class="lined">
+                    	<span class="titlelbl">Loại tin giao</span>
+                        <label>Bán biệt thự</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Gía</span>
+                        <label>10,5 tỷ</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Giá/m2</span>
+                        <label>50 tr</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Số phòng ngủ</span>
+                        <label>6</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Số phòng tắm</span>
+                        <label>4</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Diện tích</span>
+                        <label>200 m2</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Ngày đăng tin</span>
+                        <label>14/07/2016</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Lượt xem</span>
+                        <label>4233</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Địa chỉ</span>
+                        <label>KDT Xa La, Hà Đông, HN</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Vị trí</span>
+                    </div>
+                    <div class="lined">
+                    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50116.36124904685!2d105.7882095786251!3d20.995810207556246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3b1520664ffff066!2zSG9hIGzhu6VhIFV5w6puIHNob3A!5e0!3m2!1svi!2s!4v1469250664773" width="100%" height="210" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="share-box collapse-box">
+            	<div class="pull-left">
+                	<a href="#" class="p-icon i-fb"></a>
+                    <a href="#" class="p-icon i-sms"></a>
+                    <a href="#" class="p-icon i-zalo"></a>
+                    <a href="#" class="p-icon i-email"></a>
+                </div>
+                <div class="pull-right">
+                	<a href="#" class="p-icon i-share"></a>
+                </div>
+            </div>
+            <div class="contact-box collapse-box">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Liên hệ <span><i class="iconDownOpen"></i></span></a>
+                <div class="contactBox spinner spinner-hide">
+                    <div class="lined">
+                    	<span class="titlelbl">Tên liên lạc</span>
+                        <label>BDS abc</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Điện thoại</span>
+                        <label>099 876 8976</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Email</span>
+                        <label>bdsabc@gmail.com</label>
+                    </div>
+                </div>
+            </div>
+            <div class="agency-box collapse-box uln">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Môi giới <span><i class="iconDownOpen"></i></span><span class="txt">Các môi giới đang bán nhà tương tự</span></a>
+                <div class="agencyBox spinner spinner-hide">
+                    <ul>
+                    	<li>
+                        	<img src="images/avarta.jpg">
+                            <h5>Mr Viet</h5>
+                            <span class="rating">
+                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </span>
+                            <p>Có 16 bất động sản đang bán</p>
+                            <div class="action">
+                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
+                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
+                            </div>
+                        </li>
+                        <li>
+                        	<img src="images/avarta.jpg">
+                            <h5>Mr Viet</h5>
+                            <span class="rating">
+                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </span>
+                            <p>Có 16 bất động sản đang bán</p>
+                            <div class="action">
+                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
+                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
+                            </div>
+                        </li>
+                        <li>
+                        	<img src="images/avarta.jpg">
+                            <h5>Mr Viet</h5>
+                            <span class="rating">
+                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </span>
+                            <p>Có 16 bất động sản đang bán</p>
+                            <div class="action">
+                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
+                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
+                            </div>
+                        </li>
+                        <li>
+                        	<img src="images/avarta.jpg">
+                            <h5>Mr Viet</h5>
+                            <span class="rating">
+                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </span>
+                            <p>Có 16 bất động sản đang bán</p>
+                            <div class="action">
+                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
+                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		<div class="clb ovh"></div>
+    </div>
+    <footer class="main border uln">
+        <ul class="navmain nav-3 button">
+        	<li><a role="button" class="btn btn-danger" href="tel:0967474989"><i class="iconPhone"></i> Gọi điện</a></li>
+            <li><a role="button" class="btn btn-warning" href="chats.html"><i class="iconChat"></i> Chat</a></li>
+            <li><a role="button" class="btn btn-primary" href="javascript:void(0)"><i class="iconHeart"></i> Lưu tin</a></li>
+        </ul>
+    </footer>
+    <div class="overlay"></div>
+    
+    <div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                	<h4 class="modal-title" id="typeBoxLabel">Loại nhà đất</h4>
+                </div>
+                <div class="modal-body uln">
+                	<ul class="type-list">
+                    	<li><a href="#" class="active">Tất cả các loại</a></li>
+                        <li><a href="#">Loại nhà đất 1</a></li>
+                        <li><a href="#">Loại nhà đất 2</a></li>
+                        <li><a href="#">Loại nhà đất 3</a></li>
+                        <li><a href="#">Loại nhà đất 4</a></li>
+                        <li><a href="#">Loại nhà đất 5</a></li>
+                        <li><a href="#">Loại nhà đất 6</a></li>
+                        <li><a href="#">Loại nhà đất 7</a></li>
+                        <li><a href="#">Loại nhà đất 8</a></li>
+                        <li><a href="#">Loại nhà đất 9</a></li>
+                        <li><a href="#">Loại nhà đất 10</a></li>
+                        <li><a href="#">Loại nhà đất 11</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade modal-choose" id="trendBox" tabindex="-1" role="dialog" aria-labelledby="trendBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                	<h4 class="modal-title" id="trendBoxLabel">Hướng nhà</h4>
+                </div>
+                <div class="modal-body uln">
+                	<ul class="type-list">
+                    	<li><a href="#" class="active">Tất cả các loại</a></li>
+                        <li><a href="#">Hướng nhà 1</a></li>
+                        <li><a href="#">Hướng nhà 2</a></li>
+                        <li><a href="#">Hướng nhà 3</a></li>
+                        <li><a href="#">Hướng nhà 4</a></li>
+                        <li><a href="#">Hướng nhà 5</a></li>
+                        <li><a href="#">Hướng nhà 6</a></li>
+                        <li><a href="#">Hướng nhà 7</a></li>
+                        <li><a href="#">Hướng nhà 8</a></li>
+                        <li><a href="#">Hướng nhà 9</a></li>
+                        <li><a href="#">Hướng nhà 10</a></li>
+                        <li><a href="#">Hướng nhà 11</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade modal-msg" id="saveBox" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body uln">
+                	<div class="text-center">
+                        <h3>Tên tìm kiếm cần lưu</h3>
+                        <p>Ví dụ: Gần chỗ làm, gần bệnh viện...</p>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Quận Hà Đông, Hà Nội" />
+                </div>
+                <div class="modal-footer">
+                	<a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
+                    <a href="#">Lưu lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+</body>
+</html>

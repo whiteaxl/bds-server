@@ -7,8 +7,8 @@
 	
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
 	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/swiper.min.css" rel="stylesheet" type="text/css" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
     <link href="css/style.min.css" rel="stylesheet" type="text/css" />
 
 	<script src="js/jquery.min.js"></script>
@@ -18,10 +18,44 @@
 	<script src="js/hammer.fakemultitouch.js"></script>
     <script src="js/drum.min.js"></script>
 	<script src="js/javascript.min.js"></script>
+    <script>
+    	$(function(){
+			var searchadd = [
+			  {
+				diadiem: "CT1B1 - KDT Xa La",
+				diadiemlbl: "Địa điểm",
+				diadiemicon: "iconLocation gray",
+				label: "Xala",
+				quanlbl: "Quận",
+				quanicon: "iconStar red",
+				tinh: "Hà Nội",
+				tinhlbl: "Tỉnh",
+				tinhicon: "iconStar red"
+			  }
+			];
+			$("#searchadd").autocomplete({
+			  minLength: 0,
+			  source: searchadd,
+			  focus: function( event, ui ) {
+				$( "#searchadd" ).val( ui.item.label );
+				return false;
+			  }
+			})
+			.autocomplete( "instance" )._renderItem = function( ul, item ) {
+				ul.addClass('relandAutoOne');
+				return $( "<li>")
+				.append("<p><i class='" + item.diadiemicon + "'></i>" + item.diadiem + "<span>" + item.diadiemlbl + "</span></p>")
+				.append("<p><i class='" + item.quanicon + "'></i>" + item.label + "<span>" + item.quanlbl + "</span></p>")
+				.append("<p><i class='" + item.tinhicon + "'></i>" + item.tinh + "<span>" + item.tinhlbl + "</span></p>")
+				.appendTo( ul );
+			};	
+		});
+	</script>
 </head>
-<body class="hfixed both">
+<body class="hfixed header">
 	<nav class="main uln">
     	<ul>
+        	<li class="logo"><img src="img/logo.png" height="25" alt="Reland" title="Reland" /></li>
             <li>
                 <a class="login">
                 <p>Đăng nhập/Profile</p>
@@ -39,7 +73,10 @@
             <li><a href="#"><i class="iconHelp"></i> Trợ giúp</a></li>
             <li><a href="#"><i class="iconCog"></i> Cài đặt</a></li>
         </ul>
-        <h5><a href="#">Reland App (IOS/Android)</a></h5>
+        <h5>Reland App (IOS/Android)</h5>
+        <ul>
+        	<li><a href="/"><i class="iconHome gray"></i> Reland App</a></li>
+        </ul>
         <ul>
         	<li><a href="/"><i class="iconExport"></i> Đăng xuất</a></li>
         </ul>
@@ -47,7 +84,7 @@
     </nav>
     <div class="search">
     	<form>
-    	<div class="search-fr fr">
+    	<div class="search-fr">
         	<i class="iconSearch"></i>
         	<input type="text" class="input-fr" id="searchadd" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />
             <a href="javascript:void(0)" class="close-search"><i class="iconCancel"></i> Thoát</a>
@@ -199,11 +236,18 @@
         <span>Trang chủ</span>
         <a href="javascript:void(0)" class="search_mobile header-icon"><i class="iconSearch"></i></a>
     </header>
+    <div class="reland-title fixed">
+    	<h4></h4>
+        <h3></h3>
+        <h5></h5>
+    </div>
     <div class="wapper">
-    	<div class="reland-box uln">
-        	<h4>Bộ sưu tập</h4>
-            <h3>Nhà gần vị trí của bạn</h3>
-            <h5>Quận Hà Đông, Hà Nội</h5>
+    	<div class="reland-box reland-box_1 uln" reland-item="reland-box_1">
+        	<div class="reland-title">
+                <h4>Bộ sưu tập</h4>
+                <h3>Nhà gần vị trí của bạn</h3>
+                <h5>Quận Hà Đông, Hà Nội</h5>
+            </div>
             <ul class="reland-list full-3">
             	<li>
                 	<a href="#" class="heart"><i class="icon-heart"></i></a>
@@ -275,10 +319,89 @@
             <div class="btn-box"><button class="btn btn-primary btn-block">Xem thêm</button></div>
         </div>
         <!--END-->
-        <div class="reland-box uln">
-        	<h4>Bộ sưu tập</h4>
-            <h3>Nhà mới đăng hôm nay</h3>
-            <h5>Quận Hà Đông, Hà Nội</h5>
+        <div class="reland-box reland-box_2 uln" reland-item="reland-box_2">
+        	<div class="reland-title">
+                <h4>Bộ sưu tập</h4>
+                <h3>Nhà mới đăng hôm nay</h3>
+                <h5>Quận Hà Đông, Hà Nội</h5>
+            </div>
+            <ul class="reland-list full-3">
+            	<li>
+                	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                	<a href="#">
+                    	<span class="img" style="background-image:url(images/big.jpg)"></span>
+                        <span class="des bgOpa">
+                        	<span class="price">10,5 Ty</span>
+                            <span class="name">KDT Xa La</span>
+                            <span>5pn</span>
+                            <span class="split"></span>
+                            <span>4pt</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                	<a href="#">
+                    	<span class="img" style="background-image:url(images/big.jpg)"></span>
+                        <span class="des bgOpa">
+                        	<span class="price">10,5 Ty</span>
+                            <span class="name">KDT Xa La</span>
+                            <span>5pn</span>
+                            <span class="split"></span>
+                            <span>4pt</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                	<a href="#">
+                    	<span class="img" style="background-image:url(images/big.jpg)"></span>
+                        <span class="des bgOpa">
+                        	<span class="price">10,5 Ty</span>
+                            <span class="name">KDT Xa La</span>
+                            <span>5pn</span>
+                            <span class="split"></span>
+                            <span>4pt</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                	<a href="#">
+                    	<span class="img" style="background-image:url(images/big.jpg)"></span>
+                        <span class="des bgOpa">
+                        	<span class="price">10,5 Ty</span>
+                            <span class="name">KDT Xa La</span>
+                            <span>5pn</span>
+                            <span class="split"></span>
+                            <span>4pt</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                	<a href="#">
+                    	<span class="img" style="background-image:url(images/big.jpg)"></span>
+                        <span class="des bgOpa">
+                        	<span class="price">10,5 Ty</span>
+                            <span class="name">KDT Xa La</span>
+                            <span>5pn</span>
+                            <span class="split"></span>
+                            <span>4pt</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <div class="clb ovh"></div>
+            <div class="btn-box"><button class="btn btn-primary btn-block">Xem thêm</button></div>
+        </div>
+        <!--END-->
+        <div class="reland-box reland-box_3 uln" reland-item="reland-box_3">
+        	<div class="reland-title">
+                <h4>Bộ sưu tập</h4>
+                <h3>Nhà mới lưu</h3>
+                <h5>Quận Hà Đông, Hà Nội</h5>
+            </div>
             <ul class="reland-list full-3">
             	<li>
                 	<a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
@@ -351,7 +474,23 @@
         </div>
         <!--END-->
     </div>
-    <footer class="main border uln">
+    <div class="bottom clb ovh uln">
+    	<div class="app">
+        	<h5>Reland App (IOS/Android)</h5>
+            <ul>
+                <li><a href="/"><i class="iconHome gray"></i> Reland App</a></li>
+            </ul>
+        </div>
+    	<div class="copyright">
+        	<p>
+            	<a href="#">Phiên bản Desktop</a> | 
+                <a href="#">Câu hỏi thường gặp</a> | 
+                <a href="#">Điểu khoản sử dụng</a>
+            </p>
+            <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
+        </div>
+    </div>
+    <!--<footer class="main border uln">
         <ul class="navmain">
         	<li><a href="#" class="active"><i class="iconHome"></i> Trang chủ</a></li>
             <li><a href="#"><i class="iconChat"></i> Chat</a></li>
@@ -359,7 +498,7 @@
             <li><a href="#"><i class="fa fa-sliders"></i> Quản lý</a></li>
             <li><a href="#"><i class="iconUser"></i> Tôi</a></li>
         </ul>
-    </footer>
+    </footer>-->
     <div class="overlay"></div>
     
     <div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
@@ -415,7 +554,6 @@
             </div>
         </div>
     </div>
-    
     
 </body>
 </html>

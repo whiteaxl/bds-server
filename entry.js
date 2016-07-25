@@ -33,6 +33,7 @@ require("./src/web/common/directives/diaChinhLink.js");
 require("./src/web/common/directives/bdsHeaderDirective.js");
 require("./src/web/common/directives/bdsMobileMenuDirective.js");
 require("./src/web/common/directives/bdsProfileLeftDirective.js");
+require("./src/web/common/directives/bdsAdsBoxListDirective.js");
 
 
 

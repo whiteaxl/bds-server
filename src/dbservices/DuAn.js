@@ -38,7 +38,8 @@ class DuAnModel {
 
 	initBucket() {
 		bucket.enableN1ql(['127.0.0.1:8093']);
-		bucket.operationTimeout = 60 * 1000;
+		// bucket.operationTimeout = 60 * 1000;
+    bucket.operationTimeout = 120 * 1000;
 		bucket = cluster.openBucket('default');
 	}
 

@@ -1,0 +1,30 @@
+<div data-scroll="true" class="title">
+
+    <h2 ng-if="abl.header==true">{{abl.cat.name}}</h2>
+    <p ng-if="abl.header"> {{abl.cat.location}}</p>
+    <div class="row">
+        <div ng-repeat="ads in abl.cat.list track by $index" ng-click="abl.goDetail($index)"  ng-class="abl.getClass($index)">
+            <div class="item" ng-if="ads.type=='Ads'">
+              <a class="link" href="" title="">
+                <span class="img" style="background-image: url({{ads.image.cover}})"></span>
+                <span class="info">
+                    <span class="line"><span class="price">{{ads.giaFmt}} </span> <span>{{ads.dienTichFmt}} {{ads.soTangFmt}} {{ads.soPhongNguFmt}}</span></span>
+                    <span class="line">{{ads.place.diaChi}}</span>
+                </span>
+              </a>
+            </div>
+            <div class="item" ng-if="ads.type=='DuAn'" >
+              <a class="link" href="" title="">
+                <span class="img" style="background-image: url({{ads.image}})"></span>
+                <span class="info">
+                    <span class="line"><span class="price">{{ads.ten}}</span></span>
+                    <span class="line">{{ads.diaChi}}</span>
+                </span>
+              </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="abl.more==true" ng-class="abl.cat.hasMore==true?'more':'more sp'" >
+        <a href="" ng-click="abl.showMoreCat()" title="">Xem thêm</a>
+    </div>                                
+</div>

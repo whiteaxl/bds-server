@@ -702,6 +702,12 @@
         init();
 
 		function init(){
+
+			vm.dimension = {
+				height: $(window).height(),
+				width: $(window).width()
+			}
+
 			
 			// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 			//$rootScope.center = "Hanoi Vietnam";
