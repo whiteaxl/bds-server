@@ -82,6 +82,8 @@ internals.homeData4App = function(req, reply) {
   console.log(query);
 
   var currentLocation = req.payload.currentLocation;
+  if(!currentLocation)
+    currentLocation = {};
   query.limit = 5;
   //todo: order ?
 

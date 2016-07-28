@@ -85,7 +85,11 @@
       },
       findDuAnHotByDiaChinhForDetailPage: function(data){
         return $http.post("/api/findDuAnHotByDiaChinhForDetailPage",data);
+      },
+      homeDataForApp: function(data){
+        return $http.post("/api/homeData4App",data);  
       }
+      
     };
   });
 })();

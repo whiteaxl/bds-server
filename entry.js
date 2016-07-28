@@ -37,6 +37,15 @@ require("./src/web/common/directives/bdsAdsBoxListDirective.js");
 
 
 
+//Mobile zone
+// require("./src/web/app/mobile/MobileHome.js");
+require("./src/web/app/mobile/MobileHomeCtrl.js");
+require("./src/web/app/mobile/MobileSearchCtrl.js");
+require("./src/web/app/mobile/MobileDetailCtrl.js");
+
+
+require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");
+
 
 
 //Libs
