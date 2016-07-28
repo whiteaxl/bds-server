@@ -589,7 +589,15 @@ internals.endpoints = [
       }
     }
   },
-
+  {
+    method: 'POST',
+    path: '/api/findCategoryByParentId',
+    handler: newsHandlers.findCategoryByParentId,
+    config: {
+      description: 'get list childs category',
+      tags: ['api']
+    }
+  }
 ];
 
 module.exports = internals;

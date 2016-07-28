@@ -85,6 +85,38 @@ class NewsModel {
         });
     }
 
+    findCategoryByParentId(catId, callback){
+        console.log("-----findCategoryByParentId");
+        pool.getConnection(function(err,connection){
+            if (err) {
+                console.log(err);
+                if(connection)
+                    connection.release();
+                return;
+            }
+
+            console.log('connected as id ' + connection.threadId);
+
+            var sql = "SELECT * FROM reland.news_article_category where cat_parent_id = " + catId + " order by cat_order";
+            console.log("-----findCategoryByParentId-------sql: " + sql);
+            connection.query(sql ,function(err,rows){
+                connection.release();
+                if(err)
+                {
+                    console.log("Problem with MySQL"+err);
+                }
+                else
+                {
+
+                    if (!rows)
+                        rows = [];
+                    console.log("-----findCategoryByParentId: success---------with result length: " + rows.length);
+                    callback(err, rows);
+                }
+            });
+        });
+    }
+
     countAllArticleOfCat(catId, callback){
         console.log("------in countAllArticleOfCat---: " + catId);
         var listCat = [];
