@@ -25,7 +25,12 @@
       userID: null,
       adsLikes: [],
       lastSearch: null
-    }     
+    }    
+
+    $rootScope.currentLocation = {
+      lat: undefined,
+      lon: undefined
+    } 
 
     $rootScope.alreadyLike = function(adsID){
       return _.indexOf($rootScope.user.adsLikes,adsID) >=0;
@@ -79,13 +84,16 @@
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
       //alert(toState.name);
-      if (toState.name === 'home') {
-        toState.templateUrl = '/web/index_content.html';
-      }else{
-        if(!toState.templateUrl)
+      // if (toState.name === 'home') {
+      //   alert('aaaa');
+      //   toState.templateUrl = '/web/index_content.html';
+      // }else{
+      //   if(!toState.templateUrl)
+      //     toState.templateUrl = '/web/'+toState.name+'.html';
+      //   //toState.templateUrl = '/web/marker.html';
+      // }
+      if(!toState.templateUrl)
           toState.templateUrl = '/web/'+toState.name+'.html';
-        //toState.templateUrl = '/web/marker.html';
-      }
         //if (toState.name === 'list') {
         //  alert(toState);
           
@@ -274,7 +282,7 @@
         // }
       }).state('home', {
         url: "/index.html",
-        //templateUrl: "/web/index_content.html",
+        templateUrl: "/web/index_content.html",
         controller: "MainCtrl",
         controllerAs: 'mc',
         resolve: {
@@ -355,6 +363,17 @@
             return result;
           }
         }
+      }).state('mhome', {
+        url: "/mobile/index.html",
+        templateUrl: "/web/mobile/index_content.html",
+        controller: "MobileHomeCtrl",
+        controllerAs: 'mhc',
+      })
+      .state('msearch', {
+        url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+        templateUrl: "/web/mobile/list.html",
+        controller: "MobileSearchCtrl",
+        controllerAs: 'mhc',
       })
     });
   bds.factory('socket', function (socketFactory) {

@@ -12,5 +12,9 @@ module.exports = {
   validation: {
     username: /^[a-zA-Z0-9]{6,12}$/,
     password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,12}$/
+  },
+  onepay : {
+    secret : "iv9wvzqvy9bhpk1xv7w2hol9qbzsw1i4",
+    access_key: "89drdkir1hsi8uie7uuq"
   }
 };

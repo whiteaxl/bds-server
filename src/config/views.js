@@ -124,15 +124,15 @@ var hapiReact = require('hapi-react-views');
       },
       config: { auth: false }
     },
-    // {
-    //   method: 'GET',
-    //   path: '/web/dist/{param*}',
-    //   handler: {
-    //     directory: {
-    //       path: Path.join(__dirname, '../web/dist')          
-    //     }
-    //   }
-    // },
+    {
+      method: 'GET',
+      path: '/web/mobile/{param*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, '../web/mobile')          
+        }
+      }
+    },
     {
       method: 'GET',
       path: '/src/lib/{param*}',

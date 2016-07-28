@@ -61,6 +61,7 @@
     <!--[if lt IE 9]>
     <script type="text/javascript" src="asset/js/respond.src.min.js"></script>
     <![endif]-->
+    
     <script src="/web/asset/js/common.min.js"></script>
     <!-- //Script -->    
     <script src="/web/dist/vendor.bundle.js"></script>
@@ -80,6 +81,16 @@
         window.onbeforeunload = function () {
             localStorage.removeItem("ngStorage-relandToken");
         }; 
+        /*var md = new MobileDetect(window.navigator.userAgent);
+        if(md.mobile()){
+            alert(window.location.href);
+            //var webIdx = window.location.href.indexOf("/web/");
+            //idText1 = idText.replace(/_/g, " ");
+            var mobileUrl = window.location.href.replace("/web/","/web/mobile/");
+            window.location.href = mobileUrl;
+
+        }*/
+        
     </script>
     
     

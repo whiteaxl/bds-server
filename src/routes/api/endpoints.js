@@ -7,6 +7,8 @@ var userHandlers = require('./userHandlers');
 var newsHandlers = require('./newsHandlers');
 var homeDataHandlers = require('./homeDataHandlers');
 
+var onepay = require("./onepayHandlers");
+
 //Joi is Hapi's validation library
 Joi = require('joi');
 
@@ -548,12 +550,30 @@ internals.endpoints = [
       tags: ['api']
     }
   },
+
+  /*
+  Sample "query" object:
+   { loaiTin: 0,
+   giaBETWEEN: [ 0, 9999999 ],
+   soPhongNguGREATER: '0',
+   soTangGREATER: '0',
+   soPhongTamGREATER: '0',
+   dienTichBETWEEN: [ 0, 9999999 ],
+   place:
+   { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
+   relandTypeName: 'Tỉnh',
+   fullName: 'Hanoi',
+   radiusInKm: 0.5 },
+   limit: 200,
+   polygon: []
+   }
+   */
   {
     method: 'POST',
     path: '/api/homeData4App',
     handler: homeDataHandlers.homeData4App,
     config: {
-      description: 'Lay du lieu cho trang chu dua theo lan tim kiem cuoi cung',
+      description: 'Lay du lieu cho trang chu dua theo lan tim kiem cuoi cung. Se tra ve tat ca cac collection cho home',
       tags: ['api'],
       validate: {
         payload: {
@@ -597,7 +617,39 @@ internals.endpoints = [
       description: 'get list childs category',
       tags: ['api']
     }
-  }
+  },
+  {
+    method: 'GET',
+    path: '/api/1pay/SmsplusCharging',
+    handler: onepay.SmsplusCharging,
+    config: {
+      description: 'Nhan thong bao tu 1pay ve nap tien qua SmsPlus',
+      tags: ['api'],
+      /*
+      validate: {
+        payload: {
+          access_key: Joi.string(),
+          amount: Joi.string(),
+          command_code : Joi.string(),
+          error_code: Joi.string(),
+          error_message: Joi.string(),
+          mo_message: Joi.string(),
+          msisdn: Joi.string(),
+          request_id: Joi.string(),
+          request_time: Joi.string(),
+          signature: Joi.string()
+        }
+      },
+      */
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          sms: Joi.string(),
+          type: Joi.string()
+        })
+      }
+    }
+  },
 ];
 
 module.exports = internals;
