@@ -158,6 +158,31 @@ internals.findNewsDetail = function(req, reply) {
     }
 };
 
+internals.findCategoryByParentId = function(req, reply) {
+    var query = req.payload;
+    console.log("-----------hander: findCategoryByParentId");
+    var callback =(err,all) => {
+        if(err){
+            console.log("err: " + err);
+        } else{
+            if (!all)
+                all = [];
+            console.log("size:" + all.length);
+            console.log("Error:" + err);
+            reply({
+                length: all.length,
+                list: all
+            });
+        }
+    };
+    
+    if (!query.hasOwnProperty('catId')) {
+        reply(Boom.badRequest());
+    } else {
+        newsModel.findCategoryByParentId(query.catId, callback);
+    }
+};
+
 internals.increaseRating = function(req, reply) {
     var query = req.payload;
     console.log("-----------hander: increaseRating");

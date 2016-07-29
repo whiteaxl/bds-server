@@ -29,6 +29,10 @@
             findRootCategory: function(data){
                 var url = '/api/findRootCategory';
                 return $http.post(url,data);
+            },
+            findCategoryByParentId: function(data){
+                var url = '/api/findCategoryByParentId';
+                return $http.post(url,data);
             }
         };
     })

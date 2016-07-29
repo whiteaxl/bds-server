@@ -199,7 +199,7 @@ class UserModel {
         } else {
           //create on sync gateway, only can have phone or email
           let loginName=userDto.phone||userDto.email;
-          bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
+          bucket.counter(constant.DB_SEQ.User, 1, {initial: 0}, (err, res)=> {
             if (err) {
               callback(err, res);
             } else {

@@ -609,11 +609,19 @@ internals.endpoints = [
       }
     }
   },
-
+  {
+    method: 'POST',
+    path: '/api/findCategoryByParentId',
+    handler: newsHandlers.findCategoryByParentId,
+    config: {
+      description: 'get list childs category',
+      tags: ['api']
+    }
+  },
   {
     method: 'GET',
-    path: '/api/1pay/SmsplusCharging',
-    handler: onepay.SmsplusCharging,
+    path: '/api/1pay/smsplusCharging',
+    handler: onepay.smsplusCharging,
     config: {
       description: 'Nhan thong bao tu 1pay ve nap tien qua SmsPlus',
       tags: ['api'],
@@ -638,6 +646,73 @@ internals.endpoints = [
           status: Joi.number(),
           sms: Joi.string(),
           type: Joi.string()
+        })
+      }
+    }
+  },
+
+  //no need login, bcs acctually user lost...
+  {
+    method: 'POST',
+    path: '/api/1pay/scratchTopup',
+    handler: onepay.scratchTopup,
+    config: {
+      description: 'Nap tien tu the cao, sẽ thực hiện lưu db, rồi goi sang onepay api',
+      tags: ['api'],
+
+       validate: {
+         payload: {
+           type: Joi.string().description("Loại thẻ, nhận một trong các giá trị: viettel, mobifone, vinaphone, gate, vcoin, zing (*), vnmobile (*)"),
+           pin : Joi.string().description("Số pin của thẻ cào"),
+           serial: Joi.string().description("Serial của thẻ cào"),
+           userID : Joi.string().description("User thực hiện"),
+           deviceInfor : Joi.string().description("Thông tin về device: app.deviceModel, web.agent"),
+           clientType : Joi.string().description("app or web"),
+           startDateTime : Joi.number().description("Thời điểm call từ client")
+         }
+       },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.string().description("mã trạng thái"),
+          transId: Joi.string().description("mã giao dịch do 1pay cung cấp"),
+          transRef: Joi.string().description("mã giao dịch do merchant đăng ký"),
+          serial: Joi.string().description("số serial"),
+          amount: Joi.number().description("giá trị giao dịch"),
+          description: Joi.string().description("mô tả trạng thái giao dịch"),
+        })
+      }
+    }
+  },
+
+  //no need login, bcs acctually user lost...
+  //http://localhost:5000/api/1pay/scratchDelayHandler?trans_ref=ScratchTopup_1&amount=50000&type=viettel&request_time=2015-10-02T15:43:50Z&serial=123&status=0&trans_id=456
+  {
+    method: 'GET',
+    path: '/api/1pay/scratchDelayHandler',
+    handler: onepay.scratchDelayHandler,
+    config: {
+      description: 'Đăng ký nhận trạng thái thẻ trễ (dành cho thẻ lỗi).',
+      tags: ['api'],
+
+      /*
+      validate: {
+        payload: {
+          amount: Joi.string().description("Giá trị thẻ nạp"),
+          type : Joi.string().description("Loại thẻ, Là 1 trong các loại thẻ: viettel, mobifone, vinaphone, gate, vcoin, zing, vnmobile"),
+          request_time: Joi.string().description("Thời gian user nạp thẻ, ở dạng iso, ví dụ: 2015-10-02T15:43:50Z."),
+          serial : Joi.string().description("Mã serial của thẻ"),
+          status : Joi.string().description("Trạng thái xử lý, nhận giá trị: 1 – Thành công; 0 – Thất bại."),
+          trans_ref : Joi.string().description("Mã của giao dịch(là trans_ref của giao dịch ở trên trang tra cứu sản lượng)."),
+          trans_id : Joi.number().description("Mã giao dịch do 1pay cung cấp ở bước I.")
+        }
+      },
+      */
+
+      response: {
+        schema: Joi.object({
+          status: Joi.string().description("mã trạng thái: 00 thành công, khác 00 là lỗi"),
+          msg: Joi.string().description("mô tả trạng thái giao dịch"),
         })
       }
     }

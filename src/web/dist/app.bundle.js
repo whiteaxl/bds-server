@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6c745a3931ee1c4022f7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f072d5c25d90a5221ea5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -17962,7 +17962,7 @@
 	(function() {
 		'use strict';
 		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$q){
 			var vm = this;
 			//nhannc
 			$scope.loaiTin = 0;
@@ -18072,6 +18072,7 @@
 				});*/
 
 				//NhanNc add menu Tin tuc
+				console.log("---------nhannc--------------initHomeCtrl");
 				if(!menuHasContainsNewsCategory()){
 					var danhMucCategory =  {
 						label: "Tin tức",
@@ -18081,16 +18082,40 @@
 					};
 
 					NewsService.findRootCategory().then(function(res){
-						var result = [];
 						if(res.data.list){
-							for (var i = 0; i < res.data.list.length; i++) {
-								danhMucCategory.items.push({value: {menuType : 1, rootCatId : res.data.list[i].cat_id}, label: res.data.list[i].cat_name});
+							$scope.listCat = [];
+							angular.forEach(res.data.list, function (myItem) {
+								//var deferred = $q.defer();
+								var cat = {};
+								/*
+								setTimeout(function () {
+									deferred.resolve(myItem);
+									console.log('long-running operation inside forEach loop done');
+								}, 2000);*/
+								cat.value = {menuType : 1, rootCatId : myItem.cat_id};
+								cat.label = myItem.cat_name;
+								var data = {
+									catId : myItem.cat_id
+								};
+								NewsService.findCategoryByParentId(data).then(function(res) {
+									if(res.data.list){
+										cat.items = [];
+										for (var i = 0; i < res.data.list.length; i++) {
+											cat.items.push({value: {menuType : 1, rootCatId : res.data.list[i].cat_id}, label: res.data.list[i].cat_name});
+										}
+									}
+								})
+								$scope.listCat.push(cat);
+							});
+							if($scope.listCat.length >0){
+								for (var i = 0; i < $scope.listCat.length; i++) {
+									danhMucCategory.items.push($scope.listCat[i]);
+								}
 							}
+							$rootScope.menuitems.push(danhMucCategory);
+							console.log($rootScope.menuitems);
 						}
-						console.log("---------listCategory moi-------: " + $scope.listCategory.length);
-						console.log($scope.listCategory);
 					});
-					$rootScope.menuitems.push(danhMucCategory);
 				}
 				//NhanNc add menu Tin tuc
 
@@ -20367,6 +20392,10 @@
 	            },
 	            findRootCategory: function(data){
 	                var url = '/api/findRootCategory';
+	                return $http.post(url,data);
+	            },
+	            findCategoryByParentId: function(data){
+	                var url = '/api/findCategoryByParentId';
 	                return $http.post(url,data);
 	            }
 	        };
@@ -36929,6 +36958,11 @@
 	internals.FORMAT = {
 	  DATE_IN_DB : 'YYYYMMDD',
 	  DATE_IN_GUI : 'DD/MM/YYYY'
+	};
+
+	internals.DB_SEQ = {
+	  ScratchTopup: "idGeneratorForScratchTopup",
+	  User : "idGeneratorForUsers"
 	};
 
 	if (typeof(window) !== 'undefined')
