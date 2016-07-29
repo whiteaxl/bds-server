@@ -37,6 +37,11 @@ internals.FORMAT = {
   DATE_IN_GUI : 'DD/MM/YYYY'
 };
 
+internals.DB_SEQ = {
+  ScratchTopup: "idGeneratorForScratchTopup",
+  User : "idGeneratorForUsers"
+};
+
 if (typeof(window) !== 'undefined')
    window.RewayConst = internals;
 module.exports  = internals;
