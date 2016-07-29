@@ -45,6 +45,7 @@ require("./src/web/app/mobile/MobileDetailCtrl.js");
 
 
 require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");
+require("./src/web/common/directives/mobile/BdsMobileFilterDirective.js");
 
 
 
