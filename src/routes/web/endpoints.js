@@ -129,9 +129,21 @@ internals.endpoints = [
 	handler: function(requet,reply){
 		var md = new MobileDetect(requet.headers['user-agent']);
 		if(md.mobile()){			
-			reply.view('mobile/index.html');
+			reply.redirect(convertMobilePath(requet));
 		}else{
 			reply.view('index.html');
+		}
+	}
+}
+,{ 
+	method: 'GET',
+	path: '/web/mobile/detail/{p*}', 
+	handler: function(requet,reply){
+		var md = new MobileDetect(requet.headers['user-agent']);
+		if(md.mobile()){			
+			reply.view('mobile/index.html');
+		}else{
+			reply.redirect(convertDesktopPath(requet));
 		}
 	}
 },

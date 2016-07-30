@@ -37,6 +37,9 @@
 		        x.innerHTML = "Geolocation is not supported by this browser.";
 		    }
 		}
+		vm.goDetail = function(ads){
+			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
+		}
 		vm.getLocation();
 		
 	});

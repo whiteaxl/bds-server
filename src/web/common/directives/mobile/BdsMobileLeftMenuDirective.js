@@ -26,6 +26,19 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 vm.profile = function(){
                     $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
                 }
+                vm.signout = function(){
+                    $localStorage.relandToken = undefined;
+                    $rootScope.user.userName = undefined;
+                    $scope.$bus.publish({
+                      channel: 'login',
+                      topic: 'logged out',
+                      data: {}
+                    });
+                    socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
+                        console.log("disconect socket user " + $rootScope.user.userName);
+                    });
+
+                }
             }
         ],
         controllerAs: "mmn"

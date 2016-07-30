@@ -26,11 +26,45 @@
       adsLikes: [],
       lastSearch: null
     }    
+    $rootScope.pageSize = 25;
+
+    $rootScope.searchData = {
+      giaBETWEEN: [0,9999999999999],
+      "loaiTin": 0,
+      "loaiNhaDat": 0, 
+      "loaiNhaDats": [],
+      "soPhongNguGREATER": 0,
+      "soPhongTamGREATER": 0,
+      "soTangGREATER": 0,
+      "dienTichBETWEEN": [0,99999999999999],
+      "huongNha": 0,
+      "huongNhas": [],
+      "radiusInKm": 0.1,
+      "userID": $rootScope.user.userID,
+      //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+      "limit": $rootScope.pageSize,
+      "orderBy": 0,
+      "pageNo": 1
+    }
+    //mobile login box controll
+
+    $rootScope.ENTER_EMAIL = 1;
+    $rootScope.ENTER_PASSWORD = 2;
+    $rootScope.LOGGED_IN = 3;
+    $rootScope.FORGOT_PASSWORD = 4;
+    $rootScope.SENT_PASSWORD = 5;
+    $rootScope.RESET_PASSWORD = 6;
+
+    $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
 
     $rootScope.currentLocation = {
       lat: undefined,
       lon: undefined
     } 
+    $rootScope.signin = function(){
+      
+    }
+    //end mobild login box controll
 
     $rootScope.alreadyLike = function(adsID){
       return _.indexOf($rootScope.user.adsLikes,adsID) >=0;
@@ -84,11 +118,15 @@
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
       //alert(toState.name);
-      // if (toState.name === 'home') {
-      //   alert('aaaa');
-      //   toState.templateUrl = '/web/index_content.html';
-      // }else{
-      //   if(!toState.templateUrl)
+      // if (toState.name === 'msearch') {
+      //   if(toParams.viewMode == "list"){
+      //     toState.templateUrl = '/web/mobile/list.html';  
+      //   }else{
+      //     toState.templateUrl = '/web/mobile/maps.html';
+      //   }
+      // }
+      //else{
+      //   if(!toState.templateUrl)ss
       //     toState.templateUrl = '/web/'+toState.name+'.html';
       //   //toState.templateUrl = '/web/marker.html';
       // }
@@ -371,9 +409,14 @@
       })
       .state('msearch', {
         url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-        templateUrl: "/web/mobile/list.html",
+        templateUrl: "/web/mobile/search.html",
         controller: "MobileSearchCtrl",
-        controllerAs: 'mhc',
+        controllerAs: 'msc',
+      }).state('mdetail', {
+        url: "/mobile/detail/:adsID",
+        templateUrl: "/web/mobile/detail.html",
+        controller: "MobileDetailCtrl",
+        controllerAs: 'mdt'
       })
     });
   bds.factory('socket', function (socketFactory) {

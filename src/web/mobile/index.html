@@ -7,7 +7,7 @@
 	
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
 	<link href="/web/mobile/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="/web/mobile/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/web/mobile/css/jquery-ui.min.css">
     <link href="/web/mobile/css/style.min.css" rel="stylesheet" type="text/css" />
 
@@ -17,6 +17,7 @@
     <script src="/web/mobile/js/hammer.min.js"></script>
 	<script src="/web/mobile/js/hammer.fakemultitouch.js"></script>
     <script src="/web/mobile/js/drum.min.js"></script>
+    <script src="/web/mobile/js/toggles.min.js"></script>
 	
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEtJjxukkhEkNXUjTTTrbjauF2zwY4cUs&libraries=places" ></script>
 
@@ -28,9 +29,17 @@
     <script src="/web/dist/app.bundle.js"></script>
 
     <base href="/web/">
+    <style type="text/css">
+    .ngmap {
+            height: 100%;
+            width: 100%;
+    }
+    </style>
     
 </head>
 <body class="hfixed header">
-	<div ui-view></div>     
+	<div ui-view></div>
+    
+    <bds-mobile-login-form></bds-mobile-login-form>
 </body>
 </html>

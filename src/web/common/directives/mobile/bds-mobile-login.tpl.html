@@ -1,0 +1,33 @@
+<div class="modal fade modal-msg" id="loginBox" tabindex="-1" role="dialog" aria-labelledby="loginBoxLabel">
+    <div class="modal-dialog" role="document" ng-if="mlc.state==mlc.ENTER_EMAIL">
+        <div class="modal-content">
+            <div class="modal-header border-none">
+                <button type="button" class="close pull-right datetime" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconCancel"></span></button>
+            </div>
+            <div class="modal-body uln">
+                <div class="login-page text-center fr">
+                    <h4>Đăng nhập hoặc đăng ký để lưu nhà, chat và đăng tin</h4>
+                    <div class="form-group"><input type="text" ng-model="mlc.email" class="form-control" placeholder="Nhập email hoặc số điện thoại"></div>
+                    <div class="form-group"><input ng-click="mlc.signin();" type="button" value="Thực hiện" class="btn btn-block btn-primary" /></div>
+                    <div class="form-group">Hoặc đăng nhập với <a href="#" class="fb"><i class="iconFacebook"></i></a></div>
+                    <a href="#" class="datetime">Tôi đồng ý với điều khoản sử dụng của Reland</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-dialog" role="document" ng-if="mlc.state==mlc.ENTER_PASSWORD">
+        <div class="modal-content">
+            <div class="modal-header border-none">
+                <button type="button" class="close pull-right datetime" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconCancel"></span></button>
+            </div>
+            <div class="modal-body uln">
+                <div class="login-page text-center fr">
+                    <h4>Chào mừng bạn đã quay trở lại</h4>
+                    <div class="form-group"><input type="password" class="form-control" ng-model="mlc.password" placeholder="Nhập mật khẩu"></div>
+                    <div class="form-group"><input type="button" ng-click="mlc.signin();" value="Thực hiện" class="btn btn-block btn-primary" /></div>
+                    <a href="#" class="txtBlack">Quên mật khẩu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

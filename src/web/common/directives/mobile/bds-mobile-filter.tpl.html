@@ -23,27 +23,27 @@
 	                <div class="price-box collapse-box">
 	                	<a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Mức giá <span><label id="prices2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="priceBox spinner spinner-hide">
-	                    	<select id="prices1" class="drum">
+	                    	<select id="prices1" ng-model="vm.searchData.giaBETWEEN[0]" class="drum">
 	                        	<option selected value="0">0</option>
 	                            <option value="1">1 tỷ</option>
 	                            <option value="2">2 tỷ</option>
 	                            <option value="3">3 tỷ</option>
 	                            <option value="5">5 tỷ</option>
-	                            <option value="6">7 tỷ</option>
-	                            <option value="7">10 tỷ</option>
-	                            <option value="8">20 tỷ</option>
-	                            <option value="9">30 tỷ</option>
+	                            <option value="7">7 tỷ</option>
+	                            <option value="10">10 tỷ</option>
+	                            <option value="20">20 tỷ</option>
+	                            <option value="30">30 tỷ</option>
 	                        </select>
-	                        <select id="prices2" class="drum">
-	                        	<option selected value="p0">Bất kỳ</option>
-	                            <option value="p1">1 tỷ</option>
-	                            <option value="p2">2 tỷ</option>
-	                            <option value="p3">3 tỷ</option>
-	                            <option value="p4">5 tỷ</option>
-	                            <option value="p5">7 tỷ</option>
-	                            <option value="p6">10 tỷ</option>
-	                            <option value="p7">20 tỷ</option>
-	                            <option value="p8">30 tỷ</option>
+	                        <select id="prices2" ng-model="vm.searchData.giaBETWEEN[1]" class="drum">
+	                        	<option selected value="999999999999999">Bất kỳ</option>
+	                            <option value="1">1 tỷ</option>
+	                            <option value="2">2 tỷ</option>
+	                            <option value="3">3 tỷ</option>
+	                            <option value="5">5 tỷ</option>
+	                            <option value="7">7 tỷ</option>
+	                            <option value="10">10 tỷ</option>
+	                            <option value="20">20 tỷ</option>
+	                            <option value="30">30 tỷ</option>
 	                        </select>
 	                    </div>
 	                </div>
@@ -92,7 +92,7 @@
 	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(4)" id="bathroom4" value="4" autocomplete="off" ng-value="mf.searchData.spt">4+
 	                        </label>
 	                        <label class="btn">
-	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(5)" id="bathroom5" value="1=5" autocomplete="off" ng-value="mf.searchData.spt">5+
+	                        	<input type="radio" ng-click="mf.setSearchDataSpt(5)" id="bathroom5" value="1=5" autocomplete="off" ng-value="mf.searchData.spt">5+
 	                        </label>
 	                    </div>
 	                </div>

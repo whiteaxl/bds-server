@@ -44,8 +44,11 @@ require("./src/web/app/mobile/MobileSearchCtrl.js");
 require("./src/web/app/mobile/MobileDetailCtrl.js");
 
 
+
 require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileFilterDirective.js");
+require("./src/web/common/directives/mobile/BdsMobileHeaderDirective.js");
+require("./src/web/common/directives/mobile/BdsMobileLoginDirective.js");
 
 
 

@@ -1,0 +1,178 @@
+<bds-mobile-left-menu></bds-mobile-left-menu>
+<bds-mobile-filter></bds-mobile-filter>
+<bds-mobile-header></bds-mobile-header>
+
+<div ng-if="msc.viewMode=='list'" class="wapper">
+    <div class="reland-box uln">
+        <ul class="reland-list full">
+            <li ng-repeat="ads in msc.ads_list track by $index" ng-click="msc.goDetail($event,$index)">
+                <a href="#" class="heart"><i class="icon-heart"></i></a>
+                <a href="#">
+                    <span class="img" style="background-image:url({{ads.image.cover}})"></span>
+                    <span class="des bgOpa">
+                        <span class="price">{{ads.giaFmt}}</span>
+                        <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
+                        <span class="split text-center">.</span>
+                        <span>{{ads.soPhongNguFmt}}</span>
+                        <span class="split"></span>
+                        <span>{{ads.soTangFmt}}</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="clb ovh"></div>
+    </div>
+    <!--END-->
+    
+</div>
+
+<div ng-if="msc.viewMode=='map'" class="wapper">
+    <div class="maps">
+        <ng-map center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}" class="ngmap">
+        <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
+            <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
+                 id="m_{{$index}}" >
+              <div>
+                {{m.content}} 
+              </div>
+            </custom-marker>
+            <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
+                
+            <street-view-panorama
+              click-to-go="false"
+              disable-default-u-i="false"
+              disable-double-click-zoom="false"
+              pov="{heading: heading, pitch: pitch}"
+              scrollwheel="false"
+              enable-close-button="true"
+              visible="false">
+            </street-view-panorama>    
+            <!-- </marker> -->
+
+            
+
+            <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
+                <div ng-non-bindable="">
+                    id: {{$index}}<br/>
+                    name: {{msc.highlightAds.name}}<br/>
+
+                    <a href="#">Click Here</a>
+                </div>
+            </info-window> -->
+        </ng-map>    
+    </div>
+</div>
+
+<div ng-if="msc.viewMode =='list'" class="bottom clb ovh uln">
+    <div class="app">
+        <h5>Reland App (IOS/Android)</h5>
+        <ul>
+            <li><a href="/"><i class="iconHome gray"></i> Reland App</a></li>
+        </ul>
+    </div>
+    <div class="copyright">
+        <p>
+            <a href="#">Phiên bản Desktop</a> | 
+            <a href="#">Câu hỏi thường gặp</a> | 
+            <a href="#">Điểu khoản sử dụng</a>
+        </p>
+        <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
+    </div>
+</div>
+
+<footer class="main border uln">
+    <ul class="navmain nav-3 blue">
+        <li>
+            <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a>
+            <div class="list-sort popovers top uln">
+                <ul>
+                    <li><a href="javascript:void(0)" class="active">Mặc định</a></li>
+                    <li><a href="javascript:void(0)">Ngày đăng</a></li>
+                    <li><a href="javascript:void(0)">Giá (giảm dần)</a></li>
+                    <li><a href="javascript:void(0)">Giá (tăng dần)</a></li>
+                    <li><a href="javascript:void(0)">Số phòng ngủ</a></li>
+                    <li><a href="javascript:void(0)">Số phòng tắm</a></li>
+                    <li><a href="javascript:void(0)">Diện tích</a></li>
+                </ul>
+            </div>
+        </li>
+        <li><a role="button" data-toggle="modal" data-target="#saveBox"><i class="fa fa-hdd-o"></i> Lưu tìm kiếm</a></li>
+        <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#"><i class="iconMap"></i> Bản đồ</a></li>
+        <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#"><i class="iconMap"></i> Danh sách</a></li>
+    </ul>
+</footer>
+
+<div class="overlay"></div>
+
+<div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="typeBoxLabel">Loại nhà đất</h4>
+            </div>
+            <div class="modal-body uln">
+                <ul class="type-list">
+                    <li><a href="#" class="active">Tất cả các loại</a></li>
+                    <li><a href="#">Loại nhà đất 1</a></li>
+                    <li><a href="#">Loại nhà đất 2</a></li>
+                    <li><a href="#">Loại nhà đất 3</a></li>
+                    <li><a href="#">Loại nhà đất 4</a></li>
+                    <li><a href="#">Loại nhà đất 5</a></li>
+                    <li><a href="#">Loại nhà đất 6</a></li>
+                    <li><a href="#">Loại nhà đất 7</a></li>
+                    <li><a href="#">Loại nhà đất 8</a></li>
+                    <li><a href="#">Loại nhà đất 9</a></li>
+                    <li><a href="#">Loại nhà đất 10</a></li>
+                    <li><a href="#">Loại nhà đất 11</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-choose" id="trendBox" tabindex="-1" role="dialog" aria-labelledby="trendBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="trendBoxLabel">Hướng nhà</h4>
+            </div>
+            <div class="modal-body uln">
+                <ul class="type-list">
+                    <li><a href="#" class="active">Tất cả các loại</a></li>
+                    <li><a href="#">Hướng nhà 1</a></li>
+                    <li><a href="#">Hướng nhà 2</a></li>
+                    <li><a href="#">Hướng nhà 3</a></li>
+                    <li><a href="#">Hướng nhà 4</a></li>
+                    <li><a href="#">Hướng nhà 5</a></li>
+                    <li><a href="#">Hướng nhà 6</a></li>
+                    <li><a href="#">Hướng nhà 7</a></li>
+                    <li><a href="#">Hướng nhà 8</a></li>
+                    <li><a href="#">Hướng nhà 9</a></li>
+                    <li><a href="#">Hướng nhà 10</a></li>
+                    <li><a href="#">Hướng nhà 11</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-msg" id="saveBox" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body uln">
+                <div class="text-center">
+                    <h3>Tên tìm kiếm cần lưu</h3>
+                    <p>Ví dụ: Gần chỗ làm, gần bệnh viện...</p>
+                </div>
+                <input type="text" class="form-control" placeholder="Quận Hà Đông, Hà Nội" />
+            </div>
+            <div class="modal-footer">
+                <a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
+                <a href="#">Lưu lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/web/mobile/js/javascript.min.js"></script>

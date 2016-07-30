@@ -1,10 +1,6 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter></bds-mobile-filter>
-<header class="main blue">
-    <a href="javascript:void(0)" class="nav_mobile header-icon"><i class="iconMenu"></i></a>
-    <span>Trang chủ</span>
-    <a href="javascript:void(0)" class="search_mobile header-icon"><i class="iconSearch"></i></a>
-</header>
+<bds-mobile-header></bds-mobile-header>
 <div class="reland-title fixed">
 	<h4></h4>
     <h3></h3>
@@ -18,7 +14,7 @@
             <h5>{{bst.title2}}</h5>
         </div>
         <ul class="reland-list full-3">
-        	<li ng-repeat="ads in bst.data">
+        	<li ng-repeat="ads in bst.data" ng-click="mhc.goDetail(ads)">
             	<a href="#" class="heart"><i class="icon-heart"></i></a>
             	<a href="#">
                 	<span class="img" style="background-image:url({{ads.cover}})"></span>
