@@ -26,42 +26,7 @@
     
 </div>
 
-<div ng-if="msc.viewMode=='map'" class="wapper">
-    <div class="maps">
-        <ng-map center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}" class="ngmap">
-        <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-            <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
-                 id="m_{{$index}}" >
-              <div>
-                {{m.content}} 
-              </div>
-            </custom-marker>
-            <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
-                
-            <street-view-panorama
-              click-to-go="false"
-              disable-default-u-i="false"
-              disable-double-click-zoom="false"
-              pov="{heading: heading, pitch: pitch}"
-              scrollwheel="false"
-              enable-close-button="true"
-              visible="false">
-            </street-view-panorama>    
-            <!-- </marker> -->
 
-            
-
-            <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
-                <div ng-non-bindable="">
-                    id: {{$index}}<br/>
-                    name: {{msc.highlightAds.name}}<br/>
-
-                    <a href="#">Click Here</a>
-                </div>
-            </info-window> -->
-        </ng-map>    
-    </div>
-</div>
 
 <div ng-if="msc.viewMode =='list'" class="bottom clb ovh uln">
     <div class="app">
@@ -77,6 +42,42 @@
             <a href="#">Điểu khoản sử dụng</a>
         </p>
         <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
+    </div>
+</div>
+<div  class="wapper">
+    <div class="maps">
+        <ng-map ng-if="msc.viewMode=='map' || msc.initMap==true" id="searchmap" center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"  class="ngmap">
+        <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
+            <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
+                 id="m_{{$index}}" >
+              <div>
+                {{m.content}} 
+              </div>
+            </custom-marker>
+            <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
+                
+            <!-- <street-view-panorama
+              click-to-go="false"
+              disable-default-u-i="false"
+              disable-double-click-zoom="false"
+              pov="{heading: heading, pitch: pitch}"
+              scrollwheel="false"
+              enable-close-button="true"
+              visible="false">
+            </street-view-panorama>   -->  
+            <!-- </marker> -->
+
+            
+
+            <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
+                <div ng-non-bindable="">
+                    id: {{$index}}<br/>
+                    name: {{msc.highlightAds.name}}<br/>
+
+                    <a href="#">Click Here</a>
+                </div>
+            </info-window> -->
+        </ng-map>    
     </div>
 </div>
 

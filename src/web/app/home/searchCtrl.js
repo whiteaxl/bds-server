@@ -569,6 +569,11 @@
         	google.maps.event.addListener(map, "dragend", function() {
 				vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
 				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+				vm.marker = {
+	    			id: -1,
+	    			coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+	    			content: 'you are here'
+	    		};
 	          	vm.search();
 	        });
 

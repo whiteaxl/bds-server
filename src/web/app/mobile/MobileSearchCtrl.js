@@ -17,12 +17,12 @@
 		// vm.zoomMode = "auto";
 		vm.ads_list = [];
 		$scope.center = "Hanoi Vietnam";
-		vm.zoomMode = "auto";
+		vm.zoomMode = "false";
 		vm.placeId = $state.params.place;
 		vm.loaiTin = $state.params.loaiTin;
 		vm.loaiNhaDat = $state.params.loaiNhaDat;
 		vm.viewMode = $state.params.viewMode;
-
+		vm.initMap = true;
 		
 		vm.showList = function(){
 			vm.viewMode = "list";
@@ -164,9 +164,9 @@
             });
         }
 
-		vm.search = function(){
+		vm.search = function(callback){
             var googlePlace = $rootScope.searchData.place;
-            vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(googlePlace);
+            vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(vm.place);
             vm.diaChinh.tinhKhongDau = vm.diaChinh.tinh;
             vm.diaChinh.huyenKhongDau = vm.diaChinh.huyen;
             vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
@@ -193,6 +193,13 @@
                 $rootScope.searchData.geoBox = undefined;
             }
             $rootScope.searchData.userID = $rootScope.user.userID;
+            if($rootScope.searchData.place.geometry)
+            	vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
+            else{
+            	//vm.zoomMode = "auto";
+            	// vm.map.setCenter($scope.center,10);
+            }
+
             HouseService.countAds($rootScope.searchData).then(function(res){
                 vm.totalResultCounts = res.data.countResult;
                 $scope.markers =[];
@@ -208,18 +215,20 @@
                     vm.lastPageNo = 0;
                     vm.startPageNo = 0;
                 }
-                vm.searchPage(1,null);
+                vm.searchPage(1,callback);
             });
             // vm.searchPage(1,null);
         }
 
         //vm.search();
 
-        NgMap.getMap().then(function(map){
+        NgMap.getMap('searchmap').then(function(map){
         	vm.map = map;        	
             google.maps.event.addListener(map, "dragend", function() {
-				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+            	//alert(vm.map.getBounds());
+				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				//alert($rootScope.searchData.geoBox);
+				$scope.center = "["+vm.map.getCsssssenter().lat() +"," +vm.map.getCenter().lng() +"]";
 				vm.marker = {
 					id: -1,
 					coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
@@ -227,14 +236,34 @@
 				};
 				// $scope.$apply();
 	          	vm.search();
+	   			//alert('dragend');
+	   			//alert($rootScope.searchData.geoBox);
 	        });
-            window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
+
+	        google.maps.event.addListener(map, "zoom_changed", function() {
+	   //      	$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				// $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+				// vm.marker = {
+				// 	id: -1,
+				// 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+				// 	content: 'you are here'
+				// };
+				// // $scope.$apply();
+	   //        	vm.search();
+	   			//alert('zoom_changed');
+	   			//alert($rootScope.searchData.geoBox);
+	        });
+
+
+	        
+            // window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
             vm.PlacesService =  new google.maps.places.PlacesService(map);
             if(vm.placeId){
                 vm.PlacesService.getDetails({
                     placeId: vm.placeId
                 }, function(place, status) {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    	vm.place = place;
                         $rootScope.searchData.place = place;
                         //var map = $scope.map.control.getGMap();
                         var current_bounds = map.getBounds();
@@ -254,7 +283,11 @@
 							content: 'you are here'
 						};
                         $scope.$apply();
-                        vm.search();
+                        vm.search(function(){
+                        	if(vm.viewMode=="list"){
+                        		vm.initMap = false;
+                        	}
+                        });
                     }
                 });
             }            

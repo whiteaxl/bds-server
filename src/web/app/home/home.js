@@ -39,7 +39,7 @@
       "dienTichBETWEEN": [0,99999999999999],
       "huongNha": 0,
       "huongNhas": [],
-      "radiusInKm": 0.1,
+      "radiusInKm": 2,
       "userID": $rootScope.user.userID,
       //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
       "limit": $rootScope.pageSize,
@@ -62,7 +62,7 @@
       lon: undefined
     } 
     $rootScope.signin = function(){
-      
+
     }
     //end mobild login box controll
 
@@ -417,6 +417,11 @@
         templateUrl: "/web/mobile/detail.html",
         controller: "MobileDetailCtrl",
         controllerAs: 'mdt'
+      }).state('mchats', {
+        url: "/mobile/chats/:adsID",
+        templateUrl: "/web/mobile/chats.html",
+        controller: "MobileChatCtrl",
+        controllerAs: 'mcc'
       })
     });
   bds.factory('socket', function (socketFactory) {

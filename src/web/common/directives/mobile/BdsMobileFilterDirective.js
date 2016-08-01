@@ -68,7 +68,14 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
                 
                 vm.gotoSearchPage = function(event){
-                    $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
+                    //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
+                    if(!vm.place)
+                        vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
+                    $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
                     $(".overlay").click();
                 }
                 vm.gotoRelandApp = function(event){
@@ -77,6 +84,16 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.profile = function(){
                     $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
                 }
+                vm.selectPlaceCallback = function(place){
+                    vm.place = place;
+                }
+
+                NgMap.getMap("filtermap").then(function(map){
+                    vm.map = map;           
+                    window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
+                    vm.PlacesService =  new google.maps.places.PlacesService(map);                                
+                });
+
             }
         ],
         controllerAs: "mf"

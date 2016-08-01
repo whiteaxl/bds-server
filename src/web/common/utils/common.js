@@ -53,7 +53,7 @@ window.RewayClientUtils = (function($) {
 			        service.getDetails({
 			        	placeId: ui.item.place_id
 			        }, function(place, status) {
-			        	if (status === google.maps.places.PlacesServiceStatus.OK) {
+			        	if (status === google.maps.places.PlacesServiceStatus.OK && callback) {
 			        		callback(place);
 			        	}
 			        });

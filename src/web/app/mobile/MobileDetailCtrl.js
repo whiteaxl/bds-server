@@ -98,7 +98,10 @@
 
 
 			vm.goDetail = function(adsID){
-        		$state.go('detail', { "adsID" : adsID}, {location: true});
+        		$state.go('mdetail', { "adsID" : adsID}, {location: true});
+        	}
+        	vm.goChats = function(){
+        		$state.go('mchats', { "adsID" : vm.ads.adsID}, {location: true});
         	}
 		});
 		
