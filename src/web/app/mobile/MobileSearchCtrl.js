@@ -228,7 +228,7 @@
             	//alert(vm.map.getBounds());
 				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
 				//alert($rootScope.searchData.geoBox);
-				$scope.center = "["+vm.map.getCsssssenter().lat() +"," +vm.map.getCenter().lng() +"]";
+				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 				vm.marker = {
 					id: -1,
 					coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},

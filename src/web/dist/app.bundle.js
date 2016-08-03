@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b2cfabd4057e398fb45b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "12d79f94a7a1c080d868"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21615,7 +21615,7 @@
 	            	//alert(vm.map.getBounds());
 					$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
 					//alert($rootScope.searchData.geoBox);
-					$scope.center = "["+vm.map.getCsssssenter().lat() +"," +vm.map.getCenter().lng() +"]";
+					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 					vm.marker = {
 						id: -1,
 						coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
