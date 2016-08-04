@@ -1,5 +1,7 @@
 <header class="main blue">
-    <a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
-    <span>Quận Hà Đông - Hà Nội</span>
-    <a href="javascript:void(0)" ng-click="mhdr.toggleFilter();" class="search_mobile header-icon"><i class="iconSearch"></i></a>
+ 	<a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
+	<a href="javascript:void(0)" class="pull-left"><img src="/web/mobile/img/logo.png" /></a>
+	<span ng-if="mhdr.page=='list'">Quận Hà Đông - Hà Nội</span>
+	<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><i class="iconChat"></i></a>
+    <a href="javascript:void(0)" ng-click="mhdr.toggleFilter();" class="search_mobile header-icon"><i class="iconSearch"></i></a>    
 </header>

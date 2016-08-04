@@ -29,6 +29,7 @@ bucket.operationTimeout = 120 * 1000;
   "image": "http://file1.batdongsan.com.vn/thumb200x150.365519.jpg",
   "ten": "2T Corporation",
   "tenKhongDau": "2t-corporation",
+  "soTinDang": 100
   "type": "DuAn"
 }
 */
@@ -63,6 +64,9 @@ class DuAnModel {
         }
         if(q.tinhKhongDau) {
         	sql = sql + " and t.diaChinh.tinhKhongDau='" + q.tinhKhongDau + "'";
+        }
+        if (q.orderBy) {
+            sql = sql + " ORDER BY " + q.orderBy.orderByField + "  " + q.orderBy.orderByType;
         }
         if (q.limit) {
             sql = sql + " limit  " + q.limit;

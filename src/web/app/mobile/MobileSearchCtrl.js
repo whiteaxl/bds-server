@@ -199,6 +199,7 @@
             	//vm.zoomMode = "auto";
             	// vm.map.setCenter($scope.center,10);
             }
+            $rootScope.lastSearch = $rootScope.searchData;
 
             HouseService.countAds($rootScope.searchData).then(function(res){
                 vm.totalResultCounts = res.data.countResult;

@@ -4,7 +4,7 @@
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
 		var vm = this;
 		var query = { loaiTin: 0,
-		   giaBETWEEN: [ 0, 9999999 ],
+		   //giaBETWEEN: [ 0, 9999999 ],
 		   soPhongNguGREATER: '0',
 		   soTangGREATER: '0',
 		   soPhongTamGREATER: '0',
@@ -13,7 +13,7 @@
 		   { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
 		   relandTypeName: 'Tỉnh',
 		   fullName: 'Hanoi',
-		   radiusInKm: 0.5 },
+		   radiusInKm: 20 },
 		   limit: 200,
 		   polygon: []
 	   	}
@@ -22,6 +22,8 @@
           query: query,
           currentLocation : undefined
         }
+        if($rootScope.lastSearch)
+        	homeDataSearch.query = $rootScope.lastSearch;
         vm.getLocation = function() {
 		    if (navigator.geolocation) {
 		        navigator.geolocation.getCurrentPosition(function(position){
@@ -34,13 +36,42 @@
 					});
 		        });
 		    } else {
-		        x.innerHTML = "Geolocation is not supported by this browser.";
+		        //x.innerHTML = "Geolocation is not supported by this browser.";
+		        HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					//alert(JSON.stringify(res));
+					vm.boSuuTap = res.data.data; 
+				});
 		    }
 		}
 		vm.goDetail = function(ads){
 			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
 		}
-		vm.getLocation();
+		
+
+		vm.init = function(){
+			vm.getLocation();
+			if($rootScope.currentLocation){
+				if($rootScope.lastSearch){
+					var queryNearBy = {}; 
+					Object.assign(queryNearBy, vm.query);
+					// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
+					// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
+    	// 				alert(diaChinh);
+    	// 			});
+					// queryNearBy.place
+				}else{
+
+				}
+
+			}else{
+				if($rootScope.lastSearch){
+
+				}
+
+			}
+		}
+		vm.init();
+
 		
 	});
 })();

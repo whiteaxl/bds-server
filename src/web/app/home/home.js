@@ -61,6 +61,8 @@
       lat: undefined,
       lon: undefined
     } 
+    $rootScope.lastSearch = undefined;
+
     $rootScope.signin = function(){
 
     }

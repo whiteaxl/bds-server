@@ -38,5 +38,6 @@ module.exports = function (grunt) {
 	});
 	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.registerTask('default', ['webpack','watch']);
 };

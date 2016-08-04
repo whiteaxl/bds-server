@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "12d79f94a7a1c080d868"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9bb7141b8d408d176bd8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -643,6 +643,7 @@
 	__webpack_require__(37);
 	__webpack_require__(38);
 	__webpack_require__(142);
+	// require("./src/lib/services.js");
 
 
 
@@ -1049,6 +1050,8 @@
 	      lat: undefined,
 	      lon: undefined
 	    } 
+	    $rootScope.lastSearch = undefined;
+
 	    $rootScope.signin = function(){
 
 	    }
@@ -21339,7 +21342,7 @@
 		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
 			var vm = this;
 			var query = { loaiTin: 0,
-			   giaBETWEEN: [ 0, 9999999 ],
+			   //giaBETWEEN: [ 0, 9999999 ],
 			   soPhongNguGREATER: '0',
 			   soTangGREATER: '0',
 			   soPhongTamGREATER: '0',
@@ -21348,7 +21351,7 @@
 			   { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
 			   relandTypeName: 'Tỉnh',
 			   fullName: 'Hanoi',
-			   radiusInKm: 0.5 },
+			   radiusInKm: 20 },
 			   limit: 200,
 			   polygon: []
 		   	}
@@ -21357,6 +21360,8 @@
 	          query: query,
 	          currentLocation : undefined
 	        }
+	        if($rootScope.lastSearch)
+	        	homeDataSearch.query = $rootScope.lastSearch;
 	        vm.getLocation = function() {
 			    if (navigator.geolocation) {
 			        navigator.geolocation.getCurrentPosition(function(position){
@@ -21369,13 +21374,42 @@
 						});
 			        });
 			    } else {
-			        x.innerHTML = "Geolocation is not supported by this browser.";
+			        //x.innerHTML = "Geolocation is not supported by this browser.";
+			        HouseService.homeDataForApp(homeDataSearch).then(function(res){
+						//alert(JSON.stringify(res));
+						vm.boSuuTap = res.data.data; 
+					});
 			    }
 			}
 			vm.goDetail = function(ads){
 				$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
 			}
-			vm.getLocation();
+			
+
+			vm.init = function(){
+				vm.getLocation();
+				if($rootScope.currentLocation){
+					if($rootScope.lastSearch){
+						var queryNearBy = {}; 
+						Object.assign(queryNearBy, vm.query);
+						// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
+						// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
+	    	// 				alert(diaChinh);
+	    	// 			});
+						// queryNearBy.place
+					}else{
+
+					}
+
+				}else{
+					if($rootScope.lastSearch){
+
+					}
+
+				}
+			}
+			vm.init();
+
 			
 		});
 	})();
@@ -21586,6 +21620,7 @@
 	            	//vm.zoomMode = "auto";
 	            	// vm.map.setCenter($scope.center,10);
 	            }
+	            $rootScope.lastSearch = $rootScope.searchData;
 
 	            HouseService.countAds($rootScope.searchData).then(function(res){
 	                vm.totalResultCounts = res.data.countResult;
@@ -23565,6 +23600,35 @@
 	util.isEmail = function(str) {
 	    return str && (str.indexOf('@') > -1);
 	};
+
+	//giaDESC, dienTichASC, ngayDangTinASC, giaM2DESC, soPhongNguDESC, soPhongTamDESC
+	util.toOrderBy = function(orderByPam) {
+	    let orderByField;
+	    let orderByType;
+	    let ret = null;
+
+	    if (orderByPam){
+	        var arr = orderByPam.split(",");
+	        var firstElement = arr[0];
+	        var len =   firstElement.length;
+
+	        if(firstElement.endsWith("DESC")){
+	            orderByField = firstElement.substring(0,len - 4);
+	            orderByType =  "DESC";
+	        } else {
+	            if (firstElement.endsWith("ASC"))
+	                orderByField = firstElement.substring(0,len - 3);
+	            else
+	                orderByField = firstElement;
+
+	            orderByType =  "ASC";
+	        }
+
+	        ret = {orderByField, orderByType}
+	    }
+
+	    return ret;
+	}
 
 	module.exports = util;
 
