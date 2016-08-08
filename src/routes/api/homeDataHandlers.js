@@ -195,9 +195,9 @@ internals.homeData4App = function(req, reply) {
 
       duAnService.findDuAn(q,function(err,res){
         if(err || res.length<=0){
-            result.msg = err;
             async.series(fl,
               function(err, results){
+                results.msg = err;
                 reply({
                   data : results,
                   status : 0,
