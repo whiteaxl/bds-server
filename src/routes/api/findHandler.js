@@ -307,6 +307,7 @@ function countAds(q, reply){
             countResult: data
         });
     };
+    var duAnID = q.duAnID;
     console.log("into here");
 
     if(geoBox || diaChinh){
@@ -314,7 +315,7 @@ function countAds(q, reply){
             callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
             , q.soPhongNguGREATER, q.soPhongTamGREATER
-            , ngayDangTinFrom, q.huongNha
+            , ngayDangTinFrom, q.huongNha, duAnID
         );
     } else if (q[Q_FIELD.place]) {
         var center = {lat: 0, lon: 0};
@@ -349,7 +350,7 @@ function countAds(q, reply){
                         callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
                         , q.giaBETWEEN, q.dienTichBETWEEN
                         , q.soPhongNguGREATER, q.soPhongTamGREATER
-                        , ngayDangTinFrom, q.huongNha
+                        , ngayDangTinFrom, q.huongNha,duAnID
                     )
                 }
             }, (error) => {
@@ -384,6 +385,7 @@ internals.searchAds = function(q, reply) {
     let diaChinh = q.diaChinh;
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     let orderBy = _toOrderBy(q.orderBy);
+    let duAnID = q.duAnID;
     let relandTypeName ;
 
     var geoBox = q.geoBox;
@@ -429,7 +431,7 @@ internals.searchAds = function(q, reply) {
         callback,replyViewPort,diaChinh, q.loaiTin, q.loaiNhaDat
         , q.giaBETWEEN, q.dienTichBETWEEN
         , q.soPhongNguGREATER, q.soPhongTamGREATER
-        , ngayDangTinFrom, q.huongNha
+        , ngayDangTinFrom, q.huongNha, duAnID
         , orderBy, limit,pageNo
       );
     }
@@ -443,7 +445,7 @@ internals.searchAds = function(q, reply) {
             callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
             , q.soPhongNguGREATER, q.soPhongTamGREATER
-            , ngayDangTinFrom, q.huongNha
+            , ngayDangTinFrom, q.huongNha,duAnID
             , orderBy, limit,pageNo
         )
 
@@ -483,7 +485,7 @@ internals.searchAds = function(q, reply) {
                         callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
                         , q.giaBETWEEN, q.dienTichBETWEEN
                         , q.soPhongNguGREATER, q.soPhongTamGREATER
-                        , ngayDangTinFrom, q.huongNha
+                        , ngayDangTinFrom, q.huongNha,duAnID
                         , orderBy, limit,pageNo
                     )
                 }
@@ -506,7 +508,7 @@ internals.searchAds = function(q, reply) {
                 callback,geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
                 , q.giaBETWEEN, q.dienTichBETWEEN
                 , q.soPhongNguGREATER, q.soPhongTamGREATER
-                , ngayDangTinFrom, q.huongNha
+                , ngayDangTinFrom, q.huongNha, duAnID
                 , orderBy, limit, pageNo
             )
         }

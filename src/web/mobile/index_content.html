@@ -15,7 +15,7 @@
         </div>
         <ul class="reland-list full-3">
         	<li ng-repeat="ads in bst.data" ng-click="mhc.goDetail(ads)">
-            	<a href="#" class="heart"><i class="icon-heart"></i></a>
+            	<a href="" class="heart" ng-click="mhc.likeAds($event,ads.adsID)"><i ng-class="$root.alreadyLike(ads.adsID) ==  true?'icon-heart active':'icon-heart'"></i></a>
             	<a href="#">
                 	<span class="img" style="background-image:url({{ads.cover}})"></span>
                     <span class="des bgOpa">
@@ -28,61 +28,9 @@
                     </span>
                 </a>
             </li>
-            <li>
-            	<a href="#" class="heart"><i class="icon-heart"></i></a>
-            	<a href="#">
-                	<span class="img" style="background-image:url(/web/mobile/images/big.jpg)"></span>
-                    <span class="des bgOpa">
-                    	<span class="price">10,5 Ty</span>
-                        <span class="name">KDT Xa La</span>
-                        <span>5pn</span>
-                        <span class="split"></span>
-                        <span>4pt</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-            	<a href="#" class="heart"><i class="icon-heart"></i></a>
-            	<a href="#">
-                	<span class="img" style="background-image:url(/web/mobile/images/big.jpg)"></span>
-                    <span class="des bgOpa">
-                    	<span class="price">10,5 Ty</span>
-                        <span class="name">KDT Xa La</span>
-                        <span>5pn</span>
-                        <span class="split"></span>
-                        <span>4pt</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-            	<a href="#" class="heart"><i class="icon-heart"></i></a>
-            	<a href="#">
-                	<span class="img" style="background-image:url(/web/mobile/images/big.jpg)"></span>
-                    <span class="des bgOpa">
-                    	<span class="price">10,5 Ty</span>
-                        <span class="name">KDT Xa La</span>
-                        <span>5pn</span>
-                        <span class="split"></span>
-                        <span>4pt</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-            	<a href="#" class="heart"><i class="icon-heart"></i></a>
-            	<a href="#">
-                	<span class="img" style="background-image:url(/web/mobile/images/big.jpg)"></span>
-                    <span class="des bgOpa">
-                    	<span class="price">10,5 Ty</span>
-                        <span class="name">KDT Xa La</span>
-                        <span>5pn</span>
-                        <span class="split"></span>
-                        <span>4pt</span>
-                    </span>
-                </a>
-            </li>
         </ul>
         <div class="clb ovh"></div>
-        <div class="btn-box"><button class="btn btn-primary btn-block">Xem thêm</button></div>
+        <div class="btn-box" ng-click="mhc.showMore($index)"><button class="btn btn-primary btn-block">Xem thêm</button></div>
     </div>
     <!--END-->
 </div>

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9bb7141b8d408d176bd8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7cbe4a9c7eb0d7107a3b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1402,6 +1402,7 @@
 	        url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
 	        templateUrl: "/web/mobile/search.html",
 	        controller: "MobileSearchCtrl",
+	        params:{query: null},
 	        controllerAs: 'msc',
 	      }).state('mdetail', {
 	        url: "/mobile/detail/:adsID",
@@ -21384,6 +21385,35 @@
 			vm.goDetail = function(ads){
 				$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
 			}
+			vm.likeAds = function(event,adsID){
+			  event.stopPropagation();
+		      if(!$rootScope.user.userID){
+		        $scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để lưu BĐS"}
+		        });
+
+		        return;
+		      }
+		      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+		        //alert(res.data.msg);
+		        //console.log(res);
+		        if(res.data.success == true || res.data.status==1){
+		        	$rootScope.user.adsLikes.push(adsID);
+		        	//vm.likeAdsClass ="fa-heart";
+		        }
+		      });
+		    };
+			vm.showMore = function(index){
+				var query =  {};
+				Object.assign( query,vm.boSuuTap[index].query);
+				query.limit = 20;
+				query.duAnID = vm.boSuuTap[index].query.duAnID;
+				$state.go('msearch',{place: query.place.placeId || query.place.place_id,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+				//$state.go('msearch', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+				//alert('showmore');
+			}
 			
 
 			vm.init = function(){
@@ -21436,13 +21466,15 @@
 			// vm.dien_tich_min = 0;
 			// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 			// vm.zoomMode = "auto";
-			vm.ads_list = [];
+			vm.ads_list = [{},{},{},{},{}];
 			$scope.center = "Hanoi Vietnam";
 			vm.zoomMode = "false";
 			vm.placeId = $state.params.place;
 			vm.loaiTin = $state.params.loaiTin;
 			vm.loaiNhaDat = $state.params.loaiNhaDat;
 			vm.viewMode = $state.params.viewMode;
+			if($state.params.query)
+				$rootScope.searchData = $state.params.query;
 			vm.initMap = true;
 			
 			vm.showList = function(){
@@ -21869,9 +21901,10 @@
 	                   $(".overlay").click();
 	                }
 	                vm.showLogin = function(event){
-	                    $('#box-login').fadeIn(500);
+	                    //$('#loginBox').fadeIn(500);
 	                    //window.loca
 	                }
+	                
 	                vm.gotoSearchPage = function(event){
 	                    $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
 	                    $(".overlay").click();
@@ -21974,6 +22007,18 @@
 	                    $('#box-login').fadeIn(500);
 	                    //window.loca
 	                }
+
+	                vm.spinner = function(event, box, item){
+	                    var me = event.target;
+	                    if($(me).parent().find($(box)).hasClass(item)) {
+	                        $(me).parent().find($(box)).removeClass(item);
+	                        $(me).find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
+	                    }
+	                    else {
+	                        $(me).parent().find($(box)).addClass(item);
+	                        $(me).find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                    }
+	                }
 	                
 	                vm.gotoSearchPage = function(event){
 	                    //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
@@ -22001,7 +22046,17 @@
 	                    window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
 	                    vm.PlacesService =  new google.maps.places.PlacesService(map);                                
 	                });
+	                vm.init = function(){
+	                    Hammer.plugins.fakeMultitouch();
+	                    $("select.drum").drum({
+	                        onChange : function (selected) {
+	                            if (selected.value !=0) $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
+	                        } 
+	                    });
 
+	                }
+	                vm.init();
+	                
 	            }
 	        ],
 	        controllerAs: "mf"
@@ -22134,7 +22189,7 @@
 	                  vm.head = data.label;
 	                  vm.subHead = "";  
 	                }                
-	                $('#box-login').fadeIn(500);
+	                $('#loginBox').modal("show");
 	            }
 	          });
 

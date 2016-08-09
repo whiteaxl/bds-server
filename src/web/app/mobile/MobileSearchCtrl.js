@@ -15,13 +15,15 @@
 		// vm.dien_tich_min = 0;
 		// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 		// vm.zoomMode = "auto";
-		vm.ads_list = [];
+		vm.ads_list = [{},{},{},{},{}];
 		$scope.center = "Hanoi Vietnam";
 		vm.zoomMode = "false";
 		vm.placeId = $state.params.place;
 		vm.loaiTin = $state.params.loaiTin;
 		vm.loaiNhaDat = $state.params.loaiNhaDat;
 		vm.viewMode = $state.params.viewMode;
+		if($state.params.query)
+			$rootScope.searchData = $state.params.query;
 		vm.initMap = true;
 		
 		vm.showList = function(){

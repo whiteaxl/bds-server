@@ -75,7 +75,14 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 function searchAds(title1, title2, query,callback) {
   findHandler.searchAds(query, (res) => {
     if (!res.list || res.list.length == 0) {
-        callback(null,null);
+        callback(null
+          ,{
+            title1: title1,
+            title2: title2,
+            data: [],
+            query: query
+        });
+        return;
     }
     let collection = {
       title1 : title1,
@@ -208,7 +215,7 @@ internals.homeData4App = function(req, reply) {
         }else{
           for(var i=0;i<res.length;i++){
             let queryDuAn = {}; Object.assign(queryDuAn, query);
-            queryDuAn.duAnId = res[i].duAnId;
+            queryDuAn.duAnID = res[i].duAnID;
             let title2 = res[i].ten;
             var f = function(callback){
               searchAds("Nhà thuộc dự án nổi bật",title2,queryDuAn,callback);

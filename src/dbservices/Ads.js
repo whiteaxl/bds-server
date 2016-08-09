@@ -161,7 +161,7 @@ class AdsModel {
         bucket.operationTimeout = 60 * 1000;
     }
 
-    buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, orderBy, limit, pageNo) {
+    buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, duAnID,orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;
 
         
@@ -248,6 +248,8 @@ class AdsModel {
                 sql = sql + ((huongNha && huongNha>0) ? " AND huongNha=" + huongNha : "");        
             }
         }
+        if(duAnID)
+            sql = sql + " and place.duAnID = '" + duAnID + "' ";
 
         //sql = sql + ((huongNha && huongNha>0)  ? " AND huongNha=" + huongNha : "");
 
@@ -275,6 +277,7 @@ class AdsModel {
         , soPhongTamGREATER
         , ngayDangTinFrom
         , huongNha
+        , duAnID
     ){
         var sql ="SELECT count(*) FROM default t" + this.buildWhereForAllData(geoBox
             , diaChinh 
@@ -286,6 +289,7 @@ class AdsModel {
             , soPhongTamGREATER
             , ngayDangTinFrom
             , huongNha
+            , duAnID
         );
 
         console.log(sql);
@@ -310,6 +314,7 @@ class AdsModel {
         , soPhongTamGREATER
         , ngayDangTinFrom
         , huongNha
+        , duAnID
         , orderBy//orderByField, orderByType
         , limit
         , pageNo
@@ -331,6 +336,7 @@ class AdsModel {
             , soPhongTamGREATER
             , ngayDangTinFrom
             , huongNha
+            , duAnID
             , orderBy
             , limit
             , pageNo?pageNo:1

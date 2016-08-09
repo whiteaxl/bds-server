@@ -22,6 +22,7 @@
 <body class="hfixed both">
     <header class="main blue">
         <a href="list.html" class="nav_mobile header-icon"><i class="iconLeftOpen"></i></a>
+		<a href="javascript:void(0)" class="header-text pull-right"><img src="img/dots-three-horizontal.svg" width="20"></a>
         <a href="javascript:void(0)" class="pull-right header-icon iconShareContent">
         	<svg xmlns="http://www.w3.org/2000/svg" fill="white" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
 			  <g id="_x37_02-share_x40_2x.png_1_">
@@ -37,7 +38,7 @@
         	<div class="img" style="background-image:url(images/big.jpg)"><a href="javascript:void(0)"><i class="iconCamera"></i> 3/16</a></div>
             <div class="desSort">
             	<div class="price">10, 5 tỷ</div>
-                <div class="address">KDT Xa La, Hà Đông, Hà Nội</div>
+                <div class="address">KDT Xa La, Hà Đông, Hà Nội <a href="#" class="streetview"><i class="fa fa-street-view"></i></a></div>
                 <div class="note">
                 	<ul>
                     	<li><label>Bán</label></li>
@@ -51,18 +52,21 @@
             </div>
             <div class="desDetail ovh clb">
             	<h3 class="collapse-title">Chi tiết</h3>
-                Dự án đầu tư xây dựng Khu đô thị mới Xa La có tổng diện tích đất quy hoạch là 209.480m2, được đầu tư xây dựng đồng bộ với chất lượng tiêu chuẩn đô thị loại I, đáp ứng nhu cầu về nhà ở của đông đảo khách hàng có đa dạng mức độ thu nhập.
-                <div class="detailMore" style="display:none">
+                <div onClick="detailMore('.more', '.detailMore', '... Xem thêm', '... Thu gọn')">
+					Dự án đầu tư xây dựng Khu đô thị mới Xa La có tổng diện tích đất quy hoạch là 209.480m2, được đầu tư xây dựng đồng bộ với chất lượng tiêu chuẩn
+					<div class="detailMore" style="display:none">
                 	Theo cấp phép của cơ quan có thẩm quyền, Xí nghiệp Xây dựng tư nhân số I Lai Châu đầu tư xây dựng 10 toà nhà chung cư từ 21 tầng đến 34 tầng và các công trình hạ tầng xã hội như: trường học, trường mầm non, nhà trẻ, trung tâm thương mại, khách sạn, khu sân vận động bóng đá thể thao, bãi đỗ xe, công viên cây xanh, các cơ sở đầu mối, đáp ứng quy mô dân số 5.560 người.
-                </div>
-                <a href="javascript:void(0)" onClick="detailMore(this, '.detailMore', '... Xem thêm', '... Thu gọn')">... Xem thêm</a>
+					</div>
+					<a href="javascript:void(0)" class="more">... Xem thêm</a>
+				</div>
+                
             </div>
             <div class="dir-box collapse-box">
                 <a role="button" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>
             </div>
             <div class="area-box collapse-box">
-                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconDownOpen"></i></span></a>
-                <div class="areaBox spinner spinner-hide">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconUpOpen"></i></span></a>
+                <div class="areaBox spinner">
                     <div class="lined">
                     	<span class="titlelbl">Loại tin giao</span>
                         <label>Bán biệt thự</label>
@@ -87,6 +91,18 @@
                     	<span class="titlelbl">Diện tích</span>
                         <label>200 m2</label>
                     </div>
+					<div class="lined">
+                    	<span class="titlelbl">Hướng nhà</span>
+                        <label>Nam</label>
+                    </div>
+					<div class="lined">
+                    	<span class="titlelbl">Thuộc dự án</span>
+                        <label>Xala</label>
+                    </div>
+					<div class="lined">
+                    	<span class="titlelbl">Khoảng cách tìm kiếm</span>
+                        <label>2 km</label>
+                    </div>
                     <div class="lined">
                     	<span class="titlelbl">Ngày đăng tin</span>
                         <label>14/07/2016</label>
@@ -97,13 +113,13 @@
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Địa chỉ</span>
-                        <label>KDT Xa La, Hà Đông, HN</label>
+                        <label>CT1B1 KDT Xa La, Phuc La, Hà Đông, Ha Noi</label>
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Vị trí</span>
                     </div>
-                    <div class="lined">
-                    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50116.36124904685!2d105.7882095786251!3d20.995810207556246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3b1520664ffff066!2zSG9hIGzhu6VhIFV5w6puIHNob3A!5e0!3m2!1svi!2s!4v1469250664773" width="100%" height="210" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <div class="lined map">
+                    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50116.36124904685!2d105.7882095786251!3d20.995810207556246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3b1520664ffff066!2zSG9hIGzhu6VhIFV5w6puIHNob3A!5e0!3m2!1svi!2s!4v1469250664773" width="100%" height="211" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -119,8 +135,8 @@
                 </div>
             </div>
             <div class="contact-box collapse-box">
-                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Liên hệ <span><i class="iconDownOpen"></i></span></a>
-                <div class="contactBox spinner spinner-hide">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Liên hệ <span><i class="iconUpOpen"></i></span></a>
+                <div class="contactBox spinner">
                     <div class="lined">
                     	<span class="titlelbl">Tên liên lạc</span>
                         <label>BDS abc</label>
@@ -133,61 +149,107 @@
                     	<span class="titlelbl">Email</span>
                         <label>bdsabc@gmail.com</label>
                     </div>
+					<div class="lined">
+                    	<span class="titlelbl"><a href="#"><i class="p-icon i-plus18"></i> Lưu vào danh bạ</a></span>
+                    </div>
                 </div>
             </div>
             <div class="agency-box collapse-box uln">
-                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Môi giới <span><i class="iconDownOpen"></i></span><span class="txt">Các môi giới đang bán nhà tương tự</span></a>
-                <div class="agencyBox spinner spinner-hide">
-                    <ul>
-                    	<li>
-                        	<img src="images/avarta.jpg">
-                            <h5>Mr Viet</h5>
-                            <span class="rating">
-                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                            </span>
-                            <p>Có 16 bất động sản đang bán</p>
-                            <div class="action">
-                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
-                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
-                            </div>
-                        </li>
-                        <li>
-                        	<img src="images/avarta.jpg">
-                            <h5>Mr Viet</h5>
-                            <span class="rating">
-                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                            </span>
-                            <p>Có 16 bất động sản đang bán</p>
-                            <div class="action">
-                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
-                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
-                            </div>
-                        </li>
-                        <li>
-                        	<img src="images/avarta.jpg">
-                            <h5>Mr Viet</h5>
-                            <span class="rating">
-                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                            </span>
-                            <p>Có 16 bất động sản đang bán</p>
-                            <div class="action">
-                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
-                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
-                            </div>
-                        </li>
-                        <li>
-                        	<img src="images/avarta.jpg">
-                            <h5>Mr Viet</h5>
-                            <span class="rating">
-                                <span class="star star-o"></span><span class="star active"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                            </span>
-                            <p>Có 16 bất động sản đang bán</p>
-                            <div class="action">
-                            	<a href="chats.html" class="btn btn-warning border">CHAT</a>
-                                <a href="tel:0978871234" class="btn btn-danger border">GỌI</a>
-                            </div>
-                        </li>
-                    </ul>
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Phương án tài chính <span><i class="iconUpOpen"></i></span><span class="txt">Cách lập phương án tài chính cho các dự án BĐS, giúp các doanh nghiệp lên kế hoạch đâu tư hiệu quả</span></a>
+                <div class="agencyBox spinner">
+                    <div class="card-chart">
+						<div class="chart-reland">
+							<div class="chart" id="phgantaichinh"></div>
+							<script>
+								$(function(){
+								  $("#phgantaichinh").drawDoughnutChart([
+									{ title: "Gốc", value : 400,  color: "#20c063"},
+									{ title: "Lãi", value:  100,   color: "#f0a401"}
+								  ]);
+								});
+							</script>
+						</div>
+						<div class="chart-txt uln ovh">
+							<ul>
+								<li class="chart-txt-1"><i></i>400 triệu<span>Gốc</span></li>
+								<li class="chart-txt-2"><i></i>100 triệu<span>Lãi</span></li>
+							</ul>
+						</div>
+					</div>
+                </div>
+            </div>
+			<div class="other-box collapse-box uln">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Tham khảo <span><i class="iconUpOpen"></i></span><span class="txt">Các nhà đang bán gần nhất</span></a>
+                <div class="otherBox spinner">
+                    <div class="reland-box uln">
+						<ul class="reland-list">
+							<li>
+								<a href="#" class="heart"><i class="icon-heart"></i></a>
+								<a href="#">
+									<span class="img" style="background-image:url(images/big.jpg)"></span>
+									<span class="des bgOpa">
+										<span class="price">10,5 Ty</span>
+										<span class="name">KDT Xa La</span>
+										<span>5pn</span>
+										<span class="split"></span>
+										<span>4pt</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="heart"><i class="icon-heart active"></i></a>
+								<a href="#">
+									<span class="img" style="background-image:url(images/big.jpg)"></span>
+									<span class="des bgOpa">
+										<span class="price">10,5 Ty</span>
+										<span class="name">KDT Xa La</span>
+										<span>5pn</span>
+										<span class="split"></span>
+										<span>4pt</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="heart"><i class="icon-heart"></i></a>
+								<a href="#">
+									<span class="img" style="background-image:url(images/big.jpg)"></span>
+									<span class="des bgOpa">
+										<span class="price">10,5 Ty</span>
+										<span class="name">KDT Xa La</span>
+										<span>5pn</span>
+										<span class="split"></span>
+										<span>4pt</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="heart"><i class="icon-heart"></i></a>
+								<a href="#">
+									<span class="img" style="background-image:url(images/big.jpg)"></span>
+									<span class="des bgOpa">
+										<span class="price">10,5 Ty</span>
+										<span class="name">KDT Xa La</span>
+										<span>5pn</span>
+										<span class="split"></span>
+										<span>4pt</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="heart"><i class="icon-heart"></i></a>
+								<a href="#">
+									<span class="img" style="background-image:url(images/big.jpg)"></span>
+									<span class="des bgOpa">
+										<span class="price">10,5 Ty</span>
+										<span class="name">KDT Xa La</span>
+										<span>5pn</span>
+										<span class="split"></span>
+										<span>4pt</span>
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
                 </div>
             </div>
         </div>

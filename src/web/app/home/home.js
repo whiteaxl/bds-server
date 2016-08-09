@@ -413,6 +413,7 @@
         url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
         templateUrl: "/web/mobile/search.html",
         controller: "MobileSearchCtrl",
+        params:{query: null},
         controllerAs: 'msc',
       }).state('mdetail', {
         url: "/mobile/detail/:adsID",

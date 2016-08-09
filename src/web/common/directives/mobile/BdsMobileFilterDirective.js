@@ -66,6 +66,18 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $('#box-login').fadeIn(500);
                     //window.loca
                 }
+
+                vm.spinner = function(event, box, item){
+                    var me = event.target;
+                    if($(me).parent().find($(box)).hasClass(item)) {
+                        $(me).parent().find($(box)).removeClass(item);
+                        $(me).find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
+                    }
+                    else {
+                        $(me).parent().find($(box)).addClass(item);
+                        $(me).find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
+                    }
+                }
                 
                 vm.gotoSearchPage = function(event){
                     //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
@@ -93,7 +105,17 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
                     vm.PlacesService =  new google.maps.places.PlacesService(map);                                
                 });
+                vm.init = function(){
+                    Hammer.plugins.fakeMultitouch();
+                    $("select.drum").drum({
+                        onChange : function (selected) {
+                            if (selected.value !=0) $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
+                        } 
+                    });
 
+                }
+                vm.init();
+                
             }
         ],
         controllerAs: "mf"

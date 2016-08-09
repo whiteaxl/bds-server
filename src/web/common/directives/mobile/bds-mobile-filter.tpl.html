@@ -96,8 +96,8 @@
 	                        </label>
 	                    </div>
 	                </div>
-	                <div class="area-box collapse-box">
-	                    <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Diện tích <span><label id="area_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
+	                 <div class="area-box collapse-box">
+                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="areaBox spinner spinner-hide">
 	                    	<select id="area" class="drum">
 	                        	<option selected value="9999999999999999">Bất kỳ</option>
@@ -110,6 +110,17 @@
 	                            <option value="200">200 m2</option>
 	                            <option value="300">300 m2</option>
 	                        </select>
+	                        <select id="area2" class="drum">
+                            	<option selected value="a0">Bất kỳ</option>
+                                <option value="a12">10 m2</option>
+                                <option value="a22">20 m2</option>
+                                <option value="a32">30 m2</option>
+                                <option value="a52">50 m2</option>
+                                <option value="a62">70 m2</option>
+                                <option value="a72">100 m2</option>
+                                <option value="a82">200 m2</option>
+                                <option value="a92">300 m2</option>
+                            </select>
 	                    </div>
 	                </div>
 	                <div class="area-box collapse-box collapse-none"></div>
@@ -121,7 +132,7 @@
 	                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#trendBox">Hướng nhà <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>
 	                    </div>
 	                    <div class="date-box collapse-box">
-	                        <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Ngày đăng <span><label id="datepost_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
+	                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Ngày đăng <span><label id="datepost_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                        <div class="dateBox spinner spinner-hide">
 	                            <select id="datepost" class="drum">
 	                                <option selected value="a0">Bất kỳ</option>

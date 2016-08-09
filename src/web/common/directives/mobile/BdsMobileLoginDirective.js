@@ -57,7 +57,7 @@ angular.module('bds')
                   vm.head = data.label;
                   vm.subHead = "";  
                 }                
-                $('#box-login').fadeIn(500);
+                $('#loginBox').modal("show");
             }
           });
 

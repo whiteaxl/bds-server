@@ -46,6 +46,35 @@
 		vm.goDetail = function(ads){
 			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
 		}
+		vm.likeAds = function(event,adsID){
+		  event.stopPropagation();
+	      if(!$rootScope.user.userID){
+	        $scope.$bus.publish({
+              channel: 'login',
+              topic: 'show login',
+              data: {label: "Đăng nhập để lưu BĐS"}
+	        });
+
+	        return;
+	      }
+	      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+	        //alert(res.data.msg);
+	        //console.log(res);
+	        if(res.data.success == true || res.data.status==1){
+	        	$rootScope.user.adsLikes.push(adsID);
+	        	//vm.likeAdsClass ="fa-heart";
+	        }
+	      });
+	    };
+		vm.showMore = function(index){
+			var query =  {};
+			Object.assign( query,vm.boSuuTap[index].query);
+			query.limit = 20;
+			query.duAnID = vm.boSuuTap[index].query.duAnID;
+			$state.go('msearch',{place: query.place.placeId || query.place.place_id,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+			//$state.go('msearch', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+			//alert('showmore');
+		}
 		
 
 		vm.init = function(){

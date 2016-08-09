@@ -13,9 +13,10 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                    $(".overlay").click();
                 }
                 vm.showLogin = function(event){
-                    $('#box-login').fadeIn(500);
+                    //$('#loginBox').fadeIn(500);
                     //window.loca
                 }
+                
                 vm.gotoSearchPage = function(event){
                     $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
                     $(".overlay").click();
