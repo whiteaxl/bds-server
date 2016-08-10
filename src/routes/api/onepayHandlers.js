@@ -1,27 +1,11 @@
 'use strict';
 /*
 1. Scratch card topup:
-1.1 Topup api:
-  - Client send data to server
-  - Server gen txn number (transRef) and save client request into DB
-      type : 'TxTopup',
-      cat : 'ScratchTopup',
-      id : transRef
-      stage : 0
-  - Prepare request api, save request object into DB then call 1pay topup api
-    + Save request which is sent to onepay first:
-      type : 'Onepay_ScratchTopup_Req'
-      id : auto increase
-    + Call Topup api:https://api.1pay.vn/card-charging/v5/topup
-  - Server get response, save a copy and update DB:
-    + Save response to:
-      type : 'Onepay_ScratchTopup_Res'
-      id : auto increase
-    + Update into :
-      type : 'TxTopup'
-      id : transRef
-      amount:
-      stage : 1
+ https://docs.google.com/spreadsheets/d/1sz0Sp3AkW_N8duhWQFRfyqNPbgCNkHpIHUhQ9m9s_yA/edit#gid=0
+
+Notes: cac loi sau
+ lỗi 99: không xác định nguyên nhân này
+ lỗi 18: thẻ có thể bị trừ này
 
  1.2 Query api : used to solve timeout issue
       If timeout when calling
@@ -30,10 +14,15 @@
 
 var utils = require('../../lib/utils');
 var log = require('../../lib/logUtil');
+var constant = require('../../lib/constant');
 var cfg = require('../../config');
 var request = require("request");
 var rp = require("request-promise");
 var onepayServices =require('../../lib/onepay');
+var paymentEngine = require('../../lib/paymentEngine');
+
+var UserDBClass = require('../../dbservices/User');
+var userDB = new UserDBClass();
 
 var OnepayDBClass = require('../../dbservices/OnePay');
 var onepayDB = new OnepayDBClass();
@@ -74,22 +63,102 @@ internals.smsplusCharging = function(req, reply) {
   }
 };
 
+function handleScatchResponse(onepayRes, txTopup, reply) {
+  txTopup.resDescription = onepayRes.description;
+  txTopup.closeDateTime = new Date().getTime();
+
+  //fail
+  if (onepayRes.status !== "00") { //1 – Thành công; 0 – Thất bại.
+    txTopup.stage = constant.TOPUP_STAGE.FAIL;
+    onepayDB.upsert(txTopup, (err, dbRes) => {
+      log.info("updated TxTopup",err,dbRes);
+    });
+
+    reply({
+      status : onepayRes.status,
+      msg : onepayRes.description,
+    });
+
+    return;
+  }
+
+  paymentEngine.calcFinalTopupAmount({
+    paymentType : txTopup.paymentType,
+    datetime : txTopup.startDateTime,
+    topupAmount : onepayRes.amount
+  }, (calcRes) => {
+    //store into db
+    txTopup.stage = constant.TOPUP_STAGE.SUCCESS;
+    txTopup.endDateTime = new Date().getTime();
+    txTopup.topupAmount = onepayRes.amount;
+    txTopup.mainAmount = calcRes.mainAmount;
+    txTopup.bonusAmount = calcRes.bonusAmount;
+    txTopup.bonusID = calcRes.bonusID;
+
+    onepayDB.upsert(txTopup, (err, dbRes) => {
+      if (err) {
+        reply({
+          status : '100',
+          msg : "Giao dịch không thành công! Lỗi khi lưu TxTopup"
+        });
+        log.error("scratchTopup, error when update topup response into DB", err);
+
+        return;
+      }
+      //update User infor
+      userDB.updateAccount({
+        mainAmount:calcRes.mainAmount,
+        bonusAmount:calcRes.bonusAmount,
+        userID : txTopup.userID
+      }, (err, res) => {
+        if (err) {
+          reply({
+            status : '101',
+            msg : "Giao dịch không thành công! Lỗi khi cập nhật tài khoản"
+          });
+          log.error("scratchTopup, error when update updateAccount into DB", err);
+
+          return;
+        }
+
+        log.info("Done store onepay response for ScratchTopup to DB", err, res);
+        reply({
+          status : onepayRes.status,
+          msg : onepayRes.description,
+          topupAmount : onepayRes.amount,
+          mainAmount : calcRes.mainAmount,
+          bonusAmount : calcRes.bonusAmount,
+          totalMain : res.user.account.main,
+          totalBonus : res.user.account.bonus,
+          serial : onepayRes.serial,
+        });
+      });
+    });
+  });
+}
+
 internals.scratchTopup = function(req, reply) {
   var payload = req.payload;
   log.info("scratchTopup, payload=", payload);
 
   //need store into DB and return transRef
-  onepayDB.saveScratchTopupRequestFromClient(payload, (err, res, txnInDB) => {
+  onepayDB.saveScratchTopupRequestFromClient(payload, (err, res, txTopup) => {
     if (err) {
       reply({
         status : "99",
-        msg : err.msg
+        msg : "Lỗi khi thực hiện khởi tạo nạp thẻ cào: " + err.msg
       });
 
       return;
     }
 
-    onepayServices.scratchTopup(txnInDB)
+    var reqParams = {
+      type : txTopup.cardType,
+      pin : txTopup.cardPin,
+      serial : txTopup.cardSerial,
+      transRef : txTopup.id,
+    };
+    onepayServices.scratchTopup(reqParams)
       .then((res) => {
         log.info("scratchTopup onepay res:", res);
         //store as it's in db first
@@ -98,35 +167,21 @@ internals.scratchTopup = function(req, reply) {
         if (res.err) {
           let e = res.err;
 
-          //todo: need handle exception here
-          if (e.code === 'ETIMEDOUT') {
-            handleScratchTopupTimeout(txnInDB);
+          if (e.error && e.error.code === 'ETIMEDOUT') {
+            handleScratchTopupTimeout(txTopup, reply);
+          } else {
+            reply({
+              status : '99',
+              msg  : 'Loi khi thuc hien thanh toan The cao voi 1pay!'
+            });
           }
-
-          reply({
-            status : '99',
-            description  : 'Loi khi thuc hien thanh toan The cao voi 1pay!'
-          });
 
           return;
         }
 
         //
         let onepayRes = res.res;
-        //store into db
-        txnInDB.status = onepayRes.status;
-        txnInDB.stage = 1;
-        txnInDB.transId = onepayRes.transId;
-        txnInDB.resSerial = onepayRes.serial;
-        txnInDB.amount = onepayRes.amount;
-        txnInDB.resDescription = res.description;
-        txnInDB.closeDateTime = new Date().getTime();
-
-        onepayDB.upsert(txnInDB, (err, dbRes) => {
-          log.info("Done store onepay response for ScratchTopup to DB", err, dbRes);
-          reply(onepayRes);
-        });
-
+        handleScatchResponse(onepayRes, txTopup, reply)
       })
   });
 };
@@ -156,6 +211,7 @@ internals.scratchDelayHandler = function(req, reply) {
   };
 
   onepayDB.saveDelayCardTopup(dto, (err, res) => {
+    /*
     if (err) {
       log.info("scratchDelayHandler, error:", err);
       reply({
@@ -168,31 +224,32 @@ internals.scratchDelayHandler = function(req, reply) {
         msg : "Success"
       })
     }
+    */
+
+    reply({});
   });
 };
 
 //------------
-var handleScratchTopupTimeout = function(txn) {
+var handleScratchTopupTimeout = function(txn, reply) {
   onepayServices.queryScratchTopup(txn).then((res) => {
-    log.info("scratchTopup onepay res:", res);
-    //store into db
-    txn.status = res.status;
-    txn.stage = 1;
-    txn.transId = res.transId;
-    txn.resSerial = res.serial;
-    txn.amount = res.amount;
-    txn.resDescription = res.description;
-    txn.closeDateTime = new Date().getTime();
+    log.info("queryScratchTopup res:", res);
+    //store as it's in db first
+    onepayDB.logData(res, "Onepay_Request", "ScratchQuery");
 
-    onepayDB.upsert(txnInDB, (err, dbRes) => {
-      log.info("Done store onepay response for ScratchTopup to DB", err, dbRes);
-      reply(res);
-    });
+    if (res.err) {
+      reply({
+        status : '99',
+        msg  : 'Loi khi thuc hien thanh toan The cao voi 1pay!'
+      });
+      return;
+    }
+
+    //
+    let onepayRes = res.res;
+    handleScatchResponse(onepayRes, txn, reply)
 
   })
-    .catch((e) => {
-      log.error("scratchTopup onepay error:", e.statusCode, e.options);
-    });
 };
 
 

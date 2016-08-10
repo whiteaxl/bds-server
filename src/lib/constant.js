@@ -42,6 +42,21 @@ internals.DB_SEQ = {
   User : "idGeneratorForUsers"
 };
 
+internals.TOPUP_STAGE = {
+  INIT : -1,
+  SUCCESS : 0,
+  FAIL : 1
+};
+
+//topup type
+internals.PAYMENT = {
+  SCRATCH : "scratch",
+  SMSPLUS : "smsplus",
+  IN_APP_PURCHASE : "inAppPurchase",
+  MANUAL_BANK_TRANSFER : "manualBankTransfer"
+};
+
+
 if (typeof(window) !== 'undefined')
    window.RewayConst = internals;
 module.exports  = internals;

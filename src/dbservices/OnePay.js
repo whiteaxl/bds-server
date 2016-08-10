@@ -40,22 +40,23 @@ class OnePay {
 			if (err) {
 				callback(err, res);
 			} else {
-				var id = "ScratchTopup_" + res.value;
+				var id = `Scratch_${payload.userID}_${res.value}`;
 
 				var dto = {
 					id : id,
-					cardType : payload.type,
-					pin : payload.pin,
-					serial : payload.serial,
-					transRef : id,
-					dateTime : new Date().getTime(),
-					type : 'TxTopup',
-					cat : 'ScratchTopup',
-					stage : 0, // 0 = requesting, 1 = done
-          deviceInfor: payload.deviceInfor,
-          startDateTime : payload.startDateTime,
-          clientType : payload.clientType,
-          userID: payload.userID
+          type: "TxTopup",
+          userID: payload.userID,
+					clientType: payload.clientType,
+          clientInfor: payload.clientInfor,
+          paymentType : "scratch",
+          paymentName : "Thẻ cào",
+          startDateTime : new Date().getTime(),
+          stage : constant.TOPUP_STAGE.INIT, //mean initial
+          //optional
+          cardType : payload.type,
+          cardSerial : payload.serial,
+          cardPin : payload.pin,
+
 				};
 
 				bucket.upsert(dto.id, dto, (err, res) => {

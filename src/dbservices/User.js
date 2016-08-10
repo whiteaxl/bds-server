@@ -150,7 +150,7 @@ class UserModel {
         return;
       }
       const resJson = JSON.parse(body);
-      console.log(resJson);
+      console.log("Get user from syncGateway:", resJson);
 
       const updateUrl = `${url}${userDto.id}?rev=${resJson._rev}`;
       console.log("updateUrl:", updateUrl);
@@ -507,6 +507,69 @@ class UserModel {
 
   getDocById(id, callback) {
     bucket.get(id, callback);
+  }
+
+  /*
+    dto: {mainAmount, bonusAmount}
+   */
+  updateAccount(dto, callback) {
+    var url = syncGatewayDB_URL ;
+    request({
+      url: url+dto.userID,
+      method: "GET",
+    }, function(error, response, body) {
+
+      if (error) {
+        callback(error, null);
+        return;
+      }
+      const resJson = JSON.parse(body);
+      console.log("Get user from syncGateway:", resJson);
+
+      var user = {}; Object.assign(user, resJson);
+
+      if (!user.account) {
+        user.account = {
+          main:0,
+          bonus : 0
+        }
+      }
+
+      //clear some default
+      /*
+      user._rev = null;
+      user._id = null;
+      */
+
+      user.account.main += dto.mainAmount;
+      user.account.bonus += dto.bonusAmount;
+
+      log.info("will update user account:", user);
+
+      const updateUrl = `${url}${user.id}?rev=${resJson._rev}`;
+      console.log("updateUrl:", updateUrl);
+
+
+      request({
+          url: updateUrl, method: "PUT",
+          json: user
+        },
+        function (error, response, body) {
+          if (error) {
+            log.error("Error when createUser", error, response);
+            callback(error, body);
+            return;
+          }
+
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            callback(null, {user: user, body: body});
+          } else {
+            log.error("CreateUser - Have response but status fail:", response);
+            callback({code:99, msg: response.body}, null);
+          }
+        });
+
+    });
   }
 }
 

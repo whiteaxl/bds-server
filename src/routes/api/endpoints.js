@@ -8,6 +8,7 @@ var newsHandlers = require('./newsHandlers');
 var homeDataHandlers = require('./homeDataHandlers');
 
 var onepay = require("./onepayHandlers");
+var onepaySim = require("./onepaySimHandlers");
 
 //Joi is Hapi's validation library
 Joi = require('joi');
@@ -666,7 +667,7 @@ internals.endpoints = [
            pin : Joi.string().description("Số pin của thẻ cào"),
            serial: Joi.string().description("Serial của thẻ cào"),
            userID : Joi.string().description("User thực hiện"),
-           deviceInfor : Joi.string().description("Thông tin về device: app.deviceModel, web.agent"),
+           clientInfor : Joi.string().description("Thông tin về device: app.deviceModel, web.agent"),
            clientType : Joi.string().description("app or web"),
            startDateTime : Joi.number().description("Thời điểm call từ client")
          }
@@ -674,12 +675,14 @@ internals.endpoints = [
 
       response: {
         schema: Joi.object({
-          status: Joi.string().description("mã trạng thái"),
-          transId: Joi.string().description("mã giao dịch do 1pay cung cấp"),
-          transRef: Joi.string().description("mã giao dịch do merchant đăng ký"),
-          serial: Joi.string().description("số serial"),
-          amount: Joi.number().description("giá trị giao dịch"),
-          description: Joi.string().description("mô tả trạng thái giao dịch"),
+          status: Joi.string().allow(null).description("mã trạng thái:00, 01..."),
+          msg: Joi.string().allow(null).description("mô tả trạng thái giao dịch"),
+          serial: Joi.string().allow(null).description("số serial"),
+          topupAmount: Joi.number().allow(null).description("giá trị giao dịch"),
+          mainAmount: Joi.number().allow(null).description("tai khoan chinh"),
+          bonusAmount: Joi.number().allow(null).description("tai khoan KM"),
+          totalMain: Joi.number().allow(null).description("Tổng tai khoan chinh của user"),
+          totalBonus: Joi.number().allow(null).description("Tổng tai khoan KM của user"),
         })
       }
     }
@@ -713,6 +716,48 @@ internals.endpoints = [
         schema: Joi.object({
           status: Joi.string().description("mã trạng thái: 00 thành công, khác 00 là lỗi"),
           msg: Joi.string().description("mô tả trạng thái giao dịch"),
+        })
+      }
+    }
+  },
+
+  {
+    method: 'POST',
+    path: '/card-charging/v5/topup',
+    handler: onepaySim.simScratchTopup,
+    config: {
+      description: 'simulate https://api.1pay.vn/card-charging/v5/topup to test scratch topup',
+      tags: ['api'],
+
+      response: {
+        schema: Joi.object({
+          status: Joi.string().allow(null).description("mã trạng thái:00, 01..."),
+          description: Joi.string().allow(null).description("mô tả trạng thái giao dịch"),
+          serial: Joi.string().allow(null).description("số serial"),
+          amount: Joi.number().allow(null).description("giá trị giao dịch"),
+          transRef: Joi.string().allow(null).description("mã giao dịch do merchant đăng ký"),
+          transId: Joi.string().allow(null).description("mã giao dịch do 1pay cung cấp"),
+        })
+      }
+    }
+  },
+
+  {
+    method: 'POST',
+    path: '/card-charging/v5/query',
+    handler: onepaySim.simScratchQuery,
+    config: {
+      description: 'simulate https://api.1pay.vn/card-charging/v5/query to test scratch topup',
+      tags: ['api'],
+
+      response: {
+        schema: Joi.object({
+          status: Joi.string().allow(null).description("mã trạng thái:00, 01..."),
+          description: Joi.string().allow(null).description("mô tả trạng thái giao dịch"),
+          serial: Joi.string().allow(null).description("số serial"),
+          amount: Joi.number().allow(null).description("giá trị giao dịch"),
+          transRef: Joi.string().allow(null).description("mã giao dịch do merchant đăng ký"),
+          transId: Joi.string().allow(null).description("mã giao dịch do 1pay cung cấp"),
         })
       }
     }

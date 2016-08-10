@@ -19,6 +19,7 @@ var onepayHandler = require("../src/routes/api/onepayHandlers");
 
 describe("05.Onepay api",function(){
     //---------------------------------------------------------
+
     var testScatchTopup = function(done){
         server
             .post("/api/1pay/scratchTopup")
@@ -27,7 +28,7 @@ describe("05.Onepay api",function(){
               "pin": "594040024773",
               "serial": "35971000000474",
               "userID": "User_1",
-              "deviceInfor": "ip5",
+              "clientInfor": "ip5",
               "clientType": "app",
               "startDateTime": new Date().getTime()
             })
@@ -41,13 +42,74 @@ describe("05.Onepay api",function(){
               res.status.should.equal(200);
 
                 res.body.should.have.property('status');
-                res.body.should.not.have.property('ads');
 
                 done();
             });
     };
 
-    it("Scratch topup",testScatchTopup);
+    it("Scratch topup success",testScatchTopup);
+
+
+  var testScatchTopupFail = function(done){
+    server
+      .post("/api/1pay/scratchTopup")
+      .send({
+        "type": "Mobifone",
+        "pin": "01123",
+        "serial": "1012",
+        "userID": "User_1",
+        "clientInfor": "ip5",
+        "clientType": "app",
+        "startDateTime": new Date().getTime()
+      })
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+        console.log(res.statusCode);
+        console.log(res.error);
+        console.log(res.body);
+
+        res.status.should.equal(200);
+
+        res.body.should.have.property('status');
+
+        done();
+      });
+  };
+
+  it("Scratch topup fail",testScatchTopupFail);
+
+
+  var testScatchTopupTimeout = function(done){
+    this.timeout(90000);
+
+    server
+      .post("/api/1pay/scratchTopup")
+      .send({
+        "type": "Mobifone",
+        "pin": "05123", //must be 05xxx
+        "serial": "1012",
+        "userID": "User_1",
+        "clientInfor": "ip5",
+        "clientType": "app",
+        "startDateTime": new Date().getTime()
+      })
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+        console.log(res.statusCode);
+        console.log(res.error);
+        console.log(res.body);
+
+        res.status.should.equal(200);
+
+        res.body.should.have.property('status');
+
+        done();
+      });
+  };
+
+  it("Scratch topup timeout",testScatchTopupTimeout);
 
   /*
   //-------- printQueryScratchTopup --------

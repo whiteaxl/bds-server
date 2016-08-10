@@ -1,127 +1,34 @@
-'use strict';
-/**
- *  Hapi will be the NodeJS server.
- *  I figure if WalMart, the largest retailer in the world, uses it,
- *  it will work for me.  
- *
- * From the command line, run ```npm start``` 
- *
- *  Hapi is configured in this import
- */
-var HapiServer = require('./src/config/hapi');
+npm uninstall react-native-router-flux --save
+npm install react-native-router-flux --save
 
+npm uninstall react-native --save
+npm install react-native --save
 
-require('babel-core/register')({
-    presets: ['react', 'es2015']
-});
+npm uninstall react --save
+npm install react --save
 
-var chatHandler = require('./src/lib/ChatHandler');
-chatHandler.init(HapiServer);
+npm uninstall react-native-push-notification --save
+npm install react-native-push-notification --save
 
-var dbChangeHandler = require('./src/lib/dbChangeHandler');
+npm uninstall react-native-gifted-spinner --save
+npm install react-native-gifted-spinner --save
 
+npm uninstall react-native-orientation --save
+npm install react-native-orientation --save
 
-// var io = require('socket.io')(HapiServer.listener);
+npm uninstall react-native-picker --save
+npm install react-native-picker --save
 
-// var ios = io.listen(HapiServer);
-// var nickname = [];
-// // var i =0;
+npm3 uninstall react-native-swiper --save
+npm3 install react-native-swiper --save
 
-// // Initializing Variables
-// // var nickname = [];
-// var i = [];
-// var x = [];
-// var online_member = [];
-// var temp1;
-// var socket_id;
-// var socket_data;
-// var files_array  = [];
-// var expiryTime = 8;
-// var routineTime = 1;
+npm3 uninstall react-native-scrollable-tab-view --save
+npm3 install react-native-scrollable-tab-view --save
 
+npm3 uninstall react-native-keyboard-spacer --save
+npm3 install react-native-keyboard-spacer --save
 
+npm3 uninstall react-native-couchbase-lite --save
+npm3 install react-native-couchbase-lite --save
 
-// ios.on('connection', function(socket){  
-//   // creating new user if nickname doesn't exists
-//   socket.on('new user', function(data, callback){
-//     if(nickname[data.username])
-//       {
-//         callback({success:false});
-//       }else{
-//         callback({success:true});
-//         socket.username = data.username;
-//         socket.userAvatar = data.userAvatar;
-//         nickname[data.username] = socket;
-//       }
-//   });
-
-//   // sending online members list
-//   socket.on('get-online-members', function(data){
-//     var online_member = [];
-//     i = Object.keys(nickname);
-//     for(var j=0;j<i.length;j++ )
-//     {
-//       socket_id = i[j];
-//       socket_data = nickname[socket_id];
-//       temp1 = {"username": socket_data.username, "userAvatar":socket_data.userAvatar};
-//       online_member.push(temp1);
-//     }
-//     ios.sockets.emit('online-members', online_member);    
-//   });
-
-//   // sending new message
-//   socket.on('send-message', function(data, callback){
-//     console.log("receive message "+ data.username + ", " + data.hasMsg);
-//     console.log("receive a message "+ data.username + ", " + nickname[data.username] + ", and msg: " + data.msg + " and callback is " + callback);
-//     if (nickname[data.username]) {
-//       if(data.hasMsg){
-
-//          ios.sockets.emit('new message', data);
-         
-//         callback({success:true}); 
-//       }else if(data.hasFile){
-//         if(data.istype == "image"){
-//           socket.emit('new message image', data);
-//           callback({success:true});
-//         } else if(data.istype == "music"){
-//           socket.emit('new message music', data);
-//           callback({success:true});
-//         } else if(data.istype == "PDF"){
-//           socket.emit('new message PDF', data);
-//           callback({success:true});
-//         }
-//       }else{
-//         console.log("fail callback");
-//         callback({ success:false});
-//       }
-//     }   
-//   });
-  
-//   // disconnect user handling 
-//   socket.on('disconnect', function () { 
-//     /*delete nickname[socket.username];
-//     online_member = [];
-//     x = Object.keys(nickname);
-//     for(var k=0;k<x.length;k++ )
-//       {
-//           socket_id = x[k];
-//           socket_data = nickname[socket_id];
-//           temp1 = {"username": socket_data.username, "userAvatar":socket_data.userAvatar};
-//             online_member.push(temp1);
-//       }
-//     ios.sockets.emit('online-members', online_member);*/              
-//     });
-// });
-
-
-/**
- * When hapi starts up, some info is displayed
- */
-HapiServer.start(function () {
-  //dbChangeHandler.initAPN(this);
-  //dbChangeHandler.init(this);
-
-  console.log('Server is running: ' + HapiServer.info.uri);
-
-});
 

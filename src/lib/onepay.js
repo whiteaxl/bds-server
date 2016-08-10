@@ -34,9 +34,9 @@ services.queryScratchTopup = function(txn) {
   var params = {
     access_key : cfg.onepay.access_key,
     type : txn.cardType,
-    pin : txn.pin,
-    serial : txn.serial,
-    transRef : txn.transRef,
+    pin : txn.cardPin,
+    serial : txn.cardSerial,
+    transRef : txn.id,
     transId : txn.transId || ""
   };
   var signatureMsg = `access_key=${params.access_key}`
@@ -47,28 +47,43 @@ services.queryScratchTopup = function(txn) {
     + `&type=${params.type}`;
 
   log.info("queryScratchTopup, signatureMsg=", signatureMsg);
-  params.signature = genSig(signatureMsg);
+  params.signature = this.genSig(signatureMsg);
+  signatureMsg += "&signature=" + params.signature;
 
-  var url = "https://api.1pay.vn/card-charging/v5/query";
+  var url = `${cfg.onepay.rootUrl}/card-charging/v5/query?${signatureMsg}`;
   //console.log(url);
   var options = {
     method: 'POST',
     uri: url,
-    body: params,
+    body: {},
     json: true // Automatically parses the JSON string in the response
   };
 
+  //return rp(options)
+
   return rp(options)
+    .then((res) => {
+      return {
+        req : options,
+        res : res
+      }
+    })
+    .catch((err) => {
+      return {
+        req : options,
+        err : err
+      }
+    })
 };
 
 
-services.scratchTopup = function(txnInDB) {
+services.scratchTopup = function(reqParams) {
   var params = {
     access_key : cfg.onepay.access_key,
-    type : txnInDB.cardType,
-    pin : txnInDB.pin,
-    serial : txnInDB.serial,
-    transRef : txnInDB.transRef,
+    pin: reqParams.pin,
+    serial : reqParams.serial,
+    transRef : reqParams.transRef,
+    type: reqParams.type
   };
 
   var signatureMsg = `access_key=${params.access_key}`
@@ -83,13 +98,14 @@ services.scratchTopup = function(txnInDB) {
 
   signatureMsg += "&signature=" + params.signature;
 
-  var url = "https://api.1pay.vn/card-charging/v5/topup?" + signatureMsg;
+  var url = cfg.onepay.rootUrl + "/card-charging/v5/topup?" + signatureMsg;
 
   var options = {
     method: 'POST',
     uri: url,
     body: {},
-    json: true // Automatically parses the JSON string in the response
+    json: true, // Automatically parses the JSON string in the response
+    timeout : 10000
   };
 
   log.info("scratchTopup, topup request:", options);
