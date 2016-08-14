@@ -37,6 +37,8 @@ class OnePay {
 	}
 	saveScratchTopupRequestFromClient(payload, callback) {
 		bucket.counter(constant.DB_SEQ.ScratchTopup, 1, {initial: 0}, (err, res)=> {
+		  log.info("Done get next seq numnber for scratchTopup");
+
 			if (err) {
 				callback(err, res);
 			} else {
@@ -59,8 +61,10 @@ class OnePay {
 
 				};
 
+
 				bucket.upsert(dto.id, dto, (err, res) => {
-					callback(err, res, dto);
+          log.info("Done save init txTopup");
+          callback(err, res, dto);
 				})
 			}
 		});

@@ -675,7 +675,7 @@ internals.endpoints = [
 
       response: {
         schema: Joi.object({
-          status: Joi.string().allow(null).description("mã trạng thái:00, 01..."),
+          status: Joi.number().allow(null).description("mã trạng thái:0, 1..."),
           msg: Joi.string().allow(null).description("mô tả trạng thái giao dịch"),
           serial: Joi.string().allow(null).description("số serial"),
           topupAmount: Joi.number().allow(null).description("giá trị giao dịch"),

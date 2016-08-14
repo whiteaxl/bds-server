@@ -10,8 +10,6 @@ class SyncGW {
     if (dto.type==='Chat') {
       dto._id = dto.chatID;
     }
-
-
   }
 
   createDocViaSyncGateway(dto, callback) {

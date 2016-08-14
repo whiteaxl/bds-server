@@ -3,7 +3,7 @@ var should = require("should");
 var danhMuc = require("../src/lib/DanhMuc");
 var constant = require("../src/lib/constant");
 
-var server = supertest.agent("http://localhost:5000");
+var server = supertest.agent("http://192.168.0.109:5000");
 
 var moment = require("moment");
 
@@ -27,7 +27,7 @@ describe("05.Onepay api",function(){
               "type": "Mobifone",
               "pin": "594040024773",
               "serial": "35971000000474",
-              "userID": "User_1",
+              "userID": "User_0",
               "clientInfor": "ip5",
               "clientType": "app",
               "startDateTime": new Date().getTime()

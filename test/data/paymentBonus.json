@@ -1,0 +1,24 @@
+[
+  {
+    "default": {
+      "id" : "PaymentBonus_1",
+      "paymentType" : "scratch",
+      "fromDateTime" : 1457794190000,
+      "toDateTime" : 1476283790000,
+      "percent" : 30,
+      "min" : 20000,
+      "type" : "PaymentBonus"
+    }
+  },
+  {
+    "default": {
+      "id" : "PaymentBonus_2",
+      "paymentType" : "scratch",
+      "fromDateTime" : 1457794190000,
+      "toDateTime" : 1476283790000,
+      "percent" : 50,
+      "min" : 50000,
+      "type" : "PaymentBonus"
+    }
+  }
+]

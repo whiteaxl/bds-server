@@ -26,7 +26,7 @@ payment.calcFinalTopupAmount = function(param, callback) {
     callback({
       mainAmount : main,
       bonusAmount :bonus.bonusAmount,
-      bonusID : bonus.bonusID
+      paymentBonus : bonus.paymentBonus
     })
   });
 };
@@ -39,21 +39,26 @@ payment.calcBonus = function(param, callback) {
   paymentModel.getAllPaymentBonus((err, res) => {
     if (err) {
       log.error("Error when getAllPaymentBonus:", err);
-      callback({bonusAmount:0, bonusID:null});
+      callback({bonusAmount:0, paymentBonus:null});
       return;
     }
 
-    //{id, paymentType, fromDateTime, toDateTime, percent, min}
-    res.forEach((e) => {
-      if ( (!e.paymentType || e.paymentType==param.paymentType)
-        && e.fromDateTime <= param.datetime && e.toDateTime >= param.datetime
-        && e.min < param.topupAmount) {
+    var bonus = {bonusAmount:0, paymentBonus:null};
 
-        callback({bonusAmount:param.topupAmount * e.percent, bonusID:e.id})
+    //{id, paymentType, fromDateTime, toDateTime, percent, min}
+    res.forEach((inDB) => {
+      log.info("Compare bonus", {param, inDB});
+      if ( (!inDB.paymentType || inDB.paymentType==param.paymentType)
+        && inDB.fromDateTime <= param.datetime && inDB.toDateTime >= param.datetime
+        && inDB.min <= param.topupAmount) {
+
+        log.warn("Got bonus", inDB);
+
+        bonus = {bonusAmount:param.topupAmount * inDB.percent/100, paymentBonus:inDB}
       }
     });
 
-    callback({bonusAmount:0, bonusID:null});
+    callback(bonus);
   });
 };
 

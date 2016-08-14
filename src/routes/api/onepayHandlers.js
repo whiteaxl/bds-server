@@ -75,7 +75,7 @@ function handleScatchResponse(onepayRes, txTopup, reply) {
     });
 
     reply({
-      status : onepayRes.status,
+      status : Number(onepayRes.status),
       msg : onepayRes.description,
     });
 
@@ -87,18 +87,20 @@ function handleScatchResponse(onepayRes, txTopup, reply) {
     datetime : txTopup.startDateTime,
     topupAmount : onepayRes.amount
   }, (calcRes) => {
+    log.info("Done calc Amount: ", {txTopup, calcRes});
+
     //store into db
     txTopup.stage = constant.TOPUP_STAGE.SUCCESS;
     txTopup.endDateTime = new Date().getTime();
     txTopup.topupAmount = onepayRes.amount;
     txTopup.mainAmount = calcRes.mainAmount;
     txTopup.bonusAmount = calcRes.bonusAmount;
-    txTopup.bonusID = calcRes.bonusID;
+    txTopup.paymentBonus = calcRes.paymentBonus;
 
     onepayDB.upsert(txTopup, (err, dbRes) => {
       if (err) {
         reply({
-          status : '100',
+          status : 100,
           msg : "Giao dịch không thành công! Lỗi khi lưu TxTopup"
         });
         log.error("scratchTopup, error when update topup response into DB", err);
@@ -113,7 +115,7 @@ function handleScatchResponse(onepayRes, txTopup, reply) {
       }, (err, res) => {
         if (err) {
           reply({
-            status : '101',
+            status : 101,
             msg : "Giao dịch không thành công! Lỗi khi cập nhật tài khoản"
           });
           log.error("scratchTopup, error when update updateAccount into DB", err);
@@ -123,7 +125,7 @@ function handleScatchResponse(onepayRes, txTopup, reply) {
 
         log.info("Done store onepay response for ScratchTopup to DB", err, res);
         reply({
-          status : onepayRes.status,
+          status : Number(onepayRes.status),
           msg : onepayRes.description,
           topupAmount : onepayRes.amount,
           mainAmount : calcRes.mainAmount,
@@ -143,14 +145,18 @@ internals.scratchTopup = function(req, reply) {
 
   //need store into DB and return transRef
   onepayDB.saveScratchTopupRequestFromClient(payload, (err, res, txTopup) => {
+    log.info("scratchTopup, done saveScratchTopupRequestFromClient", err, res);
     if (err) {
+
       reply({
-        status : "99",
+        status : 99,
         msg : "Lỗi khi thực hiện khởi tạo nạp thẻ cào: " + err.msg
       });
 
       return;
     }
+
+
 
     var reqParams = {
       type : txTopup.cardType,
@@ -171,7 +177,7 @@ internals.scratchTopup = function(req, reply) {
             handleScratchTopupTimeout(txTopup, reply);
           } else {
             reply({
-              status : '99',
+              status : 99,
               msg  : 'Loi khi thuc hien thanh toan The cao voi 1pay!'
             });
           }
@@ -239,7 +245,7 @@ var handleScratchTopupTimeout = function(txn, reply) {
 
     if (res.err) {
       reply({
-        status : '99',
+        status : 99,
         msg  : 'Loi khi thuc hien thanh toan The cao voi 1pay!'
       });
       return;

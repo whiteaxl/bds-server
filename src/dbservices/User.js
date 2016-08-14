@@ -527,6 +527,8 @@ class UserModel {
       console.log("Get user from syncGateway:", resJson);
 
       var user = {}; Object.assign(user, resJson);
+      //user._rev = null;
+      user._id = dto.userID;
 
       if (!user.account) {
         user.account = {
@@ -535,20 +537,11 @@ class UserModel {
         }
       }
 
-      //clear some default
-      /*
-      user._rev = null;
-      user._id = null;
-      */
-
       user.account.main += dto.mainAmount;
       user.account.bonus += dto.bonusAmount;
 
-      log.info("will update user account:", user);
-
       const updateUrl = `${url}${user.id}?rev=${resJson._rev}`;
-      console.log("updateUrl:", updateUrl);
-
+      console.log("Will update user:", {updateUrl, user});
 
       request({
           url: updateUrl, method: "PUT",
@@ -564,13 +557,14 @@ class UserModel {
           if (response.statusCode === 200 || response.statusCode === 201) {
             callback(null, {user: user, body: body});
           } else {
-            log.error("CreateUser - Have response but status fail:", response);
+            log.error("UpdateUser - Have response but status fail:", response.body);
             callback({code:99, msg: response.body}, null);
           }
         });
 
     });
   }
+
 }
 
 module.exports = UserModel;

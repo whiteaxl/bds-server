@@ -2,17 +2,19 @@
 
 var should = require("should");
 var prepare = require("./prepareData");
-var AdsService = require("../src/dbservices/Ads");
+var CommonService = require("../src/dbservices/Common");
 
-var adsService = new AdsService();
-prepare.loadFromFile("ads_5108.json");
-// prepare.loadUserFromFile("user.json");
-//prepare.loadAds();
+var commonService = new CommonService();
+
+
+prepare.loadFromFile("paymentBonus.json");
+prepare.loadFromFile("ads.json");
+
 
 var times = 0;
 var timer = setInterval(
     () => {
-        adsService.countAllAds((cnt) => {
+      commonService.countByType("Ads", (cnt) => {
             console.log("Cnt = " + cnt);
         });
         times ++;
