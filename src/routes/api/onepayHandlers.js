@@ -32,35 +32,156 @@ var crypto = require('crypto');
 
 var internals = {};
 
+function updateTxTopupInfo(txTopup, calcRes, callback) {
+  //store into db
+  txTopup.stage = constant.TOPUP_STAGE.SUCCESS;
+  txTopup.endDateTime = new Date().getTime();
+  txTopup.mainAmount = calcRes.mainAmount;
+  txTopup.bonusAmount = calcRes.bonusAmount;
+  txTopup.paymentBonus = calcRes.paymentBonus;
+
+  onepayDB.upsert(txTopup, (err, dbRes) => {
+    if (err) {
+      callback({
+        status : 100,
+        msg : "Giao dịch không thành công! Lỗi khi lưu TxTopup"
+      });
+      log.error("updateTxTopupInfo, error when update topup response into DB", err);
+
+      return;
+    }
+    //update User infor
+    userDB.updateAccount({
+      mainAmount:calcRes.mainAmount,
+      bonusAmount:calcRes.bonusAmount,
+      userID : txTopup.userID
+    }, (err, res) => {
+      if (err) {
+        callback({
+          status : 101,
+          msg : "Giao dịch không thành công! Lỗi khi cập nhật tài khoản"
+        });
+        log.error("updateTxTopupInfo, error when update updateAccount into DB", err);
+
+        return;
+      }
+
+      log.info("Done updateTxTopupInfo to DB", err, res);
+      callback({
+        status : 0,
+        totalMain : res.user.account.main,
+        totalBonus : res.user.account.bonus,
+      });
+    });
+  });
+}
+
+function smsplus_reply(req, res2onepay, reply) {
+  //store as it's in db first
+  onepayDB.logData({
+    req: req.url,
+    res : res2onepay
+  }, "Onepay_Request", "SmsTopup");
+
+  reply(res2onepay);
+}
+
 internals.smsplusCharging = function(req, reply) {
   var query = req.query;
   log.info("SmsplusCharging, query=", query);
 
   var mySig = onepayServices.genSmsSignature(query);
 
-  log.info("mySig=", mySig);
-  log.info("1paySig=", query.signature);
+  log.info("mySig vs 1paySig", {relandSig: mySig, onepaySig: query.signature});
   query.mySignature = mySig;
 
-  if (mySig==query.signature) {
-    query.status = 1;
-    onepayDB.upsertSmsPlus(query);
+  var res2onepay = null;
 
-    reply({
-      status : 1,
-      sms : "OK, Signature khớp nhau",
-      type : "text"
-    });
-  } else {
-    query.status = 0;
-    onepayDB.upsertSmsPlus(query);
-
-    reply({
+  if (mySig!==query.signature) {
+    res2onepay = {
       status : 0,
       sms : "Error, Signature không khớp!",
       type : "text"
-    });
+    };
+
+    smsplus_reply(req, res2onepay, reply);
+
+    return;
   }
+
+  onepayDB.insertSmsPlus(query, (res) => {
+    if (res.status==0) {
+      var startDateTime = new Date(query.request_time).getTime();
+
+      //calc and update to user...
+      paymentEngine.calcFinalTopupAmount({
+        paymentType : constant.PAYMENT.SMSPLUS,
+        datetime : startDateTime,
+        topupAmount : query.amount
+      }, (calcRes) => {
+        log.info("Done calc Amount: ", {calcRes});
+
+        userDB.getUserByMsisdn(query.msisdn, (err, res) => {
+          if (err) {
+            let msg = "Lỗi khi thực hiện update TxTopup của smsplus.";
+
+            log.error(msg, err);
+            res2onepay = {
+              status : 0,sms : msg,type : "text"
+            };
+            smsplus_reply(req, res2onepay, reply);
+
+            return;
+          }
+
+          if (res.length ==0) {
+            let msg = "Số điện thoại nạp tiền không tồn tại.:" + + query.msisdn;
+            log.error(msg);
+
+            res2onepay = {
+              status : 0,sms : msg,type : "text"
+            };
+            smsplus_reply(req, res2onepay, reply);
+            return;
+          }
+
+          updateTxTopupInfo({
+            id : "SMS_" + query.request_id,
+            userID : res[0].userID,
+            paymentType : constant.PAYMENT.SMSPLUS,
+            paymentName : constant.PAYMENT.SMSPLUS,
+            startDateTime : startDateTime,
+            topupAmount : query.amount,
+          }, calcRes, (res) => {
+            log.info("Done updateTxTopupInfo");
+            res2onepay = {
+              status : 1,sms : "OK, Signature khớp nhau",type : "text"
+            };
+            smsplus_reply(req, res2onepay, reply);
+          });
+        });
+      });
+
+      return;
+    }
+
+    //fail cases
+    if (res.status==1) { //lap requestID
+      res2onepay = {
+        status : 0,
+        sms : res.msg,
+        type : "text"
+      };
+    } else { //other error
+      res2onepay = {
+        status : 0,
+        sms : res.msg,
+        type : "text"
+      };
+    }
+
+    smsplus_reply(req, res2onepay, reply);
+  });
 };
 
 function handleScatchResponse(onepayRes, txTopup, reply) {
@@ -89,52 +210,22 @@ function handleScatchResponse(onepayRes, txTopup, reply) {
   }, (calcRes) => {
     log.info("Done calc Amount: ", {txTopup, calcRes});
 
-    //store into db
-    txTopup.stage = constant.TOPUP_STAGE.SUCCESS;
-    txTopup.endDateTime = new Date().getTime();
     txTopup.topupAmount = onepayRes.amount;
-    txTopup.mainAmount = calcRes.mainAmount;
-    txTopup.bonusAmount = calcRes.bonusAmount;
-    txTopup.paymentBonus = calcRes.paymentBonus;
-
-    onepayDB.upsert(txTopup, (err, dbRes) => {
-      if (err) {
-        reply({
-          status : 100,
-          msg : "Giao dịch không thành công! Lỗi khi lưu TxTopup"
-        });
-        log.error("scratchTopup, error when update topup response into DB", err);
-
-        return;
-      }
-      //update User infor
-      userDB.updateAccount({
-        mainAmount:calcRes.mainAmount,
-        bonusAmount:calcRes.bonusAmount,
-        userID : txTopup.userID
-      }, (err, res) => {
-        if (err) {
-          reply({
-            status : 101,
-            msg : "Giao dịch không thành công! Lỗi khi cập nhật tài khoản"
-          });
-          log.error("scratchTopup, error when update updateAccount into DB", err);
-
-          return;
-        }
-
-        log.info("Done store onepay response for ScratchTopup to DB", err, res);
+    updateTxTopupInfo(txTopup, calcRes, (res) => {
+      if (res.status !== 0) {
+        reply(res);
+      } else {
         reply({
           status : Number(onepayRes.status),
           msg : onepayRes.description,
           topupAmount : onepayRes.amount,
           mainAmount : calcRes.mainAmount,
           bonusAmount : calcRes.bonusAmount,
-          totalMain : res.user.account.main,
-          totalBonus : res.user.account.bonus,
+          totalMain : res.totalMain,
+          totalBonus : res.totalBonus,
           serial : onepayRes.serial,
         });
-      });
+      }
     });
   });
 }
@@ -147,7 +238,6 @@ internals.scratchTopup = function(req, reply) {
   onepayDB.saveScratchTopupRequestFromClient(payload, (err, res, txTopup) => {
     log.info("scratchTopup, done saveScratchTopupRequestFromClient", err, res);
     if (err) {
-
       reply({
         status : 99,
         msg : "Lỗi khi thực hiện khởi tạo nạp thẻ cào: " + err.msg
@@ -155,8 +245,6 @@ internals.scratchTopup = function(req, reply) {
 
       return;
     }
-
-
 
     var reqParams = {
       type : txTopup.cardType,
@@ -185,7 +273,6 @@ internals.scratchTopup = function(req, reply) {
           return;
         }
 
-        //
         let onepayRes = res.res;
         handleScatchResponse(onepayRes, txTopup, reply)
       })

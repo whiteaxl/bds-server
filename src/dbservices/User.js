@@ -50,6 +50,24 @@ class UserModel {
     bucket.enableN1ql(['127.0.0.1:8093']);
     bucket.operationTimeout = 60 * 1000;
   }
+  //getUserByMsisdn: start with 84
+  getUserByMsisdn(msisdn, callback) {
+    var sql = `select default.* from default where type='User'`;
+    var f1 = msisdn;
+    var f2 = msisdn.substring(2);
+    var f3 = "0" + f2;
+
+    sql = `${sql} AND (phone='${f1}' OR phone='${f2}' OR phone='${f3}') `;
+
+    log.info("getUserByMsisdn, sql:", sql);
+
+    var query = N1qlQuery.fromString(sql);
+
+    //Todo: why need this?
+    this.initBucket();
+
+    bucket.query(query, callback);
+  }
 
   // by phone or email
   getUser(userDto, callback) {
