@@ -228,10 +228,6 @@
         </div>
         <div class="clb ovh title border">&nbsp;</div>
         <div class="collapse-none collapse-box">
-            <a role="button" class="collapse-title paytitle" data-toggle="modal" data-target="#payappBox"><i class="p-icon i-payapp"></i> Thanh toán In-App <span><i class="iconRightOpen"></i></span></a>
-        </div>
-        <div class="clb ovh title border">&nbsp;</div>
-        <div class="collapse-none collapse-box">
             <a role="button" class="collapse-title paytitle" data-toggle="modal" data-target="#paysmsBox"><i class="p-icon i-paysms"></i> Tin nhắn SMS <span><i class="iconRightOpen"></i></span></a>
         </div>
         <div class="clb ovh title border">&nbsp;</div>
@@ -560,48 +556,125 @@
                     <div class="tab-content">
                     	<div role="tabpanel" class="tab-pane active" id="mobiphone">
                         	<div class="title">Nhập mã số thẻ cào</div>
-                            <input type="text" class="modal-ipt" pattern="\d*">
+                            <div class="pd15"><input type="text" class="form-control" pattern="\d*"></div>
                             <div class="title">Nhập số Serial</div>
-                            <input type="text" class="modal-ipt mb10" pattern="\d*">
-                            <div class="note-fr pd15 mb10">
+                            <div class="pd15"><input type="text" class="form-control mb10" pattern="\d*"></div>
+                            <div class="note-fr pd15">
                             	<div>Số tiền ghi có vào tài khoản chính của bạn <strong>100k</strong></div>
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-                            <div class="collapse-box btn-box btn-reset">
-                                <button type="submit" class="collapse-title red">Nạp thẻ</button>
-                            </div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="viettel">
                         	<div class="title">Nhập mã số thẻ cào</div>
-                            <input type="text" class="modal-ipt" pattern="\d*">
+                            <div class="pd15"><input type="text" class="form-control" pattern="\d*"></div>
                             <div class="title">Nhập số Serial</div>
-                            <input type="text" class="modal-ipt mb10" pattern="\d*">
-                            <div class="note-fr pd15 mb10">
+                            <div class="pd15"><input type="text" class="form-control mb10" pattern="\d*"></div>
+                            <div class="note-fr pd15">
                             	<div>Số tiền ghi có vào tài khoản chính của bạn <strong>100k</strong></div>
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-                            <div class="collapse-box btn-box btn-reset">
-                                <button type="submit" class="collapse-title red">Nạp thẻ</button>
-                            </div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="vinaphone">
                         	<div class="title">Nhập mã số thẻ cào</div>
-                            <input type="text" class="modal-ipt" pattern="\d*">
+                            <div class="pd15"><input type="text" class="form-control" pattern="\d*"></div>
                             <div class="title">Nhập số Serial</div>
-                            <input type="text" class="modal-ipt mb10" pattern="\d*">
-                            <div class="note-fr pd15 mb10">
+                            <div class="pd15"><input type="text" class="form-control mb10" pattern="\d*"></div>
+                            <div class="note-fr pd15">
                             	<div>Số tiền ghi có vào tài khoản chính của bạn <strong>100k</strong></div>
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-                            <div class="collapse-box btn-box btn-reset">
-                                <button type="submit" class="collapse-title red">Nạp thẻ</button>
-                            </div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade modal-none modal-bg modal-choose" id="paysmsBox" tabindex="-1" role="dialog" aria-labelledby="paysmsBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            	<div class="modal-header">
+                	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                	<h4 class="modal-title" id="paysmsBoxLabel">Tin nhắn SMS</h4>
+                </div>
+                <div class="modal-body uln">
+                	<div class="collapse-box sms-item">
+						<div class="sms-icon sms-warning">
+							<div class="btn btn-block btn-warning btn-sms"><i class="fa fa-comment"></i><span>15k</span>SMS</div>
+							<div class="btn btn-block btn-warning btn-price">+ 6k</div>
+						</div>
+						<div class="sms-txt">
+							<p>Soạn tin <strong>ABC</strong> gửi <strong>123</strong></p>
+							<p>Phí nhắn tin: 15k</p>
+							<p>Tiền nạp vào tài khoản: 6k</p>
+						</div>
+						<div class="sms-action">
+							<button class="btn btn-block btn-danger">Gửi SMS</button>
+						</div>
+					</div>
+					<div class="collapse-box sms-item border-none">
+						<div class="sms-icon sms-green">
+							<div class="btn btn-block btn-green btn-sms"><i class="fa fa-comment"></i><span>15k</span>SMS</div>
+							<div class="btn btn-block btn-green btn-price">+ 6k</div>
+						</div>
+						<div class="sms-txt">
+							<p>Soạn tin <strong>DEF</strong> gửi <strong>123</strong></p>
+							<p>Phí nhắn tin: 50k</p>
+							<p>Tiền nạp vào tài khoản: 60k</p>
+						</div>
+						<div class="sms-action">
+							<button class="btn btn-block btn-danger">Gửi SMS</button>
+						</div>
+					</div>
+					<div class="note-fr title border-top">Chú ý: Chọn gói tin SMS, Soạn tin đúng cú pháp trước khi gửi tin nhắn</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade modal-none modal-bg modal-choose" id="paybankBox" tabindex="-1" role="dialog" aria-labelledby="paybankBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            	<div class="modal-header">
+                	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                	<h4 class="modal-title" id="paybankBoxLabel">Chuyển khoản ngân hàng</h4>
+                </div>
+                <div class="modal-body uln">
+					<div class="collapse-box bank-item">
+						<p><span>&nbsp;</span> <img src="images/bidv.jpg" alt="" title="" /></p>
+						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+						<p><span>Ngân hàng:</span> NH BIDV</p>
+						<p><span>Số tài khoản:</span> 22210000978423</p>
+						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+					</div>
+					<div class="collapse-box bank-item">
+						<p><span>&nbsp;</span> <img src="images/vietcombank.jpg" alt="" title="" /></p>
+						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+						<p><span>Ngân hàng:</span> NH Vietcombank</p>
+						<p><span>Số tài khoản:</span> 0451000363160</p>
+						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+					</div>
+					<div class="collapse-box bank-item">
+						<p><span>&nbsp;</span> <img src="images/acb.jpg" alt="" title="" /></p>
+						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+						<p><span>Ngân hàng:</span> NH ACB</p>
+						<p><span>Số tài khoản:</span> 214420459</p>
+						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+					</div>
+					<div class="collapse-box bank-item border-none">
+						<p><span>&nbsp;</span> <img src="images/vietinbank.jpg" alt="" title="" /></p>
+						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+						<p><span>Ngân hàng:</span> NH viettinbank</p>
+						<p><span>Số tài khoản:</span> 102010002502726</p>
+						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+					</div>
+				</div>
             </div>
         </div>
     </div>

@@ -15,6 +15,10 @@ function update(){
 			$(".input-fr").removeAttr("style");
 		}
 	}
+	
+	var postimg = ($ww-20)/4 - 10;
+	$(".post .postimg ul li").width(postimg).height(postimg);
+	$(".post .postimg input[type=file]+label").height(postimg-2).css("line-height", postimg+"px");
 }
 
 // check click detail
@@ -114,6 +118,11 @@ function spinner(me, box, item){
 	}
 }
 
+// toggle class box click
+function boxClassToggle(box, clas){
+	$(box).toggleClass(clas);
+}
+
 // show toggle box click
 function showhide(box){
 	$(box).toggle();
@@ -138,6 +147,10 @@ $(function(){
 	 $(window).resize(function(){
 		 update();	 
 	});
+	
+	$(".reland-title.fixed h3").html($(".wapper .reland-box:first-child h3").html());
+	$(".reland-title.fixed h4").html($(".wapper .reland-box:first-child h4").html());
+	$(".reland-title.fixed h5").html($(".wapper .reland-box:first-child h5").html());
 	
 	showNotify();
 	
@@ -225,6 +238,32 @@ $(function(){
 		$(this).toggleClass("active");
 	});
 	
+	// reset value input other in post page
+	$(".btn-group .btn").click(function(){
+		if(!$(this).hasClass("other")) {
+			$(this).parent().find("input").val('');
+		}
+	});
+	
+	// set active packet
+	$(".pack-box .btn-group .btn").each(function(){
+		if ($(this).hasClass("active")) $(this).parent().parent().find(".iconCheck").addClass("actived");
+	});
+	$(".pack-box .btn-group .btn").click(function(){
+		$(".pack-box .iconCheck").removeClass("actived");
+		$(".pack-box .collapse-title").removeClass("actived");
+		$(this).parent().parent().find(".iconCheck").addClass("actived");
+		$(this).parent().parent().find(".collapse-title").addClass("actived");
+	});
+	
+	$(".pack-box a").click(function(){
+		$(".pack-box .collapse-title").removeClass("actived");
+		$(".pack-box .iconCheck").removeClass("actived");
+		$(".pack-box .btn-group .btn").removeClass("active");
+		$(this).parent().find(".collapse-title").addClass("actived");
+		$(this).parent().find(".iconCheck").addClass("actived");
+		$(this).parent().find(".btn-group .btn:nth-child(2)").addClass("active");
+	});
 	
 	// input search click in search
 	$(".input-fr").keyup(function(){

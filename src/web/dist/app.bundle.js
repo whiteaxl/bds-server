@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7cbe4a9c7eb0d7107a3b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6a0037f337cbb0433a42"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -998,7 +998,7 @@
 	  });
 
 
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt'])
+	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
 	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -1029,6 +1029,7 @@
 	      "huongNha": 0,
 	      "huongNhas": [],
 	      "radiusInKm": 2,
+	      "ngayDaDang": undefined,
 	      "userID": $rootScope.user.userID,
 	      //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
 	      "limit": $rootScope.pageSize,
@@ -21363,6 +21364,9 @@
 	        }
 	        if($rootScope.lastSearch)
 	        	homeDataSearch.query = $rootScope.lastSearch;
+	        $rootScope.currentLocation.lat = 20.9898098;
+	    	$rootScope.currentLocation.lon = 105.7098334;
+	    	homeDataSearch.currentLocation = $rootScope.currentLocation;
 	        vm.getLocation = function() {
 			    if (navigator.geolocation) {
 			        navigator.geolocation.getCurrentPosition(function(position){
@@ -21375,7 +21379,7 @@
 						});
 			        });
 			    } else {
-			        //x.innerHTML = "Geolocation is not supported by this browser.";
+			        //x.innerHTML = "Geolocation is not supported by this browser.";		        
 			        HouseService.homeDataForApp(homeDataSearch).then(function(res){
 						//alert(JSON.stringify(res));
 						vm.boSuuTap = res.data.data; 
@@ -21468,7 +21472,7 @@
 			// vm.zoomMode = "auto";
 			vm.ads_list = [{},{},{},{},{}];
 			$scope.center = "Hanoi Vietnam";
-			vm.zoomMode = "false";
+			vm.zoomMode = "auto";
 			vm.placeId = $state.params.place;
 			vm.loaiTin = $state.params.loaiTin;
 			vm.loaiNhaDat = $state.params.loaiNhaDat;
@@ -21476,12 +21480,19 @@
 			if($state.params.query)
 				$rootScope.searchData = $state.params.query;
 			vm.initMap = true;
+			vm.page = 1;
+			vm.initialized = false;
 			
 			vm.showList = function(){
 				vm.viewMode = "list";
+				// vm.map.refresh();
 			}
 			vm.showMap = function(){
-				vm.viewMode = "map";
+				vm.viewMode = "map";			
+			}
+			vm.sort = function(sortBy){
+				$rootScope.searchData.orderBy = sortBy;
+				vm.search();
 			}
 
 
@@ -21518,6 +21529,74 @@
 	                }
 	            });
 	            
+	        }
+	        vm.disableScrolling = true;
+	        vm.page =1;
+	        vm.nextPage =function(){        	
+	        	vm.disableScrolling = true;
+	        	//alert('aaaa');
+	        	vm.page = vm.page+1;
+	        	$rootScope.searchData.pageNo = vm.page;       
+	            if($rootScope.searchData.place)
+	                $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;  
+	            $rootScope.searchData.userID = $rootScope.user.userID;
+	            HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
+	                var result = res.data.list;
+	                for (var i = 0; i < result.length; i++) { 
+	                    var ads = result[i];
+	                    ads.giaFmt = ads.giaFmtForWeb;
+
+	                    if($rootScope.alreadyLike(ads.adsID) ==  true)
+	                        ads.liked =true;
+	                    var length = result.length;
+	                    var fn = function() {
+	                        if(i < length) {
+	                            vm.updateStreetview(result[i], fn);
+	                        }
+	                    };
+	                    fn();
+
+	                    result[i].index = i;
+	                    if(ads.huongNha){
+	                        ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+	                    }else{
+	                        ads.huongNha = "";  
+	                    }
+	                    if(result[i].place){
+	                        if(result[i].place.geo){
+	                            result[i].map={
+	                                center: {
+	                                    latitude:   result[i].place.geo.lat,
+	                                    longitude:  result[i].place.geo.lon
+	                                },
+	                                marker: {
+	                                    id: i,
+	                                    coords: {
+	                                        latitude:   result[i].place.geo.lat,
+	                                        longitude:  result[i].place.geo.lon
+	                                    },
+	                                    content: result[i].giaFmt,
+	                                    data: 'test'
+	                                },
+	                                options:{
+	                                    scrollwheel: false
+	                                },
+	                                zoom: 14    
+	                            }
+	                                    
+	                        }
+	                    }
+	                    
+	                }
+	                vm.ads_list = vm.ads_list.concat(res.data.list);
+	                // $scope.markers = [];
+	                for(var i = 0; i < res.data.list.length; i++) { 
+	                    var ads = res.data.list[i];
+	                    if(res.data.list[i].map)
+	                        $scope.markers.push(res.data.list[i].map.marker);
+	                }       
+	                vm.disableScrolling = false;                     
+	            });
 	        }
 			vm.searchPage = function(i, callback){
 	            $rootScope.searchData.pageNo = i;       
@@ -21611,9 +21690,9 @@
 	                                vm.duAnNoiBat = res.data.duAnNoiBat;
 	                        });
 	                }
-
+	                vm.disableScrolling = false; 
 	                if(callback)
-	                    callback();
+	                    callback.call(this);
 	            });
 	        }
 
@@ -21677,7 +21756,8 @@
 	        //vm.search();
 
 	        NgMap.getMap('searchmap').then(function(map){
-	        	vm.map = map;        	
+	        	vm.map = map; 
+	        	vm.initialized = true;       	
 	            google.maps.event.addListener(map, "dragend", function() {
 	            	//alert(vm.map.getBounds());
 					$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
@@ -21961,34 +22041,125 @@
 	                    $(".btn-group .btn:first-child").addClass("active");
 	                }
 	                vm.pageSize = 25;
-	                /*vm.searchData = {
-	                    giaBETWEEN: [0,9999999999999],
-	                    "loaiTin": 0,
-	                    "loaiNhaDat": 0, 
-	                    "loaiNhaDats": [],
-	                    "soPhongNguGREATER": 0,
-	                    "soPhongTamGREATER": 0,
-	                    "soTangGREATER": 0,
-	                    "dienTichBETWEEN": [0,99999999999999],
-	                    "huongNha": 0,
-	                    "huongNhas": [],
-	                    "radiusInKm": 2,
-	                    "userID": $rootScope.user.userID,
-	                    //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-	                    "limit": vm.pageSize,
-	                    "orderBy": 0,
-	                    "pageNo": 1
-	                }*/
+	                vm.initialized = false;
+	                $scope.searchData = {};
+	                Object.assign($scope.searchData,$rootScope.searchData);
+
+	                vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
+	                vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+
+	                vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+
+	                vm.sellPrices  =[                    
+	                    {
+	                        value: 0.5,
+	                        lable: "500 triệu"
+	                    },
+	                    {
+	                        value: 0.8,
+	                        lable: "800 triệu"
+	                    },
+	                    {
+	                        value: 1,
+	                        lable: "1 tỷ"
+	                    },
+	                    {
+	                        value: 2,
+	                        lable: "2 tỷ"
+	                    },
+	                    {
+	                        value: 3,
+	                        lable: "3 tỷ"
+	                    },
+	                    {
+	                        value: 5,
+	                        lable: "5 tỷ"
+	                    },
+	                    {
+	                        value: 7,
+	                        lable: "7 tỷ"
+	                    },
+	                    {
+	                        value: 10,
+	                        lable: "10 tỷ"
+	                    },
+	                    {
+	                        value: 20,
+	                        lable: "20 tỷ"
+	                    },
+	                    {
+	                        value: 30,
+	                        lable: "30 tỷ"
+	                    }
+	                ];
+
+	                vm.rentPrices  =[                    
+	                    {
+	                        value: 1,
+	                        lable: "1 triệu"
+	                    },
+	                    {
+	                        value: 3,
+	                        lable: "3 triệu"
+	                    },
+	                    {
+	                        value: 5,
+	                        lable: "5 triệu"
+	                    },
+	                    {
+	                        value: 10,
+	                        lable: "10 triệu"
+	                    },
+	                    {
+	                        value: 20,
+	                        lable: "20 triệu"
+	                    },
+	                    {
+	                        value: 40,
+	                        lable: "40 triệu"
+	                    },
+	                    {
+	                        value: 70,
+	                        lable: "70 triệu"
+	                    },
+	                    {
+	                        value: 100,
+	                        lable: "100 triệu"
+	                    }
+	                ];
+
+	                vm.selectLoaiTin = function(loaiTin){
+	                    $scope.searchData.loaiTin = loaiTin;
+	                    if($scope.searchData.loaiTin==0){
+	                        vm.loaiNhaDat = vm.loaiNhaDatBan;
+	                        vm.prices = vm.sellPrices;
+	                    }else{
+	                        vm.loaiNhaDat = vm.loaiNhaDatThue;
+	                        vm.prices = vm.rentPrices;
+	                    }                   
+	                }
+	                vm.selectLoaiTin($scope.searchData.loaiTin);
+	                
+	                vm.selectLoaiNhaDat = function(lnd){
+	                    $scope.searchData.loaiNhaDat = lnd.value;
+	                }
+	                vm.selectHuongNha = function(hn){
+	                    $scope.searchData.huongNha = hn.value;
+
+	                }
 
 
 	                vm.setSearchDataSpn = function(val){
-	                    $rootScope.searchData.soPhongNguGREATER = val;
+	                    $scope.searchData.soPhongNguGREATER = val;
 	                }
 	                 vm.setSearchDataSpt = function(val){
-	                    $rootScope.searchData.soPhongTamGREATER = val;
+	                    $scope.searchData.soPhongTamGREATER = val;
 	                }
 	                vm.selectPlaceCallback = function(place){
 	                    $rootScope.searchData.place = place;
+	                }
+	                vm.setSearchDataGia = function(event, index){
+	                    var value = event.target;
 	                }
 	                
 
@@ -22010,13 +22181,14 @@
 
 	                vm.spinner = function(event, box, item){
 	                    var me = event.target;
-	                    if($(me).parent().find($(box)).hasClass(item)) {
-	                        $(me).parent().find($(box)).removeClass(item);
-	                        $(me).find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
+	                    me = $(me).closest('a')
+	                    if(me.parent().find($(box)).hasClass(item)) {
+	                        me.parent().find($(box)).removeClass(item);
+	                        me.find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
 	                    }
 	                    else {
-	                        $(me).parent().find($(box)).addClass(item);
-	                        $(me).find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                        me.parent().find($(box)).addClass(item);
+	                        me.find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	                    }
 	                }
 	                
@@ -22024,7 +22196,7 @@
 	                    //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
 	                    if(!vm.place)
 	                        vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
-	                    $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {
+	                    $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
 	                        reload: true,
 	                        inherit: false,
 	                        notify: true
@@ -22046,16 +22218,75 @@
 	                    window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
 	                    vm.PlacesService =  new google.maps.places.PlacesService(map);                                
 	                });
+
+	                var setDrumValues = function(select, value){
+	                    var options = select[0].options;                    
+	                    if(value>100000){
+	                         select.drum('setIndex', 1); 
+	                    }else{
+	                        for(var i =0;i<options.length;i++){
+	                            if(options[i].value==value){
+	                                select.drum('setIndex', i); 
+	                                break;
+	                            }
+	                        }
+	                    }
+	                    
+	                }
+
 	                vm.init = function(){
+	                    $("#typeBox .type-list li a").click(function(){
+	                        $(".type-box .collapse-title span label").html($(this).html());
+	                    });
+	                    $("#trendBox .type-list li a").click(function(){
+	                        $(".trend-box .collapse-title span label").html($(this).html());
+	                    });
 	                    Hammer.plugins.fakeMultitouch();
 	                    $("select.drum").drum({
 	                        onChange : function (selected) {
-	                            if (selected.value !=0) $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
-	                        } 
+	                            //if (selected.value !=0) 
+	                            $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
+	                            if(selected.id =="prices1"){
+	                                $scope.searchData.giaBETWEEN[0] = selected.value*1000;
+	                            }else if(selected.id =="prices2"){
+	                                $scope.searchData.giaBETWEEN[1] = selected.value *1000;
+	                            }else if(selected.id =="area1"){
+	                                $scope.searchData.dienTichBETWEEN[0] = selected.value ;
+	                            }else if(selected.id =="area2"){
+	                                $scope.searchData.dienTichBETWEEN[1] = selected.value;
+	                            }else if(selected.id=="datepost"){
+	                                $scope.searchData.ngayDaDang = selected.value;
+	                            }
+	                        }
 	                    });
+	                    //set price drum
+	                    var prices1 = $scope.searchData.giaBETWEEN[0]/1000;
+	                    var prices1Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices1");
+	                    setDrumValues(prices1Elm, prices1);
+	                    
+	                    var prices2 = $scope.searchData.giaBETWEEN[1]/1000;
+	                    var prices2Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices2");
+	                    setDrumValues(prices2Elm,prices2);
+
+	                    var area1 = $scope.searchData.dienTichBETWEEN[0];
+	                    var area1Elm = $("select#area1");
+	                    setDrumValues(area1Elm,area1);
+
+	                    var area2 = $scope.searchData.dienTichBETWEEN[1];
+	                    var area2Elm = $("select#area2");
+	                    setDrumValues(area2Elm,area2);
+
+	                    var datepost = $scope.searchData.ngayDaDang;
+	                    var datepostElm = $("select#datepost");
+	                    setDrumValues(datepostElm,datepost);                    
+
 
 	                }
-	                vm.init();
+	                $timeout(function() {
+	                   vm.init();
+	                   vm.initialized = true;
+	                },0);
+	                
 	                
 	            }
 	        ],
@@ -37775,6 +38006,21 @@
 	  ScratchTopup: "idGeneratorForScratchTopup",
 	  User : "idGeneratorForUsers"
 	};
+
+	internals.TOPUP_STAGE = {
+	  INIT : -1,
+	  SUCCESS : 0,
+	  FAIL : 1
+	};
+
+	//topup type
+	internals.PAYMENT = {
+	  SCRATCH : "scratch",
+	  SMSPLUS : "smsplus",
+	  IN_APP_PURCHASE : "inAppPurchase",
+	  MANUAL_BANK_TRANSFER : "manualBankTransfer"
+	};
+
 
 	if (typeof(window) !== 'undefined')
 	   window.RewayConst = internals;

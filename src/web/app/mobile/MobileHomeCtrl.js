@@ -24,6 +24,9 @@
         }
         if($rootScope.lastSearch)
         	homeDataSearch.query = $rootScope.lastSearch;
+        $rootScope.currentLocation.lat = 20.9898098;
+    	$rootScope.currentLocation.lon = 105.7098334;
+    	homeDataSearch.currentLocation = $rootScope.currentLocation;
         vm.getLocation = function() {
 		    if (navigator.geolocation) {
 		        navigator.geolocation.getCurrentPosition(function(position){
@@ -36,7 +39,7 @@
 					});
 		        });
 		    } else {
-		        //x.innerHTML = "Geolocation is not supported by this browser.";
+		        //x.innerHTML = "Geolocation is not supported by this browser.";		        
 		        HouseService.homeDataForApp(homeDataSearch).then(function(res){
 					//alert(JSON.stringify(res));
 					vm.boSuuTap = res.data.data; 

@@ -3,14 +3,16 @@
 <bds-mobile-header></bds-mobile-header>
 
 <div ng-if="msc.viewMode=='list'" class="wapper">
-    <div class="reland-box uln">
-        <ul class="reland-list full">
+    <div class="reland-box uln" infinite-scroll='msc.nextPage()' infinite-scroll-disabled='msc.disableScrolling' infinite-scroll-distance='1' >
+        <ul class="reland-list full" >
             <li ng-repeat="ads in msc.ads_list track by $index" ng-click="msc.goDetail($event,$index)">
                 <a href="#" class="heart"><i class="icon-heart"></i></a>
                 <a href="#">
                     <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                     <span class="des bgOpa">
-                        <span class="price">{{ads.giaFmt}}</span>
+                        <span class="btn btn-primary">Cần bán gấp</span>
+                        <span class="btn btn-warning">Nhà mới xây</span>
+                        <span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
                         <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
                         <span class="split text-center">.</span>
                         <span>{{ads.soPhongNguFmt}}</span>
@@ -46,7 +48,7 @@
 </div>
 <div  class="wapper">
     <div class="maps">
-        <ng-map ng-if="msc.viewMode=='map' || msc.initMap==true" id="searchmap" center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"  class="ngmap">
+        <ng-map ng-if="msc.viewMode=='map' || msc.initialized==false" id="searchmap" center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"  class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
             <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
                  id="m_{{$index}}" >
@@ -87,13 +89,13 @@
             <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a>
             <div class="list-sort popovers top uln">
                 <ul>
-                    <li><a href="javascript:void(0)" class="active">Mặc định</a></li>
-                    <li><a href="javascript:void(0)">Ngày đăng</a></li>
-                    <li><a href="javascript:void(0)">Giá (giảm dần)</a></li>
-                    <li><a href="javascript:void(0)">Giá (tăng dần)</a></li>
-                    <li><a href="javascript:void(0)">Số phòng ngủ</a></li>
-                    <li><a href="javascript:void(0)">Số phòng tắm</a></li>
-                    <li><a href="javascript:void(0)">Diện tích</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDangASC')" class="active">Mặc định</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDangASC')">Ngày đăng</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('giaDESC')">Giá (giảm dần)</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('giaASC')">Giá (tăng dần)</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNguASC')">Số phòng ngủ</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTamASC')">Số phòng tắm</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('dienTichASC')">Diện tích</a></li>
                 </ul>
             </div>
         </li>

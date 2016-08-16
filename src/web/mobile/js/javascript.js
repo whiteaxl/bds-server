@@ -89,12 +89,7 @@ $(function(){
 		$(".type-list li a").removeClass("active");
 		$(this).addClass("active");
 	});
-	$("#typeBox .type-list li a").click(function(){
-		$(".type-box .collapse-title span label").html($(this).html());
-	});
-	$("#trendBox .type-list li a").click(function(){
-		$(".trend-box .collapse-title span label").html($(this).html());
-	});
+	
 	
 	$(".btn-more .collapse-title").click(function(){
 		$(this).parent().hide();

@@ -9,7 +9,7 @@
   });
 
 
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
   .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
@@ -40,6 +40,7 @@
       "huongNha": 0,
       "huongNhas": [],
       "radiusInKm": 2,
+      "ngayDaDang": undefined,
       "userID": $rootScope.user.userID,
       //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
       "limit": $rootScope.pageSize,

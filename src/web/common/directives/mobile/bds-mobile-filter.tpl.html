@@ -14,37 +14,34 @@
 	    </div>
 	    <div class="search-box">
 	        <ul class="nav nav-tabs" role="tablist">
-	            <li role="presentation" class="active"><a href="#searchbuy" aria-controls="searchbuy" role="tab" data-toggle="tab">Bán</a></li>
-	            <li role="presentation"><a href="#searchsale" aria-controls="searchsale" role="tab" data-toggle="tab">Cho thuê</a></li>
+	            <li role="presentation" class="{{searchData.loaiTin==0?'active':''}}"><a href="#" ng-click="mf.selectLoaiTin(0)" aria-controls="searchbuy" role="tab" data-toggle="tab">Bán</a></li>
+	            <li role="presentation" class="{{searchData.loaiTin==1?'active':''}}"><a href="#" ng-click="mf.selectLoaiTin(1)" aria-controls="searchsale" role="tab" data-toggle="tab">Cho thuê</a></li>
 	        </ul>
 	        <div class="tab-content">
 	            <div role="tabpanel" class="tab-pane active" id="searchbuy">
 	            	<div class="title">Các điều kiện</div>
 	                <div class="price-box collapse-box">
-	                	<a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Mức giá <span><label id="prices2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
-	                    <div class="priceBox spinner spinner-hide">
-	                    	<select id="prices1" ng-model="vm.searchData.giaBETWEEN[0]" class="drum">
-	                        	<option selected value="0">0</option>
-	                            <option value="1">1 tỷ</option>
-	                            <option value="2">2 tỷ</option>
-	                            <option value="3">3 tỷ</option>
-	                            <option value="5">5 tỷ</option>
-	                            <option value="7">7 tỷ</option>
-	                            <option value="10">10 tỷ</option>
-	                            <option value="20">20 tỷ</option>
-	                            <option value="30">30 tỷ</option>
-	                        </select>
-	                        <select id="prices2" ng-model="vm.searchData.giaBETWEEN[1]" class="drum">
-	                        	<option selected value="999999999999999">Bất kỳ</option>
-	                            <option value="1">1 tỷ</option>
-	                            <option value="2">2 tỷ</option>
-	                            <option value="3">3 tỷ</option>
-	                            <option value="5">5 tỷ</option>
-	                            <option value="7">7 tỷ</option>
-	                            <option value="10">10 tỷ</option>
-	                            <option value="20">20 tỷ</option>
-	                            <option value="30">30 tỷ</option>
-	                        </select>
+	                	<a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')" >Mức giá<span><label id="prices2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
+	                    <div id="price_0" ng-show="searchData.loaiTin==0 || mf.initialized==false" class="priceBox spinner spinner-hide">
+	                        <select class="drum" id="prices1" ng-model="searchData.giaBETWEEN[0]">
+	                        	<option value="0">0</option>
+	                        	<option ng-repeat="price in mf.sellPrices" value="{{price.value}}">{{price.lable}}</option>
+                            </select>	                        
+	                        <select class="drum" id="prices2" ng-model="searchData.giaBETWEEN[1]">
+	                        	<option value="9999999999999">Bất kỳ</option>
+	                        	<option ng-repeat="price in mf.sellPrices" value="{{price.value}}">{{price.lable}}</option>	                        	
+                            </select>
+	                    </div>
+	                    <div id="price_1" ng-show="searchData.loaiTin==1 || mf.initialized==false" class="priceBox spinner spinner-hide">
+	                        <select class="drum" id="prices1">
+	                        	<option value="0">0</option>
+	                        	<option ng-repeat="price in mf.rentPrices" value="{{price.value}}">{{price.lable}}</option>
+                            </select>	                        
+	                        <select class="drum" id="prices2" ng-model="searchData.giaBETWEEN[1]">
+	                        	<option value="9999999999999">Bất kỳ</option>
+	                        	<option ng-repeat="price in mf.rentPrices" value="{{price.value}}">{{price.lable}}</option>
+	                        	
+                            </select>
 	                    </div>
 	                </div>
 	                <div class="type-box collapse-box">
@@ -53,54 +50,54 @@
 	                <div class="room-box collapse-box collapse-cus group-cus ovh">
 	                	<a class="collapse-title">Số phòng ngủ</a>
 	                    <div class="btn-group" data-toggle="buttons">
-	                        <label class="btn active">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(0)" name="options" id="room0" ng-value="mf.searchData.spn" autocomplete="off" >Bất kỳ
+	                        <label class="btn {{searchData.soPhongNguGREATER=='0'?'active':''}}" ng-click="mf.setSearchDataSpn(0)">
+	                        	<input type="radio" name="options" id="room0" ng-model="searchData.soPhongNguGREATER" value ="0" autocomplete="off" >Bất kỳ
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(1)" name="options" id="room1" ng-value="mf.searchData.spn" autocomplete="off">1+
+	                        <label class="btn {{searchData.soPhongNguGREATER=='1'?'active':''}}" ng-click="mf.setSearchDataSpn(1)">
+	                        	<input type="radio" name="options" id="room1" ng-model="searchData.soPhongNguGREATER" value ="1"  autocomplete="off">1+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(2)" name="options" id="room2" ng-value="mf.searchData.spn" autocomplete="off">2+
+	                        <label class="btn {{searchData.soPhongNguGREATER=='2'?'active':''}}" ng-click="mf.setSearchDataSpn(2)">
+	                        	<input type="radio" name="options" id="room2" ng-model="searchData.soPhongNguGREATER" value ="2" autocomplete="off">2+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(3)" name="options" id="room3" ng-value="mf.searchData.spn" autocomplete="off">3+
+	                        <label class="btn {{searchData.soPhongNguGREATER=='3'?'active':''}}" ng-click="mf.setSearchDataSpn(3)">
+	                        	<input type="radio"  name="options" id="room3" ng-model="searchData.soPhongNguGREATER" value ="3" autocomplete="off">3+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(4)" name="options" id="room4" ng-value="mf.searchData.spn" autocomplete="off">4+
+	                        <label class="btn {{searchData.soPhongNguGREATER=='4'?'active':''}}" ng-click="mf.setSearchDataSpn(4)">
+	                        	<input type="radio"  name="options" id="room4" ng-model="searchData.soPhongNguGREATER" value ="4" autocomplete="off">4+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpn(5)" name="options" id="room5" ng-value="mf.searchData.spn" autocomplete="off">5+
+	                        <label class="btn {{searchData.soPhongNguGREATER=='5'?'active':''}}" ng-click="mf.setSearchDataSpn(5)">
+	                        	<input type="radio" name="options" id="room5" ng-model="searchData.soPhongNguGREATER" value ="5" autocomplete="off">5+
 	                        </label>
 	                    </div>
 	                </div>
 	                <div class="room-box collapse-box collapse-cus group-cus ovh">
 	                	<a class="collapse-title">Số phòng tắm</a>
 	                    <div class="btn-group" data-toggle="buttons">
-	                        <label class="btn active">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpt(0)" id="bathroom0" value="0" autocomplete="off" ng-value="mf.searchData.spt">Bất kỳ
+	                        <label class="btn {{searchData.soPhongTamGREATER=='0'?'active':''}}" ng-click="mf.setSearchDataSpt(0)" >
+	                        	<input type="radio"  id="bathroom0" value="0" autocomplete="off" ng-value="searchData.soPhongTamGREATER">Bất kỳ
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(1)" id="bathroom1" value="1" autocomplete="off" ng-value="mf.searchData.spt">1+
+	                        <label class="btn {{searchData.soPhongTamGREATER=='1'?'active':''}}" ng-click="mf.setSearchDataSpt(1)">
+	                        	<input type="radio"  id="bathroom1" value="1" autocomplete="off" ng-value="searchData.soPhongTamGREATER">1+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(2)" id="bathroom2" value="2" autocomplete="off" ng-value="mf.searchData.spt">2+
+	                        <label class="btn {{searchData.soPhongTamGREATER=='2'?'active':''}}" ng-click="mf.setSearchDataSpt(2)">
+	                        	<input type="radio"  id="bathroom2" value="2" autocomplete="off" ng-value="searchData.soPhongTamGREATER">2+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(3)" id="bathroom3" value="3" autocomplete="off" ng-value="mf.searchData.spt">3+
+	                        <label class="btn {{searchData.soPhongTamGREATER=='3'?'active':''}}" ng-click="mf.setSearchDataSpt(3)">
+	                        	<input type="radio"  id="bathroom3" value="3" autocomplete="off" ng-value="searchData.soPhongTamGREATER">3+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio"  ng-click="mf.setSearchDataSpt(4)" id="bathroom4" value="4" autocomplete="off" ng-value="mf.searchData.spt">4+
+	                        <label class="btn {{searchData.soPhongTamGREATER=='4'?'active':''}}" ng-click="mf.setSearchDataSpt(4)">
+	                        	<input type="radio"  id="bathroom4" value="4" autocomplete="off" ng-value="searchData.soPhongTamGREATER">4+
 	                        </label>
-	                        <label class="btn">
-	                        	<input type="radio" ng-click="mf.setSearchDataSpt(5)" id="bathroom5" value="1=5" autocomplete="off" ng-value="mf.searchData.spt">5+
+	                        <label class="btn {{searchData.soPhongTamGREATER=='5'?'active':''}}" ng-click="mf.setSearchDataSpt(5)">
+	                        	<input type="radio" id="bathroom5" value="1=5" autocomplete="off" ng-value="searchData.soPhongTamGREATER">5+
 	                        </label>
 	                    </div>
 	                </div>
 	                 <div class="area-box collapse-box">
                         <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="areaBox spinner spinner-hide">
-	                    	<select id="area" class="drum">
-	                        	<option selected value="9999999999999999">Bất kỳ</option>
+	                    	<select ng-model="searchData.dienTichBETWEEN[0]" id="area1" class="drum">
+	                        	<option value="0">0</option>
 	                            <option value="10">10 m2</option>
 	                            <option value="20">20 m2</option>
 	                            <option value="30">30 m2</option>
@@ -110,17 +107,17 @@
 	                            <option value="200">200 m2</option>
 	                            <option value="300">300 m2</option>
 	                        </select>
-	                        <select id="area2" class="drum">
-                            	<option selected value="a0">Bất kỳ</option>
-                                <option value="a12">10 m2</option>
-                                <option value="a22">20 m2</option>
-                                <option value="a32">30 m2</option>
-                                <option value="a52">50 m2</option>
-                                <option value="a62">70 m2</option>
-                                <option value="a72">100 m2</option>
-                                <option value="a82">200 m2</option>
-                                <option value="a92">300 m2</option>
-                            </select>
+	                        <select ng-model="searchData.dienTichBETWEEN[1]" id="area2" class="drum">
+	                        	<option value="9999999999999999">Bất kỳ</option>
+	                            <option value="10">10 m2</option>
+	                            <option value="20">20 m2</option>
+	                            <option value="30">30 m2</option>
+	                            <option value="50">50 m2</option>
+	                            <option value="70">70 m2</option>
+	                            <option value="100">100 m2</option>
+	                            <option value="200">200 m2</option>
+	                            <option value="300">300 m2</option>
+	                        </select>
 	                    </div>
 	                </div>
 	                <div class="area-box collapse-box collapse-none"></div>
@@ -134,35 +131,64 @@
 	                    <div class="date-box collapse-box">
 	                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Ngày đăng <span><label id="datepost_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                        <div class="dateBox spinner spinner-hide">
-	                            <select id="datepost" class="drum">
-	                                <option selected value="a0">Bất kỳ</option>
-	                                <option value="a1">1 ngày</option>
-	                                <option value="a2">2 ngày</option>
-	                                <option value="a3">3 ngày</option>
-	                                <option value="a5">5 ngày</option>
-	                                <option value="a6">7 ngày</option>
-	                                <option value="a7">30 ngày</option>
-	                                <option value="a8">60 ngày</option>
-	                                <option value="a9">90 ngày</option>
+	                            <select id="datepost" ng-model="searchData.ngayDaDang" class="drum">
+	                                <option selected value="0">Bất kỳ</option>
+	                                <option value="1">1 ngày</option>
+	                                <option value="2">2 ngày</option>
+	                                <option value="3">3 ngày</option>
+	                                <option value="5">5 ngày</option>
+	                                <option value="7">7 ngày</option>
+	                                <option value="30">30 ngày</option>
+	                                <option value="60">60 ngày</option>
+	                                <option value="90">90 ngày</option>
 	                            </select>
 	                        </div>
 	                    </div>
 	                    
 	                </div>
-	                <div class="area-box collapse-box collapse-none"></div>
-	                <div class="btn-box collapse-box btn-reset">
-	                	<button type="reset" ng-click="mf.reset();" class="collapse-title red">Thiết lập lại</button>
-	                </div>
+	                
+	                <div class="pd15"><button ng-click="mf.gotoSearchPage();" type="reset" class="btn btn-danger btn-block">Thực hiện</button></div>
+					<div class="btn-box collapse-box btn-reset border-none">
+                    	<button type="reset" ng-click="mf.reset();" class="collapse-title red">Thiết lập lại</button>
+                    </div>
+					<div class="clb ovh mb10">&nbsp;</div>
 	            </div>
 	            <!--END tabs-->
 	            <div role="tabpanel" class="tab-pane" id="searchsale">Cho thuê</div>
 	            <!--END tabs-->
 	        </div>
 	    </div>
-	    <div class="search-footer">
-	    	<a href="#" class="pull-left">Thoát</a>
-	        <a href="#" class="pull-right" ng-click="mf.gotoSearchPage();">Thực hiện</a>
-	    </div>
 	</script>
 	</form>
+	<div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+            	<h4 class="modal-title" id="typeBoxLabel">Loại nhà đất</h4>
+            </div>
+            <div class="modal-body uln">
+            	<ul class="type-list">
+                    <li ng-repeat="lnd in mf.loaiNhaDat track by $index"><a ng-click="mf.selectLoaiNhaDat(lnd);" class="{{searchData.loaiNhaDat==lnd.value?'active':''}}" href="#">{{lnd.lable}}</a></li>                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-choose" id="trendBox" tabindex="-1" role="dialog" aria-labelledby="trendBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+            	<h4 class="modal-title" id="trendBoxLabel">Hướng nhà</h4>
+            </div>
+            <div class="modal-body uln">
+            	<ul class="type-list">
+                	<li ng-repeat="hn in mf.huongNhaList track by $index"><a ng-click="mf.selectHuongNha(hn);"  href="#" class="{{searchData.huongNha==hn.value?'active':''}}">{{hn.lable}}</a></li>                	
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
