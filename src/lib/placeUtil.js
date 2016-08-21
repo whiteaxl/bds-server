@@ -220,7 +220,9 @@ placeUtil.typeName = {
 };
 
 placeUtil.chuanHoaDiaChinh = function(diaChinh) {
-    diaChinh.tinhKhongDau = placeUtil.chuanHoa(diaChinh.tinhKhongDau);
+    if (diaChinh) {
+        diaChinh.tinhKhongDau = this.chuanHoa(diaChinh.tinhKhongDau);
+    }
 };
 
 placeUtil.isHuyen = function(place) {
