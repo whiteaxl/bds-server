@@ -4,7 +4,7 @@ function update(){
 	
 	$(".modal-choose .modal-body").height($wh-46);
 	$(".search, .post").height($wh);
-	$(".wapper > .maps").height($wh-86);
+	$(".wapper > .maps").height($wh-42);
 		
 	if($(".search").find("input").hasClass("input-fr")){
 		if($(".input-fr").val().length>0) {
@@ -57,12 +57,14 @@ function searchreset(){
 	$(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	$(".btn-group .btn").removeClass("active");
 	$(".btn-group .btn:first-child").addClass("active");
+	$(".search input").val('');
+	//$("select.drum").drum('setIndex', 1);
+
 }
 // search function
 function searchfr(){
 	$(".search").removeAttr("style");
 	$("body").removeClass("bodySearchShow");
-	$(".search-footer").removeClass("fixed");
 	searchreset();
 }
 // search open
@@ -134,9 +136,15 @@ function showhidebox(box1, box2){
 }
 
 // show notify
-function showNotify(text){
-	$(".notifyBox").fadeIn(300).delay(3000).slideUp(300);
+function showNotify(text, box, item, itemtext){
+	if(item!==null || item != "") $(item).html(itemtext);
 	if(text!==null || text != "") $(".notifyBox").html(text);
+	if(box!==null || box != ""){
+		$(box).fadeIn(100).delay(1800).slideUp(150);
+	}
+	else{
+		$(".notifyBox").fadeIn(100).delay(900).slideUp(150);
+	}
 }
 
 
@@ -151,8 +159,6 @@ $(function(){
 	$(".reland-title.fixed h3").html($(".wapper .reland-box:first-child h3").html());
 	$(".reland-title.fixed h4").html($(".wapper .reland-box:first-child h4").html());
 	$(".reland-title.fixed h5").html($(".wapper .reland-box:first-child h5").html());
-	
-	showNotify();
 	
 	// menu click icon
 	$(".nav_mobile").click(function(){
@@ -223,11 +229,17 @@ $(function(){
 	// click button more in search
 	$(".btn-more .collapse-title").click(function(){
 		$(this).parent().hide();
-		$(".more-box").removeClass("more-box-hide");
+		$(this).parent().parent().find(".more-box").removeClass("more-box-hide");
 	});
 	// click button reset in search
 	$(".btn-reset .collapse-title").click(function(){
-		searchreset();
+		$(this).parent().parent().find(".btn-more").removeAttr("style");
+		$(this).parent().parent().find(".more-box").addClass("more-box-hide");
+		$(this).parent().parent().find(".spinner").addClass("spinner-hide");
+		$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+		$(this).parent().parent().find(".btn-group .btn").removeClass("active");
+		$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
+		$(this).parent().parent().find(".search").val('');
 	});
 	// add class list check
 	$(".list-check li a").click(function(){
@@ -297,6 +309,19 @@ $(function(){
 		$("#"+currb).addClass("active");
 	});
 	
+	//heart click
+	$(".heart").click(function(){
+		$(this).find(".icon-heart").toggleClass("active");
+		if($(this).find(".icon-heart").hasClass("active")){
+			showNotify("Lưu tin thành công", ".heartNotify");
+			return;
+		}
+		else{
+			showNotify("Bỏ lưu tin thành công", ".heartNotify");
+			return;
+		}
+	});
+
 	// post tabs click
 	$(".post-box .nav-tabs li a").click(function(){
 		var curr = $(this).attr("aria-controls");
@@ -323,12 +348,11 @@ $(function(){
 	$(window).scroll(function (event) {
         event.stopPropagation();
         windowPos = $(window).scrollTop();
-		if($(".wapper .reland-box").find("div").hasClass("reland-title")){
+		if($(".reland-title").hasClass("fixed")){
 			for(var i=1; i<=box; i++){
 				var items = $(".wapper .reland-box_"+i);
-				var pos = items.offset().top;
+				var pos = items.offset().top-120;
 				var hg = items.height();
-				var bpos = items.find(".btn-box").offset().top;
 				
 				if (windowPos >= pos && windowPos < (pos + hg)) {
 					tfix.show();
@@ -344,7 +368,11 @@ $(function(){
 						tfix.hide();
 				}
 			});
-		}	
+		}
+		if($("div").hasClass("detail-page")){
+			if(windowPos > 300) $("header.main").removeClass("gradient").addClass("blue");
+			else  $("header.main").removeClass("blue").addClass("gradient");
+		}
 	});
 	
 	// picker scroll
@@ -352,7 +380,10 @@ $(function(){
 	$("select.drum").drum({
 		onChange : function (selected) {
 			if (selected.value !=0) $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
-		} 
+		},
+		setIndex:function(index){
+			console.log(index);
+		}
 	});
 	
 	// setting toggle

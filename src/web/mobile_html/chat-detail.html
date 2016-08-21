@@ -201,7 +201,13 @@
     <header class="main blue">
         <a href="chats.html" class="header-icon"><i class="iconLeftOpen"></i></a>
         <span class="name">Tran Anh <br><small>Trực tuyến 30 phút trước</small></span>
-        <a href="javascript:void(0)" class="header-text pull-right"><img src="img/dots-three-horizontal.svg" width="20" /></a>
+        <div class="btn-group pull-right" role="group">
+            <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><i class="iconList"></i></a>
+            <ul class="dropdown-menu">
+              <li><a role="button" data-toggle="modal" data-target="#blockuserBox">Chặn người dùng này</a></li>
+              <li><a role="button" data-toggle="modal" data-target="#deluserBox">Xóa hội thoại</a></li>
+            </ul>
+        </div>
     </header>
     <div class="wapper">
     	<div class="chat-detail">
@@ -227,16 +233,71 @@
                             <div class="cmm">Nhà có nội thất chưa ạ?</div>
                         </div>
                     </li>
+                    <li class="me">
+                        <div class="ovh">
+                            <span class="datetime">6 tháng 6 5:33</span>
+                            <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="ovh">
+                            <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="ovh">
+                            <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        </div>
+                    </li>
+                    <li class="lined"></li>
+                    <li class="other">
+                        <img src="images/avarta.jpg" class="img-circle avatar pull-left">
+                        <div class="ovh">
+                            <span class="datetime">6 tháng 7 5:32</span>
+                            <div class="cmm">Nhà có nội thất chưa ạ?</div>
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="ovh">
+                            <span class="datetime">6 tháng 7 5:33</span>
+                            <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        </div>
+                    </li>
+                    <li class="lined"></li>
+                    <li class="other">
+                        <img src="images/avarta.jpg" class="img-circle avatar pull-left">
+                        <div class="ovh">
+                            <span class="datetime">6 tháng 8 5:32</span>
+                            <div class="cmm">Nhà có nội thất chưa ạ?</div>
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="ovh">
+                            <span class="datetime">6 tháng 8 5:33</span>
+                            <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="chat-footer">
             	<textarea placeholder="Nhập tin nhắn"></textarea>
                 <div class="action">
-                	<a href="javascript:void(0)" class="active">Aa</a>
+                	<a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
                     <a href="javascript:void(0)"><i class="iconCamera"></i></a>
-                    <a href="javascript:void(0)"><i class="iconPicture"></i></a>
+                    <a href="javascript:void(0)"><i class="fa fa-picture-o"></i></a>
                     <a href="javascript:void(0)"><i class="iconLocation"></i></a>
-                    <a href="javascript:void(0)"><i class="p-icon i-more"></i></a>
+                    <div class="list-sort popovers top uln">
+                        <ul>
+                            <li><a href="javascript:void(0)">Xin chào bạn!</a></li>
+                            <li><a href="javascript:void(0)">Nhà đã bán chưa bạn?</a></li>
+                            <li><a href="javascript:void(0)">Gửi cho mình thêm ảnh</a></li>
+                            <li><a href="javascript:void(0)">Gửi cho mình vị trí chính xác của nhà</a></li>
+                            <li><a href="javascript:void(0)">Giá cuối cùng bạn bán là bao nhiêu?</a></li>
+                            <li><a href="javascript:void(0)">Giá có thương lượng được không bạn?</a></li>
+                            <li><a href="javascript:void(0)">Cảm ơn bạn!</a></li>
+                            <li><a href="javascript:void(0)">Giảm giá thêm đi bạn.</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -603,6 +664,40 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-msg" id="blockuserBox" tabindex="-1" role="dialog" aria-labelledby="blockuserBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body uln">
+                    <div class="text-center">
+                        <h3>Chặn người dùng!</h3>
+                        <p>Bạn có muốn chặn người dùng Nguyena này không?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
+                    <a href="#">Thực hiện</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-msg" id="deluserBox" tabindex="-1" role="dialog" aria-labelledby="deluserBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body uln">
+                    <div class="text-center">
+                        <h3>Xóa người dùng!</h3>
+                        <p>Bạn có muốn xóa người dùng Nguyena này không?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
+                    <a href="#">Thực hiện</a>
                 </div>
             </div>
         </div>

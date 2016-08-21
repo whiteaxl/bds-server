@@ -31,7 +31,7 @@ var internals = {};
 //The real Hapi server! 
 internals.server = new Hapi.Server();
 
-//Setup the connection for the environment
+// Setup the connection for the environment
 internals.server.connection({
   port: process.env.OPENSHIFT_NODEJS_PORT || 5000,
   address: process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
@@ -41,6 +41,15 @@ internals.server.connection({
     }
   }
 });
+
+// internals.server.connection({
+//   port: 443,
+//   address: '127.0.0.1',
+//   tls: {
+//       // key: unde,
+//       // cert: config.https.cert
+//   }
+// });
 
 
 var validate = function (decoded, request, callback) {

@@ -199,8 +199,10 @@
         </form>
     </div>
     <header class="main blue">
-        <a href="index.html" class="header-icon"><i class="iconLeftOpen"></i></a>
-        <span>Nạp tiền</span>
+        <a href="javascript:void(0)" class="nav_mobile header-icon"><i class="iconMenu"></i><span>33</span></a>
+        <a href="index.html" class="pull-left"><img src="img/logo.png" /></a>
+        <a href="chats.html" class="chat_mobile header-icon pull-right"><i class="iconChat"></i><span>3</span></a>
+        <a href="javascript:void(0)" class="search_mobile header-icon"><i class="iconSearch"></i></a>
     </header>
     <div class="wapper">
     	<div class="card-chart">
@@ -564,7 +566,7 @@
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block" onclick="showNotify('','.loading');">Nạp thẻ</button></div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="viettel">
                         	<div class="title">Nhập mã số thẻ cào</div>
@@ -576,7 +578,7 @@
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block" onclick="showNotify('','.loading');">Nạp thẻ</button></div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="vinaphone">
                         	<div class="title">Nhập mã số thẻ cào</div>
@@ -588,7 +590,7 @@
                                 <div>Số tiền ghi có vào tài khoản khuyến mại của bạn <strong>20k</strong></div>
                             </div>
                             <div class="clb ovh collapse-box">&nbsp;</div>
-							<div class="pd15"><button type="reset" class="btn btn-organe btn-block">Nạp thẻ</button></div>
+							<div class="pd15"><button type="reset" class="btn btn-organe btn-block" onclick="showNotify('','.loading');">Nạp thẻ</button></div>
                         </div>
                     </div>
                 </div>
@@ -646,38 +648,51 @@
                 	<h4 class="modal-title" id="paybankBoxLabel">Chuyển khoản ngân hàng</h4>
                 </div>
                 <div class="modal-body uln">
-					<div class="collapse-box bank-item">
-						<p><span>&nbsp;</span> <img src="images/bidv.jpg" alt="" title="" /></p>
-						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
-						<p><span>Ngân hàng:</span> NH BIDV</p>
-						<p><span>Số tài khoản:</span> 22210000978423</p>
-						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
-					</div>
-					<div class="collapse-box bank-item">
-						<p><span>&nbsp;</span> <img src="images/vietcombank.jpg" alt="" title="" /></p>
-						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
-						<p><span>Ngân hàng:</span> NH Vietcombank</p>
-						<p><span>Số tài khoản:</span> 0451000363160</p>
-						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
-					</div>
-					<div class="collapse-box bank-item">
-						<p><span>&nbsp;</span> <img src="images/acb.jpg" alt="" title="" /></p>
-						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
-						<p><span>Ngân hàng:</span> NH ACB</p>
-						<p><span>Số tài khoản:</span> 214420459</p>
-						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
-					</div>
-					<div class="collapse-box bank-item border-none">
-						<p><span>&nbsp;</span> <img src="images/vietinbank.jpg" alt="" title="" /></p>
-						<p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
-						<p><span>Ngân hàng:</span> NH viettinbank</p>
-						<p><span>Số tài khoản:</span> 102010002502726</p>
-						<p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
-					</div>
+                    <div class="title border-bottom mb10">Nội dung chuyển tiền</div>
+                    <div class="collapse-box border-none"></div>
+                    <div class="collapse-box border-none">Nạp tiền cho tài khoản:</div>
+                    <div class="collapse-box bank-item">
+                        <p><span>Email:</span> ngchibinh@gmail.com</p>
+                    </div>
+                    <div class="collapse-box border-none bank-item">
+                        <p><span>Số điện thoại:</span> 0902260262</p>
+                    </div>
+
+                    <div class="title border">Thông tin tài khoản</div>
+                    <div class="collapse-box bank-item">
+                        <p><span>&nbsp;</span> <img src="images/bidv.jpg" alt="" title="" /></p>
+                        <p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+                        <p><span>Ngân hàng:</span> NH BIDV</p>
+                        <p><span>Số tài khoản:</span> 22210000978423</p>
+                        <p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+                    </div>
+                    <div class="collapse-box bank-item">
+                        <p><span>&nbsp;</span> <img src="images/vietcombank.jpg" alt="" title="" /></p>
+                        <p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+                        <p><span>Ngân hàng:</span> NH Vietcombank</p>
+                        <p><span>Số tài khoản:</span> 0451000363160</p>
+                        <p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+                    </div>
+                    <div class="collapse-box bank-item">
+                        <p><span>&nbsp;</span> <img src="images/acb.jpg" alt="" title="" /></p>
+                        <p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+                        <p><span>Ngân hàng:</span> NH ACB</p>
+                        <p><span>Số tài khoản:</span> 214420459</p>
+                        <p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+                    </div>
+                    <div class="collapse-box bank-item border-none">
+                        <p><span>&nbsp;</span> <img src="images/vietinbank.jpg" alt="" title="" /></p>
+                        <p><span>Tên tài khoản:</span> CTY CP ĐẦU TƯ REWAY GROUP</p>
+                        <p><span>Ngân hàng:</span> NH viettinbank</p>
+                        <p><span>Số tài khoản:</span> 102010002502726</p>
+                        <p><span>Chi nhánh:</span> Chi Nhánh Thanh Xuân</p>
+                    </div>
 				</div>
             </div>
         </div>
     </div>
+
+    <div class="loading"><img src="img/loading_spinner.gif" /></div>
        
 </body>
 </html>

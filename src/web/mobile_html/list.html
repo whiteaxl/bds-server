@@ -344,12 +344,13 @@
 		<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><i class="iconChat"></i><span>3</span></a>
         <a href="javascript:void(0)" class="search_mobile header-icon"><i class="iconSearch"></i></a>
     </header>
+    <div class="notifyBox heartNotify"></div>
     <div class="wapper">
     	<div class="reland-box uln">
-            <ul class="reland-list full">
+            <ul class="reland-list reland-catg full">
             	<li>
-                	<a href="#" class="heart"><i class="icon-heart"></i></a>
-                	<a href="#">
+                	<a href="detail.html" class="heart"><i class="icon-heart"></i></a>
+                	<a href="detail.html">
                     	<span class="img" style="background-image:url(images/big.jpg)"></span>
                         <span class="des bgOpa">
                         	<span class="price">10,5 Ty</span>
@@ -362,8 +363,8 @@
                     </a>
                 </li>
                 <li>
-                	<a href="#" class="heart"><i class="icon-heart"></i></a>
-                	<a href="#">
+                	<a href="detail.html" class="heart"><i class="icon-heart active"></i></a>
+                	<a href="detail.html">
                     	<span class="img" style="background-image:url(images/big.jpg)"></span>
                         <span class="des bgOpa">
                         	<span class="price">10,5 Ty</span>
@@ -376,8 +377,8 @@
                     </a>
                 </li>
                 <li>
-                	<a href="#" class="heart"><i class="icon-heart"></i></a>
-                	<a href="#">
+                	<a href="detail.html" class="heart"><i class="icon-heart"></i></a>
+                	<a href="detail.html">
                     	<span class="img" style="background-image:url(images/big.jpg)"></span>
                         <span class="des bgOpa">
                         	<span class="price">10,5 Ty</span>
@@ -390,8 +391,8 @@
                     </a>
                 </li>
                 <li>
-                	<a href="#" class="heart"><i class="icon-heart"></i></a>
-                	<a href="#">
+                	<a href="detail.html" class="heart"><i class="icon-heart"></i></a>
+                	<a href="detail.html">
                     	<span class="img" style="background-image:url(images/big.jpg)"></span>
                         <span class="des bgOpa">
                         	<span class="price">10,5 Ty</span>
@@ -404,8 +405,8 @@
                     </a>
                 </li>
                 <li>
-                	<a href="#" class="heart"><i class="icon-heart"></i></a>
-                	<a href="#">
+                	<a href="detail.html" class="heart"><i class="icon-heart"></i></a>
+                	<a href="detail.html">
                     	<span class="img" style="background-image:url(images/big.jpg)"></span>
                         <span class="des bgOpa">
                         	<span class="price">10,5 Ty</span>
@@ -489,7 +490,7 @@
                 </li>
             </ul>
             <div class="clb ovh"></div>
-			<div class="loadingBox pdall15 text-center"><i class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></i></div>
+			<div class="loadingBox text-center"><img src="img/loading_spinner.gif" width="60" /></div>
         </div>
         <!--END-->
         
@@ -526,7 +527,7 @@
                     </ul>
                 </div>
             </li>
-            <li><a role="button" data-toggle="modal" data-target="#saveBox">Lưu tìm kiếm</a></li>
+            <li><a role="button" data-toggle="modal" data-target="#saveBox" class="saveBox">Lưu tìm kiếm</a></li>
             <li><a href="maps.html">Bản đồ</a></li>
         </ul>
     </footer>
@@ -829,7 +830,7 @@
                 </div>
                 <div class="modal-footer">
                 	<a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
-                    <a href="#">Lưu lại</a>
+                    <a href="javascript:void(0)" data-dismiss="modal" aria-label="Close" onclick="showNotify('Lưu search thành công', '.heartNotify', '.saveBox', 'Đã lưu')">Lưu lại</a>
                 </div>
             </div>
         </div>

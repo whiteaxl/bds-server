@@ -48,11 +48,11 @@
 </div>
 <div  class="wapper">
     <div class="maps">
-        <ng-map ng-if="msc.viewMode=='map' || msc.initialized==false" id="searchmap" center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"  class="ngmap">
+        <ng-map id="searchmap" center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"   map-initialized="msc.mapInitialized(map)"  class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
             <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
                  id="m_{{$index}}" >
-              <div>
+              <div class="marker">
                 {{m.content}} 
               </div>
             </custom-marker>

@@ -17,12 +17,12 @@
     <script src="js/hammer.min.js"></script>
 	<script src="js/hammer.fakemultitouch.js"></script>
     <script src="js/drum.min.js"></script>
-	<script src="js/javascript.min.js"></script>
+    <script src="js/javascript.min.js"></script>
 </head>
-<body class="hfixed both">
-    <header class="main blue">
+<body class="hfixed footer">
+    <header class="main gradient">
         <a href="list.html" class="nav_mobile header-icon"><i class="iconLeftOpen"></i></a>
-		<a href="javascript:void(0)" class="header-text pull-right"><img src="img/dots-three-horizontal.svg" width="20"></a>
+		<a role="button" data-toggle="modal" data-target="#detailAlertBox" class="header-icon header-alert pull-right"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUwOC41MiA1MDguNTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwOC41MiA1MDguNTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4Ij4KPGc+Cgk8Zz4KCQk8Zz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNMjU0LjI2LDBDMTEzLjg0NSwwLDAsMTEzLjg0NSwwLDI1NC4yNnMxMTMuODQ1LDI1NC4yNiwyNTQuMjYsMjU0LjI2ICAgICAgczI1NC4yNi0xMTMuODQ1LDI1NC4yNi0yNTQuMjZTMzk0LjY3NSwwLDI1NC4yNiwweiBNMjU0LjI2LDQ3Ni43MzdjLTEyMi42OCwwLTIyMi40NzctOTkuODI5LTIyMi40NzctMjIyLjQ3NyAgICAgIGMwLTEyMi42OCw5OS43OTctMjIyLjQ3NywyMjIuNDc3LTIyMi40NzdjMTIyLjY0OSwwLDIyMi40NzcsOTkuNzk3LDIyMi40NzcsMjIyLjQ3NyAgICAgIEM0NzYuNzM3LDM3Ni45MDgsMzc2LjkwOCw0NzYuNzM3LDI1NC4yNiw0NzYuNzM3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCQkJPHBhdGggZD0iTTI1NC4yNiw5NS4zNDdjLTE3LjU0NCwwLTMxLjc4MiwxNC4yMzktMzEuNzgyLDMxLjc4MnYxNTguOTEyICAgICAgYzAsMTcuNTQ0LDE0LjIzOSwzMS43ODIsMzEuNzgyLDMxLjc4MnMzMS43ODItMTQuMjM5LDMxLjc4Mi0zMS43ODJWMTI3LjEzQzI4Ni4wNDIsMTA5LjU4NiwyNzEuODA0LDk1LjM0NywyNTQuMjYsOTUuMzQ3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCQkJPGNpcmNsZSBjeD0iMjU0LjI2IiBjeT0iMzgwLjg4MSIgcj0iMzEuNzgyIiBmaWxsPSIjRkZGRkZGIi8+CgkJCTwvZz4KCQk8L2c+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" /></a>
         <a href="javascript:void(0)" class="pull-right header-icon iconShareContent">
         	<svg xmlns="http://www.w3.org/2000/svg" fill="white" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
 			  <g id="_x37_02-share_x40_2x.png_1_">
@@ -32,13 +32,42 @@
 			  </g>
 			</svg>
         </a>
+        <span class="bgOpa"></span>
     </header>
+    <div class="notifyBox detailnotify">Đã lưu tin thành công</div>
     <div class="wapper">
-    	<div class="detail">
-        	<div class="img" style="background-image:url(images/big.jpg)"><a href="javascript:void(0)"><i class="iconCamera"></i> 3/16</a></div>
+    	<div class="detail-page">
+            <script src="js/jquery.fancybox.pack.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.fancybox').fancybox({
+                        openEffect  : 'none',
+                        closeEffect : 'none',
+
+                        prevEffect : 'none',
+                        nextEffect : 'none',
+
+                        helpers : {
+                            title : {
+                                type : 'inside'
+                            },
+                            buttons : {}
+                        },
+
+                        afterLoad : function() {
+                            this.title = (this.index + 1) + '/' + this.group.length;
+                        }
+                    });
+                });
+            </script>
+        	<div class="img" style="background-image:url(images/big.jpg)"><a href="images/1_b.jpg" class="fancybox" data-fancybox-group="gallery"><i class="iconCamera"></i> 3/16</a></div>
+            <a href="images/2_b.jpg" class="fancybox" data-fancybox-group="gallery" title=""></a>
+            <a href="images/3_b.jpg" class="fancybox" data-fancybox-group="gallery" title=""></a>
+            <a href="images/4_b.jpg" class="fancybox" data-fancybox-group="gallery" title=""></a>
+            <a href="images/5_b.jpg" class="fancybox" data-fancybox-group="gallery" title=""></a>
             <div class="desSort">
             	<div class="price">10, 5 tỷ</div>
-                <div class="address">KDT Xa La, Hà Đông, Hà Nội <a href="#" class="streetview"><i class="fa fa-street-view"></i></a></div>
+                <div class="address">KDT Xa La, Hà Đông, Hà Nội</div>
                 <div class="note">
                 	<ul>
                     	<li><label>Bán</label></li>
@@ -61,8 +90,11 @@
 				</div>
                 
             </div>
-            <div class="dir-box collapse-box">
+            <div class="dir-box collapse-box border-top">
                 <a role="button" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>
+            </div>
+            <div class="dir-box collapse-box">
+                <a role="button" class="collapse-title" href="#"><i class="fa fa-street-view"></i> Street view <span><i class="iconRightOpen"></i></span></a>
             </div>
             <div class="area-box collapse-box">
                 <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconUpOpen"></i></span></a>
@@ -178,91 +210,357 @@
 					</div>
                 </div>
             </div>
-			<div class="other-box collapse-box uln">
-                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Tham khảo <span><i class="iconUpOpen"></i></span><span class="txt">Các nhà đang bán gần nhất</span></a>
+            <div class="other-box collapse-box uln border-none"><div class="collapse-title">Khám phá thêm</div></div>
+			<div class="other-box collapse-box uln border-none">
                 <div class="otherBox spinner">
                     <div class="reland-box uln">
-						<ul class="reland-list">
-							<li>
-								<a href="#" class="heart"><i class="icon-heart"></i></a>
-								<a href="#">
-									<span class="img" style="background-image:url(images/big.jpg)"></span>
-									<span class="des bgOpa">
-										<span class="price">10,5 Ty</span>
-										<span class="name">KDT Xa La</span>
-										<span>5pn</span>
-										<span class="split"></span>
-										<span>4pt</span>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="heart"><i class="icon-heart active"></i></a>
-								<a href="#">
-									<span class="img" style="background-image:url(images/big.jpg)"></span>
-									<span class="des bgOpa">
-										<span class="price">10,5 Ty</span>
-										<span class="name">KDT Xa La</span>
-										<span>5pn</span>
-										<span class="split"></span>
-										<span>4pt</span>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="heart"><i class="icon-heart"></i></a>
-								<a href="#">
-									<span class="img" style="background-image:url(images/big.jpg)"></span>
-									<span class="des bgOpa">
-										<span class="price">10,5 Ty</span>
-										<span class="name">KDT Xa La</span>
-										<span>5pn</span>
-										<span class="split"></span>
-										<span>4pt</span>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="heart"><i class="icon-heart"></i></a>
-								<a href="#">
-									<span class="img" style="background-image:url(images/big.jpg)"></span>
-									<span class="des bgOpa">
-										<span class="price">10,5 Ty</span>
-										<span class="name">KDT Xa La</span>
-										<span>5pn</span>
-										<span class="split"></span>
-										<span>4pt</span>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="heart"><i class="icon-heart"></i></a>
-								<a href="#">
-									<span class="img" style="background-image:url(images/big.jpg)"></span>
-									<span class="des bgOpa">
-										<span class="price">10,5 Ty</span>
-										<span class="name">KDT Xa La</span>
-										<span>5pn</span>
-										<span class="split"></span>
-										<span>4pt</span>
-									</span>
-								</a>
-							</li>
-						</ul>
+                        <div class="reland-title">
+                            <h4>Bộ sưu tập</h4>
+                            <h3>Những nhà đang bán gần nhà này</h3>
+                            <h5>Quận Hà Đông, Hà Nội</h5>
+                        </div>
+						<ul class="reland-list full-3">
+                            <li>
+                                <a href="#" class="heart"><i class="icon-heart"></i></a>
+                                <a href="detail.html">
+                                    <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                    <span class="des bgOpa">
+                                        <span class="price">10,5 Ty</span>
+                                        <span class="name">KDT Xa La</span>
+                                        <span>5pn</span>
+                                        <span class="split"></span>
+                                        <span>4pt</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="heart"><i class="icon-heart active"></i></a>
+                                <a href="detail.html">
+                                    <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                    <span class="des bgOpa">
+                                        <span class="price">10,5 Ty</span>
+                                        <span class="name">KDT Xa La</span>
+                                        <span>5pn</span>
+                                        <span class="split"></span>
+                                        <span>4pt</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="heart"><i class="icon-heart"></i></a>
+                                <a href="detail.html">
+                                    <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                    <span class="des bgOpa">
+                                        <span class="price">10,5 Ty</span>
+                                        <span class="name">KDT Xa La</span>
+                                        <span>5pn</span>
+                                        <span class="split"></span>
+                                        <span>4pt</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="heart"><i class="icon-heart"></i></a>
+                                <a href="detail.html">
+                                    <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                    <span class="des bgOpa">
+                                        <span class="price">10,5 Ty</span>
+                                        <span class="name">KDT Xa La</span>
+                                        <span>5pn</span>
+                                        <span class="split"></span>
+                                        <span>4pt</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="heart"><i class="icon-heart"></i></a>
+                                <a href="detail.html">
+                                    <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                    <span class="des bgOpa">
+                                        <span class="price">10,5 Ty</span>
+                                        <span class="name">KDT Xa La</span>
+                                        <span>5pn</span>
+                                        <span class="split"></span>
+                                        <span>4pt</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
 					</div>
                 </div>
+                <div class="clb ovh mb10"></div>
+                <div class="btn-box"><a rol="button" href="list.html" class="btn btn-primary btn-block">Xem thêm</a></div>
+                <div class="clb ovh"></div>
+                <div class="reland-box home-page reland-box_1 uln" reland-item="reland-box_1">
+                    <div class="reland-title">
+                        <h4>Bộ sưu tập</h4>
+                        <h3>Nhà gần vị trí của bạn</h3>
+                        <h5>Quận Hà Đông, Hà Nội</h5>
+                    </div>
+                    <ul class="reland-list full-3">
+                        <li>
+                            <a href="#" class="heart"><i class="icon-heart"></i></a>
+                            <a href="detail.html">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="heart"><i class="icon-heart active"></i></a>
+                            <a href="detail.html">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="heart"><i class="icon-heart"></i></a>
+                            <a href="detail.html">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="heart"><i class="icon-heart"></i></a>
+                            <a href="detail.html">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="heart"><i class="icon-heart"></i></a>
+                            <a href="detail.html">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clb ovh"></div>
+                    <div class="btn-box"><a rol="button" href="list.html" class="btn btn-primary btn-block">Xem thêm</a></div>
+                </div>
+                <!--END-->
+                <div class="reland-box home-page reland-box_2 uln" reland-item="reland-box_2">
+                    <div class="reland-title">
+                        <h4>Bộ sưu tập</h4>
+                        <h3>Nhà mới đăng hôm nay</h3>
+                        <h5>Quận Hà Đông, Hà Nội</h5>
+                    </div>
+                    <ul class="reland-list full-3">
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clb ovh"></div>
+                    <div class="btn-box"><a rol="button" href="list.html" class="btn btn-primary btn-block">Xem thêm</a></div>
+                </div>
+                <!--END-->
+                <div class="reland-box home-page reland-box_3 uln" reland-item="reland-box_3">
+                    <div class="reland-title">
+                        <h4>Bộ sưu tập</h4>
+                        <h3>Nhà mới lưu</h3>
+                        <h5>Quận Hà Đông, Hà Nội</h5>
+                    </div>
+                    <ul class="reland-list full-3">
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="heart"><i class="icon-heart"></i></a>
+                            <a href="#">
+                                <span class="img" style="background-image:url(images/big.jpg)"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">10,5 Ty</span>
+                                    <span class="name">KDT Xa La</span>
+                                    <span>5pn</span>
+                                    <span class="split"></span>
+                                    <span>4pt</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clb ovh"></div>
+                    <div class="btn-box"><a rol="button" href="list.html" class="btn btn-primary btn-block">Xem thêm</a></div>
+                </div>
+                <!--END-->
             </div>
+
         </div>
+        
 		<div class="clb ovh"></div>
     </div>
     <footer class="main border uln">
         <ul class="navmain nav-3 button">
-        	<li><a role="button" class="btn btn-danger" href="tel:0967474989"><i class="iconPhone"></i> Gọi điện</a></li>
+        	<li><a role="button" class="btn btn-organe" href="tel:0967474989"><i class="iconPhone"></i> Gọi điện</a></li>
             <li><a role="button" class="btn btn-warning" href="chats.html"><i class="iconChat"></i> Chat</a></li>
-            <li><a role="button" class="btn btn-primary" href="javascript:void(0)"><i class="iconHeart"></i> Lưu tin</a></li>
+            <li><a role="button" class="btn btn-primary" href="javascript:void(0)" onclick="showNotify('Hiện tin đã được lưu', '.detailnotify');"><i class="iconHeart"></i> Lưu tin</a></li>
         </ul>
     </footer>
     <div class="overlay"></div>
+
+    <div class="modal fade modal-choose modal-none" id="detailAlertBox" tabindex="-1" role="dialog" aria-labelledby="detailAlertBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <h4 class="modal-title" id="detailAlertBoxLabel">Thông báo cho chúng tôi</h4>
+                </div>
+                <div class="modal-body uln">
+                    <div class="title border-bottom">Chọn lý do</div>
+                    <ul class="type-list">
+                        <li><a href="javascript:void(0)" class="active">Thông tin vị trí không chính xác</a></li>
+                        <li><a href="javascript:void(0)">Hình ảnh không phù hợp</a></li>
+                        <li><a href="javascript:void(0)">Tin bài sao chép</a></li>
+                        <li><a href="javascript:void(0)">Nội dung thông tin không có thật</a></li>
+                        <li><a href="javascript:void(0)">Nhà đã được bán</a></li>
+                        <li class="pdr15"><a href="javascript:void(0)" class="border-none">Khác</a><input type="text" class="form-control" placeholder="Lý do thông báo..."></li>
+                    </ul>
+                    <div class="mb10"></div>
+                    <div class="title border-top background-none"></div>
+                    <div class="pd15"><button type="reset" class="btn btn-organe btn-block">Gửi</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
        
 </body>
 </html>

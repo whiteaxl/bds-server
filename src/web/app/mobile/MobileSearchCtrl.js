@@ -40,6 +40,10 @@
 			vm.search();
 		}
 
+		vm.mapInitialized = function(map){
+			//vm.initialized = true;
+
+		}
 
 		/*vm.searchData = {
 			"loaiTin": vm.loaiTin,
@@ -79,6 +83,7 @@
         vm.page =1;
         vm.nextPage =function(){        	
         	vm.disableScrolling = true;
+        	vm.initialized = false;   
         	//alert('aaaa');
         	vm.page = vm.page+1;
         	$rootScope.searchData.pageNo = vm.page;       
@@ -140,7 +145,7 @@
                     if(res.data.list[i].map)
                         $scope.markers.push(res.data.list[i].map.marker);
                 }       
-                vm.disableScrolling = false;                     
+                vm.disableScrolling = false;
             });
         }
 		vm.searchPage = function(i, callback){
@@ -150,7 +155,7 @@
             $rootScope.searchData.userID = $rootScope.user.userID;
             //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
             //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
-
+            vm.initialized = false;   
             // vm.khoangGiaList[]
             // $rootScope.searchData.khoangGia
             HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
@@ -222,6 +227,7 @@
                 
                 $timeout(function() {
                     $('body').scrollTop(0);
+                    vm.initialized = true;  
                 },0);
                 
                 if($rootScope.isLoggedIn()){
@@ -236,6 +242,7 @@
                         });
                 }
                 vm.disableScrolling = false; 
+                 
                 if(callback)
                     callback.call(this);
             });
@@ -302,7 +309,7 @@
 
         NgMap.getMap('searchmap').then(function(map){
         	vm.map = map; 
-        	vm.initialized = true;       	
+        	    	
             google.maps.event.addListener(map, "dragend", function() {
             	//alert(vm.map.getBounds());
 				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
@@ -319,18 +326,35 @@
 	   			//alert($rootScope.searchData.geoBox);
 	        });
 
-	        google.maps.event.addListener(map, "zoom_changed", function() {
-	   //      	$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-				// $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+	        google.maps.event.addListener(map, "zoom_changed", function() {	        	
+	        	//$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				//$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 				// vm.marker = {
 				// 	id: -1,
 				// 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
 				// 	content: 'you are here'
 				// };
-				// // $scope.$apply();
-	   //        	vm.search();
+				// $scope.$apply();
+	          	//vm.search();
 	   			//alert('zoom_changed');
 	   			//alert($rootScope.searchData.geoBox);
+	   			if(vm.initialized == true){
+	   				vm.initialized = false;
+	   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+					vm.marker = {
+						id: -1,
+						coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+						content: 'you are here'
+					};
+	   				vm.search(function(){
+	   					$timeout(function() {
+	   						vm.initialized = true;
+	   					}, 10);
+	   					
+	   				});
+	   				// alert('human zoom');
+	   			}
 	        });
 
 

@@ -19,7 +19,6 @@
     <script src="js/drum.min.js"></script>
 	<script src="js/javascript.min.js"></script>
 </head>
-<body class="hfixed both">
 	<nav class="main uln">
     	<ul>
         	<li class="logo"><a href="index.html"><img src="img/logo.png" height="25" alt="Reland" title="Reland" /></a></li>
@@ -344,12 +343,17 @@
 		<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><i class="iconChat"></i><span>3</span></a>
         <a href="javascript:void(0)" class="search_mobile header-icon"><i class="iconSearch"></i></a>
     </header>
-	<div class="notifyBox">Hiện có 24 thông báo mới</div>
+    <script type="text/javascript">
+        $(function(){
+            showNotify("Hiện có 24 thông báo mới", '.mapsnotify');
+        })
+    </script>
+	<div class="notifyBox mapsnotify">Hiện có 24 thông báo mới</div>
     <div class="wapper">
     	<div class="maps">
         	<img src="images/maps.jpg" width="100%" height="100%" />
 			<div class="marker" style="top:100px; left:120px;">1,2 tỷ</div>
-			<div class="marker" style="top:200px; left:220px;">1 tỷ</div>
+			<div class="marker" style="top:200px; left:220px;">Thỏa thuận</div>
 			<div class="marker" style="top:300px; left:180px;">1,8 tỷ</div>
 			<div class="marker" style="top:140px; left:280px;">10,2 tỷ</div>
 			<div class="actions">
@@ -360,7 +364,7 @@
     </div>
     <footer class="main border uln">
         <ul class="navmain nav-3 blue nav-text">
-        	<li><a href="javascript:void(0)">Tiện ích</a></li>
+        	<li><a role="button" data-toggle="modal" data-target="#saveUtilities" class="saveUtilities">Tiện ích</a></li>
             <li><a role="button" data-toggle="modal" data-target="#saveBox">Lưu tìm kiếm</a></li>
             <li><a href="list.html">Danh sách</a></li>
         </ul>
@@ -665,6 +669,33 @@
                 <div class="modal-footer">
                 	<a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
                     <a href="#">Lưu lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-msg" id="saveUtilities" tabindex="-1" role="dialog" aria-labelledby="saveUtilitiesLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconCancel"></span></button>
+                    <h4 class="modal-title" id="saveUtilitiesLabel">Tiện ích</h4>
+                </div>
+                <div class="modal-body uln">
+                    <p>Loại bản đồ</p>
+                    <div class="group-cus group-3 ovh mb10">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn active">
+                                <input type="radio" name="options" id="utilities0" autocomplete="off" checked>Tiện ích 1
+                            </label>
+                            <label class="btn">
+                                <input type="radio" name="options" id="utilities1" autocomplete="off">Tiện ích 2
+                            </label>
+                            <label class="btn">
+                                <input type="radio" name="options" id="utilities2" autocomplete="off">Tiện ích 3
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
