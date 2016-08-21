@@ -383,6 +383,8 @@ internals.searchAds = function(q, reply) {
     let limit = q.limit;
 
     let diaChinh = q.diaChinh;
+    placeUtil.chuanHoaDiaChinh(diaChinh);
+
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     let orderBy = _toOrderBy(q.orderBy);
     let duAnID = q.duAnID;

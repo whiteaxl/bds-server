@@ -192,6 +192,7 @@ placeUtil.chuanHoa = function(string) {
     var COMMON_WORDS = {
         '-district': '',
         '-vietnam':'',
+        '-province':'',
         'hanoi' : 'ha-noi'
     };
     for (var f in COMMON_WORDS) {
@@ -218,6 +219,9 @@ placeUtil.typeName = {
 
 };
 
+placeUtil.chuanHoaDiaChinh = function(diaChinh) {
+    diaChinh.tinhKhongDau = placeUtil.chuanHoa(diaChinh.tinhKhongDau);
+};
 
 placeUtil.isHuyen = function(place) {
     var placeTypes=place.types;
