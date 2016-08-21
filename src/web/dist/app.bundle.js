@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "57999f7c2570e50890c3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6e297c30b9d6740f3805"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21368,23 +21368,27 @@
 	    	$rootScope.currentLocation.lon = 105.7098334;
 	    	homeDataSearch.currentLocation = $rootScope.currentLocation;
 	        vm.getLocation = function() {
-			    if (navigator.geolocation) {
-			        navigator.geolocation.getCurrentPosition(function(position){
-			        	$rootScope.currentLocation.lat = position.coords.latitude;
-			        	$rootScope.currentLocation.lon = position.coords.longitude;
-			        	homeDataSearch.currentLocation = $rootScope.currentLocation;
-			        	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-							//alert(JSON.stringify(res));
-							vm.boSuuTap = res.data.data; 
-						});
-			        });
-			    } else {
-			        //x.innerHTML = "Geolocation is not supported by this browser.";		        
-			        HouseService.homeDataForApp(homeDataSearch).then(function(res){
-						//alert(JSON.stringify(res));
-						vm.boSuuTap = res.data.data; 
-					});
-			    }
+			  //   if (navigator.geolocation) {
+			  //       navigator.geolocation.getCurrentPosition(function(position){
+			  //       	$rootScope.currentLocation.lat = position.coords.latitude;
+			  //       	$rootScope.currentLocation.lon = position.coords.longitude;
+			  //       	homeDataSearch.currentLocation = $rootScope.currentLocation;
+			  //       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					// 		//alert(JSON.stringify(res));
+					// 		vm.boSuuTap = res.data.data; 
+					// 	});
+			  //       });
+			  //   } else {
+			  //       //x.innerHTML = "Geolocation is not supported by this browser.";		        
+			  //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					// 	//alert(JSON.stringify(res));
+					// 	vm.boSuuTap = res.data.data; 
+					// });
+			  //   }
+				HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					//alert(JSON.stringify(res));
+					vm.buoSuuTap = res.data.data; 
+				});
 			}
 			vm.goDetail = function(ads){
 				$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});

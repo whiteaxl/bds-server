@@ -28,23 +28,27 @@
     	$rootScope.currentLocation.lon = 105.7098334;
     	homeDataSearch.currentLocation = $rootScope.currentLocation;
         vm.getLocation = function() {
-		    if (navigator.geolocation) {
-		        navigator.geolocation.getCurrentPosition(function(position){
-		        	$rootScope.currentLocation.lat = position.coords.latitude;
-		        	$rootScope.currentLocation.lon = position.coords.longitude;
-		        	homeDataSearch.currentLocation = $rootScope.currentLocation;
-		        	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-						//alert(JSON.stringify(res));
-						vm.boSuuTap = res.data.data; 
-					});
-		        });
-		    } else {
-		        //x.innerHTML = "Geolocation is not supported by this browser.";		        
-		        HouseService.homeDataForApp(homeDataSearch).then(function(res){
-					//alert(JSON.stringify(res));
-					vm.boSuuTap = res.data.data; 
-				});
-		    }
+		  //   if (navigator.geolocation) {
+		  //       navigator.geolocation.getCurrentPosition(function(position){
+		  //       	$rootScope.currentLocation.lat = position.coords.latitude;
+		  //       	$rootScope.currentLocation.lon = position.coords.longitude;
+		  //       	homeDataSearch.currentLocation = $rootScope.currentLocation;
+		  //       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				// 		//alert(JSON.stringify(res));
+				// 		vm.boSuuTap = res.data.data; 
+				// 	});
+		  //       });
+		  //   } else {
+		  //       //x.innerHTML = "Geolocation is not supported by this browser.";		        
+		  //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				// 	//alert(JSON.stringify(res));
+				// 	vm.boSuuTap = res.data.data; 
+				// });
+		  //   }
+			HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				//alert(JSON.stringify(res));
+				vm.buoSuuTap = res.data.data; 
+			});
 		}
 		vm.goDetail = function(ads){
 			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
