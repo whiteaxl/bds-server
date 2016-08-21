@@ -103,8 +103,9 @@ class DoThiExtractor {
 
 		var i = start;
 		for (i=start; i<=end; i++) {
-			console.log("Extracting for page: " + i);
-			this.extractOnePage(rootURL + '/p'+i+'.htm', _done,ngayDangTin);
+			let fullUrl = rootURL + '/p'+i+'.htm';
+			console.log("Extracting for page: " + fullUrl);
+			this.extractOnePage(fullUrl, _done,ngayDangTin);
 		}
 
 		var myInterval = setInterval(function(){ 
