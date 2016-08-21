@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6e297c30b9d6740f3805"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "82356f8041be3653c8f9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21385,9 +21385,10 @@
 					// 	vm.boSuuTap = res.data.data; 
 					// });
 			  //   }
+			  	homeDataSearch.currentLocation = $rootScope.currentLocation;
 				HouseService.homeDataForApp(homeDataSearch).then(function(res){
 					//alert(JSON.stringify(res));
-					vm.buoSuuTap = res.data.data; 
+					vm.boSuuTap = res.data.data; 
 				});
 			}
 			vm.goDetail = function(ads){

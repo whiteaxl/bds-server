@@ -48,7 +48,7 @@
 		  	homeDataSearch.currentLocation = $rootScope.currentLocation;
 			HouseService.homeDataForApp(homeDataSearch).then(function(res){
 				//alert(JSON.stringify(res));
-				vm.buoSuuTap = res.data.data; 
+				vm.boSuuTap = res.data.data; 
 			});
 		}
 		vm.goDetail = function(ads){
