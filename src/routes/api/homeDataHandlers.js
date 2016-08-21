@@ -128,15 +128,11 @@ internals.homeData4App = function(req, reply) {
         
       ];
 
-      if(lastQuery && lastQuery.giaBETWEEN){
-        fl.push(
-          function(callback){
-            let queryDuoiGia = {}; Object.assign(queryDuoiGia, query);
-            let mid = getGiaTrungBinh(lastQuery);
-            searchAds("Nhà có giá dưới " + mid,query.fullName,queryDuoiGia,callback);
-          }
-        );
-      }
+    fl.push(function(callback){
+        let queryNearBy = {}; Object.assign(queryNearBy, query);
+        queryNearBy.diaChinh = diaChinh;
+        searchAds("Nhà Gần Vị Trí Bạn",diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryNearBy,callback);
+    });
 
 
       if (!diaChinh) {
@@ -148,7 +144,7 @@ internals.homeData4App = function(req, reply) {
               let queryMoiDang = {}; Object.assign(queryMoiDang, query);
               queryMoiDang.ngayDaDang = 700;  
               queryMoiDang.orderBy = "ngayDangTinDESC";
-              searchAds("Nhà mới đăng",query.fullName,queryMoiDang,callback);
+              searchAds("Nhà Mới Đăng Hôm Nay",query.fullName,queryMoiDang,callback);
             }
           );
           async.series(fl,
@@ -164,21 +160,25 @@ internals.homeData4App = function(req, reply) {
         }
         //reply({status: 1, msg: 'Không xác định được vị trí hiện tại của bạn!'});
       }
-      
-      fl.push(function(callback){
-        let queryNearBy = {}; Object.assign(queryNearBy, query);
-        queryNearBy.diaChinh = diaChinh;
-        searchAds("Nhà gần vị trí của bạn",diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryNearBy,callback);
-      });
 
       fl.push(
         function(callback){
           let queryMoiDang = {}; Object.assign(queryMoiDang, query);
           queryMoiDang.ngayDaDang = 700;  
           queryMoiDang.orderBy = "ngayDangTinDESC";
-          searchAds("Nhà mới đăng",query.fullName || diaChinh.tinhCoDau,queryMoiDang,callback);
+          searchAds("Nhà Mới Đăng Hôm Nay",query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryMoiDang,callback);
         }
-      );      
+      );
+
+    if(lastQuery && lastQuery.giaBETWEEN){
+        fl.push(
+            function(callback){
+                let queryDuoiGia = {}; Object.assign(queryDuoiGia, query);
+                let mid = getGiaTrungBinh(lastQuery);
+                searchAds("Nhà Có Giá Dưới " + mid,diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryDuoiGia,callback);
+            }
+        );
+    }
 
       //if no history, defaul if current Tinh and loaiTin=BAN
       if (query.loaiTin == null || query.loaiTin == undefined) {
@@ -218,7 +218,7 @@ internals.homeData4App = function(req, reply) {
             queryDuAn.duAnID = res[i].duAnID;
             let title2 = res[i].ten;
             var f = function(callback){
-              searchAds("Nhà thuộc dự án nổi bật",title2,queryDuAn,callback);
+              searchAds("Nhà Thuộc Dự Án Nổi Bật",title2,queryDuAn,callback);
             }
             fl.push(f);
           }   

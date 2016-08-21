@@ -21,15 +21,26 @@ class OnePay {
 		bucket = cluster.openBucket('default');
 	}
 
-	upsertSmsPlus(dto) {
-		dto.type = '1paySmsplus';
-		dto.id = '1paySmsplus_' + dto.request_id;
+	insertSmsPlus(query, callback) {
+	  var dto = {}; Object.assign(dto, query);
 
-		bucket.upsert(dto.id, dto, function(err, res) {
-			if (err) {
-				console.log("ERROR:" + err);
-			}
-		})
+		dto.type = 'OnepaySmsplus';
+		dto.id = 'OnepaySmsplus_' + dto.request_id;
+
+    //try to insert
+    bucket.insert(dto.id, dto, function(err, res) {
+      if (err) {
+        if (err.code == couchbase.errors.keyAlreadyExists) {
+          console.log('Key already exists:', err);
+          callback({status:1, msg: "Request_ID đã tồn tại: " + dto.request_id});
+        } else {
+          console.log('Some other error occurred: %j', err);
+          callback({status:99, msg: err.message});
+        }
+      } else {
+        callback({status:0});
+      }
+    });
 	}
 
 	upsert(dto, callback) {

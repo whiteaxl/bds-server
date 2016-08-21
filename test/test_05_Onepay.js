@@ -128,4 +128,52 @@ describe("05.Onepay api",function(){
    b3ea20c296373ff16ab787e527d7fcbdff5ba51084259529c1bf3446da9791b6
    b3ea20c296373ff16ab787e527d7fcbdff5ba51084259529c1bf3446da9791b6
 */
+
+  //Test SmsplusCharging
+
+  var testSmsplusCharging = function(done){
+    var fullUrl = "/api/1pay/SmsplusCharging" +
+      "?access_key=89drdkir1hsi8uie7uuq" +
+      "&amount=10000&command_code=RL&error_code=WCG-0000" +
+      "&error_message=thanhcong&mo_message=RL%20NAP%20abcmsg" +
+      "&msisdn=8498001&request_id=1234&request_time=2016-08-16T22%3A54%3A50Z" +
+      "&signature=910c9b9919afaf042ea52cf442d7626a90af49fe806f192484777fd0f42aef84";
+    server
+      .get(fullUrl)
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+        console.log(res.body);
+
+        res.status.should.equal(200);
+
+        res.body.should.have.property('status');
+
+        done();
+      });
+  };
+  it("testSmsplusCharging",testSmsplusCharging);
+
+  var testSmsplusChargingFail = function(done){
+    var fullUrl = "/api/1pay/SmsplusCharging" +
+      "?access_key=89drdkir1hsi8uie7uuq" +
+      "&amount=10000&command_code=RL&error_code=WCG-0000" +
+      "&error_message=thanhcong&mo_message=RL%20NAP%20abcmsg" +
+      "&msisdn=84983091602&request_id=001&request_time=2016-08-16T22%3A54%3A50Z" +
+      "&signature=123";
+    server
+      .get(fullUrl)
+      .expect("Content-type",/json/)
+      .expect(200) // THis is HTTP response
+      .end(function(err,res){
+        console.log(res.body);
+
+        res.status.should.equal(200);
+
+        res.body.should.have.property('status');
+
+        done();
+      });
+  };
+  it("testSmsplusChargingFail",testSmsplusChargingFail);
 });

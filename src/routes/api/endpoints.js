@@ -621,7 +621,7 @@ internals.endpoints = [
   },
   {
     method: 'GET',
-    path: '/api/1pay/smsplusCharging',
+    path: '/api/1pay/SmsplusCharging',
     handler: onepay.smsplusCharging,
     config: {
       description: 'Nhan thong bao tu 1pay ve nap tien qua SmsPlus',

@@ -94,6 +94,8 @@ class DoThiExtractor {
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
 	extractWithLimit(rootURL, start, end,ngayDangTin) {
+		start = Number(start);
+		end = Number(end);
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 		var count = start-1;
@@ -103,11 +105,12 @@ class DoThiExtractor {
 
 		var i = start;
 		for (i=start; i<=end; i++) {
-			console.log("Extracting for page: " + i);
-			this.extractOnePage(rootURL + '/p'+i, _done,ngayDangTin);
+			let fullUrl = rootURL + '/p'+i+'.htm';
+			console.log("Extracting for page: " + fullUrl);
+			this.extractOnePage(fullUrl, _done,ngayDangTin);
 		}
 
-		var myInterval = setInterval(function(){ 
+		var myInterval = setInterval(function(){
 			 if (count==end) {
 			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 			 	clearInterval(myInterval);
@@ -144,10 +147,10 @@ class DoThiExtractor {
 			'dangBoiDiDong'	:['.pd-contact > table  > tr[4] > td[2]']
 		})
 		.data(function(dothiBds) {
-			console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
-			console.log("dacDiemValue=", dothiBds.dacDiemValue);
-			console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
-			console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
+			//console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
+			//console.log("dacDiemValue=", dothiBds.dacDiemValue);
+			//console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
+			//console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
 
 
 			let addothiBds = {
@@ -224,14 +227,14 @@ class DoThiExtractor {
 			 	var ngayDang = addothiBds.ngayDangTin;
 				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
 
-			 	if(addothiBds.ngayDangTin == ngayDangTin){
-			 		console.log("Lay dung ngay dang tin");
-					console.log("11--Do THi -bds");
-			 		console.log(addothiBds);
+			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
+			 		//console.log("Lay dung ngay dang tin");
+					//console.log("11--Do THi -bds");
+			 		//console.log(addothiBds);
 					adsModel.upsert(addothiBds);
 			 	}
 			 }
-			console.log("22--Do THi -bds");
+			//console.log("22--Do THi -bds");
 
 		})
 		
