@@ -225,7 +225,16 @@ util.toOrderBy = function(orderByPam) {
     }
 
     return ret;
-}
+};
+
+util.toNumber = function(val) {
+    if (isNaN(val)) {
+        console.log("Not a number, will return null:" + val);
+        return null;
+    }
+
+    return Number(val);
+};
 
 module.exports = util;
 

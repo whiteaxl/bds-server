@@ -305,8 +305,8 @@ function _transformDetailAds(adsFromDb) {
     ads.dangBoi.phone = adsFromDb.dangBoi.phone;
     ads.dangBoi.userID = adsFromDb.dangBoi.userID;
 
-    ads.gia = Number(adsFromDb.gia);
-    ads.dienTich = adsFromDb.dienTich;
+    ads.gia = util.toNumber(adsFromDb.gia);
+    ads.dienTich = util.toNumber(adsFromDb.dienTich);
     ads.soPhongNgu = adsFromDb.soPhongNgu;
     ads.soTang = adsFromDb.soTang;
     ads.soPhongTam = adsFromDb.soPhongTam;
