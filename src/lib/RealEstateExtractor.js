@@ -223,6 +223,9 @@ function _saveData(adsDto) {
 
   adsObj.adsID = "Ads_bds_" + adsObj.maSo;
   adsObj.id = adsObj.adsID;
+  adsObj.source = adsDto.source;
+  adsObj.duAnID = adsDto.duAnID;
+
 
   adsModel.upsert(adsObj);
 }
@@ -289,7 +292,7 @@ class RealEstateExtractor {
         let price = listing.prices[0];
         let dienTich = listing.prices[1];
 				let ads = {
-					title: listing.title[0],
+					title: listing.title,
 					images_small: listing.images,
 					price_raw: listing.price,
 					price_value: price && price.split(' ')[0],
