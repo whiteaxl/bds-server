@@ -309,6 +309,7 @@ function _transformDetailAds(adsFromDb) {
     ads.dienTich = adsFromDb.dienTich;
     ads.soPhongNgu = adsFromDb.soPhongNgu;
     ads.soTang = adsFromDb.soTang;
+    ads.soPhongTam = adsFromDb.soPhongTam;
 
     ads.image = {};
     ads.image.cover = adsFromDb.image.cover;
@@ -360,7 +361,7 @@ function _transformDetailAds(adsFromDb) {
 
     if (ads.chiTiet) {
         var idx = ads.chiTiet.indexOf("Tìm kiếm theo từ khóa");
-        ads.chiTiet =  ads.chiTiet.substring(0, idx);
+        ads.chiTiet =  idx >= 0 ? ads.chiTiet.substring(0, idx) : ads.chiTiet;
         //val.chiTietDisplay =  val.chiTiet.substring(0, idx);
     }
 
