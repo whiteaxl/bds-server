@@ -99,13 +99,9 @@ class DoThiExtractor {
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 		var count = start-1;
-		console.log("Call me0");
 		var _done = () => {
-			console.log("Call me4");
 			count++;
 		};
-
-		console.log("Call me1:", start, end);
 
 		var i = start;
 		for (i=start; i<=end; i++) {
@@ -114,10 +110,7 @@ class DoThiExtractor {
 			this.extractOnePage(fullUrl, _done,ngayDangTin);
 		}
 
-		console.log("Call me2");
-
 		var myInterval = setInterval(function(){
-			console.log("Call me3");
 			 if (count==end) {
 			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 			 	clearInterval(myInterval);
