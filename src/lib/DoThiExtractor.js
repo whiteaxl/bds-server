@@ -104,7 +104,7 @@ class DoThiExtractor {
 		var i = start;
 		for (i=start; i<=end; i++) {
 			console.log("Extracting for page: " + i);
-			this.extractOnePage(rootURL + '/p'+i, _done,ngayDangTin);
+			this.extractOnePage(rootURL + '/p'+i+'.htm', _done,ngayDangTin);
 		}
 
 		var myInterval = setInterval(function(){ 
