@@ -94,6 +94,8 @@ class DoThiExtractor {
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
 	extractWithLimit(rootURL, start, end,ngayDangTin) {
+		start = Number(start);
+		end = Number(end);
 		console.log("Enter extractWithLimit .... " + start + ", " + end);
 		var startDate = new Date();
 		var count = start-1;
@@ -103,7 +105,7 @@ class DoThiExtractor {
 			count++;
 		};
 
-		console.log("Call me1");
+		console.log("Call me1:", start, end);
 
 		var i = start;
 		for (i=start; i<=end; i++) {
