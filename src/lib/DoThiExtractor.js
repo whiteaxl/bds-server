@@ -147,10 +147,10 @@ class DoThiExtractor {
 			'dangBoiDiDong'	:['.pd-contact > table  > tr[4] > td[2]']
 		})
 		.data(function(dothiBds) {
-			console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
-			console.log("dacDiemValue=", dothiBds.dacDiemValue);
-			console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
-			console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
+			//console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
+			//console.log("dacDiemValue=", dothiBds.dacDiemValue);
+			//console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
+			//console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
 
 
 			let addothiBds = {
@@ -228,13 +228,13 @@ class DoThiExtractor {
 				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
 
 			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
-			 		console.log("Lay dung ngay dang tin");
-					console.log("11--Do THi -bds");
-			 		console.log(addothiBds);
+			 		//console.log("Lay dung ngay dang tin");
+					//console.log("11--Do THi -bds");
+			 		//console.log(addothiBds);
 					adsModel.upsert(addothiBds);
 			 	}
 			 }
-			console.log("22--Do THi -bds");
+			//console.log("22--Do THi -bds");
 
 		})
 		
