@@ -224,7 +224,7 @@ class DoThiExtractor {
 			 	var ngayDang = addothiBds.ngayDangTin;
 				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
 
-			 	if(addothiBds.ngayDangTin == ngayDangTin){
+			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
 			 		console.log("Lay dung ngay dang tin");
 					console.log("11--Do THi -bds");
 			 		console.log(addothiBds);
