@@ -19,12 +19,12 @@ var duAnService = new DuAnService();
 var internals = {};
 
 function convertListResult(list) {
-  let cover = e.image.cover || cfg.noCoverUrl;
-  if (cover == '/web/asset/img/reland_house_large.jpg') {
-    cover = cfg.noCoverUrl
-  }
-
   let result = list.map((e) => {
+    let cover = e.image.cover || cfg.noCoverUrl;
+    if (cover == '/web/asset/img/reland_house_large.jpg') {
+      cover = cfg.noCoverUrl
+    }
+
     return {
       adsID : e.adsID,
       giaFmt : e.giaFmt || undefined,
