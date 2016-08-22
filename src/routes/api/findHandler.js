@@ -24,6 +24,8 @@ var duAnService = new DuAnService();
 var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
 var duAnNoiBatService = new DuAnNoiBatService();
 
+var cfg = require('../../config');
+
 
 var DEFAULT_SEARCH_RADIUS = 5; //km
 
@@ -157,7 +159,7 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
 
         //dummy for cover image
         if(tmp.image.cover && tmp.image.cover.indexOf("no-photo")>-1){
-            tmp.image.cover = "/web/asset/img/reland_house_large.jpg";
+            tmp.image.cover = cfg.noCoverUrl;
             //console.log("1"+tmp.image.cover);
         }
 

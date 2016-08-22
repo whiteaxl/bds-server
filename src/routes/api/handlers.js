@@ -17,6 +17,8 @@ var https = require('https');
 var services = require("../../lib/services");
 var constant = require("../../lib/constant");
 var danhMuc  = require("../../lib/DanhMuc");
+var cfg = require("../../config");
+
 myBucket.operationTimeout = 120 * 1000;
 
 var UserService = require('../../dbservices/User');
@@ -312,7 +314,11 @@ function _transformDetailAds(adsFromDb) {
     ads.soPhongTam = adsFromDb.soPhongTam;
 
     ads.image = {};
-    ads.image.cover = adsFromDb.image.cover;
+    ads.image.cover = adsFromDb.image.cover || cfg.noCoverUrl;
+    if(ads.image.cover.indexOf("no-photo")>-1){
+        ads.image.cover = cfg.noCoverUrl;
+    }
+
     ads.image.images = adsFromDb.image.images;
 
     ads.diaChi = adsFromDb.diaChi;
