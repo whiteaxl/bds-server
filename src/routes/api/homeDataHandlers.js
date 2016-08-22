@@ -19,6 +19,11 @@ var duAnService = new DuAnService();
 var internals = {};
 
 function convertListResult(list) {
+  let cover = e.image.cover || cfg.noCoverUrl;
+  if (cover == '/web/asset/img/reland_house_large.jpg') {
+    cover = cfg.noCoverUrl
+  }
+
   let result = list.map((e) => {
     return {
       adsID : e.adsID,
@@ -27,7 +32,7 @@ function convertListResult(list) {
       khuVuc : e.place && e.place.diaChinh.huyen + ", " + e.place.diaChinh.tinh,
       soPhongNguFmt : e.soPhongNguFmt || undefined,
       soPhongTamFmt : e.soPhongTamFmt || undefined,
-      cover : e.image.cover || cfg.noCoverUrl
+      cover :cover
     }
   });
 
