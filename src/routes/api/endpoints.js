@@ -600,7 +600,7 @@ internals.endpoints = [
               khuVuc : Joi.string(),
               soPhongNguFmt : Joi.string().allow(null),
               soPhongTamFmt : Joi.string(),
-              cover : Joi.string()
+              cover : Joi.string().allow(null).allow('')
             })),
             query: Joi.object()
           })),
