@@ -5,6 +5,7 @@ var services = require('../../lib/services');
 var placeUtil = require('../../lib/placeUtil');
 var danhMuc = require('../../lib/DanhMuc');
 var utils = require('../../lib/utils');
+var cfg = require('../../config');
 
 var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
 var duAnNoiBatService = new DuAnNoiBatService();
@@ -26,7 +27,7 @@ function convertListResult(list) {
       khuVuc : e.place && e.place.diaChinh.huyen + ", " + e.place.diaChinh.tinh,
       soPhongNguFmt : e.soPhongNguFmt || undefined,
       soPhongTamFmt : e.soPhongTamFmt || undefined,
-      cover : e.image.cover
+      cover : e.image.cover || cfg.noCoverUrl
     }
   });
 
