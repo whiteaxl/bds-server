@@ -34,7 +34,7 @@ internals.server = new Hapi.Server();
 // Setup the connection for the environment
 internals.server.connection({
   port: process.env.OPENSHIFT_NODEJS_PORT || 5000,
-  address: process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
+  address: process.env.OPENSHIFT_NODEJS_IP || '192.168.1.65',
   routes: {
     cors: {
       origin: ['http://localhost:3000','http://203.162.13.40:3000']

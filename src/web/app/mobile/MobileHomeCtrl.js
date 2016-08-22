@@ -27,6 +27,7 @@
         $rootScope.currentLocation.lat = 20.9898098;
     	$rootScope.currentLocation.lon = 105.7098334;
     	homeDataSearch.currentLocation = $rootScope.currentLocation;
+    	
         vm.getLocation = function() {
 		  //   if (navigator.geolocation) {
 		  //       navigator.geolocation.getCurrentPosition(function(position){
