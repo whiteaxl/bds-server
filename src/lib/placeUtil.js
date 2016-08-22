@@ -187,6 +187,10 @@ placeUtil.getXa = function(place) {
 // chuan hoa va bo dau 1 string
 placeUtil.chuanHoa = function(string) {
 
+    if (!string) {
+        return null;
+    }
+
     var result = util.locDau(string);
 
     var COMMON_WORDS = {
