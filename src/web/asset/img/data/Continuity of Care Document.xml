@@ -1,0 +1,107 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var popupWinIndex=3;
+  var popupFrameIndex="iframe3";
+  var templateSearchFor;
+  if(top.SynaTab.getDisplayingFrame().id=='p_loadingNote191000003820971Frame'){
+    top.SynaTab.setTabName('p_loadingNote191000003820971', '08/21/16 OV');
+  }
+  if(top.SynaTab.getTab('p_officeNote201000003501924')!=null){
+  } else {
+    top.SynaTab.setTabName('p_loadingNote201000003501924191000003820971', '08/21/16 OV');     
+    top.setPatientTabName(191000003820971, 'test tim1234 123');
+  }
+ 		//float toggle bar
+	   //PLAN
+		
+		   
+		var drEditable="";
+		if(!drEditable){
+			drEditable=true
+		}
+			 
+		
+	   //END PLAN
+	   
+	   //RTC REASON
+		
+	   //END RTC REASON
+		
+	   //DISPOSITION
+		
+	   //END DISPOSITION
+	   
+		
+		
+		//Vacreocrds
+		
+		//end vac
+		//diagnosis
+			
+		//end diagnosis
+		
+		
+		
+</script>
+
+<html>
+<head>
+</head>
+<form name="cadNote3Form" method="post" action="/vco/cadnote3/cadnote3.do">
+	<div id="componentContainer">
+
+
+
+</div>
+</form>
+</html>

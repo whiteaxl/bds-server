@@ -15,7 +15,7 @@
 		// vm.dien_tich_min = 0;
 		// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 		// vm.zoomMode = "auto";
-		vm.ads_list = [{},{},{},{},{}];
+		vm.ads_list = [];
 		$scope.center = "Hanoi Vietnam";
 		vm.zoomMode = "auto";
 		vm.placeId = $state.params.place;
@@ -24,16 +24,24 @@
 		vm.viewMode = $state.params.viewMode;
 		if($state.params.query)
 			$rootScope.searchData = $state.params.query;
+		vm.viewTemplateUrl = "/web/mobile/list.tpl.html";//1=map 2= list
+
+		if($state.params.viewMode=="list"){
+			vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
+		}else if($state.params.viewMode=="map"){
+			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"
+		}
 		vm.initMap = true;
 		vm.page = 1;
 		vm.initialized = false;
 		
 		vm.showList = function(){
-			vm.viewMode = "list";
-			// vm.map.refresh();
+			vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
+			vm.viewMode = "list";			
 		}
 		vm.showMap = function(){
-			vm.viewMode = "map";			
+			vm.viewMode = "map";
+			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
 		}
 		vm.sort = function(sortBy){
 			$rootScope.searchData.orderBy = sortBy;
@@ -42,6 +50,7 @@
 
 		vm.mapInitialized = function(map){
 			//vm.initialized = true;
+			// alert('aa');
 
 		}
 
@@ -80,10 +89,12 @@
             
         }
         vm.disableScrolling = true;
+        
         vm.page =1;
         vm.nextPage =function(){        	
         	vm.disableScrolling = true;
         	vm.initialized = false;   
+        	$('#searchmap').hide();
         	//alert('aaaa');
         	vm.page = vm.page+1;
         	$rootScope.searchData.pageNo = vm.page;       
@@ -146,6 +157,7 @@
                         $scope.markers.push(res.data.list[i].map.marker);
                 }       
                 vm.disableScrolling = false;
+                 $('#searchmap').show();
             });
         }
 		vm.searchPage = function(i, callback){
@@ -242,6 +254,7 @@
                         });
                 }
                 vm.disableScrolling = false; 
+
                  
                 if(callback)
                     callback.call(this);

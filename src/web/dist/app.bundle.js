@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "82356f8041be3653c8f9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1a86ba7ac9d5f88d4957"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21367,6 +21367,7 @@
 	        $rootScope.currentLocation.lat = 20.9898098;
 	    	$rootScope.currentLocation.lon = 105.7098334;
 	    	homeDataSearch.currentLocation = $rootScope.currentLocation;
+	    	
 	        vm.getLocation = function() {
 			  //   if (navigator.geolocation) {
 			  //       navigator.geolocation.getCurrentPosition(function(position){
@@ -21475,7 +21476,7 @@
 			// vm.dien_tich_min = 0;
 			// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 			// vm.zoomMode = "auto";
-			vm.ads_list = [{},{},{},{},{}];
+			vm.ads_list = [];
 			$scope.center = "Hanoi Vietnam";
 			vm.zoomMode = "auto";
 			vm.placeId = $state.params.place;
@@ -21484,16 +21485,24 @@
 			vm.viewMode = $state.params.viewMode;
 			if($state.params.query)
 				$rootScope.searchData = $state.params.query;
+			vm.viewTemplateUrl = "/web/mobile/list.tpl.html";//1=map 2= list
+
+			if($state.params.viewMode=="list"){
+				vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
+			}else if($state.params.viewMode=="map"){
+				vm.viewTemplateUrl = "/web/mobile/map.tpl.html"
+			}
 			vm.initMap = true;
 			vm.page = 1;
 			vm.initialized = false;
 			
 			vm.showList = function(){
-				vm.viewMode = "list";
-				// vm.map.refresh();
+				vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
+				vm.viewMode = "list";			
 			}
 			vm.showMap = function(){
-				vm.viewMode = "map";			
+				vm.viewMode = "map";
+				vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
 			}
 			vm.sort = function(sortBy){
 				$rootScope.searchData.orderBy = sortBy;
@@ -21502,6 +21511,7 @@
 
 			vm.mapInitialized = function(map){
 				//vm.initialized = true;
+				// alert('aa');
 
 			}
 
@@ -21540,10 +21550,12 @@
 	            
 	        }
 	        vm.disableScrolling = true;
+	        
 	        vm.page =1;
 	        vm.nextPage =function(){        	
 	        	vm.disableScrolling = true;
 	        	vm.initialized = false;   
+	        	$('#searchmap').hide();
 	        	//alert('aaaa');
 	        	vm.page = vm.page+1;
 	        	$rootScope.searchData.pageNo = vm.page;       
@@ -21606,6 +21618,7 @@
 	                        $scope.markers.push(res.data.list[i].map.marker);
 	                }       
 	                vm.disableScrolling = false;
+	                 $('#searchmap').show();
 	            });
 	        }
 			vm.searchPage = function(i, callback){
@@ -21702,6 +21715,7 @@
 	                        });
 	                }
 	                vm.disableScrolling = false; 
+
 	                 
 	                if(callback)
 	                    callback.call(this);
@@ -23628,11 +23642,16 @@
 	// chuan hoa va bo dau 1 string
 	placeUtil.chuanHoa = function(string) {
 
+	    if (!string) {
+	        return null;
+	    }
+
 	    var result = util.locDau(string);
 
 	    var COMMON_WORDS = {
 	        '-district': '',
 	        '-vietnam':'',
+	        '-province':'',
 	        'hanoi' : 'ha-noi'
 	    };
 	    for (var f in COMMON_WORDS) {
@@ -23659,6 +23678,11 @@
 
 	};
 
+	placeUtil.chuanHoaDiaChinh = function(diaChinh) {
+	    if (diaChinh) {
+	        diaChinh.tinhKhongDau = this.chuanHoa(diaChinh.tinhKhongDau);
+	    }
+	};
 
 	placeUtil.isHuyen = function(place) {
 	    var placeTypes=place.types;
@@ -23943,7 +23967,16 @@
 	    }
 
 	    return ret;
-	}
+	};
+
+	util.toNumber = function(val) {
+	    if (isNaN(val)) {
+	        console.log("Not a number, will return null:" + val);
+	        return null;
+	    }
+
+	    return Number(val);
+	};
 
 	module.exports = util;
 
