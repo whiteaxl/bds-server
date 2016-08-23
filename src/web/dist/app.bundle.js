@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1a86ba7ac9d5f88d4957"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "298654917bd9ccf62bc0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21478,7 +21478,7 @@
 			// vm.zoomMode = "auto";
 			vm.ads_list = [];
 			$scope.center = "Hanoi Vietnam";
-			vm.zoomMode = "auto";
+			vm.zoomMode = "false";
 			vm.placeId = $state.params.place;
 			vm.loaiTin = $state.params.loaiTin;
 			vm.loaiNhaDat = $state.params.loaiNhaDat;
@@ -21554,7 +21554,7 @@
 	        vm.page =1;
 	        vm.nextPage =function(){        	
 	        	vm.disableScrolling = true;
-	        	vm.initialized = false;   
+	        	//vm.initialized = false;   
 	        	$('#searchmap').hide();
 	        	//alert('aaaa');
 	        	vm.page = vm.page+1;
@@ -21618,6 +21618,7 @@
 	                        $scope.markers.push(res.data.list[i].map.marker);
 	                }       
 	                vm.disableScrolling = false;
+	                // vm.initialized = false;   
 	                 $('#searchmap').show();
 	            });
 	        }
@@ -21734,7 +21735,9 @@
 	            vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);
 
 	            // if($scope.searchPlaceSelected.geometry.viewport){
-	            if(vm.onePoint == false){
+	            if($rootScope.searchData.geoBox){
+	            	console.log("Tim ads for geoBox: " + $rootScope.searchData.geoBox);
+	            }else if(vm.onePoint == false){
 	                console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
 	                $rootScope.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
 	                //$rootScope.searchData.radiusInKm = undefined;
@@ -21751,7 +21754,9 @@
 	                $rootScope.searchData.geoBox = undefined;
 	            }
 	            $rootScope.searchData.userID = $rootScope.user.userID;
-	            if($rootScope.searchData.place.geometry)
+	            if($rootScope.searchData.geoBox){
+
+	            }else if($rootScope.searchData.place.geometry)
 	            	vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
 	            else{
 	            	//vm.zoomMode = "auto";
@@ -21811,24 +21816,32 @@
 					// $scope.$apply();
 		          	//vm.search();
 		   			//alert('zoom_changed');
-		   			//alert($rootScope.searchData.geoBox);
-		   			if(vm.initialized == true){
-		   				vm.initialized = false;
-		   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-						$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-						vm.marker = {
-							id: -1,
-							coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-							content: 'you are here'
-						};
-		   				vm.search(function(){
-		   					$timeout(function() {
-		   						vm.initialized = true;
-		   					}, 10);
-		   					
-		   				});
-		   				// alert('human zoom');
-		   			}
+
+		   			//google.maps.event.addListenerOnce(map, 'bounds_changed', function (e) {
+		   				
+		   				if(vm.initialized == true){
+			   				vm.initialized = false;
+			   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+							$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+							//var bounds = vm.map.getBounds();
+							//alert($rootScope.searchData.geoBox);
+							vm.marker = {
+								id: -1,
+								coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+								content: 'you are here'
+							};
+			   				vm.search(function(){
+			   					$timeout(function() {
+			   						vm.initialized = true;
+			   						//vm.map.fitBounds(bounds);
+			   					}, 10);
+			   					
+			   				});
+			   				// alert('human zoom');
+			   			}
+		   			//});
+		   			
+		   			
 		        });
 
 
@@ -21847,11 +21860,11 @@
 	                        //$scope.map.center =  
 	                        $scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
 	                        if(place.geometry.viewport){
-	                            //map.fitBounds(place.geometry.viewport);   
+	                            map.fitBounds(place.geometry.viewport);   
 	                            //$scope.map
 	                        } else if( !current_bounds.contains( place.geometry.location ) ){
-	                            //var new_bounds = current_bounds.extend(place.geometry.location);
-	                            //map.fitBounds(new_bounds);
+	                            var new_bounds = current_bounds.extend(place.geometry.location);
+	                            map.fitBounds(new_bounds);
 	                            //$digest();
 	                        }
 	                        vm.marker = {
