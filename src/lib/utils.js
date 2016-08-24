@@ -198,34 +198,36 @@ util.isEmail = function(str) {
     return str && (str.indexOf('@') > -1);
 };
 
-//giaDESC, dienTichASC, ngayDangTinASC, giaM2DESC, soPhongNguDESC, soPhongTamDESC
-util.toOrderBy = function(orderByPam) {
-    let orderByField;
-    let orderByType;
-    let ret = null;
 
-    if (orderByPam){
-        var arr = orderByPam.split(",");
-        var firstElement = arr[0];
-        var len =   firstElement.length;
+//comments out sicne seems not used
+// //giaDESC, dienTichASC, ngayDangTinASC, giaM2DESC, soPhongNguDESC, soPhongTamDESC
+// util.toOrderBy = function(orderByPam) {
+//     var orderByField;
+//     var orderByType;
+//     var ret = null;
 
-        if(firstElement.endsWith("DESC")){
-            orderByField = firstElement.substring(0,len - 4);
-            orderByType =  "DESC";
-        } else {
-            if (firstElement.endsWith("ASC"))
-                orderByField = firstElement.substring(0,len - 3);
-            else
-                orderByField = firstElement;
+//     if (orderByPam){
+//         var arr = orderByPam.split(",");
+//         var firstElement = arr[0];
+//         var len =   firstElement.length;
 
-            orderByType =  "ASC";
-        }
+//         if(firstElement.endsWith("DESC")){
+//             orderByField = firstElement.substring(0,len - 4);
+//             orderByType =  "DESC";
+//         } else {
+//             if (firstElement.endsWith("ASC"))
+//                 orderByField = firstElement.substring(0,len - 3);
+//             else
+//                 orderByField = firstElement;
 
-        ret = {orderByField, orderByType}
-    }
+//             orderByType =  "ASC";
+//         }
 
-    return ret;
-};
+//         ret = {orderByField, orderByType};
+//     }
+
+//     return ret;
+// };
 
 util.toNumber = function(val) {
     if (isNaN(val)) {

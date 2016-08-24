@@ -22,7 +22,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.pageSize = 25;
                 vm.initialized = false;
                 $scope.searchData = {};
-                Object.assign($scope.searchData,$rootScope.searchData);
+                //Object.assign($scope.searchData,$rootScope.searchData);
+                _.assign($scope.searchData,$rootScope.searchData);
 
                 vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
                 vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
@@ -175,11 +176,12 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
                     if(!vm.place)
                         vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
-                    $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
-                    });
+                    // $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
+                    //     reload: true,
+                    //     inherit: false,
+                    //     notify: true
+                    // });
+                    $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
                     $(".overlay").click();
                 }
                 vm.gotoRelandApp = function(event){

@@ -77,7 +77,8 @@
 	    };
 		vm.showMore = function(index){
 			var query =  {};
-			Object.assign( query,vm.boSuuTap[index].query);
+			//Object.assign( query,vm.boSuuTap[index].query);
+			_.assign(query,vm.boSuuTap[index].query);
 			query.limit = 20;
 			query.duAnID = vm.boSuuTap[index].query.duAnID;
 			$state.go('msearch',{place: query.place.placeId || query.place.place_id,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			

@@ -99,7 +99,7 @@
                 </ul>
             </div>
         </li>
-        <li><a role="button" data-toggle="modal" data-target="#saveBox"><i class="fa fa-hdd-o"></i> Lưu tìm kiếm</a></li>
+        <li><a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();"><i class="fa fa-hdd-o"></i> Lưu tìm kiếm</a></li>
         <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#"><i class="iconMap"></i> Bản đồ</a></li>
         <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#"><i class="iconMap"></i> Danh sách</a></li>
     </ul>
@@ -169,11 +169,11 @@
                     <h3>Tên tìm kiếm cần lưu</h3>
                     <p>Ví dụ: Gần chỗ làm, gần bệnh viện...</p>
                 </div>
-                <input type="text" class="form-control" placeholder="Quận Hà Đông, Hà Nội" />
+                <input type="text" ng-model="msc.saveSearchName" class="form-control" placeholder="Quận Hà Đông, Hà Nội" />
             </div>
             <div class="modal-footer">
                 <a type="button" data-dismiss="modal" aria-label="Close">Thoát</a>
-                <a href="#">Lưu lại</a>
+                <a href="#" ng-click="msc.saveSearch();">Lưu lại</a>
             </div>
         </div>
     </div>

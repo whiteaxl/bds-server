@@ -48,9 +48,58 @@
 			vm.search();
 		}
 
+
 		vm.mapInitialized = function(map){
 			//vm.initialized = true;
 			// alert('aa');
+			vm.dragendHanlder = google.maps.event.addListener(map, "dragend", function() {
+            	//alert(vm.map.getBounds());
+				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				//alert($rootScope.searchData.geoBox);
+				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+				vm.marker = {
+					id: -1,
+					coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+					content: 'you are here'
+				};
+				// $scope.$apply();
+	          	vm.search();
+	   			//alert('dragend');
+	   			//alert($rootScope.searchData.geoBox);
+	        });
+
+	        $scope.$on("$destroy", function() {
+		        google.maps.event.removeListener(vm.zoomChangeHanlder);
+		        google.maps.event.removeListener(vm.dragendHanlder);
+		    });
+	        
+	        // google.maps.event.removeListener(zoomChangeHanlder);
+            // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
+            	// google.maps.event.clearInstanceListeners(map);
+            	vm.zoomChangeHanlder = google.maps.event.addListener(map, "zoom_changed", function(){
+            		if(vm.initialized == true){
+		   				vm.initialized = false;
+		   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+						$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+						//var bounds = vm.map.getBounds();
+						//alert($rootScope.searchData.geoBox);
+						vm.marker = {
+							id: -1,
+							coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+							content: 'you are here'
+						};
+		   				vm.search(function(){
+		   					$timeout(function() {
+		   						//vm.initialized = true;
+		   						//vm.map.fitBounds(bounds);
+		   					}, 10);
+		   					
+		   				});
+		   				// alert('human zoom');
+		   			}
+            	});
+
+            // }
 
 		}
 
@@ -76,6 +125,39 @@
 		}*/
 		vm.goDetail = function(event,i){
         	$state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+        }
+        vm.showSaveSearch = function(){
+        	if($rootScope.isLoggedIn()){
+        		$('#saveBox').modal("show");
+        	}else{
+        		$scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để lưu tìm kiếm"}
+		        });
+        	}
+        }
+        vm.saveSearch = function(){
+        	if(!vm.saveSearchName){
+				vm.blankName = true;
+				return;
+			}			
+			var data = {
+				query: vm.searchData,
+				userID: $rootScope.user.userID,
+				saveSearchName: vm.saveSearchName
+			};
+
+			HouseService.saveSearch(data).then(function(res){				
+				//alert(res.data.msg);
+				if(res.data.success){
+					vm.blankName = false;
+					vm.saveSearchName = '';					
+					vm.nameSaveSearch = false;
+					$('#saveBox').modal("hide");
+				}
+			})
+        	
         }
 		vm.updateStreetview = function(ads,fn){
             var STREETVIEW_MAX_DISTANCE = 100;
@@ -264,14 +346,18 @@
 
 		vm.search = function(callback){
             var googlePlace = $rootScope.searchData.place;
+
             vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(vm.place);
             vm.diaChinh.tinhKhongDau = vm.diaChinh.tinh;
             vm.diaChinh.huyenKhongDau = vm.diaChinh.huyen;
             vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
 
-            vm.placeSearchText = googlePlace.formatted_address;
-
-            vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);
+            if(googlePlace){
+            	vm.placeSearchText = googlePlace.formatted_address;
+            	
+            	vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);	
+            }
+            
 
             // if($scope.searchPlaceSelected.geometry.viewport){
             if($rootScope.searchData.geoBox){
@@ -328,61 +414,8 @@
         NgMap.getMap('searchmap').then(function(map){
         	vm.map = map; 
         	    	
-            google.maps.event.addListener(map, "dragend", function() {
-            	//alert(vm.map.getBounds());
-				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-				//alert($rootScope.searchData.geoBox);
-				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-				vm.marker = {
-					id: -1,
-					coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-					content: 'you are here'
-				};
-				// $scope.$apply();
-	          	vm.search();
-	   			//alert('dragend');
-	   			//alert($rootScope.searchData.geoBox);
-	        });
-
-	        google.maps.event.addListener(map, "zoom_changed", function() {	        	
-	        	//$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-				//$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-				// vm.marker = {
-				// 	id: -1,
-				// 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-				// 	content: 'you are here'
-				// };
-				// $scope.$apply();
-	          	//vm.search();
-	   			//alert('zoom_changed');
-
-	   			//google.maps.event.addListenerOnce(map, 'bounds_changed', function (e) {
-	   				
-	   				if(vm.initialized == true){
-		   				vm.initialized = false;
-		   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-						$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-						//var bounds = vm.map.getBounds();
-						//alert($rootScope.searchData.geoBox);
-						vm.marker = {
-							id: -1,
-							coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-							content: 'you are here'
-						};
-		   				vm.search(function(){
-		   					$timeout(function() {
-		   						vm.initialized = true;
-		   						//vm.map.fitBounds(bounds);
-		   					}, 10);
-		   					
-		   				});
-		   				// alert('human zoom');
-		   			}
-	   			//});
-	   			
-	   			
-	        });
-
+            
+	        
 
 	        
             // window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
@@ -394,6 +427,7 @@
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                     	vm.place = place;
                         $rootScope.searchData.place = place;
+                        $rootScope.searchData.geoBox = undefined;
                         //var map = $scope.map.control.getGMap();
                         var current_bounds = map.getBounds();
                         //$scope.map.center =  
