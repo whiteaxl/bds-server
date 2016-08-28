@@ -80,6 +80,11 @@
     $rootScope.isLoggedIn = function(){
       return $rootScope.user.userID;
     }
+
+    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+      $rootScope.lastState = from;
+      $rootScope.lastStateParams = fromParams;
+    });
     
       
     $rootScope.chat_visible = true;

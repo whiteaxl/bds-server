@@ -494,6 +494,152 @@ class AdsModel {
         
     
     }
+
+    buildWhereForFilter(filter){
+
+        var sql = ` WHERE loaiTin = ${filter.loaiTin}`;
+        
+        if(filter.loaiNhaDat){
+            if(filter.loaiNhaDat.constructor === Array && filter.loaiNhaDat.length>0){
+                var condition = " and loaiNhaDat in [";
+                for(var i = 0; i<filter.loaiNhaDat.length;i++){
+                    if(i==filter.loaiNhaDat.length-1){
+                        condition = condition + filter.loaiNhaDat[i] + "]";
+                    }else{
+                        condition = condition + filter.loaiNhaDat[i] + ",";
+                    }
+                    if(filter.loaiNhaDat[i] == 0){
+                        condition = "";
+                        break;
+                    }
+                }
+                sql = sql + condition;
+            }else{
+                sql = sql + ((filter.loaiNhaDat && filter.loaiNhaDat>0) ? " AND loaiNhaDat=" + filter.loaiNhaDat : "");        
+            }
+        }
+        
+
+        if (filter.geoBox) {
+            sql = sql + " AND (place.geo.lat BETWEEN " + filter.geoBox[0] + " AND " + filter.geoBox[2] + ")";
+            sql = sql + " AND (place.geo.lon BETWEEN " + filter.geoBox[1] + " AND " + filter.geoBox[3] + ")";
+        }
+
+        if (filter.diaChinh) {
+            if (filter.diaChinh.tinh) {
+                sql = `${sql} AND place.diaChinh.tinhKhongDau='${filter.diaChinh.tinh}'`;
+            }
+
+            //todo: need remove "Quan" "Huyen" in prefix
+            if (filter.diaChinh.huyen) {
+              if (filter.diaChinh.huyen=='tu-liem') {
+                sql = sql + " and (place.diaChinh.huyenKhongDau = 'nam-tu-liem' or place.diaChinh.huyenKhongDau = 'bac-tu-liem')";
+              } else {
+                sql = `${sql} AND place.diaChinh.huyenKhongDau='${filter.diaChinh.huyen}'`;
+              }
+            }
+
+            if (filter.diaChinh.xa) {
+                sql = `${sql} AND place.diaChinh.xaKhongDau='${filter.diaChinh.xa}'`;
+            }
+        }
+
+        if (filter.ngayDangTinFrom) { //ngayDangTinFrom: 20-04-2016
+            sql = `${sql} and ngayDangTin > '${filter.ngayDangTinFrom}'`;
+        }
+
+        if (filter.gia && (filter.gia[0] > 1 || filter.gia[1] < 9999999)) {
+            sql = `${sql} AND (gia BETWEEN ${filter.gia[0]} AND ${filter.gia[1]})`;
+        }
+
+        if(filter.soPhongNguGREATER){
+            let soPhongNguGREATER = Number(filter.soPhongNguGREATER);    
+            sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+        }
+        if(filter.soPhongTamGREATER){
+            let soPhongTamGREATER = Number(filter.soPhongTamGREATER);
+            sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
+        }
+
+        if ((filter.dienTich) && (filter.dienTich[0] > 1 || filter.dienTich[1] < 9999999)) {
+            sql = `${sql} AND (dienTich BETWEEN  ${filter.dienTich[0]} AND ${filter.dienTich[1]})`;
+        }
+
+        if(filter.huongNha){
+            if(filter.huongNha.constructor === Array && filter.huongNha.length>0){
+                var condition = " and huongNha in [";
+                for(var i = 0; i<filter.huongNha.length;i++){
+                    if(i==filter.huongNha.length-1){
+                        condition = condition + filter.huongNha[i] + "]";
+                    }else{
+                        condition = condition + filter.huongNha[i] + ",";
+                    }
+                    if(filter.huongNha[i] == 0){
+                        condition = "";
+                        break;
+                    }
+                }
+                sql = sql + condition;
+            }else{
+                sql = sql + ((filter.huongNha && filter.huongNha>0) ? " AND huongNha=" + filter.huongNha : "");        
+            }
+        }
+        if(filter.duAnID)
+            sql = sql + " and place.duAnID = '" + filter.duAnID + "' ";
+
+        //sql = sql + ((huongNha && huongNha>0)  ? " AND huongNha=" + huongNha : "");
+        if(filter.soPhongNgu){
+            let soPhongNgu = Number(filter.soPhongNgu);
+            sql = sql + " AND soPhongNgu  = " + soPhongNgu;
+        }
+        if(filter.soPhongTam){
+            let soPhongTam = Number(filter.soPhongTam);
+            sql = sql + " AND soPhongTam  = " + soPhongTam;
+        }
+        if(filter.soTang){
+            let soTang = Number(filter.soTang);
+            sql = sql + " AND soTang  = " + soTang;
+        }
+        if (filter.orderBy) {
+            sql = sql + " ORDER BY " + filter.orderBy.orderByField + "  " + filter.orderBy.orderByType;
+        }
+
+        if(filter.limit)
+            sql = sql + " LIMIT  " + filter.limit;
+        if(filter.pageNo) 
+            sql = sql + " OFFSET  " + ((filter.pageNo-1)*filter.limit);    
+
+        return sql;
+
+    }
+
+    countWithFilter(callback,filter){
+        filter.limit = undefined;
+        filter.pageNo = undefined;
+        filter.orderBy = undefined;        
+        var sql ="SELECT count(*) FROM default t " + this.buildWhereForFilter(filter);        
+        console.log(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            //console.log("err=", err, all);
+            console.log("count " + all[0].$1);
+            callback(err,all[0].$1);
+        });
+    }
+
+    queryWithFilter(callback,filter){
+        var sql ="SELECT t.* FROM default t " + this.buildWhereForFilter(filter);
+
+        console.log(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            if (!all)
+                all = [];
+            callback(err, all);
+        });
+    }
+
+
 }
 
-    module.exports = AdsModel;
+module.exports = AdsModel;

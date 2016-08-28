@@ -16,13 +16,15 @@
         return $http.post(urlPath + 'create'); 
       },
       findAdsSpatial: function(data){
-        var url = "/api/find";
+        // var url = "/api/find";
+        var url = "/api/findAds";
         // var url = "/api/search";
         return $http.post(url,data);
       },
       countAds: function(data){
         //var url = "/api/find";
-        var url = "/api/count";
+        // var url = "/api/count";
+        var url = "/api/countAds";
         return $http.post(url,data);
       },
       //Nhannc
@@ -88,7 +90,11 @@
       },
       homeDataForApp: function(data){
         return $http.post("/api/homeData4App",data);  
+      },
+      reportReland: function(data){
+        return $http.post("/api/reportReland",data);  
       }
+
       
     };
   });

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0fb14a486a8e54edd108"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "158292ef6bad863897b7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1069,6 +1069,11 @@
 	    $rootScope.isLoggedIn = function(){
 	      return $rootScope.user.userID;
 	    }
+
+	    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+	      $rootScope.lastState = from;
+	      $rootScope.lastStateParams = fromParams;
+	    });
 	    
 	      
 	    $rootScope.chat_visible = true;
@@ -20487,13 +20492,15 @@
 	        return $http.post(urlPath + 'create'); 
 	      },
 	      findAdsSpatial: function(data){
-	        var url = "/api/find";
+	        // var url = "/api/find";
+	        var url = "/api/findAds";
 	        // var url = "/api/search";
 	        return $http.post(url,data);
 	      },
 	      countAds: function(data){
 	        //var url = "/api/find";
-	        var url = "/api/count";
+	        // var url = "/api/count";
+	        var url = "/api/countAds";
 	        return $http.post(url,data);
 	      },
 	      //Nhannc
@@ -20559,7 +20566,11 @@
 	      },
 	      homeDataForApp: function(data){
 	        return $http.post("/api/homeData4App",data);  
+	      },
+	      reportReland: function(data){
+	        return $http.post("/api/reportReland",data);  
 	      }
+
 	      
 	    };
 	  });
@@ -21943,6 +21954,48 @@
 				data: 'test'
 			}
 			vm.center= [21.0363818591319,105.80105538518103];
+			vm.reportCode = 1;
+			vm.searchDataXungQuanh = {
+				// "loaiTin": vm.ads.loaiTin,
+				"loaiNhaDat": 0, 
+				"limit": 9,
+				"soPhongNguGREATER": 0,
+	  			"soPhongTamGREATER": 0,
+	  			"soTangGREATER": 0,
+	  			"dienTichBETWEEN": [0,99999999999999],
+	  			"giaBETWEEN": [0,99999999999999],
+	  			"radiusInKm": 2,
+				//"diaChinh": vm.ads.place.diaChinh,
+				// "place": {
+		  //     			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+	   // 				radiusInKm :  2,
+				// 	    currentLocation: {
+				// 	    	lat: vm.ads.place.geo.lat,
+				// 	    	lon: vm.ads.place.geo.lon
+				// 	    }
+				// },
+				"updateLastSearch": false,
+			  	"orderBy": "ngayDangTinDESC",
+			  	"pageNo": 1
+			};
+			vm.searchDataTuongTu = {
+				// "loaiTin": vm.ads.loaiTin,
+				// "loaiNhaDat": vm.ads.loaiNhaDat, 
+				"limit": 9,
+				"soPhongNguGREATER": 0,
+	  			"soPhongTamGREATER": 0,
+	  			"soTangGREATER": 0,
+	  			"dienTichBETWEEN": [0,99999999999999],
+	  			"giaBETWEEN": [0,99999999999999],
+	  			"radiusInKm": 2,
+				// "diaChinh": {
+				// 	tinh: vm.ads.place.diaChinh.tinhKhongDau,
+				// 	huyen: vm.ads.place.diaChinh.huyenKhongDau
+				// },
+				"updateLastSearch": false,
+			  	"orderBy": "ngayDangTinDESC",
+			  	"pageNo": 1
+			};
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
 				//console.log("res.data " + res.data.ads);
 				$rootScope.user.lastViewAds = vm.adsID;
@@ -21987,7 +22040,66 @@
 							vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
 					});
 				}
+
+				vm.goBack = function(){
+					if($rootScope.lastState.abstract == true){
+						var webIdx = window.location.href.indexOf("/web/");
+	            		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
+	            		window.location.href = homeUrl;
+					}else{
+						$state.go($rootScope.lastState, $rootScope.lastStateParams);
+					}
 					
+				}
+
+
+				vm.setReportCode = function(reportCode){
+					vm.reportCode = reportCode;
+				}
+				vm.sendReport = function(){
+
+					var data = {
+						reportCode: vm.reportCode,		
+						reportContent: vm.reportContent,
+						reportObjID: vm.ads.adsID			
+					}
+
+					if($rootScope.isLoggedIn()){
+						data.reportUserID = $rootScope.user.userID;
+					}
+					HouseService.reportReland(data).then(function(res){
+						if(res.data.success== true){
+							// alert('ok');
+							$('#detailAlertBox').modal("hide");
+						}else{
+							vm.reportRelandErrMsg = res.data.errMsg;
+						}
+					});
+				}
+					
+
+				
+
+				var showMore = function(searchData){
+					var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+				      "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
+				      "&latlng=" + vm.ads.place.geo.lat + ',' + vm.ads.place.geo.lon;
+				    console.log(url);
+				    $http.get(url,{}).then(function(res){
+				    	var place = res.data.results[0];
+				    	var query =  {};
+						//Object.assign( query,vm.boSuuTap[index].query);
+						_.assign(query,searchData);
+						query.limit = 20;				
+						$state.go('msearch',{place: place.place_id, loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})							
+				    });
+				}
+				vm.showMoreTuongTu = function(){
+					showMore(vm.searchDataTuongTu);
+				}
+				vm.showMoreXungQuanh = function(){
+					showMore(vm.searchDataXungQuanh);
+				}
 
 				vm.userLoggedIn = function(){
 					vm.name = $rootScope.user.userName;
@@ -22059,48 +22171,40 @@
 				  	]);
 				}, 10);
 
-				var searchDataXungQuanh = {
-					"loaiTin": vm.ads.loaiTin,
-					"loaiNhaDat": 0, 
-					"limit": 9,
-					"soPhongNguGREATER": 0,
-		  			"soPhongTamGREATER": 0,
-		  			"soTangGREATER": 0,
-					//"diaChinh": vm.ads.place.diaChinh,
-					"place": {
-	 	      			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	       				radiusInKm :  2,
-	 				    currentLocation: {
-	 				    	lat: vm.ads.place.geo.lat,
-	 				    	lon: vm.ads.place.geo.lon
-	 				    }
-					},
-					"updateLastSearch": false,
-				  	"orderBy": "ngayDangTinDESC",
-				  	"pageNo": 1
+				vm.searchDataXungQuanh.place = {
+		      		//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+	   				radiusInKm :  2,
+				    currentLocation: {
+				    	lat: vm.ads.place.geo.lat,
+				    	lon: vm.ads.place.geo.lon
+				    }
 				};
+				vm.searchDataXungQuanh.loaiTin = vm.ads.loaiTin;
 
-				HouseService.findAdsSpatial(searchDataXungQuanh).then(function(res){
+				HouseService.findAdsSpatial(vm.searchDataXungQuanh).then(function(res){
 					vm.nhaXungQuanh = res.data.list;					
-				});
+				});			
 
-				var searchDataTuongTu = {
-					"loaiTin": vm.ads.loaiTin,
-					"loaiNhaDat": vm.ads.loaiNhaDat, 
-					"limit": 9,
-					"soPhongNguGREATER": 0,
-		  			"soPhongTamGREATER": 0,
-		  			"soTangGREATER": 0,
-					"diaChinh": {
-						tinh: vm.ads.place.diaChinh.tinhKhongDau,
-						huyen: vm.ads.place.diaChinh.huyenKhongDau
-					},
-					"updateLastSearch": false,
-				  	"orderBy": "ngayDangTinDESC",
-				  	"pageNo": 1
-				};
-
-				HouseService.findAdsSpatial(searchDataTuongTu).then(function(res){
+				vm.searchDataTuongTu.loaiTin = vm.ads.loaiTin;
+				vm.searchDataTuongTu.loaiNhaDat = vm.ads.loaiNhaDat;
+				vm.searchDataTuongTu.diaChinh = {
+					tinh: vm.ads.place.diaChinh.tinhKhongDau,
+					huyen: vm.ads.place.diaChinh.huyenKhongDau
+				}
+				if(vm.ads.dienTich){
+					vm.searchDataTuongTu.dienTichBETWEEN[0] = vm.ads.dienTich*0.8;
+					vm.searchDataTuongTu.dienTichBETWEEN[1] = vm.ads.dienTich*1.2;
+				}
+				if(vm.ads.gia){
+					vm.searchDataTuongTu.giaBETWEEN[0] = vm.ads.gia*0.8;
+					vm.searchDataTuongTu.giaBETWEEN[1] = vm.ads.gia*1.2;	
+				}
+				if(vm.ads.loaiNhaDat==1 && vm.ads.soPhongNgu){
+					vm.searchDataTuongTu.soPhongNgu = vm.ads.soPhongNgu;
+				}else if(vm.ads.soTang){
+					vm.searchDataTuongTu.soTang = vm.ads.soTang;
+				}
+				HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function(res){
 					vm.nhaTuongTu = res.data.list;					
 				});
 

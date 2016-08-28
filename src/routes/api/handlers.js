@@ -34,6 +34,9 @@ var DEFAULT_SEARCH_RADIUS = 5; //km
 
 var adsService = new AdsService();
 var userService = new UserService();
+var ClientReportService = require("../../dbservices/ClientReport");
+var clientReportService = new ClientReportService();
+
 
 var RewayMailer = require("../../lib/RewayMailer");
 
@@ -481,7 +484,22 @@ internals.requestInfo = function(req,reply){
 
 }
 
-
+internals.reportReland = function(req, reply){
+    var result = {
+        success: false        
+    }
+    clientReportService.upsert(req.payload, function(err,res){
+        if (err) {
+            console.log("ERROR:" + err);
+            result.success = false;
+            result.errMsg = "Đã có lỗi xảy ra. Reland mong bạn thông cảm, chúng tôi sẽ khắc phục sớm";
+        }else{
+            result.success = true;
+            reply(result);
+        }
+    })
+    console.log(" log data for report "+JSON.stringify(req.payload));
+}
 
 
 

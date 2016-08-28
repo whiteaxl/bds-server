@@ -111,6 +111,7 @@ var internals = {};
 
 function _validateFindRequestParameters(req, reply) {
     var query = req.payload;
+    console.log(JSON.stringify(req.payload));
     if (!query.hasOwnProperty('loaiTin')) {
         reply(Boom.badRequest());
 
@@ -535,6 +536,22 @@ internals.search = function(req, reply) {
     }
 };
 
+internals.searchAdsNew = function(req,reply){
+    console.log(req.payload);
+    if (_validateFindRequestParameters(req, reply)) {
+        console.log(req.payload);
+
+        try {
+          internals.searchAdsWithFilter(req.payload, reply)
+        } catch (e) {
+            logUtil.error(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
+    }
+};
+
 internals.count = function(req,reply){
     if (_validateFindRequestParameters(req, reply)) {
         try {
@@ -547,6 +564,20 @@ internals.count = function(req,reply){
         }
     }
 };
+
+internals.countAdsNew = function(req,reply){
+    if (_validateFindRequestParameters(req, reply)) {
+        try {
+            countAdsWithFilter(req.payload, reply)
+        } catch (e) {
+            logUtil.error(e);
+            console.log(e, e.stack.split("\n"));
+
+            reply(Boom.badImplementation());
+        }
+    }
+};
+
 
 internals.findBdsCungLoaiMoidang = function(req,reply){
     var userID = req.payload.userID;
@@ -758,5 +789,200 @@ internals.findDuAnHotByDiaChinhForDetailPage = function(req,reply){
             reply(result); 
         }
     });
+}
+
+internals.searchAdsWithFilter = function(q,reply){
+    let limit = q.limit;
+
+    let diaChinh = q.diaChinh;
+    placeUtil.chuanHoaDiaChinh(diaChinh);
+
+    let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
+    let orderBy = _toOrderBy(q.orderBy);
+    let duAnID = q.duAnID;
+    let relandTypeName ;
+
+    var geoBox = q.geoBox;
+    var center = {lat: 0, lon: 0};
+    var radiusInKm = null;
+
+    var replyViewPort = geoBox;
+    var pageNo = q.pageNo;
+
+    let polygon = q.polygon;
+    let polygonCoords = null;
+    if (polygon && polygon.length > 2) {
+      polygonCoords = polygon.map((e) => {
+        return {latitude: e.lat, longitude: e.lon}
+      });
+    }
+
+    if(q.userID) {
+        //console.log(JSON.stringify(q));
+        userService.getUserByID(q.userID, function(err,res){
+            if(err || res.length ==0)
+                console.log(err);
+            else { 
+                console.log(JSON.stringify(res));
+                var user = res[0];
+                user.lastSearch = q;
+                userService.upsert(user);
+            }
+        });
+    }
+
+    var callback = (err, all) =>  {
+        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords);
+    };
+
+    var filter = _.assign(q);
+    filter.orderBy = orderBy;
+    filter.ngayDangTinFrom = ngayDangTinFrom;
+    filter.duAnID = duAnID;
+    filter.limit = limit;
+    filter.pageNo = pageNo;
+
+    //polygon
+    if (polygon && polygon.length > 2) {
+      let ret = geoUtil.getGeoBoxOfPolygon(polygonCoords);
+      replyViewPort = ret.geoBox;
+      center = ret.center;
+      filter.geoBox = req.geoBox;
+      adsModel.queryWithFilter(callback,filter);
+    }else if(geoBox || diaChinh) {
+        if(geoBox){
+            center.lat = (geoBox[0]+geoBox[2])/2;
+            center.lon = (geoBox[1]+geoBox[3])/2;    
+        }
+        replyViewPort = [];
+        adsModel.queryWithFilter(callback, filter);
+    }else if (q[Q_FIELD.place]) {
+        var place = q[Q_FIELD.place];
+        relandTypeName = q.place.relandTypeName;
+        if (place.placeId) {
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    //from google placedetail
+                    center.lat = placeDetail.geometry.location.lat;
+                    center.lon = placeDetail.geometry.location.lng;
+                    center.formatted_address = placeDetail.formatted_address;
+
+                    placeDetail.fullName = placeDetail.name;
+
+                    if (_isDiaDiem(relandTypeName)) {
+                        radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+                        diaChinh = null;
+                        filter.geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+                        replyViewPort = filter.geoBox;
+                    } else {
+                        diaChinh  = placeUtil.getDiaChinhFromGooglePlace(placeDetail);
+                        filter.geoBox = null;
+                        radiusInKm = null;
+                        let vp = placeDetail.geometry.viewport;
+                        replyViewPort = [vp.southwest.lat, vp.southwest.lng, vp.northeast.lat, vp.northeast.lng];
+                    }
+
+                    adsModel.queryWithFilter(callback,filter);
+                }
+            }, (error) => {
+                logUtil.error(error);
+                reply(Boom.internal("Call google detail fail", null, null));
+            });
+
+        }else if (place.currentLocation) {
+            center.lat = place.currentLocation.lat;
+            center.lon = place.currentLocation.lon;
+
+            radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+
+            filter.geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+            filter.diaChinh = null;
+            replyViewPort = filter.geoBox;
+
+            adsModel.queryWithFilter(callback,filter);
+        }
+    }
+
+
+}
+
+function countAdsWithFilter(q, reply){
+    var geoBox = q.geoBox;
+    let limit = q.limit;
+    let diaChinh = q.diaChinh;
+    console.log("into here111");
+    let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
+    var count = 0;
+    var callback = (err, data) =>  {
+        console.log("before reply count = " + data);
+        reply({
+            countResult: data
+        });
+    };
+    var duAnID = q.duAnID;
+    console.log("into here");
+
+    var filter = _.assign(q);
+    filter.ngayDangTinFrom = ngayDangTinFrom;
+    filter.limit = limit;
+
+
+    if(geoBox || diaChinh){
+        count = adsModel.countWithFilter(callback,filter);
+    } else if (q[Q_FIELD.place]) {
+        var center = {lat: 0, lon: 0};
+        var radiusInKm = null;
+        var place = q[Q_FIELD.place];
+        if(place.placeId){
+            var relandTypeName = q.place.relandTypeName;
+            services.getPlaceDetail(place.placeId, (placeDetail) => {
+                if (!placeDetail) { //sometime autocomplete and detail not sync
+                    reply({
+                        error: constant.MSG.DIA_DIEM_NOTFOUND,
+                        status : constant.STS.FAILURE
+                    })
+                } else {
+                    //from google placedetail
+                    
+                    center.lat = placeDetail.geometry.location.lat;
+                    center.lon = placeDetail.geometry.location.lng;
+                    placeDetail.fullName = placeDetail.name;
+                    let diaChinh = null;
+
+                    if (_isDiaDiem(relandTypeName)) {
+                        radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+                        diaChinh = null;
+                        filter.geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+                    } else {
+                        diaChinh  = placeUtil.getDiaChinhFromGooglePlace(placeDetail);
+                        filter.geoBox = null;
+                    }
+
+                    adsModel.countWithFilter(callback, filter);
+                }
+            }, (error) => {
+                logUtil.error(error);
+                reply(Boom.internal("Call google detail fail", null, null));
+            });
+
+        }else if (place.currentLocation) {
+            center.lat = place.currentLocation.lat;
+            center.lon = place.currentLocation.lon;
+
+            radiusInKm = place[Q_FIELD.radiusInKm] || DEFAULT_SEARCH_RADIUS;
+
+            filter.geoBox = geoUtil.getBox({lat:center.lat, lon:center.lon} , geoUtil.meter2degree(radiusInKm));
+            filter.diaChinh = null;
+
+            adsModel.countWithFilter(callback,filter);
+        }
+
+    } 
+    
 }
 module.exports = internals;

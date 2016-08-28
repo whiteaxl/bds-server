@@ -182,6 +182,16 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/findAds',
+    handler: findHandler.searchAdsNew,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api'],
+      notes: 'Theo 4 loai: geoBox, polygon, diaDiem(banKinh), diaChinh(tinh/huyen/xa)',
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/findRecent',
     handler: Handlers.findRencentAds,
     config: {
@@ -236,6 +246,15 @@ internals.endpoints = [
     method: 'POST',
     path: '/api/count',
     handler: findHandler.count,
+    config: {
+      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/countAds',
+    handler: findHandler.countAdsNew,
     config: {
       description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
       tags: ['api']
@@ -394,6 +413,15 @@ internals.endpoints = [
     handler: Handlers.requestInfo,
     config: {
       description: 'sendEmail to nguoi dang tin', 
+      tags: ['api']
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/reportReland',
+    handler: Handlers.reportReland,
+    config: {
+      description: 'report for Reland', 
       tags: ['api']
     }
   },

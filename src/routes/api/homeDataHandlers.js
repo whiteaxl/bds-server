@@ -79,6 +79,7 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 
 
 function searchAds(title1, title2, query,callback) {
+  console.log("searchAds" + JSON.stringify(query));
   findHandler.searchAds(query, (res) => {
     if (!res.list || res.list.length == 0) {
         callback(null
@@ -118,7 +119,7 @@ internals.homeData4App = function(req, reply) {
   var query = req.payload.query;
   var lastQuery = {}; Object.assign(lastQuery, query);
 
-  console.log(query);
+  console.log("homeData4App " + JSON.stringify(query));
 
   var currentLocation = req.payload.currentLocation;
   if(!currentLocation)
@@ -137,6 +138,7 @@ internals.homeData4App = function(req, reply) {
     fl.push(function(callback){
         let queryNearBy = {}; Object.assign(queryNearBy, query);
         queryNearBy.diaChinh = diaChinh;
+        console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
         searchAds("Nhà Gần Vị Trí Bạn",diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryNearBy,callback);
     });
 
