@@ -548,8 +548,8 @@ class AdsModel {
             sql = `${sql} and ngayDangTin > '${filter.ngayDangTinFrom}'`;
         }
 
-        if (filter.gia && (filter.gia[0] > 1 || filter.gia[1] < 9999999)) {
-            sql = `${sql} AND (gia BETWEEN ${filter.gia[0]} AND ${filter.gia[1]})`;
+        if (filter.giaBETWEEN && (filter.giaBETWEEN[0] > 1 || filter.giaBETWEEN[1] < 9999999)) {
+            sql = `${sql} AND (gia BETWEEN ${filter.giaBETWEEN[0]} AND ${filter.giaBETWEEN[1]})`;
         }
 
         if(filter.soPhongNguGREATER){
@@ -561,8 +561,8 @@ class AdsModel {
             sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
         }
 
-        if ((filter.dienTich) && (filter.dienTich[0] > 1 || filter.dienTich[1] < 9999999)) {
-            sql = `${sql} AND (dienTich BETWEEN  ${filter.dienTich[0]} AND ${filter.dienTich[1]})`;
+        if ((filter.dienTichBETWEEN) && (filter.dienTichBETWEEN[0] > 1 || filter.dienTichBETWEEN[1] < 9999999)) {
+            sql = `${sql} AND (dienTich BETWEEN  ${filter.dienTichBETWEEN[0]} AND ${filter.dienTichBETWEEN[1]})`;
         }
 
         if(filter.huongNha){
