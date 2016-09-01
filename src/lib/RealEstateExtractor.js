@@ -292,14 +292,14 @@ class RealEstateExtractor {
         let price = listing.prices[0];
         let dienTich = listing.prices[1];
 				let ads = {
-					title: listing.title,
+					title: listing.title[0],
 					images_small: listing.images,
 					price_raw: listing.price,
 					price_value: price && price.split(' ')[0],
 					price_unit: price && price.split(' ')[1],
 					dienTich: dienTich && Number(dienTich.substr(0, dienTich.length-2)),
 					area_raw: dienTich,
-					loc: listing.loc.length > 9 ? listing.loc.substring(9): '',
+					loc: listing.loc && listing.loc.length > 9 ? listing.loc.substring(9): '',
 					chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
 					hdLat : Number(listing.hdLat),
 					hdLong : Number(listing.hdLong),

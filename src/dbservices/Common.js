@@ -11,6 +11,8 @@ bucket.operationTimeout = 120 * 1000;
 
 class CommonModel {
 	upsert(dto,callback) {
+		bucket.operationTimeout = 1200 * 1000;
+
 		bucket.upsert(dto.id, dto, function (err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
@@ -24,6 +26,8 @@ class CommonModel {
 	countByType(type, onSuccess) {
 		var sql = `select count(*) cnt from default where type = '${type}'`;
 		var query = N1qlQuery.fromString(sql);
+
+		bucket.operationTimeout = 1200 * 1000;
 
 		bucket.query(query, function (err, res) {
 			if (err) {

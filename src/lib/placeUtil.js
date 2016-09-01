@@ -185,6 +185,31 @@ placeUtil.getXa = function(place) {
 };
 
 // chuan hoa va bo dau 1 string
+placeUtil.chuanHoaAndLocDau = function(str) {
+    if (!str) {
+        return null;
+    }
+
+    var result = str;
+
+    var COMMON_WORDS = [
+        'Quận ','Huyện ',
+        'Tỉnh ', 'Thành phố ','TP.' ,'Tp.' ,'tp.','tp ' ,'TP ',
+        'Phường ' ,'Xã ', 'Thị trấn '
+    ];
+
+    COMMON_WORDS.forEach((e) => {
+      if (result.startsWith(e)) {
+        result = result.substring(e.length)
+      }
+    });
+
+    result = util.locDau(result);
+
+    return result;
+};
+
+// chuan hoa va bo dau 1 string: tu google
 placeUtil.chuanHoa = function(string) {
 
     if (!string) {
@@ -197,7 +222,7 @@ placeUtil.chuanHoa = function(string) {
         '-district': '',
         '-vietnam':'',
         '-province':'',
-        'hanoi' : 'ha-noi'
+        'hanoi' : 'ha-noi',
     };
     for (var f in COMMON_WORDS) {
         result = result.replace(f,COMMON_WORDS[f]);
@@ -269,6 +294,29 @@ placeUtil.getTypeName = function(place) {
     return placeUtil.typeName.DIA_DIEM;
 };
 
+placeUtil.getShortName = function(fullName) {
+    if (!fullName) {
+        return null;
+    }
+
+    var result = fullName;
+
+    var COMMON_WORDS = [
+        {val1 : ', Huyện ', val2 :', '},
+        {val1 : ', Tỉnh ', val2 :', '},
+        {val1 : ', Thành phố ', val2 :', '},
+        {val1 : ', Quận ', val2 :', Q. '},
+      {val1 : 'Thị trấn ', val2 :'TT. '},
+      {val1 : 'Phường ', val2 :'P. '},
+        {val1 : 'Thị xã ', val2 :'Tx. '},
+    ];
+
+    COMMON_WORDS.forEach((e) => {
+        result = result.replace(e.val1, e.val2)
+    });
+
+    return result;
+};
 
 placeUtil.isOnePoint = function(place) {
     var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);

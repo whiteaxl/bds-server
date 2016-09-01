@@ -17,8 +17,8 @@ module.exports = {
     secret : "iv9wvzqvy9bhpk1xv7w2hol9qbzsw1i4",
     access_key: "89drdkir1hsi8uie7uuq",
     //rootUrl : "https://api.1pay.vn"
-    rootUrl : `http://${process.env.OPENSHIFT_NODEJS_IP || '192.168.0.109'}:5000`,
-    //rootUrl : "http://192.168.0.109:5000",
+    //rootUrl : `http://${process.env.OPENSHIFT_NODEJS_IP || '192.168.0.109'}:5000`,
+    rootUrl : "http://192.168.0.109:5000",
   },
   noCoverUrl : "http://203.162.13.177:5000/web/asset/img/reland_house_large.jpg"
 

@@ -56,7 +56,6 @@ internals.PAYMENT = {
   MANUAL_BANK_TRANSFER : "manualBankTransfer"
 };
 
-
 if (typeof(window) !== 'undefined')
    window.RewayConst = internals;
 module.exports  = internals;

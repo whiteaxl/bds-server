@@ -130,8 +130,6 @@ class AdsModel {
             }
             console.log("Finish");
         });
-
-
     }
 
 
@@ -151,7 +149,7 @@ class AdsModel {
     }
 
     getAds(adsID, callback) {
-        this.initBucket();
+        //this.initBucket();
         bucket.get(adsID, callback);
     }
 

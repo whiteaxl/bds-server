@@ -6,6 +6,7 @@ var fileUploadHandler = require('./fileUploadHandler');
 var userHandlers = require('./userHandlers');
 var newsHandlers = require('./newsHandlers');
 var homeDataHandlers = require('./homeDataHandlers');
+var placeHandlers = require('./placeHandlers');
 
 var onepay = require("./onepayHandlers");
 var onepaySim = require("./onepaySimHandlers");
@@ -791,6 +792,36 @@ internals.endpoints = [
     }
   },
 
+  {
+    method: 'GET',
+    path: '/api/place/autocomplete',
+    handler: placeHandlers.autocomplete,
+    config: {
+      description: 'Tra ve ds top 10 tinh/huyen/xa thoa man',
+      tags: ['api'],
+
+      /*
+       validate: {
+       payload: {
+       amount: Joi.string().description("Giá trị thẻ nạp"),
+       type : Joi.string().description("Loại thẻ, Là 1 trong các loại thẻ: viettel, mobifone, vinaphone, gate, vcoin, zing, vnmobile"),
+       request_time: Joi.string().description("Thời gian user nạp thẻ, ở dạng iso, ví dụ: 2015-10-02T15:43:50Z."),
+       serial : Joi.string().description("Mã serial của thẻ"),
+       status : Joi.string().description("Trạng thái xử lý, nhận giá trị: 1 – Thành công; 0 – Thất bại."),
+       trans_ref : Joi.string().description("Mã của giao dịch(là trans_ref của giao dịch ở trên trang tra cứu sản lượng)."),
+       trans_id : Joi.number().description("Mã giao dịch do 1pay cung cấp ở bước I.")
+       }
+       },
+       */
+
+      response: {
+        schema: Joi.object({
+          predictions: Joi.array().description("ds thoa man"),
+          status: Joi.string().description("mô tả trạng thái OK/ERROR"),
+        })
+      }
+    }
+  },
 ];
 
 module.exports = internals;

@@ -122,7 +122,7 @@ function _validateFindRequestParameters(req, reply) {
 }
 
 //
-function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, reply, polygonCoords) {
+function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, reply, polygonCoords, diaChinh) {
     let transformeds = [];
 
     allAds.forEach((e) => {
@@ -213,6 +213,9 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
     };
 
     //get formatted_address of center
+    center.formatted_address = diaChinh && diaChinh.shortName;
+
+    //if we manage tinh/huyen/xa data, so no need this ?
     if (!center.formatted_address) {
         services.getGeocoding(center.lat, center.lon,
           (res) => {
@@ -386,6 +389,9 @@ internals.searchAds = function(q, reply) {
     let limit = q.limit;
 
     let diaChinh = q.diaChinh;
+    if (q.place && q.place.placeId && q.place.tinh) {//must have Tinh = tinhKhongDau
+        diaChinh = q.place;
+    }
     placeUtil.chuanHoaDiaChinh(diaChinh);
 
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
@@ -423,7 +429,7 @@ internals.searchAds = function(q, reply) {
     }
 
     var callback = (err, all) =>  {
-        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords);
+        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords,diaChinh);
     };
 
     //polygon
@@ -523,8 +529,6 @@ internals.searchAds = function(q, reply) {
 internals.search = function(req, reply) {
     console.log(req.payload);
     if (_validateFindRequestParameters(req, reply)) {
-        console.log(req.payload);
-
         try {
           internals.searchAds(req.payload, reply)
         } catch (e) {
@@ -832,7 +836,7 @@ internals.searchAdsWithFilter = function(q,reply){
     }
 
     var callback = (err, all) =>  {
-        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords);
+        _handleDBFindResult(err, all, replyViewPort, center, radiusInKm, reply, polygonCoords, diaChinh);
     };
 
     var filter = _.assign(q);

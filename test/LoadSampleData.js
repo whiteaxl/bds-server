@@ -7,14 +7,19 @@ var CommonService = require("../src/dbservices/Common");
 var commonService = new CommonService();
 
 
-prepare.loadFromFile("paymentBonus.json");
+//prepare.loadFromFile("paymentBonus.json");
 prepare.loadFromFile("ads.json");
+
+//prepare.loadTinhHuyenXa("tinhhuyenxa.json");
+//prepare.loadViewport("tinhhuyenxa.json");
+
+//prepare.addNameKhongDau();
 
 
 var times = 0;
 var timer = setInterval(
     () => {
-      commonService.countByType("Ads", (cnt) => {
+      commonService.countByType("Place", (cnt) => {
             console.log("Cnt = " + cnt);
         });
         times ++;
