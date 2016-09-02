@@ -8,10 +8,12 @@ var commonService = new CommonService();
 
 
 //prepare.loadFromFile("paymentBonus.json");
-prepare.loadFromFile("ads.json");
+//prepare.loadFromFile("ads.json");
 
 //prepare.loadTinhHuyenXa("tinhhuyenxa.json");
 //prepare.loadViewport("tinhhuyenxa.json");
+
+prepare.loadFromFile("thx_01.json");
 
 //prepare.addNameKhongDau();
 

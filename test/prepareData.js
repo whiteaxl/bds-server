@@ -32,7 +32,10 @@ internals.loadFromFile = function (fn) {
   console.log("data.length = " + data.length);
   for (var i in data) {
     console.log(data[i]);
-    commonService.upsert(data[i].default, () => {
+    var tmp = data[i].default || data[i];
+
+    commonService.upsert(tmp, () => {
+
     });
   }
 };
