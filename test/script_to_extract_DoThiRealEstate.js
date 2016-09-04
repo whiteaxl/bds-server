@@ -11,5 +11,5 @@ var bdsEx = new DoThiExtractor();
 }
 
 
-extractDoThiRealEstateWithNgayDangTin("http://dothi.net/ban-nha-biet-thu-lien-ke", 1, 1,null);
+extractDoThiRealEstateWithNgayDangTin("http://dothi.net/nha-dat-ban-phuong-ben-nghe", 1, 10,null);
 

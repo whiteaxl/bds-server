@@ -304,10 +304,13 @@ function countAds(q, reply){
     var geoBox = q.geoBox;
     let limit = q.limit;
     let diaChinh = q.diaChinh;
-    if (q.place && q.place.placeId && q.place.tinh) {//must have Tinh = tinhKhongDau
+
+    //need keep DiaChinh condition
+    if (!diaChinh && q.place && q.place.placeId && q.place.tinh) {//must have Tinh = tinhKhongDau
         diaChinh = q.place;
     }
     placeUtil.chuanHoaDiaChinh(diaChinh);
+
     console.log("into here111");
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     var count = 0;

@@ -150,7 +150,7 @@ internals.homeData4App = function(req, reply) {
           fl.push(
             function(callback){
               let queryMoiDang = {}; Object.assign(queryMoiDang, query);
-              queryMoiDang.ngayDaDang = 700;  
+              queryMoiDang.ngayDaDang = 7;  // order by DESC very slow, so need limit... to 7 days first
               queryMoiDang.orderBy = "ngayDangTinDESC";
               searchAds("Nhà Mới Đăng Hôm Nay",query.fullName,queryMoiDang,callback);
             }
@@ -172,7 +172,7 @@ internals.homeData4App = function(req, reply) {
       fl.push(
         function(callback){
           let queryMoiDang = {}; Object.assign(queryMoiDang, query);
-          queryMoiDang.ngayDaDang = 700;  
+          queryMoiDang.ngayDaDang = 7;// order by DESC very slow, so need limit... to 7 days first
           queryMoiDang.orderBy = "ngayDangTinDESC";
           searchAds("Nhà Mới Đăng Hôm Nay",query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryMoiDang,callback);
         }

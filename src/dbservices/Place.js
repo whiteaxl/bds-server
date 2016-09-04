@@ -25,7 +25,7 @@ class PlaceModel {
 	getPlaceByNameLike(input, callback) {
 		let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
 
-    var sql = `select default.* from default where type='Place' and ggMatched=true 
+    var sql = `select default.* from default where type='Place' and (placeType='T' or placeType='H' or placeType = 'X') and ggMatched=true 
     		and nameKhongDau like '%${inputKhongDau}%' order by placeType desc limit 10 `;
 
     console.log('getPlaceByNameLike, sql=',sql);

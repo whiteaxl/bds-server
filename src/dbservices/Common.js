@@ -22,6 +22,10 @@ class CommonModel {
 		})
 	}
 
+	query(sql, callback) {
+		var query = N1qlQuery.fromString(sql);
+		bucket.query(query, callback);
+	}
 
 	countByType(type, onSuccess) {
 		var sql = `select count(*) cnt from default where type = '${type}'`;
