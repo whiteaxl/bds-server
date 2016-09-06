@@ -58,7 +58,7 @@ function appDefault(collection) {
 }
 
 function doSearchAds(collections, title1, title2, queryToday, doneToday) {
-  findHandler.searchAds(queryToday, (res) => {
+  findHandler.searchAdsWithFilter(queryToday, (res) => {
     if (!res.list || res.list.length == 0) {
       doneToday(collections);
       return;
@@ -150,7 +150,7 @@ internals.homeData4App = function(req, reply) {
           fl.push(
             function(callback){
               let queryMoiDang = {}; Object.assign(queryMoiDang, query);
-              queryMoiDang.ngayDaDang = 7;  // order by DESC very slow, so need limit... to 7 days first
+              queryMoiDang.ngayDaDang = 700;  
               queryMoiDang.orderBy = "ngayDangTinDESC";
               searchAds("Nhà Mới Đăng Hôm Nay",query.fullName,queryMoiDang,callback);
             }
@@ -172,7 +172,7 @@ internals.homeData4App = function(req, reply) {
       fl.push(
         function(callback){
           let queryMoiDang = {}; Object.assign(queryMoiDang, query);
-          queryMoiDang.ngayDaDang = 7;// order by DESC very slow, so need limit... to 7 days first
+          queryMoiDang.ngayDaDang = 700;  
           queryMoiDang.orderBy = "ngayDangTinDESC";
           searchAds("Nhà Mới Đăng Hôm Nay",query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryMoiDang,callback);
         }

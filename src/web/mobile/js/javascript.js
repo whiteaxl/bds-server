@@ -22,15 +22,13 @@ function update(){
 }
 
 // check click detail
-function detailMore(me, a, b, c,d){
+function detailMore(me, a, b, c){
 	if($(a).css('display') == 'none'){
 		$(me).html(c);
 		$(a).css("display",'inline');
-		$(d).hide();
 	}else {
 		$(me).html(b);
 		$(a).css("display",'none');
-		$(d).show();
 	}
 }
 
@@ -203,6 +201,9 @@ $(function(){
 	$(".type-list li a, .list-sort li a").click(function(){
 		$(this).parent().parent().find("a").removeClass("active");
 		$(this).addClass("active");
+	});
+	$("footer.main .list-sort li a").click(function(){
+		$(this).parent().parent().parent().hide();
 	});
 	$("#typeBox .type-list li a").click(function(){
 		$(".type-box .collapse-title span label").html($(this).html());

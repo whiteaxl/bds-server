@@ -76,26 +76,31 @@
 	        // google.maps.event.removeListener(zoomChangeHanlder);
             // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
             	// google.maps.event.clearInstanceListeners(map);
+            	vm.humanZoom = false;
             	vm.zoomChangeHanlder = google.maps.event.addListener(map, "zoom_changed", function(){
             		if(vm.initialized == true){
 		   				vm.initialized = false;
+		   				vm.humanZoom = true;
 		   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-						$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-						//var bounds = vm.map.getBounds();
-						//alert($rootScope.searchData.geoBox);
-						vm.marker = {
-							id: -1,
-							coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-							content: 'you are here'
-						};
+						// $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+						// //var bounds = vm.map.getBounds();
+						// //alert($rootScope.searchData.geoBox);
+						// vm.marker = {
+						// 	id: -1,
+						// 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+						// 	content: 'you are here'
+						// };
 		   				vm.search(function(){
 		   					$timeout(function() {
 		   						//vm.initialized = true;
 		   						//vm.map.fitBounds(bounds);
+		   						vm.humanZoom = false;
 		   					}, 10);
 		   					
 		   				});
 		   				// alert('human zoom');
+		   			}else{
+		   				console.log("not human zoom");
 		   			}
             	});
 
@@ -319,11 +324,18 @@
                 vm.currentPageStart = vm.pageSize*($rootScope.searchData.pageNo-1) + 1
                 vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
                 vm.currentPage = $rootScope.searchData.pageNo;
+                $scope.center = [res.data.viewport.center.lat,res.data.viewport.center.lon];
+                var southWest = new google.maps.LatLng(res.data.viewport.southwest.lat, res.data.viewport.southwest.lon);
+			    var northEast = new google.maps.LatLng(res.data.viewport.northeast.lat, res.data.viewport.northeast.lon);
+			    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                
+                if(vm.humanZoom != true && res.data.viewport.northeast.lat && res.data.viewport.southwest.lat)
+                	vm.map.fitBounds(bounds);
                 
                 $timeout(function() {
                     $('body').scrollTop(0);
                     vm.initialized = true;  
-                },0);
+                },100);
                 
                 if($rootScope.isLoggedIn()){
                     $rootScope.user.lastSearch = $rootScope.searchData;
@@ -370,7 +382,7 @@
                 console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
                 //data.radiusInKm = "10";
                 var placeData = {
-                    placeId: googlePlace.place_id,
+                    placeId: googlePlace.place_id || googlePlace.placeId,
                     relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
                     radiusInKm :  $rootScope.searchData.radiusInKm,
                     currentLocation: undefined
@@ -381,8 +393,9 @@
             $rootScope.searchData.userID = $rootScope.user.userID;
             if($rootScope.searchData.geoBox){
 
-            }else if($rootScope.searchData.place.geometry)
-            	vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
+            }else if($rootScope.searchData.place.geometry){
+            	// vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
+            }
             else{
             	//vm.zoomMode = "auto";
             	// vm.map.setCenter($scope.center,10);
@@ -433,11 +446,11 @@
                         //$scope.map.center =  
                         $scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
                         if(place.geometry.viewport){
-                            map.fitBounds(place.geometry.viewport);   
+                            //map.fitBounds(place.geometry.viewport);   
                             //$scope.map
                         } else if( !current_bounds.contains( place.geometry.location ) ){
                             var new_bounds = current_bounds.extend(place.geometry.location);
-                            map.fitBounds(new_bounds);
+                            //map.fitBounds(new_bounds);
                             //$digest();
                         }
                         vm.marker = {

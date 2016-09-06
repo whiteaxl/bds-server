@@ -29,8 +29,7 @@ window.RewayClientUtils = (function($) {
 			           			}
 			           			);
 			           		}	
-			           	}
-			           	
+			           	}		           	
 			           	response(results);
 			           }
 			           var service = new google.maps.places.AutocompleteService();

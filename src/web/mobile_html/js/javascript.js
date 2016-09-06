@@ -202,6 +202,9 @@ $(function(){
 		$(this).parent().parent().find("a").removeClass("active");
 		$(this).addClass("active");
 	});
+	$("footer.main .list-sort li a").click(function(){
+		$(this).parent().parent().parent().hide();
+	});
 	$("#typeBox .type-list li a").click(function(){
 		$(".type-box .collapse-title span label").html($(this).html());
 	});

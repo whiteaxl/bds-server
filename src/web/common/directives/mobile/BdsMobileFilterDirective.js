@@ -214,6 +214,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     }
                     
                 }
+                vm.showFrequentSearch = false;
+                vm.keyPress = function(event){
+                    vm.showFrequentSearch = false;
+                }
 
                 vm.init = function(){
                     $("#typeBox .type-list li a").click(function(){

@@ -78,7 +78,9 @@
     }
 
     $rootScope.isLoggedIn = function(){
-      return $rootScope.user.userID;
+      if($rootScope.user.userID)
+        return true;
+      return false;
     }
 
     $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
@@ -444,6 +446,6 @@
 
 
 
-  hello = function (){
+  var hello = function (){
     alert('hello buddy! how are you today?');
   }

@@ -15,30 +15,13 @@
     <div class="notifyBox detailnotify">Đã lưu tin thành công</div>
     <div class="wapper">
     	<div class="detail-page">
-            <script src="/web/mobile/js/jquery.fancybox.pack.js"></script>
+            
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('.fancybox').fancybox({
-                        openEffect  : 'none',
-                        closeEffect : 'none',
-
-                        prevEffect : 'none',
-                        nextEffect : 'none',
-
-                        helpers : {
-                            title : {
-                                type : 'inside'
-                            },
-                            buttons : {}
-                        },
-
-                        afterLoad : function() {
-                            this.title = (this.index + 1) + '/' + this.group.length;
-                        }
-                    });
+                    
                 });
             </script>
-        	<div class="img" style="background-image:url({{mdt.ads.image.images[0]}})"><a href="{{mdt.ads.image.images[0]}}" class="fancybox" data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
+        	<div class="img" style="background-image:url({{mdt.ads.image.images[0]}})"><a href="{{mdt.ads.image.images[1]}}" class="fancybox" data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
             <a href="{{img}}" ng-repeat="img in mdt.ads.image.images track by $index" class="fancybox" data-fancybox-group="gallery" title=""></a>
                 <div class="desSort">
             	<div class="price">{{mdt.ads.giaFmt}}</div>
@@ -119,24 +102,28 @@
                         <label>{{mdt.ads.place.diaChi}}</label>
                     </div>
                     <div class="lined">
-                    	<span class="titlelbl">Vị trí</span>
+                    	<span class="titlelbl" style="width: 100%; text-align: justify; white-space: normal;">Vị trí: Kéo và thả icon hình người (icon) vào những điểm hình tròn màu xanh (icon) trên bản đồ để xem ảnh khu vực đó . Zoom nhỏ bản đồ lại để nhìn thấy nhiều điểm streetview hơn.</span>
                     </div>
                     <div class="lined map">
-                    	<ng-map center="{{mdt.center}}" zoom="15" class="ngmap">
-                        <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
-                          <div class = "marker">
-                            {{mdt.marker.content}} 
-                          </div>
-                        </custom-marker>
+                    	<ng-map center="{{mdt.center}}" zoom="15" class="ngmap" default-style="true">
+                            <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
+                              <div class = "marker">
+                                {{mdt.marker.content}} 
+                              </div>
+                            </custom-marker>
+                            <custom-control id="home" position="TOP_RIGHT" index="1" on-click="mdt.showMinimapHome();">
+                              <div style="background-color: black; color:#fff;cursor:pointer">Nhà</div>
+                            </custom-control>
+                        </ng-map>
                     </div>
                 </div>
             </div>
-            <div class="share-box collapse-box" style="display: none;">
+            <div class="share-box collapse-box">
             	<div class="pull-left">
-                	<a href="#" class="p-icon i-fb"></a>
-                    <a href="#" class="p-icon i-sms"></a>
-                    <a href="#" class="p-icon i-zalo"></a>
-                    <a href="#" class="p-icon i-email"></a>
+                	<a href="fb:" class="p-icon i-fb"></a>                    
+                    <a href="sms:" class="p-icon i-sms"></a>
+                    <a href="zalo:" class="p-icon i-zalo"></a>
+                    <a href="mailto:" class="p-icon i-email"></a>
                 </div>
                 <div class="pull-right">
                 	<a href="#" class="p-icon i-share"></a>
@@ -151,11 +138,13 @@
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Điện thoại</span>
-                        <label>{{::mdt.ads.dangBoi.phone}}</label>
+                        <label> <a href="tel:{{::mdt.ads.dangBoi.phone}}"> {{::mdt.ads.dangBoi.phone}}</a></label>
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Email</span>
-                        <label>{{::mdt.ads.dangBoi.email}}</label>
+                        <!-- <label>{{::mdt.ads.dangBoi.email}}</label> -->
+                        <label><a href="mailto:{{::mdt.ads.dangBoi.email}}?Subject=Hello%20again" target="_top">{{::mdt.ads.dangBoi.email}}</a></label>
+
                     </div>
 					<div class="lined" style="display: none;">
                     	<span class="titlelbl"><a href="#"><i class="p-icon i-plus18"></i> Lưu vào danh bạ</a></span>
@@ -196,9 +185,9 @@
                             <h5>{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h5>
                         </div>
 						<ul class="reland-list full-3">
-                            <li ng-click="mdt.goDetail(ads.adsID)" ng-repeat="ads in mdt.nhaXungQuanh track by $index">
-                                <a href="#" class="heart"><i class="icon-heart"></i></a>
-                                <a href="detail.html">
+                            <li  ng-repeat="ads in mdt.nhaXungQuanh track by $index">
+                                <a href="#" ng-click="mdt.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
+                                <a href="#" ng-click="mdt.goDetail(ads.adsID)">
                                     <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                                     <span class="des bgOpa">
                                         <span class="price">{{ads.giaFmt}}</span>
@@ -222,9 +211,9 @@
                         <h5>{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h5>
                     </div>
                     <ul class="reland-list full-3">
-                        <li ng-click="mdt.goDetail(ads.adsID)" ng-repeat="ads in mdt.nhaTuongTu track by $index">
-                            <a href="#" class="heart"><i class="icon-heart"></i></a>
-                            <a href="detail.html">
+                        <li  ng-repeat="ads in mdt.nhaTuongTu track by $index">
+                            <a href="#" ng-click="mdt.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
+                            <a href="#" ng-click="mdt.goDetail(ads.adsID)">
                                 <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                                 <span class="des bgOpa">
                                     <span class="price">{{ads.giaFmt}}</span>
@@ -251,7 +240,7 @@
     </div>
     <footer class="main border uln">
         <ul class="navmain nav-3 button">
-        	<li><a role="button" class="btn btn-organe" href="tel:0967474989"><i class="iconPhone"></i> Gọi điện</a></li>
+        	<li><a role="button" class="btn btn-organe" href="tel:{{::mdt.ads.dangBoi.phone}}"><i class="iconPhone"></i> Gọi điện</a></li>
             <li><a role="button" class="btn btn-warning" href="chats.html"><i class="iconChat"></i> Chat</a></li>
             <li><a role="button" class="btn btn-primary" href="javascript:void(0)" onclick="showNotify('Hiện tin đã được lưu', '.detailnotify');"><i class="iconHeart"></i> Lưu tin</a></li>
         </ul>

@@ -1,0 +1,855 @@
+// Fonts
+// --------------------------
+
+@font-face{
+	font-family:Truliacons;src:url(../fonts/truliacons.eot);
+	src:url(../fonts/truliacons.eot?#iefix) format("embedded-opentype"),url(../fonts/truliacons.woff) format("woff"),url(../fonts/truliacons.ttf) format("truetype"),url(../fonts/truliacons.svg#Truliacons) format("svg");
+	font-weight:400;font-style:normal;
+}
+@font-face {
+    font-family: Entypo;
+    src: url(../fonts/Entypo.eot);
+    src: url(../fonts/Entypo.eot?#iefix) format("embedded-opentype"), url(../fonts/Entypo.woff) format("woff"), url(../fonts/Entypo.ttf) format("truetype"), url(../fonts/Entypo.svg#Entypo) format("svg");
+    font-weight: 400;
+    font-style: normal
+}
+
+.iconAddress:before,
+.iconAgent:before,
+.iconAttach:before,
+.iconAttention:before,
+.iconBasket:before,
+.iconBell:before,
+.iconBlock:before,
+.iconBookmark:before,
+.iconCalendar:before,
+.iconCamera:before,
+.iconCancel:before,
+.iconChartArea:before,
+.iconChartBar:before,
+.iconChartLine:before,
+.iconChartPie:before,
+.iconChat:before,
+.iconCheck:before,
+.iconClock:before,
+.iconCloud:before,
+.iconCog:before,
+.iconComment:before,
+.iconCup:before,
+.iconDirection:before,
+.iconDocs:before,
+.iconDollarSign:before,
+.iconDown:before,
+.iconDownOpen:before,
+.iconExport:before,
+.iconFacebook:before,
+.iconFlag:before,
+.iconFlight:before,
+.iconFolder:before,
+.iconFood:before,
+.iconForward:before,
+.iconFuel:before,
+.iconGlobe:before,
+.iconGraduationCap:before,
+.iconHeart:before,
+.iconHeartEmpty:before,
+.iconHelp:before,
+.iconHome:before,
+.iconHourGlass:before,
+.iconInbox:before,
+.iconInfo:before,
+.iconLeaf:before,
+.iconLeft:before,
+.iconLeftOpen:before,
+.iconLinkedin:before,
+.iconList:before,
+.iconLocation2:before,
+.iconMail:before,
+.iconMap2:before,
+.iconMenu:before,
+.iconMinus:before,
+.iconMobile:before,
+.iconMortgage:before,
+.iconPencil:before,
+.iconPhone:before,
+.iconPicture:before,
+.iconPinterest:before,
+.iconPlus:before,
+.iconPopup:before,
+.iconPrint:before,
+.iconQuote:before,
+.iconRent:before,
+.iconReply:before,
+.iconReplyAll:before,
+.iconResizeFull:before,
+.iconResizeSmall:before,
+.iconRight:before,
+.iconRightOpen:before,
+.iconRocket:before,
+.iconSearch:before,
+.iconShareAndroid:before,
+.iconShareIos .path1:before,
+.iconShareIos .path2:before,
+.iconShareIos .path3:before,
+.iconShareIos .path4:before,
+.iconStar:before,
+.iconStarEmpty:before,
+.iconTag:before,
+.iconThumbsDown:before,
+.iconThumbsUp:before,
+.iconTicket:before,
+.iconTrash:before,
+.iconTrophy:before,
+.iconTwitter:before,
+.iconUp:before,
+.iconUpOpen:before,
+.iconUser:before,
+.iconUsers:before,
+.iconVcard:before,
+.iconVideo:before {
+    font-family: Entypo;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+	vertical-align:baseline;
+}
+
+.iconFood:before {
+    content: "\e601"
+}
+
+.iconDollarSign:before {
+    content: "\e602"
+}
+
+.iconMortgage:before {
+    content: "\e606"
+}
+
+.iconRent:before {
+    content: "\e607"
+}
+
+.iconAgent:before {
+    content: "\e609"
+}
+
+.iconHeartEmpty:before {
+    content: "\e61b"
+}
+
+.iconHourGlass:before {
+    content: "\e647"
+}
+
+.iconFuel:before {
+    content: "\e800"
+}
+
+.iconPlus:before {
+    content: "\e802"
+}
+
+.iconMinus:before {
+    content: "\e803"
+}
+
+.iconStar:before {
+    content: "\e805"
+}
+
+.iconStarEmpty:before {
+    content: "\e806"
+}
+
+.iconHome:before {
+    content: "\e807"
+}
+
+.iconMenu:before {
+    content: "\e808"
+}
+
+.iconHeart:before {
+    content: "\e809"
+}
+
+.iconFlag:before {
+    content: "\e80a"
+}
+
+.iconCog:before {
+    content: "\e80b"
+}
+
+.iconDownOpen:before {
+    content: "\e80c"
+}
+
+.iconLeftOpen:before {
+    content: "\e80d"
+}
+
+.iconRightOpen:before {
+    content: "\e80e"
+}
+
+.iconUpOpen:before {
+    content: "\e80f"
+}
+
+.iconDown:before {
+    content: "\e810"
+}
+
+.iconLeft:before {
+    content: "\e811"
+}
+
+.iconRight:before {
+    content: "\e812"
+}
+
+.iconUp:before {
+    content: "\e813"
+}
+
+.iconAttention:before {
+    content: "\e814"
+}
+
+.iconCloud:before {
+    content: "\e815"
+}
+
+.iconMail:before {
+    content: "\e816"
+}
+
+.iconPencil:before {
+    content: "\e817"
+}
+
+.iconCheck:before {
+    content: "\e818"
+}
+
+.iconCancel:before {
+    content: "\e819"
+}
+
+.iconHelp:before {
+    content: "\e81a"
+}
+
+.iconQuote:before {
+    content: "\e81b"
+}
+
+.iconDirection:before {
+    content: "\e81c"
+}
+
+.iconForward:before {
+    content: "\e81d"
+}
+
+.iconList:before {
+    content: "\e81e"
+}
+
+.iconTag:before {
+    content: "\e81f"
+}
+
+.iconReply:before {
+    content: "\e820"
+}
+
+.iconReplyAll:before {
+    content: "\e821"
+}
+
+.iconExport:before {
+    content: "\e822"
+}
+
+.iconPrint:before {
+    content: "\e823"
+}
+
+.iconComment:before {
+    content: "\e824"
+}
+
+.iconChat:before {
+    content: "\e825"
+}
+
+.iconVcard:before {
+    content: "\e826"
+}
+
+.iconAddress:before {
+    content: "\e827"
+}
+
+.iconLocation2:before {
+    content: "\e828"
+}
+
+.iconMap2:before {
+    content: "\e829"
+}
+
+.iconTrash:before {
+    content: "\e82a"
+}
+
+.iconDocs:before {
+    content: "\e82b"
+}
+
+.iconBasket:before {
+    content: "\e82c"
+}
+
+.iconResizeFull:before {
+    content: "\e82d"
+}
+
+.iconResizeSmall:before {
+    content: "\e82e"
+}
+
+.iconPopup:before {
+    content: "\e82f"
+}
+
+.iconInbox:before {
+    content: "\e830"
+}
+
+.iconFlight:before {
+    content: "\e831"
+}
+
+.iconTwitter:before {
+    content: "\e832"
+}
+
+.iconFacebook:before {
+    content: "\e833"
+}
+
+.iconLinkedin:before {
+    content: "\e834"
+}
+
+.iconPicture:before {
+    content: "\e835"
+}
+
+.iconGlobe:before {
+    content: "\e836"
+}
+
+.iconLeaf:before {
+    content: "\e837"
+}
+
+.iconGraduationCap:before {
+    content: "\e838"
+}
+
+.iconTicket:before {
+    content: "\e839"
+}
+
+.iconVideo:before {
+    content: "\e83a"
+}
+
+.iconTrophy:before {
+    content: "\e83b"
+}
+
+.iconThumbsUp:before {
+    content: "\e83c"
+}
+
+.iconThumbsDown:before {
+    content: "\e83d"
+}
+
+.iconUser:before {
+    content: "\e83e"
+}
+
+.iconUsers:before {
+    content: "\e83f"
+}
+
+.iconFolder:before {
+    content: "\e840"
+}
+
+.iconCalendar:before {
+    content: "\e841"
+}
+
+.iconChartPie:before {
+    content: "\e842"
+}
+
+.iconChartLine:before {
+    content: "\e843"
+}
+
+.iconChartBar:before {
+    content: "\e844"
+}
+
+.iconChartArea:before {
+    content: "\e845"
+}
+
+.iconAttach:before {
+    content: "\e846"
+}
+
+.iconPhone:before {
+    content: "\e847"
+}
+
+.iconMobile:before {
+    content: "\e848"
+}
+
+.iconCamera:before {
+    content: "\e849"
+}
+
+.iconSearch:before {
+    content: "\e84a"
+}
+
+.iconBell:before {
+    content: "\e84b"
+}
+
+.iconBookmark:before {
+    content: "\e84c"
+}
+
+.iconClock:before {
+    content: "\e84d"
+}
+
+.iconBlock:before {
+    content: "\e84e"
+}
+
+.iconRocket:before {
+    content: "\e84f"
+}
+
+.iconPinterest:before {
+    content: "\e850"
+}
+
+.iconCup:before {
+    content: "\e851"
+}
+
+.iconInfo:before {
+    content: "\e804"
+}
+
+.iconShareIos .path1:before {
+    content: "\e603"
+}
+
+.iconShareIos .path2:before {
+    content: "\e604";
+    margin-left: -.6396484375em
+}
+
+.iconShareIos .path3:before {
+    content: "\e605";
+    margin-left: -.6396484375em
+}
+
+.iconShareIos .path4:before {
+    content: "\e608";
+    margin-left: -.6396484375em
+}
+
+.iconShareAndroid:before {
+    content: "\e60a"
+}
+
+
+.iconActivelife:before,
+.iconAddress:before,
+.iconAffordability:before,
+.iconAgent:before,
+.iconAir:before,
+.iconAndroid:before,
+.iconApple:before,
+.iconAttach:before,
+.iconAttention:before,
+.iconBasket:before,
+.iconBath:before,
+.iconBed:before,
+.iconBell:before,
+.iconBike:before,
+.iconBlock:before,
+.iconBlog:before,
+.iconBookmark:before,
+.iconCalendar:before,
+.iconCamera:before,
+.iconCancel2:before,
+.iconCar:before,
+.iconCat:before,
+.iconChartArea:before,
+.iconChartBar:before,
+.iconChartLine:before,
+.iconChartPie:before,
+.iconChat:before,
+.iconCheck:before,
+.iconCircledHelp:before,
+.iconCity:before,
+.iconClock:before,
+.iconCloud:before,
+.iconCoffee:before,
+.iconCog:before,
+.iconComment:before,
+.iconCreditCard:before,
+.iconCrime:before,
+.iconCup:before,
+.iconDirection:before,
+.iconDocs:before,
+.iconDog:before,
+.iconDown:before,
+.iconDownOpen:before,
+.iconExport:before,
+.iconEye:before,
+.iconFHEO:before,
+.iconFacebook:before,
+.iconFlag:before,
+.iconFlight:before,
+.iconFloorplan:before,
+.iconFolder:before,
+.iconFood:before,
+.iconForward:before,
+.iconFuel:before,
+.iconGlobe:before,
+.iconGooglePlus:before,
+.iconGraduationCap:before,
+.iconHeart:before,
+.iconHeartActive:before,
+.iconHeartEmpty:before,
+.iconHeartInactive:before,
+.iconHelp:before,
+.iconHome2:before,
+.iconHomeWorth:before,
+.iconHourGlass:before,
+.iconInbox:before,
+.iconInfo:before,
+.iconLeaf:before,
+.iconLeft:before,
+.iconLeftOpen:before,
+.iconLinkedin:before,
+.iconList:before,
+.iconLocation:before,
+.iconMail:before,
+.iconMap:before,
+.iconMegaphone:before,
+.iconMenu:before,
+.iconMessageCompose:before,
+.iconMessageView:before,
+.iconMinus:before,
+.iconMobile:before,
+.iconMoon:before,
+.iconMortgage:before,
+.iconNoteBeamed:before,
+.iconPaperPlane:before,
+.iconPencil:before,
+.iconPhone:before,
+.iconPicture:before,
+.iconPig:before,
+.iconPinterest:before,
+.iconPlus:before,
+.iconPopup:before,
+.iconPrint:before,
+.iconQuote:before,
+.iconRent:before,
+.iconReply:before,
+.iconReplyAll:before,
+.iconResizeFull:before,
+.iconResizeSmall:before,
+.iconRestaurants:before,
+.iconRight:before,
+.iconRightOpen:before,
+.iconRocket:before,
+.iconSearch:before,
+.iconShopping:before,
+.iconStar:before,
+.iconStarActive:before,
+.iconStarDefault:before,
+.iconStarEmpty:before,
+.iconStarNotification:before,
+.iconStarShield:before,
+.iconTag:before,
+.iconThumbsDown:before,
+.iconThumbsUp:before,
+.iconTicket:before,
+.iconTransit:before,
+.iconTrash:before,
+.iconTrophy:before,
+.iconTwitter:before,
+.iconUp:before,
+.iconUpOpen:before,
+.iconUser:before,
+.iconUserAdd:before,
+.iconUsers:before,
+.iconVcard:before,
+.iconVideo:before,
+.iconWalking:before,
+.iconZombieHand:before,
+.ratingStar .ratingGroup .ratingOn label:before,
+.ratingStar .ratingGroup label:before,
+.toggleArrow:before,
+.toggleArrowActive:before {
+    font-family: Truliacons;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1.1em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+	vertical-align:baseline;
+}
+.iconActivelife:before{content:'\e800'}
+.iconAddress:before{content:'\e801'}
+.iconAgent:before{content:'\e802'}
+.iconChartArea:before{content:'\e803'}
+.iconChartBar:before{content:'\e804'}
+.iconChartLine:before{content:'\e805'}
+.iconExport:before{content:'\e806'}
+.iconEye:before{content:'\e807'}
+.iconFacebook:before{content:'\e808'}
+.iconInfo:before{content:'\e809'}
+.iconLeaf:before{content:'\e80a'}
+.iconLeft:before{content:'\e80b'}
+.iconPhone:before{content:'\e80c'}
+.iconPicture:before{content:'\e80d'}
+.iconPig:before{content:'\e80e'}
+.iconStarDefault:before,.iconStarEmpty:before,.ratingStar .ratingGroup label:before{content:'\e80f'}
+.iconCrime:before,.iconStarShield:before{content:'\e810'}
+.iconTag:before{content:'\e811'}
+.iconAffordability:before{content:'\e812'}
+.iconUserAdd:before{content:'\e813'}
+.iconAir:before{content:'\e814'}
+.iconAndroid:before{content:'\e815'}
+.iconApple:before{content:'\e816'}
+.iconAttach:before{content:'\e817'}
+.iconAttention:before{content:'\e818'}
+.iconBasket:before{content:'\e819'}
+.iconBath:before{content:'\e81a'}
+.iconBed:before{content:'\e81b'}
+.iconBell:before{content:'\e81c'}
+.iconBike:before{content:'\e81d'}
+.iconBlock:before{content:'\e81e'}
+.iconBookmark:before{content:'\e81f'}
+.iconCalendar:before{content:'\e820'}
+.iconCamera:before{content:'\e821'}
+.iconCancel2:before{content:'\e859';}
+.iconCar:before{content:'\e823'}
+.iconCat:before{content:'\e824'}
+.iconChartPie:before{content:'\e825'}
+.iconChat:before{content:'\e826'}
+.iconCheck:before{content:'\e827'}
+.iconCircledHelp:before{content:'\e828'}
+.iconCity:before{content:'\e829'}
+.iconClock:before{content:'\e82a'}
+.iconCloud:before{content:'\e82b'}
+.iconCoffee:before{content:'\e82c'}
+.iconCog:before{content:'\e82d'}
+.iconComment:before{content:'\e82e'}
+.iconCreditCard:before{content:'\e82f'}
+.iconCup:before{content:'\e830'}
+.iconDirection:before{content:'\e831'}
+.iconDocs:before{content:'\e832'}
+.iconDog:before{content:'\e833'}
+.iconDown:before{content:'\e834'}
+.iconDownOpen:before{content:'\e835'}
+.iconFHEO:before{content:'\e836'}
+.iconFlag:before{content:'\e837'}
+.iconFlight:before{content:'\e838'}
+.iconFloorplan:before{content:'\e839'}
+.iconFolder:before{content:'\e83a'}
+.iconFood:before{content:'\e83b'}
+.iconForward:before{content:'\e83c'}
+.iconFuel:before{content:'\e83d'}
+.iconGlobe:before{content:'\e83e'}
+.iconGooglePlus:before{content:'\e83f'}
+.iconGraduationCap:before{content:'\e840'}
+.iconHeart:before,.iconHeartInactive:before{content:'\e841'}
+.iconHeartEmpty:before{content:'\e842'}
+.iconHelp:before{content:'\e843'}
+.iconHome2:before{content:'\e844'}
+.iconHourGlass:before{content:'\e845'}
+.iconInbox:before{content:'\e846'}
+.iconLeftOpen:before{content:'\e847'}
+.iconLinkedin:before{content:'\e848'}
+.iconList:before{content:'\e849'}
+.iconLocation:before{content:'\e84a'}
+.iconMail:before{content:'\e84b'}
+.iconMap:before{content:'\e84c'}
+.iconMegaphone:before{content:'\e84d'}
+.iconMenu:before{content:'\e84e'}
+.iconMessageCompose:before{content:'\e84f'}
+.iconMessageView:before{content:'\e850'}
+.iconMinus:before{content:'\e851'}
+.iconMobile:before{content:'\e852'}
+.iconMoon:before{content:'\e853'}
+.iconNoteBeamed:before{content:'\e854'}
+.iconMortgage:before{content:'\e855'}
+.iconPaperPlane:before{content:'\e856'}
+.iconPencil:before{content:'\e857'}
+.iconPinterest:before{content:'\e858'}
+.iconPlus:before{content:'\e859'}
+.iconPopup:before{content:'\e85a'}
+.iconPrint:before{content:'\e85b'}
+.iconQuote:before{content:'\e85c'}
+.iconRent:before{content:'\e85d'}
+.iconReply:before{content:'\e85e'}
+.iconReplyAll:before{content:'\e85f'}
+.iconResizeFull:before{content:'\e860'}
+.iconResizeSmall:before{content:'\e861'}
+.iconRestaurants:before{content:'\e862'}
+.iconRight:before{content:'\e863'}
+.iconRightOpen:before{content:'\e864'}
+.iconRocket:before{content:'\e865'}
+.iconSearch:before{content:'\e866'}
+.iconShopping:before{content:'\e867'}
+.iconStar:before,.iconStarActive:before,.iconStarNotification:before,.ratingStar .ratingGroup .ratingOn label:before{content:'\e868'}
+.iconThumbsDown:before{content:'\e869'}
+.iconThumbsUp:before{content:'\e86a'}
+.iconTicket:before{content:'\e86b'}
+.iconTransit:before{content:'\e86c'}
+.iconTrash:before{content:'\e86d'}
+.iconTrophy:before{content:'\e86e'}
+.iconTwitter:before{content:'\e86f'}
+.iconUp:before{content:'\e870'}
+.iconUpOpen:before{content:'\e871'}
+.iconUser:before{content:'\e872'}
+.iconUsers:before{content:'\e873'}
+.iconVcard:before{content:'\e874'}
+.iconVideo:before{content:'\e875'}
+.iconWalking:before{content:'\e876'}
+.iconZombieHand:before{content:'\e877'}
+.iconHomeWorth:before{content:'\e878'}
+.iconBlog:before{content:'\e879'}
+
+.p-icon{
+	background:url('../img/p-icon.png') no-repeat 0 0; 
+	width:0; height:0; 
+	vertical-align:middle; 
+	display:inline-block;
+	&.i-sort{
+		width:24px; height:14px
+	}
+	&.i-fb{
+		width:24px;
+		height:24px;
+		background-position:0 -21px;	
+	}
+	&.i-sms{
+		@extend .i-fb;
+		background-position-y:-45px;	
+	}
+	&.i-zalo{
+		@extend .i-fb;
+		background-position-y:-69px;
+	}
+	&.i-email{
+		@extend .i-fb;
+		background-position-y:-93px;
+	}
+	&.i-share{
+		@extend .i-fb;
+		background-position-y:-117px;
+	}
+	&.i-more{
+		width:24px;
+		height:15px;
+		background-position:0 -141px;	
+	}
+	&.i-paycart{
+		width:30px;
+		height:29px;
+		background-position:-70px 0;	
+	}
+	&.i-payapp{
+		@extend .i-paycart;
+		background-position-y:-29px;
+	}
+	&.i-paysms{
+		@extend .i-paycart;
+		background-position-y:-58px;
+	}
+	&.i-paybank{
+		@extend .i-paycart;
+		background-position-y:-87px;
+	}
+	&.i-advlocaltion{
+		width:28px;
+		height:28px;
+		background-position:-72px -116px;	
+	}
+	&.i-advhome{
+		@extend .i-advlocaltion;
+		background-position-y:-144px;
+	}
+	&.i-advlogo{
+		@extend .i-advlocaltion;
+		background-position-y:-172px;
+	}
+	&.i-mapdraw{
+		width:50px;
+		height:46px;
+		background-position:-127px 0;
+	}
+	&.i-maplocation{
+		@extend .i-mapdraw;
+		background-position-y:-46px;
+	}
+	&.i-plus18{
+		width:18px;
+		height:18px;
+		background-position:-105px 0;	
+	}
+	&.i-user18{
+		@extend .i-plus18;
+		background-position-y:-18px;
+	}
+}
+
+.iconShareContent{
+	color:$color-white;
+	svg{
+		height:24px;
+	}	
+}

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "158292ef6bad863897b7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b77c356e9dc7c304bd62"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -583,8 +583,10 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	 //require("!style!css!./src/web/assets/css/style.css");
-	 //require("!style!css!./src/web/assets/css/ie.css");
+	"use strict";
+
+	//require("!style!css!./src/web/assets/css/style.css");
+	//require("!style!css!./src/web/assets/css/ie.css");
 	// require("./src/app/app.js");
 	__webpack_require__(1);
 	__webpack_require__(2);
@@ -602,11 +604,9 @@
 	__webpack_require__(14);
 	__webpack_require__(15);
 
-
 	//services
 	__webpack_require__(16);
 	__webpack_require__(17);
-
 
 	//Directives
 	__webpack_require__(18);
@@ -620,8 +620,6 @@
 	__webpack_require__(26);
 	__webpack_require__(27);
 
-
-
 	//Mobile zone
 	// require("./src/web/app/mobile/MobileHome.js");
 	__webpack_require__(28);
@@ -629,14 +627,10 @@
 	__webpack_require__(30);
 	__webpack_require__(31);
 
-
-
 	__webpack_require__(32);
 	__webpack_require__(33);
 	__webpack_require__(34);
 	__webpack_require__(35);
-
-
 
 	//Libs
 	__webpack_require__(36);
@@ -645,32 +639,19 @@
 	__webpack_require__(142);
 	// require("./src/lib/services.js");
 
-
-
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
 
-	window.testData =  [
-	{
+	"use strict";
+
+	window.testData = [{
 	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
-	    "images_small": [
-	      "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134026-4fa1.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134013-6bbf.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134007-e0a3.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410133956-f528.jpg"
-	    ],
-	    "images": [
-	      "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134026-4fa1.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134013-6bbf.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134007-e0a3.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410133956-f528.jpg"
-	    ]
+	    "images_small": ["http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134026-4fa1.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134013-6bbf.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410134007-e0a3.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2015/04/10/raCcHWvA/20150410133956-f528.jpg"],
+	    "images": ["http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134022-9c8d.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134026-4fa1.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134013-6bbf.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410134007-e0a3.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2015/04/10/raCcHWvA/20150410133956-f528.jpg"]
 	  },
 	  "adsID": "BÁN BIỆT THỰ DIỆN TÍCH 142M2 Ở HOÀNG MAI, HÀ NỘI",
 	  "dangBoi": {
@@ -701,24 +682,13 @@
 	  "ten_loaiTin": "Bán",
 	  "ten_loaiNhaDat": "Biệt thự, liền kề",
 	  "chiTiet": "Cần bán biệt thự sân vườn 4 tầng đã hoàn thiện. Khung cửa, cầu thang, sàn nhà làm bằng gỗ hương đẹp. Phòng tắm, vệ sinh hiện đại.Nhà gồm 4 phòng ngủ, 1 phòng thờ, 1 phòng giặt phơi, 1 phòng khách, 1 phòng ăn, 1 garage, 1 hầm rươu. Sân vườn trước và sau.Diện tích:142m2Giá: 10.9 tỷ Liên hệ: 0983456780.\r\n        \r\n            Tìm kiếm theo từ khóa: \r\n        \r\n                Bán biệt thự 142m2 Hoàng Mai Hoàng Mai\r\n            \r\n                , \r\n            \r\n                Bán biệt thự 142m2 Hoàng Mai\r\n            \r\n                , \r\n            \r\n                Bán biệt thự dự án 142m2 Hoàng Mai"
-	}
-	,
-
-	{
+	}, {
 	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/30/20160330134616-2ece.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/30/20160330134616-2ece.jpg",
-	    "images_small": [
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134616-2ece.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134647-5245.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134655-35e8.jpg"
-	    ],
-	    "images": [
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134616-2ece.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134647-5245.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134655-35e8.jpg"
-	    ]
+	    "images_small": ["http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134616-2ece.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134647-5245.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/30/20160330134655-35e8.jpg"],
+	    "images": ["http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134616-2ece.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134647-5245.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/30/20160330134655-35e8.jpg"]
 	  },
 	  "adsID": "BÁN BIỆT THỰ, NHÀ PHỐ TẠI KĐT ECOPARK KHU VƯỜN TÙNG-VƯỜN MAI- AQUABAY GIÁ TỐT NHẤT, LH 0912.893.882",
 	  "dangBoi": {
@@ -749,26 +719,13 @@
 	  "ten_loaiTin": "Bán",
 	  "ten_loaiNhaDat": "Biệt thự, liền kề",
 	  "chiTiet": "Bán biệt thự, nhà phố tại KĐT EcoPark, khu Vườn Tùng - Vườn Mai - Aquabay giá tốt nhất thị trường, LH: 0912 893 882.\r\r+ Biệt thự Vườn Tùng - Vườn Mai xây thô hoàn thiện mặt ngoài.\r1. Biệt thự song lập, diện tích cơ bản 162 m2, giá bán từ 41 tr/m2.\r2. Biệt thự đơn lập, diện tích cơ bản từ 324 m2, giá bán từ 35tr/m2.\rVà còn nhiều loại diện tích khác, căn góc, mặt lõi vườn hoa, VIP vị trí đẹp theo nhu cầu của khách hàng.\r\rLH: 0974 84 8998, để mua được giá tốt nhất.\rTư vấn nhiệt tình, trung thực.\r\r+ Biệt thự - nhà phố Aqua Bay EcoPark, biệt thự Mimosa, biệt thự Marina, nhà phố Thảo Nguyên, Thủy Nguyên.\r1. Biệt thự Mimosa & Marina diện tích 189m2 - 210m2 - 400m2 - 712m2.\r2. Nhà phố Thảo Nguyên, Thủy Nguyên diện tích: 90m2 - 100m2 - 110m2 - 180m2 - 200m2 - 250m2 - 300m2.\rVị trí đẹp, giá tốt nhất thị trường, thủ tục nhanh gọn.\rMọi thông tin chi tiết xin liên hệ:\rTel: 0912 893 882 - 0974 84 8998.\rTrân trọng!\r\n        \r\n            Tìm kiếm theo từ khóa: \r\n        \r\n                Bán biệt thự Ecopark Văn Giang\r\n            \r\n                , \r\n            \r\n                Bán biệt thự Ecopark\r\n            \r\n                , \r\n            \r\n                Bán biệt thự dự án Ecopark"
-	},
-	{
+	}, {
 	  "type": "Ads",
 	  "image": {
 	    "cover": "http://file4.batdongsan.com.vn/crop/745x510/2016/03/29/20160329100405-0146.jpg",
 	    "cover_small": "http://file4.batdongsan.com.vn/crop/120x90/2016/03/29/20160329100405-0146.jpg",
-	    "images_small": [
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100405-0146.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100411-ff4d.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100432-b663.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100502-d46e.jpg",
-	      "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100539-1145.jpg"
-	    ],
-	    "images": [
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100405-0146.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100411-ff4d.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100432-b663.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100502-d46e.jpg",
-	      "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100539-1145.jpg"
-	    ]
+	    "images_small": ["http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100405-0146.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100411-ff4d.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100432-b663.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100502-d46e.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/03/29/20160329100539-1145.jpg"],
+	    "images": ["http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100405-0146.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100411-ff4d.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100432-b663.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100502-d46e.jpg", "http://file4.batdongsan.com.vn/resize/745x510/2016/03/29/20160329100539-1145.jpg"]
 	  },
 	  "adsID": "BÁN CĂN HỘ GREEN STARS SUẤT NGOẠI GIAO GIÁ TỪ 24 TR/M2 - NHẬN NGAY NHÀ MỚI TƯ VẤN XEM NHÀ MIỄN PHÍ",
 	  "dangBoi": {
@@ -802,15 +759,9 @@
 	  "ten_loaiTin": "Bán",
 	  "ten_loaiNhaDat": "Căn hộ chung cư",
 	  "chiTiet": "Dự án Green Stars nằm trong khu đô thị xanh, với hồ nước không gian thiên nhiên thoáng đãng, đáp ứng việc nghỉ ngơi tối ưu sau một ngày dài làm việc.Được đầu tư bởi tập đoàn Geleximco uy tín thương hiệu trên thị trường Hà Nội, cung cấp đến khách hàng một tiêu chuẩn sống đẳng cấp vượt trội mới. Đây là sự kết hợp hoàn chính giữa bất động sản nhà ở và dịch vụ khu đô thị tiện nghi cao cấp, không gian sống.Căn hộ tại Thành phố Giao lưu mang hơi thở cuộc sống mới thoải mái trong lành, cùng với sự hiện đại năng động. Đồng thời kiến tạo cho người dân với quy hoạch đồng bộ, nhà ở chất lượng, dịch vụ xứng tầm, môi trường trong lành an, an ninh đảm bảo.* Tiện ích: Trung tâm thương mại Vincom lớn nhất quận Bắc Từ Liêm tại tầng hầm dự án đưa vào sử dụng. Ngoài ra còn siêu thị Metro để cư dân mua sắm rau củ quả.Trường liên cấp: Trường mẫu giáo, tiểu học, cấp II Phạm Văn Đồng, cấp III.* Gần các trường đại học như đại học Ngoại Ngữ, ĐH Quốc Gia, Học Viện Báo Chí, Sư Phạm, gần bệnh viện E...* Diện tích phù hợp, tận dụng triệt để không gian sống:- 2 phòng ngủ: 60.2m2 - 66,8m2 (1 căn 60.2m2, 5 căn 66.8m2).- 3 phòng ngủ: Căn thường 102m2 (tặng 15 triệu), căn góc 102m2 (tặng 5 triệu).Tòa A3 ký hợp đồng trực tiếp chủ đầu tư!Các căn ngoại giao Bộ Công An giá từ 24,2 tr đến 27,5 tr/m2.Nhận nhà ngay!Giá từ: Từ 24tr - 28 triệu/m2.Dự án được Ngân hàng BIDV, Vietinbank, PV Bank, MB, VP Bank... Hỗ trợ tới 70% giá trị căn hộ, thủ tục đơn giản nhanh chóng.Để lựa chọn căn hộ đẹp và ưng ý nhất cũng như đi xem khu đô thị quý khách vui lòng gọi theo số: – 0989 62 93 62.1. Đóng 30% ký HĐMB. Trong vòng 5 đến 7 ngày khi đặt cọc mua căn hộ.2. Trước 10/03/2016 đóng 40%.3. Nhận bàn giao 25% + PBT.4. Bàn giao sổ thanh toán 5% còn lại.Quý khách có thể đóng đủ 95% để nhận nhà sớm hơn.Xem nhà ngay khi có yêu cầu!Hotline: 0989 62 93 62.\r\n        \r\n            Tìm kiếm theo từ khóa: \r\n        \r\n                Bán chung cư Tòa A3 Green Stars\r\n            \r\n                , \r\n            \r\n                Bán căn hộ Green Stars Bắc Từ Liêm\r\n            \r\n                , \r\n            \r\n                Bán căn hộ Green Stars\r\n            \r\n                , \r\n            \r\n                Bán chung cư Tòa A3 Green Stars\r\n            \r\n                , \r\n            \r\n                Bán căn hộ Green Stars Bắc Từ Liêm\r\n            \r\n                , \r\n            \r\n                Bán căn hộ Green Stars"
-	},
-	{
+	}, {
 	  "title": "3 ĐIỀU KHÁCH HÀNG CẦN PHẢI LƯU TÂM KHI CHỌN MUA BIỆT THỰ VINHOMES RIVERSIDE LONG BIÊN",
-	  "images_small": [
-	    "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112917-e2aa.jpg",
-	    "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112923-efb3.jpg",
-	    "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112928-16a8.jpg",
-	    "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112935-0433.jpg"
-	  ],
+	  "images_small": ["http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112917-e2aa.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112923-efb3.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112928-16a8.jpg", "http://file4.batdongsan.com.vn/resize/80x60/2016/04/02/20160402112935-0433.jpg"],
 	  "price_value": "Thỏa",
 	  "price_unit": "thuận",
 	  "dienTich": null,
@@ -855,157 +806,145 @@
 	  },
 	  "type": "Ads",
 	  "cover": "http://file4.batdongsan.com.vn/crop/120x90/2016/04/02/20160402112917-e2aa.jpg"
-	}
-	]
+	}];
 
-
-	window.hot_ads_cat = [
-	  {
-	    name: "Biệt thự",
-	    location: "Hồ Tây",
-	    list: window.testData
-	  },
-	  {
-	    name: "Chung cư",
-	    location: "Thanh Xuân",
-	    list: window.testData 
-	  }
-	];
-
-
+	window.hot_ads_cat = [{
+	  name: "Biệt thự",
+	  location: "Hồ Tây",
+	  list: window.testData
+	}, {
+	  name: "Chung cư",
+	  location: "Thanh Xuân",
+	  list: window.testData
+	}];
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	window.RewayClientUtils = (function($) {
+	'use strict';
+
+	window.RewayClientUtils = function ($) {
 		'use strict';
-		 var div_icon = {
-	            type: 'div',
-	            iconSize: [230, 0],
-	            html: 'Using <strong>Bold text as an icon</strong>: Lisbon',
-	            popupAnchor:  [0, 0]
-	    };
+
+		var div_icon = {
+			type: 'div',
+			iconSize: [230, 0],
+			html: 'Using <strong>Bold text as an icon</strong>: Lisbon',
+			popupAnchor: [0, 0]
+		};
 		return {
-			createPlaceAutoComplete: function(callback, inputTagId, map){
-				$( "#" + inputTagId ).autocomplete({
+			createPlaceAutoComplete: function createPlaceAutoComplete(callback, inputTagId, map) {
+				$("#" + inputTagId).autocomplete({
 					minLength: 0,
-					source: function (request, response) {
+					source: function source(request, response) {
 						var options = {
 							input: request.term,
-				               //types: ['(cities)'],
-				               //region: 'US',
-				               componentRestrictions: { country: "vn" }
-				           };
-				           function callback(predictions, status) {
-				           	var results = [];
-				           	if(predictions){
-				           		for (var i = 0, prediction; prediction = predictions[i]; i++) {
-				           			results.push(
-				           			{
-				           				description: prediction.description,
-				           				types:  	prediction.types, 
-				           				place_id: 	prediction.place_id
-				           			}
-				           			);
-				           		}	
-				           	}
-				           	
-				           	response(results);
-				           }
-				           var service = new google.maps.places.AutocompleteService();
-				           service.getPlacePredictions(options, callback);
-				           var results = [];
-				       },
-				       focus: function( event, ui ) {
-				       	$( "#" + inputTagId ).val( ui.item.description );
-				       	return false;
-				       },
-				       select: function( event, ui ) {
-				       	$( "#" + inputTagId ).val( ui.item.description );
-				        // $( "#project-id" ).val( ui.item.value );
-				        // $( "#project-description" ).html( ui.item.desc );
-				        // $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
-				        //alert(ui.item.place_id);
-				        //var map = $scope.map.control.getGMap();
-				        var service = new google.maps.places.PlacesService(map);
+							//types: ['(cities)'],
+							//region: 'US',
+							componentRestrictions: { country: "vn" }
+						};
+						function callback(predictions, status) {
+							var results = [];
+							if (predictions) {
+								for (var i = 0, prediction; prediction = predictions[i]; i++) {
+									results.push({
+										description: prediction.description,
+										types: prediction.types,
+										place_id: prediction.place_id
+									});
+								}
+							}
+							response(results);
+						}
+						var service = new google.maps.places.AutocompleteService();
+						service.getPlacePredictions(options, callback);
+						var results = [];
+					},
+					focus: function focus(event, ui) {
+						$("#" + inputTagId).val(ui.item.description);
+						return false;
+					},
+					select: function select(event, ui) {
+						$("#" + inputTagId).val(ui.item.description);
+						// $( "#project-id" ).val( ui.item.value );
+						// $( "#project-description" ).html( ui.item.desc );
+						// $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+						//alert(ui.item.place_id);
+						//var map = $scope.map.control.getGMap();
+						var service = new google.maps.places.PlacesService(map);
 
-				        service.getDetails({
-				        	placeId: ui.item.place_id
-				        }, function(place, status) {
-				        	if (status === google.maps.places.PlacesServiceStatus.OK && callback) {
-				        		callback(place);
-				        	}
-				        });
-				        return false;
-				    }
-				})
-				.autocomplete( "instance" )._renderItem = function( ul, item ) {
-					return $( "<li class='googlemap'>")
-					.append( "<span>" + item.description +  "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>" )
-					.appendTo( ul );
+						service.getDetails({
+							placeId: ui.item.place_id
+						}, function (place, status) {
+							if (status === google.maps.places.PlacesServiceStatus.OK && callback) {
+								callback(place);
+							}
+						});
+						return false;
+					}
+				}).autocomplete("instance")._renderItem = function (ul, item) {
+					return $("<li class='googlemap'>").append("<span>" + item.description + "<span style='float: right;'>" + window.RewayPlaceUtil.getTypeName(item) + "</span></span>").appendTo(ul);
 				};
 			},
-			getBoundsAtLatLngWithZoom: function(maps,map, center, zoom) {
-
-			},
-			isSameDate: function(date1,date2){
-				if(date1 && date2){
+			getBoundsAtLatLngWithZoom: function getBoundsAtLatLngWithZoom(maps, map, center, zoom) {},
+			isSameDate: function isSameDate(date1, date2) {
+				if (date1 && date2) {
 					console.log(date1.getYear() + "/" + date1.getMonth() + "/" + date1.getDate());
 					console.log(date2.getYear() + "/" + date2.getMonth() + "/" + date2.getDate());
-					return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth()
-						&& date1.getDate() == date2.getDate();
+					return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate();
 				}
 				return false;
 			},
-			addChatMessage: function(chatbox,msg){
+			addChatMessage: function addChatMessage(chatbox, msg) {
 				var messages = chatbox.messages;
-				if(messages.length>0){
-					var lastDate = messages[messages.length-1].date;
-					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate,msg.date);
-				}else{
+				if (messages.length > 0) {
+					var lastDate = messages[messages.length - 1].date;
+					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate, msg.date);
+				} else {
 					msg.showDate = true;
 					msg.date = new Date(msg.date);
 					msg.dateDisplay = this.formatDateWeekDay(msg.date);
 				}
 				messages.push(msg);
 			},
-			formatDateWeekDay: function(date){
-				if(date){
-					var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-					var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-					var day = days[ date.getDay() ];
-					var month = months[ date.getMonth() ];
+			formatDateWeekDay: function formatDateWeekDay(date) {
+				if (date) {
+					var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+					var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+					var day = days[date.getDay()];
+					var month = months[date.getMonth()];
 					return day + " " + month + " " + date.getFullYear();
 				}
 				return "";
 			}
-		}
-	})(jQuery);
+		};
+	}(jQuery);
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 	  'use strict';
+
 	  window.initData = {};
-	  
+
 	  var postal = __webpack_require__(4);
-	    
-	  var tap = postal.addWireTap( function( d, e ) {
-	    console.log( JSON.stringify( e ) );
+
+	  var tap = postal.addWireTap(function (d, e) {
+	    console.log(JSON.stringify(e));
 	  });
 
-
-	  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
-	  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
+	  var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll']).run(['$rootScope', '$cookieStore', '$http', '$compile', function ($rootScope, $cookieStore, $http, $compile, $sce) {
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
-	    $rootScope.center  = {
+	    $rootScope.center = {
 	      lat: 16.0439,
 	      lng: 108.199
-	    }
+	    };
 
 	    $rootScope.loginbox = {};
 	    $rootScope.chatBoxes = [];
@@ -1014,18 +953,18 @@
 	      userID: null,
 	      adsLikes: [],
 	      lastSearch: null
-	    }    
+	    };
 	    $rootScope.pageSize = 25;
 
 	    $rootScope.searchData = {
-	      giaBETWEEN: [0,9999999999999],
+	      giaBETWEEN: [0, 9999999999999],
 	      "loaiTin": 0,
-	      "loaiNhaDat": 0, 
+	      "loaiNhaDat": 0,
 	      "loaiNhaDats": [],
 	      "soPhongNguGREATER": 0,
 	      "soPhongTamGREATER": 0,
 	      "soTangGREATER": 0,
-	      "dienTichBETWEEN": [0,99999999999999],
+	      "dienTichBETWEEN": [0, 99999999999999],
 	      "huongNha": 0,
 	      "huongNhas": [],
 	      "radiusInKm": 2,
@@ -1035,7 +974,7 @@
 	      "limit": $rootScope.pageSize,
 	      "orderBy": 0,
 	      "pageNo": 1
-	    }
+	    };
 	    //mobile login box controll
 
 	    $rootScope.ENTER_EMAIL = 1;
@@ -1050,37 +989,31 @@
 	    $rootScope.currentLocation = {
 	      lat: undefined,
 	      lon: undefined
-	    } 
+	    };
 	    $rootScope.lastSearch = undefined;
 
-	    $rootScope.signin = function(){
-
-	    }
+	    $rootScope.signin = function () {};
 	    //end mobild login box controll
 
-	    $rootScope.alreadyLike = function(adsID){
-	      return _.indexOf($rootScope.user.adsLikes,adsID) >=0;
-	    } 
+	    $rootScope.alreadyLike = function (adsID) {
+	      return _.indexOf($rootScope.user.adsLikes, adsID) >= 0;
+	    };
 
-	    $rootScope.showDangNhapForLike = function(){
-	        
-	    }
+	    $rootScope.showDangNhapForLike = function () {};
 
-	    $rootScope.isLoggedIn = function(){
-	      return $rootScope.user.userID;
-	    }
+	    $rootScope.isLoggedIn = function () {
+	      if ($rootScope.user.userID) return true;
+	      return false;
+	    };
 
 	    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
 	      $rootScope.lastState = from;
 	      $rootScope.lastStateParams = fromParams;
 	    });
-	    
-	      
+
 	    $rootScope.chat_visible = true;
-	    $rootScope.showChat = function(user,scope){
-	      if($rootScope.chatBoxes.hasOwnProperty(user.email)){
-	        
-	      }else{
+	    $rootScope.showChat = function (user, scope) {
+	      if ($rootScope.chatBoxes.hasOwnProperty(user.email)) {} else {
 	        $rootScope.chatBoxes[user.email] = user;
 	        var divElement = angular.element(document.querySelector('#chat-container'));
 	        var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
@@ -1090,30 +1023,26 @@
 	      /*if(true || $rootScope.user.userName){
 	        $rootScope.chat_visible = true;
 	        $rootScope.chat_user = user;
-
-	      }
+	        }
 	      else{
 	        alert(window.RewayConst.MSG.LOGIN_REQUIRED);
 	      }*/
-	    }
-	    $rootScope.closeChat = function(){
+	    };
+	    $rootScope.closeChat = function () {
 	      $rootScope.chat_visible = false;
-	    }
-	    
-	    $rootScope.postPageRendered = function(){
+	    };
+
+	    $rootScope.postPageRendered = function () {
 	      // alert('aaa');
 	      //window.DesignCommon.adjustPage();
-	    }
+	    };
 
-
-
-	    $rootScope.signout = function(){
-	        $rootScope.loginbox.resetLoginBox(); 
-	    }
+	    $rootScope.signout = function () {
+	      $rootScope.loginbox.resetLoginBox();
+	    };
 	    $rootScope.bodyClass = "page-home";
 
-
-	    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
+	    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
 	      //alert(toState.name);
 	      // if (toState.name === 'msearch') {
 	      //   if(toParams.viewMode == "list"){
@@ -1127,301 +1056,287 @@
 	      //     toState.templateUrl = '/web/'+toState.name+'.html';
 	      //   //toState.templateUrl = '/web/marker.html';
 	      // }
-	      if(!toState.templateUrl)
-	          toState.templateUrl = '/web/'+toState.name+'.html';
-	        //if (toState.name === 'list') {
-	        //  alert(toState);
-	          
-	        //}
+	      if (!toState.templateUrl) toState.templateUrl = '/web/' + toState.name + '.html';
+	      //if (toState.name === 'list') {
+	      //  alert(toState);
+
+	      //}
 	    });
-	    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-	      console.log("changed to state " + toState) ;
+	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+	      console.log("changed to state " + toState);
 	    });
 
-	    $rootScope.getGoogleLocation = function(val) {
-	        return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
-	          params: {
-	            address: val,
-	            //language: 'en',
-	            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-	            //types: 'gecodes,cities,places',
-	            components: 'country:vn',
-	            sensor: false
-	          }
-	        }).then(function(response){
-	          /*return response.data.results.map(function(item){
-	            return item;
-	          });*/
-	          return response.data.results;
-	        });
-	        // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
-	        //   params: {
-	        //     input: val,
-	        //     language: 'en',
-	        //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-	        //     //types: 'gecodes,cities',
-	        //     components: 'country:vn',
-	        //     sensor: false
-	        //   }
-	        // }).then(function(response){
-	        //   /*return response.data.results.map(function(item){
-	        //     return item;
-	        //   });*/
-	        //   return response.data.results;
-	        // });
-	      };
-	    $rootScope.getGoogleLocationById = function(val) {
-	        return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
-	          params: {
-	            placeid: val,
-	            // language: 'en',
-	            key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
-	            //types: 'gecodes,cities',
-	            // components: 'country:vn',
-	            // sensor: false
-	          }
-	        }).then(function(response){
-	          /*return response.data.results.map(function(item){
-	            return item;
-	          });*/
-	          return response.data.result;
-	        });
-	      };
-
+	    $rootScope.getGoogleLocation = function (val) {
+	      return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+	        params: {
+	          address: val,
+	          //language: 'en',
+	          key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	          //types: 'gecodes,cities,places',
+	          components: 'country:vn',
+	          sensor: false
+	        }
+	      }).then(function (response) {
+	        /*return response.data.results.map(function(item){
+	          return item;
+	        });*/
+	        return response.data.results;
+	      });
+	      // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
+	      //   params: {
+	      //     input: val,
+	      //     language: 'en',
+	      //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	      //     //types: 'gecodes,cities',
+	      //     components: 'country:vn',
+	      //     sensor: false
+	      //   }
+	      // }).then(function(response){
+	      //   /*return response.data.results.map(function(item){
+	      //     return item;
+	      //   });*/
+	      //   return response.data.results;
+	      // });
+	    };
+	    $rootScope.getGoogleLocationById = function (val) {
+	      return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
+	        params: {
+	          placeid: val,
+	          // language: 'en',
+	          key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
+	          //types: 'gecodes,cities',
+	          // components: 'country:vn',
+	          // sensor: false
+	        }
+	      }).then(function (response) {
+	        /*return response.data.results.map(function(item){
+	          return item;
+	        });*/
+	        return response.data.result;
+	      });
+	    };
 	  }]);
-	  bds.config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
-	      // For any unmatched url, send to /route1
-	      $locationProvider.html5Mode(true);
+	  bds.config(function ($provide, $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider) {
+	    // For any unmatched url, send to /route1
+	    $locationProvider.html5Mode(true);
 
-
-	      $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
-	       Object.defineProperty($delegate.constructor.prototype, 
-	            '$bus', {
-	                value: postal,
-	                enumerable: false
-	            });
-	        return $delegate;
+	    $provide.decorator('$rootScope', ['$delegate', '$window', function ($delegate, $window) {
+	      Object.defineProperty($delegate.constructor.prototype, '$bus', {
+	        value: postal,
+	        enumerable: false
+	      });
+	      return $delegate;
 	    }]);
 
-
-
-
-	      $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-	       return {
-	           'request': function (config) {
-	               config.headers = config.headers || {};
-	               if ($localStorage.relandToken) {
-	                   config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
-	               }
-	               return config;
-	           },
-	           'responseError': function (response) {
-	               if (response.status === 401 || response.status === 403) {
-	                   //$location.path('/signin');
-	                   alert("Đăng nhập hệ thống để sử dụng tính năng này");
-	               }
-	               return $q.reject(response);
-	           }
-	       };
-	      }]);
-
-	      //$urlRouterProvider.otherwise("/web/list.html")
-	      //alert('sss');
-	      // $interpolateProvider.startSymbol('{[{');
-	      // $interpolateProvider.endSymbol('}]}');
-
-	     /*uiGmapGoogleMapApiProvider.configure({
-	          //    key: 'your api key',
-	          v: '3.20', //defaults to latest 3.X anyhow
-	          libraries: 'places,geometry,visualization' // Required for SearchBox.
-	      });*/
-	      $stateProvider
-	      .state('package', {
-	        url: "/hotlist/:packageID/:viewMode",
-	        templateUrl: "/web/search.html",
-	        controller: "SearchCtrl",
-	        controllerAs: 'mc',
-	        resolve: {
-	          title: function(HouseService,$stateParams,$rootScope) {
-	            var result = HouseService.getAllAds();
-	            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	            //alert($state.params.place);
-	            //var result = HouseService.findAdsSpatial($stateParams.place);
-	            result.then(function(data){
-	              window.initData = data.data;
-	            }); 
-	            return result;
+	    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+	      return {
+	        'request': function request(config) {
+	          config.headers = config.headers || {};
+	          if ($localStorage.relandToken) {
+	            config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
 	          }
+	          return config;
 	        },
-	        data: {
-	            //bodyClass: "page-search",
-	            //abc: title
-	        } 
-	        // ,
-	        // controller: function($scope,sellingHouses){
-	        //   $scope.sellingHouses = sellingHouses;
-	        //   //alert(sellingHouses.length);
-	        // }
-	      })
-	      .state('searchdc', {
-	        url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
-	        templateUrl: "/web/search.html",
-	        controller: "SearchCtrl",
-	        controllerAs: 'mc',
-	        resolve: {
-	          title: function(HouseService,$stateParams,$rootScope) {
-	            var result = HouseService.getAllAds();
-	            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	            //alert($state.params.place);
-	            //var result = HouseService.findAdsSpatial($stateParams.place);
-	            result.then(function(data){
-	              window.initData = data.data;
-	            }); 
-	            return result;
+	        'responseError': function responseError(response) {
+	          if (response.status === 401 || response.status === 403) {
+	            //$location.path('/signin');
+	            alert("Đăng nhập hệ thống để sử dụng tính năng này");
 	          }
-	        },
-	        data: {
-	            //bodyClass: "page-search",
-	            //abc: title
-	        } 
-	        // ,
-	        // controller: function($scope,sellingHouses){
-	        //   $scope.sellingHouses = sellingHouses;
-	        //   //alert(sellingHouses.length);
-	        // }
-	      }).state('search', {
-	          url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-	        // templateUrl: "/web/search.tpl.html",
-	        controller: "SearchCtrl",
-	        controllerAs: 'mc',
-	        resolve: {
-	          title: function(HouseService,$stateParams,$rootScope) {
-	            var result = HouseService.getAllAds();
-	            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	            //alert($state.params.place);
-	            //var result = HouseService.findAdsSpatial($stateParams.place);
-	            result.then(function(data){
-	              window.initData = data.data;
-	            }); 
-	            return result;
-	          }
-	        },
-	        data: {
-	            //bodyClass: "page-search",
-	            //abc: title
-	        } 
-	        // ,
-	        // controller: function($scope,sellingHouses){
-	        //   $scope.sellingHouses = sellingHouses;
-	        //   //alert(sellingHouses.length);
-	        // }
-	      }).state('home', {
-	        url: "/index.html",
-	        templateUrl: "/web/index_content.html",
-	        controller: "MainCtrl",
-	        controllerAs: 'mc',
-	        resolve: {
-	          title: function(HouseService) {
-	            //alert(HouseService);
-	            //return HouseService.getAllAds();
-	            /*.then(function(data){
-	              return data.data;
-	            });*/
-	            //return $http.get("http://www.dantri.com");
-	            window.initData = [{a:'a'},{b:'b'}];
-	          }
-	        },
-	        data: {
-	            bodyClass: "page-home",
-	            xyz: [{a:'b'}],
+	          return $q.reject(response);
 	        }
-	      }).state('detail', {
-	        url: "/detail/:adsID",
-	        //templateUrl: "/web/index_content.html",
-	        controller: "DetailCtrl",
-	        controllerAs: 'dt',
-	        data: {
-	            bodyClass: "page-detail"
-	        }
-	      }).state('news', {
-	          url: "/news/:rootCatId",
-	          controller: "NewsCtrl",
-	          controllerAs: 'nc',
-	          data: {
+	      };
+	    }]);
 
-	          }
-	      }).state('newsDetail', {
-	          url: "/newsDetail/:rootCatId/:articleId",
-	          controller: "NewsDetailCtrl",
-	          controllerAs: 'ndc',
-	          data: {
+	    //$urlRouterProvider.otherwise("/web/list.html")
+	    //alert('sss');
+	    // $interpolateProvider.startSymbol('{[{');
+	    // $interpolateProvider.endSymbol('}]}');
 
-	          }
-	      }).state('resetPassword', {
-	        url: "/resetPassword",
-	        templateUrl: "/web/index_content.html",
-	        controller: "MainCtrl",
-	        controllerAs: 'mc',
-	        data: {
-	            bodyClass: "page-detail"
+	    /*uiGmapGoogleMapApiProvider.configure({
+	         //    key: 'your api key',
+	         v: '3.20', //defaults to latest 3.X anyhow
+	         libraries: 'places,geometry,visualization' // Required for SearchBox.
+	     });*/
+	    $stateProvider.state('package', {
+	      url: "/hotlist/:packageID/:viewMode",
+	      templateUrl: "/web/search.html",
+	      controller: "SearchCtrl",
+	      controllerAs: 'mc',
+	      resolve: {
+	        title: function title(HouseService, $stateParams, $rootScope) {
+	          var result = HouseService.getAllAds();
+	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	          //alert($state.params.place);
+	          //var result = HouseService.findAdsSpatial($stateParams.place);
+	          result.then(function (data) {
+	            window.initData = data.data;
+	          });
+	          return result;
 	        }
-	      }).state('profile', {
-	        url: "/profile/:userID",
-	        templateUrl: "/web/profile.tpl.html",
-	        controller: "ProfileCtrl",
-	        controllerAs: 'pc',
-	        data: {
-	            bodyClass: "page-detail"
+	      },
+	      data: {}
+	      //bodyClass: "page-search",
+	      //abc: title
+
+	      // ,
+	      // controller: function($scope,sellingHouses){
+	      //   $scope.sellingHouses = sellingHouses;
+	      //   //alert(sellingHouses.length);
+	      // }
+	    }).state('searchdc', {
+	      url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
+	      templateUrl: "/web/search.html",
+	      controller: "SearchCtrl",
+	      controllerAs: 'mc',
+	      resolve: {
+	        title: function title(HouseService, $stateParams, $rootScope) {
+	          var result = HouseService.getAllAds();
+	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	          //alert($state.params.place);
+	          //var result = HouseService.findAdsSpatial($stateParams.place);
+	          result.then(function (data) {
+	            window.initData = data.data;
+	          });
+	          return result;
 	        }
-	      }).state('dangtin', {
-	        url: "/dangtin",
-	        templateUrl: "/web/dang-tin.html",
-	        controller: "DangTinCtrl",
-	        controllerAs: 'dt',
-	        data: {
-	            bodyClass: "page-detail"
+	      },
+	      data: {}
+	      //bodyClass: "page-search",
+	      //abc: title
+
+	      // ,
+	      // controller: function($scope,sellingHouses){
+	      //   $scope.sellingHouses = sellingHouses;
+	      //   //alert(sellingHouses.length);
+	      // }
+	    }).state('search', {
+	      url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+	      // templateUrl: "/web/search.tpl.html",
+	      controller: "SearchCtrl",
+	      controllerAs: 'mc',
+	      resolve: {
+	        title: function title(HouseService, $stateParams, $rootScope) {
+	          var result = HouseService.getAllAds();
+	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	          //alert($state.params.place);
+	          //var result = HouseService.findAdsSpatial($stateParams.place);
+	          result.then(function (data) {
+	            window.initData = data.data;
+	          });
+	          return result;
 	        }
-	      }).state('topview', {
-	        url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
-	        templateUrl: "/web/search.html",
-	        controller: "SearchCtrl",
-	        controllerAs: 'mc',
-	        resolve: {
-	          title: function(HouseService,$stateParams,$rootScope) {
-	            var result = HouseService.getAllAds();
-	            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	            //alert($state.params.place);
-	            //var result = HouseService.findAdsSpatial($stateParams.place);
-	            result.then(function(data){
-	              window.initData = data.data;
-	            }); 
-	            return result;
-	          }
+	      },
+	      data: {}
+	      //bodyClass: "page-search",
+	      //abc: title
+
+	      // ,
+	      // controller: function($scope,sellingHouses){
+	      //   $scope.sellingHouses = sellingHouses;
+	      //   //alert(sellingHouses.length);
+	      // }
+	    }).state('home', {
+	      url: "/index.html",
+	      templateUrl: "/web/index_content.html",
+	      controller: "MainCtrl",
+	      controllerAs: 'mc',
+	      resolve: {
+	        title: function title(HouseService) {
+	          //alert(HouseService);
+	          //return HouseService.getAllAds();
+	          /*.then(function(data){
+	            return data.data;
+	          });*/
+	          //return $http.get("http://www.dantri.com");
+	          window.initData = [{ a: 'a' }, { b: 'b' }];
 	        }
-	      }).state('mhome', {
-	        url: "/mobile/index.html",
-	        templateUrl: "/web/mobile/index_content.html",
-	        controller: "MobileHomeCtrl",
-	        controllerAs: 'mhc',
-	      })
-	      .state('msearch', {
-	        url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-	        templateUrl: "/web/mobile/search.html",
-	        controller: "MobileSearchCtrl",
-	        params:{query: null},
-	        controllerAs: 'msc',
-	      }).state('mdetail', {
-	        url: "/mobile/detail/:adsID",
-	        templateUrl: "/web/mobile/detail.html",
-	        controller: "MobileDetailCtrl",
-	        controllerAs: 'mdt'
-	      }).state('mchats', {
-	        url: "/mobile/chats/:adsID",
-	        templateUrl: "/web/mobile/chats.html",
-	        controller: "MobileChatCtrl",
-	        controllerAs: 'mcc'
-	      })
+	      },
+	      data: {
+	        bodyClass: "page-home",
+	        xyz: [{ a: 'b' }]
+	      }
+	    }).state('detail', {
+	      url: "/detail/:adsID",
+	      //templateUrl: "/web/index_content.html",
+	      controller: "DetailCtrl",
+	      controllerAs: 'dt',
+	      data: {
+	        bodyClass: "page-detail"
+	      }
+	    }).state('news', {
+	      url: "/news/:rootCatId",
+	      controller: "NewsCtrl",
+	      controllerAs: 'nc',
+	      data: {}
+	    }).state('newsDetail', {
+	      url: "/newsDetail/:rootCatId/:articleId",
+	      controller: "NewsDetailCtrl",
+	      controllerAs: 'ndc',
+	      data: {}
+	    }).state('resetPassword', {
+	      url: "/resetPassword",
+	      templateUrl: "/web/index_content.html",
+	      controller: "MainCtrl",
+	      controllerAs: 'mc',
+	      data: {
+	        bodyClass: "page-detail"
+	      }
+	    }).state('profile', {
+	      url: "/profile/:userID",
+	      templateUrl: "/web/profile.tpl.html",
+	      controller: "ProfileCtrl",
+	      controllerAs: 'pc',
+	      data: {
+	        bodyClass: "page-detail"
+	      }
+	    }).state('dangtin', {
+	      url: "/dangtin",
+	      templateUrl: "/web/dang-tin.html",
+	      controller: "DangTinCtrl",
+	      controllerAs: 'dt',
+	      data: {
+	        bodyClass: "page-detail"
+	      }
+	    }).state('topview', {
+	      url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
+	      templateUrl: "/web/search.html",
+	      controller: "SearchCtrl",
+	      controllerAs: 'mc',
+	      resolve: {
+	        title: function title(HouseService, $stateParams, $rootScope) {
+	          var result = HouseService.getAllAds();
+	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	          //alert($state.params.place);
+	          //var result = HouseService.findAdsSpatial($stateParams.place);
+	          result.then(function (data) {
+	            window.initData = data.data;
+	          });
+	          return result;
+	        }
+	      }
+	    }).state('mhome', {
+	      url: "/mobile/index.html",
+	      templateUrl: "/web/mobile/index_content.html",
+	      controller: "MobileHomeCtrl",
+	      controllerAs: 'mhc'
+	    }).state('msearch', {
+	      url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+	      templateUrl: "/web/mobile/search.html",
+	      controller: "MobileSearchCtrl",
+	      params: { query: null },
+	      controllerAs: 'msc'
+	    }).state('mdetail', {
+	      url: "/mobile/detail/:adsID",
+	      templateUrl: "/web/mobile/detail.html",
+	      controller: "MobileDetailCtrl",
+	      controllerAs: 'mdt'
+	    }).state('mchats', {
+	      url: "/mobile/chats/:adsID",
+	      templateUrl: "/web/mobile/chats.html",
+	      controller: "MobileChatCtrl",
+	      controllerAs: 'mcc'
 	    });
+	  });
 	  bds.factory('socket', function (socketFactory) {
 	    // var socket = io.connect("http://localhost:5000");
 	    var socket = io.connect();
@@ -1429,14 +1344,11 @@
 	    // socket.connect();
 	    return socket;
 	  });
-	  })();
+	})();
 
-
-
-	  hello = function (){
-	    alert('hello buddy! how are you today?');
-	  }
-
+	var hello = function hello() {
+	  alert('hello buddy! how are you today?');
+	};
 
 /***/ },
 /* 4 */
@@ -18021,89 +17933,86 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'MainCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$q){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location, $q) {
 			var vm = this;
 			//nhannc
 			$scope.loaiTin = 0;
 			$scope.loaiNhaDat;
 			$scope.listCategory = [];
-			$scope.placeSearchId='ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			$scope.placeSearchId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
 			init();
 			initHotAds();
 			//alert("placeSearchId: " + $scope.placeSearchId);
 
 			$scope.$bus.subscribe({
-	            channel: 'user',
-	            topic: 'logged-in',
-	            callback: function(data, envelope) {
-	                //console.log('add new chat box', data, envelope);
-	                initHotAds();
-	            }
-	        });
+				channel: 'user',
+				topic: 'logged-in',
+				callback: function callback(data, envelope) {
+					//console.log('add new chat box', data, envelope);
+					initHotAds();
+				}
+			});
 
-			$scope.goToPageSearch = function(loaiTin, loaiBds){
-				if(loaiTin)
-					$scope.loaiTin = loaiTin;
-				if(loaiBds)
-					$scope.loaiNhaDat = loaiBds;
-				if($scope.loaiNhaDat == '0')
-					$scope.loaiNhaDat = null;
+			$scope.goToPageSearch = function (loaiTin, loaiBds) {
+				if (loaiTin) $scope.loaiTin = loaiTin;
+				if (loaiBds) $scope.loaiNhaDat = loaiBds;
+				if ($scope.loaiNhaDat == '0') $scope.loaiNhaDat = null;
 
 				console.log("$scope.loaiTin: " + $scope.loaiTin);
 				console.log("$scope.loaiNhaDat: " + $scope.loaiNhaDat);
 				console.log("$scope.placeId: " + $scope.placeSearchId);
-				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat }, {location: true});
-			}
-			$scope.goToPageNews = function(rootCatId){
+				$state.go('search', { "place": $scope.placeSearchId, "loaiTin": $scope.loaiTin, "loaiNhaDat": $scope.loaiNhaDat }, { location: true });
+			};
+			$scope.goToPageNews = function (rootCatId) {
 				console.log("--goToPageNews---rootCatId: " + rootCatId);
-				$state.go('news',{"rootCatId" : rootCatId});
-			}
-			vm.selectPlaceCallback = function(place){
+				$state.go('news', { "rootCatId": rootCatId });
+			};
+			vm.selectPlaceCallback = function (place) {
 				$scope.searchPlaceSelected = place;
 				$scope.placeSearchId = place.place_id;
-			}
-			$scope.setLoaiTin = function(loaiTin){
+			};
+			$scope.setLoaiTin = function (loaiTin) {
 				$scope.loaiTin = loaiTin;
-			}
+			};
 
 			//End nhannc
-			vm.getAllAds = function(){
-				HouseService.getAllAds().then(function(res){
+			vm.getAllAds = function () {
+				HouseService.getAllAds().then(function (res) {
 					vm.sellingHouses = res.data;
 					$scope.markers = [];
-					for(var i = 0; i < res.data.length; i++) {
-			    		var ads = res.data[i];
-			    		if(res.data[i].map)
-			    			$scope.markers.push(res.data[i].map.marker);
+					for (var i = 0; i < res.data.length; i++) {
+						var ads = res.data[i];
+						if (res.data[i].map) $scope.markers.push(res.data[i].map.marker);
 					}
 				});
-			}
-			vm.goDetail = function(cat, index){
-				$state.go('detail', { "adsID" : cat.list[index].adsID}, {location: true});
-			}
+			};
+			vm.goDetail = function (cat, index) {
+				$state.go('detail', { "adsID": cat.list[index].adsID }, { location: true });
+			};
 
-			$scope.$on('$viewContentLoaded', function(){
+			$scope.$on('$viewContentLoaded', function () {
 				//addCrudControls
-				$timeout(function() {
+				$timeout(function () {
 					window.DesignCommon.adjustPage();
-				},0);
-				if($state.current.data)
-					$rootScope.bodyClass = $state.current.data.bodyClass
+				}, 0);
+				if ($state.current.data) $rootScope.bodyClass = $state.current.data.bodyClass;
 				// window.onresize = function() {
 				//     window.DesignCommon.resizePage();
 				// }
 			});
 
-			vm.formatLabel = function(model){
-				if(model)
-					return model.formatted_address;
+			vm.formatLabel = function (model) {
+				if (model) return model.formatted_address;
 			};
 
-			vm.showMoreCat = function(cat){
-				$state.go('topview', { "tinhKhongDau" : cat.query.diaChinh.tinhKhongDau, "huyenKhongDau" : cat.query.diaChinh.huyenKhongDau, "ngayDaDang" : cat.query.ngayDaDang }, {location: true});
+			vm.showMoreCat = function (cat) {
+				$state.go('topview', { "tinhKhongDau": cat.query.diaChinh.tinhKhongDau, "huyenKhongDau": cat.query.diaChinh.huyenKhongDau, "ngayDaDang": cat.query.ngayDaDang }, { location: true });
 
 				// cat.query.pageNo = cat.query.pageNo + 1;
 				// HouseService.findAdsSpatial(cat.query).then(function(res){							
@@ -18113,63 +18022,62 @@
 				// });
 			};
 
-
-			function init(){
+			function init() {
 				//nhannc
 				$scope.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
 				$scope.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 				$scope.loaiNhaDatCanMua = window.RewayListValue.LoaiNhaDatCanMuaWeb;
 				$scope.loaiNhaDatCanThue = window.RewayListValue.LoaiNhaDatCanThueWeb;
 				/*
-				console.log("---------nhannc--------------listCategory");
-				NewsService.findRootCategory().then(function(res){
-					var result = [];
-					if(res.data.list){
-						for (var i = 0; i < res.data.list.length; i++) {
-							$scope.listCategory.push({value: res.data.list[i].cat_id, lable: res.data.list[i].cat_name});
-						}
-					}
-					console.log("---------listCategory: " + $scope.listCategory.length);
-					console.log($scope.listCategory);
-				});*/
+	   console.log("---------nhannc--------------listCategory");
+	   NewsService.findRootCategory().then(function(res){
+	   	var result = [];
+	   	if(res.data.list){
+	   		for (var i = 0; i < res.data.list.length; i++) {
+	   			$scope.listCategory.push({value: res.data.list[i].cat_id, lable: res.data.list[i].cat_name});
+	   		}
+	   	}
+	   	console.log("---------listCategory: " + $scope.listCategory.length);
+	   	console.log($scope.listCategory);
+	   });*/
 
 				//NhanNc add menu Tin tuc
 				console.log("---------nhannc--------------initHomeCtrl");
-				if(!menuHasContainsNewsCategory()){
-					var danhMucCategory =  {
+				if (!menuHasContainsNewsCategory()) {
+					var danhMucCategory = {
 						label: "Tin tức",
 						value: {},
 						visible: true,
 						items: []
 					};
 
-					NewsService.findRootCategory().then(function(res){
-						if(res.data.list){
+					NewsService.findRootCategory().then(function (res) {
+						if (res.data.list) {
 							$scope.listCat = [];
 							angular.forEach(res.data.list, function (myItem) {
 								//var deferred = $q.defer();
 								var cat = {};
 								/*
-								setTimeout(function () {
-									deferred.resolve(myItem);
-									console.log('long-running operation inside forEach loop done');
-								}, 2000);*/
-								cat.value = {menuType : 1, rootCatId : myItem.cat_id};
+	       setTimeout(function () {
+	       	deferred.resolve(myItem);
+	       	console.log('long-running operation inside forEach loop done');
+	       }, 2000);*/
+								cat.value = { menuType: 1, rootCatId: myItem.cat_id };
 								cat.label = myItem.cat_name;
 								var data = {
-									catId : myItem.cat_id
+									catId: myItem.cat_id
 								};
-								NewsService.findCategoryByParentId(data).then(function(res) {
-									if(res.data.list){
+								NewsService.findCategoryByParentId(data).then(function (res) {
+									if (res.data.list) {
 										cat.items = [];
 										for (var i = 0; i < res.data.list.length; i++) {
-											cat.items.push({value: {menuType : 1, rootCatId : res.data.list[i].cat_id}, label: res.data.list[i].cat_name});
+											cat.items.push({ value: { menuType: 1, rootCatId: res.data.list[i].cat_id }, label: res.data.list[i].cat_name });
 										}
 									}
-								})
+								});
 								$scope.listCat.push(cat);
 							});
-							if($scope.listCat.length >0){
+							if ($scope.listCat.length > 0) {
 								for (var i = 0; i < $scope.listCat.length; i++) {
 									danhMucCategory.items.push($scope.listCat[i]);
 								}
@@ -18181,75 +18089,72 @@
 				}
 				//NhanNc add menu Tin tuc
 
-				NgMap.getMap().then(function(map){
-		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-		        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autoCompleteHome",map);
-		        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-		        	$scope.PlacesService.getDetails({
-		        		placeId: $scope.placeId
-		        	}, function(place, status) {
-		        		if (status === google.maps.places.PlacesServiceStatus.OK) {
-		        			$scope.searchPlaceSelected = place;
-							        		//var map = $scope.map.control.getGMap();
-							        		var current_bounds = map.getBounds();
-							        		//$scope.map.center =  
-							        		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-							        		if(place.geometry.viewport){
-							        			//map.fitBounds(place.geometry.viewport);	
-							        			//$scope.map
-							        		} else if( !current_bounds.contains( place.geometry.location ) ){
-							        			//var new_bounds = current_bounds.extend(place.geometry.location);
-							        			//map.fitBounds(new_bounds);
-							        			//$digest();
-							        		}
-							        		$scope.$apply();
-							        		//vm.search();
-							        	}
-							        });
-
-	        	});
+				NgMap.getMap().then(function (map) {
+					// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+					window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback, "autoCompleteHome", map);
+					$scope.PlacesService = new google.maps.places.PlacesService(map);
+					$scope.PlacesService.getDetails({
+						placeId: $scope.placeId
+					}, function (place, status) {
+						if (status === google.maps.places.PlacesServiceStatus.OK) {
+							$scope.searchPlaceSelected = place;
+							//var map = $scope.map.control.getGMap();
+							var current_bounds = map.getBounds();
+							//$scope.map.center =  
+							vm.center = "[" + place.geometry.location.lat() + "," + place.geometry.location.lng() + "]";
+							if (place.geometry.viewport) {
+								//map.fitBounds(place.geometry.viewport);	
+								//$scope.map
+							} else if (!current_bounds.contains(place.geometry.location)) {
+								//var new_bounds = current_bounds.extend(place.geometry.location);
+								//map.fitBounds(new_bounds);
+								//$digest();
+							}
+							$scope.$apply();
+							//vm.search();
+						}
+					});
+				});
 				//end nhannc
-				$scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {}};
-				$scope.options = {scrollwheel: false,labelContent: 'gia'};
+				$scope.map = { center: { latitude: 16.0439, longitude: 108.199 }, zoom: 10, control: {} };
+				$scope.options = { scrollwheel: false, labelContent: 'gia' };
 				$scope.markerCount = 3;
 				$scope.markers = [];
 				$scope.initData = window.initData;
 				//$scope.hot_ads_cat = window.hot_ads_cat;
 				$scope.ads_list = window.testData;
-				$scope.bodyClass= "page-home";
-				for(var i = 0; i < $scope.ads_list.length; i++) { 
-		    		var ads = $scope.ads_list[i];
-		    		if(ads.place){
-		    			if(ads.place.geo){
-			    			ads.map={
-			    				center: {
-									latitude: 	ads.place.geo.lat,
-									longitude: 	ads.place.geo.lon
+				$scope.bodyClass = "page-home";
+				for (var i = 0; i < $scope.ads_list.length; i++) {
+					var ads = $scope.ads_list[i];
+					if (ads.place) {
+						if (ads.place.geo) {
+							ads.map = {
+								center: {
+									latitude: ads.place.geo.lat,
+									longitude: ads.place.geo.lon
 								},
-			    				marker: {
+								marker: {
 									id: i,
 									coords: {
-										latitude: 	ads.place.geo.lat,
-										longitude: 	ads.place.geo.lon
+										latitude: ads.place.geo.lat,
+										longitude: ads.place.geo.lon
 									},
 									options: {
 										//labelContent : ads.gia,
-										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ ads.gia+ '|FF0000|000000'
+										icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + ads.gia + '|FF0000|000000'
 									},
 									data: 'test'
 								},
-								options:{
+								options: {
 									scrollwheel: false
 								},
-								zoom: 14	
-			    			}
-			    			$scope.map.center = {latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
-			    			$scope.markers.push(ads.map.marker);
-			    					
+								zoom: 14
+							};
+							$scope.map.center = { latitude: ads.map.center.latitude, longitude: ads.map.center.longitude };
+							$scope.markers.push(ads.map.marker);
 						}
-		    		}
+					}
 				}
-
 			}
 
 			function menuHasContainsNewsCategory() {
@@ -18261,174 +18166,165 @@
 				return false;
 			}
 
-			$scope.getClass = function(i){
+			$scope.getClass = function (i) {
 				var colArr = ["col col-40", "col col-35", "col col-25"];
-				var reverse = false;	
-				var j = Math.floor(i/3);
-				if(j==0){
-					return colArr[i%3];
-				}else if(j==1){
-					return colArr[((i%3)+1)%3];
-				}else {
-					return colArr[((i%3)+2)%3];
+				var reverse = false;
+				var j = Math.floor(i / 3);
+				if (j == 0) {
+					return colArr[i % 3];
+				} else if (j == 1) {
+					return colArr[(i % 3 + 1) % 3];
+				} else {
+					return colArr[(i % 3 + 2) % 3];
 				}
 				/*var reverse = false;	
-				var j = Math.floor(i/2);
+	   var j = Math.floor(i/2);
+	   		if(i%2==0){
+	   	if(j%2==0)					
+	   		return "col col-40";
+	   	else
+	   		return "col col-60";
+	   }else{
+	   	if(j%2==0)					
+	   		return "col col-60";
+	   	else
+	   		return "col col-40";	
+	   }*/
+			};
 
-				if(i%2==0){
-					if(j%2==0)					
-						return "col col-40";
-					else
-						return "col col-60";
-				}else{
-					if(j%2==0)					
-						return "col col-60";
-					else
-						return "col col-40";	
-				}*/
-			}
-
-			
-			function initHotAds(){
+			function initHotAds() {
 				console.log("---------------------initHotAds ---------------");
-				$scope.hot_ads_cat =[];
-				$timeout(function() {
-					if($rootScope.user && $rootScope.user.userID && $rootScope.user.lastSearch){
-						var lastSearch = $rootScope.user.lastSearch;	
-						if(lastSearch){
-							for(var i=0;i<3;i++){
-								$scope.hot_ads_cat.push( {
+				$scope.hot_ads_cat = [];
+				$timeout(function () {
+					if ($rootScope.user && $rootScope.user.userID && $rootScope.user.lastSearch) {
+						var lastSearch = $rootScope.user.lastSearch;
+						if (lastSearch) {
+							for (var i = 0; i < 3; i++) {
+								$scope.hot_ads_cat.push({
 									name: "",
 									location: "",
-									list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
-								});	
+									list: [{ type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }]
+								});
 							}
 							var searchDataCungLoai = {
 								"loaiTin": lastSearch.loaiTin,
-								"loaiNhaDat": lastSearch.loaiNhaDat, 
+								"loaiNhaDat": lastSearch.loaiNhaDat,
 								"limit": 9,
 								"soPhongNguGREATER": 0,
-					  			"soPhongTamGREATER": 0,
-					  			"soTangGREATER": 0,
+								"soPhongTamGREATER": 0,
+								"soTangGREATER": 0,
 								"diaChinh": lastSearch.diaChinh,
 								"geoBox": lastSearch.geoBox,
 								"updateLastSearch": false,
-							  	"orderBy": "ngayDangTinDESC",
-							  	"pageNo": 1
+								"orderBy": "ngayDangTinDESC",
+								"pageNo": 1
 							};
-							HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
-								if(lastSearch.loaiNhaDat==0 ){
+							HouseService.findAdsSpatial(searchDataCungLoai).then(function (res) {
+								if (lastSearch.loaiNhaDat == 0) {
 									$scope.hot_ads_cat[0].name = "Bất động sản mới đăng";
-								}else{
-									$scope.hot_ads_cat[0].name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin,lastSearch.loaiNhaDat) + " mới đăng";
+								} else {
+									$scope.hot_ads_cat[0].name = window.RewayListValue.getLoaiNhaDatForDisplayNew(lastSearch.loaiTin, lastSearch.loaiNhaDat) + " mới đăng";
 								}
-								$scope.hot_ads_cat[0].list = res.data.list;	
-								$scope.hot_ads_cat[0].query = searchDataCungLoai;	
-								$scope.hot_ads_cat[0].hasMore = res.data.list.length>0;
-
+								$scope.hot_ads_cat[0].list = res.data.list;
+								$scope.hot_ads_cat[0].query = searchDataCungLoai;
+								$scope.hot_ads_cat[0].hasMore = res.data.list.length > 0;
 							});
 							var giaBETWEEN = lastSearch.giaBETWEEN;
 							var searchDataNgangGia = {
 								"loaiTin": lastSearch.loaiTin,
-								"loaiNhaDat": 0, 
+								"loaiNhaDat": 0,
 								"limit": 9,
 								"soPhongNguGREATER": 0,
-					  			"soPhongTamGREATER": 0,
-					  			"soTangGREATER": 0,
-					  			"giaBETWEEN": giaBETWEEN,
+								"soPhongTamGREATER": 0,
+								"soTangGREATER": 0,
+								"giaBETWEEN": giaBETWEEN,
 								"diaChinh": lastSearch.diaChinh,
 								"geoBox": lastSearch.geoBox,
-							  	"orderBy": "ngayDangTinDESC",
-							  	
-							  	"pageNo": 1
+								"orderBy": "ngayDangTinDESC",
+
+								"pageNo": 1
 							};
 							var searchDataDuoiGia = {
 								"loaiTin": lastSearch.loaiTin,
-								"loaiNhaDat": 0, 
+								"loaiNhaDat": 0,
 								"limit": 9,
 								"soPhongNguGREATER": 0,
-					  			"soPhongTamGREATER": 0,
-					  			"soTangGREATER": 0,
-					  			"giaBETWEEN": giaBETWEEN,
+								"soPhongTamGREATER": 0,
+								"soTangGREATER": 0,
+								"giaBETWEEN": giaBETWEEN,
 								"diaChinh": lastSearch.diaChinh,
 								"geoBox": lastSearch.geoBox,
-							  	"orderBy": "ngayDangTinDESC",
-							  	
-							  	"pageNo": 1
+								"orderBy": "ngayDangTinDESC",
+
+								"pageNo": 1
 							};
 
-							if(giaBETWEEN && !(giaBETWEEN[1]> 99999999999 && giaBETWEEN[0]==0)){
-								var mean = (giaBETWEEN[0] + giaBETWEEN[1])/2;
-								giaBETWEEN[0] = mean - mean*0.1;
+							if (giaBETWEEN && !(giaBETWEEN[1] > 99999999999 && giaBETWEEN[0] == 0)) {
+								var mean = (giaBETWEEN[0] + giaBETWEEN[1]) / 2;
+								giaBETWEEN[0] = mean - mean * 0.1;
 								giaBETWEEN[1] = mean + mean * 0.1;
 								searchDataNgangGia.giaBETWEEN = giaBETWEEN;
-								HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
-									if(searchDataNgangGia.loaiTin == 0){
-										$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN[0]/1000  + " đến "+ giaBETWEEN[1]/1000 + " tỷ";
-									}else{
-										$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN + " đến "+ giaBETWEEN[1] + " triệu/tháng";								
+								HouseService.findAdsSpatial(searchDataNgangGia).then(function (res) {
+									if (searchDataNgangGia.loaiTin == 0) {
+										$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN[0] / 1000 + " đến " + giaBETWEEN[1] / 1000 + " tỷ";
+									} else {
+										$scope.hot_ads_cat[1].name = "Bất động sản giá từ " + giaBETWEEN + " đến " + giaBETWEEN[1] + " triệu/tháng";
 									}
-									
-									$scope.hot_ads_cat[1].list = res.data.list;	
+
+									$scope.hot_ads_cat[1].list = res.data.list;
 									$scope.hot_ads_cat[1].query = searchDataNgangGia;
-									$scope.hot_ads_cat[1].hasMore = res.data.list.length>0;
+									$scope.hot_ads_cat[1].hasMore = res.data.list.length > 0;
 								});
 								searchDataDuoiGia.giaBETWEEN[0] = 0;
 								searchDataDuoiGia.giaBETWEEN[1] = mean;
-								HouseService.findAdsSpatial(searchDataDuoiGia).then(function(res){							
-									if(searchDataDuoiGia.loaiTin==0){
-										$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean/1000 + " tỷ";
-									}else{
-										$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean + " triệu/tháng";								
+								HouseService.findAdsSpatial(searchDataDuoiGia).then(function (res) {
+									if (searchDataDuoiGia.loaiTin == 0) {
+										$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean / 1000 + " tỷ";
+									} else {
+										$scope.hot_ads_cat[2].name = "Bất động giá dưới " + mean + " triệu/tháng";
 									}
-									
-									$scope.hot_ads_cat[2].list = res.data.list;	
+
+									$scope.hot_ads_cat[2].list = res.data.list;
 									$scope.hot_ads_cat[2].query = searchDataDuoiGia;
-									$scope.hot_ads_cat[2].hasMore = res.data.list.length>0;
+									$scope.hot_ads_cat[2].hasMore = res.data.list.length > 0;
 								});
-							}else{
-								if($rootScope.user.lastViewAds){
-									HouseService.detailAds({adsID: $rootScope.user.lastViewAds}).then(function(res){
-										if(res.data.status == 0){
-											giaBETWEEN[0] = res.data.ads.gia - res.data.ads.gia*0.1;
-											giaBETWEEN[1] = res.data.ads.gia + res.data.ads.gia*0.1;
+							} else {
+								if ($rootScope.user.lastViewAds) {
+									HouseService.detailAds({ adsID: $rootScope.user.lastViewAds }).then(function (res) {
+										if (res.data.status == 0) {
+											giaBETWEEN[0] = res.data.ads.gia - res.data.ads.gia * 0.1;
+											giaBETWEEN[1] = res.data.ads.gia + res.data.ads.gia * 0.1;
 											searchDataNgangGia.giaBETWEEN = giaBETWEEN;
 											$scope.hot_ads_cat[1].name = "Bất động ngang giá " + res.data.ads.giaFmt;
-											HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){							
-												$scope.hot_ads_cat[1].list = res.data.list;	
+											HouseService.findAdsSpatial(searchDataNgangGia).then(function (res) {
+												$scope.hot_ads_cat[1].list = res.data.list;
 												$scope.hot_ads_cat[1].query = searchDataNgangGia;
-												$scope.hot_ads_cat[1].hasMore = res.data.list.length>0;
+												$scope.hot_ads_cat[1].hasMore = res.data.list.length > 0;
 											});
 											searchDataDuoiGia.giaBETWEEN[0] = 0;
 											searchDataDuoiGia.giaBETWEEN[1] = res.data.ads.gia;
 											$scope.hot_ads_cat[2].name = "Bất động giá dưới " + res.data.ads.giaFmt;
-											HouseService.findAdsSpatial(searchDataDuoiGia).then(function(res){							
-												$scope.hot_ads_cat[2].list = res.data.list;	
+											HouseService.findAdsSpatial(searchDataDuoiGia).then(function (res) {
+												$scope.hot_ads_cat[2].list = res.data.list;
 												$scope.hot_ads_cat[2].query = searchDataDuoiGia;
-												$scope.hot_ads_cat[2].hasMore = res.data.list.length>0;
+												$scope.hot_ads_cat[2].hasMore = res.data.list.length > 0;
 											});
-
-
 										}
 									});
 								}
 								// giaBETWEEN = [1000000000, 2000000000]
 							}
-							
-							
-
-
 						}
-					}else{
-						for(var i=0;i<4;i++){
-							$scope.hot_ads_cat.push( {
+					} else {
+						for (var i = 0; i < 4; i++) {
+							$scope.hot_ads_cat.push({
 								name: "",
 								location: "",
-								list: [{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"},{type: "Ads"}]
-							});	
+								list: [{ type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }, { type: "Ads" }]
+							});
 						}
-						
-						HouseService.findAdsAndDuanForHomePage({limit:9}).then(function(res){
+
+						HouseService.findAdsAndDuanForHomePage({ limit: 9 }).then(function (res) {
 							$scope.hot_ads_cat[0].name = res.data.list[0].name;
 							$scope.hot_ads_cat[0].type = res.data.list[0].type;
 							$scope.hot_ads_cat[0].location = res.data.list[0].location;
@@ -18436,73 +18332,73 @@
 							$scope.hot_ads_cat[1].name = res.data.list[1].name;
 							$scope.hot_ads_cat[1].type = res.data.list[1].type;
 							$scope.hot_ads_cat[1].location = res.data.list[1].location;
-							$scope.hot_ads_cat[1].list = res.data.list[1].list;					
+							$scope.hot_ads_cat[1].list = res.data.list[1].list;
 							//Array.prototype.push.apply($scope.hot_ads_cat, res.data.list);
 							//console.log(res);
-						});	
+						});
 						//var ngayDaDang = Date.today().add(-700).days();
 						var searchNhaXemNhieuNhatTaiHanoi = {
 							"loaiTin": 0,
-							"loaiNhaDat": 0, 
+							"loaiNhaDat": 0,
 							"limit": 6,
 							"soPhongNguGREATER": 0,
-				  			"soPhongTamGREATER": 0,
-				  			"soTangGREATER": 0,
-				  			"ngayDaDang": 300,
+							"soPhongTamGREATER": 0,
+							"soTangGREATER": 0,
+							"ngayDaDang": 300,
 							"diaChinh": {
 								tinh: "ha-noi"
-							},				
-						  	"orderBy": "luotXemDESC",
-						  	"pageNo": 1
+							},
+							"orderBy": "luotXemDESC",
+							"pageNo": 1
 						};
-						HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHanoi).then(function(res){										
-							$scope.hot_ads_cat[2].name = "Bất động sản xem nhiều nhất tại Hà Nội";				
+						HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHanoi).then(function (res) {
+							$scope.hot_ads_cat[2].name = "Bất động sản xem nhiều nhất tại Hà Nội";
 							$scope.hot_ads_cat[2].list = res.data.list;
 							$scope.hot_ads_cat[2].query = searchNhaXemNhieuNhatTaiHanoi;
-							$scope.hot_ads_cat[2].hasMore = res.data.list.length>0;
-						});	
+							$scope.hot_ads_cat[2].hasMore = res.data.list.length > 0;
+						});
 						var searchNhaXemNhieuNhatTaiHcm = {
 							"loaiTin": 0,
-							"loaiNhaDat": 0, 
+							"loaiNhaDat": 0,
 							"limit": 6,
 							"soPhongNguGREATER": 0,
-				  			"soPhongTamGREATER": 0,
-				  			"soTangGREATER": 0,
-				  			"ngayDaDang": 300,
+							"soPhongTamGREATER": 0,
+							"soTangGREATER": 0,
+							"ngayDaDang": 300,
 							"diaChinh": {
 								tinh: "ho-chi-minh"
-							},				
-						  	"orderBy": "luotXemDESC",
-						  	"pageNo": 1
+							},
+							"orderBy": "luotXemDESC",
+							"pageNo": 1
 						};
-						HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHcm).then(function(res){					
-							$scope.hot_ads_cat[3].name = "Bất động sản xem nhiều nhất tại thành phố Hồ Chí Minh";				
-							$scope.hot_ads_cat[3].list = res.data.list;		
-							$scope.hot_ads_cat[3].query = searchNhaXemNhieuNhatTaiHcm;	
-							$scope.hot_ads_cat[3].hasMore = res.data.list.length>0;										
-						});	
-					}	
+						HouseService.findAdsSpatial(searchNhaXemNhieuNhatTaiHcm).then(function (res) {
+							$scope.hot_ads_cat[3].name = "Bất động sản xem nhiều nhất tại thành phố Hồ Chí Minh";
+							$scope.hot_ads_cat[3].list = res.data.list;
+							$scope.hot_ads_cat[3].query = searchNhaXemNhieuNhatTaiHcm;
+							$scope.hot_ads_cat[3].hasMore = res.data.list.length > 0;
+						});
+					}
 
 					/*var searchDiaChinh = {
-						tinh: "ha-noi",
-						huyen: "hoan-kiem"
-					}
-					if(lastSearch && lastSearch.diaChinh){
-						searchDiaChinh = lastSearch.diaChinh;
-					}
-					var searchLogoGiamGia = {
-						"loaiTin": lastSearch.loaiTin,
-						"loaiNhaDat": lastSearch.loaiNhaDat, 
-						"limit": 10,
-						"soPhongNguGREATER": 0,
-			  			"soPhongTamGREATER": 0,
-			  			"soTangGREATER": 0,
-						"diaChinh": lastSearch.diaChinh,
-						"geoBox": lastSearch.geoBox,
-						"updateLastSearch": false,
-					  	"orderBy": "ngayDangTinDESC",
-					  	"pageNo": 1
-					}	*/
+	    	tinh: "ha-noi",
+	    	huyen: "hoan-kiem"
+	    }
+	    if(lastSearch && lastSearch.diaChinh){
+	    	searchDiaChinh = lastSearch.diaChinh;
+	    }
+	    var searchLogoGiamGia = {
+	    	"loaiTin": lastSearch.loaiTin,
+	    	"loaiNhaDat": lastSearch.loaiNhaDat, 
+	    	"limit": 10,
+	    	"soPhongNguGREATER": 0,
+	    			"soPhongTamGREATER": 0,
+	    			"soTangGREATER": 0,
+	    	"diaChinh": lastSearch.diaChinh,
+	    	"geoBox": lastSearch.geoBox,
+	    	"updateLastSearch": false,
+	      	"orderBy": "ngayDangTinDESC",
+	      	"pageNo": 1
+	    }	*/
 					// data = {
 					// 	"gia": 800,
 					// 	"limit": 4
@@ -18546,10 +18442,7 @@
 					// 	console.log("HouseService.findRencentAds: " + result.length);
 					// 	console.log(result);
 					// });
-				},0);
-
-				
-
+				}, 0);
 			}
 			vm.getLocation = function () {
 				if (navigator.geolocation) {
@@ -18557,8 +18450,8 @@
 				} else {
 					alert("Geolocation is not supported by this browser.");
 				}
-			}
-			vm.showPosition =  function(position) {
+			};
+			vm.showPosition = function (position) {
 				var lat = position.coords.latitude;
 				var lng = position.coords.longitude;
 				//$scope.map.center.latitude = lat;
@@ -18570,41 +18463,42 @@
 						longitude: lng
 					},
 					options: {
-						labelContent : 'You are here'
+						labelContent: 'You are here'
 					},
 					data: 'restaurant'
-				}
+				};
 				$scope.markers.push(marker);
 				$scope.markerCount = $scope.markerCount + 1;
 				$scope.$digest();
-			}
+			};
 
-			if($state.current.name == "resetPassword"){
-				var token =  $location.search().token;			
+			if ($state.current.name == "resetPassword") {
+				var token = $location.search().token;
 				$scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'show login',
-	              data: {label: "Đăng nhập để chat", token: token}
-		        });
+					channel: 'login',
+					topic: 'show login',
+					data: { label: "Đăng nhập để chat", token: token }
+				});
 			}
-
 		});
 
 		// /* @ngInject */
 		// function MainCtrl() {
-			
+
 		// }
 	})();
-
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'SearchCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window, $timeout) {
 			var vm = this;
 			$scope.center = "Hanoi Vietnam";
 			$scope.placeId = $state.params.place;
@@ -18618,14 +18512,13 @@
 			vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
 
 			vm.khoangGiaList = window.RewayListValue.khoangGia;
-			if($scope.loaiTin==1){
+			if ($scope.loaiTin == 1) {
 				vm.khoangGiaList = window.RewayListValue.khoangGiaThue;
 			}
-			vm.khoangGia = vm.khoangGiaList[vm.khoangGiaList.length-1];
-
+			vm.khoangGia = vm.khoangGiaList[vm.khoangGiaList.length - 1];
 
 			vm.khoangDienTichList = window.RewayListValue.khoangDienTich;
-			vm.khoangDienTich = vm.khoangDienTichList[vm.khoangDienTichList.length-1];
+			vm.khoangDienTich = vm.khoangDienTichList[vm.khoangDienTichList.length - 1];
 			//vm.khoangGiaSelected = {};
 
 			//use for menu
@@ -18636,147 +18529,134 @@
 			vm.loaiTinTuc = window.RewayListValue.LoaiTinTuc;
 			vm.onePoint = false;
 
-			
-			
-			
 			vm.diaChinh = {
 				tinh: $state.params.tinh,
 				tinhKhongDau: $state.params.tinh,
 				huyen: $state.params.huyen,
 				huyenKhongDau: $state.params.huyen,
 				xa: $state.params.xa,
-				xaKhongDau: $state.params.xa,
-			}
+				xaKhongDau: $state.params.xa
+			};
 			vm.packageID = $state.params.packageID;
 			vm.viewMode = $state.params.viewMode;
-			if(!vm.viewMode)
-				vm.viewMode = "map";
+			if (!vm.viewMode) vm.viewMode = "map";
 
-			if(!$scope.placeId)
-				$scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
-			if(!$scope.loaiTin)
-				$scope.loaiTin = 0;
-			if(!$scope.loaiNhaDat)
-				$scope.loaiNhaDat = 0;
+			if (!$scope.placeId) $scope.placeId = 'ChIJoRyG2ZurNTERqRfKcnt_iOc';
+			if (!$scope.loaiTin) $scope.loaiTin = 0;
+			if (!$scope.loaiNhaDat) $scope.loaiNhaDat = 0;
 			vm.loaiTin = $scope.loaiTin;
 
 			vm.stateName = $state.current.name;
 
-			
 			console.log("placeId: " + $scope.placeId);
 			console.log("loaiTin: " + $scope.loaiTin);
 			console.log("loaiNhaDat: " + $scope.loaiNhaDat);
 			console.log("placeId: " + $scope.placeId);
-			
-			vm.viewTemplateUrl = "search.tpl.html";//1=map 2= list
 
-			if($state.params.viewMode=="list"){
+			vm.viewTemplateUrl = "search.tpl.html"; //1=map 2= list
+
+			if ($state.params.viewMode == "list") {
 				vm.viewTemplateUrl = "list.tpl.html";
-			}else if($state.params.viewMode=="map"){
-				vm.viewTemplateUrl = "search.tpl.html"
+			} else if ($state.params.viewMode == "map") {
+				vm.viewTemplateUrl = "search.tpl.html";
 			}
 
-
-			vm.showList = function(){
-				vm.viewTemplateUrl = "list.tpl.html"
+			vm.showList = function () {
+				vm.viewTemplateUrl = "list.tpl.html";
 				vm.viewMode = "list";
 				$scope.bodyClass = "page-list";
+			};
 
-			}
-
-			vm.goPackage = function(packageID){
-				$state.go('package', { "packageID" : packageID, "viewMode": vm.viewMode}, {location: true});
-			}
+			vm.goPackage = function (packageID) {
+				$state.go('package', { "packageID": packageID, "viewMode": vm.viewMode }, { location: true });
+			};
 
 			// vm.likeAds = function(index){
-		 //      if(!$rootScope.user.userID){
-		 //        alert("Đăng nhập để like");
-		 //        return;
-		 //      }
-		 //      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.user.userID}).then(function(res){
-		 //        alert(res.data.msg);
-		 //        console.log(res);
-		 //      });
-		 //    };
-		    vm.likeAdsClass ="like";
-			vm.likeAds = function(index,adsID){
-		      if(!$rootScope.user.userID){
-		        $scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'show login',
-	              data: {label: "Đăng nhập để lưu BĐS"}
-		        });
-		        return;
-		      }
-		      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.user.userID}).then(function(res){
-		        //alert(res.data.msg);
-		        //console.log(res);
-		        if(res.data.success == true || res.data.status==1){
-		        	vm.ads_list[index].liked =true;
-		        }
-		      });
-		    };
-			vm.gotoDiachinh = function(diachinh,type){
+			//      if(!$rootScope.user.userID){
+			//        alert("Đăng nhập để like");
+			//        return;
+			//      }
+			//      HouseService.likeAds({adsID: vm.ads_list[index].adsID,userID: $rootScope.user.userID}).then(function(res){
+			//        alert(res.data.msg);
+			//        console.log(res);
+			//      });
+			//    };
+			vm.likeAdsClass = "like";
+			vm.likeAds = function (index, adsID) {
+				if (!$rootScope.user.userID) {
+					$scope.$bus.publish({
+						channel: 'login',
+						topic: 'show login',
+						data: { label: "Đăng nhập để lưu BĐS" }
+					});
+					return;
+				}
+				HouseService.likeAds({ adsID: vm.ads_list[index].adsID, userID: $rootScope.user.userID }).then(function (res) {
+					//alert(res.data.msg);
+					//console.log(res);
+					if (res.data.success == true || res.data.status == 1) {
+						vm.ads_list[index].liked = true;
+					}
+				});
+			};
+			vm.gotoDiachinh = function (diachinh, type) {
 				/*if(type==1){
+	   	vm.diaChinh.huyen = null;
+	   	vm.diaChinh.xa = null;
+	   }else if(type==2){
+	   	vm.diaChinh.xa = null;
+	   }
+	   //alert(diachinh +" " + type);
+	   		
+	   vm.searchData = {
+	   	"loaiTin": $scope.loaiTin,
+	   	"loaiNhaDat": $scope.loaiNhaDat, 
+	   	"loaiNhaDats": [],
+	     	"giaBETWEEN": [vm.price_min,vm.price_max],
+	     	"soPhongNguGREATER": vm.soPhongNguList[0].value,
+	     	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+	     	"soTangGREATER": vm.soTangList[0].value,
+	     	"dienTichBETWEEN": [0,vm.dien_tich_max],
+	     	"huongNha": vm.huongNhaList[0].value,
+	     	"huongNhas": [],
+	     	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+	     	"limit": vm.pageSize,
+	     	"orderBy": vm.sortOptions[0].value,
+	     	diaChinh: vm.diaChinh,
+	     	"pageNo": 1
+	   };
+	   
+	   //vm.searchData.geoBox = undefined;
+	   vm.search();*/
+				if (type == 1) {
 					vm.diaChinh.huyen = null;
 					vm.diaChinh.xa = null;
-				}else if(type==2){
-					vm.diaChinh.xa = null;
-				}
-				//alert(diachinh +" " + type);
-
-				
-				vm.searchData = {
-					"loaiTin": $scope.loaiTin,
-					"loaiNhaDat": $scope.loaiNhaDat, 
-					"loaiNhaDats": [],
-				  	"giaBETWEEN": [vm.price_min,vm.price_max],
-				  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-				  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-				  	"soTangGREATER": vm.soTangList[0].value,
-				  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-				  	"huongNha": vm.huongNhaList[0].value,
-				  	"huongNhas": [],
-				  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-				  	"limit": vm.pageSize,
-				  	"orderBy": vm.sortOptions[0].value,
-				  	diaChinh: vm.diaChinh,
-				  	"pageNo": 1
-				};
-
-
-				//vm.searchData.geoBox = undefined;
-				vm.search();*/
-				if(type==1){
-					vm.diaChinh.huyen = null;
-					vm.diaChinh.xa = null;
-				}else if(type==2){
+				} else if (type == 2) {
 					vm.diaChinh.xa = null;
 				}
 
-				$state.go('searchdc', { "tinh" : vm.diaChinh.tinh, "huyen" : vm.diaChinh.huyen,"xa" : vm.diaChinh.xa,"loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
-			}
-			vm.showMap = function(){
-				vm.viewTemplateUrl = "search.tpl.html"
+				$state.go('searchdc', { "tinh": vm.diaChinh.tinh, "huyen": vm.diaChinh.huyen, "xa": vm.diaChinh.xa, "loaiTin": $scope.loaiTin, "loaiNhaDat": $scope.loaiNhaDat, "viewMode": vm.viewMode }, { location: true });
+			};
+			vm.showMap = function () {
+				vm.viewTemplateUrl = "search.tpl.html";
 				vm.viewMode = "map";
 				$scope.bodyClass = "page-search";
-			}
+			};
 			vm.blankName = false;
-			vm.saveSearch = function(){
+			vm.saveSearch = function () {
 
-				if(!vm.saveSearchName){
+				if (!vm.saveSearchName) {
 					vm.blankName = true;
 					return;
 				}
 
-				
-				if(!$rootScope.user.userID){
+				if (!$rootScope.user.userID) {
 					$scope.$bus.publish({
-		              channel: 'login',
-		              topic: 'show login',
-		              data: {label: "Đăng nhập để lưu tìm kiếm"}
-			        });
-			        return;
+						channel: 'login',
+						topic: 'show login',
+						data: { label: "Đăng nhập để lưu tìm kiếm" }
+					});
+					return;
 				}
 				var data = {
 					query: vm.searchData,
@@ -18784,27 +18664,25 @@
 					saveSearchName: vm.saveSearchName
 				};
 
-				HouseService.saveSearch(data).then(function(res){				
+				HouseService.saveSearch(data).then(function (res) {
 					//alert(res.data.msg);
-					if(res.data.success){
+					if (res.data.success) {
 						vm.blankName = false;
-						vm.saveSearchName = '';					
+						vm.saveSearchName = '';
 						vm.nameSaveSearch = false;
 					}
-				})
-			}
+				});
+			};
 
-			
-				
 			//vm.sell_price_list_from = window.RewayListValue.sell_steps;
 			/*vm.sell_price_list_from = [
-				{
-			        value: 0,
-			        lable: "Giá từ 0",
-			        position: 0
-			    },
-			];
-			Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);*/
+	  	{
+	          value: 0,
+	          lable: "Giá từ 0",
+	          position: 0
+	      },
+	  ];
+	  Array.prototype.push.apply(vm.sell_price_list_from, window.RewayListValue.sell_steps);*/
 			vm.sell_price_list_from = window.RewayListValue.khoangGia;
 
 			vm.radius_steps = [{
@@ -18813,38 +18691,27 @@
 				position: 0
 			}];
 			Array.prototype.push.apply(vm.radius_steps, vm.radiusInKmList);
-			
 
 			vm.sell_price_list_to = [];
 			Array.prototype.push.apply(vm.sell_price_list_to, window.RewayListValue.sell_steps);
-			vm.sell_price_list_to.push(
-				{
-			        value: window.RewayListValue.filter_max_value.value,
-			        lable: window.RewayListValue.filter_max_value.lable,
-			        position: vm.sell_price_list_to.length
-			    }
-			);
-			vm.sell_dien_tich_list_from = [
-				{
-			        value: 0,
-			        lable: "Diện tích từ 0",
-			        position: 0
-			    },
-			];
+			vm.sell_price_list_to.push({
+				value: window.RewayListValue.filter_max_value.value,
+				lable: window.RewayListValue.filter_max_value.lable,
+				position: vm.sell_price_list_to.length
+			});
+			vm.sell_dien_tich_list_from = [{
+				value: 0,
+				lable: "Diện tích từ 0",
+				position: 0
+			}];
 			Array.prototype.push.apply(vm.sell_dien_tich_list_from, window.RewayListValue.dientich_steps);
 			vm.sell_dien_tich_list_to = [];
 			Array.prototype.push.apply(vm.sell_dien_tich_list_to, window.RewayListValue.dientich_steps);
-			vm.sell_dien_tich_list_to.push(
-				{
-			        value: window.RewayListValue.filter_max_value.value,
-			        lable: window.RewayListValue.filter_max_value.lable,
-			        position: vm.sell_price_list_to.length
-			    }
-			);
-			
-			
-			 
-
+			vm.sell_dien_tich_list_to.push({
+				value: window.RewayListValue.filter_max_value.value,
+				lable: window.RewayListValue.filter_max_value.lable,
+				position: vm.sell_price_list_to.length
+			});
 
 			vm.sortOptions = window.RewayListValue.sortHouseOptions;
 			vm.sortBy = vm.sortOptions[0].value;
@@ -18862,174 +18729,164 @@
 
 			vm.searchData = {
 				"loaiTin": $scope.loaiTin,
-				"loaiNhaDat": $scope.loaiNhaDat, 
+				"loaiNhaDat": $scope.loaiNhaDat,
 				"loaiNhaDats": [],
-			  	"giaBETWEEN": [vm.price_min,vm.price_max],
-			  	"khoangGia": vm.khoangGia, 
-			  	"khoangDienTich": vm.khoangDienTich,
-			  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-			  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-			  	"soTangGREATER": vm.soTangList[0].value,
-			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-			  	"huongNha": vm.huongNhaList[0].value,
-			  	"huongNhas": [],
-			  	"radiusInKm": 2,
-			  	"userID": $rootScope.user.userID,
-			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-			  	"limit": vm.pageSize,
-			  	"orderBy": vm.sortOptions[0].value,
-			  	"pageNo": 1
-			}
-
-			
-
-			vm.mouseover = function(e,i) {
-	          vm.showDetail(i);
-	        };
-	        vm.goDetail = function(event,i){
-	        	$state.go('detail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
-	        }
-	        vm.goDetailHighlight = function(){
-	        	$state.go('detail', { "adsID" : vm.highlightAds.adsID}, {location: true});
-	        }
-	        vm.mouseout = function() {
-	          //vm.hideDetail();
-	        };
-	        vm.click = function(e,i) {
-	        	console.log('click');
-	    	};
-
-	        vm.showDetail = function(i) {
-			    vm.highlightAds = vm.ads_list[i];
-			    if(vm.ads_list[i].place){
-	    			if(vm.ads_list[i].place.geo){
-	    				vm.map.showInfoWindow("iw","m_" +i);
-	    			}
-	    		}
+				"giaBETWEEN": [vm.price_min, vm.price_max],
+				"khoangGia": vm.khoangGia,
+				"khoangDienTich": vm.khoangDienTich,
+				"soPhongNguGREATER": vm.soPhongNguList[0].value,
+				"soPhongTamGREATER": vm.soPhongTamList[0].value,
+				"soTangGREATER": vm.soTangList[0].value,
+				"dienTichBETWEEN": [0, vm.dien_tich_max],
+				"huongNha": vm.huongNhaList[0].value,
+				"huongNhas": [],
+				"radiusInKm": 2,
+				"userID": $rootScope.user.userID,
+				//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+				"limit": vm.pageSize,
+				"orderBy": vm.sortOptions[0].value,
+				"pageNo": 1
 			};
 
+			vm.mouseover = function (e, i) {
+				vm.showDetail(i);
+			};
+			vm.goDetail = function (event, i) {
+				$state.go('detail', { "adsID": vm.ads_list[i].adsID }, { location: true });
+			};
+			vm.goDetailHighlight = function () {
+				$state.go('detail', { "adsID": vm.highlightAds.adsID }, { location: true });
+			};
+			vm.mouseout = function () {
+				//vm.hideDetail();
+			};
+			vm.click = function (e, i) {
+				console.log('click');
+			};
 
-			vm.hideDetail = function() {
+			vm.showDetail = function (i) {
+				vm.highlightAds = vm.ads_list[i];
+				if (vm.ads_list[i].place) {
+					if (vm.ads_list[i].place.geo) {
+						vm.map.showInfoWindow("iw", "m_" + i);
+					}
+				}
+			};
+
+			vm.hideDetail = function () {
 				vm.map.hideInfoWindow('iw');
 			};
 			// window.DesignCommon.adjustPage();
-			$scope.$on('$viewContentLoaded', function(){
-				$timeout(function() {
+			$scope.$on('$viewContentLoaded', function () {
+				$timeout(function () {
 					window.DesignCommon.adjustPage();
-
-				},0);
-				if($state.params){
+				}, 0);
+				if ($state.params) {
 					//$scope.bodyClass = $state.current.data.bodyClass;
 					$rootScope.bodyClass = "page-search";
-					if($state.params.viewMode=="list"){
+					if ($state.params.viewMode == "list") {
 						$rootScope.bodyClass = "page-list";
-					} 
+					}
 				}
 			});
-			vm.selectPlaceCallback = function(place){
+			vm.selectPlaceCallback = function (place) {
 				$scope.searchPlaceSelected = place;
-	    		$scope.placeSearchId = place.place_id;
-	    		vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
-	    		//$scope.markers = [];
-	    		/*vm.marker = {
-	    				id: -1,
-	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
-	    				content: 'you are here'
-	    		};*/
-	    		//$scope.markers.push(marker);
-	    		//$scope.markers.push
+				$scope.placeSearchId = place.place_id;
+				vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
+				//$scope.markers = [];
+				/*vm.marker = {
+	   		id: -1,
+	   		coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+	   		content: 'you are here'
+	   };*/
+				//$scope.markers.push(marker);
+				//$scope.markers.push
 
-	    		/*$scope.markers = [];
-	    		var marker = {
-	    				id: -1,
-	    				coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
-	    				content: 'you are here'
-	    		}
-	    		if(place.geometry.viewport){
-	    			vm.searchData.geoBox = [  place.geometry.viewport.H.j,  place.geometry.viewport.j.j ,place.geometry.viewport.H.H, vm.map.getBounds().j.H];
-	    			vm.searchData.geoBox = [place.geometry.viewport.getSouthWest().lat(),place.geometry.viewport.getSouthWest().lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng()]
-					vm.searchData.radiusInKm = undefined;
+				/*$scope.markers = [];
+	   var marker = {
+	   		id: -1,
+	   		coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+	   		content: 'you are here'
+	   }
+	   if(place.geometry.viewport){
+	   	vm.searchData.geoBox = [  place.geometry.viewport.H.j,  place.geometry.viewport.j.j ,place.geometry.viewport.H.H, vm.map.getBounds().j.H];
+	   	vm.searchData.geoBox = [place.geometry.viewport.getSouthWest().lat(),place.geometry.viewport.getSouthWest().lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng()]
+	   vm.searchData.radiusInKm = undefined;
+	   }else{
+	   var placeData = {
+	    			placeId: place.place_id,
+	      		relandTypeName : window.RewayPlaceUtil.getTypeName(place),
+	       			radiusInKm :  1,
+	   		currentLocation: undefined
+	   }
+	   vm.searchData.place = placeData;
+	    vm.searchData.geoBox = undefined;
+	   }*/
+				$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
 
-				}else{
-					var placeData = {
-				    			placeId: place.place_id,
-				 	    		relandTypeName : window.RewayPlaceUtil.getTypeName(place),
-				       			radiusInKm :  1,
-				 				currentLocation: undefined
-				 	}
-				 	vm.searchData.place = placeData;
-				    vm.searchData.geoBox = undefined;
-				}*/
-	    		$scope.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
-	    		
-	    		/*$scope.markers.push(marker);
-	    		$scope.$apply();
+				/*$scope.markers.push(marker);
+	   $scope.$apply();
+	   		if(place.geometry.viewport){
+	   vm.map.fitBounds(place.geometry.viewport);	
+	   //$scope.map
+	   }
+	   		//$scope.map.fit = false;
+	   
+	   vm.map.setCenter(place.geometry.location);*/
+				//$scope.$apply();
+				//$scope.map.refresh();
+				vm.goToPageSearch();
+				//vm.search();
+			};
 
-	    		if(place.geometry.viewport){
-					vm.map.fitBounds(place.geometry.viewport);	
-					//$scope.map
-				}
-
-	    		//$scope.map.fit = false;
-	    		
-	    		vm.map.setCenter(place.geometry.location);*/
-	    		//$scope.$apply();
-	    		//$scope.map.refresh();
-	    		vm.goToPageSearch();
-	    		//vm.search();
-			}
-
-			vm.showStreetView = function(event){
+			vm.showStreetView = function (event) {
 				vm.map.getStreetView().setPosition(vm.highlightAds.streetviewLatLng);
 				vm.map.getStreetView().setVisible(true);
 				event.stopPropagation();
 				//return false;
+			};
 
-			}
-
-			$scope.goToPageNews = function(loaiTinTuc){
+			$scope.goToPageNews = function (loaiTinTuc) {
 				console.log("--goToPageNews---loaiTinTuc: " + loaiTinTuc);
 				$state.go('news');
-			}
+			};
 
-			vm.goToPageSearch = function(){
-				$state.go('search', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+			vm.goToPageSearch = function () {
+				$state.go('search', { "place": $scope.placeSearchId, "loaiTin": $scope.loaiTin, "loaiNhaDat": $scope.loaiNhaDat, "viewMode": vm.viewMode }, { location: true });
 				//vm.search();
-			}
+			};
 
-			vm.goToPageSearchMenu = function(loaiTin, loaiNhaDat){
+			vm.goToPageSearchMenu = function (loaiTin, loaiNhaDat) {
 				vm.searchData.loaiTin = loaiTin;
 				vm.searchData.loaiNhaDat = loaiNhaDat;
 				vm.search();
-			}
-	  		
-			vm.firstPage = function(callback){
+			};
+
+			vm.firstPage = function (callback) {
 				vm.searchPage(1);
-			}
-			vm.nextPage = function(callback){
-				vm.searchPage(vm.currentPage+1);
-			}
-			vm.lastPage = function(callback){
+			};
+			vm.nextPage = function (callback) {
+				vm.searchPage(vm.currentPage + 1);
+			};
+			vm.lastPage = function (callback) {
 				vm.searchPage(vm.lastPageNo);
-			}
-			vm.previousPage = function(callback){
-				vm.searchPage(vm.currentPage-1);
-			}
-			vm.updateStreetview = function(ads,fn){
+			};
+			vm.previousPage = function (callback) {
+				vm.searchPage(vm.currentPage - 1);
+			};
+			vm.updateStreetview = function (ads, fn) {
 				var STREETVIEW_MAX_DISTANCE = 100;
 				var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
 				var streetViewService = new google.maps.StreetViewService();
-		        streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function(streetViewPanoramaData, status,res) {
-		        	if (status === google.maps.StreetViewStatus.OK) {
+				streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status, res) {
+					if (status === google.maps.StreetViewStatus.OK) {
 						ads.streetviewLatLng = streetViewPanoramaData.location.latLng;
 					}
 				});
-				
-			}
-			vm.searchPage = function(i, callback){
-				vm.searchData.pageNo = i;		
-				if(vm.searchData.place)
-					vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;	
+			};
+			vm.searchPage = function (i, callback) {
+				vm.searchData.pageNo = i;
+				if (vm.searchData.place) vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
 				vm.searchData.userID = $rootScope.user.userID;
 				vm.searchData.giaBETWEEN[0] = vm.searchData.khoangGia.value.min;
 				vm.searchData.giaBETWEEN[1] = vm.searchData.khoangGia.value.max;
@@ -19038,215 +18895,201 @@
 
 				// vm.khoangGiaList[]
 				// vm.searchData.khoangGia
-				HouseService.findAdsSpatial(vm.searchData).then(function(res){
+				HouseService.findAdsSpatial(vm.searchData).then(function (res) {
 					var result = res.data.list;
 					//vm.totalResultCounts = res.data.list.length;
-					
-					for (var i = 0; i < result.length; i++) { 
-			    		var ads = result[i];
-			    		ads.giaFmt = ads.giaFmtForWeb;
 
-			    		if($rootScope.alreadyLike(ads.adsID) ==  true)
-							ads.liked =true;
-				        var length = result.length;
-				        var fn = function() {
-				            if(i < length) {
-				                vm.updateStreetview(result[i], fn);
-				            }
-				        };
-					    fn();
+					for (var i = 0; i < result.length; i++) {
+						var ads = result[i];
+						ads.giaFmt = ads.giaFmtForWeb;
 
-			    		result[i].index = i;
-			    		if(ads.huongNha){
-			    			ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
-			    		}else{
-			    			ads.huongNha = "";	
-			    		}
-			    		if(result[i].place){
-			    			if(result[i].place.geo){
-				    			result[i].map={
-				    				center: {
-										latitude: 	result[i].place.geo.lat,
-										longitude: 	result[i].place.geo.lon
+						if ($rootScope.alreadyLike(ads.adsID) == true) ads.liked = true;
+						var length = result.length;
+						var fn = function fn() {
+							if (i < length) {
+								vm.updateStreetview(result[i], fn);
+							}
+						};
+						fn();
+
+						result[i].index = i;
+						if (ads.huongNha) {
+							ads.huongNha = window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+						} else {
+							ads.huongNha = "";
+						}
+						if (result[i].place) {
+							if (result[i].place.geo) {
+								result[i].map = {
+									center: {
+										latitude: result[i].place.geo.lat,
+										longitude: result[i].place.geo.lon
 									},
-				    				marker: {
+									marker: {
 										id: i,
 										coords: {
-											latitude: 	result[i].place.geo.lat,
-											longitude: 	result[i].place.geo.lon
+											latitude: result[i].place.geo.lat,
+											longitude: result[i].place.geo.lon
 										},
 										content: result[i].giaFmt,
 										data: 'test'
 									},
-									options:{
+									options: {
 										scrollwheel: false
 									},
-									zoom: 14	
-				    			}
-				    					
+									zoom: 14
+								};
 							}
-			    		}
-			    		
+						}
 					}
 					vm.ads_list = res.data.list;
 					$scope.markers = [];
-					for(var i = 0; i < res.data.list.length; i++) { 
-			    		var ads = res.data.list[i];
-			    		if(res.data.list[i].map)
-			    			$scope.markers.push(res.data.list[i].map.marker);
+					for (var i = 0; i < res.data.list.length; i++) {
+						var ads = res.data.list[i];
+						if (res.data.list[i].map) $scope.markers.push(res.data.list[i].map.marker);
 					}
 					/*if(vm.ads_list.length==0){
-						vm.zoomMode = "false";
-					}else{
-						vm.zoomMode = "auto";
-					}*/
+	    	vm.zoomMode = "false";
+	    }else{
+	    	vm.zoomMode = "auto";
+	    }*/
 
-					vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
-					vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+					vm.currentPageStart = vm.pageSize * (vm.searchData.pageNo - 1) + 1;
+					vm.currentPageEnd = vm.currentPageStart + res.data.list.length - 1;
 					vm.currentPage = vm.searchData.pageNo;
-					
-					$timeout(function() {
+
+					$timeout(function () {
 						$('body').scrollTop(0);
-					},0);
-					
-					if($rootScope.isLoggedIn()){
+					}, 0);
+
+					if ($rootScope.isLoggedIn()) {
 						$rootScope.user.lastSearch = vm.searchData;
 					}
-					
-					if(vm.ads_list && vm.ads_list.length>0){					
-						if(vm.diaChinh)
-							HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
-								if(res.data.success==true)
-									vm.duAnNoiBat = res.data.duAnNoiBat;
-							});
+
+					if (vm.ads_list && vm.ads_list.length > 0) {
+						if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
+							if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
+						});
 					}
 
-					if(callback)
-						callback();
+					if (callback) callback();
 				});
-			}
+			};
 
-
-			vm.search = function(callback){
-				if(vm.searchData.place)
-					vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
+			vm.search = function (callback) {
+				if (vm.searchData.place) vm.searchData.place.radiusInKm = vm.searchData.radiusInKm;
 				vm.searchData.userID = $rootScope.user.userID;
 				vm.searchData.giaBETWEEN[0] = vm.searchData.khoangGia.value.min;
 				vm.searchData.giaBETWEEN[1] = vm.searchData.khoangGia.value.max;
 				vm.searchData.dienTichBETWEEN[0] = vm.searchData.khoangDienTich.value.min;
 				vm.searchData.dienTichBETWEEN[1] = vm.searchData.khoangDienTich.value.max;
-				HouseService.countAds(vm.searchData).then(function(res){
-	        		vm.totalResultCounts = res.data.countResult;
-	        		$scope.markers =[];
-	        		vm.ads_list = [];
-	        		if(vm.totalResultCounts>0){
-	        			vm.currentPage = 1;
-	        			vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
-	        			vm.currentPageStart = 1;
-	        			vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
-
-	        		} else{
-	        			vm.currentPage = 0;
+				HouseService.countAds(vm.searchData).then(function (res) {
+					vm.totalResultCounts = res.data.countResult;
+					$scope.markers = [];
+					vm.ads_list = [];
+					if (vm.totalResultCounts > 0) {
+						vm.currentPage = 1;
+						vm.lastPageNo = Math.ceil(vm.totalResultCounts / vm.pageSize);
+						vm.currentPageStart = 1;
+						vm.currentPageEnd = vm.totalResultCounts >= vm.pageSize ? vm.pageSize - 1 : vm.totalResultCounts - 1;
+					} else {
+						vm.currentPage = 0;
 						vm.lastPageNo = 0;
 						vm.startPageNo = 0;
-	        		}
-	        		vm.searchPage(1,callback);
-	        	});
+					}
+					vm.searchPage(1, callback);
+				});
+			};
+			vm.formatLabel = function (model) {
+				if (model) return model.formatted_address;
+			};
 
-			}
-			vm.formatLabel = function(model){
-				if(model)
-					return model.formatted_address;
-			}
-			
 			var events = {
-	          places_changed: function (searchBox) {}
-	        }
-	        $scope.searchbox = { template:'searchbox.tpl.html', events:events};
-	        
+				places_changed: function places_changed(searchBox) {}
+			};
+			$scope.searchbox = { template: 'searchbox.tpl.html', events: events };
 
-
-	        NgMap.getMap().then(function(map){
-	        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-	        	vm.map = map;
-	        	google.maps.event.addListener(map, "dragend", function() {
-					vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+			NgMap.getMap().then(function (map) {
+				// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+				vm.map = map;
+				google.maps.event.addListener(map, "dragend", function () {
+					vm.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(), vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(), vm.map.getBounds().getNorthEast().lng()];
+					$scope.center = "[" + vm.map.getCenter().lat() + "," + vm.map.getCenter().lng() + "]";
 					vm.marker = {
-		    			id: -1,
-		    			coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-		    			content: 'you are here'
-		    		};
-		          	vm.search();
-		        });
+						id: -1,
+						coords: { latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng() },
+						content: 'you are here'
+					};
+					vm.search();
+				});
 
-	        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
-	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-	        	if(vm.stateName == "package"){
-	        		//TODO implement later wih packageID in Ads
-	        		vm.searchData = {
+				window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback, "autocomplete", map);
+				$scope.PlacesService = new google.maps.places.PlacesService(map);
+				if (vm.stateName == "package") {
+					//TODO implement later wih packageID in Ads
+					vm.searchData = {
 						"loaiTin": $scope.loaiTin,
-						"loaiNhaDat": $scope.loaiNhaDat, 
+						"loaiNhaDat": $scope.loaiNhaDat,
 						"loaiNhaDats": [],
-					  	"giaBETWEEN": [vm.price_min,vm.price_max],
-					  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-					  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-					  	"khoangGia": vm.khoangGia, 
-			  			"khoangDienTich": vm.khoangDienTich,
-					  	"soTangGREATER": vm.soTangList[0].value,
-					  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-					  	"huongNha": vm.huongNhaList[0].value,
-					  	"huongNhas": [],
-					  	"userID": $rootScope.user.userID,
-					  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-					  	"limit": vm.pageSize,
-					  	"orderBy": vm.sortOptions[0].value,
-					  	diaChinh: vm.diaChinh,
-					  	"pageNo": 1
+						"giaBETWEEN": [vm.price_min, vm.price_max],
+						"soPhongNguGREATER": vm.soPhongNguList[0].value,
+						"soPhongTamGREATER": vm.soPhongTamList[0].value,
+						"khoangGia": vm.khoangGia,
+						"khoangDienTich": vm.khoangDienTich,
+						"soTangGREATER": vm.soTangList[0].value,
+						"dienTichBETWEEN": [0, vm.dien_tich_max],
+						"huongNha": vm.huongNhaList[0].value,
+						"huongNhas": [],
+						"userID": $rootScope.user.userID,
+						//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+						"limit": vm.pageSize,
+						"orderBy": vm.sortOptions[0].value,
+						diaChinh: vm.diaChinh,
+						"pageNo": 1
 					};
 					vm.searchData.diaChinh = vm.diaChinh;
 					vm.search();
-	        	}else if(vm.stateName == "searchdc"){
-	        		vm.searchData = {
+				} else if (vm.stateName == "searchdc") {
+					vm.searchData = {
 						"loaiTin": $scope.loaiTin,
-						"loaiNhaDat": $scope.loaiNhaDat, 
+						"loaiNhaDat": $scope.loaiNhaDat,
 						"loaiNhaDats": [],
-					  	"giaBETWEEN": [vm.price_min,vm.price_max],
-					  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-					  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-					  	"khoangGia": vm.khoangGia, 
-			  			"khoangDienTich": vm.khoangDienTich,
-					  	"soTangGREATER": vm.soTangList[0].value,
-					  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-					  	"huongNha": vm.huongNhaList[0].value,
-					  	"huongNhas": [],
-					  	"userID": $rootScope.user.userID,
-					  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-					  	"limit": vm.pageSize,
-					  	"orderBy": vm.sortOptions[0].value,
-					  	diaChinh: vm.diaChinh,
-					  	"pageNo": 1
+						"giaBETWEEN": [vm.price_min, vm.price_max],
+						"soPhongNguGREATER": vm.soPhongNguList[0].value,
+						"soPhongTamGREATER": vm.soPhongTamList[0].value,
+						"khoangGia": vm.khoangGia,
+						"khoangDienTich": vm.khoangDienTich,
+						"soTangGREATER": vm.soTangList[0].value,
+						"dienTichBETWEEN": [0, vm.dien_tich_max],
+						"huongNha": vm.huongNhaList[0].value,
+						"huongNhas": [],
+						"userID": $rootScope.user.userID,
+						//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+						"limit": vm.pageSize,
+						"orderBy": vm.sortOptions[0].value,
+						diaChinh: vm.diaChinh,
+						"pageNo": 1
 					};
 					vm.searchData.diaChinh = vm.diaChinh;
 					vm.search();
-	        	}else if(vm.stateName=="search"){
-	        		$scope.PlacesService.getDetails({
+				} else if (vm.stateName == "search") {
+					$scope.PlacesService.getDetails({
 						placeId: $scope.placeId
-					}, function(place, status) {
+					}, function (place, status) {
 						if (status === google.maps.places.PlacesServiceStatus.OK) {
 							$scope.searchPlaceSelected = place;
-			        		//var map = $scope.map.control.getGMap();
-			        		
-			        		/*$scope.markers = [
-								{
-													id: 0,
-													coords: {
-														latitude: 	place.geometry.location.lat(),
-														longitude: 	place.geometry.location.lng()
-													},
-													content: 'you are here'
-												}
-							];*/
+							//var map = $scope.map.control.getGMap();
+
+							/*$scope.markers = [
+	      {
+	      id: 0,
+	      coords: {
+	      	latitude: 	place.geometry.location.lat(),
+	      	longitude: 	place.geometry.location.lng()
+	      },
+	      content: 'you are here'
+	      }
+	      ];*/
 							var googlePlace = $scope.searchPlaceSelected;
 							vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(googlePlace);
 							vm.diaChinh.tinhKhongDau = vm.diaChinh.tinh;
@@ -19256,216 +19099,195 @@
 							vm.placeSearchText = googlePlace.formatted_address;
 
 							vm.marker = {
-				    			id: -1,
-				    			coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
-				    			content: 'you are here'
-				    		};
-
-							
+								id: -1,
+								coords: { latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() },
+								content: 'you are here'
+							};
 
 							vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);
 
 							// if($scope.searchPlaceSelected.geometry.viewport){
-							if(vm.onePoint == false){
-				          		console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-				          		vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
-				          		//vm.searchData.radiusInKm = undefined;
-				        	} else{
-				          		console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
-				          		//data.radiusInKm = "10";
-				          		var placeData = {
-				          			placeId: googlePlace.place_id,
-				 	      			relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-				       				radiusInKm :  vm.searchData.radiusInKm,
-				 				    currentLocation: undefined
-				 			  	}
-				 			  	vm.searchData.place = placeData;
-				          		vm.searchData.geoBox = undefined;
-				        	}
-				        	
-							vm.search(function(){
+							if (vm.onePoint == false) {
+								console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
+								vm.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(), googlePlace.geometry.viewport.getSouthWest().lng(), googlePlace.geometry.viewport.getNorthEast().lat(), googlePlace.geometry.viewport.getNorthEast().lng()];
+								//vm.searchData.radiusInKm = undefined;
+							} else {
+								console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
+								//data.radiusInKm = "10";
+								var placeData = {
+									placeId: googlePlace.place_id,
+									relandTypeName: window.RewayPlaceUtil.getTypeName(googlePlace),
+									radiusInKm: vm.searchData.radiusInKm,
+									currentLocation: undefined
+								};
+								vm.searchData.place = placeData;
+								vm.searchData.geoBox = undefined;
+							}
+
+							vm.search(function () {
 								vm.zoomMode = "auto";
 								var current_bounds = map.getBounds();
-				        		//$scope.map.center =  
-				        		vm.map.setCenter(place.geometry.location);
-				        		//$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-				        		if(place.geometry.viewport){
-				        			map.fitBounds(place.geometry.viewport);	
-				        			//$scope.map
-				        		} else if( !current_bounds.contains( place.geometry.location ) ){
-				        			//var new_bounds = current_bounds.extend(place.geometry.location);
-				        			//map.fitBounds(new_bounds);
-				        			//$digest();
-				        		}
+								//$scope.map.center =  
+								vm.map.setCenter(place.geometry.location);
+								//$scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+								if (place.geometry.viewport) {
+									map.fitBounds(place.geometry.viewport);
+									//$scope.map
+								} else if (!current_bounds.contains(place.geometry.location)) {
+									//var new_bounds = current_bounds.extend(place.geometry.location);
+									//map.fitBounds(new_bounds);
+									//$digest();
+								}
 							});
-							
+
 							//vm.map.refresh();
 							//$scope.$apply();	
-			        	}
-			        });
-	        	}
-				
-				
-	        });
-	        init();
+						}
+					});
+				}
+			});
+			init();
 
-			function init(){
+			function init() {
 
 				vm.dimension = {
 					height: $(window).height(),
 					width: $(window).width()
-				}
+				};
 
-				
 				// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
 				//$rootScope.center = "Hanoi Vietnam";
-				vm.provinces = [
-					{
-						value: "Hanoi",
-						lable: "Hà Nội"
-					},
-					{
-						value: "Da nang",
-						lable: "Đà Nãng"
+				vm.provinces = [{
+					value: "Hanoi",
+					lable: "Hà Nội"
+				}, {
+					value: "Da nang",
+					lable: "Đà Nãng"
 
-					}
-				];
+				}];
 
-				vm.districts = [
-					{
-						value: "Cau Giay",
-						lable: "Cầu Giấy"
-					},
-					{
-						value: "Dong Da",
-						lable: "Đống Đa"
+				vm.districts = [{
+					value: "Cau Giay",
+					lable: "Cầu Giấy"
+				}, {
+					value: "Dong Da",
+					lable: "Đống Đa"
 
-					}
-				];
+				}];
 
-				vm.findDuAnHot = function(){
-					HouseService.findDuAnHotByDiaChinhForSearchPage(vm.searchData).then(function(res){
-						if(res.data.success==true){
-							vm.duAnHot =  res.data.duAn;
-						}			
+				vm.findDuAnHot = function () {
+					HouseService.findDuAnHotByDiaChinhForSearchPage(vm.searchData).then(function (res) {
+						if (res.data.success == true) {
+							vm.duAnHot = res.data.duAn;
+						}
 					});
-				}
+				};
 				vm.findDuAnHot();
 
-				vm.loaiNhaDatList = []
-				if(vm.loaiTin == 0){
-					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatBan);	
-				}else{
+				vm.loaiNhaDatList = [];
+				if (vm.loaiTin == 0) {
+					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatBan);
+				} else {
 					vm.loaiNhaDatList = window.RewayListValue.getNameValueArray(window.RewayListValue.LoaiNhaDatThue);
 				}
-				
-				
+
 				vm.moreFilter = {
 					loaiNhaDat: vm.loaiNhaDatList.slice(),
 					huongNha: vm.huongNhaList.slice(),
 					soPhongNgu: vm.soPhongNguList[0].value,
 					soPhongTam: vm.soPhongTamList[0].value,
 					soTang: vm.soTangList[0].value
-				}
+				};
 				vm.moreFilter.loaiNhaDat[0].selected = true;
 				vm.moreFilter.huongNha[0].selected = true;
-				vm.changeFilterLoaiNhaDat = function(k){
+				vm.changeFilterLoaiNhaDat = function (k) {
 					var newvalue = vm.moreFilter.loaiNhaDat[k].selected;
-					if(k==0){
-						if(newvalue==true){
-							for(var i =1; i< vm.moreFilter.loaiNhaDat.length;i++){
+					if (k == 0) {
+						if (newvalue == true) {
+							for (var i = 1; i < vm.moreFilter.loaiNhaDat.length; i++) {
 								vm.moreFilter.loaiNhaDat[i].selected = false;
 							}
 						}
-					}else{
-						if(newvalue==true)
-							vm.moreFilter.loaiNhaDat[0].selected = false;	
+					} else {
+						if (newvalue == true) vm.moreFilter.loaiNhaDat[0].selected = false;
 					}
-					
-				}
-				vm.changeFilterHuongNha = function(k){
+				};
+				vm.changeFilterHuongNha = function (k) {
 					var newvalue = vm.moreFilter.huongNha[k].selected;
-					if(k==0){
-						if(newvalue==true){
-							for(var i =1; i< vm.moreFilter.huongNha.length;i++){
+					if (k == 0) {
+						if (newvalue == true) {
+							for (var i = 1; i < vm.moreFilter.huongNha.length; i++) {
 								vm.moreFilter.huongNha[i].selected = false;
 							}
 						}
-					}else{
-						if(newvalue==true)
-							vm.moreFilter.huongNha[0].selected = false;	
+					} else {
+						if (newvalue == true) vm.moreFilter.huongNha[0].selected = false;
 					}
-				}
+				};
 
-				vm.filter = function(){
+				vm.filter = function () {
 					// vm.searchData.giaBETWEEN[vm.moreFilter.priceFrom, vm.moreFilter.priceTo];
-					vm.searchData.soPhongNguGREATER=vm.moreFilter.soPhongNgu;
-					vm.searchData.soTangGREATER=vm.moreFilter.soTang;
-					vm.searchData.soPhongTamGREATER=vm.moreFilter.soPhongTam;
+					vm.searchData.soPhongNguGREATER = vm.moreFilter.soPhongNgu;
+					vm.searchData.soTangGREATER = vm.moreFilter.soTang;
+					vm.searchData.soPhongTamGREATER = vm.moreFilter.soPhongTam;
 					vm.searchData.loaiNhaDat = [];
 					vm.searchData.huongNha = [];
-					for(var i = 0; i< vm.moreFilter.loaiNhaDat.length;i++){
-						if(vm.moreFilter.loaiNhaDat[i].selected == true){
+					for (var i = 0; i < vm.moreFilter.loaiNhaDat.length; i++) {
+						if (vm.moreFilter.loaiNhaDat[i].selected == true) {
 							vm.searchData.loaiNhaDat.push(vm.moreFilter.loaiNhaDat[i].value);
 						}
 					}
-					for(var i = 0; i< vm.moreFilter.huongNha.length;i++){
-						if(vm.moreFilter.huongNha[i].selected == true){
+					for (var i = 0; i < vm.moreFilter.huongNha.length; i++) {
+						if (vm.moreFilter.huongNha[i].selected == true) {
 							vm.searchData.huongNha.push(vm.moreFilter.huongNha[i].value);
 						}
 					}
 					// vm.searchData.loaiNhaDat=vm.moreFilter.loaiNhaDat;
 					$("a[data-action='more']").click();
 					//$('filter').trigger("click");
-					vm.search(function(){
-						vm.searchData.soPhongNguGREATER=undefined;
-						vm.searchData.soTangGREATER=undefined;
-						vm.searchData.soPhongNguGREATER=undefined;
-						vm.searchData.soPhongTamGREATER=undefined;
-						vm.searchData.huongNha=undefined;
+					vm.search(function () {
+						vm.searchData.soPhongNguGREATER = undefined;
+						vm.searchData.soTangGREATER = undefined;
+						vm.searchData.soPhongNguGREATER = undefined;
+						vm.searchData.soPhongTamGREATER = undefined;
+						vm.searchData.huongNha = undefined;
 						vm.searchData.loaiNhaDat = vm.loaiNhaDatList[0].value;
 					});
-				}
+				};
 
-
-
-				$scope.options = {scrollwheel: false,labelContent: 'gia'};
+				$scope.options = { scrollwheel: false, labelContent: 'gia' };
 				$scope.markerCount = 3;
 				/*$scope.markers = [
-					{
-										id: 0,
-										coords: {
-											latitude: 	16.0439,
-											longitude: 	108.199
-										},
-										content: 'you are here'
-									}
-				];*/
+	   	{
+	   						id: 0,
+	   						coords: {
+	   							latitude: 	16.0439,
+	   							longitude: 	108.199
+	   						},
+	   						content: 'you are here'
+	   					}
+	   ];*/
 				//$scope.initData = window.initData;
 				//$scope.hot_ads_cat = window.hot_ads_cat;
 				//vm.ads_list = window.testData;
-				$scope.bodyClass= "page-home";
+				$scope.bodyClass = "page-home";
 
-				if(vm.viewMode == "list"){
-
-				}
-
-
+				if (vm.viewMode == "list") {}
 			}
-			
-
 		});
-
 	})();
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	(function(){
+	'use strict';
+
+	(function () {
 	    'use strict';
+
 	    var controllerId = 'NewsCtrl';
-	    angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, $sce, NewsService, $window) {
+	    angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, $sce, NewsService, $window) {
 	        var vm = this;
 	        $scope.rootCatId = $state.params.rootCatId;
 	        $scope.listArticle = [];
@@ -19478,35 +19300,33 @@
 	            "catId": $scope.rootCatId,
 	            "pageNo": 1,
 	            "pageSize": vm.pageSize
-	        }
+	        };
 	        initNews();
-	        vm.formatHtml = function(doc){
-	            if(doc)
-	                return $sce.trustAsHtml(doc);
-	        }
+	        vm.formatHtml = function (doc) {
+	            if (doc) return $sce.trustAsHtml(doc);
+	        };
 
 	        //$scope.trustAsHtml1 = $sce.trustAsHtml("<span style='background-color: rgb(255, 255, 255)'>6 điều cần cân nhắc trước khi mua nhà</span>");
 	        //$scope.trustAsHtml = $sce.trustAsHtml("&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;6 điều cần cân nhắc trước khi mua nhà&lt;/span&gt;");
 
-	        vm.goDetail = function(articleId){
-	            $state.go('newsDetail', { "rootCatId" : $scope.rootCatId, "articleId" : articleId}, {location: true});
-	        }
+	        vm.goDetail = function (articleId) {
+	            $state.go('newsDetail', { "rootCatId": $scope.rootCatId, "articleId": articleId }, { location: true });
+	        };
 
 	        function initNews() {
 	            console.log("---------------------initNews1 ---------------catId: " + $scope.rootCatId);
 	            var data = {
 	                catId: $scope.rootCatId
 	            };
-	            NewsService.countNews(data).then(function(res){
+	            NewsService.countNews(data).then(function (res) {
 	                console.log(res.data.countArticle);
 	                vm.totalResultCounts = res.data.countArticle;
-	                if(vm.totalResultCounts>0){
+	                if (vm.totalResultCounts > 0) {
 	                    vm.currentPage = 1;
-	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts / vm.pageSize);
 	                    vm.currentPageStart = 1;
-	                    vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
-
-	                } else{
+	                    vm.currentPageEnd = vm.totalResultCounts >= vm.pageSize ? vm.pageSize - 1 : vm.totalResultCounts - 1;
+	                } else {
 	                    vm.currentPage = 0;
 	                    vm.lastPageNo = 0;
 	                    vm.startPageNo = 0;
@@ -19515,8 +19335,8 @@
 	            });
 	            NewsService.findHightestArticle(data).then(function (res) {
 	                console.log("------NewsService.findHightestArticle-----");
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.hightestArticles = [];
 	                        for (var i = 1; i < res.data.length; i++) {
 	                            $scope.hightestArticles.push(res.data.list[i]);
@@ -19528,10 +19348,10 @@
 	            });
 	            NewsService.findHotArticle(data).then(function (res) {
 	                console.log("------NewsService.findHotArticle-----");
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.defaultHotArticle = res.data.list[0];
-	                        if(res.data.length > 1){
+	                        if (res.data.length > 1) {
 	                            $scope.hotArticles = [];
 	                            for (var i = 1; i < res.data.length; i++) {
 	                                $scope.hotArticles.push(res.data.list[i]);
@@ -19544,27 +19364,27 @@
 	            });
 	        }
 
-	        vm.firstPage = function(callback){
+	        vm.firstPage = function (callback) {
 	            vm.searchPage(1);
-	        }
-	        vm.nextPage = function(callback){
-	            vm.searchPage(vm.currentPage+1);
-	        }
-	        vm.lastPage = function(callback){
+	        };
+	        vm.nextPage = function (callback) {
+	            vm.searchPage(vm.currentPage + 1);
+	        };
+	        vm.lastPage = function (callback) {
 	            vm.searchPage(vm.lastPageNo);
-	        }
-	        vm.previousPage = function(callback){
-	            vm.searchPage(vm.currentPage-1);
-	        }
+	        };
+	        vm.previousPage = function (callback) {
+	            vm.searchPage(vm.currentPage - 1);
+	        };
 
-	        vm.searchPage = function(i){
+	        vm.searchPage = function (i) {
 	            vm.searchData.pageNo = i;
-	            NewsService.findNews(vm.searchData).then(function(res){
+	            NewsService.findNews(vm.searchData).then(function (res) {
 	                console.log(res.data.list);
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.firstArticle = res.data.list[0];
-	                        if(res.data.length > 1){
+	                        if (res.data.length > 1) {
 	                            $scope.listArticle = [];
 	                            for (var i = 1; i < res.data.length; i++) {
 	                                $scope.listArticle.push(res.data.list[i]);
@@ -19577,38 +19397,40 @@
 	                }
 	                console.log("---------listArticle: " + $scope.listArticle.length);
 
-	                vm.currentPageStart = vm.pageSize*(vm.searchData.pageNo-1) + 1
-	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+	                vm.currentPageStart = vm.pageSize * (vm.searchData.pageNo - 1) + 1;
+	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length - 1;
 	                vm.currentPage = vm.searchData.pageNo;
 	                console.log("NewsService.findNews finished ");
 	            });
-	        }
-	    })
+	        };
+	    });
 	})();
 
 /***/ },
 /* 11 */
 /***/ function(module, exports) {
 
-	(function(){
+	'use strict';
+
+	(function () {
 	    'use strict';
+
 	    var controllerId = 'NewsDetailCtrl';
-	    angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, $sce, NewsService, $window) {
+	    angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, $sce, NewsService, $window) {
 	        var vm = this;
 	        $scope.rootCatId = $state.params.rootCatId;
 	        $scope.articleId = $state.params.articleId;
 	        $scope.article = null;
-	        console.log("----------newsDetail: " +$scope.rootCatId + "----" + $scope.articleId);
+	        console.log("----------newsDetail: " + $scope.rootCatId + "----" + $scope.articleId);
 	        initNewsDetail();
 
-	        vm.goDetail = function(articleId){
-	            $state.go('newsDetail', { "rootCatId" : $scope.rootCatId, "articleId" : articleId}, {location: true});
-	        }
+	        vm.goDetail = function (articleId) {
+	            $state.go('newsDetail', { "rootCatId": $scope.rootCatId, "articleId": articleId }, { location: true });
+	        };
 
-	        vm.formatHtml = function(doc){
-	            if(doc)
-	                return $sce.trustAsHtml(doc);
-	        }
+	        vm.formatHtml = function (doc) {
+	            if (doc) return $sce.trustAsHtml(doc);
+	        };
 
 	        function initNewsDetail() {
 	            console.log("---------------------initNews ---------------catId: " + $scope.articleId);
@@ -19627,10 +19449,10 @@
 	                "pageSize": 4
 	            };
 
-	            NewsService.findNews(vm.searchData).then(function(res){
+	            NewsService.findNews(vm.searchData).then(function (res) {
 	                console.log(res.data.list);
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.listArticle = [];
 	                        for (var i = 0; i < res.data.length; i++) {
 	                            $scope.listArticle.push(res.data.list[i]);
@@ -19650,8 +19472,8 @@
 	            });
 	            NewsService.findHightestArticle(data).then(function (res) {
 	                console.log("------newsDetailCtrl.findHightestArticle-----");
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.hightestArticles = [];
 	                        for (var i = 1; i < res.data.length; i++) {
 	                            $scope.hightestArticles.push(res.data.list[i]);
@@ -19663,10 +19485,10 @@
 	            });
 	            NewsService.findHotArticle(data).then(function (res) {
 	                console.log("------newsDetailCtrl.findHotArticle-----");
-	                if(res.data.list){
-	                    if(res.data.length > 0){
+	                if (res.data.list) {
+	                    if (res.data.length > 0) {
 	                        $scope.defaultHotArticle = res.data.list[0];
-	                        if(res.data.length > 1){
+	                        if (res.data.length > 1) {
 	                            $scope.hotArticles = [];
 	                            for (var i = 1; i < res.data.length; i++) {
 	                                $scope.hotArticles.push(res.data.list[i]);
@@ -19678,104 +19500,102 @@
 	                console.log("----newsDetailCtrl.findHotArticle finished ");
 	            });
 	        }
-	    })
+	    });
 	})();
 
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'DetailCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window, $timeout) {
 			var vm = this;
 			vm.viewMap = false;
 			$scope.chat_visible = true;
-			vm.likeAdsClass ="fa-heart-o";
-			$scope.$on('$viewContentLoaded', function(){
-				$timeout(function() {
-					window.DesignCommon.adjustPage();				
-				},0);
-				if($state.current.data){
+			vm.likeAdsClass = "fa-heart-o";
+			$scope.$on('$viewContentLoaded', function () {
+				$timeout(function () {
+					window.DesignCommon.adjustPage();
+				}, 0);
+				if ($state.current.data) {
 					$rootScope.bodyClass = "page-detail";
 				}
-			});	
+			});
 
 			vm.marker = {
 				id: 1,
 				coords: {
-					latitude: 	16.0439,
-					longitude: 	108.199
+					latitude: 16.0439,
+					longitude: 108.199
 				},
 				content: undefined,
 				data: 'test'
-			}
-			vm.center= [21.0363818591319,105.80105538518103];
+			};
+			vm.center = [21.0363818591319, 105.80105538518103];
 
-			vm.diaChinh=  {};
-			
+			vm.diaChinh = {};
 
-			vm.goToPageSearch = function(){
-				if(vm.placeSearchId){
-					$state.go('search', { "place" : vm.placeSearchId, "loaiTin" : vm.ads.loaiTin, "loaiNhaDat" : vm.ads.loaiNhaDat }, {location: true});	
-				}else{
-					$state.go('searchdc', { "tinh" : vm.ads.place.diaChinh.tinhKhongDau, "huyen" : vm.ads.place.diaChinh.huyenKhongDau,"loaiTin" : vm.ads.loaiTin, "loaiNhaDat" : vm.ads.loaiNhaDat, "viewMode": "map"}, {location: true});	
+			vm.goToPageSearch = function () {
+				if (vm.placeSearchId) {
+					$state.go('search', { "place": vm.placeSearchId, "loaiTin": vm.ads.loaiTin, "loaiNhaDat": vm.ads.loaiNhaDat }, { location: true });
+				} else {
+					$state.go('searchdc', { "tinh": vm.ads.place.diaChinh.tinhKhongDau, "huyen": vm.ads.place.diaChinh.huyenKhongDau, "loaiTin": vm.ads.loaiTin, "loaiNhaDat": vm.ads.loaiNhaDat, "viewMode": "map" }, { location: true });
 				}
-				
-				
-			}
+			};
 
-
-
-			vm.showChat = function(user){
-				if(!$rootScope.user.userID){
+			vm.showChat = function (user) {
+				if (!$rootScope.user.userID) {
 					$scope.$bus.publish({
-		              channel: 'login',
-		              topic: 'show login',
-		              data: {label: "Đăng nhập để chat"}
-			        });
-			        return;
+						channel: 'login',
+						topic: 'show login',
+						data: { label: "Đăng nhập để chat" }
+					});
+					return;
 				}
 				$scope.$bus.publish({
-	              channel: 'chat',
-	              topic: 'new user',
-	              data: {userID: user.userID,avatar: user.avatar, name: user.name,ads: {adsID:vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover}}
-		        });
+					channel: 'chat',
+					topic: 'new user',
+					data: { userID: user.userID, avatar: user.avatar, name: user.name, ads: { adsID: vm.ads.adsID, title: vm.ads.title, cover: vm.ads.image.cover } }
+				});
 			};
-			vm.likeAds = function(adsID){
-		      if(!$rootScope.user.userID){
-		        $scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'show login',
-	              data: {label: "Đăng nhập để lưu BĐS"}
-		        });
-		        return;
-		      }
-		      HouseService.likeAds({adsID: vm.adsID,userID: $rootScope.user.userID}).then(function(res){
-		        //alert(res.data.msg);
-		        //console.log(res);
-		        if(res.data.success == true || res.data.status==1){
-		        	vm.likeAdsClass ="fa-heart";
-		        }
-		      });
-		    };
-			$timeout(function() {
+			vm.likeAds = function (adsID) {
+				if (!$rootScope.user.userID) {
+					$scope.$bus.publish({
+						channel: 'login',
+						topic: 'show login',
+						data: { label: "Đăng nhập để lưu BĐS" }
+					});
+					return;
+				}
+				HouseService.likeAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
+					//alert(res.data.msg);
+					//console.log(res);
+					if (res.data.success == true || res.data.status == 1) {
+						vm.likeAdsClass = "fa-heart";
+					}
+				});
+			};
+			$timeout(function () {
 				$('body').scrollTop(0);
-			},0);
+			}, 0);
 			vm.adsID = $state.params.adsID;
-			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
+			HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
 				//console.log("res.data " + res.data.ads);
 				$rootScope.user.lastViewAds = vm.adsID;
 				vm.ads = res.data.ads;
 				vm.marker.coords.latitude = vm.ads.place.geo.lat;
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
-				vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
+				vm.center = [vm.ads.place.geo.lat, vm.ads.place.geo.lon];
 				vm.marker.content = vm.ads.giaFmt;
 				// vm.diaChinh = vm.ads.place.diaChinh;
 				$scope.email = vm.ads.dangBoi.email;
-				vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
-				vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
+				vm.ads.place.diaChinh.tinhKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
+				vm.ads.place.diaChinh.huyenKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
 				// vm.diaChinh = {
 				// 	tinh:vm.ads.place.diaChinh.tinh,
@@ -19785,76 +19605,53 @@
 				// 	xa: vm.ads.place.diaChinh.xa,
 				// 	xaKhongDau: vm.ads.place.diaChinh.xaKhongDau
 				// }				
-				if($rootScope.alreadyLike(vm.ads.adsID) ==  true)
-					vm.likeAdsClass ="fa-heart";
+				if ($rootScope.alreadyLike(vm.ads.adsID) == true) vm.likeAdsClass = "fa-heart";
 				var price_min = 0;
 				var price_max = window.RewayListValue.filter_max_value.value;
 				var dien_tich_min = 0;
 				var dien_tich_max = window.RewayListValue.filter_max_value.value;
 
-			
 				var pageSize = 8;
 
-				vm.name ="";
-				vm.phone="";
-				vm.email="";
+				vm.name = "";
+				vm.phone = "";
+				vm.email = "";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 				vm.requestInfoClass = "btn-submit";
-				vm.clearInfoRequest = function(){
-					vm.name ="";
-					vm.phone="";
-					vm.email="";
+				vm.clearInfoRequest = function () {
+					vm.name = "";
+					vm.phone = "";
+					vm.email = "";
 					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
-				}
-				if(vm.ads.place.diaChinh){
-					HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){
-						if(res.data.success==true)
-							vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
+				};
+				if (vm.ads.place.diaChinh) {
+					HouseService.findDuAnHotByDiaChinhForDetailPage({ diaChinh: vm.ads.place.diaChinh }).then(function (res) {
+						if (res.data.success == true) vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
 					});
 				}
-					
 
-				vm.userLoggedIn = function(){
+				vm.userLoggedIn = function () {
 					vm.name = $rootScope.user.userName;
-		                if($rootScope.user.phone)
-							vm.phone = parseInt($rootScope.user.phone);
-						vm.email = $rootScope.user.userEmail;
-					if(vm.ads.dangBoi.userID == $rootScope.user.userID)
-						vm.showLuotXem = true;
-					if(vm.ads.dangBoi.email == $rootScope.user.userEmail)
-						vm.showLuotXem = true;
-				}
-				
-				$scope.$bus.subscribe({
-	            	channel: 'user',
-		            topic: 'logged-in',
-		            callback: function(data, envelope) {
-		                //console.log('add new chat box', data, envelope);
-		                vm.userLoggedIn();
-		            }
-		        });
-		        if($rootScope.isLoggedIn()){	        	
-		        	vm.userLoggedIn();
-		        }
+					if ($rootScope.user.phone) vm.phone = parseInt($rootScope.user.phone);
+					vm.email = $rootScope.user.userEmail;
+					if (vm.ads.dangBoi.userID == $rootScope.user.userID) vm.showLuotXem = true;
+					if (vm.ads.dangBoi.email == $rootScope.user.userEmail) vm.showLuotXem = true;
+				};
 
-				vm.requestInfo = function(){
-					if($('#form-info-request').valid()){
-						vm.requestInfoClass = 'btn-submit-disabled';
-						HouseService.requestInfo({
-							name: vm.name,
-							phone: vm.phone,
-							email: vm.email,
-							content: vm.content,
-							adsUrl: window.location.href
-						}).then(function(res){
-							console.log(JSON.stringify(res.data));						
-							vm.requestInfoClass = 'btn-submit';
-							vm.clearInfoRequest();
-						});
-					}				
+				$scope.$bus.subscribe({
+					channel: 'user',
+					topic: 'logged-in',
+					callback: function callback(data, envelope) {
+						//console.log('add new chat box', data, envelope);
+						vm.userLoggedIn();
+					}
+				});
+				if ($rootScope.isLoggedIn()) {
+					vm.userLoggedIn();
 				}
-				vm.requestInfoPopup = function(){
-					if($('#form-info-request-popup').valid()){
+
+				vm.requestInfo = function () {
+					if ($('#form-info-request').valid()) {
 						vm.requestInfoClass = 'btn-submit-disabled';
 						HouseService.requestInfo({
 							name: vm.name,
@@ -19862,44 +19659,56 @@
 							email: vm.email,
 							content: vm.content,
 							adsUrl: window.location.href
-						}).then(function(res){
+						}).then(function (res) {
 							console.log(JSON.stringify(res.data));
 							vm.requestInfoClass = 'btn-submit';
 							vm.clearInfoRequest();
 						});
-					}		
-				}
+					}
+				};
+				vm.requestInfoPopup = function () {
+					if ($('#form-info-request-popup').valid()) {
+						vm.requestInfoClass = 'btn-submit-disabled';
+						HouseService.requestInfo({
+							name: vm.name,
+							phone: vm.phone,
+							email: vm.email,
+							content: vm.content,
+							adsUrl: window.location.href
+						}).then(function (res) {
+							console.log(JSON.stringify(res.data));
+							vm.requestInfoClass = 'btn-submit';
+							vm.clearInfoRequest();
+						});
+					}
+				};
 
-
-				vm.goDetail = function(adsID){
-	        		$state.go('detail', { "adsID" : adsID}, {location: true});
-	        	}
-	        	//find bds cung loai moi dang
+				vm.goDetail = function (adsID) {
+					$state.go('detail', { "adsID": adsID }, { location: true });
+				};
+				//find bds cung loai moi dang
 				var searchDataCungLoai = {
 					"loaiTin": vm.ads.loaiTin,
-					"loaiNhaDat": vm.ads.loaiNhaDat, 
+					"loaiNhaDat": vm.ads.loaiNhaDat,
 					"diaChinh": {
 						tinh: vm.ads.place.diaChinh.tinhKhongDau,
 						huyen: vm.ads.place.diaChinh.huyenKhongDau
 					},
 					"limit": pageSize,
-				  	"orderBy": "ngayDangTinDESC",
-				  	"pageNo": 1
+					"orderBy": "ngayDangTinDESC",
+					"pageNo": 1
 				};
-				
-				HouseService.findAdsSpatial(searchDataCungLoai).then(function(res){
-					vm.bdsCungLoaiMoiDang = [];
-					for(var i=0;i<res.data.length;i++){
-						if(res.data.list[i].adsID == vm.ads.adsID){
 
-						}else if(vm.bdsCungLoaiMoiDang.length<7){
+				HouseService.findAdsSpatial(searchDataCungLoai).then(function (res) {
+					vm.bdsCungLoaiMoiDang = [];
+					for (var i = 0; i < res.data.length; i++) {
+						if (res.data.list[i].adsID == vm.ads.adsID) {} else if (vm.bdsCungLoaiMoiDang.length < 7) {
 							vm.bdsCungLoaiMoiDang.push(res.data.list[i]);
 						}
 					}
-					
 				});
 				//find bds ngang gia
-				var searchDataNgangGia  ={
+				var searchDataNgangGia = {
 					"loaiTin": vm.ads.loaiTin,
 					"diaChinh": {
 						tinh: vm.ads.place.diaChinh.tinhKhongDau,
@@ -19907,23 +19716,20 @@
 					},
 					"limit": pageSize,
 					"orderBy": "ngayDangTinDESC",
-					"giaBETWEEN": [vm.ads.gia-0.1*vm.ads.gia,vm.ads.gia+0.1*vm.ads.gia],
-				  	"pageNo": 1
-				}
-				
-				HouseService.findAdsSpatial(searchDataNgangGia).then(function(res){
-					vm.bdsNgangGia = [];
-					for(var i=0;i<res.data.length;i++){
-						if(res.data.list[i].adsID == vm.ads.adsID){
+					"giaBETWEEN": [vm.ads.gia - 0.1 * vm.ads.gia, vm.ads.gia + 0.1 * vm.ads.gia],
+					"pageNo": 1
+				};
 
-						}else if(vm.bdsNgangGia.length<7){
+				HouseService.findAdsSpatial(searchDataNgangGia).then(function (res) {
+					vm.bdsNgangGia = [];
+					for (var i = 0; i < res.data.length; i++) {
+						if (res.data.list[i].adsID == vm.ads.adsID) {} else if (vm.bdsNgangGia.length < 7) {
 							vm.bdsNgangGia.push(res.data.list[i]);
 						}
 					}
-					
 				});
 				//find bds gia nho hon
-				var searchDataGiaNhoHon  ={
+				var searchDataGiaNhoHon = {
 					"loaiTin": vm.ads.loaiTin,
 					"diaChinh": {
 						tinh: vm.ads.place.diaChinh.tinhKhongDau,
@@ -19931,399 +19737,383 @@
 					},
 					"limit": pageSize,
 					"orderBy": "ngayDangTinDESC",
-					"giaBETWEEN": [0,vm.ads.gia],
-				  	"pageNo": 1
-				}
-				HouseService.findAdsSpatial(searchDataGiaNhoHon).then(function(res){
+					"giaBETWEEN": [0, vm.ads.gia],
+					"pageNo": 1
+				};
+				HouseService.findAdsSpatial(searchDataGiaNhoHon).then(function (res) {
 					vm.bdsNgangNhoHon = [];
-					for(var i=0;i<res.data.length;i++){
-						if(res.data.list[i].adsID == vm.ads.adsID){
-
-						}else if(vm.bdsNgangNhoHon.length<7){
+					for (var i = 0; i < res.data.length; i++) {
+						if (res.data.list[i].adsID == vm.ads.adsID) {} else if (vm.bdsNgangNhoHon.length < 7) {
 							vm.bdsNgangNhoHon.push(res.data.list[i]);
 						}
 					}
-					
 				});
-
-
 			});
-			vm.selectPlaceCallback = function(place){
+			vm.selectPlaceCallback = function (place) {
 				vm.searchPlaceSelected = place;
 				vm.placeSearchId = place.place_id;
 				vm.goToPageSearch();
-			}
+			};
 
+			vm.init = function () {
+				NgMap.getMap().then(function (map) {
+					// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
+					window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback, "autoComplete", map);
+					$scope.PlacesService = new google.maps.places.PlacesService(map);
+					/*$scope.PlacesService.getDetails({
+	    	placeId: $scope.placeId
+	    }, function(place, status) {
+	    	if (status === google.maps.places.PlacesServiceStatus.OK) {
+	    		$scope.searchPlaceSelected = place;
+	     		//var map = $scope.map.control.getGMap();
+	     		var current_bounds = map.getBounds();
+	     		//$scope.map.center =  
+	     		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+	     		if(place.geometry.viewport){
+	     			//map.fitBounds(place.geometry.viewport);	
+	     			//$scope.map
+	     		} else if( !current_bounds.contains( place.geometry.location ) ){
+	     			//var new_bounds = current_bounds.extend(place.geometry.location);
+	     			//map.fitBounds(new_bounds);
+	     			//$digest();
+	     		}
+	     		$scope.$apply();
+	     		//vm.search();
+	    	}
+	    });*/
+				});
+				/*vm.findDuAnHot = function(){
+	   HouseService.findDuAnHotByDiaChinhForDetailPage(vm.searchData).then(function(res){
+	   if(res.data.success==true){
+	   vm.listDuAnHot =  res.data.listDuAnHot;
+	   }			
+	   });
+	   }
+	   vm.findDuAnHot();*/
 
-			vm.init = function(){
-				NgMap.getMap().then(function(map){
-		        	// $scope.map = {center: {latitude: 16.0439, longitude: 108.199 }, zoom: 10 , control: {},fit: true};
-		        	window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autoComplete",map);
-		        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-		        	/*$scope.PlacesService.getDetails({
-		        		placeId: $scope.placeId
-		        	}, function(place, status) {
-		        		if (status === google.maps.places.PlacesServiceStatus.OK) {
-		        			$scope.searchPlaceSelected = place;
-				        		//var map = $scope.map.control.getGMap();
-				        		var current_bounds = map.getBounds();
-				        		//$scope.map.center =  
-				        		vm.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-				        		if(place.geometry.viewport){
-				        			//map.fitBounds(place.geometry.viewport);	
-				        			//$scope.map
-				        		} else if( !current_bounds.contains( place.geometry.location ) ){
-				        			//var new_bounds = current_bounds.extend(place.geometry.location);
-				        			//map.fitBounds(new_bounds);
-				        			//$digest();
-				        		}
-				        		$scope.$apply();
-				        		//vm.search();
-			        	}
-			        });*/
+				var infoRequestRules = {
+					email: {
+						email: true,
+						required: function required(element) {
+							return $("#form-info-request [name = 'phone']").val() == '';
+						}
+					},
+					name: {
+						required: true
+					},
+					phone: {
+						number: true,
+						minlength: 9,
+						required: function required(element) {
+							return $("#form-info-request [name = 'email']").val() == '';
+						}
+					}
+				};
+				var infoRequestMessages = {
+					email: {
+						required: "Nhập số điện thoại hoặc email",
+						email: 'Email không hợp lệ'
+					},
+					phone: {
+						number: 'Số điện thoại không hợp lệ',
+						minlength: 'Số điện thoại ít nhất 9 ký tự',
+						required: "Nhập số điện thoại hoặc email"
+					},
+					name: {
+						required: 'Xin nhập họ tên'
+					}
+				};
 
-	        	});
-	        	/*vm.findDuAnHot = function(){
-					HouseService.findDuAnHotByDiaChinhForDetailPage(vm.searchData).then(function(res){
-						if(res.data.success==true){
-							vm.listDuAnHot =  res.data.listDuAnHot;
-						}			
-					});
-				}
-				vm.findDuAnHot();*/
-	        	
-	        	var infoRequestRules = {
-		            email: {
-		              	email: true,
-		              	required: function(element) {
-		        			return $("#form-info-request [name = 'phone']").val()=='';
-		    			}
-		            },
-		            name:{
-		            	required: true,
-		            },
-		            phone: {
-		            	number: true,
-		            	minlength: 9,
-		            	required: function(element) {
-		        			return $("#form-info-request [name = 'email']").val()=='';
-		    			}
-		            }
-		        };
-		        var infoRequestMessages = {
-	                email: {
-	                  required: "Nhập số điện thoại hoặc email",
-	                  email: 'Email không hợp lệ'
-	                },
-	                phone: {
-	                   	number:  'Số điện thoại không hợp lệ',
-	                    minlength: 'Số điện thoại ít nhất 9 ký tự',
-	                    required: "Nhập số điện thoại hoặc email"
-	                },
-	                name: {
-	                  required: 'Xin nhập họ tên'
-	                }
-	            };
-
-	        	var formRequest = $('#form-info-request');
-	            formRequest.validate({
-	              rules: infoRequestRules,
-	              messages: infoRequestMessages
-	            });  
-	            formRequest = $('#form-info-request-popup');
-	            formRequest.validate({
-	              rules: infoRequestRules,
-	              messages: infoRequestMessages
-	            });      
-			}
+				var formRequest = $('#form-info-request');
+				formRequest.validate({
+					rules: infoRequestRules,
+					messages: infoRequestMessages
+				});
+				formRequest = $('#form-info-request-popup');
+				formRequest.validate({
+					rules: infoRequestRules,
+					messages: infoRequestMessages
+				});
+			};
 
 			vm.init();
 
-			vm.showPopupImage = function(e){
+			vm.showPopupImage = function (e) {
 				e.preventDefault();
-	            $('#box-popup').fadeIn(500, function(){
-	                $('#total').html(vm.getSlider().getSlideCount());
-	                vm.getSlider().reloadSlider();
-	                vm.getSlider().goToSlide(0);
-	            })
-			}
-			vm.hidePopup = function(e){
-				e.preventDefault();            
-	            $('#box-popup').fadeOut(500, function(){
-	                vm.getSlider().destroySlider();
-	            })
-			}
+				$('#box-popup').fadeIn(500, function () {
+					$('#total').html(vm.getSlider().getSlideCount());
+					vm.getSlider().reloadSlider();
+					vm.getSlider().goToSlide(0);
+				});
+			};
+			vm.hidePopup = function (e) {
+				e.preventDefault();
+				$('#box-popup').fadeOut(500, function () {
+					vm.getSlider().destroySlider();
+				});
+			};
 			vm.showPopupRequestForm = true;
-			vm.toggleContactPopup = function(e){
+			vm.toggleContactPopup = function (e) {
 				e.preventDefault();
-	            var target = $(e.target).attr('href'),
-	                text = $(e.target).text(),
-	                change = $(e.target).data('toggle-text');
-	            $('#box-popup').toggleClass('open');
-	            vm.showPopupRequestForm = !vm.showPopupRequestForm;
-	            //$(this).data('toggle-text', text).html('<i class="fa fa-angle-right"></i> ' + change).attr('title', change);
-	            vm.getSlider().reloadSlider();
-			}
+				var target = $(e.target).attr('href'),
+				    text = $(e.target).text(),
+				    change = $(e.target).data('toggle-text');
+				$('#box-popup').toggleClass('open');
+				vm.showPopupRequestForm = !vm.showPopupRequestForm;
+				//$(this).data('toggle-text', text).html('<i class="fa fa-angle-right"></i> ' + change).attr('title', change);
+				vm.getSlider().reloadSlider();
+			};
 
-			vm.getSlider = function(){
-	            if(vm.slider)
-	                return vm.slider;
-	            var slider_popup = $('#slider-popup');
-	            vm.slider = slider_popup.bxSlider({
-	                //mode: 'fade',
-	                preloadImages: 'visible',
-	                auto: false,
-	                speed: 1000,
-	                autoHover: true,
-	                pause: 5000,
-	                pager: false,
-	                minSlides: 1,
-	                maxSlides: 1,
-	                controls: true,
-	                onSliderLoad: function(currentIndex){
-	                    $('#count').html(currentIndex + 1);
-	                },
-	                onSlideAfter: function($slideElement, oldIndex, newIndex){
-	                    $('#count').html(newIndex + 1);
-	                }
-	            });
-	            return vm.slider;
-	        }
-
+			vm.getSlider = function () {
+				if (vm.slider) return vm.slider;
+				var slider_popup = $('#slider-popup');
+				vm.slider = slider_popup.bxSlider({
+					//mode: 'fade',
+					preloadImages: 'visible',
+					auto: false,
+					speed: 1000,
+					autoHover: true,
+					pause: 5000,
+					pager: false,
+					minSlides: 1,
+					maxSlides: 1,
+					controls: true,
+					onSliderLoad: function onSliderLoad(currentIndex) {
+						$('#count').html(currentIndex + 1);
+					},
+					onSlideAfter: function onSlideAfter($slideElement, oldIndex, newIndex) {
+						$('#count').html(newIndex + 1);
+					}
+				});
+				return vm.slider;
+			};
 		});
-
 	})();
 
 /***/ },
 /* 13 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'ChatPanelCtrl';
-		angular.module('bds').controller(controllerId,function (socket,$compile,$rootScope,$http, $scope,$state,HouseService,NgMap,$window){
-			var vm = this;		
+		angular.module('bds').controller(controllerId, function (socket, $compile, $rootScope, $http, $scope, $state, HouseService, NgMap, $window) {
+			var vm = this;
 			vm.boxPositions = [];
 			vm.chatBoxes = [];
 
-			vm.isSameDate
-
+			vm.isSameDate;
 
 			/**
-			Handle in comming message
-			*/
-			socket.on("new message", function(data){
-				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == false){
+	  Handle in comming message
+	  */
+			socket.on("new message", function (data) {
+				if (vm.chatBoxes.hasOwnProperty(data.fromUserID) == false) {
 					//someone just start chat with you need to popup the chat box for that user
-					vm.addNewChat({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
-					vm.chatBoxes[data.fromUserID].hidden == true;	
+					vm.addNewChat({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+					vm.chatBoxes[data.fromUserID].hidden == true;
 				}
-				
+
 				// vm.chatBoxes[data.fromUserID].messages.push(data);
 				data.date = new Date(data.date);
-				window.RewayClientUtils.addChatMessage(vm.chatBoxes[data.fromUserID],data);
+				window.RewayClientUtils.addChatMessage(vm.chatBoxes[data.fromUserID], data);
 
 				/*socket.emit("confirm read",msg, function(data){
-					console.log("mark message as read");				
-				});*/
+	   	console.log("mark message as read");				
+	   });*/
 
 				$scope.$apply();
 				//$('#' + data.emailFrom + ' ' + '.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
 				$('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history').scrollTop($('#' + vm.chatBoxes[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 			});
 
-			socket.on("user-start-typing",function(data){
-				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+			socket.on("user-start-typing", function (data) {
+				if (vm.chatBoxes.hasOwnProperty(data.fromUserID) == true) {
 					vm.chatBoxes[data.fromUserID].status = vm.chatBoxes[data.fromUserID].user.name + " is typing...";
 					$scope.$apply();
 				}
 			});
 
-			socket.on("user-stop-typing",function(data){
-				if(vm.chatBoxes.hasOwnProperty(data.fromUserID) == true){
+			socket.on("user-stop-typing", function (data) {
+				if (vm.chatBoxes.hasOwnProperty(data.fromUserID) == true) {
 					vm.chatBoxes[data.fromUserID].status = "";
 					$scope.$apply();
 				}
 			});
 
-			socket.on("unread-messages", function(data){
+			socket.on("unread-messages", function (data) {
 				for (var i = 0, len = data.length; i < len; i++) {
-				  var msg = data[i].default;
-				  msg.date = new Date(msg.date);
-				  vm.addNewChat({userID:msg.fromUserID, name:msg.fromFullName,avatar: msg.fromUserAvatar});
-				  vm.chatBoxes[msg.fromUserID].hidden = true;
-				  window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID],msg);
-				  console.log("msg["+i+"] "  + msg);
+					var msg = data[i].default;
+					msg.date = new Date(msg.date);
+					vm.addNewChat({ userID: msg.fromUserID, name: msg.fromFullName, avatar: msg.fromUserAvatar });
+					vm.chatBoxes[msg.fromUserID].hidden = true;
+					window.RewayClientUtils.addChatMessage(vm.chatBoxes[msg.fromUserID], msg);
+					console.log("msg[" + i + "] " + msg);
 				}
-				socket.emit("read-messages",data, function(res){
-					console.log("mark messages as read " + res);				
+				socket.emit("read-messages", data, function (res) {
+					console.log("mark messages as read " + res);
 				});
 			});
 
-			
-
-			vm.addNewChat = function(user){
-				if(vm.chatBoxes.hasOwnProperty(user.userID)){
-	        
-		      	}else{
-		      		var count = Object.keys(vm.chatBoxes).length;
-					var rightPos = (24 + Math.min(2,count)*300);
-		        	vm.chatBoxes[user.userID] = {
-		        		user: user,
-		        		onlineClass: "online",
-		        		hidden: false,
-		        		ads: user.ads,
-		        		status: "",
-		        		position: rightPos,
-		        		messages: []
-		        	};
-		        	var count = Object.keys(vm.chatBoxes).length-1;
-					var rightPos = (24 + Math.min(2,count)*300);
-		        	var divElement = angular.element(document.querySelector('#chat-container'));
-		        	var appendHtml = $compile('<bds-chat chatbox="cp.chatBoxes[\'' + user.userID  +  '\']" visible="$root.chat_visible" right="' + rightPos + '" useremail="\''+ user.email+'\'"></bds-chat>')($scope);
-		        	divElement.append(appendHtml);
-		      	}
-			}
-			vm.reOrderChat = function(){
-				var id = 0;
-				for (var userID in vm.chatBoxes){
-					var rightPos = (24 + Math.min(2,id)*300);
-					vm.chatBoxes[userID].position = rightPos;
-					id = id +1;
+			vm.addNewChat = function (user) {
+				if (vm.chatBoxes.hasOwnProperty(user.userID)) {} else {
+					var count = Object.keys(vm.chatBoxes).length;
+					var rightPos = 24 + Math.min(2, count) * 300;
+					vm.chatBoxes[user.userID] = {
+						user: user,
+						onlineClass: "online",
+						hidden: false,
+						ads: user.ads,
+						status: "",
+						position: rightPos,
+						messages: []
+					};
+					var count = Object.keys(vm.chatBoxes).length - 1;
+					var rightPos = 24 + Math.min(2, count) * 300;
+					var divElement = angular.element(document.querySelector('#chat-container'));
+					var appendHtml = $compile('<bds-chat chatbox="cp.chatBoxes[\'' + user.userID + '\']" visible="$root.chat_visible" right="' + rightPos + '" useremail="\'' + user.email + '\'"></bds-chat>')($scope);
+					divElement.append(appendHtml);
 				}
-			}
-			
+			};
+			vm.reOrderChat = function () {
+				var id = 0;
+				for (var userID in vm.chatBoxes) {
+					var rightPos = 24 + Math.min(2, id) * 300;
+					vm.chatBoxes[userID].position = rightPos;
+					id = id + 1;
+				}
+			};
+
 			$scope.$bus.subscribe({
-	            channel: 'chat',
-	            topic: 'new user',
-	            callback: function(data, envelope) {
-	                console.log('add new chat box', data, envelope);
-	                vm.addNewChat(data);                
-	            }
-	        });
-	        $scope.$bus.subscribe({
-	            channel: 'chat',
-	            topic: 'close chat',
-	            callback: function(data, envelope) {
-	                console.log('close chat', data, envelope);
-	                delete vm.chatBoxes[data];
-	                vm.reOrderChat();
-	            }
-	        });
+				channel: 'chat',
+				topic: 'new user',
+				callback: function callback(data, envelope) {
+					console.log('add new chat box', data, envelope);
+					vm.addNewChat(data);
+				}
+			});
+			$scope.$bus.subscribe({
+				channel: 'chat',
+				topic: 'close chat',
+				callback: function callback(data, envelope) {
+					console.log('close chat', data, envelope);
+					delete vm.chatBoxes[data];
+					vm.reOrderChat();
+				}
+			});
 
-	        $scope.$bus.subscribe({
-	            channel: 'chat',
-	            topic: 'new message',
-	            callback: function(data, envelope) {
-	                console.log('new message arrive', data, envelope);
-	                //vm.addNewChat(data);
-	            }
-	        });
-
-	        
-
+			$scope.$bus.subscribe({
+				channel: 'chat',
+				topic: 'new message',
+				callback: function callback(data, envelope) {
+					console.log('new message arrive', data, envelope);
+					//vm.addNewChat(data);
+				}
+			});
 		});
-
 	})();
 
 /***/ },
 /* 14 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'ProfileCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,Upload,NgMap,$window,$timeout){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, Upload, NgMap, $window, $timeout) {
 			var vm = this;
 			vm.viewMap = false;
 			$scope.chat_visible = true;
-			$scope.$on('$viewContentLoaded', function(){
-				$timeout(function() {
+			$scope.$on('$viewContentLoaded', function () {
+				$timeout(function () {
 					window.DesignCommon.adjustPage();
-				},0);
-				if($state.current.data){
+				}, 0);
+				if ($state.current.data) {
 					$rootScope.bodyClass = "page-home";
 				}
-			});	
-			vm.init = function(){
+			});
+			vm.init = function () {
 				vm.userID = $state.params.userID;
-				HouseService.profile({userID: vm.userID}).then(function(res){
-					if(res.data.success == true){
-						vm.user = res.data.user;	
-						vm.original =  angular.copy(vm.user);
-					}				
+				HouseService.profile({ userID: vm.userID }).then(function (res) {
+					if (res.data.success == true) {
+						vm.user = res.data.user;
+						vm.original = angular.copy(vm.user);
+					}
 				});
-			}
+			};
 
 			vm.init();
 
-			vm.prepareUpdateProfileData = function(){
+			vm.prepareUpdateProfileData = function () {
 				return {
 					newPass: vm.newPass,
 					userID: vm.user.id,
 					email: vm.user.email,
-					phone: "'" + vm.user.phone + "'" ,
+					phone: "'" + vm.user.phone + "'",
 					fullName: vm.user.fullName,
 					diaChi: vm.user.diaChi,
 					avatar: vm.user.avatar
 				};
-			}
+			};
 
-
-			vm.updateProfile = function(callback){
+			vm.updateProfile = function (callback) {
 				var data = vm.prepareUpdateProfileData();
-				HouseService.updateProfile(data).then(function(res){
+				HouseService.updateProfile(data).then(function (res) {
 					console.log(JSON.stringify(res));
 					vm.edit = false;
-					if(callback)
-						callback(res);
+					if (callback) callback(res);
 				});
-			}
-			vm.reset = function(){
+			};
+			vm.reset = function () {
 				//$('#form-register').reset();
 				vm.user = angular.copy(vm.original);
 				vm.edit = false;
-			}
-			vm.uploadFile = function(file){
+			};
+			vm.uploadFile = function (file) {
 				var data = vm.prepareUpdateProfileData();
 				// var ft = vm.catchFile(files[i]);
-	   //  		var isImageFile = (ft == "image");
-	    		
-	    		Upload.upload({
-		            url: '/api/upload',
-		            data: {files: file}
-		        }).then(function (resp) {
-		            console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
-		            //here we need to emit message
-		            // if(ft == "image")
-		            // 	vm.sendImage(resp.data.image_file);
-		            // else
-		            vm.user.avatar = resp.data.file.url;
-		            vm.updateProfile(function(res){
-		            	$('[data-close="avatar"]').click();
-		            });
+				//  		var isImageFile = (ft == "image");
 
-		        }, function (resp) {
-		            console.log('Error status: ' + resp.status);
-		        }, function (evt) {
-		            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-		            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-		        });	        
-			}
-
-
+				Upload.upload({
+					url: '/api/upload',
+					data: { files: file }
+				}).then(function (resp) {
+					console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
+					//here we need to emit message
+					// if(ft == "image")
+					// 	vm.sendImage(resp.data.image_file);
+					// else
+					vm.user.avatar = resp.data.file.url;
+					vm.updateProfile(function (res) {
+						$('[data-close="avatar"]').click();
+					});
+				}, function (resp) {
+					console.log('Error status: ' + resp.status);
+				}, function (evt) {
+					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+					//console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+				});
+			};
 		});
-
 	})();
 
 /***/ },
 /* 15 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'DangTinCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope,$http, $scope,$state,HouseService,NgMap,$window,$timeout,Upload){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NgMap, $window, $timeout, Upload) {
 			var vm = this;
 			vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
 			vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
@@ -20337,91 +20127,83 @@
 				soTang: vm.soTangList[0],
 				huongNha: vm.huongNhaList[0],
 				status: 1,
-				place:{
+				place: {
 					diaChi: undefined
 				},
-				images: [
-					{
-						url: "/web/asset/img/reland_house_large.jpg",
-						name: "Ảnh đại diện"
-					}
-				]
+				images: [{
+					url: "/web/asset/img/reland_house_large.jpg",
+					name: "Ảnh đại diện"
+				}]
 			};
 			vm.center = "Hanoi Vietnam";
 			vm.markers = [];
-			NgMap.getMap().then(function(map){
-				window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"autocomplete",map);
-	        	$scope.PlacesService =  new google.maps.places.PlacesService(map);
-	        	$scope.map = map;
+			NgMap.getMap().then(function (map) {
+				window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback, "autocomplete", map);
+				$scope.PlacesService = new google.maps.places.PlacesService(map);
+				$scope.map = map;
 			});
 
-			
-			vm.getMapPos = function(event){
+			vm.getMapPos = function (event) {
 				var marker = {
-	    				id: -1,
-	    				coords: {latitude: event.latLng.lat(), longitude: event.latLng.lng()},
-	    				content: 'you are here'
-	    		}
-	    		vm.markers = [];
-	    		vm.markers.push(marker);
-			}
-			vm.selectPlaceCallback = function(place){
+					id: -1,
+					coords: { latitude: event.latLng.lat(), longitude: event.latLng.lng() },
+					content: 'you are here'
+				};
+				vm.markers = [];
+				vm.markers.push(marker);
+			};
+			vm.selectPlaceCallback = function (place) {
 				$scope.searchPlaceSelected = place;
-	    		$scope.placeSearchId = place.place_id;
-	    		vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
-	    		vm.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
-	    		vm.ads.place.diaChi = place.formatted_address;
-	    		$scope.$apply();
-			}
+				$scope.placeSearchId = place.place_id;
+				vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(place);
+				vm.center = "[" + place.geometry.location.lat() + ", " + place.geometry.location.lng() + "]";
+				vm.ads.place.diaChi = place.formatted_address;
+				$scope.$apply();
+			};
 
-			vm.dangTin = function(){
-
-			}
-			vm.catchImageFile = function (file){
-		    	if(!file)
-		    		return false;
-		        var filetype = file.type.substring(0,file.type.indexOf('/'));
+			vm.dangTin = function () {};
+			vm.catchImageFile = function (file) {
+				if (!file) return false;
+				var filetype = file.type.substring(0, file.type.indexOf('/'));
 				if (filetype == "image") {
 					return true;
-				}else{
+				} else {
 					return false;
-				}		
-		    }
-		    vm.addImage = function(file){
-		    	if(vm.ads.images.length==1 && vm.ads.images[0].url == "/web/asset/img/reland_house_large.jpg"){
-		    		vm.ads.images[0].url = file.url;
-		    		vm.ads.images[0].name = file.name;
-		    	}else{
-		    		vm.ads.images.push(file);
-		    	}
-		    }
-		    vm.removeImage =function(index){
-		    	vm.ads.images.splice(index,1);
-		    }
+				}
+			};
+			vm.addImage = function (file) {
+				if (vm.ads.images.length == 1 && vm.ads.images[0].url == "/web/asset/img/reland_house_large.jpg") {
+					vm.ads.images[0].url = file.url;
+					vm.ads.images[0].name = file.name;
+				} else {
+					vm.ads.images.push(file);
+				}
+			};
+			vm.removeImage = function (index) {
+				vm.ads.images.splice(index, 1);
+			};
 
 			vm.uploadFiles = function (files) {
-		        vm.files = files;
-		        //var msg = $scope.getMessage();
-		        if (files && files.length) {
-		        	for (var i = 0; i < files.length; i++){
-		        		var isImageFile = vm.catchImageFile(files[i]);	     	        		
-		        		Upload.upload({
-				            url: '/api/upload',
-				            data: {file: files[i], filename: files[i].name}
-				        }).then(function (resp) {
-				            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-				            vm.addImage(resp.data.file);
-				        }, function (resp) {
-				            console.log('Error status: ' + resp.status);
-				        }, function (evt) {
-				            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-				            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-				        });
-		        		
-		        	}            
-		        }
-		    };
-
+				vm.files = files;
+				//var msg = $scope.getMessage();
+				if (files && files.length) {
+					for (var i = 0; i < files.length; i++) {
+						var isImageFile = vm.catchImageFile(files[i]);
+						Upload.upload({
+							url: '/api/upload',
+							data: { file: files[i], filename: files[i].name }
+						}).then(function (resp) {
+							console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+							vm.addImage(resp.data.file);
+						}, function (resp) {
+							console.log('Error status: ' + resp.status);
+						}, function (evt) {
+							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+							console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+						});
+					}
+				}
+			};
 		});
 	})();
 
@@ -20429,484 +20211,469 @@
 /* 16 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	(function () {
 	    'use strict';
-	    angular.module('bds').factory('NewsService',function ($http, $q, $rootScope) {
-	        return{
-	            countNews: function(data){
+
+	    angular.module('bds').factory('NewsService', function ($http, $q, $rootScope) {
+	        return {
+	            countNews: function countNews(data) {
 	                var url = "/api/countNews";
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findNews: function(data){
+	            findNews: function findNews(data) {
 	                var url = '/api/findNews';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findHotArticle: function(data){
+	            findHotArticle: function findHotArticle(data) {
 	                var url = '/api/findHotArticle';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findHightestArticle: function(data){
+	            findHightestArticle: function findHightestArticle(data) {
 	                var url = '/api/findHightestArticle';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findNewsDetail: function(data){
+	            findNewsDetail: function findNewsDetail(data) {
 	                var url = '/api/findNewsDetail';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            increaseRating: function(data){
+	            increaseRating: function increaseRating(data) {
 	                var url = '/api/increaseRating';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findRootCategory: function(data){
+	            findRootCategory: function findRootCategory(data) {
 	                var url = '/api/findRootCategory';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            },
-	            findCategoryByParentId: function(data){
+	            findCategoryByParentId: function findCategoryByParentId(data) {
 	                var url = '/api/findCategoryByParentId';
-	                return $http.post(url,data);
+	                return $http.post(url, data);
 	            }
 	        };
-	    })
+	    });
 	})();
-
 
 /***/ },
 /* 17 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	(function () {
 	  'use strict';
-	  angular
-	  .module('bds')
-	  .factory('HouseService', function($http, $q, $rootScope){
+
+	  angular.module('bds').factory('HouseService', function ($http, $q, $rootScope) {
 	    var urlPath = '/api/ads/getAllAds';
 	    return {
-	      getAllAds: function(){
+	      getAllAds: function getAllAds() {
 	        console.log("Get all Ads");
 	        //return $http.get(urlPath);
-	        var deferred = $q.defer()
-	        deferred.resolve({data: window.testData});
+	        var deferred = $q.defer();
+	        deferred.resolve({ data: window.testData });
 	        return deferred.promise;
 	      },
-	      createHouse: function(desc,email,seller){
-	        return $http.post(urlPath + 'create'); 
+	      createHouse: function createHouse(desc, email, seller) {
+	        return $http.post(urlPath + 'create');
 	      },
-	      findAdsSpatial: function(data){
+	      findAdsSpatial: function findAdsSpatial(data) {
 	        // var url = "/api/find";
 	        var url = "/api/findAds";
 	        // var url = "/api/search";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      countAds: function(data){
+	      countAds: function countAds(data) {
 	        //var url = "/api/find";
 	        // var url = "/api/count";
 	        var url = "/api/countAds";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
 	      //Nhannc
-	      findRencentAds: function(data){
+	      findRencentAds: function findRencentAds(data) {
 	        var url = "/api/findRecent";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      findBelowPriceAds: function(data){
+	      findBelowPriceAds: function findBelowPriceAds(data) {
 	        var url = "/api/findBelowPrice";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      saveSearch: function(data){
+	      saveSearch: function saveSearch(data) {
 	        var url = "/api/saveSearch";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
 	      //End Nhannc
-	      checkUserExist: function(data){
+	      checkUserExist: function checkUserExist(data) {
 	        var url = "/api/checkUserExist";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      detailAds: function(data){
+	      detailAds: function detailAds(data) {
 	        var url = "/api/detail";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      likeAds: function(data){
+	      likeAds: function likeAds(data) {
 	        var url = "/api/likeAds";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      findGooglePlaceById: function(googlePlaceId){
-	        return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
+	      findGooglePlaceById: function findGooglePlaceById(googlePlaceId) {
+	        return $http.post("/api/findGooglePlaceById", { 'googlePlaceId': googlePlaceId });
 	      },
-	      login: function(data){
+	      login: function login(data) {
 	        var url = "/api/login";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      signup: function(data){
+	      signup: function signup(data) {
 	        var url = "/api/signup";
-	        return $http.post(url,data);
+	        return $http.post(url, data);
 	      },
-	      requestInfo: function(data){
-	        return $http.post("/api/requestInfo",data);
+	      requestInfo: function requestInfo(data) {
+	        return $http.post("/api/requestInfo", data);
 	      },
-	      forgotPassword: function(data){
-	        return $http.post("/api/forgotPassword",data);
+	      forgotPassword: function forgotPassword(data) {
+	        return $http.post("/api/forgotPassword", data);
 	      },
-	      resetPassword: function(data){
-	        return $http.post("/api/resetPassword",data);
+	      resetPassword: function resetPassword(data) {
+	        return $http.post("/api/resetPassword", data);
 	      },
-	      profile: function(data){
-	        return $http.post("/api/profile",data);
+	      profile: function profile(data) {
+	        return $http.post("/api/profile", data);
 	      },
-	      updateProfile: function(data){
-	        return $http.post("/api/updateProfile",data);
+	      updateProfile: function updateProfile(data) {
+	        return $http.post("/api/updateProfile", data);
 	      },
-	      findAdsAndDuanForHomePage: function(data){
-	        return $http.post("/api/findAdsAndDuanForHomePage",data);
+	      findAdsAndDuanForHomePage: function findAdsAndDuanForHomePage(data) {
+	        return $http.post("/api/findAdsAndDuanForHomePage", data);
 	      },
-	      findDuAnHotByDiaChinhForSearchPage: function(data){
-	        return $http.post("/api/findDuAnHotByDiaChinhForSearchPage",data);
+	      findDuAnHotByDiaChinhForSearchPage: function findDuAnHotByDiaChinhForSearchPage(data) {
+	        return $http.post("/api/findDuAnHotByDiaChinhForSearchPage", data);
 	      },
-	      findDuAnHotByDiaChinhForDetailPage: function(data){
-	        return $http.post("/api/findDuAnHotByDiaChinhForDetailPage",data);
+	      findDuAnHotByDiaChinhForDetailPage: function findDuAnHotByDiaChinhForDetailPage(data) {
+	        return $http.post("/api/findDuAnHotByDiaChinhForDetailPage", data);
 	      },
-	      homeDataForApp: function(data){
-	        return $http.post("/api/homeData4App",data);  
+	      homeDataForApp: function homeDataForApp(data) {
+	        return $http.post("/api/homeData4App", data);
 	      },
-	      reportReland: function(data){
-	        return $http.post("/api/reportReland",data);  
+	      reportReland: function reportReland(data) {
+	        return $http.post("/api/reportReland", data);
 	      }
 
-	      
 	    };
 	  });
 	})();
-
 
 /***/ },
 /* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
-	angular.module('bds')
-	.directive("loginForm", [
-	  function() {
-	    return {
-	      restrict: 'E',
-	      scope: {loginbox: "=loginbox"},
-	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
-	        templateUrl: "/web/common/directives/loginTemplate.html",
-	        replace: 'true',
-	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','jwtHelper',
-	        function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,jwtHelper) {
-	          $scope.loginError = false;
-	          var vm = this;
-	          vm.login = true;
-	          vm.reset = false;
-	          vm.ENTER_EMAIL = 1;
-	          vm.ENTER_PASSWORD = 2;
-	          vm.LOGGED_IN = 3;
-	          vm.FORGOT_PASSWORD = 4;
-	          vm.SENT_PASSWORD = 5;
-	          vm.RESET_PASSWORD = 6;
-	          vm.state = vm.ENTER_EMAIL;
+
+	angular.module('bds').directive("loginForm", [function () {
+	  return {
+	    restrict: 'E',
+	    scope: { loginbox: "=loginbox" },
+	    // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
+	    templateUrl: "/web/common/directives/loginTemplate.html",
+	    replace: 'true',
+	    controller: ['socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'jwtHelper', function (socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, jwtHelper) {
+	      $scope.loginError = false;
+	      var vm = this;
+	      vm.login = true;
+	      vm.reset = false;
+	      vm.ENTER_EMAIL = 1;
+	      vm.ENTER_PASSWORD = 2;
+	      vm.LOGGED_IN = 3;
+	      vm.FORGOT_PASSWORD = 4;
+	      vm.SENT_PASSWORD = 5;
+	      vm.RESET_PASSWORD = 6;
+	      vm.state = vm.ENTER_EMAIL;
+	      vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	      vm.subHead = "";
+	      $scope.$bus.subscribe({
+	        channel: 'login',
+	        topic: 'logged out',
+	        callback: function callback(data, envelope) {
+	          vm.userExist = false;
+	          vm.password = "";
+	          $localStorage.relandToken = undefined;
+	          $rootScope.user.userID = undefined;
+	          vm.changeState(vm.ENTER_EMAIL, vm.userExist);
+	        }
+	      });
+
+	      $scope.$bus.subscribe({
+	        channel: 'login',
+	        topic: 'show login',
+	        callback: function callback(data, envelope) {
+	          var token = data.token;
+	          if (token) {
+	            var mydecode = jwtHelper.decodeToken(token);
+	            vm.resetPasswordToken = token;
+	            vm.resetUserID = mydecode.userID;
+	            vm.resetHead = "Xin nhập mật khẩu mới";
+	            vm.reset = true;
+	            vm.login = false;
+	            vm.state = vm.RESET_PASSWORD;
+	          } else {
+	            vm.state = vm.ENTER_EMAIL;
+	            vm.userExist = false;
+	            vm.password = "";
+	            $localStorage.relandToken = undefined;
+	            vm.head = data.label;
+	            vm.subHead = "";
+	          }
+	          $('#box-login').fadeIn(500);
+	        }
+	      });
+
+	      vm.exitLoginBox = function ($event) {
+	        if (!$event || $event.target.id == "box-login") {
+	          vm.userExist = false;
+	          vm.changeState(vm.ENTER_EMAIL, false);
+	        }
+	      };
+	      vm.forgotPassword = function () {
+	        vm.changeState(vm.FORGOT_PASSWORD);
+	      };
+
+	      vm.changeState = function (state, userExist) {
+	        vm.state = state;
+	        if (state == vm.FORGOT_PASSWORD) {
+	          vm.head = "Quên mật khẩu?";
+	          vm.subHead = "Hãy nhập email, Reland sẽ gửi mật khẩu tới email";
+	        }
+	        if (vm.state == vm.SENT_PASSWORD) {
+	          vm.subHead = "Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập";
+	        }
+	        if (vm.state == vm.ENTER_EMAIL) {
 	          vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
 	          vm.subHead = "";
-	          $scope.$bus.subscribe({
-	            channel: 'login',
-	            topic: 'logged out',
-	            callback: function(data, envelope) {
-	                vm.userExist = false;
-	                vm.password = "";
-	                $localStorage.relandToken = undefined;  
-	                $rootScope.user.userID = undefined;
-	                vm.changeState(vm.ENTER_EMAIL,vm.userExist);
-	            }
-	          });
+	        }
+	        if (vm.state == vm.ENTER_PASSWORD) {
+	          vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	          if (userExist == true) vm.head = "Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu";else if (userExist == false) vm.head = "Tạo mật khẩu";
+	        }
+	      };
 
-	          $scope.$bus.subscribe({
-	            channel: 'login',
-	            topic: 'show login',
-	            callback: function(data, envelope) {
-	                var token = data.token;
-	                if(token){
-	                  var mydecode = jwtHelper.decodeToken(token);
-	                  vm.resetPasswordToken = token;
-	                  vm.resetUserID = mydecode.userID;
-	                  vm.resetHead = "Xin nhập mật khẩu mới"
-	                  vm.reset = true;
-	                  vm.login = false;
-	                  vm.state = vm.RESET_PASSWORD;
-	                }else{
-	                  vm.state = vm.ENTER_EMAIL;
+	      vm.signin = function () {
+	        var loginForm = $('#form-login');
+	        var data = {
+	          email: vm.email,
+	          matKhau: vm.password
+	        };
+	        if (vm.email && vm.email.indexOf("@") == -1) {
+	          data.email = undefined;
+	          data.phone = vm.email;
+	        }
+	        if (loginForm.valid()) {
+	          if (vm.state == vm.RESET_PASSWORD) {
+	            HouseService.resetPassword({ token: vm.resetPasswordToken, pass: vm.resetPassword }).then(function (resp) {
+	              if (resp.data.success == true) {
+	                //need to auto login here
+	                HouseService.login({ userID: vm.resetUserID, matKhau: vm.resetPassword }).then(function (res) {
+	                  if (res.data.login == true) {
+	                    //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                    //$window.token = res.data.token;
+	                    $localStorage.relandToken = res.data.token;
+	                    $rootScope.user.userName = res.data.userName;
+	                    $rootScope.user.userID = res.data.userID;
+	                    $rootScope.user.userAvatar = res.data.avatar;
+	                    //hung dummy here to set userID to email so we can test chat
+	                    //$rootScope.user.userID = res.data.email;
+	                    $rootScope.user.userID = res.data.userID;
+	                    $rootScope.user.adsLikes = res.data.adsLikes;
+	                    $rootScope.user.userEmail = res.data.email;
+	                    $rootScope.user.phone = res.data.phone;
+	                    $rootScope.user.lastSearch = res.data.lastSearch;
+	                    $rootScope.user.lastViewAds = res.data.lastViewAds;
+
+	                    vm.class = "has-sub";
+	                    vm.state = vm.LOGGED_IN;
+	                    vm.userExist = false;
+	                    vm.password = "";
+	                    socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                      console.log("register socket user " + $rootScope.user.userName);
+	                    });
+	                    $scope.$bus.publish({
+	                      channel: 'user',
+	                      topic: 'logged-in',
+	                      data: null
+	                    });
+	                    $('#box-login').hide();
+	                  } else {
+	                    //alert(res.data.message);
+	                    vm.head = res.data.message;
+	                  }
+	                });
+	              } else {
+	                alert(resp.data.msg);
+	              }
+	            });
+	          } else if (vm.state == vm.FORGOT_PASSWORD) {
+	            HouseService.forgotPassword({
+	              email: vm.email,
+	              newPass: vm.password
+	            }).then(function (res) {
+	              if (res.data.success == true) vm.changeState(vm.SENT_PASSWORD);else vm.subHead = res.data.msg;
+	            });
+	          } else if (vm.state == vm.ENTER_EMAIL) {
+	            HouseService.checkUserExist(data).then(function (res) {
+	              vm.userExist = res.data.exist;
+	              vm.changeState(vm.ENTER_PASSWORD, vm.userExist);
+	            });
+	          } else if (vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD) {
+	            if (vm.userExist == true) {
+	              //sign in
+	              HouseService.login(data).then(function (res) {
+	                if (res.data.login == true) {
+	                  //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                  //$window.token = res.data.token;
+	                  $localStorage.relandToken = res.data.token;
+	                  $rootScope.user.userName = res.data.userName;
+	                  $rootScope.user.userID = res.data.userID;
+	                  $rootScope.user.userAvatar = res.data.avatar;
+	                  //hung dummy here to set userID to email so we can test chat
+	                  //$rootScope.user.userID = res.data.email;
+	                  $rootScope.user.userID = res.data.userID;
+	                  $rootScope.user.adsLikes = res.data.adsLikes;
+	                  $rootScope.user.userEmail = res.data.email;
+	                  $rootScope.user.phone = res.data.phone;
+	                  $rootScope.user.lastSearch = res.data.lastSearch;
+	                  $rootScope.user.lastViewAds = res.data.lastViewAds;
+	                  vm.class = "has-sub";
+	                  vm.state = vm.LOGGED_IN;
 	                  vm.userExist = false;
 	                  vm.password = "";
-	                  $localStorage.relandToken = undefined;  
-	                  vm.head = data.label;
-	                  vm.subHead = "";  
-	                }                
-	                $('#box-login').fadeIn(500);
-	            }
-	          });
-
-
-	          vm.exitLoginBox = function($event){
-	            if(!$event || $event.target.id == "box-login"){
-	              vm.userExist = false;
-	              vm.changeState(vm.ENTER_EMAIL,false);
-	            }
-	          }
-	          vm.forgotPassword = function(){
-	            vm.changeState(vm.FORGOT_PASSWORD);
-	          }
-
-	          vm.changeState = function(state,userExist){
-	            vm.state = state;
-	            if(state == vm.FORGOT_PASSWORD){
-	              vm.head  = "Quên mật khẩu?";
-	              vm.subHead = "Hãy nhập email, Reland sẽ gửi mật khẩu tới email";
-	            }
-	            if(vm.state == vm.SENT_PASSWORD){
-	              vm.subHead = "Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập";
-	            }
-	            if(vm.state == vm.ENTER_EMAIL){
-	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
-	              vm.subHead = "";
-	            }
-	            if(vm.state == vm.ENTER_PASSWORD){
-	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
-	              if(userExist == true)
-	                vm.head = "Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu";
-	              else if(userExist == false)
-	                vm.head = "Tạo mật khẩu";
-	            }
-
-	          }
-
-
-	          vm.signin = function(){
-	            var loginForm = $('#form-login');
-	              var data = {
-	                email: vm.email,
-	                matKhau: vm.password
-	              }
-	              if(vm.email && vm.email.indexOf("@")==-1){
-	                data.email = undefined;
-	                data.phone = vm.email;
-	              }
-	              if (loginForm.valid()) {
-	                if(vm.state == vm.RESET_PASSWORD){
-	                  HouseService.resetPassword({token: vm.resetPasswordToken,pass: vm.resetPassword}).then(function(resp){
-	                    if(resp.data.success == true){
-	                      //need to auto login here
-	                      HouseService.login({userID: vm.resetUserID, matKhau: vm.resetPassword}).then(function(res){
-	                        if(res.data.login==true){
-	                          //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
-	                          //$window.token = res.data.token;
-	                          $localStorage.relandToken = res.data.token;
-	                          $rootScope.user.userName = res.data.userName;
-	                          $rootScope.user.userID = res.data.userID;
-	                          $rootScope.user.userAvatar = res.data.avatar;
-	                          //hung dummy here to set userID to email so we can test chat
-	                          //$rootScope.user.userID = res.data.email;
-	                          $rootScope.user.userID = res.data.userID;
-	                          $rootScope.user.adsLikes = res.data.adsLikes;
-	                          $rootScope.user.userEmail = res.data.email;
-	                          $rootScope.user.phone = res.data.phone;
-	                          $rootScope.user.lastSearch = res.data.lastSearch;
-	                          $rootScope.user.lastViewAds = res.data.lastViewAds;
-
-	                          vm.class = "has-sub";
-	                          vm.state = vm.LOGGED_IN;
-	                          vm.userExist = false;
-	                          vm.password = "";
-	                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
-	                            console.log("register socket user " + $rootScope.user.userName);
-	                          });
-	                          $scope.$bus.publish({
-	                            channel: 'user',
-	                            topic: 'logged-in',
-	                            data: null
-	                          });
-	                          $('#box-login').hide();
-	                        }else{
-	                          //alert(res.data.message);
-	                          vm.head = res.data.message;
-	                        }                    
-	                      });
-	                    }else{
-	                      alert(resp.data.msg);
-	                    }
+	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                    console.log("register socket user " + $rootScope.user.userName);
 	                  });
-	                }else if(vm.state == vm.FORGOT_PASSWORD){
-	                  HouseService.forgotPassword({
-	                    email: vm.email,
-	                    newPass: vm.password
-	                  }).then(function(res){ 
-	                    if(res.data.success == true)                              
-	                      vm.changeState(vm.SENT_PASSWORD);
-	                    else
-	                       vm.subHead = res.data.msg;
+	                  $scope.$bus.publish({
+	                    channel: 'user',
+	                    topic: 'logged-in',
+	                    data: null
 	                  });
-	                } else if(vm.state == vm.ENTER_EMAIL){
-	                  HouseService.checkUserExist(data).then(function(res){
-	                    vm.userExist = res.data.exist;
-	                    vm.changeState(vm.ENTER_PASSWORD,vm.userExist);
-	                  });
-	                } else if(vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD){
-	                  if(vm.userExist==true){//sign in
-	                    HouseService.login(data).then(function(res){
-	                      if(res.data.login==true){
-	                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
-	                        //$window.token = res.data.token;
-	                        $localStorage.relandToken = res.data.token;
-	                        $rootScope.user.userName = res.data.userName;
-	                        $rootScope.user.userID = res.data.userID;
-	                        $rootScope.user.userAvatar = res.data.avatar;
-	                        //hung dummy here to set userID to email so we can test chat
-	                        //$rootScope.user.userID = res.data.email;
-	                        $rootScope.user.userID = res.data.userID;
-	                        $rootScope.user.adsLikes = res.data.adsLikes;
-	                        $rootScope.user.userEmail = res.data.email;
-	                        $rootScope.user.phone = res.data.phone;
-	                        $rootScope.user.lastSearch = res.data.lastSearch;
-	                        $rootScope.user.lastViewAds = res.data.lastViewAds;
-	                        vm.class = "has-sub";
-	                        vm.state = vm.LOGGED_IN;
-	                        vm.userExist = false;
-	                        vm.password = "";
-	                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
-	                          console.log("register socket user " + $rootScope.user.userName);
-	                        });
-	                        $scope.$bus.publish({
-	                            channel: 'user',
-	                            topic: 'logged-in',
-	                            data: null
-	                        });
-	                        $('#box-login').hide();
-	                      }else{
-	                        //alert(res.data.message);
-	                        vm.head = res.data.message;
-	                      }                    
-	                    });
-	                  }else{//register
-	                    HouseService.signup(data).then(function(res){
-	                      $localStorage.relandToken = res.data.token;
-	                      $rootScope.user.userName = res.data.userName;
-	                      vm.class = "has-sub";
-	                      vm.state = vm.LOGGED_IN;
-	                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
-	                          console.log("register socket user " + $rootScope.user.userName);
-	                      });
-	                      $('#box-login').hide();
-	                    });
-	                  }
-
+	                  $('#box-login').hide();
+	                } else {
+	                  //alert(res.data.message);
+	                  vm.head = res.data.message;
 	                }
-	              }
+	              });
+	            } else {
+	              //register
+	              HouseService.signup(data).then(function (res) {
+	                $localStorage.relandToken = res.data.token;
+	                $rootScope.user.userName = res.data.userName;
+	                vm.class = "has-sub";
+	                vm.state = vm.LOGGED_IN;
+	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	                  console.log("register socket user " + $rootScope.user.userName);
+	                });
+	                $('#box-login').hide();
+	              });
+	            }
 	          }
-
-	          var formLogin = $("#form-login");
-	          // $("#form-login").validate();
-	          // if(formLogin.validate){
-	            $.validator.addMethod("mailorphone", function(value, element) {
-	              var mail = jQuery.validator.methods.email.call(this, value, element);
-	              var digits = jQuery.validator.methods.digits.call(this, value, element);
-	              var minlength = jQuery.validator.methods.minlength.call(this, value, element,8);
-	              return mail || (digits && minlength);
-	            });
-	            formLogin.validate({
-	              rules: {
-	                mailorphone: {
-	                  required: true,                  
-	                  mailorphone: true
-	                },
-	                password: {
-	                  required: true
-	                },
-	                passwordConfirm: {
-	                  required: function(element){
-	                    var pass = $("#form-login [name = 'password']").val();
-	                    var passConfirm = element.value;
-	                    if(pass){
-	                      return !(pass == passConfirm);
-	                    }else
-	                      return false;
-	                  }
-	                }                
-	              },
-	              messages: {
-	                mailorphone: {
-	                  mailorphone: 'Xin nhập email hoặc số điện thoại',
-	                  required: 'Xin nhập email hoặc số điện thoại'
-	                },
-	                password: {
-	                  required: 'Xin nhập mật khẩu'
-	                },
-	                passwordConfirm: {
-	                  required: 'Mật khẩu không khớp',
-	                }
-	              }
-	            });    
-	          // }
-
-
 	        }
-	        ],
-	        controllerAs: 'lc',
-	      }
-	    }
-	    ]);
+	      };
+
+	      var formLogin = $("#form-login");
+	      // $("#form-login").validate();
+	      // if(formLogin.validate){
+	      $.validator.addMethod("mailorphone", function (value, element) {
+	        var mail = jQuery.validator.methods.email.call(this, value, element);
+	        var digits = jQuery.validator.methods.digits.call(this, value, element);
+	        var minlength = jQuery.validator.methods.minlength.call(this, value, element, 8);
+	        return mail || digits && minlength;
+	      });
+	      formLogin.validate({
+	        rules: {
+	          mailorphone: {
+	            required: true,
+	            mailorphone: true
+	          },
+	          password: {
+	            required: true
+	          },
+	          passwordConfirm: {
+	            required: function required(element) {
+	              var pass = $("#form-login [name = 'password']").val();
+	              var passConfirm = element.value;
+	              if (pass) {
+	                return !(pass == passConfirm);
+	              } else return false;
+	            }
+	          }
+	        },
+	        messages: {
+	          mailorphone: {
+	            mailorphone: 'Xin nhập email hoặc số điện thoại',
+	            required: 'Xin nhập email hoặc số điện thoại'
+	          },
+	          password: {
+	            required: 'Xin nhập mật khẩu'
+	          },
+	          passwordConfirm: {
+	            required: 'Mật khẩu không khớp'
+	          }
+	        }
+	      });
+	      // }
+
+	    }],
+	    controllerAs: 'lc'
+	  };
+	}]);
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	angular.module('bds')
-	.directive("userInfoMenu", [
-	  function() {
-	    return {
-	      restrict: 'E',
-	      scope: {},
-	        templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
-	        replace: 'true',
-	        controller: ['socket','$scope','$state','$rootScope', '$http', '$window','$localStorage','HouseService',
-	        function(socket,$scope, $state, $rootScope, $http, $window,$localStorage, HouseService) {
-	          $scope.loginError = false;
-	          var vm = this;
-	          vm.profile = function() {
-	            $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
-	          }
-	          vm.showLogin = function(){
-	            //var target = $(this).attr('href');
-	            $('#box-login').fadeIn(500);
-	          }
+	'use strict';
 
-	          vm.signout = function(){
-	          	$localStorage.relandToken = undefined;
-	          	$rootScope.user.userName = undefined;
-	            $scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'logged out',
-	              data: {}
-	            });
-	            socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
-	                console.log("disconect socket user " + $rootScope.user.userName);
-	            });
+	angular.module('bds').directive("userInfoMenu", [function () {
+	  return {
+	    restrict: 'E',
+	    scope: {},
+	    templateUrl: "/web/common/directives/userInfoMenuTemplate.html",
+	    replace: 'true',
+	    controller: ['socket', '$scope', '$state', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function (socket, $scope, $state, $rootScope, $http, $window, $localStorage, HouseService) {
+	      $scope.loginError = false;
+	      var vm = this;
+	      vm.profile = function () {
+	        $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
+	      };
+	      vm.showLogin = function () {
+	        //var target = $(this).attr('href');
+	        $('#box-login').fadeIn(500);
+	      };
 
-	          }
-	        }
-	        ],
-	        controllerAs: 'uim',
-	      }
-	    }
-	    ]);
+	      vm.signout = function () {
+	        $localStorage.relandToken = undefined;
+	        $rootScope.user.userName = undefined;
+	        $scope.$bus.publish({
+	          channel: 'login',
+	          topic: 'logged out',
+	          data: {}
+	        });
+	        socket.emit('user leave', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	          console.log("disconect socket user " + $rootScope.user.userName);
+	        });
+	      };
+	    }],
+	    controllerAs: 'uim'
+	  };
+	}]);
 
 /***/ },
 /* 20 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	angular.module('bds').directive('afterRender', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'A',
 	        terminal: true,
 	        transclude: false,
-	        link: function (scope, element, attrs) {
-	            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+	        link: function link(scope, element, attrs) {
+	            $timeout(scope.$eval(attrs.afterRender), 0); //Calling a scoped method
 	            //alert('ssss');
 	        }
 	    };
@@ -20917,16 +20684,18 @@
 /* 21 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsChat', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {visible: "=visible", useremail: "=useremail", right: "=right", chatbox: "=chatbox"},
+	        scope: { visible: "=visible", useremail: "=useremail", right: "=right", chatbox: "=chatbox" },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/chatTemplate.html",
 	        replace: 'true',
 	        controller: 'ChatCtrl',
 	        controllerAs: "chat",
-	        link: function(scope, elm, attrs){
+	        link: function link(scope, elm, attrs) {
 	            console.log("after render");
 	            /*$timeout(function() {
 	                //alert(scope.chatbox.hidden);
@@ -20945,7 +20714,10 @@
 /* 22 */
 /***/ function(module, exports) {
 
-	angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socket, $location, $http, Upload, $timeout){		// Chat Page Controller
+	'use strict';
+
+	angular.module('bds').controller('ChatCtrl', function ($scope, $rootScope, socket, $location, $http, Upload, $timeout) {
+		// Chat Page Controller
 		// Varialbles Initialization.
 		var vm = this;
 		vm.isMsgBoxEmpty = false;
@@ -20955,224 +20727,205 @@
 		vm.chatMsg = "";
 		vm.users = [];
 		vm.messeges = [];
-		vm.menu = {
-			
-		}
-		
-		var count = Object.keys($rootScope.chatBoxes).length-1;
-		vm.rightPos = (24 + Math.min(2,count)*300) + "px";
+		vm.menu = {};
+
+		var count = Object.keys($rootScope.chatBoxes).length - 1;
+		vm.rightPos = 24 + Math.min(2, count) * 300 + "px";
 		//vm.user = chatBoxes[$scope.useremail];
 
 		console.log("chat visible is " + $scope.visible);
 		vm.typing = false;
 
-
-
-		$scope.chatKeypress = function(event){
-			var keyCode  = event.keyCode;
-			if(vm.typing == false){
-				socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+		$scope.chatKeypress = function (event) {
+			var keyCode = event.keyCode;
+			if (vm.typing == false) {
+				socket.emit('user-start-typing', { fromUserID: $rootScope.user.userID, toUserID: $scope.chatbox.user.userID }, function (data) {
 					console.log("emit start typing to " + $scope.chatbox.user.userID);
-				});   
+				});
 			}
-		}
-		$scope.chatBlur = function(event){
-			socket.emit('user-stop-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){   
+		};
+		$scope.chatBlur = function (event) {
+			socket.emit('user-stop-typing', { fromUserID: $rootScope.user.userID, toUserID: $scope.chatbox.user.userID }, function (data) {
 				console.log("emit stop typing to " + $scope.chatbox.user.userID);
-			});   
-		}
+			});
+		};
 
-
-		$scope.getMessage = function(){
+		$scope.getMessage = function () {
 			return {
-				fromUserID: $rootScope.user.userID
-				, fromUserAvatar: $rootScope.user.userAvatar
-				, toUserID: $scope.chatbox.user.userID
-				, toFullName: $scope.chatbox.user.name
-				, fromFullName: $rootScope.user.userName
-				, relatedToAds: $scope.chatbox.ads
-				, content : vm.chatMsg
-				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
-				, timeStamp : formatAMPM(new Date()) 
-				, date: new Date()
-				, type: "Chat"
-				, file: undefined
+				fromUserID: $rootScope.user.userID,
+				fromUserAvatar: $rootScope.user.userAvatar,
+				toUserID: $scope.chatbox.user.userID,
+				toFullName: $scope.chatbox.user.name,
+				fromFullName: $rootScope.user.userName,
+				relatedToAds: $scope.chatbox.ads,
+				content: vm.chatMsg,
+				msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT,
+				timeStamp: formatAMPM(new Date()),
+				date: new Date(),
+				type: "Chat",
+				file: undefined
 			};
-		}
+		};
 
-		
+		vm.sendFile = function (file, isImageFile) {
+			vm.isFileSelected = true;
+			// var file = files[0];
+			var dateString = formatAMPM(new Date());
+			var DWid = $rootScope.user.userName + "dwid" + Date.now();
 
-		
-	    vm.sendFile = function(file, isImageFile){
-	    	vm.isFileSelected = true;
-	        // var file = files[0];
-	        var dateString = formatAMPM(new Date());            
-	        var DWid = $rootScope.user.userName + "dwid" + Date.now();
-
-	        var msg = $scope.getMessage();
-	        if(isImageFile==true)
-	        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
-	        else
-	        	msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
-		    msg.content = undefined;
-		    msg.file = file;
-	        socket.emit('send-message',msg,function (data){      
-	        	console.log("sent image to " + $scope.chatbox.user.userID);
-	        	if (data.success == true) {
-					if(data.offline==true){
+			var msg = $scope.getMessage();
+			if (isImageFile == true) msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;else msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+			msg.content = undefined;
+			msg.file = file;
+			socket.emit('send-message', msg, function (data) {
+				console.log("sent image to " + $scope.chatbox.user.userID);
+				if (data.success == true) {
+					if (data.offline == true) {
 						$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 						$scope.chatbox.onlineClass = "offline";
 						//console.log("TODO: this person is offline he will receive the message next time he online");
 					}
 					vm.chatMsg = "";
-					vm.setFocus = true;		
+					vm.setFocus = true;
 
 					msg.timeStamp = dateString;
 					// $scope.chatbox.messages.push(msg);
-					window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
+					window.RewayClientUtils.addChatMessage($scope.chatbox, msg);
 					$scope.$apply();
 					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 				}
-
-	        });
-	    }
+			});
+		};
 
 		$scope.uploadFiles = function (files) {
-	        $scope.files = files;
-	        var msg = $scope.getMessage();
-	        if (files && files.length) {
-	        	for (var i = 0; i < files.length; i++){
+			$scope.files = files;
+			var msg = $scope.getMessage();
+			if (files && files.length) {
+				for (var i = 0; i < files.length; i++) {
 
-	        		var ft = vm.catchFile(files[i]);
-	        		var isImageFile = (ft == "image");
-	        		
-	        		Upload.upload({
-			            url: '/api/upload',
-			            data: {files: files[i]}
-			        }).then(function (resp) {
-			            console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
-			            //here we need to emit message
-			            // if(ft == "image")
-			            // 	vm.sendImage(resp.data.image_file);
-			            // else
-			            	vm.sendFile(resp.data.file,isImageFile);
+					var ft = vm.catchFile(files[i]);
+					var isImageFile = ft == "image";
 
-			        }, function (resp) {
-			            console.log('Error status: ' + resp.status);
-			        }, function (evt) {
-			            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-			            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
-			        });
-	        		
-	        	}            
-	        }
-	    };
+					Upload.upload({
+						url: '/api/upload',
+						data: { files: files[i] }
+					}).then(function (resp) {
+						console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
+						//here we need to emit message
+						// if(ft == "image")
+						// 	vm.sendImage(resp.data.image_file);
+						// else
+						vm.sendFile(resp.data.file, isImageFile);
+					}, function (resp) {
+						console.log('Error status: ' + resp.status);
+					}, function (evt) {
+						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+						console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
+					});
+				}
+			}
+		};
 
-	    // message time formatting into string    
+		// message time formatting into string    
 		function formatAMPM(date) {
 			var hours = date.getHours();
 			var minutes = date.getMinutes();
 			var ampm = hours >= 12 ? 'pm' : 'am';
 			hours = hours % 12;
 			hours = hours ? hours : 12; // the hour '0' should be '12'
-			minutes = minutes < 10 ? '0'+minutes : minutes;
+			minutes = minutes < 10 ? '0' + minutes : minutes;
 			var strTime = hours + ':' + minutes + ' ' + ampm;
 			return strTime;
 		}
-		
+
 		// ====================================== Messege Sending Code ============================
 		// sending text message function
-		vm.sendMsg = function(){
+		vm.sendMsg = function () {
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
 				vm.isMsg = true;
 				var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
-				socket.emit("send-message",msg, function(data){
+				socket.emit("send-message", msg, function (data) {
 					//delivery report code goes here
 					if (data.success == true) {
-						if(data.offline==true){
+						if (data.offline == true) {
 							$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
 							$scope.chatbox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
 						vm.chatMsg = "";
-						vm.setFocus = true;				
+						vm.setFocus = true;
 						msg.timeStamp = dateString;
 						// $scope.chatbox.messages.push(msg);
-						window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
+						window.RewayClientUtils.addChatMessage($scope.chatbox, msg);
 						$scope.$apply();
 						$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
 					}
-					
 				});
-			}else{
+			} else {
 				vm.isMsgBoxEmpty = true;
-			}		
-		}
+			}
+		};
 
-		
-	    vm.toggleChat = function(event){
-	    	angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
-	    	angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
-	    	//$scope.chatbox.hidden = !$scope.chatbox.hidden;
-		}
-	    vm.closeChat = function(event){
-	    	$(event.target).parent().parent().parent().remove();
-	    	$scope.$bus.publish({
-	        	channel: 'chat',
-	            topic: 'close chat',
-	            data: $scope.chatbox.user.userID
-		    });
-	    }
+		vm.toggleChat = function (event) {
+			angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
+			angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
+			//$scope.chatbox.hidden = !$scope.chatbox.hidden;
+		};
+		vm.closeChat = function (event) {
+			$(event.target).parent().parent().parent().remove();
+			$scope.$bus.publish({
+				channel: 'chat',
+				topic: 'close chat',
+				data: $scope.chatbox.user.userID
+			});
+		};
 
-
-	    // function for checking file type
-	    vm.catchFile = function (file){
-	    	if(!file)
-	    		return "invalid format";
-	        if (file.type == "application/pdf" || file.type == "application/msword" || file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.type == "text/plain" || file.type == "application/vnd.ms-excel") {
+		// function for checking file type
+		vm.catchFile = function (file) {
+			if (!file) return "invalid format";
+			if (file.type == "application/pdf" || file.type == "application/msword" || file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.type == "text/plain" || file.type == "application/vnd.ms-excel") {
 				return "document";
-			}else if(file.type == "audio/mp3" || file.type == "audio/mpeg"){
+			} else if (file.type == "audio/mp3" || file.type == "audio/mpeg") {
 				return "music";
-			}else{
-				var filetype = file.type.substring(0,file.type.indexOf('/'));
+			} else {
+				var filetype = file.type.substring(0, file.type.indexOf('/'));
 				if (filetype == "image") {
 					return "image";
-				}else{
+				} else {
 					return "invalid format";
 				}
 			}
-	    }
-	})
-
+		};
+	});
 
 /***/ },
 /* 23 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsDiaChinhLink', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {diachinh: "=diachinh", loaitin: "=loaitin", loainhadat: "=loainhadat", viewmode: "=viewmode"},
+	        scope: { diachinh: "=diachinh", loaitin: "=loaitin", loainhadat: "=loainhadat", viewmode: "=viewmode" },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/diaChinhLinkTemplate.html",
-	        replace: 'true',   
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;
-	                
-	                vm.gotoDiachinh = function(diachinh,type){
-	                    if(type==1){
-	                        $scope.diachinh.huyenKhongDau = null;
-	                        $scope.diachinh.xaKhongDau = null;
-	                    }else if(type==2){
-	                        $scope.diachinh.xaKhongDau = null;
-	                    }
-	                    $state.go('searchdc', { "tinh" : $scope.diachinh.tinhKhongDau, "huyen" : $scope.diachinh.huyenKhongDau,"xa" : $scope.diachinh.xaKhongDau,"loaiTin" : $scope.loaitin, "loaiNhaDat" : $scope.loainhadat, "viewMode": vm.viewMode}, {location: true});
+	        replace: 'true',
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+
+	            vm.gotoDiachinh = function (diachinh, type) {
+	                if (type == 1) {
+	                    $scope.diachinh.huyenKhongDau = null;
+	                    $scope.diachinh.xaKhongDau = null;
+	                } else if (type == 2) {
+	                    $scope.diachinh.xaKhongDau = null;
 	                }
-	            }
-	        ],
+	                $state.go('searchdc', { "tinh": $scope.diachinh.tinhKhongDau, "huyen": $scope.diachinh.huyenKhongDau, "xa": $scope.diachinh.xaKhongDau, "loaiTin": $scope.loaitin, "loaiNhaDat": $scope.loainhadat, "viewMode": vm.viewMode }, { location: true });
+	            };
+	        }],
 	        controllerAs: "dl"
 	    };
 	    return def;
@@ -21182,41 +20935,39 @@
 /* 24 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {menuitems: "=menuitems", placesearchid: "=placesearchid"},
+	        scope: { menuitems: "=menuitems", placesearchid: "=placesearchid" },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/bdsHeaderTemplate.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;                
-	                vm.gotoMenu = function(data){
-	                    //$state.go('searchdc', { "tinh" : $scope.diachinh.tinhKhongDau, "huyen" : $scope.diachinh.huyenKhongDau,"xa" : $scope.diachinh.xaKhongDau,"loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
-	                    if(!data.menuType)
-	                        $state.go('search', { "place" : $scope.placesearchid, "loaiTin" : data.loaiTin, "loaiNhaDat" : data.loaiNhaDat }, {location: true});
-	                    else if(data.menuType == 1){
-	                        console.log("--goToPageNews---rootCatId: " + data.rootCatId);
-	                        $state.go('news',{"rootCatId" : data.rootCatId});
-	                    }
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	            vm.gotoMenu = function (data) {
+	                //$state.go('searchdc', { "tinh" : $scope.diachinh.tinhKhongDau, "huyen" : $scope.diachinh.huyenKhongDau,"xa" : $scope.diachinh.xaKhongDau,"loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
+	                if (!data.menuType) $state.go('search', { "place": $scope.placesearchid, "loaiTin": data.loaiTin, "loaiNhaDat": data.loaiNhaDat }, { location: true });else if (data.menuType == 1) {
+	                    console.log("--goToPageNews---rootCatId: " + data.rootCatId);
+	                    $state.go('news', { "rootCatId": data.rootCatId });
 	                }
-	                vm.onMobileMenu = function(data){
-	                    /*$(this).toggleClass('active');*/
-	                    var body = $("body");
-	                    var height_menu = $("#menu-left").find('.inner').height(),
-	                        height_device = $(window).height();
-	                    if(height_menu <= height_device) height_menu = height_device;
-	                    if(body.hasClass("show-menu")){
-	                        body.removeClass("show-menu").addClass('hide-menu');
-	                        $("#wrapper").removeAttr("style");
-	                    }else{
-	                        body.removeClass('hide-menu').addClass("show-menu");
-	                        $("#wrapper").css({height: height_menu});
-	                    }
+	            };
+	            vm.onMobileMenu = function (data) {
+	                /*$(this).toggleClass('active');*/
+	                var body = $("body");
+	                var height_menu = $("#menu-left").find('.inner').height(),
+	                    height_device = $(window).height();
+	                if (height_menu <= height_device) height_menu = height_device;
+	                if (body.hasClass("show-menu")) {
+	                    body.removeClass("show-menu").addClass('hide-menu');
+	                    $("#wrapper").removeAttr("style");
+	                } else {
+	                    body.removeClass('hide-menu').addClass("show-menu");
+	                    $("#wrapper").css({ height: height_menu });
 	                }
-	            }
-	        ],
+	            };
+	        }],
 	        controllerAs: "hdr"
 	    };
 	    return def;
@@ -21226,6 +20977,8 @@
 /* 25 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsMobileMenu', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
@@ -21233,28 +20986,23 @@
 	        terminal: true,
 	        templateUrl: "/web/common/directives/bdsMobileMenuTemplate.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;                                
-	                vm.gotoSearchPage = function(event){
-	                   $state.go('search', {"place":"ChIJoRyG2ZurNTERqRfKcnt_iOc", "loaiTin" : 0, "loaiNhaDat" : 1, "viewMode": "list"}, {location: true});
-
-	                }
-	                vm.showLogin = function(event){
-	                    $('#box-login').fadeIn(500);
-	                    window.loca
-	                }
-	                vm.gotoHomePage = function(event){
-	                    $state.go('home', { }, {location: true});
-	                }
-	                vm.gotoRelandApp = function(event){
-
-	                }
-	                vm.profile = function(){
-	                    $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
-	                }
-	            }
-	        ],
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	            vm.gotoSearchPage = function (event) {
+	                $state.go('search', { "place": "ChIJoRyG2ZurNTERqRfKcnt_iOc", "loaiTin": 0, "loaiNhaDat": 1, "viewMode": "list" }, { location: true });
+	            };
+	            vm.showLogin = function (event) {
+	                $('#box-login').fadeIn(500);
+	                window.loca;
+	            };
+	            vm.gotoHomePage = function (event) {
+	                $state.go('home', {}, { location: true });
+	            };
+	            vm.gotoRelandApp = function (event) {};
+	            vm.profile = function () {
+	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
+	            };
+	        }],
 	        controllerAs: "mmn"
 	    };
 	    return def;
@@ -21264,6 +21012,8 @@
 /* 26 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsProfileLeft', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
@@ -21271,12 +21021,9 @@
 	        terminal: true,
 	        templateUrl: "/web/common/directives/bds-profile-left.tpl.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;                
-	                
-	            }
-	        ],
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	        }],
 	        controllerAs: "pl"
 	    };
 	    return def;
@@ -21286,60 +21033,56 @@
 /* 27 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsAdsBoxList', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {cat: "=cat", view_mode: "=view_mode", more: "=more", header: "=header"},
+	        scope: { cat: "=cat", view_mode: "=view_mode", more: "=more", header: "=header" },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/ads-box-list.tpl.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;     
-	                vm.cat = $scope.cat;  
-	                vm.more = $scope.more;
-	                vm.header = $scope.header;
-	                vm.goDetail = function(index){
-	                    var item = vm.cat.list[index];
-	                    if(item.type == "Ads"){
-	                        $state.go('detail', { "adsID" : item.adsID}, {location: true});
-	                    }else if(item.type=="DuAn"){
-
-	                    }
-	                }     
-	                vm.getClass = function(i){
-	                    // alert('aaaa');
-	                    var colArr = ["col col-40", "col col-35", "col col-25"];
-	                    var reverse = false;    
-	                    var j = Math.floor(i/3);
-	                    if(j==0){
-	                        return colArr[i%3];
-	                    }else if(j==1){
-	                        return colArr[((i%3)+1)%3];
-	                    }else {
-	                        return colArr[((i%3)+2)%3];
-	                    }
-	                    /*var reverse = false;  
-	                    var j = Math.floor(i/2);
-
-	                    if(i%2==0){
-	                        if(j%2==0)                  
-	                            return "col col-40";
-	                        else
-	                            return "col col-60";
-	                    }else{
-	                        if(j%2==0)                  
-	                            return "col col-60";
-	                        else
-	                            return "col col-40";    
-	                    }*/
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	            vm.cat = $scope.cat;
+	            vm.more = $scope.more;
+	            vm.header = $scope.header;
+	            vm.goDetail = function (index) {
+	                var item = vm.cat.list[index];
+	                if (item.type == "Ads") {
+	                    $state.go('detail', { "adsID": item.adsID }, { location: true });
+	                } else if (item.type == "DuAn") {}
+	            };
+	            vm.getClass = function (i) {
+	                // alert('aaaa');
+	                var colArr = ["col col-40", "col col-35", "col col-25"];
+	                var reverse = false;
+	                var j = Math.floor(i / 3);
+	                if (j == 0) {
+	                    return colArr[i % 3];
+	                } else if (j == 1) {
+	                    return colArr[(i % 3 + 1) % 3];
+	                } else {
+	                    return colArr[(i % 3 + 2) % 3];
 	                }
-	                $scope.$on("$destroy", function () {
-	                    // alert("OMG! You are killing me");
-	                });
-	            }
-
-	        ],
+	                /*var reverse = false;  
+	                var j = Math.floor(i/2);
+	                  if(i%2==0){
+	                    if(j%2==0)                  
+	                        return "col col-40";
+	                    else
+	                        return "col col-60";
+	                }else{
+	                    if(j%2==0)                  
+	                        return "col col-60";
+	                    else
+	                        return "col col-40";    
+	                }*/
+	            };
+	            $scope.$on("$destroy", function () {
+	                // alert("OMG! You are killing me");
+	            });
+	        }],
 	        controllerAs: "abl"
 	    };
 	    return def;
@@ -21349,439 +21092,426 @@
 /* 28 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'MobileHomeCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
 			var vm = this;
 			var query = { loaiTin: 0,
-			   //giaBETWEEN: [ 0, 9999999 ],
-			   soPhongNguGREATER: '0',
-			   soTangGREATER: '0',
-			   soPhongTamGREATER: '0',
-			   dienTichBETWEEN: [ 0, 9999999 ],
-			   place:
-			   { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
-			   relandTypeName: 'Tỉnh',
-			   fullName: 'Hanoi',
-			   radiusInKm: 20 },
-			   limit: 200,
-			   polygon: []
-		   	}
-		   	var homeDataSearch = {
-	          timeModified: undefined,
-	          query: query,
-	          currentLocation : undefined
-	        }
-	        if($rootScope.lastSearch)
-	        	homeDataSearch.query = $rootScope.lastSearch;
-	        $rootScope.currentLocation.lat = 20.9898098;
-	    	$rootScope.currentLocation.lon = 105.7098334;
-	    	homeDataSearch.currentLocation = $rootScope.currentLocation;
-	    	
-	        vm.getLocation = function() {
-			  //   if (navigator.geolocation) {
-			  //       navigator.geolocation.getCurrentPosition(function(position){
-			  //       	$rootScope.currentLocation.lat = position.coords.latitude;
-			  //       	$rootScope.currentLocation.lon = position.coords.longitude;
-			  //       	homeDataSearch.currentLocation = $rootScope.currentLocation;
-			  //       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-					// 		//alert(JSON.stringify(res));
-					// 		vm.boSuuTap = res.data.data; 
-					// 	});
-			  //       });
-			  //   } else {
-			  //       //x.innerHTML = "Geolocation is not supported by this browser.";		        
-			  //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-					// 	//alert(JSON.stringify(res));
-					// 	vm.boSuuTap = res.data.data; 
-					// });
-			  //   }
-			  	homeDataSearch.currentLocation = $rootScope.currentLocation;
-				HouseService.homeDataForApp(homeDataSearch).then(function(res){
-					//alert(JSON.stringify(res));
-					vm.boSuuTap = res.data.data; 
-				});
-			}
-			vm.goDetail = function(ads){
-				$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
-			}
-			vm.likeAds = function(event,adsID){
-			  event.stopPropagation();
-		      if(!$rootScope.user.userID){
-		        $scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'show login',
-	              data: {label: "Đăng nhập để lưu BĐS"}
-		        });
+				//giaBETWEEN: [ 0, 9999999 ],
+				soPhongNguGREATER: '0',
+				soTangGREATER: '0',
+				soPhongTamGREATER: '0',
+				dienTichBETWEEN: [0, 9999999],
+				place: { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
+					relandTypeName: 'Tỉnh',
+					fullName: 'Hanoi',
+					radiusInKm: 20 },
+				limit: 200,
+				polygon: []
+			};
+			var homeDataSearch = {
+				timeModified: undefined,
+				query: query,
+				currentLocation: undefined
+			};
+			if ($rootScope.lastSearch) homeDataSearch.query = $rootScope.lastSearch;
+			$rootScope.currentLocation.lat = 20.9898098;
+			$rootScope.currentLocation.lon = 105.7098334;
+			homeDataSearch.currentLocation = $rootScope.currentLocation;
 
-		        return;
-		      }
-		      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
-		        //alert(res.data.msg);
-		        //console.log(res);
-		        if(res.data.success == true || res.data.status==1){
-		        	$rootScope.user.adsLikes.push(adsID);
-		        	//vm.likeAdsClass ="fa-heart";
-		        }
-		      });
-		    };
-			vm.showMore = function(index){
-				var query =  {};
+			vm.getLocation = function () {
+				//   if (navigator.geolocation) {
+				//       navigator.geolocation.getCurrentPosition(function(position){
+				//       	$rootScope.currentLocation.lat = position.coords.latitude;
+				//       	$rootScope.currentLocation.lon = position.coords.longitude;
+				//       	homeDataSearch.currentLocation = $rootScope.currentLocation;
+				//       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				// 		//alert(JSON.stringify(res));
+				// 		vm.boSuuTap = res.data.data; 
+				// 	});
+				//       });
+				//   } else {
+				//       //x.innerHTML = "Geolocation is not supported by this browser.";		        
+				//       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				// 	//alert(JSON.stringify(res));
+				// 	vm.boSuuTap = res.data.data; 
+				// });
+				//   }
+				homeDataSearch.currentLocation = $rootScope.currentLocation;
+				HouseService.homeDataForApp(homeDataSearch).then(function (res) {
+					//alert(JSON.stringify(res));
+					vm.boSuuTap = [];
+					res.data.data.forEach(function (item, index) {
+						if (item.data.length > 0) vm.boSuuTap.push(item);
+					});
+					//vm.boSuuTap = res.data.data; 
+				});
+			};
+			vm.goDetail = function (ads) {
+				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
+			};
+			vm.likeAds = function (event, adsID) {
+				event.stopPropagation();
+				if (!$rootScope.user.userID) {
+					$scope.$bus.publish({
+						channel: 'login',
+						topic: 'show login',
+						data: { label: "Đăng nhập để lưu BĐS" }
+					});
+
+					return;
+				}
+				HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
+					//alert(res.data.msg);
+					//console.log(res);
+					if (res.data.success == true || res.data.status == 1) {
+						$rootScope.user.adsLikes.push(adsID);
+						//vm.likeAdsClass ="fa-heart";
+					}
+				});
+			};
+			vm.showMore = function (index) {
+				var query = {};
 				//Object.assign( query,vm.boSuuTap[index].query);
-				_.assign(query,vm.boSuuTap[index].query);
+				_.assign(query, vm.boSuuTap[index].query);
 				query.limit = 20;
 				query.duAnID = vm.boSuuTap[index].query.duAnID;
-				$state.go('msearch',{place: query.place.placeId || query.place.place_id,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+				$state.go('msearch', { place: query.place.placeId || query.place.place_id, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
 				//$state.go('msearch', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 				//alert('showmore');
-			}
-			
+			};
 
-			vm.init = function(){
+			vm.init = function () {
 				vm.getLocation();
-				if($rootScope.currentLocation){
-					if($rootScope.lastSearch){
-						var queryNearBy = {}; 
+				if ($rootScope.currentLocation) {
+					if ($rootScope.lastSearch) {
+						var queryNearBy = {};
 						Object.assign(queryNearBy, vm.query);
 						// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
 						// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
-	    	// 				alert(diaChinh);
-	    	// 			});
+						// 				alert(diaChinh);
+						// 			});
 						// queryNearBy.place
-					}else{
-
-					}
-
-				}else{
-					if($rootScope.lastSearch){
-
-					}
-
+					} else {}
+				} else {
+					if ($rootScope.lastSearch) {}
 				}
-			}
+			};
 			vm.init();
-
-			
 		});
 	})();
-
 
 /***/ },
 /* 29 */
 /***/ function(module, exports) {
 
-	(function() {
-		'use strict';
-		var controllerId = 'MobileSearchCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
-			var vm = this;
-			// vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
-			// vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
-			// vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
-			// vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-			// vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
-			// vm.sortOptions = window.RewayListValue.sortHouseOptions;
-			// vm.sortBy = vm.sortOptions[0].value;
-			// vm.price_min = 0;
-			// vm.price_max = window.RewayListValue.filter_max_value.value;
-			// vm.dien_tich_min = 0;
-			// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
-			// vm.zoomMode = "auto";
-			vm.ads_list = [];
-			$scope.center = "Hanoi Vietnam";
-			vm.zoomMode = "false";
-			vm.placeId = $state.params.place;
-			vm.loaiTin = $state.params.loaiTin;
-			vm.loaiNhaDat = $state.params.loaiNhaDat;
-			vm.viewMode = $state.params.viewMode;
-			if($state.params.query)
-				$rootScope.searchData = $state.params.query;
-			vm.viewTemplateUrl = "/web/mobile/list.tpl.html";//1=map 2= list
+	'use strict';
 
-			if($state.params.viewMode=="list"){
-				vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
-			}else if($state.params.viewMode=="map"){
-				vm.viewTemplateUrl = "/web/mobile/map.tpl.html"
-			}
-			vm.initMap = true;
-			vm.page = 1;
-			vm.initialized = false;
-			
-			vm.showList = function(){
-				vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
-				vm.viewMode = "list";			
-			}
-			vm.showMap = function(){
-				vm.viewMode = "map";
-				vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
-			}
-			vm.sort = function(sortBy){
-				$rootScope.searchData.orderBy = sortBy;
-				vm.search();
-			}
+	(function () {
+	    'use strict';
 
+	    var controllerId = 'MobileSearchCtrl';
+	    angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
+	        var vm = this;
+	        // vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
+	        // vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
+	        // vm.soTangList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoTang);
+	        // vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+	        // vm.radiusInKmList = window.RewayListValue.getNameValueArray(window.RewayListValue.RadiusInKm);
+	        // vm.sortOptions = window.RewayListValue.sortHouseOptions;
+	        // vm.sortBy = vm.sortOptions[0].value;
+	        // vm.price_min = 0;
+	        // vm.price_max = window.RewayListValue.filter_max_value.value;
+	        // vm.dien_tich_min = 0;
+	        // vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
+	        // vm.zoomMode = "auto";
+	        vm.ads_list = [];
+	        $scope.center = "Hanoi Vietnam";
+	        vm.zoomMode = "false";
+	        vm.placeId = $state.params.place;
+	        vm.loaiTin = $state.params.loaiTin;
+	        vm.loaiNhaDat = $state.params.loaiNhaDat;
+	        vm.viewMode = $state.params.viewMode;
+	        if ($state.params.query) $rootScope.searchData = $state.params.query;
+	        vm.viewTemplateUrl = "/web/mobile/list.tpl.html"; //1=map 2= list
 
-			vm.mapInitialized = function(map){
-				//vm.initialized = true;
-				// alert('aa');
-				vm.dragendHanlder = google.maps.event.addListener(map, "dragend", function() {
-	            	//alert(vm.map.getBounds());
-					$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-					//alert($rootScope.searchData.geoBox);
-					$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-					vm.marker = {
-						id: -1,
-						coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-						content: 'you are here'
-					};
-					// $scope.$apply();
-		          	vm.search();
-		   			//alert('dragend');
-		   			//alert($rootScope.searchData.geoBox);
-		        });
+	        if ($state.params.viewMode == "list") {
+	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
+	        } else if ($state.params.viewMode == "map") {
+	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
+	        }
+	        vm.initMap = true;
+	        vm.page = 1;
+	        vm.initialized = false;
 
-		        $scope.$on("$destroy", function() {
-			        google.maps.event.removeListener(vm.zoomChangeHanlder);
-			        google.maps.event.removeListener(vm.dragendHanlder);
-			    });
-		        
-		        // google.maps.event.removeListener(zoomChangeHanlder);
+	        vm.showList = function () {
+	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
+	            vm.viewMode = "list";
+	        };
+	        vm.showMap = function () {
+	            vm.viewMode = "map";
+	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
+	        };
+	        vm.sort = function (sortBy) {
+	            $rootScope.searchData.orderBy = sortBy;
+	            vm.search();
+	        };
+
+	        vm.mapInitialized = function (map) {
+	            //vm.initialized = true;
+	            // alert('aa');
+	            vm.dragendHanlder = google.maps.event.addListener(map, "dragend", function () {
+	                //alert(vm.map.getBounds());
+	                $rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(), vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(), vm.map.getBounds().getNorthEast().lng()];
+	                //alert($rootScope.searchData.geoBox);
+	                $scope.center = "[" + vm.map.getCenter().lat() + "," + vm.map.getCenter().lng() + "]";
+	                vm.marker = {
+	                    id: -1,
+	                    coords: { latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng() },
+	                    content: 'you are here'
+	                };
+	                // $scope.$apply();
+	                vm.search();
+	                //alert('dragend');
+	                //alert($rootScope.searchData.geoBox);
+	            });
+
+	            $scope.$on("$destroy", function () {
+	                google.maps.event.removeListener(vm.zoomChangeHanlder);
+	                google.maps.event.removeListener(vm.dragendHanlder);
+	            });
+
+	            // google.maps.event.removeListener(zoomChangeHanlder);
 	            // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
-	            	// google.maps.event.clearInstanceListeners(map);
-	            	vm.zoomChangeHanlder = google.maps.event.addListener(map, "zoom_changed", function(){
-	            		if(vm.initialized == true){
-			   				vm.initialized = false;
-			   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-							$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-							//var bounds = vm.map.getBounds();
-							//alert($rootScope.searchData.geoBox);
-							vm.marker = {
-								id: -1,
-								coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-								content: 'you are here'
-							};
-			   				vm.search(function(){
-			   					$timeout(function() {
-			   						//vm.initialized = true;
-			   						//vm.map.fitBounds(bounds);
-			   					}, 10);
-			   					
-			   				});
-			   				// alert('human zoom');
-			   			}
-	            	});
+	            // google.maps.event.clearInstanceListeners(map);
+	            vm.humanZoom = false;
+	            vm.zoomChangeHanlder = google.maps.event.addListener(map, "zoom_changed", function () {
+	                if (vm.initialized == true) {
+	                    vm.initialized = false;
+	                    vm.humanZoom = true;
+	                    $rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(), vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(), vm.map.getBounds().getNorthEast().lng()];
+	                    // $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+	                    // //var bounds = vm.map.getBounds();
+	                    // //alert($rootScope.searchData.geoBox);
+	                    // vm.marker = {
+	                    // 	id: -1,
+	                    // 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+	                    // 	content: 'you are here'
+	                    // };
+	                    vm.search(function () {
+	                        $timeout(function () {
+	                            //vm.initialized = true;
+	                            //vm.map.fitBounds(bounds);
+	                            vm.humanZoom = false;
+	                        }, 10);
+	                    });
+	                    // alert('human zoom');
+	                } else {
+	                    console.log("not human zoom");
+	                }
+	            });
 
 	            // }
+	        };
 
-			}
+	        /*vm.searchData = {
+	        	"loaiTin": vm.loaiTin,
+	        	"loaiNhaDat": vm.loaiNhaDat, 
+	        	"loaiNhaDats": [],
+	          	"giaBETWEEN": [vm.price_min,vm.price_max],
+	          	"khoangGia": vm.khoangGia, 
+	          	"khoangDienTich": vm.khoangDienTich,
+	          	"soPhongNguGREATER": vm.soPhongNguList[0].value,
+	          	"soPhongTamGREATER": vm.soPhongTamList[0].value,
+	          	"soTangGREATER": vm.soTangList[0].value,
+	          	"dienTichBETWEEN": [0,vm.dien_tich_max],
+	          	"huongNha": vm.huongNhaList[0].value,
+	          	"huongNhas": [],
+	          	"radiusInKm": 2,
+	          	"userID": $rootScope.user.userID,
+	          	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+	          	"limit": vm.pageSize,
+	          	"orderBy": vm.sortOptions[0].value,
+	          	"pageNo": 1
+	        }*/
+	        vm.goDetail = function (event, i) {
+	            $state.go('mdetail', { "adsID": vm.ads_list[i].adsID }, { location: true });
+	        };
+	        vm.showSaveSearch = function () {
+	            if ($rootScope.isLoggedIn()) {
+	                $('#saveBox').modal("show");
+	            } else {
+	                $scope.$bus.publish({
+	                    channel: 'login',
+	                    topic: 'show login',
+	                    data: { label: "Đăng nhập để lưu tìm kiếm" }
+	                });
+	            }
+	        };
+	        vm.saveSearch = function () {
+	            if (!vm.saveSearchName) {
+	                vm.blankName = true;
+	                return;
+	            }
+	            var data = {
+	                query: vm.searchData,
+	                userID: $rootScope.user.userID,
+	                saveSearchName: vm.saveSearchName
+	            };
 
-			/*vm.searchData = {
-				"loaiTin": vm.loaiTin,
-				"loaiNhaDat": vm.loaiNhaDat, 
-				"loaiNhaDats": [],
-			  	"giaBETWEEN": [vm.price_min,vm.price_max],
-			  	"khoangGia": vm.khoangGia, 
-			  	"khoangDienTich": vm.khoangDienTich,
-			  	"soPhongNguGREATER": vm.soPhongNguList[0].value,
-			  	"soPhongTamGREATER": vm.soPhongTamList[0].value,
-			  	"soTangGREATER": vm.soTangList[0].value,
-			  	"dienTichBETWEEN": [0,vm.dien_tich_max],
-			  	"huongNha": vm.huongNhaList[0].value,
-			  	"huongNhas": [],
-			  	"radiusInKm": 2,
-			  	"userID": $rootScope.user.userID,
-			  	//"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-			  	"limit": vm.pageSize,
-			  	"orderBy": vm.sortOptions[0].value,
-			  	"pageNo": 1
-			}*/
-			vm.goDetail = function(event,i){
-	        	$state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
-	        }
-	        vm.showSaveSearch = function(){
-	        	if($rootScope.isLoggedIn()){
-	        		$('#saveBox').modal("show");
-	        	}else{
-	        		$scope.$bus.publish({
-		              channel: 'login',
-		              topic: 'show login',
-		              data: {label: "Đăng nhập để lưu tìm kiếm"}
-			        });
-	        	}
-	        }
-	        vm.saveSearch = function(){
-	        	if(!vm.saveSearchName){
-					vm.blankName = true;
-					return;
-				}			
-				var data = {
-					query: vm.searchData,
-					userID: $rootScope.user.userID,
-					saveSearchName: vm.saveSearchName
-				};
-
-				HouseService.saveSearch(data).then(function(res){				
-					//alert(res.data.msg);
-					if(res.data.success){
-						vm.blankName = false;
-						vm.saveSearchName = '';					
-						vm.nameSaveSearch = false;
-						$('#saveBox').modal("hide");
-					}
-				})
-	        	
-	        }
-			vm.updateStreetview = function(ads,fn){
+	            HouseService.saveSearch(data).then(function (res) {
+	                //alert(res.data.msg);
+	                if (res.data.success) {
+	                    vm.blankName = false;
+	                    vm.saveSearchName = '';
+	                    vm.nameSaveSearch = false;
+	                    $('#saveBox').modal("hide");
+	                }
+	            });
+	        };
+	        vm.updateStreetview = function (ads, fn) {
 	            var STREETVIEW_MAX_DISTANCE = 100;
 	            var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
 	            var streetViewService = new google.maps.StreetViewService();
-	            streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function(streetViewPanoramaData, status,res) {
+	            streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status, res) {
 	                if (status === google.maps.StreetViewStatus.OK) {
 	                    ads.streetviewLatLng = streetViewPanoramaData.location.latLng;
 	                }
 	            });
-	            
-	        }
+	        };
 	        vm.disableScrolling = true;
-	        
-	        vm.page =1;
-	        vm.nextPage =function(){        	
-	        	vm.disableScrolling = true;
-	        	//vm.initialized = false;   
-	        	$('#searchmap').hide();
-	        	//alert('aaaa');
-	        	vm.page = vm.page+1;
-	        	$rootScope.searchData.pageNo = vm.page;       
-	            if($rootScope.searchData.place)
-	                $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;  
+
+	        vm.page = 1;
+	        vm.nextPage = function () {
+	            vm.disableScrolling = true;
+	            //vm.initialized = false;   
+	            $('#searchmap').hide();
+	            //alert('aaaa');
+	            vm.page = vm.page + 1;
+	            $rootScope.searchData.pageNo = vm.page;
+	            if ($rootScope.searchData.place) $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;
 	            $rootScope.searchData.userID = $rootScope.user.userID;
-	            HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
+	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
-	                for (var i = 0; i < result.length; i++) { 
+	                for (var i = 0; i < result.length; i++) {
 	                    var ads = result[i];
 	                    ads.giaFmt = ads.giaFmtForWeb;
 
-	                    if($rootScope.alreadyLike(ads.adsID) ==  true)
-	                        ads.liked =true;
+	                    if ($rootScope.alreadyLike(ads.adsID) == true) ads.liked = true;
 	                    var length = result.length;
-	                    var fn = function() {
-	                        if(i < length) {
+	                    var fn = function fn() {
+	                        if (i < length) {
 	                            vm.updateStreetview(result[i], fn);
 	                        }
 	                    };
 	                    fn();
 
 	                    result[i].index = i;
-	                    if(ads.huongNha){
-	                        ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
-	                    }else{
-	                        ads.huongNha = "";  
+	                    if (ads.huongNha) {
+	                        ads.huongNha = window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+	                    } else {
+	                        ads.huongNha = "";
 	                    }
-	                    if(result[i].place){
-	                        if(result[i].place.geo){
-	                            result[i].map={
+	                    if (result[i].place) {
+	                        if (result[i].place.geo) {
+	                            result[i].map = {
 	                                center: {
-	                                    latitude:   result[i].place.geo.lat,
-	                                    longitude:  result[i].place.geo.lon
+	                                    latitude: result[i].place.geo.lat,
+	                                    longitude: result[i].place.geo.lon
 	                                },
 	                                marker: {
 	                                    id: i,
 	                                    coords: {
-	                                        latitude:   result[i].place.geo.lat,
-	                                        longitude:  result[i].place.geo.lon
+	                                        latitude: result[i].place.geo.lat,
+	                                        longitude: result[i].place.geo.lon
 	                                    },
 	                                    content: result[i].giaFmt,
 	                                    data: 'test'
 	                                },
-	                                options:{
+	                                options: {
 	                                    scrollwheel: false
 	                                },
-	                                zoom: 14    
-	                            }
-	                                    
+	                                zoom: 14
+	                            };
 	                        }
 	                    }
-	                    
 	                }
 	                vm.ads_list = vm.ads_list.concat(res.data.list);
 	                // $scope.markers = [];
-	                for(var i = 0; i < res.data.list.length; i++) { 
+	                for (var i = 0; i < res.data.list.length; i++) {
 	                    var ads = res.data.list[i];
-	                    if(res.data.list[i].map)
-	                        $scope.markers.push(res.data.list[i].map.marker);
-	                }       
+	                    if (res.data.list[i].map) $scope.markers.push(res.data.list[i].map.marker);
+	                }
 	                vm.disableScrolling = false;
 	                // vm.initialized = false;   
-	                 $('#searchmap').show();
+	                $('#searchmap').show();
 	            });
-	        }
-			vm.searchPage = function(i, callback){
-	            $rootScope.searchData.pageNo = i;       
-	            if($rootScope.searchData.place)
-	                $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;  
+	        };
+	        vm.searchPage = function (i, callback) {
+	            $rootScope.searchData.pageNo = i;
+	            if ($rootScope.searchData.place) $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;
 	            $rootScope.searchData.userID = $rootScope.user.userID;
 	            //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
 	            //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
-	            vm.initialized = false;   
+	            vm.initialized = false;
 	            // vm.khoangGiaList[]
 	            // $rootScope.searchData.khoangGia
-	            HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
+	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
 	                //vm.totalResultCounts = res.data.list.length;
-	                
-	                for (var i = 0; i < result.length; i++) { 
+
+	                for (var i = 0; i < result.length; i++) {
 	                    var ads = result[i];
 	                    ads.giaFmt = ads.giaFmtForWeb;
 
-	                    if($rootScope.alreadyLike(ads.adsID) ==  true)
-	                        ads.liked =true;
+	                    if ($rootScope.alreadyLike(ads.adsID) == true) ads.liked = true;
 	                    var length = result.length;
-	                    var fn = function() {
-	                        if(i < length) {
+	                    var fn = function fn() {
+	                        if (i < length) {
 	                            vm.updateStreetview(result[i], fn);
 	                        }
 	                    };
 	                    fn();
 
 	                    result[i].index = i;
-	                    if(ads.huongNha){
-	                        ads.huongNha =  window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
-	                    }else{
-	                        ads.huongNha = "";  
+	                    if (ads.huongNha) {
+	                        ads.huongNha = window.RewayListValue.getHuongNhaDisplay(ads.huongNha);
+	                    } else {
+	                        ads.huongNha = "";
 	                    }
-	                    if(result[i].place){
-	                        if(result[i].place.geo){
-	                            result[i].map={
+	                    if (result[i].place) {
+	                        if (result[i].place.geo) {
+	                            result[i].map = {
 	                                center: {
-	                                    latitude:   result[i].place.geo.lat,
-	                                    longitude:  result[i].place.geo.lon
+	                                    latitude: result[i].place.geo.lat,
+	                                    longitude: result[i].place.geo.lon
 	                                },
 	                                marker: {
 	                                    id: i,
 	                                    coords: {
-	                                        latitude:   result[i].place.geo.lat,
-	                                        longitude:  result[i].place.geo.lon
+	                                        latitude: result[i].place.geo.lat,
+	                                        longitude: result[i].place.geo.lon
 	                                    },
 	                                    content: result[i].giaFmt,
 	                                    data: 'test'
 	                                },
-	                                options:{
+	                                options: {
 	                                    scrollwheel: false
 	                                },
-	                                zoom: 14    
-	                            }
-	                                    
+	                                zoom: 14
+	                            };
 	                        }
 	                    }
-	                    
 	                }
 	                vm.ads_list = res.data.list;
 	                $scope.markers = [];
-	                for(var i = 0; i < res.data.list.length; i++) { 
+	                for (var i = 0; i < res.data.list.length; i++) {
 	                    var ads = res.data.list[i];
-	                    if(res.data.list[i].map)
-	                        $scope.markers.push(res.data.list[i].map.marker);
+	                    if (res.data.list[i].map) $scope.markers.push(res.data.list[i].map.marker);
 	                }
 	                /*if(vm.ads_list.length==0){
 	                    vm.zoomMode = "false";
@@ -21789,35 +21519,37 @@
 	                    vm.zoomMode = "auto";
 	                }*/
 
-	                vm.currentPageStart = vm.pageSize*($rootScope.searchData.pageNo-1) + 1
-	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
+	                vm.currentPageStart = vm.pageSize * ($rootScope.searchData.pageNo - 1) + 1;
+	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length - 1;
 	                vm.currentPage = $rootScope.searchData.pageNo;
-	                
-	                $timeout(function() {
+	                $scope.center = [res.data.viewport.center.lat, res.data.viewport.center.lon];
+	                var southWest = new google.maps.LatLng(res.data.viewport.southwest.lat, res.data.viewport.southwest.lon);
+	                var northEast = new google.maps.LatLng(res.data.viewport.northeast.lat, res.data.viewport.northeast.lon);
+	                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+	                if (vm.humanZoom != true && res.data.viewport.northeast.lat && res.data.viewport.southwest.lat) vm.map.fitBounds(bounds);
+
+	                $timeout(function () {
 	                    $('body').scrollTop(0);
-	                    vm.initialized = true;  
-	                },0);
-	                
-	                if($rootScope.isLoggedIn()){
+	                    vm.initialized = true;
+	                }, 100);
+
+	                if ($rootScope.isLoggedIn()) {
 	                    $rootScope.user.lastSearch = $rootScope.searchData;
 	                }
-	                
-	                if(vm.ads_list && vm.ads_list.length>0){                    
-	                    if(vm.diaChinh)
-	                        HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
-	                            if(res.data.success==true)
-	                                vm.duAnNoiBat = res.data.duAnNoiBat;
-	                        });
+
+	                if (vm.ads_list && vm.ads_list.length > 0) {
+	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
+	                        if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
+	                    });
 	                }
-	                vm.disableScrolling = false; 
+	                vm.disableScrolling = false;
 
-	                 
-	                if(callback)
-	                    callback.call(this);
+	                if (callback) callback.call(this);
 	            });
-	        }
+	        };
 
-			vm.search = function(callback){
+	        vm.search = function (callback) {
 	            var googlePlace = $rootScope.searchData.place;
 
 	            vm.diaChinh = window.RewayPlaceUtil.getDiaChinhFromGooglePlace(vm.place);
@@ -21825,187 +21557,179 @@
 	            vm.diaChinh.huyenKhongDau = vm.diaChinh.huyen;
 	            vm.diaChinh.xaKhongDau = vm.diaChinh.xa;
 
-	            if(googlePlace){
-	            	vm.placeSearchText = googlePlace.formatted_address;
-	            	
-	            	vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);	
+	            if (googlePlace) {
+	                vm.placeSearchText = googlePlace.formatted_address;
+
+	                vm.onePoint = window.RewayPlaceUtil.isOnePoint(googlePlace);
 	            }
-	            
 
 	            // if($scope.searchPlaceSelected.geometry.viewport){
-	            if($rootScope.searchData.geoBox){
-	            	console.log("Tim ads for geoBox: " + $rootScope.searchData.geoBox);
-	            }else if(vm.onePoint == false){
+	            if ($rootScope.searchData.geoBox) {
+	                console.log("Tim ads for geoBox: " + $rootScope.searchData.geoBox);
+	            } else if (vm.onePoint == false) {
 	                console.log("Tim ads for Tinh Huyen Xa: " + googlePlace.formatted_address);
-	                $rootScope.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(),googlePlace.geometry.viewport.getSouthWest().lng(),googlePlace.geometry.viewport.getNorthEast().lat(),googlePlace.geometry.viewport.getNorthEast().lng()]
+	                $rootScope.searchData.geoBox = [googlePlace.geometry.viewport.getSouthWest().lat(), googlePlace.geometry.viewport.getSouthWest().lng(), googlePlace.geometry.viewport.getNorthEast().lat(), googlePlace.geometry.viewport.getNorthEast().lng()];
 	                //$rootScope.searchData.radiusInKm = undefined;
-	            } else{
+	            } else {
 	                console.log("Tim ads for dia diem: " + googlePlace.formatted_address);
 	                //data.radiusInKm = "10";
 	                var placeData = {
-	                    placeId: googlePlace.place_id,
-	                    relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	                    radiusInKm :  $rootScope.searchData.radiusInKm,
+	                    placeId: googlePlace.place_id || googlePlace.placeId,
+	                    relandTypeName: window.RewayPlaceUtil.getTypeName(googlePlace),
+	                    radiusInKm: $rootScope.searchData.radiusInKm,
 	                    currentLocation: undefined
-	                }
+	                };
 	                $rootScope.searchData.place = placeData;
 	                $rootScope.searchData.geoBox = undefined;
 	            }
 	            $rootScope.searchData.userID = $rootScope.user.userID;
-	            if($rootScope.searchData.geoBox){
-
-	            }else if($rootScope.searchData.place.geometry)
-	            	vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
-	            else{
-	            	//vm.zoomMode = "auto";
-	            	// vm.map.setCenter($scope.center,10);
-	            }
+	            if ($rootScope.searchData.geoBox) {} else if ($rootScope.searchData.place.geometry) {
+	                // vm.map.fitBounds($rootScope.searchData.place.geometry.viewport);
+	            } else {
+	                    //vm.zoomMode = "auto";
+	                    // vm.map.setCenter($scope.center,10);
+	                }
 	            $rootScope.lastSearch = $rootScope.searchData;
 
-	            HouseService.countAds($rootScope.searchData).then(function(res){
+	            HouseService.countAds($rootScope.searchData).then(function (res) {
 	                vm.totalResultCounts = res.data.countResult;
-	                $scope.markers =[];
+	                $scope.markers = [];
 	                vm.ads_list = [];
-	                if(vm.totalResultCounts>0){
+	                if (vm.totalResultCounts > 0) {
 	                    vm.currentPage = 1;
-	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts / vm.pageSize);
 	                    vm.currentPageStart = 1;
-	                    vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
-
-	                } else{
+	                    vm.currentPageEnd = vm.totalResultCounts >= vm.pageSize ? vm.pageSize - 1 : vm.totalResultCounts - 1;
+	                } else {
 	                    vm.currentPage = 0;
 	                    vm.lastPageNo = 0;
 	                    vm.startPageNo = 0;
 	                }
-	                vm.searchPage(1,callback);
+	                vm.searchPage(1, callback);
 	            });
 	            // vm.searchPage(1,null);
-	        }
+	        };
 
 	        //vm.search();
 
-	        NgMap.getMap('searchmap').then(function(map){
-	        	vm.map = map; 
-	        	    	
-	            
-		        
+	        NgMap.getMap('searchmap').then(function (map) {
+	            vm.map = map;
 
-		        
 	            // window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
-	            vm.PlacesService =  new google.maps.places.PlacesService(map);
-	            if(vm.placeId){
+	            vm.PlacesService = new google.maps.places.PlacesService(map);
+	            if (vm.placeId) {
 	                vm.PlacesService.getDetails({
 	                    placeId: vm.placeId
-	                }, function(place, status) {
+	                }, function (place, status) {
 	                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-	                    	vm.place = place;
+	                        vm.place = place;
 	                        $rootScope.searchData.place = place;
 	                        $rootScope.searchData.geoBox = undefined;
 	                        //var map = $scope.map.control.getGMap();
 	                        var current_bounds = map.getBounds();
 	                        //$scope.map.center =  
-	                        $scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
-	                        if(place.geometry.viewport){
-	                            map.fitBounds(place.geometry.viewport);   
+	                        $scope.center = "[" + place.geometry.location.lat() + "," + place.geometry.location.lng() + "]";
+	                        if (place.geometry.viewport) {
+	                            //map.fitBounds(place.geometry.viewport);   
 	                            //$scope.map
-	                        } else if( !current_bounds.contains( place.geometry.location ) ){
+	                        } else if (!current_bounds.contains(place.geometry.location)) {
 	                            var new_bounds = current_bounds.extend(place.geometry.location);
-	                            map.fitBounds(new_bounds);
+	                            //map.fitBounds(new_bounds);
 	                            //$digest();
 	                        }
 	                        vm.marker = {
-								id: -1,
-								coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
-								content: 'you are here'
-							};
+	                            id: -1,
+	                            coords: { latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() },
+	                            content: 'you are here'
+	                        };
 	                        $scope.$apply();
-	                        vm.search(function(){
-	                        	if(vm.viewMode=="list"){
-	                        		vm.initMap = false;
-	                        	}
+	                        vm.search(function () {
+	                            if (vm.viewMode == "list") {
+	                                vm.initMap = false;
+	                            }
 	                        });
 	                    }
 	                });
-	            }            
+	            }
 	        });
-
-			
-		});
+	    });
 	})();
-
 
 /***/ },
 /* 30 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'MobileDetailCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
 			var vm = this;
 			vm.adsID = $state.params.adsID;
 			vm.marker = {
 				id: 1,
 				coords: {
-					latitude: 	16.0439,
-					longitude: 	108.199
+					latitude: 16.0439,
+					longitude: 108.199
 				},
 				content: undefined,
 				data: 'test'
-			}
-			vm.center= [21.0363818591319,105.80105538518103];
+			};
+			vm.center = [21.0363818591319, 105.80105538518103];
 			vm.reportCode = 1;
 			vm.searchDataXungQuanh = {
 				// "loaiTin": vm.ads.loaiTin,
-				"loaiNhaDat": 0, 
+				"loaiNhaDat": 0,
 				"limit": 9,
 				"soPhongNguGREATER": 0,
-	  			"soPhongTamGREATER": 0,
-	  			"soTangGREATER": 0,
-	  			"dienTichBETWEEN": [0,99999999999999],
-	  			"giaBETWEEN": [0,99999999999999],
-	  			"radiusInKm": 2,
+				"soPhongTamGREATER": 0,
+				"soTangGREATER": 0,
+				"dienTichBETWEEN": [0, 99999999999999],
+				"giaBETWEEN": [0, 99999999999999],
+				"radiusInKm": 2,
 				//"diaChinh": vm.ads.place.diaChinh,
 				// "place": {
-		  //     			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	   // 				radiusInKm :  2,
+				//     			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+				// 				radiusInKm :  2,
 				// 	    currentLocation: {
 				// 	    	lat: vm.ads.place.geo.lat,
 				// 	    	lon: vm.ads.place.geo.lon
 				// 	    }
 				// },
 				"updateLastSearch": false,
-			  	"orderBy": "ngayDangTinDESC",
-			  	"pageNo": 1
+				"orderBy": "ngayDangTinDESC",
+				"pageNo": 1
 			};
 			vm.searchDataTuongTu = {
 				// "loaiTin": vm.ads.loaiTin,
 				// "loaiNhaDat": vm.ads.loaiNhaDat, 
 				"limit": 9,
 				"soPhongNguGREATER": 0,
-	  			"soPhongTamGREATER": 0,
-	  			"soTangGREATER": 0,
-	  			"dienTichBETWEEN": [0,99999999999999],
-	  			"giaBETWEEN": [0,99999999999999],
-	  			"radiusInKm": 2,
+				"soPhongTamGREATER": 0,
+				"soTangGREATER": 0,
+				"dienTichBETWEEN": [0, 99999999999999],
+				"giaBETWEEN": [0, 99999999999999],
+				"radiusInKm": 2,
 				// "diaChinh": {
 				// 	tinh: vm.ads.place.diaChinh.tinhKhongDau,
 				// 	huyen: vm.ads.place.diaChinh.huyenKhongDau
 				// },
 				"updateLastSearch": false,
-			  	"orderBy": "ngayDangTinDESC",
-			  	"pageNo": 1
+				"orderBy": "ngayDangTinDESC",
+				"pageNo": 1
 			};
-			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
+			HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
 				//console.log("res.data " + res.data.ads);
 				$rootScope.user.lastViewAds = vm.adsID;
 				vm.ads = res.data.ads;
 				vm.ads.chiTietThuGon = vm.ads.chiTiet;
-				if(vm.ads.chiTiet.length > 30){
-					vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0,300);				
+				if (vm.ads.chiTiet.length > 30) {
+					vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0, 300);
 				}
-				vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
-				vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
+				vm.ads.place.diaChinh.tinhKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
+				vm.ads.place.diaChinh.huyenKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;
 				// if($rootScope.alreadyLike(vm.ads.adsID) ==  true)
 				// 	vm.likeAdsClass ="fa-heart";
@@ -22013,135 +21737,126 @@
 				var price_max = window.RewayListValue.filter_max_value.value;
 				var dien_tich_min = 0;
 				var dien_tich_max = window.RewayListValue.filter_max_value.value;
-				vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
+				vm.center = [vm.ads.place.geo.lat, vm.ads.place.geo.lon];
 				vm.marker.content = vm.ads.giaFmt;
 				vm.marker.coords.latitude = vm.ads.place.geo.lat;
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
+				vm.likeAdsClass = "";
 
-			
+				vm.likeAds = function (event, adsID) {
+					//event.stopPropagation();
+					if ($rootScope.isLoggedIn() == false) {
+						$scope.$bus.publish({
+							channel: 'login',
+							topic: 'show login',
+							data: { label: "Đăng nhập để lưu BĐS" }
+						});
+						return;
+					}
+					HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
+						//alert(res.data.msg);
+						//console.log(res);
+						if (res.data.success == true || res.data.status == 1) {
+							$rootScope.user.adsLikes.push(adsID);
+						}
+					});
+				};
+
 				var pageSize = 8;
 
-				vm.name ="";
-				vm.phone="";
-				vm.email="";
+				vm.name = "";
+				vm.phone = "";
+				vm.email = "";
 				vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
 				vm.requestInfoClass = "btn-submit";
-				vm.clearInfoRequest = function(){
-					vm.name ="";
-					vm.phone="";
-					vm.email="";
+				vm.clearInfoRequest = function () {
+					vm.name = "";
+					vm.phone = "";
+					vm.email = "";
 					vm.content = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại " + window.location.href + ", xin vui lòng liên hệ lại sớm.";
-				}
+				};
 
-
-				if(vm.ads.place.diaChinh){
-					HouseService.findDuAnHotByDiaChinhForDetailPage({diaChinh: vm.ads.place.diaChinh}).then(function(res){
-						if(res.data.success==true)
-							vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
+				if (vm.ads.place.diaChinh) {
+					HouseService.findDuAnHotByDiaChinhForDetailPage({ diaChinh: vm.ads.place.diaChinh }).then(function (res) {
+						if (res.data.success == true) vm.listDuAnNoiBat = res.data.listDuAnNoiBat;
 					});
 				}
 
-				vm.goBack = function(){
-					if($rootScope.lastState.abstract == true){
+				vm.goBack = function () {
+					if ($rootScope.lastState.abstract == true) {
 						var webIdx = window.location.href.indexOf("/web/");
-	            		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
-	            		window.location.href = homeUrl;
-					}else{
+						var homeUrl = window.location.href.substring(0, webIdx) + "/web/index.html";
+						window.location.href = homeUrl;
+					} else {
 						$state.go($rootScope.lastState, $rootScope.lastStateParams);
 					}
-					
-				}
+				};
 
-
-				vm.setReportCode = function(reportCode){
+				vm.setReportCode = function (reportCode) {
 					vm.reportCode = reportCode;
-				}
-				vm.sendReport = function(){
+				};
+				vm.sendReport = function () {
 
 					var data = {
-						reportCode: vm.reportCode,		
+						reportCode: vm.reportCode,
 						reportContent: vm.reportContent,
-						reportObjID: vm.ads.adsID			
-					}
+						reportObjID: vm.ads.adsID
+					};
 
-					if($rootScope.isLoggedIn()){
+					if ($rootScope.isLoggedIn()) {
 						data.reportUserID = $rootScope.user.userID;
 					}
-					HouseService.reportReland(data).then(function(res){
-						if(res.data.success== true){
+					HouseService.reportReland(data).then(function (res) {
+						if (res.data.success == true) {
 							// alert('ok');
 							$('#detailAlertBox').modal("hide");
-						}else{
+						} else {
 							vm.reportRelandErrMsg = res.data.errMsg;
 						}
 					});
-				}
-					
+				};
 
-				
-
-				var showMore = function(searchData){
-					var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
-				      "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
-				      "&latlng=" + vm.ads.place.geo.lat + ',' + vm.ads.place.geo.lon;
-				    console.log(url);
-				    $http.get(url,{}).then(function(res){
-				    	var place = res.data.results[0];
-				    	var query =  {};
+				var showMore = function showMore(searchData) {
+					var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" + "&latlng=" + vm.ads.place.geo.lat + ',' + vm.ads.place.geo.lon;
+					console.log(url);
+					$http.get(url, {}).then(function (res) {
+						var place = res.data.results[0];
+						var query = {};
 						//Object.assign( query,vm.boSuuTap[index].query);
-						_.assign(query,searchData);
-						query.limit = 20;				
-						$state.go('msearch',{place: place.place_id, loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})							
-				    });
-				}
-				vm.showMoreTuongTu = function(){
+						_.assign(query, searchData);
+						query.limit = 20;
+						$state.go('msearch', { place: place.place_id, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
+					});
+				};
+				vm.showMoreTuongTu = function () {
 					showMore(vm.searchDataTuongTu);
-				}
-				vm.showMoreXungQuanh = function(){
+				};
+				vm.showMoreXungQuanh = function () {
 					showMore(vm.searchDataXungQuanh);
-				}
+				};
 
-				vm.userLoggedIn = function(){
+				vm.userLoggedIn = function () {
 					vm.name = $rootScope.user.userName;
-		                if($rootScope.user.phone)
-							vm.phone = parseInt($rootScope.user.phone);
-						vm.email = $rootScope.user.userEmail;
-					if(vm.ads.dangBoi.userID == $rootScope.user.userID)
-						vm.showLuotXem = true;
-					if(vm.ads.dangBoi.email == $rootScope.user.userEmail)
-						vm.showLuotXem = true;
-				}
-				
-				$scope.$bus.subscribe({
-	            	channel: 'user',
-		            topic: 'logged-in',
-		            callback: function(data, envelope) {
-		                //console.log('add new chat box', data, envelope);
-		                vm.userLoggedIn();
-		            }
-		        });
-		        if($rootScope.isLoggedIn()){	        	
-		        	vm.userLoggedIn();
-		        }
+					if ($rootScope.user.phone) vm.phone = parseInt($rootScope.user.phone);
+					vm.email = $rootScope.user.userEmail;
+					if (vm.ads.dangBoi.userID == $rootScope.user.userID) vm.showLuotXem = true;
+					if (vm.ads.dangBoi.email == $rootScope.user.userEmail) vm.showLuotXem = true;
+				};
 
-				vm.requestInfo = function(){
-					if($('#form-info-request').valid()){
-						vm.requestInfoClass = 'btn-submit-disabled';
-						HouseService.requestInfo({
-							name: vm.name,
-							phone: vm.phone,
-							email: vm.email,
-							content: vm.content,
-							adsUrl: window.location.href
-						}).then(function(res){
-							console.log(JSON.stringify(res.data));						
-							vm.requestInfoClass = 'btn-submit';
-							vm.clearInfoRequest();
-						});
-					}				
+				$scope.$bus.subscribe({
+					channel: 'user',
+					topic: 'logged-in',
+					callback: function callback(data, envelope) {
+						//console.log('add new chat box', data, envelope);
+						vm.userLoggedIn();
+					}
+				});
+				if ($rootScope.isLoggedIn()) {
+					vm.userLoggedIn();
 				}
-				vm.requestInfoPopup = function(){
-					if($('#form-info-request-popup').valid()){
+
+				vm.requestInfo = function () {
+					if ($('#form-info-request').valid()) {
 						vm.requestInfoClass = 'btn-submit-disabled';
 						HouseService.requestInfo({
 							name: vm.name,
@@ -22149,90 +21864,131 @@
 							email: vm.email,
 							content: vm.content,
 							adsUrl: window.location.href
-						}).then(function(res){
+						}).then(function (res) {
 							console.log(JSON.stringify(res.data));
 							vm.requestInfoClass = 'btn-submit';
 							vm.clearInfoRequest();
 						});
-					}		
-				}
+					}
+				};
+				vm.requestInfoPopup = function () {
+					if ($('#form-info-request-popup').valid()) {
+						vm.requestInfoClass = 'btn-submit-disabled';
+						HouseService.requestInfo({
+							name: vm.name,
+							phone: vm.phone,
+							email: vm.email,
+							content: vm.content,
+							adsUrl: window.location.href
+						}).then(function (res) {
+							console.log(JSON.stringify(res.data));
+							vm.requestInfoClass = 'btn-submit';
+							vm.clearInfoRequest();
+						});
+					}
+				};
 
+				vm.goDetail = function (adsID) {
+					$state.go('mdetail', { "adsID": adsID }, { location: true });
+				};
+				vm.goChats = function () {
+					$state.go('mchats', { "adsID": vm.ads.adsID }, { location: true });
+				};
+				vm.showMinimapHome = function () {
+					//vm.map.setCenter(chicago);
+					// vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
+					vm.home = new google.maps.LatLng(vm.ads.place.geo.lat, vm.ads.place.geo.lon);
+					vm.map.setCenter(vm.home);
+					//alert('aaaa');
+					//$scope.$apply();
+				};
+				NgMap.getMap().then(function (map) {
+					vm.map = map;
+				});
 
-				vm.goDetail = function(adsID){
-	        		$state.go('mdetail', { "adsID" : adsID}, {location: true});
-	        	}
-	        	vm.goChats = function(){
-	        		$state.go('mchats', { "adsID" : vm.ads.adsID}, {location: true});
-	        	}
-	        	$timeout(function() {
-					$("#phgantaichinh").drawDoughnutChart([
-						{ title: "Gốc", value : 400,  color: "#20c063"},
-						{ title: "Lãi", value:  100,   color: "#f0a401"}
-				  	]);
-				}, 10);
+				$timeout(function () {
+					$("#phgantaichinh").drawDoughnutChart([{ title: "Gốc", value: 400, color: "#20c063" }, { title: "Lãi", value: 100, color: "#f0a401" }]);
+					$('.fancybox').fancybox({
+						openEffect: 'none',
+						closeEffect: 'none',
+
+						prevEffect: 'none',
+						nextEffect: 'none',
+
+						helpers: {
+							title: {
+								type: 'inside'
+							},
+							buttons: {}
+						},
+
+						afterLoad: function afterLoad() {
+							this.title = this.index + 1 + '/' + this.group.length;
+						}
+					});
+					$('body').scrollTop(0);
+				}, 0);
 
 				vm.searchDataXungQuanh.place = {
-		      		//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-	   				radiusInKm :  2,
-				    currentLocation: {
-				    	lat: vm.ads.place.geo.lat,
-				    	lon: vm.ads.place.geo.lon
-				    }
+					//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
+					radiusInKm: 2,
+					currentLocation: {
+						lat: vm.ads.place.geo.lat,
+						lon: vm.ads.place.geo.lon
+					}
 				};
 				vm.searchDataXungQuanh.loaiTin = vm.ads.loaiTin;
 
-				HouseService.findAdsSpatial(vm.searchDataXungQuanh).then(function(res){
-					vm.nhaXungQuanh = res.data.list;					
-				});			
+				HouseService.findAdsSpatial(vm.searchDataXungQuanh).then(function (res) {
+					vm.nhaXungQuanh = res.data.list;
+				});
 
 				vm.searchDataTuongTu.loaiTin = vm.ads.loaiTin;
 				vm.searchDataTuongTu.loaiNhaDat = vm.ads.loaiNhaDat;
 				vm.searchDataTuongTu.diaChinh = {
 					tinh: vm.ads.place.diaChinh.tinhKhongDau,
 					huyen: vm.ads.place.diaChinh.huyenKhongDau
+				};
+				if (vm.ads.dienTich) {
+					vm.searchDataTuongTu.dienTichBETWEEN[0] = vm.ads.dienTich * 0.8;
+					vm.searchDataTuongTu.dienTichBETWEEN[1] = vm.ads.dienTich * 1.2;
 				}
-				if(vm.ads.dienTich){
-					vm.searchDataTuongTu.dienTichBETWEEN[0] = vm.ads.dienTich*0.8;
-					vm.searchDataTuongTu.dienTichBETWEEN[1] = vm.ads.dienTich*1.2;
+				if (vm.ads.gia) {
+					vm.searchDataTuongTu.giaBETWEEN[0] = vm.ads.gia * 0.8;
+					vm.searchDataTuongTu.giaBETWEEN[1] = vm.ads.gia * 1.2;
 				}
-				if(vm.ads.gia){
-					vm.searchDataTuongTu.giaBETWEEN[0] = vm.ads.gia*0.8;
-					vm.searchDataTuongTu.giaBETWEEN[1] = vm.ads.gia*1.2;	
-				}
-				if(vm.ads.loaiNhaDat==1 && vm.ads.soPhongNgu){
+				if (vm.ads.loaiNhaDat == 1 && vm.ads.soPhongNgu) {
 					vm.searchDataTuongTu.soPhongNgu = vm.ads.soPhongNgu;
-				}else if(vm.ads.soTang){
+				} else if (vm.ads.soTang) {
 					vm.searchDataTuongTu.soTang = vm.ads.soTang;
 				}
-				HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function(res){
-					vm.nhaTuongTu = res.data.list;					
+				HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function (res) {
+					vm.nhaTuongTu = res.data.list;
 				});
-
-
 			});
-			
 		});
 	})();
-
 
 /***/ },
 /* 31 */
 /***/ function(module, exports) {
 
-	(function() {
+	'use strict';
+
+	(function () {
 		'use strict';
+
 		var controllerId = 'MobileChatCtrl';
-		angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
 			var vm = this;
-			
-			
 		});
 	})();
-
 
 /***/ },
 /* 32 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($timeout) {
 	    var def = {
@@ -22241,43 +21997,38 @@
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-left-menu.tpl.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;                                
-	                vm.gotoHomePage = function(event){
-	                   $state.go('mhome', { }, {location: true});
-	                   $(".overlay").click();
-	                }
-	                vm.showLogin = function(event){
-	                    //$('#loginBox').fadeIn(500);
-	                    //window.loca
-	                }
-	                
-	                vm.gotoSearchPage = function(event){
-	                    $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
-	                    $(".overlay").click();
-	                }
-	                vm.gotoRelandApp = function(event){
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	            vm.gotoHomePage = function (event) {
+	                $state.go('mhome', {}, { location: true });
+	                $(".overlay").click();
+	            };
+	            vm.showLogin = function (event) {
+	                //$('#loginBox').fadeIn(500);
+	                //window.loca
+	            };
 
-	                }
-	                vm.profile = function(){
-	                    $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
-	                }
-	                vm.signout = function(){
-	                    $localStorage.relandToken = undefined;
-	                    $rootScope.user.userName = undefined;
-	                    $scope.$bus.publish({
-	                      channel: 'login',
-	                      topic: 'logged out',
-	                      data: {}
-	                    });
-	                    socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
-	                        console.log("disconect socket user " + $rootScope.user.userName);
-	                    });
-
-	                }
-	            }
-	        ],
+	            vm.gotoSearchPage = function (event) {
+	                $state.go('msearch', { "place": 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin": 0, "loaiNhaDat": 0, "viewMode": "list" }, { location: true });
+	                $(".overlay").click();
+	            };
+	            vm.gotoRelandApp = function (event) {};
+	            vm.profile = function () {
+	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
+	            };
+	            vm.signout = function () {
+	                $localStorage.relandToken = undefined;
+	                $rootScope.user.userName = undefined;
+	                $scope.$bus.publish({
+	                    channel: 'login',
+	                    topic: 'logged out',
+	                    data: {}
+	                });
+	                socket.emit('user leave', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	                    console.log("disconect socket user " + $rootScope.user.userName);
+	                });
+	            };
+	        }],
 	        controllerAs: "mmn"
 	    };
 	    return def;
@@ -22287,6 +22038,8 @@
 /* 33 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
@@ -22294,272 +22047,235 @@
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-filter.tpl.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','NgMap',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,NgMap) {
-	                var vm = this; 
-	                $(".btn-more .collapse-title").click(function() {
-	                    $(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
-	                })   
-	                vm.reset = function(){
-	                    $(".btn-more").removeAttr("style");
-	                    $(".more-box").addClass("more-box-hide");
-	                    $(".spinner").addClass("spinner-hide");
-	                    $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
-	                    $(".btn-group .btn").removeClass("active");
-	                    $(".btn-group .btn:first-child").addClass("active");
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'NgMap', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, NgMap) {
+	            var vm = this;
+	            $(".btn-more .collapse-title").click(function () {
+	                $(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
+	            });
+	            vm.reset = function () {
+	                $(".btn-more").removeAttr("style");
+	                $(".more-box").addClass("more-box-hide");
+	                $(".spinner").addClass("spinner-hide");
+	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                $(".btn-group .btn").removeClass("active");
+	                $(".btn-group .btn:first-child").addClass("active");
+	            };
+	            vm.pageSize = 25;
+	            vm.initialized = false;
+	            $scope.searchData = {};
+	            //Object.assign($scope.searchData,$rootScope.searchData);
+	            _.assign($scope.searchData, $rootScope.searchData);
+
+	            vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
+	            vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+
+	            vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+
+	            vm.sellPrices = [{
+	                value: 0.5,
+	                lable: "500 triệu"
+	            }, {
+	                value: 0.8,
+	                lable: "800 triệu"
+	            }, {
+	                value: 1,
+	                lable: "1 tỷ"
+	            }, {
+	                value: 2,
+	                lable: "2 tỷ"
+	            }, {
+	                value: 3,
+	                lable: "3 tỷ"
+	            }, {
+	                value: 5,
+	                lable: "5 tỷ"
+	            }, {
+	                value: 7,
+	                lable: "7 tỷ"
+	            }, {
+	                value: 10,
+	                lable: "10 tỷ"
+	            }, {
+	                value: 20,
+	                lable: "20 tỷ"
+	            }, {
+	                value: 30,
+	                lable: "30 tỷ"
+	            }];
+
+	            vm.rentPrices = [{
+	                value: 1,
+	                lable: "1 triệu"
+	            }, {
+	                value: 3,
+	                lable: "3 triệu"
+	            }, {
+	                value: 5,
+	                lable: "5 triệu"
+	            }, {
+	                value: 10,
+	                lable: "10 triệu"
+	            }, {
+	                value: 20,
+	                lable: "20 triệu"
+	            }, {
+	                value: 40,
+	                lable: "40 triệu"
+	            }, {
+	                value: 70,
+	                lable: "70 triệu"
+	            }, {
+	                value: 100,
+	                lable: "100 triệu"
+	            }];
+
+	            vm.selectLoaiTin = function (loaiTin) {
+	                $scope.searchData.loaiTin = loaiTin;
+	                if ($scope.searchData.loaiTin == 0) {
+	                    vm.loaiNhaDat = vm.loaiNhaDatBan;
+	                    vm.prices = vm.sellPrices;
+	                } else {
+	                    vm.loaiNhaDat = vm.loaiNhaDatThue;
+	                    vm.prices = vm.rentPrices;
 	                }
-	                vm.pageSize = 25;
-	                vm.initialized = false;
-	                $scope.searchData = {};
-	                //Object.assign($scope.searchData,$rootScope.searchData);
-	                _.assign($scope.searchData,$rootScope.searchData);
+	            };
+	            vm.selectLoaiTin($scope.searchData.loaiTin);
 
-	                vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
-	                vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+	            vm.selectLoaiNhaDat = function (lnd) {
+	                $scope.searchData.loaiNhaDat = lnd.value;
+	            };
+	            vm.selectHuongNha = function (hn) {
+	                $scope.searchData.huongNha = hn.value;
+	            };
 
-	                vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+	            vm.setSearchDataSpn = function (val) {
+	                $scope.searchData.soPhongNguGREATER = val;
+	            };
+	            vm.setSearchDataSpt = function (val) {
+	                $scope.searchData.soPhongTamGREATER = val;
+	            };
+	            vm.selectPlaceCallback = function (place) {
+	                $rootScope.searchData.place = place;
+	            };
+	            vm.setSearchDataGia = function (event, index) {
+	                var value = event.target;
+	            };
 
-	                vm.sellPrices  =[                    
-	                    {
-	                        value: 0.5,
-	                        lable: "500 triệu"
-	                    },
-	                    {
-	                        value: 0.8,
-	                        lable: "800 triệu"
-	                    },
-	                    {
-	                        value: 1,
-	                        lable: "1 tỷ"
-	                    },
-	                    {
-	                        value: 2,
-	                        lable: "2 tỷ"
-	                    },
-	                    {
-	                        value: 3,
-	                        lable: "3 tỷ"
-	                    },
-	                    {
-	                        value: 5,
-	                        lable: "5 tỷ"
-	                    },
-	                    {
-	                        value: 7,
-	                        lable: "7 tỷ"
-	                    },
-	                    {
-	                        value: 10,
-	                        lable: "10 tỷ"
-	                    },
-	                    {
-	                        value: 20,
-	                        lable: "20 tỷ"
-	                    },
-	                    {
-	                        value: 30,
-	                        lable: "30 tỷ"
+	            vm.gotoHomePage = function (event) {
+	                $state.go('mhome', {}, { location: true });
+	                $(".overlay").click();
+	            };
+	            vm.showLogin = function (event) {
+	                $('#box-login').fadeIn(500);
+	                //window.loca
+	            };
+
+	            vm.spinner = function (event, box, item) {
+	                var me = event.target;
+	                me = $(me).closest('a');
+	                if (me.parent().find($(box)).hasClass(item)) {
+	                    me.parent().find($(box)).removeClass(item);
+	                    me.find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
+	                } else {
+	                    me.parent().find($(box)).addClass(item);
+	                    me.find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                }
+	            };
+
+	            vm.gotoSearchPage = function (event) {
+	                //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
+	                if (!vm.place) vm.place = { place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc" };
+	                // $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
+	                //     reload: true,
+	                //     inherit: false,
+	                //     notify: true
+	                // });
+	                $state.go("msearch", { "place": vm.place.place_id, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": "list" });
+	                $(".overlay").click();
+	            };
+	            vm.gotoRelandApp = function (event) {};
+	            vm.profile = function () {
+	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
+	            };
+	            vm.selectPlaceCallback = function (place) {
+	                vm.place = place;
+	            };
+
+	            NgMap.getMap("filtermap").then(function (map) {
+	                vm.map = map;
+	                window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback, "searchadd", map);
+	                vm.PlacesService = new google.maps.places.PlacesService(map);
+	            });
+
+	            var setDrumValues = function setDrumValues(select, value) {
+	                var options = select[0].options;
+	                if (value > 100000) {
+	                    select.drum('setIndex', 1);
+	                } else {
+	                    for (var i = 0; i < options.length; i++) {
+	                        if (options[i].value == value) {
+	                            select.drum('setIndex', i);
+	                            break;
+	                        }
 	                    }
-	                ];
-
-	                vm.rentPrices  =[                    
-	                    {
-	                        value: 1,
-	                        lable: "1 triệu"
-	                    },
-	                    {
-	                        value: 3,
-	                        lable: "3 triệu"
-	                    },
-	                    {
-	                        value: 5,
-	                        lable: "5 triệu"
-	                    },
-	                    {
-	                        value: 10,
-	                        lable: "10 triệu"
-	                    },
-	                    {
-	                        value: 20,
-	                        lable: "20 triệu"
-	                    },
-	                    {
-	                        value: 40,
-	                        lable: "40 triệu"
-	                    },
-	                    {
-	                        value: 70,
-	                        lable: "70 triệu"
-	                    },
-	                    {
-	                        value: 100,
-	                        lable: "100 triệu"
-	                    }
-	                ];
-
-	                vm.selectLoaiTin = function(loaiTin){
-	                    $scope.searchData.loaiTin = loaiTin;
-	                    if($scope.searchData.loaiTin==0){
-	                        vm.loaiNhaDat = vm.loaiNhaDatBan;
-	                        vm.prices = vm.sellPrices;
-	                    }else{
-	                        vm.loaiNhaDat = vm.loaiNhaDatThue;
-	                        vm.prices = vm.rentPrices;
-	                    }                   
 	                }
-	                vm.selectLoaiTin($scope.searchData.loaiTin);
-	                
-	                vm.selectLoaiNhaDat = function(lnd){
-	                    $scope.searchData.loaiNhaDat = lnd.value;
-	                }
-	                vm.selectHuongNha = function(hn){
-	                    $scope.searchData.huongNha = hn.value;
+	            };
+	            vm.showFrequentSearch = false;
+	            vm.keyPress = function (event) {
+	                vm.showFrequentSearch = false;
+	            };
 
-	                }
-
-
-	                vm.setSearchDataSpn = function(val){
-	                    $scope.searchData.soPhongNguGREATER = val;
-	                }
-	                 vm.setSearchDataSpt = function(val){
-	                    $scope.searchData.soPhongTamGREATER = val;
-	                }
-	                vm.selectPlaceCallback = function(place){
-	                    $rootScope.searchData.place = place;
-	                }
-	                vm.setSearchDataGia = function(event, index){
-	                    var value = event.target;
-	                }
-	                
-
-
-	                
-
-
-	                
-
-
-	                vm.gotoHomePage = function(event){
-	                   $state.go('mhome', { }, {location: true});
-	                   $(".overlay").click();
-	                }
-	                vm.showLogin = function(event){
-	                    $('#box-login').fadeIn(500);
-	                    //window.loca
-	                }
-
-	                vm.spinner = function(event, box, item){
-	                    var me = event.target;
-	                    me = $(me).closest('a')
-	                    if(me.parent().find($(box)).hasClass(item)) {
-	                        me.parent().find($(box)).removeClass(item);
-	                        me.find("i").addClass("iconUpOpen").removeClass("iconDownOpen");
-	                    }
-	                    else {
-	                        me.parent().find($(box)).addClass(item);
-	                        me.find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
-	                    }
-	                }
-	                
-	                vm.gotoSearchPage = function(event){
-	                    //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
-	                    if(!vm.place)
-	                        vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
-	                    // $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
-	                    //     reload: true,
-	                    //     inherit: false,
-	                    //     notify: true
-	                    // });
-	                    $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
-	                    $(".overlay").click();
-	                }
-	                vm.gotoRelandApp = function(event){
-
-	                }
-	                vm.profile = function(){
-	                    $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
-	                }
-	                vm.selectPlaceCallback = function(place){
-	                    vm.place = place;
-	                }
-
-	                NgMap.getMap("filtermap").then(function(map){
-	                    vm.map = map;           
-	                    window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
-	                    vm.PlacesService =  new google.maps.places.PlacesService(map);                                
+	            vm.init = function () {
+	                $("#typeBox .type-list li a").click(function () {
+	                    $(".type-box .collapse-title span label").html($(this).html());
 	                });
-
-	                var setDrumValues = function(select, value){
-	                    var options = select[0].options;                    
-	                    if(value>100000){
-	                         select.drum('setIndex', 1); 
-	                    }else{
-	                        for(var i =0;i<options.length;i++){
-	                            if(options[i].value==value){
-	                                select.drum('setIndex', i); 
-	                                break;
-	                            }
+	                $("#trendBox .type-list li a").click(function () {
+	                    $(".trend-box .collapse-title span label").html($(this).html());
+	                });
+	                Hammer.plugins.fakeMultitouch();
+	                $("select.drum").drum({
+	                    onChange: function onChange(selected) {
+	                        //if (selected.value !=0) 
+	                        $("#" + selected.id + "_value").html($("#" + selected.id + " option:selected").text());
+	                        if (selected.id == "prices1") {
+	                            $scope.searchData.giaBETWEEN[0] = selected.value * 1000;
+	                        } else if (selected.id == "prices2") {
+	                            $scope.searchData.giaBETWEEN[1] = selected.value * 1000;
+	                        } else if (selected.id == "area1") {
+	                            $scope.searchData.dienTichBETWEEN[0] = selected.value;
+	                        } else if (selected.id == "area2") {
+	                            $scope.searchData.dienTichBETWEEN[1] = selected.value;
+	                        } else if (selected.id == "datepost") {
+	                            $scope.searchData.ngayDaDang = selected.value;
 	                        }
 	                    }
-	                    
-	                }
+	                });
+	                //set price drum
+	                var prices1 = $scope.searchData.giaBETWEEN[0] / 1000;
+	                var prices1Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices1");
+	                setDrumValues(prices1Elm, prices1);
 
-	                vm.init = function(){
-	                    $("#typeBox .type-list li a").click(function(){
-	                        $(".type-box .collapse-title span label").html($(this).html());
-	                    });
-	                    $("#trendBox .type-list li a").click(function(){
-	                        $(".trend-box .collapse-title span label").html($(this).html());
-	                    });
-	                    Hammer.plugins.fakeMultitouch();
-	                    $("select.drum").drum({
-	                        onChange : function (selected) {
-	                            //if (selected.value !=0) 
-	                            $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
-	                            if(selected.id =="prices1"){
-	                                $scope.searchData.giaBETWEEN[0] = selected.value*1000;
-	                            }else if(selected.id =="prices2"){
-	                                $scope.searchData.giaBETWEEN[1] = selected.value *1000;
-	                            }else if(selected.id =="area1"){
-	                                $scope.searchData.dienTichBETWEEN[0] = selected.value ;
-	                            }else if(selected.id =="area2"){
-	                                $scope.searchData.dienTichBETWEEN[1] = selected.value;
-	                            }else if(selected.id=="datepost"){
-	                                $scope.searchData.ngayDaDang = selected.value;
-	                            }
-	                        }
-	                    });
-	                    //set price drum
-	                    var prices1 = $scope.searchData.giaBETWEEN[0]/1000;
-	                    var prices1Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices1");
-	                    setDrumValues(prices1Elm, prices1);
-	                    
-	                    var prices2 = $scope.searchData.giaBETWEEN[1]/1000;
-	                    var prices2Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices2");
-	                    setDrumValues(prices2Elm,prices2);
+	                var prices2 = $scope.searchData.giaBETWEEN[1] / 1000;
+	                var prices2Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices2");
+	                setDrumValues(prices2Elm, prices2);
 
-	                    var area1 = $scope.searchData.dienTichBETWEEN[0];
-	                    var area1Elm = $("select#area1");
-	                    setDrumValues(area1Elm,area1);
+	                var area1 = $scope.searchData.dienTichBETWEEN[0];
+	                var area1Elm = $("select#area1");
+	                setDrumValues(area1Elm, area1);
 
-	                    var area2 = $scope.searchData.dienTichBETWEEN[1];
-	                    var area2Elm = $("select#area2");
-	                    setDrumValues(area2Elm,area2);
+	                var area2 = $scope.searchData.dienTichBETWEEN[1];
+	                var area2Elm = $("select#area2");
+	                setDrumValues(area2Elm, area2);
 
-	                    var datepost = $scope.searchData.ngayDaDang;
-	                    var datepostElm = $("select#datepost");
-	                    setDrumValues(datepostElm,datepost);                    
-
-
-	                }
-	                $timeout(function() {
-	                   vm.init();
-	                   vm.initialized = true;
-	                },0);
-	                
-	                
-	            }
-	        ],
+	                var datepost = $scope.searchData.ngayDaDang;
+	                var datepostElm = $("select#datepost");
+	                setDrumValues(datepostElm, datepost);
+	            };
+	            $timeout(function () {
+	                vm.init();
+	                vm.initialized = true;
+	            }, 0);
+	        }],
 	        controllerAs: "mf"
 	    };
 	    return def;
@@ -22569,6 +22285,8 @@
 /* 34 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
@@ -22576,52 +22294,49 @@
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
 	        replace: 'true',
-	        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
-	            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-	                var vm = this;  
-	                vm.searchfr = function(){
-	                    $(".search").removeAttr("style");
-	                    $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
-	                    $("body").removeClass("bodyNavShow");
-	                    $(".search-footer").removeClass("fixed");
-	                    vm.reset();
-	                }                     
-	                vm.reset =function(){
-	                    $(".btn-more").removeAttr("style");
-	                    $(".more-box").addClass("more-box-hide");
-	                    $(".spinner").addClass("spinner-hide");
-	                    $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
-	                    $(".btn-group .btn").removeClass("active");
-	                    $(".btn-group .btn:first-child").addClass("active");
-	                }         
-	                vm.toggleFilter = function(){
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	            var vm = this;
+	            vm.searchfr = function () {
+	                $(".search").removeAttr("style");
+	                $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
+	                $("body").removeClass("bodyNavShow");
+	                $(".search-footer").removeClass("fixed");
+	                vm.reset();
+	            };
+	            vm.reset = function () {
+	                $(".btn-more").removeAttr("style");
+	                $(".more-box").addClass("more-box-hide");
+	                $(".spinner").addClass("spinner-hide");
+	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                $(".btn-group .btn").removeClass("active");
+	                $(".btn-group .btn:first-child").addClass("active");
+	            };
+	            vm.toggleFilter = function () {
 
-	                    if($(".search_mobile").find("i").hasClass("iconSearch")){
-	                        $(".search").animate({
-	                            right: 0
-	                        }, 120);
-	                        $(".search_mobile").find("i").removeClass("iconSearch").addClass("iconCancel");
-	                        //$("body").addClass("bodyNavShow");
-	                        $(".search").scrollTop(0);
-	                        $(".search-footer").addClass("fixed");
-	                    }else{
-	                        vm.searchfr();
-	                    }
-	                }
-
-	                vm.toggleLeftMenu=function(){
-	                    $(".overlay").show();
-	                    $(".nav_mobile").find("i").removeClass("iconMenu").addClass("iconLeftOpen");
-	                    $("body").addClass("bodyNavShow").animate({
-	                        left: 270
+	                if ($(".search_mobile").find("i").hasClass("iconSearch")) {
+	                    $(".search").animate({
+	                        right: 0
 	                    }, 120);
-	                    $("nav.main").animate({
-	                        left: 0
-	                    }, 120);
+	                    $(".search_mobile").find("i").removeClass("iconSearch").addClass("iconCancel");
+	                    //$("body").addClass("bodyNavShow");
+	                    $(".search").scrollTop(0);
+	                    $(".search-footer").addClass("fixed");
+	                } else {
+	                    vm.searchfr();
 	                }
+	            };
 
-	            }
-	        ],
+	            vm.toggleLeftMenu = function () {
+	                $(".overlay").show();
+	                $(".nav_mobile").find("i").removeClass("iconMenu").addClass("iconLeftOpen");
+	                $("body").addClass("bodyNavShow").animate({
+	                    left: 270
+	                }, 120);
+	                $("nav.main").animate({
+	                    left: 0
+	                }, 120);
+	            };
+	        }],
 	        controllerAs: "mhdr"
 	    };
 	    return def;
@@ -22632,671 +22347,605 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	angular.module('bds')
-	.directive("bdsMobileLoginForm", [
-	  function() {
-	    return {
-	      restrict: 'E',
-	      scope: {},
-	        // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
-	        templateUrl: "/web/common/directives/mobile/bds-mobile-login.tpl.html",
-	        replace: 'true',
-	        controller: ['socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','jwtHelper',
-	        function(socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,jwtHelper) {
-	          $scope.loginError = false;
-	          var vm = this;
 
-	          vm.login = true;
-	          vm.reset = false;
-	          vm.ENTER_EMAIL = 1;
-	          vm.ENTER_PASSWORD = 2;
-	          vm.LOGGED_IN = 3;
-	          vm.FORGOT_PASSWORD = 4;
-	          vm.SENT_PASSWORD = 5;
-	          vm.RESET_PASSWORD = 6;
-	          vm.state = vm.ENTER_EMAIL;
+	angular.module('bds').directive("bdsMobileLoginForm", [function () {
+	  return {
+	    restrict: 'E',
+	    scope: {},
+	    // template: '<div class="box-login" id="box-login"><div class="inner"><form action="index.html" method="post" id="form-login" novalidate><div ng-if="$root.token" class="head">Đăng nhập/Đăng ký để lưu thông tin tìm kiếm</div><div ng-if="!$root.token" class="head">Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu</div><a href="#box-login" class="btn-close" data-login="close"><i class="fa fa-times"></i></a><div ng-if="$root.token" class="control"><input type="email" ng-model="lc.email" placeholder="Enter email address" class="form-control" name="email" required/></div><div ng-if="!$root.token" class="control"><input type="password" ng-model="lc.password" class="form-control" required> </input></div><div class="handle"><button type="button" ng-click="lc.signin();" class="btn-login">Đăng nhập</button></div><div class="rule">Tôi đồng ý với các điều khoản <a href="/terms/" target="_blank">sử dụng</a> và <a href="/privacy/" target="_blank">bản quyền của Reland</a>.</div><div class="register">Bạn có phải là môi giới BĐS? <a href="/agent_signup/?redirect_url=http://www.trulia.com/"> Đăng ký tại đây.</a></div></form></div></div>',
+	    templateUrl: "/web/common/directives/mobile/bds-mobile-login.tpl.html",
+	    replace: 'true',
+	    controller: ['socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'jwtHelper', function (socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, jwtHelper) {
+	      $scope.loginError = false;
+	      var vm = this;
+
+	      vm.login = true;
+	      vm.reset = false;
+	      vm.ENTER_EMAIL = 1;
+	      vm.ENTER_PASSWORD = 2;
+	      vm.LOGGED_IN = 3;
+	      vm.FORGOT_PASSWORD = 4;
+	      vm.SENT_PASSWORD = 5;
+	      vm.RESET_PASSWORD = 6;
+	      vm.state = vm.ENTER_EMAIL;
+	      vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	      vm.subHead = "";
+	      $scope.$bus.subscribe({
+	        channel: 'login',
+	        topic: 'logged out',
+	        callback: function callback(data, envelope) {
+	          vm.userExist = false;
+	          vm.password = "";
+	          $localStorage.relandToken = undefined;
+	          $rootScope.user.userID = undefined;
+	          vm.changeState(vm.ENTER_EMAIL, vm.userExist);
+	        }
+	      });
+
+	      $scope.$bus.subscribe({
+	        channel: 'login',
+	        topic: 'show login',
+	        callback: function callback(data, envelope) {
+	          var token = data.token;
+	          if (token) {
+	            var mydecode = jwtHelper.decodeToken(token);
+	            vm.resetPasswordToken = token;
+	            vm.resetUserID = mydecode.userID;
+	            vm.resetHead = "Xin nhập mật khẩu mới";
+	            vm.reset = true;
+	            vm.login = false;
+	            vm.state = vm.RESET_PASSWORD;
+	          } else {
+	            vm.state = vm.ENTER_EMAIL;
+	            vm.userExist = false;
+	            vm.password = "";
+	            $localStorage.relandToken = undefined;
+	            vm.head = data.label;
+	            vm.subHead = "";
+	          }
+	          $('#loginBox').modal("show");
+	        }
+	      });
+
+	      vm.exitLoginBox = function ($event) {
+	        if (!$event || $event.target.id == "box-login") {
+	          vm.userExist = false;
+	          vm.changeState(vm.ENTER_EMAIL, false);
+	        }
+	      };
+	      vm.forgotPassword = function () {
+	        vm.changeState(vm.FORGOT_PASSWORD);
+	      };
+
+	      vm.changeState = function (state, userExist) {
+	        vm.state = state;
+	        if (state == vm.FORGOT_PASSWORD) {
+	          vm.head = "Quên mật khẩu?";
+	          vm.subHead = "Hãy nhập email, Reland sẽ gửi mật khẩu tới email";
+	        }
+	        if (vm.state == vm.SENT_PASSWORD) {
+	          vm.subHead = "Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập";
+	        }
+	        if (vm.state == vm.ENTER_EMAIL) {
 	          vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
 	          vm.subHead = "";
-	          $scope.$bus.subscribe({
-	            channel: 'login',
-	            topic: 'logged out',
-	            callback: function(data, envelope) {
-	                vm.userExist = false;
-	                vm.password = "";
-	                $localStorage.relandToken = undefined;  
-	                $rootScope.user.userID = undefined;
-	                vm.changeState(vm.ENTER_EMAIL,vm.userExist);
-	            }
-	          });
+	        }
+	        if (vm.state == vm.ENTER_PASSWORD) {
+	          vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
+	          if (userExist == true) vm.head = "Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu";else if (userExist == false) vm.head = "Tạo mật khẩu";
+	        }
+	      };
 
-	          $scope.$bus.subscribe({
-	            channel: 'login',
-	            topic: 'show login',
-	            callback: function(data, envelope) {
-	                var token = data.token;
-	                if(token){
-	                  var mydecode = jwtHelper.decodeToken(token);
-	                  vm.resetPasswordToken = token;
-	                  vm.resetUserID = mydecode.userID;
-	                  vm.resetHead = "Xin nhập mật khẩu mới"
-	                  vm.reset = true;
-	                  vm.login = false;
-	                  vm.state = vm.RESET_PASSWORD;
-	                }else{
-	                  vm.state = vm.ENTER_EMAIL;
+	      vm.signin = function () {
+	        var loginForm = $('#form-login');
+	        var data = {
+	          email: vm.email,
+	          matKhau: vm.password
+	        };
+	        if (vm.email && vm.email.indexOf("@") == -1) {
+	          data.email = undefined;
+	          data.phone = vm.email;
+	        }
+	        //if (loginForm.valid()) {
+	        if (vm.state == vm.RESET_PASSWORD) {
+	          HouseService.resetPassword({ token: vm.resetPasswordToken, pass: vm.resetPassword }).then(function (resp) {
+	            if (resp.data.success == true) {
+	              //need to auto login here
+	              HouseService.login({ userID: vm.resetUserID, matKhau: vm.resetPassword }).then(function (res) {
+	                if (res.data.login == true) {
+	                  //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                  //$window.token = res.data.token;
+	                  $localStorage.relandToken = res.data.token;
+	                  $rootScope.user.userName = res.data.userName;
+	                  $rootScope.user.userID = res.data.userID;
+	                  $rootScope.user.userAvatar = res.data.avatar;
+	                  //hung dummy here to set userID to email so we can test chat
+	                  //$rootScope.user.userID = res.data.email;
+	                  $rootScope.user.userID = res.data.userID;
+	                  $rootScope.user.adsLikes = res.data.adsLikes;
+	                  $rootScope.user.userEmail = res.data.email;
+	                  $rootScope.user.phone = res.data.phone;
+	                  $rootScope.user.lastSearch = res.data.lastSearch;
+	                  $rootScope.user.lastViewAds = res.data.lastViewAds;
+
+	                  vm.class = "has-sub";
+	                  vm.state = vm.LOGGED_IN;
 	                  vm.userExist = false;
 	                  vm.password = "";
-	                  $localStorage.relandToken = undefined;  
-	                  vm.head = data.label;
-	                  vm.subHead = "";  
-	                }                
-	                $('#loginBox').modal("show");
+	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                    console.log("register socket user " + $rootScope.user.userName);
+	                  });
+	                  $scope.$bus.publish({
+	                    channel: 'user',
+	                    topic: 'logged-in',
+	                    data: null
+	                  });
+	                  $('#box-login').hide();
+	                } else {
+	                  //alert(res.data.message);
+	                  vm.head = res.data.message;
+	                }
+	              });
+	            } else {
+	              alert(resp.data.msg);
 	            }
 	          });
-
-
-	          vm.exitLoginBox = function($event){
-	            if(!$event || $event.target.id == "box-login"){
-	              vm.userExist = false;
-	              vm.changeState(vm.ENTER_EMAIL,false);
-	            }
-	          }
-	          vm.forgotPassword = function(){
-	            vm.changeState(vm.FORGOT_PASSWORD);
-	          }
-
-	          vm.changeState = function(state,userExist){
-	            vm.state = state;
-	            if(state == vm.FORGOT_PASSWORD){
-	              vm.head  = "Quên mật khẩu?";
-	              vm.subHead = "Hãy nhập email, Reland sẽ gửi mật khẩu tới email";
-	            }
-	            if(vm.state == vm.SENT_PASSWORD){
-	              vm.subHead = "Reland đã gửi mật khẩu tới email của bạn. Hãy kiểm tra và nhập mật khẩu mới để đăng nhập";
-	            }
-	            if(vm.state == vm.ENTER_EMAIL){
-	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
-	              vm.subHead = "";
-	            }
-	            if(vm.state == vm.ENTER_PASSWORD){
-	              vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
-	              if(userExist == true)
-	                vm.head = "Chào mừng bạn quay lại với Reland. Xin nhập mật khẩu";
-	              else if(userExist == false)
-	                vm.head = "Tạo mật khẩu";
-	            }
-
-	          }
-
-
-	          vm.signin = function(){
-	            var loginForm = $('#form-login');
-	              var data = {
-	                email: vm.email,
-	                matKhau: vm.password
+	        } else if (vm.state == vm.FORGOT_PASSWORD) {
+	          HouseService.forgotPassword({
+	            email: vm.email,
+	            newPass: vm.password
+	          }).then(function (res) {
+	            if (res.data.success == true) vm.changeState(vm.SENT_PASSWORD);else vm.subHead = res.data.msg;
+	          });
+	        } else if (vm.state == vm.ENTER_EMAIL) {
+	          HouseService.checkUserExist(data).then(function (res) {
+	            vm.userExist = res.data.exist;
+	            vm.changeState(vm.ENTER_PASSWORD, vm.userExist);
+	          });
+	        } else if (vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD) {
+	          if (vm.userExist == true) {
+	            //sign in
+	            HouseService.login(data).then(function (res) {
+	              if (res.data.login == true) {
+	                //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
+	                //$window.token = res.data.token;
+	                $localStorage.relandToken = res.data.token;
+	                $rootScope.user.userName = res.data.userName;
+	                $rootScope.user.userID = res.data.userID;
+	                $rootScope.user.userAvatar = res.data.avatar;
+	                //hung dummy here to set userID to email so we can test chat
+	                //$rootScope.user.userID = res.data.email;
+	                $rootScope.user.userID = res.data.userID;
+	                $rootScope.user.adsLikes = res.data.adsLikes;
+	                $rootScope.user.userEmail = res.data.email;
+	                $rootScope.user.phone = res.data.phone;
+	                $rootScope.user.lastSearch = res.data.lastSearch;
+	                $rootScope.user.lastViewAds = res.data.lastViewAds;
+	                vm.class = "has-sub";
+	                vm.state = vm.LOGGED_IN;
+	                vm.userExist = false;
+	                vm.password = "";
+	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                  console.log("register socket user " + $rootScope.user.userName);
+	                });
+	                $scope.$bus.publish({
+	                  channel: 'user',
+	                  topic: 'logged-in',
+	                  data: null
+	                });
+	                $('#loginBox').modal('hide');
+	                // $('#loginBox').hide();
+	              } else {
+	                //alert(res.data.message);
+	                vm.head = res.data.message;
 	              }
-	              if(vm.email && vm.email.indexOf("@")==-1){
-	                data.email = undefined;
-	                data.phone = vm.email;
-	              }
-	              //if (loginForm.valid()) {
-	                if(vm.state == vm.RESET_PASSWORD){
-	                  HouseService.resetPassword({token: vm.resetPasswordToken,pass: vm.resetPassword}).then(function(resp){
-	                    if(resp.data.success == true){
-	                      //need to auto login here
-	                      HouseService.login({userID: vm.resetUserID, matKhau: vm.resetPassword}).then(function(res){
-	                        if(res.data.login==true){
-	                          //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
-	                          //$window.token = res.data.token;
-	                          $localStorage.relandToken = res.data.token;
-	                          $rootScope.user.userName = res.data.userName;
-	                          $rootScope.user.userID = res.data.userID;
-	                          $rootScope.user.userAvatar = res.data.avatar;
-	                          //hung dummy here to set userID to email so we can test chat
-	                          //$rootScope.user.userID = res.data.email;
-	                          $rootScope.user.userID = res.data.userID;
-	                          $rootScope.user.adsLikes = res.data.adsLikes;
-	                          $rootScope.user.userEmail = res.data.email;
-	                          $rootScope.user.phone = res.data.phone;
-	                          $rootScope.user.lastSearch = res.data.lastSearch;
-	                          $rootScope.user.lastViewAds = res.data.lastViewAds;
-
-	                          vm.class = "has-sub";
-	                          vm.state = vm.LOGGED_IN;
-	                          vm.userExist = false;
-	                          vm.password = "";
-	                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
-	                            console.log("register socket user " + $rootScope.user.userName);
-	                          });
-	                          $scope.$bus.publish({
-	                            channel: 'user',
-	                            topic: 'logged-in',
-	                            data: null
-	                          });
-	                          $('#box-login').hide();
-	                        }else{
-	                          //alert(res.data.message);
-	                          vm.head = res.data.message;
-	                        }                    
-	                      });
-	                    }else{
-	                      alert(resp.data.msg);
-	                    }
-	                  });
-	                }else if(vm.state == vm.FORGOT_PASSWORD){
-	                  HouseService.forgotPassword({
-	                    email: vm.email,
-	                    newPass: vm.password
-	                  }).then(function(res){ 
-	                    if(res.data.success == true)                              
-	                      vm.changeState(vm.SENT_PASSWORD);
-	                    else
-	                       vm.subHead = res.data.msg;
-	                  });
-	                } else if(vm.state == vm.ENTER_EMAIL){
-	                  HouseService.checkUserExist(data).then(function(res){
-	                    vm.userExist = res.data.exist;
-	                    vm.changeState(vm.ENTER_PASSWORD,vm.userExist);
-	                  });
-	                } else if(vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD){
-	                  if(vm.userExist==true){//sign in
-	                    HouseService.login(data).then(function(res){
-	                      if(res.data.login==true){
-	                        //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
-	                        //$window.token = res.data.token;
-	                        $localStorage.relandToken = res.data.token;
-	                        $rootScope.user.userName = res.data.userName;
-	                        $rootScope.user.userID = res.data.userID;
-	                        $rootScope.user.userAvatar = res.data.avatar;
-	                        //hung dummy here to set userID to email so we can test chat
-	                        //$rootScope.user.userID = res.data.email;
-	                        $rootScope.user.userID = res.data.userID;
-	                        $rootScope.user.adsLikes = res.data.adsLikes;
-	                        $rootScope.user.userEmail = res.data.email;
-	                        $rootScope.user.phone = res.data.phone;
-	                        $rootScope.user.lastSearch = res.data.lastSearch;
-	                        $rootScope.user.lastViewAds = res.data.lastViewAds;
-	                        vm.class = "has-sub";
-	                        vm.state = vm.LOGGED_IN;
-	                        vm.userExist = false;
-	                        vm.password = "";
-	                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
-	                          console.log("register socket user " + $rootScope.user.userName);
-	                        });
-	                        $scope.$bus.publish({
-	                            channel: 'user',
-	                            topic: 'logged-in',
-	                            data: null
-	                        });
-	                        $('#loginBox').modal('hide')
-	                        // $('#loginBox').hide();
-	                      }else{
-	                        //alert(res.data.message);
-	                        vm.head = res.data.message;
-	                      }                    
-	                    });
-	                  }else{//register
-	                    HouseService.signup(data).then(function(res){
-	                      $localStorage.relandToken = res.data.token;
-	                      $rootScope.user.userName = res.data.userName;
-	                      vm.class = "has-sub";
-	                      vm.state = vm.LOGGED_IN;
-	                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
-	                          console.log("register socket user " + $rootScope.user.userName);
-	                      });
-	                      $('#box-login').hide();
-	                    });
-	                  }
-
-	                }
-	              //}
-	          }
-
-	          /*var formLogin = $("#form-login");
-	          // $("#form-login").validate();
-	          // if(formLogin.validate){
-	            $.validator.addMethod("mailorphone", function(value, element) {
-	              var mail = jQuery.validator.methods.email.call(this, value, element);
-	              var digits = jQuery.validator.methods.digits.call(this, value, element);
-	              var minlength = jQuery.validator.methods.minlength.call(this, value, element,8);
-	              return mail || (digits && minlength);
 	            });
-	            formLogin.validate({
-	              rules: {
-	                mailorphone: {
-	                  required: true,                  
-	                  mailorphone: true
-	                },
-	                password: {
-	                  required: true
-	                },
-	                passwordConfirm: {
-	                  required: function(element){
-	                    var pass = $("#form-login [name = 'password']").val();
-	                    var passConfirm = element.value;
-	                    if(pass){
-	                      return !(pass == passConfirm);
-	                    }else
-	                      return false;
-	                  }
-	                }                
-	              },
-	              messages: {
-	                mailorphone: {
-	                  mailorphone: 'Xin nhập email hoặc số điện thoại',
-	                  required: 'Xin nhập email hoặc số điện thoại'
-	                },
-	                password: {
-	                  required: 'Xin nhập mật khẩu'
-	                },
-	                passwordConfirm: {
-	                  required: 'Mật khẩu không khớp',
-	                }
-	              }
-	            });    
-	          // }
-	          */
-
+	          } else {
+	            //register
+	            HouseService.signup(data).then(function (res) {
+	              $localStorage.relandToken = res.data.token;
+	              $rootScope.user.userName = res.data.userName;
+	              vm.class = "has-sub";
+	              vm.state = vm.LOGGED_IN;
+	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	                console.log("register socket user " + $rootScope.user.userName);
+	              });
+	              $('#box-login').hide();
+	            });
+	          }
 	        }
-	        ],
-	        controllerAs: 'mlc',
-	      }
-	    }
-	    ]);
+	        //}
+	      };
+
+	      /*var formLogin = $("#form-login");
+	      // $("#form-login").validate();
+	      // if(formLogin.validate){
+	        $.validator.addMethod("mailorphone", function(value, element) {
+	          var mail = jQuery.validator.methods.email.call(this, value, element);
+	          var digits = jQuery.validator.methods.digits.call(this, value, element);
+	          var minlength = jQuery.validator.methods.minlength.call(this, value, element,8);
+	          return mail || (digits && minlength);
+	        });
+	        formLogin.validate({
+	          rules: {
+	            mailorphone: {
+	              required: true,                  
+	              mailorphone: true
+	            },
+	            password: {
+	              required: true
+	            },
+	            passwordConfirm: {
+	              required: function(element){
+	                var pass = $("#form-login [name = 'password']").val();
+	                var passConfirm = element.value;
+	                if(pass){
+	                  return !(pass == passConfirm);
+	                }else
+	                  return false;
+	              }
+	            }                
+	          },
+	          messages: {
+	            mailorphone: {
+	              mailorphone: 'Xin nhập email hoặc số điện thoại',
+	              required: 'Xin nhập email hoặc số điện thoại'
+	            },
+	            password: {
+	              required: 'Xin nhập mật khẩu'
+	            },
+	            passwordConfirm: {
+	              required: 'Mật khẩu không khớp',
+	            }
+	          }
+	        });    
+	      // }
+	      */
+	    }],
+	    controllerAs: 'mlc'
+	  };
+	}]);
 
 /***/ },
 /* 36 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	var danhMuc = {};
 
 	var BAT_KY = "Bất kỳ";
 
 	danhMuc.BAT_KY = BAT_KY;
-	danhMuc.BIG =9999999;
+	danhMuc.BIG = 9999999;
 
 	danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
 
 	danhMuc.filter_max_value = {
 	    lable: "Bất kỳ",
-	    value: 999999999999999999,
-	}
+	    value: 999999999999999999
+	};
 
-	danhMuc.sortHouseOptions = [
-	    {
-	        lable: "Giá từ cao đến thấp",
-	        value: "giaDESC",
-	        position: 1
-	    },
-	    {
-	        lable: "Giá từ thấp đến cao",
-	        value: "giaASC",
-	        position: 2
-	    },
-	    {
-	        lable: "Diện tích từ cao đến thấp",
-	        value: "dienTichDESC",
-	        position: 3
-	    },
-	    {
-	        lable: "Diện tích từ thấp đến cao",
-	        value: "dienTichASC",
-	        position: 4
-	    }
-	];
+	danhMuc.sortHouseOptions = [{
+	    lable: "Giá từ cao đến thấp",
+	    value: "giaDESC",
+	    position: 1
+	}, {
+	    lable: "Giá từ thấp đến cao",
+	    value: "giaASC",
+	    position: 2
+	}, {
+	    lable: "Diện tích từ cao đến thấp",
+	    value: "dienTichDESC",
+	    position: 3
+	}, {
+	    lable: "Diện tích từ thấp đến cao",
+	    value: "dienTichASC",
+	    position: 4
+	}];
 
-	danhMuc.sell_steps = [
-	    {
-	        value: 1000,
-	        lable: "1 tỷ",
-	        position: 1
-	    },
-	    {
-	        value: 2000,
-	        lable: "2 tỷ",
-	        position: 2
-	    },
-	    {
-	        value: 3000,
-	        lable: "3 tỷ",
-	        position: 3
-	    },
-	    {
-	        value: 5000,
-	        lable: "5 tỷ",
-	        position: 4
-	    },
-	    {
-	        value: 7000,
-	        lable: "7 tỷ",
-	        position: 5
-	    },
-	    {
-	        value: 10000,
-	        lable: "10 tỷ",
-	        position: 6
-	    },
-	    {
-	        value: 20000,
-	        lable: "20 tỷ",
-	        position: 7
-	    },
-	    {
-	        value: 30000,
-	        lable: "30 tỷ",
-	        position: 8
-	    }
-	];
-
-
+	danhMuc.sell_steps = [{
+	    value: 1000,
+	    lable: "1 tỷ",
+	    position: 1
+	}, {
+	    value: 2000,
+	    lable: "2 tỷ",
+	    position: 2
+	}, {
+	    value: 3000,
+	    lable: "3 tỷ",
+	    position: 3
+	}, {
+	    value: 5000,
+	    lable: "5 tỷ",
+	    position: 4
+	}, {
+	    value: 7000,
+	    lable: "7 tỷ",
+	    position: 5
+	}, {
+	    value: 10000,
+	    lable: "10 tỷ",
+	    position: 6
+	}, {
+	    value: 20000,
+	    lable: "20 tỷ",
+	    position: 7
+	}, {
+	    value: 30000,
+	    lable: "30 tỷ",
+	    position: 8
+	}];
 
 	danhMuc.rentStepValues = [0, 2, 5, 10, 20, 50, 100, 500]; //by month
 
-	danhMuc.khoangDienTich = [
-	    {
-	        value: {
-	            min:  0,
-	            max:  30,
-	            id: 1     
-	        },
-	        label: "<= 30m2",
-	        position: 2
+	danhMuc.khoangDienTich = [{
+	    value: {
+	        min: 0,
+	        max: 30,
+	        id: 1
 	    },
-	    {
-	        value: {
-	            min:  30,
-	            max:  50,
-	            id: 2     
-	        },
-	        label: "30 - 50m2",
-	        position: 3
+	    label: "<= 30m2",
+	    position: 2
+	}, {
+	    value: {
+	        min: 30,
+	        max: 50,
+	        id: 2
 	    },
-	    {
-	        value: {
-	            min:  50,
-	            max:  50,
-	            id: 3     
-	        },
-	        label: "50 - 80m2",
-	        position: 4
+	    label: "30 - 50m2",
+	    position: 3
+	}, {
+	    value: {
+	        min: 50,
+	        max: 50,
+	        id: 3
 	    },
-	    {
-	        value: {
-	            min:  80,
-	            max:  100,
-	            id: 4     
-	        },
-	        label: "80 - 100m2",
-	        position: 4
+	    label: "50 - 80m2",
+	    position: 4
+	}, {
+	    value: {
+	        min: 80,
+	        max: 100,
+	        id: 4
 	    },
-	    {
-	        value: {
-	            min:  100,
-	            max:  150,
-	            id: 5     
-	        },
-	        label: "100 - 150m2",
-	        position: 5
+	    label: "80 - 100m2",
+	    position: 4
+	}, {
+	    value: {
+	        min: 100,
+	        max: 150,
+	        id: 5
 	    },
-	    {
-	        value: {
-	            min:  150,
-	            max:  200,
-	            id: 6     
-	        },
-	        label: "150 - 200m2",
-	        position: 6
+	    label: "100 - 150m2",
+	    position: 5
+	}, {
+	    value: {
+	        min: 150,
+	        max: 200,
+	        id: 6
 	    },
-	    {
-	        value: {
-	            min:  200,
-	            max:  250,
-	            id: 7     
-	        },
-	        label: "200 - 250m2",
-	        position: 7
+	    label: "150 - 200m2",
+	    position: 6
+	}, {
+	    value: {
+	        min: 200,
+	        max: 250,
+	        id: 7
 	    },
-	    {
-	        value: {
-	            min:  250,
-	            max:  300,
-	            id: 8     
-	        },
-	        label: "250 - 300m2",
-	        position: 8
+	    label: "200 - 250m2",
+	    position: 7
+	}, {
+	    value: {
+	        min: 250,
+	        max: 300,
+	        id: 8
 	    },
-	    {
-	        value: {
-	            min:  300,
-	            max:  500,
-	            id: 9     
-	        },
-	        label: "300 - 500m2",
-	        position: 9
+	    label: "250 - 300m2",
+	    position: 8
+	}, {
+	    value: {
+	        min: 300,
+	        max: 500,
+	        id: 9
 	    },
-	    {
-	        value: {
-	            min:  500,
-	            max:  999999999999999,
-	            id: 10     
-	        },
-	        label: ">= 500m2",
-	        position: 10
+	    label: "300 - 500m2",
+	    position: 9
+	}, {
+	    value: {
+	        min: 500,
+	        max: 999999999999999,
+	        id: 10
 	    },
-	    {
-	        value: {
-	            min:  0,
-	            max:  999999999999999,
-	            id: 11     
-	        },
-	        label: "Diện tích bất kỳ",
-	        position: 11
-	    }
-	];
-	danhMuc.khoangGia = [
-	    {
-	        value: {
-	            min:  0,
-	            max:  500,
-	            id:1     
-	        },
-	        label: "<= 500 triệu",
-	        position: 2
+	    label: ">= 500m2",
+	    position: 10
+	}, {
+	    value: {
+	        min: 0,
+	        max: 999999999999999,
+	        id: 11
 	    },
-	    {
-	        value: {
-	            min:  500,
-	            max:  800,
-	            id:2
-	        },
-	        label: "500 - 800 triệu",
-	        position: 3
+	    label: "Diện tích bất kỳ",
+	    position: 11
+	}];
+	danhMuc.khoangGia = [{
+	    value: {
+	        min: 0,
+	        max: 500,
+	        id: 1
 	    },
-	    {
-	        value: {
-	            min:  800,
-	            max:  1000,
-	            id:3
-	        },
-	        label: "800 triệu - 1 tỷ",
-	        position: 4
+	    label: "<= 500 triệu",
+	    position: 2
+	}, {
+	    value: {
+	        min: 500,
+	        max: 800,
+	        id: 2
 	    },
-	    {
-	        value: {
-	            min:  1000,
-	            max:  2000,
-	            id:4     
-	        },
-	        label: "1 - 2 tỷ",
-	        position: 5
+	    label: "500 - 800 triệu",
+	    position: 3
+	}, {
+	    value: {
+	        min: 800,
+	        max: 1000,
+	        id: 3
 	    },
-	    {
-	        value: {
-	            min:  2000,
-	            max:  3000,
-	            id:5     
-	        },
-	        label: "2 - 3 tỷ",
-	        position: 6
+	    label: "800 triệu - 1 tỷ",
+	    position: 4
+	}, {
+	    value: {
+	        min: 1000,
+	        max: 2000,
+	        id: 4
 	    },
-	    {
-	        value: {
-	            min:  3000,
-	            max:  5000,
-	            id:6     
-	        },
-	        label: "3 - 5 tỷ",
-	        position: 7
+	    label: "1 - 2 tỷ",
+	    position: 5
+	}, {
+	    value: {
+	        min: 2000,
+	        max: 3000,
+	        id: 5
 	    },
-	    {
-	        value: {
-	            min:  5000,
-	            max:  7000,
-	            id:7     
-	        },
-	        label: "5 - 7 tỷ",
-	        position: 8
+	    label: "2 - 3 tỷ",
+	    position: 6
+	}, {
+	    value: {
+	        min: 3000,
+	        max: 5000,
+	        id: 6
 	    },
-	    {
-	        value: {
-	            min:  7000,
-	            max:  10000,
-	            id:8     
-	        },
-	        label: "7 - 10 tỷ",
-	        position: 9
+	    label: "3 - 5 tỷ",
+	    position: 7
+	}, {
+	    value: {
+	        min: 5000,
+	        max: 7000,
+	        id: 7
 	    },
-	    {
-	        value: {
-	            min:  10000,
-	            max:  20000,
-	            id:9     
-	        },
-	        label: "10 - 20 tỷ",
-	        position: 10
+	    label: "5 - 7 tỷ",
+	    position: 8
+	}, {
+	    value: {
+	        min: 7000,
+	        max: 10000,
+	        id: 8
 	    },
-	    {
-	        value: {
-	            min:  20000,
-	            max:  30000,
-	            id:10     
-	        },
-	        label: "20 - 30 tỷ",
-	        position: 11
+	    label: "7 - 10 tỷ",
+	    position: 9
+	}, {
+	    value: {
+	        min: 10000,
+	        max: 20000,
+	        id: 9
 	    },
-	    {
-	        value: {
-	            min:  30000,
-	            max:  999999999999,
-	            id:11    
-	        },
-	        label: ">= 30 tỷ",
-	        position: 12
+	    label: "10 - 20 tỷ",
+	    position: 10
+	}, {
+	    value: {
+	        min: 20000,
+	        max: 30000,
+	        id: 10
 	    },
-	    {
-	        value: {
-	            min:  0,
-	            max:  999999999999,
-	            id:12    
-	        },
-	        label: "Giá bất kỳ",
-	        position: 13
-	    }
+	    label: "20 - 30 tỷ",
+	    position: 11
+	}, {
+	    value: {
+	        min: 30000,
+	        max: 999999999999,
+	        id: 11
+	    },
+	    label: ">= 30 tỷ",
+	    position: 12
+	}, {
+	    value: {
+	        min: 0,
+	        max: 999999999999,
+	        id: 12
+	    },
+	    label: "Giá bất kỳ",
+	    position: 13
+	}];
 
-
-	];
-
-	danhMuc.khoangGiaThue = [
-	    {
-	        value: {
-	            min:  0,
-	            max:  1,
-	            id:1     
-	        },
-	        label: "<= 1 triệu",
-	        position: 2
+	danhMuc.khoangGiaThue = [{
+	    value: {
+	        min: 0,
+	        max: 1,
+	        id: 1
 	    },
-	    {
-	        value: {
-	            min:  1,
-	            max:  3,
-	            id:2
-	        },
-	        label: "1 - 3 triệu",
-	        position: 3
+	    label: "<= 1 triệu",
+	    position: 2
+	}, {
+	    value: {
+	        min: 1,
+	        max: 3,
+	        id: 2
 	    },
-	    {
-	        value: {
-	            min:  3,
-	            max:  5,
-	            id:3
-	        },
-	        label: "3 - 5 triệu",
-	        position: 4
+	    label: "1 - 3 triệu",
+	    position: 3
+	}, {
+	    value: {
+	        min: 3,
+	        max: 5,
+	        id: 3
 	    },
-	    {
-	        value: {
-	            min:  5,
-	            max:  10,
-	            id:4     
-	        },
-	        label: "5 - 10 triệu",
-	        position: 5
+	    label: "3 - 5 triệu",
+	    position: 4
+	}, {
+	    value: {
+	        min: 5,
+	        max: 10,
+	        id: 4
 	    },
-	    {
-	        value: {
-	            min:  10,
-	            max:  40,
-	            id:5     
-	        },
-	        label: "10 - 40 triệu",
-	        position: 6
+	    label: "5 - 10 triệu",
+	    position: 5
+	}, {
+	    value: {
+	        min: 10,
+	        max: 40,
+	        id: 5
 	    },
-	    {
-	        value: {
-	            min:  40,
-	            max:  70,
-	            id:6     
-	        },
-	        label: "40 - 70 triệu",
-	        position: 7
+	    label: "10 - 40 triệu",
+	    position: 6
+	}, {
+	    value: {
+	        min: 40,
+	        max: 70,
+	        id: 6
 	    },
-	    {
-	        value: {
-	            min:  70,
-	            max:  100,
-	            id:7     
-	        },
-	        label: "70 - 100 triệu",
-	        position: 8
+	    label: "40 - 70 triệu",
+	    position: 7
+	}, {
+	    value: {
+	        min: 70,
+	        max: 100,
+	        id: 7
 	    },
-	    {
-	        value: {
-	            min:  100,
-	            max:  999999999999,
-	            id:8     
-	        },
-	        label: "> 100 triệu",
-	        position: 9
+	    label: "70 - 100 triệu",
+	    position: 8
+	}, {
+	    value: {
+	        min: 100,
+	        max: 999999999999,
+	        id: 8
 	    },
-	    {
-	        value: {
-	            min:  0,
-	            max:  999999999999,
-	            id:9    
-	        },
-	        label: "Giá bất kỳ",
-	        position: 10
-	    }
-
-
-	];
+	    label: "> 100 triệu",
+	    position: 9
+	}, {
+	    value: {
+	        min: 0,
+	        max: 999999999999,
+	        id: 9
+	    },
+	    label: "Giá bất kỳ",
+	    position: 10
+	}];
 
 	danhMuc.dienTichStepValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500];
 
-	danhMuc.convertDienTichStepValueToNameValueArray= function(){
+	danhMuc.convertDienTichStepValueToNameValueArray = function () {
 	    var result = [];
-	    for(var i =1; i<danhMuc.dienTichStepValues.length;i++){
+	    for (var i = 1; i < danhMuc.dienTichStepValues.length; i++) {
 	        result.push({
 	            value: danhMuc.dienTichStepValues[i],
 	            lable: danhMuc.dienTichStepValues[i] + " m2",
@@ -23304,163 +22953,70 @@
 	        });
 	    }
 	    return result;
-	}
-
-
+	};
 
 	danhMuc.dientich_steps = danhMuc.convertDienTichStepValueToNameValueArray();
 
 	danhMuc.LoaiTin = {
-	    0 : "Bán",
-	    1  : "Cho Thuê"
+	    0: "Bán",
+	    1: "Cho Thuê"
 	};
 
-	danhMuc.LoaiTinTuc = [
-	    { value: "1", lable: "Tin thị trường" },
-	    { value: "2", lable: "Phân tích - Nhận định" },
-	    { value: "3", lable: "Chính sách - Quản lý" },
-	    { value: "4", lable: "Thông tin quy hoạch" },
-	    { value: "6", lable: "BĐS thế giới" },
-	    { value: "7", lable: "Tài chính - Chứng khoán - BĐS" },
-	    { value: "5", lable: "Tư vấn luật" },
-	    { value: "8", lable: "Lời khuyên" }
-	];
+	danhMuc.LoaiTinTuc = [{ value: "1", lable: "Tin thị trường" }, { value: "2", lable: "Phân tích - Nhận định" }, { value: "3", lable: "Chính sách - Quản lý" }, { value: "4", lable: "Thông tin quy hoạch" }, { value: "6", lable: "BĐS thế giới" }, { value: "7", lable: "Tài chính - Chứng khoán - BĐS" }, { value: "5", lable: "Tư vấn luật" }, { value: "8", lable: "Lời khuyên" }];
 
 	danhMuc.LoaiNhaDatBan = {
-	    1  : "Bán căn hộ chung cư",
-	    2  : "Bán nhà riêng",
-	    3  : "Bán nhà mặt phố",
-	    4  : "Bán biệt thự, liền kề",
-	    6  : "Bán Shophouse",
-	    7  : "Bán đất nền dự án",
-	    5  : "Bán đất",
-	    8  : "Bán trang trại, khu nghỉ dưỡng",
-	    99 : "Bán các BDS khác",
-	    10 : "Tìm kiếm nâng cao",
-	    0 : "Tất cả"
-	}
+	    1: "Bán căn hộ chung cư",
+	    2: "Bán nhà riêng",
+	    3: "Bán nhà mặt phố",
+	    4: "Bán biệt thự, liền kề",
+	    6: "Bán Shophouse",
+	    7: "Bán đất nền dự án",
+	    5: "Bán đất",
+	    8: "Bán trang trại, khu nghỉ dưỡng",
+	    99: "Bán các BDS khác",
+	    10: "Tìm kiếm nâng cao",
+	    0: "Tất cả"
+	};
 
+	danhMuc.menu = [{
+	    label: "BĐS bán",
+	    value: { loaiTin: "0", loaiNhaDat: "0" },
+	    level: "1",
+	    visible: true,
+	    items: [{ visible: true, value: { loaiTin: "0", loaiNhaDat: "1" }, label: "Bán căn hộ chung cư" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "2" }, label: "Bán nhà riêng" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "3" }, label: "Bán nhà mặt phố" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "4" }, label: "Bán biệt thự, liền kề" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "6" }, label: "Bán Shophouse" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "7" }, label: "Bán đất nền dự án" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "5" }, label: "Bán đất" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "8" }, label: "Bán trang trại, khu nghỉ dưỡng" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "99" }, label: "Bán các BDS khác" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "10" }, label: "Tìm kiếm nâng cao" }, { visible: true, value: { loaiTin: "0", loaiNhaDat: "0" }, label: "Tất cả" }]
+	}, {
+	    label: "BĐS cho thuê",
+	    value: { loaiTin: "1", loaiNhaDat: "0" },
+	    level: "1",
+	    visible: true,
+	    items: [{ visible: true, value: { loaiTin: "1", loaiNhaDat: "1" }, label: "Mua căn hộ chung cư" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "2" }, label: "Mua nhà riêng" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "3" }, label: "Mua biệt thự, liền kề" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "4" }, label: "Mua nhà mặt phố" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "5" }, label: "Mua đất nền dự án" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "6" }, label: "Mua đất" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "7" }, label: "Mua trang trại, khu nghỉ dưỡng" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "8" }, label: "Bán trang trại, khu nghỉ dưỡng" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "9" }, label: "Mua kho, nhà xưởng" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "10" }, label: "Mua loại BĐS khác" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "11" }, label: "Tìm kiếm nâng cao" }, { visible: true, value: { loaiTin: "1", loaiNhaDat: "0" }, label: "Tất cả" }]
+	}, {
+	    label: "Giới thiệu",
+	    value: {},
+	    visible: true,
+	    items: [{ value: {}, label: "Môi giới" }, { value: {}, label: "Ứng dụng Mobile" }]
+	}];
 
-	danhMuc.menu = [
-	    {
-	        label: "BĐS bán",
-	        value: {loaiTin: "0", loaiNhaDat: "0"},
-	        level: "1",
-	        visible: true,
-	        items: [
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "1"}, label: "Bán căn hộ chung cư" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "2"}, label: "Bán nhà riêng" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "3"}, label: "Bán nhà mặt phố" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "4"}, label: "Bán biệt thự, liền kề" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "6"}, label: "Bán Shophouse" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "7"}, label: "Bán đất nền dự án" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "5"}, label: "Bán đất" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "8"}, label: "Bán trang trại, khu nghỉ dưỡng" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "99"}, label: "Bán các BDS khác" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "10"}, label: "Tìm kiếm nâng cao" },
-	            { visible: true,value: {loaiTin: "0", loaiNhaDat: "0"}, label: "Tất cả" }
-	        ]                                           
-	    },
-	    {
-	        label: "BĐS cho thuê",
-	        value: {loaiTin: "1", loaiNhaDat: "0"},
-	        level: "1",
-	        visible: true,
-	        items: [
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "1"}, label: "Mua căn hộ chung cư" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "2"}, label: "Mua nhà riêng" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "3"}, label: "Mua biệt thự, liền kề" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "4"}, label: "Mua nhà mặt phố" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "5"}, label: "Mua đất nền dự án" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "6"}, label: "Mua đất" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "7"}, label: "Mua trang trại, khu nghỉ dưỡng" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "8"}, label: "Bán trang trại, khu nghỉ dưỡng" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "9"}, label: "Mua kho, nhà xưởng" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "10"}, label: "Mua loại BĐS khác" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "11"}, label: "Tìm kiếm nâng cao" },
-	            { visible: true,value: {loaiTin: "1", loaiNhaDat: "0"}, label: "Tất cả" }
-	        ]                                           
-	    },
-	    {
-	        label: "Giới thiệu",
-	        value: {},
-	        visible: true,
-	        items: [
-	            { value: {}, label: "Môi giới" },
-	            { value: {}, label: "Ứng dụng Mobile" }
-	        ]
-	    }
-	];
+	danhMuc.LoaiNhaDatBanWeb = [{ value: "1", lable: "Bán căn hộ chung cư" }, { value: "2", lable: "Bán nhà riêng" }, { value: "3", lable: "Bán nhà mặt phố" }, { value: "4", lable: "Bán biệt thự, liền kề" }, { value: "6", lable: "Bán Shophouse" }, { value: "7", lable: "Bán đất nền dự án" }, { value: "5", lable: "Bán đất" }, { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" }, { value: "99", lable: "Bán các BDS khác" }, { value: "10", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
 
+	danhMuc.LoaiNhaDatCanMuaWeb = [{ value: "1", lable: "Mua căn hộ chung cư" }, { value: "2", lable: "Mua nhà riêng" }, { value: "3", lable: "Mua biệt thự, liền kề" }, { value: "4", lable: "Mua nhà mặt phố" }, { value: "5", lable: "Mua đất nền dự án" }, { value: "6", lable: "Mua đất" }, { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" }, { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" }, { value: "9", lable: "Mua kho, nhà xưởng" }, { value: "10", lable: "Mua loại BĐS khác" }, { value: "11", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
 
-
-	danhMuc.LoaiNhaDatBanWeb = [
-	    { value: "1", lable: "Bán căn hộ chung cư" },
-	    { value: "2", lable: "Bán nhà riêng" },
-	    { value: "3", lable: "Bán nhà mặt phố" },
-	    { value: "4", lable: "Bán biệt thự, liền kề" },
-	    { value: "6", lable: "Bán Shophouse" },
-	    { value: "7", lable: "Bán đất nền dự án" },
-	    { value: "5", lable: "Bán đất" },
-	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
-	    { value: "99", lable: "Bán các BDS khác" },
-	    { value: "10", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	    ];
-
-	danhMuc.LoaiNhaDatCanMuaWeb = [
-	    { value: "1", lable: "Mua căn hộ chung cư" },
-	    { value: "2", lable: "Mua nhà riêng" },
-	    { value: "3", lable: "Mua biệt thự, liền kề" },
-	    { value: "4", lable: "Mua nhà mặt phố" },
-	    { value: "5", lable: "Mua đất nền dự án" },
-	    { value: "6", lable: "Mua đất" },
-	    { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" },
-	    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
-	    { value: "9", lable: "Mua kho, nhà xưởng" },
-	    { value: "10", lable: "Mua loại BĐS khác" },
-	    { value: "11", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
-
-	danhMuc.LoaiNhaDatCanThueWeb = [
-	    { value: "1", lable: "Cần thuê căn hộ chung cư" },
-	    { value: "2", lable: "Cần thuê nhà riêng" },
-	    { value: "3", lable: "Cần thuê nhà mặt phố" },
-	    { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" },
-	    { value: "5", lable: "Cần thuê văn phòng" },
-	    { value: "6", lable: "Cần thuê cửa hàng, ki ốt" },
-	    { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" },
-	    { value: "8", lable: "Cần thuê loại BĐS khác" },
-	    { value: "11", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
+	danhMuc.LoaiNhaDatCanThueWeb = [{ value: "1", lable: "Cần thuê căn hộ chung cư" }, { value: "2", lable: "Cần thuê nhà riêng" }, { value: "3", lable: "Cần thuê nhà mặt phố" }, { value: "4", lable: "Cần thuê nhà trọ, phòng trọ" }, { value: "5", lable: "Cần thuê văn phòng" }, { value: "6", lable: "Cần thuê cửa hàng, ki ốt" }, { value: "7", lable: "Cần thuê kho, nhà xưởng, đất" }, { value: "8", lable: "Cần thuê loại BĐS khác" }, { value: "11", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
 
 	danhMuc.LoaiNhaDatThue = {
-	    1 : "Cho Thuê căn hộ chung cư",
-	    2 : "Cho Thuê nhà riêng",
-	    3 : "Cho Thuê nhà mặt phố",
-	    6 : "Cho thuê nhà trọ, phòng trọ",
-	    4 : "Cho Thuê văn phòng",
-	    5 : "Cho Thuê cửa hàng, ki-ốt",
-	    7 : "Cho thuê kho, nhà xưởng, đất",
+	    1: "Cho Thuê căn hộ chung cư",
+	    2: "Cho Thuê nhà riêng",
+	    3: "Cho Thuê nhà mặt phố",
+	    6: "Cho thuê nhà trọ, phòng trọ",
+	    4: "Cho Thuê văn phòng",
+	    5: "Cho Thuê cửa hàng, ki-ốt",
+	    7: "Cho thuê kho, nhà xưởng, đất",
 	    99: "Cho Thuê các BDS khác",
-	    8 : "Tìm kiếm nâng cao",
-	    0 : "Tất cả"
-	}
+	    8: "Tìm kiếm nâng cao",
+	    0: "Tất cả"
+	};
 
-	danhMuc.LoaiNhaDatThueWeb = [
-	    { value: "1", lable: "Cho Thuê căn hộ chung cư" },
-	    { value: "2", lable: "Cho Thuê nhà riêng" },
-	    { value: "3", lable: "Cho Thuê nhà mặt phố" },
-	    { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
-	    { value: "4", lable: "Cho Thuê văn phòng" },
-	    { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
-	    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
-	    { value: "99", lable: "Cho Thuê các BDS khác" },
-	    { value: "8", lable: "Tìm kiếm nâng cao" },
-	    { value: "0", lable: "Tất cả" }
-	];
+	danhMuc.LoaiNhaDatThueWeb = [{ value: "1", lable: "Cho Thuê căn hộ chung cư" }, { value: "2", lable: "Cho Thuê nhà riêng" }, { value: "3", lable: "Cho Thuê nhà mặt phố" }, { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" }, { value: "4", lable: "Cho Thuê văn phòng" }, { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" }, { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" }, { value: "99", lable: "Cho Thuê các BDS khác" }, { value: "8", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
 
 	danhMuc.SoPhongNgu = {
 	    0: BAT_KY,
@@ -23469,7 +23025,7 @@
 	    3: "3+",
 	    4: "4+",
 	    5: "5+"
-	}
+	};
 
 	danhMuc.SoTang = {
 	    0: BAT_KY,
@@ -23478,7 +23034,7 @@
 	    3: "3+",
 	    4: "4+",
 	    5: "5+"
-	}
+	};
 
 	danhMuc.SoPhongTam = {
 	    0: BAT_KY,
@@ -23487,7 +23043,7 @@
 	    3: "3+",
 	    4: "4+",
 	    5: "5+"
-	}
+	};
 
 	danhMuc.RadiusInKm = {
 	    0.5: "0.5km",
@@ -23496,16 +23052,9 @@
 	    3: "3km",
 	    4: "4km",
 	    5: "5km"
-	}
+	};
 
-	danhMuc.RadiusInKmKey = [
-	    0.5,
-	    1,
-	    2,
-	    3,
-	    4,
-	    5
-	]
+	danhMuc.RadiusInKmKey = [0.5, 1, 2, 3, 4, 5];
 
 	danhMuc.NgayDaDang = {
 	    0: BAT_KY,
@@ -23514,16 +23063,9 @@
 	    14: "14",
 	    30: "30",
 	    90: "90"
-	}
+	};
 
-	danhMuc.NgayDaDangKey = [
-	    0,
-	    1,
-	    7,
-	    14,
-	    30,
-	    90
-	]
+	danhMuc.NgayDaDangKey = [0, 1, 7, 14, 30, 90];
 
 	danhMuc.HuongNha = {
 	    0: BAT_KY,
@@ -23535,8 +23077,7 @@
 	    6: "Tây-Bắc",
 	    7: "Đông-Nam",
 	    8: "Tây-Nam"
-	}
-
+	};
 
 	danhMuc.getDanhMucKeys = function (hashDanhMuc) {
 	    var result = [];
@@ -23544,24 +23085,22 @@
 	        result.push(k);
 	    }
 	    return result;
-	}
+	};
 
-	danhMuc.getNameValueArray = function(hashDanhMuc){
+	danhMuc.getNameValueArray = function (hashDanhMuc) {
 	    console.log("getNameValueArray");
 	    console.log(hashDanhMuc);
 	    var result = [];
 	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
 	    for (var k in hashDanhMuc) {
-	        result.push(
-	            {
-	                value: k,
-	                lable: hashDanhMuc[k]
-	            }
-	        )
+	        result.push({
+	            value: k,
+	            lable: hashDanhMuc[k]
+	        });
 	    }
 	    console.log(result);
 	    return result;
-	}
+	};
 
 	danhMuc.getDanhMucValues = function (hashDanhMuc) {
 	    var result = [];
@@ -23569,67 +23108,61 @@
 	        result.push(hashDanhMuc[k]);
 	    }
 	    return result;
-	}
+	};
 
 	danhMuc.getLoaiNhaDatBanValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatBan);
-	}
+	};
 
 	danhMuc.getLoaiNhaDatThueValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.LoaiNhaDatThue);
-	}
+	};
 
 	danhMuc.getSoPhongNguValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.SoPhongNgu);
-	}
+	};
 
 	danhMuc.getSoTangValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.SoTang);
-	}
+	};
 
 	danhMuc.getSoPhongTamValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.SoPhongTam);
-	}
+	};
 
 	danhMuc.getHuongNhaValues = function () {
 	    return danhMuc.getDanhMucValues(danhMuc.HuongNha);
-	}
+	};
 
 	danhMuc.getRadiusInKmValues = function () {
 	    return ["0.5", "1", "2", "3", "4", "5"];
-	}
+	};
 
 	danhMuc.getNgayDaDangValues = function () {
 	    return danhMuc.NgayDaDangKey;
-	}
+	};
 
-	danhMuc.getLoaiNhaDatForDisplay = function(loaiTin, loaiNhaDatKey){
+	danhMuc.getLoaiNhaDatForDisplay = function (loaiTin, loaiNhaDatKey) {
 	    var value = '';
-	    if (loaiTin == 'ban')
-	        value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
+	    if (loaiTin == 'ban') value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
 
-	    if (loaiTin == 'thue')
-	        value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
+	    if (loaiTin == 'thue') value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
 
-	    if (!value)
-	        value = BAT_KY;
+	    if (!value) value = BAT_KY;
 
 	    return value;
-	}
+	};
 
-	danhMuc.getLoaiNhaDatForDisplayNew = function(loaiTin, loaiNhaDatKey){
+	danhMuc.getLoaiNhaDatForDisplayNew = function (loaiTin, loaiNhaDatKey) {
 	    var value = '';
-	    if (loaiTin == '0')
-	        value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
+	    if (loaiTin == '0') value = danhMuc.LoaiNhaDatBan[loaiNhaDatKey];
 
-	    if (loaiTin == '1')
-	        value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
+	    if (loaiTin == '1') value = danhMuc.LoaiNhaDatThue[loaiNhaDatKey];
 
-	    if (!value)
-	        value = BAT_KY;
+	    if (!value) value = BAT_KY;
 
 	    return value;
-	}
+	};
 
 	danhMuc.getDanhMucKeyByIndex = function (hashDanhMuc, index) {
 	    var find = '';
@@ -23642,37 +23175,34 @@
 	        i++;
 	    }
 	    return find;
-	}
+	};
 
 	danhMuc.getSoPhongByIndex = function (index) {
 	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongNgu, index);
-	}
+	};
 
 	danhMuc.getSoTangByIndex = function (index) {
 	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoTang, index);
-	}
+	};
 
 	danhMuc.getSoPhongTamByIndex = function (index) {
 	    return danhMuc.getDanhMucKeyByIndex(danhMuc.SoPhongTam, index);
-	}
+	};
 
-	danhMuc.getRadiusInKmByIndex = function(index) {
+	danhMuc.getRadiusInKmByIndex = function (index) {
 	    return danhMuc.RadiusInKmKey[index];
-	}
+	};
 
-	danhMuc.getHuongNhaDisplay = function(val){
+	danhMuc.getHuongNhaDisplay = function (val) {
 	    if (!val) {
 	        return "Không rõ";
 	    }
-	    return eval('danhMuc.HuongNha['+val + ']');
-	}
-
+	    return eval('danhMuc.HuongNha[' + val + ']');
+	};
 
 	module.exports = danhMuc;
 
-	if (typeof(window) !== 'undefined')
-	   window.RewayListValue = danhMuc;
-
+	if (typeof window !== 'undefined') window.RewayListValue = danhMuc;
 
 	//import {LoaiNhaDatBan} from "danhMuc"...
 
@@ -23688,18 +23218,14 @@
 
 	var placeUtil = {};
 
-
-	placeUtil.getDuAnFullName = function(place) {
+	placeUtil.getDuAnFullName = function (place) {
 	    if (!place.duAn) {
 	        return null;
 	    }
 
 	    var ret = "";
-	    var _appendIfHave = function(ret, value) {
-	        if (ret)
-	            ret =  ret + ", " + value;
-	        else
-	            ret =  value;
+	    var _appendIfHave = function _appendIfHave(ret, value) {
+	        if (ret) ret = ret + ", " + value;else ret = value;
 
 	        return ret;
 	    };
@@ -23713,24 +23239,23 @@
 	    return ret;
 	};
 
-	placeUtil.getDiaChinhFromGooglePlace = function(place) {
-	    var tinh ="";
-	    var huyen ="";
-	    var xa ="";
+	placeUtil.getDiaChinhFromGooglePlace = function (place) {
+	    var tinh = "";
+	    var huyen = "";
+	    var xa = "";
 
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
+	    for (var i = 0; i < place.address_components.length; i++) {
 	        var addr = place.address_components[i];
 
-	        if (addr.types[0] == placeUtil.type.TINH){
+	        if (addr.types[0] == placeUtil.type.TINH) {
 	            tinh = addr.long_name;
 	        }
 
-	        if (addr.types[0] == placeUtil.type.HUYEN){
+	        if (addr.types[0] == placeUtil.type.HUYEN) {
 	            huyen = addr.long_name;
 	        }
 
-	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2){
+	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2) {
 	            xa = addr.long_name;
 	        }
 	    }
@@ -23739,44 +23264,41 @@
 	        tinh: this.chuanHoa(tinh),
 	        huyen: this.chuanHoa(huyen),
 	        xa: this.chuanHoa(xa),
-	        tinhCoDau : tinh,
-	        huyenCoDau : huyen,
-	        xaCoDau : xa
+	        tinhCoDau: tinh,
+	        huyenCoDau: huyen,
+	        xaCoDau: xa
 	    };
 
 	    return diaChinh;
 	};
 
-	placeUtil.getDiaChinh = function(diaChi) {
+	placeUtil.getDiaChinh = function (diaChi) {
 	    var spl = diaChi.split(",");
 	    var diaChinh = {};
 
 	    var i = spl.length;
 	    diaChinh.tinh = spl[--i].trim();
-	    if(diaChinh.tinh)
-	        diaChinh.tinhKhongDau =util.locDau(diaChinh.tinh);
+	    if (diaChinh.tinh) diaChinh.tinhKhongDau = util.locDau(diaChinh.tinh);
 
 	    var rawHuyen = spl[--i];
 	    if (rawHuyen) {
 	        diaChinh.huyen = rawHuyen.trim();
-	        if(diaChinh.huyen)
-	            diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
+	        if (diaChinh.huyen) diaChinh.huyenKhongDau = util.locDau(diaChinh.huyen);
 	    } else {
 	        console.log("WARN -- no HUYEN information " + diaChi);
 	    }
 
-	    if (i>0) {
+	    if (i > 0) {
 	        var v = spl[--i].trim();
 	        if (!v.startsWith("Dự án")) {
 	            diaChinh.xa = v;
-	            if(diaChinh.xa)
-	                diaChinh.xaKhongDau =util.locDau(diaChinh.xa);
+	            if (diaChinh.xa) diaChinh.xaKhongDau = util.locDau(diaChinh.xa);
 	        } else {
 	            return diaChinh;
 	        }
 	    }
 
-	    if (i>0) {
+	    if (i > 0) {
 	        var v = spl[--i].trim();
 	        if (!v.startsWith("Dự án")) {
 	            diaChinh.duong = v;
@@ -23785,89 +23307,100 @@
 	        }
 	    }
 
-
 	    return diaChinh;
 	};
 
-	placeUtil.fullName = function(place) {
+	placeUtil.fullName = function (place) {
 	    //todo: other types
-	    if (place.placeType === "Quan" || place.placeType  === "Huyen") {
+	    if (place.placeType === "Quan" || place.placeType === "Huyen") {
 	        return place.placeName + ", " + place.parentName;
 	    }
 
 	    return place.placeName;
 	};
 	// return Quoc Gia form Place.Place is type of Google api
-	placeUtil.getQuocGia = function(place) {
+	placeUtil.getQuocGia = function (place) {
 
-	    var getCountry ="";
+	    var getCountry = "";
 
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
+	    for (var i = 0; i < place.address_components.length; i++) {
 	        var addr = place.address_components[i];
 
-	        if (addr.types[0] == 'country'){
+	        if (addr.types[0] == 'country') {
 	            getCountry = addr.long_name;
 	        }
-
 	    }
 	    return getCountry;
 	};
 
 	// return Tinh form Place.Place is type of Google api
-	placeUtil.getTinh = function(place) {
+	placeUtil.getTinh = function (place) {
 
-	    var Tinh ="";
+	    var Tinh = "";
 
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
+	    for (var i = 0; i < place.address_components.length; i++) {
 	        var addr = place.address_components[i];
 
-	        if (addr.types[0] == placeUtil.type.TINH){
+	        if (addr.types[0] == placeUtil.type.TINH) {
 	            Tinh = addr.long_name;
 	        }
-
 	    }
 	    return Tinh;
 	};
 
 	// return Huyen form Place.Place is type of Google api
-	placeUtil.getHuyen = function(place) {
+	placeUtil.getHuyen = function (place) {
 
-	    var Huyen ="";
+	    var Huyen = "";
 
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
+	    for (var i = 0; i < place.address_components.length; i++) {
 	        var addr = place.address_components[i];
 
-	        if (addr.types[0] == placeUtil.type.HUYEN){
+	        if (addr.types[0] == placeUtil.type.HUYEN) {
 	            Huyen = addr.long_name;
 	        }
-
 	    }
 	    return Huyen;
 	};
 
 	// return Xa form Place.Place is type of Google api
-	placeUtil.getXa = function(place) {
+	placeUtil.getXa = function (place) {
 
-	    var Xa ="";
+	    var Xa = "";
 
-	    for (var i = 0; i < place.address_components.length; i++)
-	    {
+	    for (var i = 0; i < place.address_components.length; i++) {
 	        var addr = place.address_components[i];
 
-	        if ((addr.types[0] == placeUtil.type.XA) || (addr.types[0] == placeUtil.type.XA2))
-	        {
+	        if (addr.types[0] == placeUtil.type.XA || addr.types[0] == placeUtil.type.XA2) {
 	            Xa = addr.long_name;
 	        }
-
 	    }
 	    return Xa;
 	};
 
 	// chuan hoa va bo dau 1 string
-	placeUtil.chuanHoa = function(string) {
+	placeUtil.chuanHoaAndLocDau = function (str) {
+	    if (!str) {
+	        return null;
+	    }
+
+	    var result = str;
+
+	    var COMMON_WORDS = ['Quận ', 'Huyện ', 'Tỉnh ', 'Thành phố ', 'TP.', 'Tp.', 'tp.', 'tp ', 'TP ', 'Phường ', 'Xã ', 'Thị trấn '];
+
+	    COMMON_WORDS.forEach(function (e) {
+	        if (result.startsWith(e)) {
+	            result = result.substring(e.length);
+	        }
+	    });
+
+	    result = util.locDau(result);
+
+	    return result;
+	};
+
+	// chuan hoa va bo dau 1 string: tu google
+	placeUtil.chuanHoa = function (string) {
 
 	    if (!string) {
 	        return null;
@@ -23877,56 +23410,55 @@
 
 	    var COMMON_WORDS = {
 	        '-district': '',
-	        '-vietnam':'',
-	        '-province':'',
-	        'hanoi' : 'ha-noi'
+	        '-vietnam': '',
+	        '-province': '',
+	        'hanoi': 'ha-noi'
 	    };
 	    for (var f in COMMON_WORDS) {
-	        result = result.replace(f,COMMON_WORDS[f]);
+	        result = result.replace(f, COMMON_WORDS[f]);
 	    }
 
 	    return result;
 	};
 
 	placeUtil.type = {
-	    TINH : "administrative_area_level_1",
-	    HUYEN : "administrative_area_level_2",
-	    XA : "administrative_area_level_3",
-	    XA2 : "sublocality_level_1",
-	    DUONG : "route"
+	    TINH: "administrative_area_level_1",
+	    HUYEN: "administrative_area_level_2",
+	    XA: "administrative_area_level_3",
+	    XA2: "sublocality_level_1",
+	    DUONG: "route"
 	};
 
 	placeUtil.typeName = {
-	    TINH : "Tỉnh",
-	    HUYEN : "Huyện",
-	    XA : "Xã",
-	    DUONG : "Đường",
+	    TINH: "Tỉnh",
+	    HUYEN: "Huyện",
+	    XA: "Xã",
+	    DUONG: "Đường",
 	    DIA_DIEM: "Địa điểm"
 
 	};
 
-	placeUtil.chuanHoaDiaChinh = function(diaChinh) {
+	placeUtil.chuanHoaDiaChinh = function (diaChinh) {
 	    if (diaChinh) {
 	        diaChinh.tinhKhongDau = this.chuanHoa(diaChinh.tinhKhongDau);
 	    }
 	};
 
-	placeUtil.isHuyen = function(place) {
-	    var placeTypes=place.types;
+	placeUtil.isHuyen = function (place) {
+	    var placeTypes = place.types;
 
 	    if (_.indexOf(placeTypes, placeUtil.type.HUYEN) > -1) {
 	        return true;
 	    }
 
-	    if (_.indexOf(placeTypes, 'locality') > -1
-	        && _.indexOf(placeTypes, 'political') > -1
-	        //&& ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
+	    if (_.indexOf(placeTypes, 'locality') > -1 && _.indexOf(placeTypes, 'political') > -1
+	    //&& ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
 	    ) {
-	        return true;
-	    }
+	            return true;
+	        }
 	};
 
-	placeUtil.getTypeName = function(place) {
+	placeUtil.getTypeName = function (place) {
 	    var placeTypes = place.types;
 
 	    if (_.indexOf(placeTypes, placeUtil.type.TINH) > -1) {
@@ -23951,17 +23483,30 @@
 	    return placeUtil.typeName.DIA_DIEM;
 	};
 
+	placeUtil.getShortName = function (fullName) {
+	    if (!fullName) {
+	        return null;
+	    }
 
-	placeUtil.isOnePoint = function(place) {
-	    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
-	    return  name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
+	    var result = fullName;
+
+	    var COMMON_WORDS = [{ val1: ', Huyện ', val2: ', ' }, { val1: ', Tỉnh ', val2: ', ' }, { val1: ', Thành phố ', val2: ', ' }, { val1: ', Quận ', val2: ', Q. ' }, { val1: 'Thị trấn ', val2: 'TT. ' }, { val1: 'Phường ', val2: 'P. ' }, { val1: 'Thị xã ', val2: 'Tx. ' }];
+
+	    COMMON_WORDS.forEach(function (e) {
+	        result = result.replace(e.val1, e.val2);
+	    });
+
+	    return result;
 	};
 
-	module.exports  = placeUtil;
+	placeUtil.isOnePoint = function (place) {
+	    var name = placeUtil.relandTypeName || placeUtil.getTypeName(place);
+	    return name === placeUtil.typeName.DIA_DIEM || name === placeUtil.typeName.DUONG;
+	};
 
-	if (typeof(window) !== 'undefined')
-	   window.RewayPlaceUtil = placeUtil;
+	module.exports = placeUtil;
 
+	if (typeof window !== 'undefined') window.RewayPlaceUtil = placeUtil;
 
 /***/ },
 /* 38 */
@@ -23974,46 +23519,45 @@
 	var constant = __webpack_require__(142);
 	var util = {};
 
-
-	util.locDau = function(str) {
+	util.locDau = function (str) {
 	    var a1 = locDauInt(str);
 	    var a2 = locDauInt(a1);
 
 	    return a2;
 	};
 
-	util.locHtml = function(str) {
-	    if(!str) {
-	        return str
+	util.locHtml = function (str) {
+	    if (!str) {
+	        return str;
 	    }
-	    str= str.replace(/&lt;|&LT|&#x0003C;|&#60;/g,"<");
-	    str= str.replace(/&nbsp;|&#160;/g," ");
-	    str= str.replace(/&quot;|&QUOT;|&#x00022;|&#34;/g,"\"");
-	    str= str.replace(/&gt;|&GT;|&#x0003E;|&#62;/g,">");
-	    str= str.replace(/&amp;|&AMP;|&#x00026;|&#38;/g,"&");
+	    str = str.replace(/&lt;|&LT|&#x0003C;|&#60;/g, "<");
+	    str = str.replace(/&nbsp;|&#160;/g, " ");
+	    str = str.replace(/&quot;|&QUOT;|&#x00022;|&#34;/g, "\"");
+	    str = str.replace(/&gt;|&GT;|&#x0003E;|&#62;/g, ">");
+	    str = str.replace(/&amp;|&AMP;|&#x00026;|&#38;/g, "&");
 	    return str;
 	};
 
-	var locDauInt = function(str) {
-	    if(!str) {
-	        return str
+	var locDauInt = function locDauInt(str) {
+	    if (!str) {
+	        return str;
 	    }
 	    //var str = (document.getElementById("title").value);
-	    str= str.toLowerCase();
-	    str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|à/g,"a");
-	    str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
-	    str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
-	    str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ộ|ớ|ợ|ở|ỡ|ọ/g,"o");
-	    str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
-	    str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
-	    str= str.replace(/đ/g,"d");
-	    str= str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g,"-");
-	    str= str.replace(/-+-/g,"-"); //thay thế 2- thành 1-
-	    str= str.replace(/^\-+|\-+$/g,"");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+	    str = str.toLowerCase();
+	    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|à/g, "a");
+	    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+	    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+	    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ộ|ớ|ợ|ở|ỡ|ọ/g, "o");
+	    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+	    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+	    str = str.replace(/đ/g, "d");
+	    str = str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g, "-");
+	    str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+	    str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
 	    return str;
 	};
 
-	util.getPriceDisplay = function(val, loaiTin,forWeb) {
+	util.getPriceDisplay = function (val, loaiTin, forWeb) {
 	    try {
 	        if (!val) {
 	            return "Thỏa thuận";
@@ -24021,22 +23565,22 @@
 
 	        val = Number(val);
 
-	        if (loaiTin===0) { //ban
+	        if (loaiTin === 0) {
+	            //ban
 	            if (val < 1000) {
-	                return val.toFixed(2)+ " triệu";
+	                return val.toFixed(2) + " triệu";
 	            }
 
-	            return (val/1000).toFixed(2) + " tỷ";
+	            return (val / 1000).toFixed(2) + " tỷ";
 	        } else {
-	            return val.toFixed(2) +  (forWeb?"triệu":"triệu");
+	            return val.toFixed(2) + (forWeb ? "triệu" : "triệu");
 	        }
-	    } catch(ex) {
-	        console.log("Error when getPriceDisplay of " + val, ex)
+	    } catch (ex) {
+	        console.log("Error when getPriceDisplay of " + val, ex);
 	    }
-
 	};
 
-	util.getDienTichDisplay = function(val) {
+	util.getDienTichDisplay = function (val) {
 	    if (!val) {
 	        return "Không rõ";
 	    }
@@ -24044,129 +23588,106 @@
 	    return val + "m²";
 	};
 
-	util.replaceBrHtml = function(string_to_replace) {
-	    return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg,"\n\r");
+	util.replaceBrHtml = function (string_to_replace) {
+	    return string_to_replace.replace(/&nbsp;/g, ' ').replace(/<br\s*\/?>/mg, "\n\r");
 	    if (!val) {
 	        return "Không rõ";
 	    }
-
 	};
 
-
-	util.replaceBrToDowntoLine = function(inputString) {
+	util.replaceBrToDowntoLine = function (inputString) {
 	    var kq = "";
 	    var Timkiem = 'Tìm kiếm theo từ khóa';
 
 	    var kqReplace = util.replaceBrHtml(inputString);
 	    var kqReplaceA = striptags(kqReplace);
 
-	    if (inputString ) {
+	    if (inputString) {
 	        var idx = kqReplaceA.indexOf(Timkiem);
-	        if(idx >0)
-	            kq = kqReplaceA.substring(0,idx);
-	        else
-	            kq = kqReplaceA;
+	        if (idx > 0) kq = kqReplaceA.substring(0, idx);else kq = kqReplaceA;
 	    }
 	    return kq;
 	};
 
-	util.getDiaChinhFromDoThi = function(inputString,removeString,type) {
+	util.getDiaChinhFromDoThi = function (inputString, removeString, type) {
 	    var kq = "";
 	    var khuVuc = 'Khu vực';
 
-	    var kqReplaceA = (striptags(inputString)).trim();
+	    var kqReplaceA = striptags(inputString).trim();
 
-	    kqReplaceA = kqReplaceA.replace(removeString,"")
-	    kqReplaceA = kqReplaceA.replace(khuVuc,"");
+	    kqReplaceA = kqReplaceA.replace(removeString, "");
+	    kqReplaceA = kqReplaceA.replace(khuVuc, "");
 
 	    kqReplaceA = kqReplaceA.toUpperCase();
-	    if (kqReplaceA.includes("QUẬN") ) {
-	        kqReplaceA = kqReplaceA.replace("QUẬN","");
+	    if (kqReplaceA.includes("QUẬN")) {
+	        kqReplaceA = kqReplaceA.replace("QUẬN", "");
 	    }
-	    if (kqReplaceA.includes("HUYỆN") ) {
-	        kqReplaceA = kqReplaceA.replace("HUYỆN","");
+	    if (kqReplaceA.includes("HUYỆN")) {
+	        kqReplaceA = kqReplaceA.replace("HUYỆN", "");
 	    }
 
+	    if (kqReplaceA) {
+	        var idx = kqReplaceA.indexOf("-");
+	        var lastIdx = kqReplaceA.lastIndexOf("-");
 
-	        if (kqReplaceA ) {
-	            var idx = kqReplaceA.indexOf("-");
-	            var lastIdx = kqReplaceA.lastIndexOf("-");
-
-	            if(type =="HUYEN") {
-	                if ((idx > 0) && (lastIdx > idx))
-	                    kq = kqReplaceA.substring(idx + 1, lastIdx);
-	                else
-	                    kq = kqReplaceA;
-	            }
-	            if(type =="TINH") {
-	                if ((idx > 0) && (lastIdx > idx))
-	                    kq = kqReplaceA.substring(lastIdx + 1, kqReplaceA.length);
-	                else
-	                    kq = kqReplaceA;
-	            }
+	        if (type == "HUYEN") {
+	            if (idx > 0 && lastIdx > idx) kq = kqReplaceA.substring(idx + 1, lastIdx);else kq = kqReplaceA;
 	        }
+	        if (type == "TINH") {
+	            if (idx > 0 && lastIdx > idx) kq = kqReplaceA.substring(lastIdx + 1, kqReplaceA.length);else kq = kqReplaceA;
+	        }
+	    }
 
 	    return kq.trim();
 	};
 
-
-	util.removeAllHtmlTagAndReplaceOneString = function(inputString, replaceString) {
+	util.removeAllHtmlTagAndReplaceOneString = function (inputString, replaceString) {
 	    var kqRemove = striptags(inputString);
-	    return (kqRemove.replace(replaceString,"")).trim();
+	    return kqRemove.replace(replaceString, "").trim();
 	};
 
-
-	util.popField = function (obj, field){
+	util.popField = function (obj, field) {
 	    var a = obj[field];
 	    delete obj[field];
 
 	    return a;
 	};
 	// Input string is 25-05-2015 to Date type
-	util.parseDate = function(dateStr) {
+	util.parseDate = function (dateStr) {
 	    var parts = dateStr.split("-");
 	    return new Date(parts[2], parts[1] - 1, parts[0]);
 	};
 
-	util.equalDate = function(date1Str,date2Str) {
-	    var date1= this.parseDate(date1Str);
-	    var date2= this.parseDate(date2Str);
-	    if ((date1 <date2) ||(date1 >date2))
-	        return false;
-	    else
-	        return true;
-
+	util.equalDate = function (date1Str, date2Str) {
+	    var date1 = this.parseDate(date1Str);
+	    var date2 = this.parseDate(date2Str);
+	    if (date1 < date2 || date1 > date2) return false;else return true;
 	};
 
-	util.parseDate = function(dateStr) {
+	util.parseDate = function (dateStr) {
 	    var parts = dateStr.split("-");
 	    return new Date(parts[2], parts[1] - 1, parts[0]);
 	};
 
-
-	util.convertFormatDate= function(ngayDangTin) {
+	util.convertFormatDate = function (ngayDangTin) {
 	    var bdsComDateFormat = 'DD-MM-YYYY';
 	    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
 	        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
-	        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+	        return moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
 	    }
-
 	};
 
-	util.convertFormatDatetoYYYYMMDD= function(ngayDangTin) {
+	util.convertFormatDatetoYYYYMMDD = function (ngayDangTin) {
 	    var bdsComDateFormat = 'DD/MM/YYYY';
 	    if (moment(ngayDangTin, bdsComDateFormat).isValid()) {
 	        var ngayDangTinDate = moment(ngayDangTin, bdsComDateFormat);
-	        return  moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
+	        return moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
 	    }
-
 	};
 
-
-	util.isEmail = function(str) {
-	    return str && (str.indexOf('@') > -1);
+	util.isEmail = function (str) {
+	    return str && str.indexOf('@') > -1;
 	};
-
 
 	//comments out sicne seems not used
 	// //giaDESC, dienTichASC, ngayDangTinASC, giaM2DESC, soPhongNguDESC, soPhongTamDESC
@@ -24198,7 +23719,7 @@
 	//     return ret;
 	// };
 
-	util.toNumber = function(val) {
+	util.toNumber = function (val) {
 	    if (isNaN(val)) {
 	        console.log("Not a number, will return null:" + val);
 	        return null;
@@ -24209,8 +23730,7 @@
 
 	module.exports = util;
 
-	if (typeof(window) !== 'undefined')
-	    window.RewayUtil = util;
+	if (typeof window !== 'undefined') window.RewayUtil = util;
 
 /***/ },
 /* 39 */
@@ -38254,68 +37774,68 @@
 /* 142 */
 /***/ function(module, exports) {
 
+	"use strict";
+
 	var internals = {};
 	internals.STS = {
-	    SUCCESS : 0,
-	    FAILURE : 1
+	  SUCCESS: 0,
+	  FAILURE: 1
 	};
 
-	internals.CHAT_MESSAGE_TYPE ={
+	internals.CHAT_MESSAGE_TYPE = {
 	  TEXT: 1,
-	  IMAGE:2,
+	  IMAGE: 2,
 	  FILE: 3,
 	  SYSTEM: 4
 	};
 
 	internals.MSG = {
-	    DIA_DIEM_NOTFOUND : "Địa điểm bạn tìm kiếm không tồn tại!",
-	    USER_EXISTS : "Người sử dụng đã tồn tại!",
-	    LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
-	    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline",
-	    EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
-	    SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
-	    SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
-	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
-	    USER_NOT_EXIST: "User không tồn tại",
-	    SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công",
+	  DIA_DIEM_NOTFOUND: "Địa điểm bạn tìm kiếm không tồn tại!",
+	  USER_EXISTS: "Người sử dụng đã tồn tại!",
+	  LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
+	  USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline",
+	  EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
+	  SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
+	  SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
+	  EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
+	  USER_NOT_EXIST: "User không tồn tại",
+	  SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công"
 
 	};
 
 	internals.DB_ERR = {
-		USER_EXISTS: {
-			code: 101,
-			message: "Người sử dụng đã tồn tại"
-		}
+	  USER_EXISTS: {
+	    code: 101,
+	    message: "Người sử dụng đã tồn tại"
+	  }
 	};
 
 	internals.FORMAT = {
-	  DATE_IN_DB : 'YYYYMMDD',
-	  DATE_IN_GUI : 'DD/MM/YYYY'
+	  DATE_IN_DB: 'YYYYMMDD',
+	  DATE_IN_GUI: 'DD/MM/YYYY'
 	};
 
 	internals.DB_SEQ = {
 	  ScratchTopup: "idGeneratorForScratchTopup",
-	  User : "idGeneratorForUsers"
+	  User: "idGeneratorForUsers"
 	};
 
 	internals.TOPUP_STAGE = {
-	  INIT : -1,
-	  SUCCESS : 0,
-	  FAIL : 1
+	  INIT: -1,
+	  SUCCESS: 0,
+	  FAIL: 1
 	};
 
 	//topup type
 	internals.PAYMENT = {
-	  SCRATCH : "scratch",
-	  SMSPLUS : "smsplus",
-	  IN_APP_PURCHASE : "inAppPurchase",
-	  MANUAL_BANK_TRANSFER : "manualBankTransfer"
+	  SCRATCH: "scratch",
+	  SMSPLUS: "smsplus",
+	  IN_APP_PURCHASE: "inAppPurchase",
+	  MANUAL_BANK_TRANSFER: "manualBankTransfer"
 	};
 
-
-	if (typeof(window) !== 'undefined')
-	   window.RewayConst = internals;
-	module.exports  = internals;
+	if (typeof window !== 'undefined') window.RewayConst = internals;
+	module.exports = internals;
 
 /***/ }
 /******/ ]);

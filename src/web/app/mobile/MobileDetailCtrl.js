@@ -77,6 +77,26 @@
 			vm.marker.content = vm.ads.giaFmt;
 			vm.marker.coords.latitude = vm.ads.place.geo.lat;
 			vm.marker.coords.longitude = vm.ads.place.geo.lon;
+			vm.likeAdsClass ="";
+
+			vm.likeAds = function(event,adsID){
+			  //event.stopPropagation();
+		      if($rootScope.isLoggedIn()==false){
+		        $scope.$bus.publish({
+	              channel: 'login',
+	              topic: 'show login',
+	              data: {label: "Đăng nhập để lưu BĐS"}
+		        });
+		        return;
+		      }
+		      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+		        //alert(res.data.msg);
+		        //console.log(res);
+		        if(res.data.success == true || res.data.status==1){
+		        	$rootScope.user.adsLikes.push(adsID);
+		        }
+		      });
+		    };
 
 		
 			var pageSize = 8;
@@ -224,12 +244,43 @@
         	vm.goChats = function(){
         		$state.go('mchats', { "adsID" : vm.ads.adsID}, {location: true});
         	}
+        	vm.showMinimapHome = function(){
+        		//vm.map.setCenter(chicago);
+        		// vm.center = [vm.ads.place.geo.lat,vm.ads.place.geo.lon];
+        		vm.home = new google.maps.LatLng(vm.ads.place.geo.lat, vm.ads.place.geo.lon);
+  				vm.map.setCenter(vm.home);
+        		//alert('aaaa');
+        		//$scope.$apply();
+        	}
+        	NgMap.getMap().then(function(map){
+        		vm.map = map; 
+        	});
+
         	$timeout(function() {
 				$("#phgantaichinh").drawDoughnutChart([
 					{ title: "Gốc", value : 400,  color: "#20c063"},
 					{ title: "Lãi", value:  100,   color: "#f0a401"}
 			  	]);
-			}, 10);
+			  	$('.fancybox').fancybox({
+                    openEffect  : 'none',
+                    closeEffect : 'none',
+
+                    prevEffect : 'none',
+                    nextEffect : 'none',
+
+                    helpers : {
+                        title : {
+                            type : 'inside'
+                        },
+                        buttons : {}
+                    },
+
+                    afterLoad : function() {
+                        this.title = (this.index + 1) + '/' + this.group.length;
+                    }
+                });
+                $('body').scrollTop(0);
+			}, 0);
 
 			vm.searchDataXungQuanh.place = {
 	      		//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
@@ -268,6 +319,7 @@
 				vm.nhaTuongTu = res.data.list;					
 			});
 
+		
 
 		});
 		

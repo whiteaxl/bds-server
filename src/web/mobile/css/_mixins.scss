@@ -1,0 +1,139 @@
+// Mixins
+// --------------------------
+
+@mixin p-border-radius($radius) {
+	-moz-border-radius: $radius; 
+	-webkit-border-radius: $radius; 
+	-khtml-border-radius: $radius; 
+	border-radius: $radius;
+}
+@mixin p-transition($transition) {
+	-webkit-transition:$transition;
+	-moz-transition:$transition;
+	-ms-transition:$transition;
+	-o-transition:$transition;
+}
+@mixin p-column($column, $gap, $rule) {
+	-webkit-column-count: $column;
+    -moz-column-count: $column;
+    column-count: $column;
+	-webkit-column-gap: $gap;
+    -moz-column-gap: $gap;
+    column-gap: $gap;
+	-webkit-column-rule: $rule;
+    -moz-column-rule: $rule;
+    column-rule: $rule;
+}
+@mixin p-gradient($color1, $color2) {
+	background: -moz-linear-gradient(top, $color1, $color2);
+	background: -o-linear-gradient(top, $color1, $color2);
+	background: -webkit-linear-gradient(top, $color1, $color2);
+	background: linear-gradient(to bottom, $color1, $color2);
+
+
+}
+@mixin p-gradient-topbottom($top, $bottom) {
+	background: -webkit-linear-gradient($top, $bottom);
+	background: -o-linear-gradient($top, $bottom);
+	background: -moz-linear-gradient($top, $bottom);
+	background: linear-gradient($top, $bottom);
+}
+@mixin p-gradient-leftright($left, $right) {
+	background: -webkit-linear-gradient(left, $left , $right);
+	background: -o-linear-gradient(right, $left, $right);
+	background: -moz-linear-gradient(right, $left, $right);
+	background: linear-gradient(to right, $left , $right);
+}
+@mixin p-appearance($app){
+	-webkit-appearance: $app;
+	-moz-appearance: $app;
+	-o-appearance: $app;
+	appearance: $app;
+}
+@mixin p-box-sizing($sizing) {
+	-webkit-box-sizing: $sizing;
+    -moz-box-sizing: $sizing;
+    box-sizing: $sizing;
+}
+@mixin p-user-select($select) {
+	-webkit-user-select: $select;
+	-khtml-user-select: $select;
+	-moz-user-select: $select;
+	user-select: $select;
+}
+@mixin p-box-shadow($shadow){
+	-moz-box-shadow: $shadow;
+    -webkit-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+@mixin p-transform($x) {
+	-ms-transform: $x;
+   	-webkit-transform:$x;
+    transform: $x;
+}
+@mixin p-rotate($rotate) {
+	-ms-transform: rotate($rotate);
+   	-webkit-transform: rotate($rotate);
+    transform: rotate($rotate);
+}
+@mixin p-ul($style, $margin, $padding) {
+	list-style:$style;
+	margin:$margin;
+	padding:$padding;
+}
+
+@mixin p-justify($justify){
+	-webkit-justify-content: $justify;
+    -ms-flex-pack: $justify;
+    justify-content: $justify;	
+}
+@mixin p-direction($direction){
+	-webkit-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+@mixin p-align-items($align){
+	-webkit-align-items: $align;
+    -ms-flex-align: $align;
+    align-items: $align;	
+}
+@mixin p-align-self($align){
+	-webkit-align-self: $align;
+    -ms-flex-item-align: $align;
+    align-self: $align;	
+}
+@mixin p-flex($flex){
+	-webkit-flex-basis: $flex;
+    -ms-flex-preferred-size: $flex;
+    flex-basis: $flex;
+    max-width: $flex;	
+}
+@mixin p-flex-wrap($flex){
+	-webkit-flex-wrap: $flex;
+	-ms-flex-wrap: $flex;
+	flex-wrap: $flex;	
+}
+@mixin p-flex-auto($flex){
+	-ms-flex: $flex;
+	-webkit-flex: $flex;
+	flex: $flex;	
+}
+@mixin p-display(){
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;	
+}
+@mixin p-flex-margin($flex){
+	margin-left: $flex;	
+}
+@mixin p-order($order){
+	-webkit-order: $order;
+    -ms-flex-order: $order;
+    order: $order;	
+}
+@mixin p-flex-item($flex){
+	-webkit-flex: $flex;
+    flex: $flex;	
+}
+
+
