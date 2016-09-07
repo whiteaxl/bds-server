@@ -46,6 +46,7 @@ var syncGw = new SyncGw();
 
 class UserModel {
   initBucket() {
+    cluster = new couchbase.Cluster('couchbase://localhost:8091');
     bucket = cluster.openBucket('default');
     bucket.enableN1ql(['127.0.0.1:8093']);
     bucket.operationTimeout = 60 * 1000;
