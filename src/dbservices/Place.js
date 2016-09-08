@@ -36,7 +36,7 @@ class PlaceModel {
 
 		let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
 
-    var sql = `select default.* from default where type='Place' and (placeType='T' or placeType='H' or placeType = 'X') and ggMatched=true 
+    var sql = `select default.* from default where type='Place' and geometry is not missing 
     		and nameKhongDau like '%${inputKhongDau}%' order by placeType desc limit 10 `;
 
     console.log('getPlaceByNameLike, sql=',sql);
