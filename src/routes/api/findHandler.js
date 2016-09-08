@@ -311,7 +311,6 @@ function countAds(q, reply){
     }
     placeUtil.chuanHoaDiaChinh(diaChinh);
 
-    console.log("into here111");
     let ngayDangTinFrom = _toNgayDangTinFrom(q.ngayDaDang);
     var count = 0;
     var callback = (err, data) =>  {
@@ -321,9 +320,28 @@ function countAds(q, reply){
         });
     };
     var duAnID = q.duAnID;
-    console.log("into here");
 
-    if(geoBox || diaChinh){
+    let polygon = q.polygon;
+    let polygonCoords = null;
+    if (polygon && polygon.length > 2) {
+        polygonCoords = polygon.map((e) => {
+                return {latitude: e.lat, longitude: e.lon}
+            });
+    }
+
+
+    //polygon
+    if (polygon && polygon.length > 2) {
+        let ret = geoUtil.getGeoBoxOfPolygon(polygonCoords);
+
+        adsModel.countForAllDataByPolygon(
+            callback,ret.geoBox, polygonCoords,diaChinh, q.loaiTin, q.loaiNhaDat
+            , q.giaBETWEEN, q.dienTichBETWEEN
+            , q.soPhongNguGREATER, q.soPhongTamGREATER
+            , ngayDangTinFrom, q.huongNha, duAnID
+        );
+    }
+    else if(geoBox || diaChinh){
         count = adsModel.countForAllData(
             callback, geoBox,diaChinh, q.loaiTin, q.loaiNhaDat
             , q.giaBETWEEN, q.dienTichBETWEEN
@@ -445,8 +463,8 @@ internals.searchAds = function(q, reply) {
       replyViewPort = ret.geoBox;
       center = ret.center;
 
-      adsModel.queryAllData(
-        callback,replyViewPort,diaChinh, q.loaiTin, q.loaiNhaDat
+      adsModel.queryAllDataByPolygon(
+        callback,replyViewPort,polygonCoords,diaChinh, q.loaiTin, q.loaiNhaDat
         , q.giaBETWEEN, q.dienTichBETWEEN
         , q.soPhongNguGREATER, q.soPhongTamGREATER
         , ngayDangTinFrom, q.huongNha, duAnID

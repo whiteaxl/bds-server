@@ -48,6 +48,7 @@
 var couchbase = require('couchbase');
 var util = require("../lib/utils");
 var constant = require("../lib/constant");
+var geoUtil = require("../lib/geoUtil");
 
 var N1qlQuery = require('couchbase').N1qlQuery;
 
@@ -263,6 +264,57 @@ class AdsModel {
         return sql;
     }
 
+    countForAllDataByPolygon(
+        callback
+        , geoBox
+        , polygonCoords
+        , diaChinh //tinh, huyen, xa
+        , loaiTin
+        , loaiNhaDat
+        , gia //arrays from,to
+        , dienTich //arrays from,to
+        , soPhongNguGREATER
+        , soPhongTamGREATER
+        , ngayDangTinFrom
+        , huongNha
+        , duAnID
+    ){
+        var sql ="SELECT place FROM default t" + this.buildWhereForAllData(geoBox
+                , diaChinh
+                , loaiTin
+                , loaiNhaDat
+                , gia
+                , dienTich
+                , soPhongNguGREATER
+                , soPhongTamGREATER
+                , ngayDangTinFrom
+                , huongNha
+                , duAnID
+            );
+        var handleDBCountResult = this._handleDBCountResultByPolygon;
+
+        console.log(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            // console.log("err=", err, all);
+            // console.log("count " + all[0].$1);
+            // callback(err,all[0].$1);
+            handleDBCountResult(err, all, polygonCoords, callback);
+        });
+    }
+
+    _handleDBCountResultByPolygon(err, allAds, polygonCoords, callback) {
+        let count = 0;
+        allAds.forEach((e) => {
+            let ads = e;
+            let place = ads.place;
+            if (geoUtil.isPointInside(place.geo,polygonCoords)) {
+                count++;
+            }
+        });
+        callback(err,count);
+    }
+
     countForAllData(
         callback
         , geoBox
@@ -362,6 +414,93 @@ class AdsModel {
             callback(err, all);
         });
     }
+
+    //loaiTin is mandatory
+    queryAllDataByPolygon(
+        callback
+        , geoBox
+        , polygonCoords
+        , diaChinh //tinh, huyen, xa
+        , loaiTin
+        , loaiNhaDat
+        , gia //arrays from,to
+        , dienTich //arrays from,to
+        , soPhongNguGREATER
+        , soPhongTamGREATER
+        , ngayDangTinFrom
+        , huongNha
+        , duAnID
+        , orderBy//orderByField, orderByType
+        , limit
+        , pageNo
+
+    ) {
+
+        if (isNaN(limit)) {
+            console.log("WARN", "limit is not a number:" , limit);
+            limit = DEFAULT_LIMIT;
+        }
+
+        var sql ="SELECT t.* FROM default t" + this.buildWhereForAllData(geoBox
+                , diaChinh
+                , loaiTin
+                , loaiNhaDat
+                , gia
+                , dienTich
+                , soPhongNguGREATER
+                , soPhongTamGREATER
+                , ngayDangTinFrom
+                , huongNha
+                , duAnID
+                , orderBy
+            );
+
+        console.log(sql);
+        /*
+         var query = N1qlQuery.fromString('select count(*) from default');
+         bucket.query(query, function(err, all) {
+         console.log("err=", err, all);
+         });
+         */
+
+        //@todo: really need reopen like this ?
+        var bucket = cluster.openBucket('default');
+        bucket.enableN1ql(['127.0.0.1:8093']);
+        bucket.operationTimeout = 60 * 1000;
+
+        var query = N1qlQuery.fromString(sql);
+
+        var handleDBFindResult = this._handleDBFindResultByPolygon;
+
+        bucket.query(query, function(err, all) {
+            //console.log("err=", err);
+            if (!all)
+                all = [];
+            // callback(err, all);
+            handleDBFindResult(err, all, polygonCoords, limit, pageNo, callback);
+        });
+    }
+
+    _handleDBFindResultByPolygon(err, allAds, polygonCoords, limit, pageNo, callback) {
+        let transformeds = [];
+        let index = 0;
+        let startFromIndex = (pageNo-1)*limit;
+        allAds.forEach((e) => {
+            if (transformeds.length >= limit) {
+                return;
+            }
+            let ads = e;
+            let place = ads.place;
+            if (geoUtil.isPointInside(place.geo,polygonCoords)) {
+                if (index >= startFromIndex) {
+                    transformeds.push(ads);
+                }
+                index++;
+            }
+        });
+        callback(err, transformeds);
+    }
+
     // query by Tinh, Huyen, Xa.
     queryByDiaChinh(reply, tinh,huyen,xa,limit) {
 
