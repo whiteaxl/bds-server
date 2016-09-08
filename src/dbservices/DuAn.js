@@ -58,6 +58,8 @@ class DuAnModel {
 	}
 
 	findDuAn(q,callback){
+        this.initBucket();
+        
 		var sql = "SELECT t.* FROM `default` t  where t.type='DuAn' ";
 
         if (q.hot) {

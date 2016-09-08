@@ -23,6 +23,8 @@ class OnePay {
 	}
 
 	insertSmsPlus(query, callback) {
+        this.initBucket();
+
 	  var dto = {}; Object.assign(dto, query);
 
 		dto.type = 'OnepaySmsplus';
@@ -45,9 +47,11 @@ class OnePay {
 	}
 
 	upsert(dto, callback) {
+        this.initBucket();
 		bucket.upsert(dto.id, dto, callback)
 	}
 	saveScratchTopupRequestFromClient(payload, callback) {
+        this.initBucket();
 		bucket.counter(constant.DB_SEQ.ScratchTopup, 1, {initial: 0}, (err, res)=> {
 		  log.info("Done get next seq numnber for scratchTopup");
 
@@ -83,6 +87,8 @@ class OnePay {
 	}
 
 	saveDelayCardTopup(dto, callback) {
+        this.initBucket();
+
 	  var delayDto  = {}; Object.assign(delayDto, dto);
 
     delayDto.id = "DelayCardTopup_" + dto.transRef;
@@ -121,6 +127,8 @@ class OnePay {
 	}
 
   logData(dto, type, cat, callback) {
+      this.initBucket();
+      
     bucket.counter("idGen_" + type + "_" + cat, 1, {initial: 0}, (err, res)=> {
       if (err) {
         if (callback) callback(err, res);

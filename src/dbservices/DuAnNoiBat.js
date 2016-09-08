@@ -59,6 +59,8 @@ class DuAnNoiBatModel {
 	}
 
 	findDuAnNoiBat(q,callback){
+        this.initBucket();
+        
 		var sql = "SELECT t.* FROM `default` t  where t.type='DuAnNoiBat' ";
 
         if(q.tinhKhongDau) {

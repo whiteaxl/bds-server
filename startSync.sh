@@ -1,1 +1,1 @@
-~/setup/couchbase-sync-gateway/bin/sync_gateway ./sync-gateway-config.json
+/Volumes/MacBook\ SSD/Setup/couchbase-sync-gateway/bin/sync_gateway ./sync-gateway-config.json

@@ -275,6 +275,7 @@ class UserModel {
   }
 
   upsert(userDto,callback) {
+    this.initBucket();
     bucket.upsert(userDto.userID, userDto, function (err, res) {
         if (err) {
             console.log("ERROR:" + err);
@@ -411,6 +412,8 @@ class UserModel {
     }
     var query = N1qlQuery.fromString(sql);
 
+    this.initBucket();
+
     bucket.query(query, function (err, res) {
       if (err) {
           console.log('query failed'.red, err);
@@ -509,10 +512,13 @@ class UserModel {
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
 
+    this.initBucket();
+
     bucket.query(query, callback);
   }
 
   updateDevice(dto, callback) {
+    this.initBucket();
     console.log('updateDevice dto:', dto);
     bucket.upsert(dto.deviceID, dto, callback)
   }
@@ -520,11 +526,12 @@ class UserModel {
   getTokenOfUser(userID,callback){
     var sql = `select default.* from default where type='Device' and userID='${userID}'`;
     var query = N1qlQuery.fromString(sql);
-    //this.initBucket();
+    this.initBucket();
     bucket.query(query, callback);
   }
 
   getDocById(id, callback) {
+    this.initBucket();
     bucket.get(id, callback);
   }
 
