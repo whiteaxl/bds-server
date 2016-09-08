@@ -261,9 +261,11 @@ placeUtil.isHuyen = function(place) {
         return true;
     }
 
-    if (_.indexOf(placeTypes, 'locality') > -1
-        && _.indexOf(placeTypes, 'political') > -1
-        //&& ( place.description.indexOf("tp.") > -1 || place.description.indexOf("tx.") > -1)
+    if (_.indexOf(placeTypes, 'political') > -1
+        && _.indexOf(placeTypes, 'sublocality') > -1
+      && _.indexOf(placeTypes, 'sublocality_level_1') > -1
+
+        && ( place.formatted_address.indexOf("District") > -1 )
     ) {
         return true;
     }

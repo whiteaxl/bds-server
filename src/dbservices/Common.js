@@ -19,11 +19,17 @@ class CommonModel {
 	}
 
 	upsert(dto,callback) {
-		this.initBucket();
-
-		bucket.operationTimeout = 1200 * 1000;
-
 		bucket.upsert(dto.id, dto, function (err, res) {
+			if (err) {
+				console.log("ERROR:" + err);
+			}
+			if(callback)
+				callback(err,res);
+		})
+	}
+
+	insert(dto,callback) {
+		bucket.insert(dto.id, dto, function (err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
 			}

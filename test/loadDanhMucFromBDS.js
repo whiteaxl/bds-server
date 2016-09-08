@@ -6,13 +6,30 @@ var placeUtil = require("../src/lib/placeUtil");
 var geoUtil = require("../src/lib/geoUtil");
 var rp = require("request-promise");
 
-function loadViewportFromGG(dc, geoUrl) {
+function loadViewportFromGG(list, idx, geoUrl) {
+  if (list.length == idx) {
+    console.log("DONE!!!!!");
+    return;
+  }
+
+  var dc = list[idx];
+
   var url = null;
 
   if (!geoUrl) {
+    let keyword = dc.fullName;
+    keyword = keyword.replace("Thị xã ", "");
+    keyword = keyword.replace("Quận ", "");
+    keyword = keyword.replace("Huyện ", "");
+    keyword = keyword.replace("Thành phố ", "");
+
+    if (dc.placeType =='T') {
+      keyword = "Tinh " + keyword;
+    }
+
     url = "https://maps.googleapis.com/maps/api/geocode/json?" +
       "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
-      "&address=" + encodeURIComponent(dc.fullName);
+      "&address=" + encodeURIComponent(keyword);
   } else {
     url = geoUrl;
   }
@@ -26,9 +43,13 @@ function loadViewportFromGG(dc, geoUrl) {
 
   rp(options)
     .then((res) => {
+      if (dc.fullName == 'Quận Cầu Giấy, Hà Nội') {
+        console.log("here" + res.results.length, url)
+      }
+
       mapWithGoogle(dc, res.results);
 
-      if (res.results.length == 0 || dc.ggMatched == false) {
+      if (dc.placeType=='X' && (res.results.length == 0 || dc.ggMatched == false)) {
         console.log("Can't find geoCode, will try by remove Huyen:" + dc.fullName);
 
         if (!geoUrl && dc.placeType == 'X') {
@@ -40,7 +61,7 @@ function loadViewportFromGG(dc, geoUrl) {
 
           console.log("Will try geoCode for :" + xaTinh);
 
-          loadViewportFromGG(dc, url2);
+          loadViewportFromGG(list, idx, url2);
           return;
         }
       }
@@ -48,7 +69,12 @@ function loadViewportFromGG(dc, geoUrl) {
       //console.log("dc:", dc.ggMatched, dc.id, dc.fullName);
       //console.log("OK:", res.results);
 
-      upsert(dc)
+      if (!dc.ggMatched) {
+        console.log("can't find:", dc.fullName);
+      }
+      upsert(dc);
+
+      loadViewportFromGG(list, idx+1, null);
     })
     .catch((err) => {
       console.log("ERROR:", err);
@@ -99,7 +125,7 @@ function mapWithGoogle(diaChinh, geocodes) {
 
   geocodes.forEach((geocode) => {
     let first = geocode.address_components[0];
-    if (match(first, diaChinh.placeType)) {
+    if (match(geocode, diaChinh.placeType)) {
       diaChinh.ggMatched = true;
 
       assignGeoCode(diaChinh, geocode);
@@ -112,16 +138,18 @@ function mapWithGoogle(diaChinh, geocodes) {
 }
 
 function useGoogleToAddMissingViewportInDB() {
-  let sql = `select t.* from default t where type='Place' and ggMatched=false and (placeType = 'T' or placeType = 'H' or placeType = 'X')`;
+  //let sql = `select t.* from default t where type='Place' and ggMatched=false and (placeType = 'T' or placeType = 'H' or placeType = 'X')`;
+  let sql = `select t.* from default t where type='Place' and ggMatched=false  and geometry is missing limit 3000`;
+
   commonService.query(sql, (err, res) => {
+    console.log("COUNT=", res.length);
     if (err) {
       console.log("Error:", err);
       return;
     }
 
-    res.forEach((dc) => {
-      loadViewportFromGG(dc, null);
-    })
+    var idx = 0;
+    loadViewportFromGG(res, idx, null);
   });
 }
 
@@ -201,6 +229,20 @@ function upsert(obj) {
   });
 }
 
+
+function insert(obj, success) {
+  commonService.insert(obj, (err, res) => {
+    if (err) {
+      console.log("error when insert", err);
+    } else {
+      if (success) {
+        success(res);
+      }
+    }
+  });
+}
+
+
 function loadViewport(dc) {
   var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
     "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
@@ -235,6 +277,148 @@ function loadViewport(dc) {
     })
 }
 
+function processDuAn(projects) {
+  projects.forEach((p) => {
+    let projectKhongDau = placeUtil.chuanHoaAndLocDau(p.name);
+
+    let radiusInKm = 1.5;//default to 3km square
+    let geoBox = geoUtil.getBox({lat:p.lat, lon:p.lng} , geoUtil.meter2degree(radiusInKm));
+
+    let projectObj = {
+      "fullName": p.name + ", " + d.name + ", " + tinh.name,
+      "ggMatched": false,
+      "huyen": d.name,
+      "huyenKhongDau": huyenKhongDau,
+      "id": "Place_" + p.id,
+      "nameKhongDau": projectKhongDau,
+      "placeName": p.name,
+      "placeType": "A",
+      "tinh": tinh.name,
+      "tinhKhongDau": tinhNameKhongDau,
+      "type": "Place",
+      "duAn": p.name,
+      "duAnKhongDau": projectKhongDau,
+      "parentId" : huyenId,
+      geometry : {
+        location : {
+          lat : p.lat,
+          lon : p.lng,
+        },
+        viewport : {
+          northeast : {
+            lat: geoBox[2],
+            lon: geoBox[3],
+          },
+          southwest : {
+            lat: geoBox[0],
+            lon: geoBox[1],
+          }
+        }
+      }
+    };
+
+    upsert(projectObj);
+  });
+}
+
+function processXa(wards, huyenObj) {
+  //Insert list of wards
+  wards.forEach((ward) => {
+    let xaNameWithPrefix = (ward.pre + " " + ward.name).trim();
+    let xaKhongDau = placeUtil.chuanHoaAndLocDau(ward.name);
+    console.log(xaNameWithPrefix);
+
+    let xaObj = {
+      "fullName": xaNameWithPrefix + ", " + huyenObj.fullName,
+      "ggMatched": false,
+      "huyen": huyenObj.placeName,
+      "huyenKhongDau": huyenObj.huyenKhongDau,
+      "id": "Place_X_" + ward.id,
+      "nameKhongDau": xaKhongDau,
+      "placeName": ward.name,
+      "placeType": "X",
+      "tinh": huyenObj.tinh,
+      "tinhKhongDau": huyenObj.tinhKhongDau,
+      "type": "Place",
+      "xa": ward.name,
+      "xaKhongDau": xaKhongDau,
+      "parentId" : huyenObj.id,
+      "pre" : ward.pre,
+      "code" : ward.id
+    };
+
+    upsert(xaObj);
+    //loadViewportFromDB(xaObj);
+
+  });
+}
+
+function processStreet(streets) {
+  streets.forEach((p) => {
+    let streetKhongDau = placeUtil.chuanHoaAndLocDau(p.name);
+
+    let name = (p.pre + " " + p.name).trim();
+
+    let streetObj = {
+      "fullName": name + ", " + d.name + ", " + tinh.name,
+      "ggMatched": false,
+      "huyen": d.name,
+      "huyenKhongDau": huyenKhongDau,
+      "id": "Place_" + p.id,
+      "nameKhongDau": streetKhongDau,
+      "placeName": p.name,
+      "placeType": "D",
+      "tinh": tinh.name,
+      "tinhKhongDau": tinhNameKhongDau,
+      "type": "Place",
+      "duong": p.name,
+      "duongKhongDau": streetKhongDau,
+      "parentId" : huyenId,
+      "pre" : p.pre
+    };
+
+    upsert(streetObj);
+  })
+}
+
+function processHuyen(districts, tinhObj) {
+  districts.forEach((d) => {
+    console.log("     " + d.id
+      + ", name:" + d.name
+      + ", pre:" + d.pre
+      + ", project:" + d.project.length
+      + ", street:" + d.street.length
+      + ", ward:" + d.ward.length);
+
+    let huyenName = (d.pre + " " + d.name).trim();
+    let huyenKhongDau  = placeUtil.chuanHoaAndLocDau(d.name);
+    let huyenId = "Place_H_" +  d.id;
+
+    let huyenObj = {
+      "fullName": huyenName + ", " + tinhObj.placeName,
+      "ggMatched": false,
+      "huyen": d.name,
+      "huyenKhongDau": huyenKhongDau,
+      "id": huyenId,
+      "nameKhongDau": huyenKhongDau,
+      "placeName": d.name,
+      "placeType": "H",
+      "tinh": tinhObj.placeName,
+      "tinhKhongDau": tinhObj.tinhKhongDau,
+      "type": "Place",
+      "pre" : d.pre,
+      "parentId" : tinhObj.id,
+      "code" : d.id
+    };
+
+    insert(huyenObj, (res) => {console.log("Success", res);});
+
+
+    processXa(d.ward, huyenObj);
+    //processDuAn(d.project);
+    //processStreet(d.street);
+  });
+}
 
 function load(fn) {
   var data = require('./data/' + fn);
@@ -244,7 +428,7 @@ function load(fn) {
     console.log("Tinh:",tinh.code, tinh.name);
 
     var tinhNameKhongDau  = placeUtil.chuanHoaAndLocDau(tinh.name);
-    let tinhId = "Place_" + tinh.code;
+    let tinhId = "Place_T_" + tinh.code;
 
     var tinhObj = {
       "id" : tinhId,
@@ -259,150 +443,14 @@ function load(fn) {
       "code" : tinh.code,
     };
 
+    insert(tinhObj, (res) => {console.log("Success", res);});
 
-    loadViewportFromDB(tinhObj);
-
-    var districts = tinh.district;
-
-    districts.forEach((d) => {
-      console.log("     " + d.id
-        + ", name:" + d.name
-        + ", pre:" + d.pre
-        + ", project:" + d.project.length
-        + ", street:" + d.street.length
-        + ", ward:" + d.ward.length);
-
-      let huyenName = (d.pre + " " + d.name).trim();
-      let huyenKhongDau  = placeUtil.chuanHoaAndLocDau(d.name);
-      let huyenId = "Place_" + d.id;
-
-      let huyenObj = {
-        "fullName": huyenName + ", " + tinh.name,
-        "ggMatched": false,
-        "huyen": d.name,
-        "huyenKhongDau": huyenKhongDau,
-        "id": huyenId,
-        "nameKhongDau": huyenKhongDau,
-        "placeName": d.name,
-        "placeType": "H",
-        "tinh": tinh.name,
-        "tinhKhongDau": tinhNameKhongDau,
-        "type": "Place",
-        "pre" : d.pre,
-        "parentId" : tinhId
-      };
-
-      //upsert(huyenObj);
-      loadViewportFromDB(huyenObj);
-
-      //Insert list of wards
-      d.ward.forEach((ward) => {
-        let xaNameWithPrefix = (ward.pre + " " + ward.name).trim();
-        let xaKhongDau = placeUtil.chuanHoaAndLocDau(ward.name);
-
-        let xaObj = {
-          "fullName": xaNameWithPrefix + ", " + d.name + ", " + tinh.name,
-          "ggMatched": false,
-          "huyen": d.name,
-          "huyenKhongDau": huyenKhongDau,
-          "id": "Place_" + ward.id,
-          "nameKhongDau": xaKhongDau,
-          "placeName": ward.name,
-          "placeType": "X",
-          "tinh": tinh.name,
-          "tinhKhongDau": tinhNameKhongDau,
-          "type": "Place",
-          "xa": ward.name,
-          "xaKhongDau": xaKhongDau,
-          "parentId" : huyenId,
-          "pre" : ward.pre
-        };
-
-        upsert(xaObj);
-        //loadViewportFromDB(xaObj);
-
-      });
-
-      //Projects
-      d.project.forEach((p) => {
-        let projectKhongDau = placeUtil.chuanHoaAndLocDau(p.name);
-
-        let radiusInKm = 1.5;//default to 3km square
-        let geoBox = geoUtil.getBox({lat:p.lat, lon:p.lng} , geoUtil.meter2degree(radiusInKm));
-
-        let projectObj = {
-          "fullName": p.name + ", " + d.name + ", " + tinh.name,
-          "ggMatched": false,
-          "huyen": d.name,
-          "huyenKhongDau": huyenKhongDau,
-          "id": "Place_" + p.id,
-          "nameKhongDau": projectKhongDau,
-          "placeName": p.name,
-          "placeType": "A",
-          "tinh": tinh.name,
-          "tinhKhongDau": tinhNameKhongDau,
-          "type": "Place",
-          "duAn": p.name,
-          "duAnKhongDau": projectKhongDau,
-          "parentId" : huyenId,
-          geometry : {
-            location : {
-              lat : p.lat,
-              lon : p.lng,
-            },
-            viewport : {
-              northeast : {
-                lat: geoBox[2],
-                lon: geoBox[3],
-              },
-              southwest : {
-                lat: geoBox[0],
-                lon: geoBox[1],
-              }
-            }
-          }
-        };
-
-        upsert(projectObj);
-      });
-
-      //Streets
-      d.street.forEach((p) => {
-        let streetKhongDau = placeUtil.chuanHoaAndLocDau(p.name);
-
-        let name = (p.pre + " " + p.name).trim();
-
-        let streetObj = {
-          "fullName": name + ", " + d.name + ", " + tinh.name,
-          "ggMatched": false,
-          "huyen": d.name,
-          "huyenKhongDau": huyenKhongDau,
-          "id": "Place_" + p.id,
-          "nameKhongDau": streetKhongDau,
-          "placeName": p.name,
-          "placeType": "D",
-          "tinh": tinh.name,
-          "tinhKhongDau": tinhNameKhongDau,
-          "type": "Place",
-          "duong": p.name,
-          "duongKhongDau": streetKhongDau,
-          "parentId" : huyenId,
-          "pre" : p.pre
-        };
-
-        upsert(streetObj);
-      })
-
-    });
-
-    /*
-     commonService.upsert(tmp, () => {});
-     */
+    processHuyen(tinh.district, tinhObj);
   });
 }
 
 
-//load("city2.json");
+//load("city1.json");
 
 //useBCAToAddMissingViewportInDB(1000);
 
