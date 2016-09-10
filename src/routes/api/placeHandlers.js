@@ -14,6 +14,66 @@ var PlaceModel = require("../../dbservices/Place");
 var place = new PlaceModel();
 
 var internals = {};
+var placeCache = null;
+
+function _getFromCache(input, reply) {
+  let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
+
+  let ret = [];
+  for (var i=0; i < placeCache.length; i++) {
+    let e = placeCache[i];
+
+    //console.log(e.nameKhongDau);
+
+    if (e.nameKhongDau.indexOf(inputKhongDau) > -1) {
+      ret.push(e);
+      if (ret.length >= 10) {
+        break;
+      }
+    }
+  }
+
+  _returnToClient(ret, reply);
+}
+
+
+function _returnToClient(list, reply) {
+  var predictions = [];
+
+  if (list) {
+    predictions = list.map((e) => {
+      let vp = e.geometry.viewport;
+
+      return {
+        placeName : e.placeName,
+        fullName : e.fullName,
+        shortName : placeUtil.getShortName(e.fullName),
+        placeType : e.placeType,
+        placeId : e.id,
+        tinh : e.tinhKhongDau,
+        huyen: e.huyenKhongDau,
+        xa : e.xaKhongDau,
+        viewport : {
+          "northeast": {
+            "lat": vp.northeast.lat,
+            "lon": vp.northeast.lng
+          },
+          "southwest": {
+            "lat": vp.southwest.lat,
+            "lon": vp.southwest.lng
+          }
+        }
+      }
+    });
+  }
+
+  console.log("matched:", predictions);
+
+  reply({
+    predictions : predictions,
+    status: "OK"
+  });
+}
 
 internals.autocomplete = function(req, reply) {
   var query = req.query;
@@ -28,6 +88,30 @@ internals.autocomplete = function(req, reply) {
     return;
   }
 
+  //
+  if (!placeCache) {
+    place.getAllPlaces((err, res) => {
+      if (err) {
+        console.log("getAllPlaces error:", err);
+
+        reply({
+          predictions : [],
+          status: "ERROR " + err
+        });
+        return;
+      }
+
+      placeCache = res;
+
+      return _getFromCache(query.input, reply)
+    }) ;
+
+    return;
+  }
+
+  return _getFromCache(query.input, reply);
+
+/*
   place.getPlaceByNameLike(query.input, (err, res) => {
     //console.log(res);
 
@@ -40,41 +124,9 @@ internals.autocomplete = function(req, reply) {
       return;
     }
 
-    var predictions = [];
-
-    if (res) {
-      predictions = res.map((e) => {
-        let vp = e.geometry.viewport;
-
-        return {
-          placeName : e.placeName,
-          fullName : e.fullName,
-          shortName : placeUtil.getShortName(e.fullName),
-          placeType : e.placeType,
-          placeId : e.id,
-          tinh : e.tinhKhongDau,
-          huyen: e.huyenKhongDau,
-          xa : e.xaKhongDau,
-          viewport : {
-            "northeast": {
-              "lat": vp.northeast.lat,
-              "lon": vp.northeast.lng
-            },
-            "southwest": {
-              "lat": vp.southwest.lat,
-              "lon": vp.southwest.lng
-            }
-          }
-        }
-      });
-    }
-
-    reply({
-      predictions : predictions,
-      status: "OK"
-    });
+    _returnToClient(res, reply);
   });
-
+*/
 
 };
 

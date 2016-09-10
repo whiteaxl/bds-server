@@ -45,6 +45,13 @@ class PlaceModel {
     bucket.query(query, callback);
   }
 
+	getAllPlaces(callback) {
+		var sql = "select default.* from default where type='Place'";
+		var query = N1qlQuery.fromString(sql);
+
+		bucket.query(query, callback);
+	}
+
 	//may be for testing only
 	patchDataInDB(){
 		this.initBucket();
