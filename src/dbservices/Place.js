@@ -56,7 +56,7 @@ class PlaceModel {
 	patchDataInDB(){
 		this.initBucket();
 		
-		var sql = "select default.* from default where type='Place'";
+		var sql = "select default.* from default where type='Place' where geometry is not missing and geometry.viewport is not missing";
 		var query = N1qlQuery.fromString(sql);
 
 		var that = this;
