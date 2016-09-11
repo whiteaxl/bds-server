@@ -22,7 +22,7 @@ internals.enter = function(msg, msg2, msg3) {
 };
 
 internals.doLog = function(type, msg, msg2, msg3) {
-	type = moment().format('[dd hh:mm:ss a]') + type;
+	type = "[" + moment().format('h:mm:ss.SSS') + "]" + type;
 
 	if (msg3) {
 		console.log(type, msg, msg2, msg3);

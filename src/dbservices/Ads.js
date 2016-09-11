@@ -47,6 +47,7 @@
 
 var couchbase = require('couchbase');
 var util = require("../lib/utils");
+var logUtil = require("../lib/logUtil");
 var constant = require("../lib/constant");
 var geoUtil = require("../lib/geoUtil");
 
@@ -82,7 +83,7 @@ class AdsModel {
 
         bucket.upsert(adsDto.id, adsDto, function (err, res) {
             if (err) {
-                console.log("ERROR:" + err);
+                logUtil.error("ERROR:" + err);
             }
         })
     }
@@ -91,8 +92,7 @@ class AdsModel {
         let query = ViewQuery.from('ads', 'all_ads').limit(3);
 
         this.myBucket.query(query, function (err, all) {
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            logUtil.info("number of ads:" + all.length);
             if (!all)
                 all = [];
 
@@ -105,7 +105,7 @@ class AdsModel {
         let query = ViewQuery.from('ads', 'all_ads');
         var that = this;
         bucket.query(query, function (err, all) {
-            console.log("number of ads:" + all.length);
+            logUtil.info("number of ads:" + all.length);
             if (!all)
                 all = [];
 
@@ -129,7 +129,7 @@ class AdsModel {
 
                 that.upsert(ads);
             }
-            console.log("Finish");
+            logUtil.info("Finish");
         });
     }
 
@@ -140,10 +140,10 @@ class AdsModel {
 
         bucket.query(query, function (err, res) {
             if (err) {
-                console.log('query failed'.red, err);
+                logUtil.info('query failed'.red, err);
                 return;
             }
-            console.log('success!', res);
+            logUtil.info('success!', res);
 
             onSuccess(res[0].cnt);
         });
@@ -293,11 +293,11 @@ class AdsModel {
             );
         var handleDBCountResult = this._handleDBCountResultByPolygon;
 
-        console.log(sql);
+        logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
-            // console.log("err=", err, all);
-            // console.log("count " + all[0].$1);
+            // logUtil.info("err=", err, all);
+            // logUtil.info("count " + all[0].$1);
             // callback(err,all[0].$1);
             handleDBCountResult(err, all, polygonCoords, callback);
         });
@@ -342,11 +342,11 @@ class AdsModel {
             , duAnID
         );
 
-        console.log(sql);
+        logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
-            //console.log("err=", err, all);
-            console.log("count " + all[0].$1);
+            //logUtil.info("err=", err, all);
+            logUtil.info("count " + all[0].$1);
             callback(err,all[0].$1);
         });
     }
@@ -372,7 +372,7 @@ class AdsModel {
     ) {
 
         if (isNaN(limit)) {
-            console.log("WARN", "limit is not a number:" , limit);
+            logUtil.info("WARN", "limit is not a number:" , limit);
             limit = DEFAULT_LIMIT;
         }
 
@@ -392,11 +392,11 @@ class AdsModel {
             , pageNo?pageNo:1
         );
         
-        console.log(sql);
+        logUtil.info(sql);
         /*
         var query = N1qlQuery.fromString('select count(*) from default');
         bucket.query(query, function(err, all) {
-            console.log("err=", err, all);
+            logUtil.info("err=", err, all);
         });
         */
 
@@ -408,7 +408,7 @@ class AdsModel {
         var query = N1qlQuery.fromString(sql);
 
         bucket.query(query, function(err, all) {
-            //console.log("err=", err);
+            //logUtil.info("err=", err);
             if (!all)
                 all = [];
             callback(err, all);
@@ -437,7 +437,7 @@ class AdsModel {
     ) {
 
         if (isNaN(limit)) {
-            console.log("WARN", "limit is not a number:" , limit);
+            logUtil.info("WARN", "limit is not a number:" , limit);
             limit = DEFAULT_LIMIT;
         }
 
@@ -455,11 +455,11 @@ class AdsModel {
                 , orderBy
             );
 
-        console.log(sql);
+        logUtil.info(sql);
         /*
          var query = N1qlQuery.fromString('select count(*) from default');
          bucket.query(query, function(err, all) {
-         console.log("err=", err, all);
+         logUtil.info("err=", err, all);
          });
          */
 
@@ -473,7 +473,7 @@ class AdsModel {
         var handleDBFindResult = this._handleDBFindResultByPolygon;
 
         bucket.query(query, function(err, all) {
-            //console.log("err=", err);
+            //logUtil.info("err=", err);
             if (!all)
                 all = [];
             // callback(err, all);
@@ -533,13 +533,13 @@ class AdsModel {
         else {
             sql = sql + " limit 100 ";
         }
-        console.log("sql:" + sql );
+        logUtil.info("sql:" + sql );
         var query = N1qlQuery.fromString(sql);
         return query;
         /*
         bucket.query(query, function(err, all) {
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            logUtil.info("number of ads:" + all.length);
+            logUtil.info("Error:" + err);
             if (!all)
                 all = [];
 
@@ -572,14 +572,14 @@ class AdsModel {
         }
         var query = N1qlQuery.fromString(sql);
 
-        console.log("queryRecentAds: " + sql);
+        logUtil.info("queryRecentAds: " + sql);
 
         bucket.query(query, function(err, all) {
             
             if (!all)
                 all = [];
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            logUtil.info("number of ads:" + all.length);
+            logUtil.info("Error:" + err);
             reply({
                 length: all.length,
                 list: all
@@ -608,14 +608,14 @@ class AdsModel {
         }
         var query = N1qlQuery.fromString(sql);
 
-        console.log("queryBelowPriceAds: " + sql);
+        logUtil.info("queryBelowPriceAds: " + sql);
 
         bucket.query(query, function(err, all) {
             
             if (!all)
                 all = [];
-            console.log("number of ads:" + all.length);
-            console.log("Error:" + err);
+            logUtil.info("number of ads:" + all.length);
+            logUtil.info("Error:" + err);
             reply({
                 length: all.length,
                 list: all
@@ -755,11 +755,11 @@ class AdsModel {
         filter.pageNo = undefined;
         filter.orderBy = undefined;        
         var sql ="SELECT count(*) FROM default t " + this.buildWhereForFilter(filter);        
-        console.log(sql);
+        logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
-            //console.log("err=", err, all);
-            console.log("count " + all[0].$1);
+            //logUtil.info("err=", err, all);
+            logUtil.info("count " + all[0].$1);
             callback(err,all[0].$1);
         });
     }
@@ -767,7 +767,7 @@ class AdsModel {
     queryWithFilter(callback,filter){
         var sql ="SELECT t.* FROM default t " + this.buildWhereForFilter(filter);
 
-        console.log(sql);
+        logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
             if (!all)
