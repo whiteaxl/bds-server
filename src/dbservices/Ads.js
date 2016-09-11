@@ -793,12 +793,12 @@ class AdsModel {
     }
 
     count(q, callback){
-        var sql ="SELECT count(*) FROM default t " + this._buildWhere(q);
+        var sql ="SELECT count(*) cnt FROM default t " + this._buildWhere(q);
 
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, res) {
-            callback(err, res[0]);
+            callback(err, res[0].cnt);
         });
     }
 

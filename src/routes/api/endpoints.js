@@ -828,7 +828,7 @@ internals.endpoints = [
         schema: {
           length: Joi.number().integer(),
           list: Joi.array().items(ListResultModel),
-          totalCount : Joi.number().integer(),
+          totalCount : Joi.number().integer().allow(null),
         }
       }
     }
