@@ -138,11 +138,11 @@ function _handleDBFindResult(error, allAds, replyViewPort, center, radiusInKm, r
             giaFmtForWeb: util.getPriceDisplay(ads.gia, ads.loaiTin,true),
             dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
             soPhongNgu: ads.soPhongNgu,
-            soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
+            soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "p.ngủ" : null,
             soTang: ads.soTang,
-            soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+            soTangFmt: ads.soTang ? ads.soTang + "tầng" : null,
             soPhongTam: ads.soPhongTam,
-            soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "pt" : null,
+            soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "p.tắm" : null,
             image : {
                 cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize):null,
                 images : ads.image.images ? ads.image.images.map((e) => {
