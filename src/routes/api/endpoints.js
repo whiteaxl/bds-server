@@ -49,6 +49,7 @@ const ListResultModel = Joi.object({
   soPhongTam: Joi.number().allow(null),
   soPhongTamFmt : Joi.string().allow(null),
   distance: Joi.number().allow(null),
+  place: Joi.any(),
 
   //should not have?
   ten_loaiNhaDat: Joi.any(),
@@ -820,8 +821,7 @@ internals.endpoints = [
           isIncludeCountInResponse : Joi.boolean(), 
           userID : Joi.string().description("to keep track history - last search"),
           soPhongNgu: Joi.number().integer(),
-          soPhongTam: Joi.number().integer(),
-          soPhongTang: Joi.number().integer(),
+          soPhongTam: Joi.number().integer()
         }
       },
       response: {

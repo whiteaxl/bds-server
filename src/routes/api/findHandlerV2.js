@@ -67,6 +67,7 @@ function _handleDBFindResult(error, allAds, q) {
     }
 
     let place = ads.place;
+    tmp.place = ads.place;
     let valid = true;
 
     //filter by radius
