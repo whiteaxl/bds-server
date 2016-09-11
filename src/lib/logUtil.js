@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require("moment");
+
 var internals = {};
 
 internals.warn = function(msg, msg2, msg3) {
@@ -20,6 +22,8 @@ internals.enter = function(msg, msg2, msg3) {
 };
 
 internals.doLog = function(type, msg, msg2, msg3) {
+	type = moment().format('[dd hh:mm:ss a]') + type;
+
 	if (msg3) {
 		console.log(type, msg, msg2, msg3);
 	} else if (msg2) {
