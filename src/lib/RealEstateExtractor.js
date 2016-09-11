@@ -37,28 +37,28 @@ var REALESTATE_NAME_MAP = {
 
 //(x,y), x is Ban/Thue, y is loaiNhaDat
 var REALESTATE_TYPE_NAME_MAP = {
-	'Bán nhà biệt thự, liền kề' : '0,4',
-	'Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)' : '0,4',
+	'Bán nhà biệt thự, liền kề' : '0,3',
+	'Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)' : '0,3',
 	'Bán căn hộ chung cư' :'0,1',
 	'Bán nhà riêng' : '0,2',
-	'Bán nhà mặt phố' : '0,3',
+	'Bán nhà mặt phố' : '0,4',
 	'Bán đất nền dự án' : '0,5',
 	'Bán đất nền dự án (đất trong dự án quy hoạch)' :'0,5',
-	'Bán trang trại, khu nghỉ dưỡng' : '0,99',
-	'Bán kho, nhà xưởng' : '0,99',
+	'Bán trang trại, khu nghỉ dưỡng' : '0,7',
+	'Bán kho, nhà xưởng' : '0,8',
 	'Bán loại bất động sản khác' : '0,99',
-	'Bán đất' : '0,5',
-  'Bán nhà mặt phố (nhà mặt tiền trên các tuyến phố)' : '0,3',
+	'Bán đất' : '0,6',
+  'Bán nhà mặt phố (nhà mặt tiền trên các tuyến phố)' : '0,4',
 	//thue
 	'Cho thuê căn hộ chung cư' : '1,1',
 	'Cho thuê nhà riêng' : '1,2',
-	'Cho thuê nhà mặt phố' : "2,3",
-	'Cho thuê nhà trọ, phòng trọ' : '1,99',
-	'Cho thuê văn phòng' : '1,4',
-	'Cho thuê cửa hàng - ki ốt' : '1,5',
-	'Cho thuê kho, nhà xưởng, đất' : '1,99',
+	'Cho thuê nhà mặt phố' : "1,3",
+	'Cho thuê nhà trọ, phòng trọ' : '1,4',
+	'Cho thuê văn phòng' : '1,5',
+	'Cho thuê cửa hàng - ki ốt' : '1,6',
+	'Cho thuê kho, nhà xưởng, đất' : '1,7',
 	'Cho thuê loại bất động sản khác' : '1,99',
-  'Cho thuê cửa hàng, ki ốt' :  '1,5'
+  'Cho thuê cửa hàng, ki ốt' :  '1,6'
 };
 
 
@@ -81,7 +81,7 @@ function _convertLoaiTinGiao(ads) {
 
 		var mapped = REALESTATE_TYPE_NAME_MAP[ads.loaiTinRao];
 		if (!mapped) {
-			console.log("WARN can't find ads.loaiTinRao:" + ads.loaiTinRao)
+			console.log("WARN can't find ads.loaiTinRao:" + ads.loaiTinRao);
 			return;
 		}
 

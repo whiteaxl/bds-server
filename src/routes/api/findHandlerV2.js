@@ -9,9 +9,6 @@ var adsModel = new AdsModel();
 
 var placeUtil = require("../../lib/placeUtil");
 
-var http = require('http');
-var https = require('https');
-var services = require("../../lib/services");
 var constant = require("../../lib/constant");
 var moment = require("moment");
 var geoUtil = require("../../lib/geoUtil");
@@ -19,13 +16,7 @@ var geoUtil = require("../../lib/geoUtil");
 var UserService = require('../../dbservices/User');
 var userService = new UserService();
 
-var DuAnService = require('../../dbservices/DuAn');
-var duAnService = new DuAnService();
-var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
-var duAnNoiBatService = new DuAnNoiBatService();
-
 var cfg = require('../../config');
-
 var _ = require("lodash");
 
 var internals = {};
@@ -205,8 +196,6 @@ internals.findAds = function (q, reply) {
             list: filtered,
             totalCount : cnt,
           });
-
-          return;
         });
 
         return;

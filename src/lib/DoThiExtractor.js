@@ -44,27 +44,27 @@ class DoThiExtractor {
 	static convertDataLoaiNhaDat(loaiNhaDat){
 
 	if(loaiNhaDat == ('Bán nhà biệt thự, liền kề').toUpperCase())
-		return 0,4;
+		return 0,3;
 	if(loaiNhaDat == ('Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)').toUpperCase())
-		return 0,4;
+		return 0,3;
 	if(loaiNhaDat == ('Bán căn hộ chung cư').toUpperCase())
 		return 0,1;
 	if(loaiNhaDat == ('Bán nhà riêng').toUpperCase())
 		return 0,2;
 	if(loaiNhaDat == ('Bán nhà mặt phố').toUpperCase())
-		return 0,3;
+		return 0,4;
 	if(loaiNhaDat == ('Bán đất nền dự án').toUpperCase())
 		return 0,5;
 	if(loaiNhaDat == ('Bán đất nền dự án (đất trong dự án quy hoạch)').toUpperCase())
 		return 0,5;
 	if(loaiNhaDat == ('Bán trang trại, khu nghỉ dưỡng').toUpperCase())
-		return 0,99;
+		return 0,7;
 	if(loaiNhaDat == ('Bán kho, nhà xưởng').toUpperCase())
-		return 0,99;
+		return 0,8;
 	if(loaiNhaDat == ('Bán loại bất động sản khác').toUpperCase())
 		return 0,99;
 	if(loaiNhaDat == ('Bán đất').toUpperCase())
-		return 0,5;
+		return 0,6;
 	if(loaiNhaDat == ('Cho thuê căn hộ chung cư').toUpperCase())
 		return 1,1;
 	if(loaiNhaDat == ('Cho thuê nhà riêng').toUpperCase())
@@ -72,13 +72,13 @@ class DoThiExtractor {
 	if(loaiNhaDat == ('Cho thuê nhà mặt phố').toUpperCase())
 		return 2,3;
 	if(loaiNhaDat == ('Cho thuê nhà trọ, phòng trọ').toUpperCase())
-		return 1,99;
-	if(loaiNhaDat == ('Cho thuê văn phòng').toUpperCase())
 		return 1,4;
-	if(loaiNhaDat == ('Cho thuê cửa hàng - ki ốt').toUpperCase())
+	if(loaiNhaDat == ('Cho thuê văn phòng').toUpperCase())
 		return 1,5;
+	if(loaiNhaDat == ('Cho thuê cửa hàng - ki ốt').toUpperCase())
+		return 1,6;
 	if(loaiNhaDat == ('Cho thuê kho, nhà xưởng, đất').toUpperCase())
-		return 1,99;
+		return 1,7;
 	if(loaiNhaDat == ('Cho thuê loại bất động sản khác').toUpperCase())
 		return 1,99;
 }
@@ -89,7 +89,7 @@ class DoThiExtractor {
 				return i;
 
 		}
-		return 0 // 0 la huong Bat ky
+		return 0; // 0 la huong Bat ky
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
