@@ -23,6 +23,19 @@ internals.getBox = function(point, radius) {
     return [sw.lat, sw.lon, ne.lat, ne.lon];
 };
 
+internals.getBoxOfCircle = function(point, radius) {
+    let ne = {};
+    let sw = {};
+
+    ne.lat = point.lat + radius;
+    ne.lon = point.lon + radius;
+
+    sw.lat = point.lat - radius;
+    sw.lon = point.lon - radius;
+
+    return {northeast: ne, southwest: sw};
+};
+
 //polygon: [{lat,lon}]
 internals.getGeoBoxOfPolygon = function(coords) {
     var tmpCenter = geolib.getCenter(coords);
@@ -54,6 +67,36 @@ internals.getGeoBoxOfPolygon = function(coords) {
     var geoBox = [sw.lat, sw.lon, ne.lat, ne.lon];
 
     return {geoBox: geoBox, center: center};
+};
+
+internals.getBoxOfPolygon = function(coords) {
+    var tmpCenter = geolib.getCenter(coords);
+    var center = {lat: Number(tmpCenter.latitude), lon: Number(tmpCenter.longitude)};
+
+    var maxLat = 0;
+    var maxLon = 0;
+
+    coords.forEach((e) => {
+        if (maxLat < Math.abs(center.lat-e.latitude)) {
+            maxLat = Math.abs(center.lat-e.latitude);
+        }
+
+        if (maxLon < Math.abs(center.lon-e.longitude)) {
+            maxLon = Math.abs(center.lon-e.longitude);
+        }
+    });
+
+    var sw = {
+        lat : center.lat - maxLat,
+        lon : center.lon - maxLon,
+    };
+
+    var ne = {
+        lat : center.lat + maxLat,
+        lon : center.lon + maxLon,
+    };
+
+    return {southwest:sw, northeast: ne};
 };
 
 internals.isPointInside = function(geo, polygonCoords) {

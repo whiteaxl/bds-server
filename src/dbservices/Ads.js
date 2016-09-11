@@ -628,8 +628,8 @@ class AdsModel {
     likeAds(payload,reply){
         var adsID = req.payload.adsID;
         var userID = req.payload.userID;
-        
-    
+
+
     }
 
     buildWhereForFilter(filter){
@@ -776,7 +776,147 @@ class AdsModel {
         });
     }
 
+    query(q, callback){
+        var sql ="SELECT " +
+          " id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, " +
+          " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin " +
+          " FROM default t "
+          + this._buildWhere(q) + this._buildOrderByAndPaging(q);
 
+        logUtil.info(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, all) {
+            if (!all)
+                all = [];
+            callback(err, all);
+        });
+    }
+
+    count(q, callback){
+        var sql ="SELECT count(*) FROM default t " + this._buildWhere(q);
+
+        logUtil.info(sql);
+        var query = N1qlQuery.fromString(sql);
+        bucket.query(query, function(err, res) {
+            callback(err, res[0]);
+        });
+    }
+
+    _buildOrderByAndPaging(q) {
+        let sql = "";
+
+        if (q.orderBy) {
+            sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
+        }
+
+        if(q.dbLimit)
+            sql = sql + " LIMIT  " + q.dbLimit;
+        if(q.dbPageNo)
+            sql = sql + " OFFSET  " + ((q.dbPageNo-1)*q.dbLimit);
+
+        return sql;
+    }
+
+    _buildWhere(q){
+        var sql = ` WHERE loaiTin = ${q.loaiTin}`;
+
+        if(q.loaiNhaDat){
+            var condition = " and loaiNhaDat in [";
+            for(var i = 0; i<q.loaiNhaDat.length;i++){
+                if(i==q.loaiNhaDat.length-1){
+                    condition = condition + q.loaiNhaDat[i] + "]";
+                }else{
+                    condition = condition + q.loaiNhaDat[i] + ",";
+                }
+                if(q.loaiNhaDat[i] == 0){
+                    condition = "";
+                    break;
+                }
+            }
+            sql = sql + condition;
+        }
+
+        if (q.viewport) {
+            let vp = q.viewport;
+            sql = sql + " AND (place.geo.lat BETWEEN " + vp.southwest.lat + " AND " + vp.northeast.lat + ")";
+            sql = sql + " AND (place.geo.lon BETWEEN " + vp.southwest.lon + " AND " + vp.northeast.lon + ")";
+        }
+
+        if (q.diaChinh) {
+            let dc = q.diaChinh;
+            if (dc.tinhKhongDau) {
+                sql = `${sql} AND place.diaChinh.tinhKhongDau='${dc.tinhKhongDau}'`;
+            }
+
+            if (dc.huyenKhongDau) {
+                sql = `${sql} AND place.diaChinh.huyenKhongDau='${dc.huyenKhongDau}'`;
+            }
+            if (dc.xaKhongDau) {
+                sql = `${sql} AND place.diaChinh.xaKhongDau='${dc.xaKhongDau}'`;
+            }
+            if (dc.duAnKhongDau) {
+                sql = `${sql} AND place.diaChinh.duAnKhongDau='${dc.duAnKhongDau}'`;
+            }
+        }
+
+        if (q.ngayDangTinGREATER) { //ngayDangTinFrom: 20-04-2016
+            sql = `${sql} and ngayDangTin > '${q.ngayDangTinGREATER}'`;
+        }
+
+        if (q.giaBETWEEN && (q.giaBETWEEN[0] > 1 || q.giaBETWEEN[1] < 9999999)) {
+            sql = `${sql} AND (gia BETWEEN ${q.giaBETWEEN[0]} AND ${q.giaBETWEEN[1]})`;
+        }
+
+        if(q.soPhongNguGREATER){
+            let soPhongNguGREATER = Number(q.soPhongNguGREATER);
+            sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
+        }
+        if(q.soPhongTamGREATER){
+            let soPhongTamGREATER = Number(q.soPhongTamGREATER);
+            sql = sql + (soPhongTamGREATER ? " AND soPhongTam  >= " + soPhongTamGREATER : "");
+        }
+        if(q.soTangGREATER){
+            let soTangGREATER = Number(q.soTangGREATER);
+            sql = sql + (soTangGREATER ? " AND soTang  >= " + soTangGREATER : "");
+        }
+
+        if ((q.dienTichBETWEEN) && (q.dienTichBETWEEN[0] > 1 || q.dienTichBETWEEN[1] < 9999999)) {
+            sql = `${sql} AND (dienTich BETWEEN  ${q.dienTichBETWEEN[0]} AND ${q.dienTichBETWEEN[1]})`;
+        }
+
+        if(q.huongNha){
+            var condition = " and huongNha in [";
+            for(var i = 0; i<q.huongNha.length;i++){
+                if(i==q.huongNha.length-1){
+                    condition = condition + q.huongNha[i] + "]";
+                }else{
+                    condition = condition + q.huongNha[i] + ",";
+                }
+                if(q.huongNha[i] == 0){
+                    condition = "";
+                    break;
+                }
+            }
+            sql = sql + condition;
+        }
+
+        if(q.soPhongNgu){
+            let soPhongNgu = Number(q.soPhongNgu);
+            sql = sql + " AND soPhongNgu  = " + soPhongNgu;
+        }
+        if(q.soPhongTam){
+            let soPhongTam = Number(q.soPhongTam);
+            sql = sql + " AND soPhongTam  = " + soPhongTam;
+        }
+        if(q.soTang){
+            let soTang = Number(q.soTang);
+            sql = sql + " AND soTang  = " + soTang;
+        }
+
+
+        return sql;
+
+    }
 }
 
 module.exports = AdsModel;
