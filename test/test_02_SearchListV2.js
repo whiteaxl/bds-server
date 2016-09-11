@@ -130,4 +130,42 @@ describe("01.Find API testsuite", function () {
   };
 
   it("Tim kiem theo testFind_02",testFind_02);
+  //------------
+  var testFind_03 = function (done) {
+    server
+      .post("/api/v2/find")
+      .send({
+        "loaiTin": 0,
+        "giaBETWEEN": [0, 3000],
+        "dienTichBETWEEN" : [20, 100],
+        "ngayDangTinGREATER" : "20150601",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 21.385027,
+            "lon" : 106.0198859
+          },
+          "southwest" : {
+            "lat" : 20.562323,
+            "lon" : 105.2854659
+          }
+        },
+        "diaChinh" : {
+          "tinhKhongDau" : "ha-noi",
+          "huyenKhongDau" : "cau-giay"
+        },
+        "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
+        "limit" : 25,
+        "pageNo" : 1,
+        "isIncludeCountInResponse" : false
+      })
+      .expect("Content-type", /json/)
+      .expect(200) // THis is HTTP response
+      .end(function (err, res) {
+        console.log("\ntestFind, length:", res.body);
+
+        done();
+      });
+  };
+
+  it("Tim kiem theo NO Count",testFind_03);
 });
