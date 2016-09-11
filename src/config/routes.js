@@ -16,16 +16,14 @@
 // Accounts
 //var AccountRoutes = require('../routes/account/endpoints'),
     //General like env & status
-var  AdminRoutes = require('../routes/admin/endpoints')   
-var  ApiRoutes = require('../routes/api/endpoints')   
+var  ApiRoutes = require('../routes/api/endpoints')
 var  WebRoutes = require('../routes/web/endpoints')   
 
 
 var internals = {};
 
 //Concatentate the routes into one array
-internals.routes = [].concat(AdminRoutes.endpoints,
-                             ApiRoutes.endpoints,
+internals.routes = [].concat(ApiRoutes.endpoints,
                              WebRoutes.endpoints
                              );
 

@@ -47,6 +47,7 @@ const ListResultModel = Joi.object({
   huongNha: Joi.number().integer().allow(null),
   soNgayDaDangTin: Joi.number().allow(null),
   soPhongTam: Joi.number().allow(null),
+  soPhongTamFmt : Joi.string().allow(null),
   distance: Joi.number().allow(null),
 
   //should not have?

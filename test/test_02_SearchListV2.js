@@ -7,47 +7,8 @@ var constant = require('../src/lib/constant');
 
 var server = supertest.agent("http://localhost:5000");
 
-
-/**
- *  Co' 3 loai search:
- *      Tim kiem theo GeoBox, polygon : phuc vu MAP
- *      Tim kiem theo Dia Chinh : search text
- *      Tim kiem theo Dia Diem  + Ban Kinh: search text
- *  Thu tu uu tien khi tim kiem: GeoBox > Dia Chinh/Dia Diem
- *  Su dung tim theo BanKinh cho: DiaDiem (ko phai Tinh/Huyen/Xa), Current Location
- * Request json: {
- *  loaiTin: bat buoc Number, 0=BAN, 1 = THUE
- *  loaiNhaDat: Number, eg: 1,2,... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
- *  giaBETWEEN: Array, eg [0,85] : <from,to>, don vi la` TRIEU (voi THUE la trieu/thang)
- *  dienTichBETWEEN: Array: [from,to] , don vi la` m2
- *  ngayDangTinGREATER: greater or equals
- *  soPhongNguGREATER: greater or equals
- *  soPhongTamGREATER: greater or equals
- *  huongNha: Number, 1.... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)
- *  viewport: {southwest:{lat, lon}, northeast: {lat, lon}}
- *		eg: {southwest:{20.986007099732642,105.84372998042551},northeast:{21.032107100267314,105.87777141957429}}
- *  polygon : [{lat, lon}, {}]
- *  circle { //Object
- *      center: {lat, lon}
- *      radius : number in km
- *  }
- *  diaChinh { tinh huyen xa co' dau
- *       tinhKhongDau, huyenKhongDau, xaKhongDau, duAnKhongDau, duongKhongDau
- *  }
- *  orderBy: {name:string, type:string}, eg: ngayDangTinDESC/giaASC/giaDESC/dienTichASC, soPhongTamASC, soPhongNguASC
- *  limit : Number, eg: 25
- *  pageNo : 1,2, 3
- *  isIncludeCountInResponse : true/false
- *}
- *Response : xem chi tiet trong file sample_find.js
- *  {
- *       length: Number, so bai dang thoa man (theo page)
-         list: [] Danh sach cac bai dang thoa man
-         totalCount : total count (when isIncludeCountInResponse=true)
- *  }
- */
-
 describe("01.Find API testsuite", function () {
+  this.timeout(15000);
 
   var testFind = function (done) {
     server
@@ -139,7 +100,7 @@ describe("01.Find API testsuite", function () {
         "loaiTin": 0,
         "giaBETWEEN": [0, 3000],
         "dienTichBETWEEN" : [20, 100],
-        "ngayDangTinGREATER" : "20160601",
+        "ngayDangTinGREATER" : "20150601",
         "viewport" : {
           "northeast" : {
             "lat" : 21.385027,
