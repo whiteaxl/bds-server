@@ -56,11 +56,11 @@ function _returnToClient(list, reply) {
         viewport : {
           "northeast": {
             "lat": vp.northeast.lat,
-            "lon": vp.northeast.lng
+            "lon": vp.northeast.lon
           },
           "southwest": {
             "lat": vp.southwest.lat,
-            "lon": vp.southwest.lng
+            "lon": vp.southwest.lon
           }
         }
       }
