@@ -29,14 +29,14 @@ function _handleDBFindResult(error, allAds, q) {
     var targetSize = "745x510"; //350x280
 
     let tmp = {
-      adsID: ads.adsID,
+      adsID: ads.id,
       gia: ads.gia,
       giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
       giaFmtForWeb: util.getPriceDisplay(ads.gia, ads.loaiTin, true),
       dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
       soPhongNgu: ads.soPhongNgu,
       soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
-      soTang: ads.soTang,
+      soTang: ads.soTang ,
       soTangFmt: ads.soTang ? ads.soTang + "t" : null,
       soPhongTam: ads.soPhongTam,
       soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "pt" : null,
