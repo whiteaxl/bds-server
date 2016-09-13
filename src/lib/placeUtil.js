@@ -53,6 +53,11 @@ placeUtil.getDiaChinhFromGooglePlace = function(place) {
         }
     }
 
+    //todo: Name tu liem ? harded code for now
+    if (huyen == "Từ Liêm") {
+        huyen = "Nam Từ Liêm";
+    }
+
     var diaChinh = {
         tinh: this.chuanHoa(tinh),
         huyen: this.chuanHoa(huyen),
@@ -67,6 +72,10 @@ placeUtil.getDiaChinhFromGooglePlace = function(place) {
 
 placeUtil.getDiaChinh = function(diaChi) {
     var spl = diaChi.split(",");
+    if (!spl || spl.length == 0) {
+        spl = diaChi.split("-");
+    }
+
     var diaChinh = {};
 
     var i = spl.length;

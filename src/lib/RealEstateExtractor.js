@@ -103,19 +103,6 @@ function _convertLoaiTinGiao(ads) {
 	}
 }
 
-function _parseHuyenFullName(huyenFullName) {
-	let spl = huyenFullName.split(",");
-	let place = {huyenFullName : huyenFullName}
-	if (spl.length === 2) {
-		place.huyenName = spl[0].trim();
-		place.tinhName  = spl[1].trim();
-	} else {
-		logUtil.warn("huyenFullName is wrong format:" + huyenFullName);
-	}
-
-	return place;
-}
-
 function buildPlace(adsDto) {
 	adsDto.place = {};
 

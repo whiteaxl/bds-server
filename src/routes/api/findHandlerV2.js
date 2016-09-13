@@ -214,7 +214,7 @@ internals.findAds = function (q, reply) {
 internals.find = function (req, reply) {
   console.log("Find v2:", req.payload);
     internals.findAds(req.payload, (res) => {
-      logUtil.info("Will resonse:", res);
+      //logUtil.info("Will resonse:", res);
       reply(res);
     })
 
