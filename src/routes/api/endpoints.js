@@ -876,6 +876,8 @@ internals.endpoints = [
             title2 : Joi.string().allow(null).allow(''),
             data : Joi.array().items(Joi.object({
               adsID : Joi.string(),
+              loaiTin : Joi.number(),
+              loaiNhaDat : Joi.number(),
               giaFmt : Joi.string(),
               dienTichFmt : Joi.string(),
               khuVuc : Joi.string(),

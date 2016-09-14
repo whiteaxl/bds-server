@@ -26,6 +26,8 @@ function convertListResult(list) {
 
     return {
       adsID: e.adsID,
+      loaiTin: e.loaiTin,
+      loaiNhaDat: e.loaiNhaDat,
       giaFmt: e.giaFmt || undefined,
       dienTichFmt: e.dienTichFmt || undefined,
       khuVuc: e.place.diaChinh.huyen ?   e.place.diaChinh.huyen + ", " + e.place.diaChinh.tinh : e.place.diaChinh.tinh,
