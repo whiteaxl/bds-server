@@ -33,7 +33,7 @@ INSERT INTO default (KEY, VALUE) VALUES ("DuAnNoiBat_3",
 class DuAnNoiBatModel {
 
 	upsert(duAnNoiBatDto) {
-		this.initBucket();
+	
 
 		duAnNoiBatDto.id = duAnNoiBatDto.duAnNoiBatID;
 
@@ -45,7 +45,7 @@ class DuAnNoiBatModel {
 	}
 
 	findDuAnNoiBat(q,callback){
-        this.initBucket();
+       
         
 		var sql = "SELECT t.* FROM `default` t  where t.type='DuAnNoiBat' ";
 

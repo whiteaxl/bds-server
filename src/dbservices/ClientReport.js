@@ -14,7 +14,7 @@ reportObjID
 class ClientReportModel {
 
 	upsert(clientReportDto, callback) {
-		this.initBucket();
+	
 
 		clientReportDto.id = clientReportDto.clientReportID;
 

@@ -95,7 +95,7 @@ class AdsModel {
     }
 
     getAds(adsID, callback) {
-        //this.initBucket();
+       
         bucket.get(adsID, callback);
     }
 

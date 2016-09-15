@@ -9,12 +9,12 @@ var N1qlQuery = require('couchbase').N1qlQuery;
 class Payment {
   
   upsert(dto, callback) {
-    this.initBucket();
+   
     bucket.upsert(dto.id, dto, callback)
   }
 
   getAllPaymentBonus(callback) {
-    this.initBucket();
+   
     var sql = `select default.* from default where type='PaymentBonus'`;
     var query = N1qlQuery.fromString(sql);
     bucket.query(query, callback);

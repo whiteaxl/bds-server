@@ -31,7 +31,7 @@ var N1qlQuery = require('couchbase').N1qlQuery;
 class DuAnModel {
 
 	upsert(duAnDto) {
-		this.initBucket();
+	
 
 		duAnDto.id = duAnDto.duAnID;
 
@@ -43,7 +43,7 @@ class DuAnModel {
 	}
 
 	findDuAn(q,callback){
-        this.initBucket();
+      
         
 		var sql = "SELECT t.* FROM `default` t  where t.type='DuAn' ";
 

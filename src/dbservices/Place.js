@@ -20,8 +20,7 @@ class PlaceModel {
 
 	//return top 5
 	getPlaceByNameLike(input, callback) {
-		this.initBucket();
-
+	
 		let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
 
     var sql = `select default.* from default where type='Place' and geometry is not missing 
@@ -42,7 +41,7 @@ class PlaceModel {
 
 	//may be for testing only
 	patchDataInDB(){
-		this.initBucket();
+	
 		
 		var sql = "select default.* from default where type='Place' where geometry is not missing and geometry.viewport is not missing";
 		var query = N1qlQuery.fromString(sql);
