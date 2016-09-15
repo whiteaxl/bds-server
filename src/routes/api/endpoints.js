@@ -7,6 +7,7 @@ var fileUploadHandler = require('./fileUploadHandler');
 var userHandlers = require('./userHandlers');
 var newsHandlers = require('./newsHandlers');
 var homeDataHandlers = require('./homeDataHandlers');
+var homeDataHandlersV2 = require('./homeDataHandlersV2');
 var placeHandlers = require('./placeHandlers');
 
 var onepay = require("./onepayHandlers");
@@ -828,12 +829,14 @@ internals.endpoints = [
             duAnKhongDau : Joi.string(),
           },
           limit: Joi.number(),
+          dbLimit: Joi.number(),
           orderBy: Joi.object({
             name : Joi.string(), // ngayDangTin
             type : Joi.string()  // ASC, DESC
           })
             .description('ngayDangTin/gia/gia/dienTich, soPhongTam, soPhongNgu'),
           pageNo: Joi.number(),
+          dbPageNo: Joi.number(),
           isIncludeCountInResponse : Joi.boolean(), 
           userID : Joi.string().description("to keep track history - last search"),
           soPhongNgu: Joi.number().integer(),
@@ -860,6 +863,50 @@ internals.endpoints = [
       response: {
         schema: Joi.object({
           countResult : Joi.number().integer(),
+        })
+      }
+    }
+  },
+
+  {
+    method: 'POST',
+    path: '/api/v2/homeData4App',
+    handler: homeDataHandlersV2.homeData4App,
+    config: {
+      description: 'Lay du lieu cho trang chu dua theo lan tim kiem cuoi cung. Se tra ve tat ca cac collection cho home',
+      tags: ['api'],
+      validate: {
+        payload: {
+          timeModified: Joi.number(),
+          query: Joi.object(),
+          currentLocation : Joi.object({
+            lat : Joi.number(),
+            lon : Joi.number()
+          })
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          data: Joi.array().items(Joi.object({
+            title1 : Joi.string(),
+            title2 : Joi.string().allow(null).allow(''),
+            data : Joi.array().items(Joi.object({
+              adsID : Joi.string(),
+              loaiTin : Joi.number(),
+              loaiNhaDat : Joi.number(),
+              giaFmt : Joi.string(),
+              dienTichFmt : Joi.string(),
+              khuVuc : Joi.string(),
+              soPhongNguFmt : Joi.string().allow(null),
+              soPhongTamFmt : Joi.string(),
+              cover : Joi.string().allow(null).allow('')
+            })),
+            query: Joi.object()
+          })),
+          lastQuery : Joi.object(),
+          msg: Joi.string()
         })
       }
     }

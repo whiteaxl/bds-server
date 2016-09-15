@@ -35,11 +35,11 @@ function _handleDBFindResult(error, allAds, q) {
       giaFmtForWeb: util.getPriceDisplay(ads.gia, ads.loaiTin, true),
       dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
       soPhongNgu: ads.soPhongNgu,
-      soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "pn" : null,
+      soPhongNguFmt: ads.soPhongNgu ? ads.soPhongNgu + "p.ngủ" : null,
       soTang: ads.soTang ,
-      soTangFmt: ads.soTang ? ads.soTang + "t" : null,
+      soTangFmt: ads.soTang ? ads.soTang + "tầng" : null,
       soPhongTam: ads.soPhongTam,
-      soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "pt" : null,
+      soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "p.tắm" : null,
       image: {
         cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize) : null,
         images: ads.image.images ? ads.image.images.map((e) => {
@@ -214,7 +214,7 @@ internals.findAds = function (q, reply) {
 internals.find = function (req, reply) {
   console.log("Find v2:", req.payload);
     internals.findAds(req.payload, (res) => {
-      logUtil.info("Will resonse:", res);
+      //logUtil.info("Will resonse:", res);
       reply(res);
     })
 
