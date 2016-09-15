@@ -5,8 +5,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
         terminal: true,
         templateUrl: "/web/common/directives/mobile/bds-mobile-filter.tpl.html",
         replace: 'true',
-        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','NgMap',
-            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,NgMap) {
+        controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil','NgMap',
+            function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil,NgMap) {
                 var vm = this; 
                 $(".btn-more .collapse-title").click(function() {
                     $(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
@@ -181,7 +181,21 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     //     inherit: false,
                     //     notify: true
                     // });
-                    $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
+                    if($scope.searchData.dienTichKhacFrom || $scope.searchData.dienTichKhacTo){
+                        $scope.searchData.dienTichBETWEEN[0] = 0 || $scope.searchData.dienTichKhacFrom;
+                        $scope.searchData.dienTichBETWEEN[1] = $scope.searchData.dienTichKhacTo || 9999999999999999;  
+                        $scope.searchData.dienTichKhacFrom = undefined;
+                        $scope.searchData.dienTichKhacTo = undefined;                     
+                    }
+                    if($scope.searchData.giaKhacFrom || $scope.searchData.giaKhacTo){
+                        $scope.searchData.giaBETWEEN[0] = $scope.searchData.giaKhacFrom || 0;
+                        $scope.searchData.giaBETWEEN[1] = $scope.searchData.giaKhacTo || 9999999999999999;  
+                        $scope.searchData.giaKhacFrom = undefined;
+                        $scope.searchData.giaKhacTo = undefined;
+                      
+                    }
+                    // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
+                    $state.go("msearch", { "tinh" : vm.place.tinh,"huyen" : vm.place.huyen,"xa" : vm.place.xa, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData,"placeId": vm.place.placeId, "viewMode": "list"});
                     $(".overlay").click();
                 }
                 vm.gotoRelandApp = function(event){
@@ -196,8 +210,36 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 NgMap.getMap("filtermap").then(function(map){
                     vm.map = map;           
-                    window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
-                    vm.PlacesService =  new google.maps.places.PlacesService(map);                                
+                    /*window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map,[
+                        {
+                            description: "1",
+                            types:      "1", 
+                            place_id:   "111",
+                            class: "iconLocation gray"
+                        },
+                        {
+                            description: "2",
+                            types:      "1", 
+                            place_id:   "111",
+                            class: "iconLocation gray"
+                        }
+                    ]);*/
+
+                    RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback,"searchadd",[
+                        {
+                            description: "3",
+                            types:      "1", 
+                            place_id:   "111",
+                            class: "iconLocation grasy"
+                        },
+                        {
+                            description: "4",
+                            types:      "1", 
+                            place_id:   "111",
+                            class: "iconLocation grasy"
+                        }
+                    ]);
+                    // vm.PlacesService =  new google.maps.places.PlacesService(map);                                
                 });
 
                 var setDrumValues = function(select, value){
@@ -215,8 +257,84 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     
                 }
                 vm.showFrequentSearch = false;
+                vm.autocompleteSource = function (request, response) {
+                    var results = [];
+                    $http.get("/api/place/autocomplete?input=" + request.term).then(function(res){
+                        var predictions = res.data.predictions; 
+                        if(res.status == '200'){
+                          for (var i = 0, prediction; prediction = predictions[i]; i++) {
+                            results.push(
+                            {
+                              description: prediction.fullName,
+                              types:    prediction.placeType, 
+                              viewPort:   prediction.viewPort,
+                              tinh: prediction.tinh,
+                              huyen: prediction.huyen,
+                              xa: prediction.xa,
+                              placeId: prediction.placeId,
+                              class: "iconLocation gray"
+                            }
+                            );
+                          } 
+                        }
+                        response(results);
+                    });
+                }
+                vm.favoriteSearchSource = [
+                     {
+                        description: "1",
+                        types:      "1", 
+                        place_id:   "111",
+                        class: "iconLocation gray"
+                    },
+                    {
+                        description: "2",
+                        types:      "1", 
+                        place_id:   "111",
+                        class: "iconLocation gray"
+                    }
+                ];
                 vm.keyPress = function(event){
                     vm.showFrequentSearch = false;
+                    $( "#searchadd").autocomplete( "option", "source",vm.autocompleteSource);
+                    var $ww = $(window).width();                 
+
+                    
+                }
+                vm.toggleQuickClearAutoComplete = function(){
+                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                        $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
+                        $( "#searchadd").autocomplete( "search", "" );
+                        $(".close-search").removeAttr("style");
+                        $(".input-fr").removeAttr("style");
+                    }else{
+                        $(".close-search").show();
+                        $(".input-fr").css("width", $ww-78);
+                    }
+                    // if($(".search").find("input").hasClass("input-fr")){
+
+                    //     if($(".input-fr").val().length>0) {
+                    //         $(".close-search").show();
+                    //         $(".input-fr").css("width", $ww-78);
+                    //     }else{
+                    //         $(".close-search").removeAttr("style");
+                    //         $(".input-fr").removeAttr("style");
+                    //     }
+                    // }
+                }
+                vm.autoCompleteChange = function(event){
+                    if(vm.autoCompleteText == ''){
+                        $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
+                        $( "#searchadd").autocomplete( "search", "" );
+                    }
+                    vm.toggleQuickClearAutoComplete();                    
+                }
+                vm.showFavorite = function(event){
+                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                        $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
+                        $( "#searchadd").autocomplete( "search", "" );
+                    }
+
                 }
 
                 vm.init = function(){
@@ -263,8 +381,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                     var datepost = $scope.searchData.ngayDaDang;
                     var datepostElm = $("select#datepost");
-                    setDrumValues(datepostElm,datepost);                    
-
+                    setDrumValues(datepostElm,datepost);   
 
                 }
                 $timeout(function() {

@@ -52,6 +52,13 @@ class PlaceModel {
 		bucket.query(query, callback);
 	}
 
+	getPlaceByID(placeID,callback){
+		var sql = "select default.* from default where type='Place' and id='" + placeID + "'";
+		console.log("getPlaceByID" + sql);
+		var query = N1qlQuery.fromString(sql);
+		bucket.query(query, callback);	
+	}
+
 	//may be for testing only
 	patchDataInDB(){
 		this.initBucket();

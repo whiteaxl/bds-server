@@ -21,6 +21,7 @@ require("./src/web/app/home/DangTinCtrl.js");
 //services
 require("./src/web/common/services/newsService.js");
 require("./src/web/common/services/house.js");
+require("./src/web/common/services/utils.js");
 
 
 //Directives

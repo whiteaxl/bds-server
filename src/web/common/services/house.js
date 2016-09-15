@@ -17,14 +17,16 @@
       },
       findAdsSpatial: function(data){
         // var url = "/api/find";
-        var url = "/api/findAds";
+        // var url = "/api/findAds";
         // var url = "/api/search";
+        var url = "/api/v2/find";
         return $http.post(url,data);
       },
       countAds: function(data){
         //var url = "/api/find";
         // var url = "/api/count";
-        var url = "/api/countAds";
+        // var url = "/api/countAds";
+        var url = "/api/v2/count";
         return $http.post(url,data);
       },
       //Nhannc
@@ -93,7 +95,14 @@
       },
       reportReland: function(data){
         return $http.post("/api/reportReland",data);  
+      },
+      placeAutoComplete: function(data){
+        return $http.get("/api/place/autocomplete",data);
+      },
+      getPlaceByID: function(data){
+        return $http.post("/api/place/getPlaceByID",data);
       }
+
 
       
     };

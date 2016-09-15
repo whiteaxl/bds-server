@@ -5,9 +5,9 @@
 <div ng-if="msc.viewMode=='list'" class="wapper">
     <div class="reland-box uln" infinite-scroll='msc.nextPage()' infinite-scroll-disabled='msc.disableScrolling' infinite-scroll-distance='1' >
         <ul class="reland-list full" >
-            <li ng-repeat="ads in msc.ads_list track by $index" ng-click="msc.goDetail($event,$index)">
-                <a href="#" class="heart"><i class="icon-heart"></i></a>
-                <a href="#">
+            <li ng-repeat="ads in msc.ads_list track by $index" >
+                <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
+                <a href="#" ng-click="msc.goDetail($event,$index)">
                     <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                     <span class="des bgOpa">
                         <span class="btn btn-primary">Cần bán gấp</span>
@@ -25,12 +25,12 @@
         <div class="clb ovh"></div>
     </div>
     <!--END-->
-    
+    <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
 </div>
 
 
 
-<div ng-if="msc.viewMode =='list'" class="bottom clb ovh uln">
+<div ng-if="msc.ads_list && msc.ads_list.length>0" class="bottom clb ovh uln">
     <div class="app">
         <h5>Reland App (IOS/Android)</h5>
         <ul>
@@ -46,6 +46,7 @@
         <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
     </div>
 </div>
+ <div class="notifyBox heartNotify"></div>
 <div  class="wapper">
     <div class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}">
         <ng-map id="searchmap"  center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"   map-initialized="msc.mapInitialized(map)"  class="ngmap">
@@ -82,6 +83,7 @@
             </info-window> -->
         </ng-map>    
     </div>
+    <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
 </div>
 
 <footer class="main border uln">
@@ -107,6 +109,7 @@
 </footer>
 
 <div class="overlay"></div>
+
 
 <div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
     <div class="modal-dialog" role="document">

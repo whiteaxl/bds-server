@@ -75,6 +75,34 @@ function _returnToClient(list, reply) {
   });
 }
 
+internals.getPlaceByID = function(req,reply){
+  var payload = req.payload;
+  log.info("getPlaceByID, payload=", payload);
+
+  if (!payload.placeId) {
+    reply({
+      place : undefined,
+      status: "OK"
+    });
+
+    return;
+  }
+  place.getPlaceByID(payload.placeId,(err,res) => {
+    if(err){
+      console.log("getPlaceByID error ", err);
+      reply({
+        place : undefined,
+        status: "ERROR " + err
+      });
+      return;
+    }
+    reply({
+      place : res[0],
+      status: "OK"
+    });
+  });
+}
+
 internals.autocomplete = function(req, reply) {
   var query = req.query;
   log.info("autocomplete, query=", query);

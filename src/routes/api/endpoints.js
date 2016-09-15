@@ -768,6 +768,22 @@ internals.endpoints = [
       }
     }
   },
+  {
+    method: 'POST',
+    path: '/api/place/getPlaceByID',
+    handler: placeHandlers.getPlaceByID,
+    config: {
+      description: 'Tra ve place by ID',
+      tags: ['api'],
+      response: {
+        schema: Joi.object({
+          place: Joi.object().description("ds thoa man"),
+          status: Joi.string().description("mô tả trạng thái OK/ERROR"),
+        })
+      }
+    }
+  },
+
 
   {
     method: 'POST',

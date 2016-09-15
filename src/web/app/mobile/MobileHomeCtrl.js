@@ -24,8 +24,8 @@
         }
         if($rootScope.lastSearch)
         	homeDataSearch.query = $rootScope.lastSearch;
-        $rootScope.currentLocation.lat = 20.9898098;
-    	$rootScope.currentLocation.lon = 105.7098334;
+     //    $rootScope.currentLocation.lat = 20.9898098;
+    	// $rootScope.currentLocation.lon = 105.7098334;
     	homeDataSearch.currentLocation = $rootScope.currentLocation;
     	
         vm.getLocation = function() {
@@ -54,7 +54,7 @@
 					if(item.data.length>0)
 						vm.boSuuTap.push(item);
 				});
-				//vm.boSuuTap = res.data.data; 
+				vm.doneSearch = true;
 			});
 		}
 		vm.goDetail = function(ads){

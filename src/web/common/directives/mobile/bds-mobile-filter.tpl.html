@@ -8,12 +8,12 @@
 	<form>
 		<div class="search-fr">
 	    	<i class="iconSearch"></i>
-	    	<input type="text" ng-keypress="mf.keyPress($event)" ng-click="mf.showFrequentSearch = true;" class="input-fr" id="searchadd" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />	
-	    	<ul ng-if="mf.showFrequentSearch==true" >
+	    	<input type="text" ng-change="mf.autoCompleteChange();" ng-model="mf.autoCompleteText" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />	
+	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>
-	    	</ul>    	
-	        <a href="javascript:void(0)" class="close-search"><i class="iconCancel"></i> Thoát</a>
+	    	</ul> -->    	
+	        <a href="#" ng-click="mf.autoCompleteText='';mf.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
 	    </div>
 	    <div class="search-box">
 	        <ul class="nav nav-tabs" role="tablist">
@@ -26,6 +26,10 @@
 	                <div class="price-box collapse-box">
 	                	<a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')" >Mức giá<span><label id="prices2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div id="price_0" ng-show="searchData.loaiTin==0 || mf.initialized==false" class="priceBox spinner spinner-hide">
+	                    	<div class="mb10 ovh">
+                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacFrom" class="form-control" /></div>
+                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacTo" class="form-control" /></div>
+                            </div>
 	                        <select class="drum" id="prices1" ng-model="searchData.giaBETWEEN[0]">
 	                        	<option value="0">0</option>
 	                        	<option ng-repeat="price in mf.sellPrices" value="{{price.value}}">{{price.lable}}</option>
@@ -99,6 +103,10 @@
 	                 <div class="area-box collapse-box">
                         <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area2_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="areaBox spinner spinner-hide">
+	                    	<div class="mb10 ovh">
+                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacFrom" class="form-control" /></div>
+                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacTo" class="form-control" /></div>
+                            </div>
 	                    	<select ng-model="searchData.dienTichBETWEEN[0]" id="area1" class="drum">
 	                        	<option value="0">0</option>
 	                            <option value="10">10 m2</option>

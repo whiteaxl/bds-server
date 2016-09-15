@@ -28,25 +28,50 @@
     }    
     $rootScope.pageSize = 25;
 
+    // $rootScope.searchData = {
+    //   giaBETWEEN: [0,9999999999999],
+    //   "loaiTin": 0,
+    //   "loaiNhaDat": 0, 
+    //   "loaiNhaDats": [],
+    //   "soPhongNguGREATER": 0,
+    //   "soPhongTamGREATER": 0,
+    //   "soTangGREATER": 0,
+    //   "dienTichBETWEEN": [0,99999999999999],
+    //   "huongNha": 0,
+    //   "huongNhas": [],
+    //   "radiusInKm": 2,
+    //   "ngayDaDang": undefined,
+    //   "userID": $rootScope.user.userID,
+    //   //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+    //   "limit": $rootScope.pageSize,
+    //   "orderBy": 0,
+    //   "pageNo": 1
+    // }
+
     $rootScope.searchData = {
-      giaBETWEEN: [0,9999999999999],
-      "loaiTin": 0,
-      "loaiNhaDat": 0, 
-      "loaiNhaDats": [],
-      "soPhongNguGREATER": 0,
-      "soPhongTamGREATER": 0,
-      "soTangGREATER": 0,
-      "dienTichBETWEEN": [0,99999999999999],
-      "huongNha": 0,
-      "huongNhas": [],
-      "radiusInKm": 2,
-      "ngayDaDang": undefined,
-      "userID": $rootScope.user.userID,
-      //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-      "limit": $rootScope.pageSize,
-      "orderBy": 0,
-      "pageNo": 1
-    }
+        "loaiTin": 0,
+        "giaBETWEEN": [0, 3000],
+        "dienTichBETWEEN" : [20, 100],
+        "ngayDangTinGREATER" : "20150601",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 21.385027,
+            "lon" : 106.0198859
+          },
+          "southwest" : {
+            "lat" : 20.562323,
+            "lon" : 105.2854659
+          }
+        },
+        "diaChinh" : {
+          "tinhKhongDau" : "ha-noi",
+          "huyenKhongDau" : "cau-giay"
+        },
+        "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
+        "limit" : 25,
+        "pageNo" : 1,
+        "isIncludeCountInResponse" : false
+      }
     //mobile login box controll
 
     $rootScope.ENTER_EMAIL = 1;
@@ -72,6 +97,18 @@
     $rootScope.alreadyLike = function(adsID){
       return _.indexOf($rootScope.user.adsLikes,adsID) >=0;
     } 
+
+    // show notify
+    $rootScope.showNotify = function(text, box, item, itemtext){
+      if(item!==null || item != "") $(item).html(itemtext);
+      if(text!==null || text != "") $(".notifyBox").html(text);
+      if(box!==null || box != ""){
+        $(box).fadeIn(100).delay(1800).slideUp(150);
+      }
+      else{
+        $(".notifyBox").fadeIn(100).delay(900).slideUp(150);
+      }
+    }
 
     $rootScope.showDangNhapForLike = function(){
         
@@ -118,7 +155,14 @@
       //window.DesignCommon.adjustPage();
     }
 
-
+    $rootScope.suggestedSearch = [
+      {
+          description: "Vị trí hiện tại",
+          types:      "1", 
+          place_id:   "111",
+          class: "iconLocation gray"
+      }
+    ];
 
     $rootScope.signout = function(){
         $rootScope.loginbox.resetLoginBox(); 
@@ -418,7 +462,8 @@
         controllerAs: 'mhc',
       })
       .state('msearch', {
-        url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+        // url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+        url: "/mobile/search/:placeId/:loaiTin/:loaiNhaDat/:viewMode",
         templateUrl: "/web/mobile/search.html",
         controller: "MobileSearchCtrl",
         params:{query: null},
