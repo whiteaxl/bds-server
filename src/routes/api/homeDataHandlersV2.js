@@ -82,13 +82,15 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 function searchAds(title1, title2, query, callback) {
   console.log("searchAds" + JSON.stringify(query));
   findHandlerV2.findAds(query, (res) => {
+    var origQuery = {}; Object.assign(origQuery, query);
+    
     if (!res.list || res.list.length == 0) {
       callback(null
         , {
           title1: title1,
           title2: title2,
           data: [],
-          query: query
+          query: origQuery
         });
       return;
     }
@@ -96,7 +98,7 @@ function searchAds(title1, title2, query, callback) {
       title1: title1,
       title2: title2,
       data: convertListResult(res.list),
-      query: query
+      query: origQuery
     };
     appDefault(collection);
     callback(null, collection);
@@ -146,7 +148,7 @@ internals.homeData4App = function (req, reply) {
         queryNearBy.diaChinh = {
           tinhKhongDau : diaChinh.tinh,
           huyenKhongDau : diaChinh.huyen,
-          xaKhongDau: diaChinh.xa
+          xaKhongDau: diaChinh.xa 
         };
         console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
         searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);

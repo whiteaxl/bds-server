@@ -2,13 +2,8 @@
 
 var _ = require("lodash");
 
-var couchbase = require('couchbase');
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
-bucket.enableN1ql(['127.0.0.1:8093']);
-bucket.operationTimeout = 120 * 1000;
 
 var constant = require('../lib/constant');
 var log = require('../lib/logUtil');
@@ -45,12 +40,6 @@ var syncGw = new SyncGw();
  */
 
 class UserModel {
-  initBucket() {
-    cluster = new couchbase.Cluster('couchbase://localhost:8091');
-    bucket = cluster.openBucket('default');
-    bucket.enableN1ql(['127.0.0.1:8093']);
-    bucket.operationTimeout = 60 * 1000;
-  }
   //getUserByMsisdn: start with 84
   getUserByMsisdn(msisdn, callback) {
     var sql = `select default.* from default where type='User'`;
@@ -259,19 +248,6 @@ class UserModel {
       }
     });
 
-  }
-
-  queryAll(callBack) {
-    let query = ViewQuery.from('user', 'all_user');
-
-    this.myBucket.query(query, function (err, all) {
-      console.log(all);
-
-      if (!all)
-        all = [];
-
-      callBack(all);
-    });
   }
 
   upsert(userDto,callback) {
