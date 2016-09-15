@@ -813,12 +813,14 @@ internals.endpoints = [
             duAnKhongDau : Joi.string(),
           },
           limit: Joi.number(),
+          dbLimit: Joi.number(),
           orderBy: Joi.object({
             name : Joi.string(), // ngayDangTin
             type : Joi.string()  // ASC, DESC
           })
             .description('ngayDangTin/gia/gia/dienTich, soPhongTam, soPhongNgu'),
           pageNo: Joi.number(),
+          dbPageNo: Joi.number(),
           isIncludeCountInResponse : Joi.boolean(), 
           userID : Joi.string().description("to keep track history - last search"),
           soPhongNgu: Joi.number().integer(),

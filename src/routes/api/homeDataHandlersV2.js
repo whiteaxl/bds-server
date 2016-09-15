@@ -144,9 +144,11 @@ internals.homeData4App = function (req, reply) {
         Object.assign(queryNearBy, query);
 
         queryNearBy.diaChinh = {
+          fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
+                                        diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
           tinhKhongDau : diaChinh.tinh,
           huyenKhongDau : diaChinh.huyen,
-          xaKhongDau: diaChinh.xa
+          xaKhongDau: diaChinh.xa || undefined
         };
         console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
         searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
