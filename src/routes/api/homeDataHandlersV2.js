@@ -81,8 +81,9 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 
 function searchAds(title1, title2, query, callback) {
   console.log("searchAds" + JSON.stringify(query));
+  var origQuery = {}; Object.assign(origQuery, query);
+  
   findHandlerV2.findAds(query, (res) => {
-    var origQuery = {}; Object.assign(origQuery, query);
     
     if (!res.list || res.list.length == 0) {
       callback(null
