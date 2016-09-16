@@ -1,4 +1,4 @@
-var shareIP = '203.162.13.177';
+var shareIP = '203.162.13.40';
 
 var cfg = {
   n1ql: `${shareIP}:8093`,
