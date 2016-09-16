@@ -30,7 +30,7 @@ function _handleDBFindResult(error, allAds, q) {
 
     let tmp = {
       adsID: ads.id,
-      gia: ads.gia,
+      gia: ads.gia && !isNaN(ads.gia) ? ads.gia : Number(0),
       giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
       giaFmtForWeb: util.getPriceDisplay(ads.gia, ads.loaiTin, true),
       dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
@@ -51,7 +51,7 @@ function _handleDBFindResult(error, allAds, q) {
       giaM2: ads.giaM2,
       loaiNhaDat: ads.loaiNhaDat,
       loaiTin: ads.loaiTin,
-      huongNha: ads.huongNha
+      huongNha: ads.huongNha && !isNaN(ads.huongNha) ? ads.huongNha : Number(0)
     };
     //console.log(tmp.cover);
 

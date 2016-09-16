@@ -54,7 +54,7 @@ class DuAnModel {
         	sql = sql + " and t.diaChinh.tinhKhongDau='" + q.tinhKhongDau + "'";
         }
         if (q.orderBy) {
-            sql = sql + " ORDER BY " + q.orderBy.orderByField + "  " + q.orderBy.orderByType;
+            sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
         }
         if (q.limit) {
             sql = sql + " limit  " + q.limit;

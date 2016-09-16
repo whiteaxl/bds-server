@@ -10,6 +10,7 @@ var cfg = require('../../config');
 var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
 var duAnNoiBatService = new DuAnNoiBatService();
 
+var moment = require('moment');
 
 var DuAnService = require('../../dbservices/DuAn');
 var duAnService = new DuAnService();
@@ -157,6 +158,7 @@ internals.homeData4App = function (req, reply) {
         searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
       });
 
+      let ngayDangTinBegin = moment().subtract(28, 'days').format('YYYYMMDD');
 
       if (!diaChinh) {
         //diaChinh = lastQuery
@@ -166,7 +168,7 @@ internals.homeData4App = function (req, reply) {
             function (callback) {
               let queryMoiDang = {};
               Object.assign(queryMoiDang, query);
-              queryMoiDang.ngayDangTinGREATER = "20160601";
+              queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
               queryMoiDang.orderBy = {
                 name: "ngayDangTin",
                 type: "DESC"
@@ -192,7 +194,7 @@ internals.homeData4App = function (req, reply) {
         function (callback) {
           let queryMoiDang = {};
           Object.assign(queryMoiDang, query);
-          queryMoiDang.ngayDangTinGREATER = "20160601";
+          queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
           queryMoiDang.orderBy = {
             name: "ngayDangTin",
             type: "DESC"
