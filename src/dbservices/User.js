@@ -334,6 +334,35 @@ class UserModel {
     });       
   }
 
+  unlikeAds(payload,reply){
+    var adsID = payload.adsID;
+    var userID = payload.userID;
+    this.getUserByID(userID, (err,res) => {
+      console.log("Done getUserByID");
+      if (err) {
+        console.log("ERROR:" + err);
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          if(!user.adsLikes)
+            user.adsLikes = [];
+          var indexOfItem = user.adsLikes.findIndex((item) => item === adsID);
+          user.adsLikes.splice(indexOfItem, 1);
+          bucket.upsert(user.id, user, function (err, res) {
+            if (err) {
+              console.log("ERROR:" + err);
+            }
+            console.log("likeAds, reply SUCCESS_UNLIKE_ADS");
+            reply({success:true,status:0,msg: constant.MSG.SUCCESS_UNLIKE_ADS});
+          });
+        } else {
+          reply({success:false,status:2, msg: constant.MSG.USER_NOT_EXIST});
+        }
+      }
+    });
+  }
+
   resetPassword(payload,reply){
     var pass = payload.pass;
     var userID = payload.userID;

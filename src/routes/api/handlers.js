@@ -420,6 +420,11 @@ internals.likeAds = function(req, reply){
     console.log("payload is" + JSON.stringify(req.payload));
     userService.likeAds(req.payload,reply);    
 }
+internals.unlikeAds = function(req, reply){
+    //req.payload.userID = "User_6";
+    console.log("payload is" + JSON.stringify(req.payload));
+    userService.unlikeAds(req.payload,reply);
+}
 
 /**
 
