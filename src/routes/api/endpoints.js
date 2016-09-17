@@ -332,6 +332,29 @@ internals.endpoints = [
       }
     }
   },
+  {
+    method: 'POST',
+    path: '/api/unlikeAds',
+    handler: Handlers.unlikeAds,
+    config: {
+      description: 'Unlike Ads - Se loai bo adsID khoi ds user.adsLikes',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+          adsID: Joi.string().required(),
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          success: Joi.boolean(),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
   //todo: can viet lai bang cach truyen list adsID, de bao mat thong tin
   {
     method: 'POST',

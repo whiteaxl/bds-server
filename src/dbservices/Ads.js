@@ -45,26 +45,17 @@
 
  */
 
-var couchbase = require('couchbase');
 var util = require("../lib/utils");
 var logUtil = require("../lib/logUtil");
 var constant = require("../lib/constant");
 var geoUtil = require("../lib/geoUtil");
 
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
-bucket.enableN1ql(['127.0.0.1:8093']);
-
-bucket.operationTimeout = 120 * 1000;
 
 var moment = require('moment');
 
-
 var DEFAULT_LIMIT = 1000;
-
 
 /**
 id,adsID,
@@ -88,52 +79,6 @@ class AdsModel {
         })
     }
 
-    queryAll(callBack) {
-        let query = ViewQuery.from('ads', 'all_ads').limit(3);
-
-        this.myBucket.query(query, function (err, all) {
-            logUtil.info("number of ads:" + all.length);
-            if (!all)
-                all = [];
-
-            callBack(all);
-        });
-    }
-
-    //may be for testing only
-    patchDataInDB(){
-        let query = ViewQuery.from('ads', 'all_ads');
-        var that = this;
-        bucket.query(query, function (err, all) {
-            logUtil.info("number of ads:" + all.length);
-            if (!all)
-                all = [];
-
-            for (var i = 0; i < all.length; i++)
-            {
-                var ads = all[i].value;
-                if (ads.place.diaChinh.tinh)
-                ads.place.diaChinh.tinhKhongDau =util.locDau(ads.place.diaChinh.tinh);
-                if (ads.place.diaChinh.huyen)
-                ads.place.diaChinh.huyenKhongDau =util.locDau(ads.place.diaChinh.huyen);
-                if (ads.place.diaChinh.xa)
-                ads.place.diaChinh.xaKhongDau =util.locDau(ads.place.diaChinh.xa);
-
-                //ngayDangTin
-                let bdsComDateFormat = 'DD-MM-YYYY';
-                if (moment(ads.ngayDangTin, bdsComDateFormat).isValid()) {
-                    let ngayDangTinDate = moment(ads.ngayDangTin, bdsComDateFormat);
-                    let ngayDangTinYMD = moment(ngayDangTinDate).format(constant.FORMAT.DATE_IN_DB);
-                    ads.ngayDangTin = ngayDangTinYMD;
-                }
-
-                that.upsert(ads);
-            }
-            logUtil.info("Finish");
-        });
-    }
-
-
     countAllAds(onSuccess) {
         var sql = "select count(*) cnt from default where type = 'Ads'";
         var query = N1qlQuery.fromString(sql);
@@ -150,16 +95,11 @@ class AdsModel {
     }
 
     getAds(adsID, callback) {
-        //this.initBucket();
+       
         bucket.get(adsID, callback);
     }
 
-    initBucket() {
-        bucket = cluster.openBucket('default');
-        bucket.enableN1ql(['127.0.0.1:8093']);
-        bucket.operationTimeout = 60 * 1000;
-    }
-
+   
     buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, duAnID,orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;
 
@@ -400,10 +340,6 @@ class AdsModel {
         });
         */
 
-        //@todo: really need reopen like this ?
-        var bucket = cluster.openBucket('default');
-        bucket.enableN1ql(['127.0.0.1:8093']);
-        bucket.operationTimeout = 60 * 1000;
 
         var query = N1qlQuery.fromString(sql);
 
@@ -462,11 +398,6 @@ class AdsModel {
          logUtil.info("err=", err, all);
          });
          */
-
-        //@todo: really need reopen like this ?
-        var bucket = cluster.openBucket('default');
-        bucket.enableN1ql(['127.0.0.1:8093']);
-        bucket.operationTimeout = 60 * 1000;
 
         var query = N1qlQuery.fromString(sql);
 

@@ -19,6 +19,7 @@ internals.MSG = {
     EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
     SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
     SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
+    SUCCESS_UNLIKE_ADS: "Đã unlike bất động sản thành công",
     EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
     USER_NOT_EXIST: "User không tồn tại",
     SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công",

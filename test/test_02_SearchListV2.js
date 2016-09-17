@@ -4,8 +4,11 @@ var supertest = require("supertest");
 var should = require("should");
 var moment = require('moment');
 var constant = require('../src/lib/constant');
+var url  =`http://${process.env.IP}:${process.env.PORT}`;
 
-var server = supertest.agent("http://localhost:5000");
+console.log("Server URL:", url);
+
+var server = supertest.agent(url);
 
 describe("01.Find API testsuite", function () {
   this.timeout(15000);

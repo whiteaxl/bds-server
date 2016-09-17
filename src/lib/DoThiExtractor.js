@@ -35,7 +35,42 @@ var THONGTINLIENHE_MAP = {
 };
 
 
+function convertGia(priceRaw, dienTich) {
+	if (gia == 'Thỏa thuận') {
+		return undefined;
+	}
+	
+	var spl = priceRaw.split(" ");
+	var price_value = spl[0];
+	var price_unit = spl[1];
+	
+	var gia = null;
+	
+	if (!price_unit) {
+		return gia;
+	}
 
+	if (price_unit==='tỷ' || price_unit==='Tỷ') {
+		gia =price_value*1000;
+		return gia;
+	}
+
+	if (~price_unit.indexOf('u/m')) { //trieu/m2
+		gia = price_value * dienTich;
+		return gia;
+	}
+
+	if (~price_unit.indexOf('n/m2/t') || ~price_unit.indexOf('n/m²/t')) {//nghìn/m2/tháng
+		gia = price_value * dienTich / 1000;
+		return gia;
+	}
+
+	gia = price_value*1;
+	
+	return gia;
+}
+
+var URLCache = {};
 
 class DoThiExtractor {
 	constructor() {
@@ -89,7 +124,7 @@ class DoThiExtractor {
 				return i;
 
 		}
-		return 0; // 0 la huong Bat ky
+		return undefined; // 0 la huong Bat ky ?
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
@@ -124,6 +159,9 @@ class DoThiExtractor {
 		osmosis
 		.get(url)
 		.find('.for-user')
+		.set({
+			'url'			   :'ul > li > a@href'
+		})
 		.follow('ul > li > a@href')
 		.set({
 			'title'			   :'.product-detail > h1',
@@ -132,12 +170,10 @@ class DoThiExtractor {
 			'thongTinLienHeLabel'       :['.pd-contact > table > tr > td[1]'],
 			'thongTinLienHeValue'       :['.pd-contact > table  > tr > td[2]'],
 			'images'		:['#myGallery > li > img@src'],
-			'price'			:'.spanprice',
-			'area'			:'#ContentPlaceHolder1_ProductDetail1_divprice > span[2] ',
+			'price_raw'			:'.spanprice',
+			'area_raw'			:'#ContentPlaceHolder1_ProductDetail1_divprice > span[2]',
 			'chiTiet'	    :['.pd-desc > div'],
-			'name'			:'.product-detail > h1',
-			'diachi'		:'.pd-location > a',
-			'diachinhraw'	:'.pd-location :source',
+			'diaChi'		:'.pd-location',
 			'hdLat'		    :'.divmaps input[id="hddLatitude"]@value',
 			'hdLong'	    :'.divmaps input[id="hddLongtitude"]@value',
 			'adsID'		    :'#tbl1 > tbody > tr[1] > td[2]',
@@ -147,23 +183,32 @@ class DoThiExtractor {
 			'dangBoiDiDong'	:['.pd-contact > table  > tr[4] > td[2]']
 		})
 		.data(function(dothiBds) {
-			//console.log("dacDiemLabel=", dothiBds.dacDiemLabel);
-			//console.log("dacDiemValue=", dothiBds.dacDiemValue);
-			//console.log("thongTinLienHeLabel=", dothiBds.thongTinLienHeLabel);
-			//console.log("thongTinLienHeValue=", dothiBds.thongTinLienHeValue);
-
+		
+			//console.log("AAAAAAA=", dothiBds.url);
+			
+			var dc = dothiBds.diaChi.replace(/.* tại /, "");
+			var spl = dc.split("-");
+			
+			if (spl.length < 2) {
+				console.log("DiaChi khong dung:", dc, dothiBds.url);
+				return;
+			}
+			
+			var huyen = spl[spl.length-2].trim().replace("Quận ", "").replace("Huyện ", "");
+			var tinh = spl[spl.length-1].trim();
+			
+			
+			//console.log("AAAAAAA=", dc);
 
 			let addothiBds = {
-				name:  dothiBds.name,
-				nameKhongDau:  util.locDau(dothiBds.name),
 				title:  	dothiBds.title,
 				loaiTin:  	dothiBds.loaiTin,
 				image:{
 					cover:      dothiBds.images[0],
 					images:  	dothiBds.images
 				},
-				gia:  		dothiBds.price,
-				dienTich:  	dothiBds.area,
+				
+				area_raw:  	dothiBds.area_raw,
 				chiTiet:  	dothiBds.chiTiet[0],
 				adsID:  	dothiBds.adsID,
 				ngayDangTin:  	dothiBds.ngayDangTin,
@@ -172,16 +217,19 @@ class DoThiExtractor {
 					phone: dothiBds.dangBoiPhone[0]||dothiBds.dangBoiDiDong[0]
 				},
 				place:{
-					diaChi: 	dothiBds.diachi,
+					diaChi: 	dc,
 					diaChinh:{
-						huyen: util.getDiaChinhFromDoThi(dothiBds.diachinhraw,dothiBds.diachi,"HUYEN"),
-						tinh: util.getDiaChinhFromDoThi(dothiBds.diachinhraw,dothiBds.diachi,"TINH")
+						huyen: huyen,
+						tinh: tinh
 					},
 					geo:{
 						lat: Number(dothiBds.hdLat),
 						lon: Number(dothiBds.hdLong)
 					},
 				},
+				url : dothiBds.url,
+				price_raw : dothiBds.price_raw,
+				
 
 			}
 			//Extract dacDiem
@@ -189,12 +237,16 @@ class DoThiExtractor {
 				addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
 			}
 
-
-
+			addothiBds.dienTich = addothiBds.area_raw && Number(addothiBds.area_raw.substr(0, addothiBds.area_raw.length-2));
+			
+			addothiBds.gia = convertGia(addothiBds.price_raw, addothiBds.dienTich),
 			addothiBds.adsID = "Ads_dothi_" + addothiBds.maSo;
 			addothiBds.type = "Ads";
 			addothiBds.source = "DOTHI.NET";
-
+			if (addothiBds.gia && addothiBds.dienTich) {
+				addothiBds.giaM2 = Number((addothiBds.gia/addothiBds.dienTich).toFixed(3));
+			}
+			
 			if(addothiBds.place.diaChinh.huyen) {
 				addothiBds.place.diaChinh.huyenKhongDau = util.locDau(addothiBds.place.diaChinh.huyen);
 			}
@@ -216,28 +268,35 @@ class DoThiExtractor {
 			if(addothiBds.huongNha){
 				var huongNha = (addothiBds.huongNha).toUpperCase();
 				addothiBds.huongNha = DoThiExtractor.convertDataHuongNha(huongNha);
+			} else {
+				addothiBds.huongNha = undefined;
 			}
+			
+			if (addothiBds.soPhong) {
+				addothiBds.soPhongNgu = Number(addothiBds.soPhong);
+			}
+			addothiBds.soPhong=undefined;
+	
+			addothiBds.soPhongTam = addothiBds.soPhongTam ? Number(addothiBds.soPhongTam) : undefined;
+			addothiBds.soTang = addothiBds.soTang ? Number(addothiBds.soTang) : undefined;
 
 			if(addothiBds.ngayHetHan){
 				var ngayHetHan = addothiBds.ngayHetHan;
-				addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
+				addothiBds.ngayHetHan = Number(util.convertFormatDatetoYYYYMMDD(ngayHetHan));
+			} else {
+				addothiBds.ngayHetHan = undefined;
 			}
 
-			 if(addothiBds.ngayDangTin){
+			if(addothiBds.ngayDangTin){
 			 	var ngayDang = addothiBds.ngayDangTin;
-				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
+				 addothiBds.ngayDangTin = Number(util.convertFormatDatetoYYYYMMDD(ngayDang));
 
 			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
-			 		//console.log("Lay dung ngay dang tin");
-					//console.log("11--Do THi -bds");
-			 		//console.log(addothiBds);
 					adsModel.upsert(addothiBds);
 			 	}
 			 }
-			//console.log("22--Do THi -bds");
 
 		})
-		
 		.log(console.log)
 		.error(console.log)
 		.debug(console.log)

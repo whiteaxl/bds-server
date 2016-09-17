@@ -1,28 +1,16 @@
 'use strict';
 
-var couchbase = require('couchbase');
+
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
 
 var placeUtil = require('../lib/placeUtil');
 
-bucket.enableN1ql(['127.0.0.1:8093']);
-
-bucket.operationTimeout = 120 * 1000;
-
 class PlaceModel {
 
-	initBucket() {
-		cluster = new couchbase.Cluster('couchbase://localhost:8091');
-		bucket.enableN1ql(['127.0.0.1:8093']);
-		bucket.operationTimeout = 120 * 1000;
-		bucket = cluster.openBucket('default');
-	}
 
 	upsert(dto) {
-		this.initBucket();
+		
 		bucket.upsert(dt.placeID, dto, function(err, res) {
 			if (err) {
 				console.log("ERROR:" + err);
@@ -32,8 +20,7 @@ class PlaceModel {
 
 	//return top 5
 	getPlaceByNameLike(input, callback) {
-		this.initBucket();
-
+	
 		let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
 
     var sql = `select default.* from default where type='Place' and geometry is not missing 
@@ -61,7 +48,7 @@ class PlaceModel {
 
 	//may be for testing only
 	patchDataInDB(){
-		this.initBucket();
+	
 		
 		var sql = "select default.* from default where type='Place' where geometry is not missing and geometry.viewport is not missing";
 		var query = N1qlQuery.fromString(sql);

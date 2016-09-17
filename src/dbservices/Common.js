@@ -1,23 +1,9 @@
 'use strict';
 
-var couchbase = require('couchbase');
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
-bucket.enableN1ql(['127.0.0.1:8093']);
-
-bucket.operationTimeout = 120 * 1000;
 
 class CommonModel {
-
-	initBucket() {
-		cluster = new couchbase.Cluster('couchbase://localhost:8091');
-		bucket.enableN1ql(['127.0.0.1:8093']);
-		bucket.operationTimeout = 120 * 1000;
-		bucket = cluster.openBucket('default');
-	}
-
 	upsert(dto,callback) {
 		bucket.upsert(dto.id, dto, function (err, res) {
 			if (err) {
@@ -39,14 +25,14 @@ class CommonModel {
 	}
 
 	query(sql, callback) {
-		this.initBucket();
+	
 
 		var query = N1qlQuery.fromString(sql);
 		bucket.query(query, callback);
 	}
 
 	countByType(type, onSuccess) {
-		this.initBucket();
+	
 		
 		var sql = `select count(*) cnt from default where type = '${type}'`;
 		var query = N1qlQuery.fromString(sql);

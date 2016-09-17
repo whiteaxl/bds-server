@@ -10,6 +10,7 @@ var cfg = require('../../config');
 var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
 var duAnNoiBatService = new DuAnNoiBatService();
 
+var moment = require('moment');
 
 var DuAnService = require('../../dbservices/DuAn');
 var duAnService = new DuAnService();
@@ -81,14 +82,17 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 
 function searchAds(title1, title2, query, callback) {
   console.log("searchAds" + JSON.stringify(query));
+  var origQuery = {}; Object.assign(origQuery, query);
+  
   findHandlerV2.findAds(query, (res) => {
+    
     if (!res.list || res.list.length == 0) {
       callback(null
         , {
           title1: title1,
           title2: title2,
           data: [],
-          query: query
+          query: origQuery
         });
       return;
     }
@@ -96,7 +100,7 @@ function searchAds(title1, title2, query, callback) {
       title1: title1,
       title2: title2,
       data: convertListResult(res.list),
-      query: query
+      query: origQuery
     };
     appDefault(collection);
     callback(null, collection);
@@ -154,6 +158,7 @@ internals.homeData4App = function (req, reply) {
         searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
       });
 
+      let ngayDangTinBegin = moment().subtract(28, 'days').format('YYYYMMDD');
 
       if (!diaChinh) {
         //diaChinh = lastQuery
@@ -163,7 +168,7 @@ internals.homeData4App = function (req, reply) {
             function (callback) {
               let queryMoiDang = {};
               Object.assign(queryMoiDang, query);
-              queryMoiDang.ngayDangTinGREATER = "20160601";
+              queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
               queryMoiDang.orderBy = {
                 name: "ngayDangTin",
                 type: "DESC"
@@ -189,7 +194,7 @@ internals.homeData4App = function (req, reply) {
         function (callback) {
           let queryMoiDang = {};
           Object.assign(queryMoiDang, query);
-          queryMoiDang.ngayDangTinGREATER = "20160601";
+          queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
           queryMoiDang.orderBy = {
             name: "ngayDangTin",
             type: "DESC"

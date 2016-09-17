@@ -2,13 +2,8 @@
 
 var _ = require("lodash");
 
-var couchbase = require('couchbase');
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
-bucket.enableN1ql(['127.0.0.1:8093']);
-bucket.operationTimeout = 120 * 1000;
 
 var constant = require('../lib/constant');
 var log = require('../lib/logUtil');
@@ -45,12 +40,6 @@ var syncGw = new SyncGw();
  */
 
 class UserModel {
-  initBucket() {
-    cluster = new couchbase.Cluster('couchbase://localhost:8091');
-    bucket = cluster.openBucket('default');
-    bucket.enableN1ql(['127.0.0.1:8093']);
-    bucket.operationTimeout = 60 * 1000;
-  }
   //getUserByMsisdn: start with 84
   getUserByMsisdn(msisdn, callback) {
     var sql = `select default.* from default where type='User'`;
@@ -64,8 +53,7 @@ class UserModel {
 
     var query = N1qlQuery.fromString(sql);
 
-    //Todo: why need this?
-    this.initBucket();
+  
 
     bucket.query(query, callback);
   }
@@ -88,9 +76,6 @@ class UserModel {
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
 
-    //Todo: why need this?
-    this.initBucket();
-
     bucket.query(query, callback);
   }
 
@@ -98,7 +83,7 @@ class UserModel {
     var sql = `select default.* from default where type='User' and id='${userID}'`;
 
     var query = N1qlQuery.fromString(sql);
-    this.initBucket();
+   
     console.log("getUserByID: " + sql);
     bucket.query(query, callback);
   }
@@ -107,7 +92,7 @@ class UserModel {
     var sql = `select t.adsLikes from default t where type='User' and id='${userID}'`;
 
     var query = N1qlQuery.fromString(sql);
-    this.initBucket();
+   
     console.log("getAdsLikes, sql=", sql);
     bucket.query(query, (err, res) => {
       if (err) {
@@ -261,21 +246,8 @@ class UserModel {
 
   }
 
-  queryAll(callBack) {
-    let query = ViewQuery.from('user', 'all_user');
-
-    this.myBucket.query(query, function (err, all) {
-      console.log(all);
-
-      if (!all)
-        all = [];
-
-      callBack(all);
-    });
-  }
-
   upsert(userDto,callback) {
-    this.initBucket();
+    
     bucket.upsert(userDto.userID, userDto, function (err, res) {
         if (err) {
             console.log("ERROR:" + err);
@@ -362,6 +334,35 @@ class UserModel {
     });       
   }
 
+  unlikeAds(payload,reply){
+    var adsID = payload.adsID;
+    var userID = payload.userID;
+    this.getUserByID(userID, (err,res) => {
+      console.log("Done getUserByID");
+      if (err) {
+        console.log("ERROR:" + err);
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          if(!user.adsLikes)
+            user.adsLikes = [];
+          var indexOfItem = user.adsLikes.findIndex((item) => item === adsID);
+          user.adsLikes.splice(indexOfItem, 1);
+          bucket.upsert(user.id, user, function (err, res) {
+            if (err) {
+              console.log("ERROR:" + err);
+            }
+            console.log("likeAds, reply SUCCESS_UNLIKE_ADS");
+            reply({success:true,status:0,msg: constant.MSG.SUCCESS_UNLIKE_ADS});
+          });
+        } else {
+          reply({success:false,status:2, msg: constant.MSG.USER_NOT_EXIST});
+        }
+      }
+    });
+  }
+
   resetPassword(payload,reply){
     var pass = payload.pass;
     var userID = payload.userID;
@@ -412,7 +413,7 @@ class UserModel {
     }
     var query = N1qlQuery.fromString(sql);
 
-    this.initBucket();
+    
 
     bucket.query(query, function (err, res) {
       if (err) {
@@ -512,13 +513,12 @@ class UserModel {
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
 
-    this.initBucket();
 
     bucket.query(query, callback);
   }
 
   updateDevice(dto, callback) {
-    this.initBucket();
+   
     console.log('updateDevice dto:', dto);
     bucket.upsert(dto.deviceID, dto, callback)
   }
@@ -526,12 +526,12 @@ class UserModel {
   getTokenOfUser(userID,callback){
     var sql = `select default.* from default where type='Device' and userID='${userID}'`;
     var query = N1qlQuery.fromString(sql);
-    this.initBucket();
+   
     bucket.query(query, callback);
   }
 
   getDocById(id, callback) {
-    this.initBucket();
+   
     bucket.get(id, callback);
   }
 

@@ -1,8 +1,9 @@
 'use strict';
 
 var request = require("request");
+var dbcfg = require("../config/db");
 
-var syncGatewayDB_URL = "http://localhost:4985/default/";
+var syncGatewayDB_URL = dbcfg.syncGW;
 let log = require('../lib/logUtil');
 
 class SyncGW {

@@ -1,13 +1,7 @@
 'use strict';
 
-var couchbase = require('couchbase');
-var ViewQuery = couchbase.ViewQuery;
+var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var ViewQuery = couchbase.ViewQuery;
-var cluster = new couchbase.Cluster('couchbase://localhost:8091');
-var bucket = cluster.openBucket('default');
-bucket.enableN1ql(['127.0.0.1:8093']);
-bucket.operationTimeout = 120 * 1000;
 
 var constant = require('../lib/constant');
 var log = require('../lib/logUtil');
