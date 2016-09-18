@@ -55,17 +55,23 @@ function convertGia(priceRaw, dienTich) {
 		gia =price_value*1000;
 		return gia;
 	}
-
-	if (~price_unit.indexOf('u/m')) { //trieu/m2
-		gia = price_value * dienTich;
-		return gia;
-	}
-
+	
 	if (~price_unit.indexOf('n/m2/t') || ~price_unit.indexOf('n/m²/t')) {//nghìn/m2/tháng
 		gia = price_value * dienTich / 1000;
 		return gia;
 	}
 
+	if (~price_unit.indexOf('răm nghìn/m)) { //Trăm nghìn/m²
+		gia = price_value * dienTich / 1000;
+		return gia;
+	}
+
+	if (~price_unit.indexOf('u/m')) { //tram nghin/m2
+		gia = price_value * dienTich;
+		return gia;
+	}
+	
+	
 	gia = price_value*1;
 	
 	return gia;
@@ -155,12 +161,17 @@ class DoThiExtractor {
 			count++;
 		};
 
+		/*
 		var i = start;
 		for (i=start; i<=end; i++) {
 			let fullUrl = rootURL + '/p'+i+'.htm';
 			console.log("Extracting for page: " + fullUrl);
-			this.extractOnePage(fullUrl, _done,ngayDangTin);
+			//this.extractOnePage(fullUrl, _done,ngayDangTin);
+			
 		}
+		*/
+		
+		this.extractOnePage(rootURL, _done,ngayDangTin);
 
 		var myInterval = setInterval(function(){
 			 if (count==end) {
@@ -174,12 +185,21 @@ class DoThiExtractor {
 
 	extractOnePage(url, handleDone,ngayDangTin) {
 		osmosis
+		
 		.get(url)
-		.find('.for-user')
+		
+		.follow('#ulProductCount > li > h4 > a@href')
+		.follow('#ulProductCount > li > h4 > a@href')
+		.paginate(".pager_controls a[title!='P1']:has(.style-pager-button-next-first-last)[1]")
+		
 		.set({
-			'urls'			   :['ul > li > a@href']
+			'urls'	:['.for-user ul > li > a@href'],
+			'nextsLabel' : ['.pager_controls a'],
+			'nexts' : [".pager_controls a[title!='P1']:has(.style-pager-button-next-first-last)@href"]
 		})
 		.data((dat => {
+			//console.log("NNNNNNN:", dat.nexts, dat.nextsLabel);
+			
 			dat.urls.forEach((url) => {
 				let idx = url.lastIndexOf("-");
 				let tail = url.substr(idx+3);
@@ -187,9 +207,9 @@ class DoThiExtractor {
 				
 				URLCache[code] = url;
 			})
-			
 		}))
-		.follow('ul > li > a@href')
+		
+		.follow('.for-user ul > li > a@href')
 		.set({
 			'title'			   :'.product-detail > h1',
 			'dacDiemLabel'       :['.pd-dacdiem > table > tbody > tr > td[1]'],
@@ -209,7 +229,6 @@ class DoThiExtractor {
 			'custInfo03'	:['.pd-contact > table  > tr[4] > td'],
 			'custInfo04'	:['.pd-contact > table  > tr[2] > td'],
 			'custInfo05'	:['.pd-contact > table  > tr[5] > td'],
-			'custInfo'	:['.pd-contact > table  > tr > td'],
 		})
 		.data(function(dothiBds) {
 			//Convert diaChi, diaChinh
@@ -224,7 +243,7 @@ class DoThiExtractor {
 			
 			// customer information : thong tin lien lac
 			var dangBoi = {};
-			for (var i = 1; i <= 4; i++) {
+			for (var i = 1; i <= 5; i++) {
 				//transform first:
 				let row = dothiBds['custInfo0'+i];
 				let val = row[1];
