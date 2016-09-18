@@ -43,7 +43,9 @@ function convertGia(priceRaw, dienTich) {
 	
 	var spl = priceRaw.split(" ");
 	var price_value = spl[0];
-	var price_unit = spl[1];
+	var price_unit = priceRaw.substr(price_value.length).trim();
+	
+	//console.log("aaa", spl, price_unit, price_value);
 	
 	var gia = null;
 	
@@ -61,7 +63,12 @@ function convertGia(priceRaw, dienTich) {
 		return gia;
 	}
 
-	if (~price_unit.indexOf('răm nghìn/m)) { //Trăm nghìn/m²
+	if (~price_unit.indexOf('m nghìn/m')) { //Trăm nghìn/m²
+		gia = price_value * dienTich / 10;
+		return gia;
+	}
+	
+	if (~price_unit.indexOf('nghìn/m')) { //nghìn/m²
 		gia = price_value * dienTich / 1000;
 		return gia;
 	}
