@@ -102,6 +102,130 @@ var parseEmail = function(encEmail) {
 
 var URLCache = {};
 
+function handle(dothiBds) {
+	
+	
+	// customer information : thong tin lien lac
+	var dangBoi = {};
+	for (var i = 1; i <= 5; i++) {
+		//transform first:
+		let row = dothiBds['custInfo0'+i];
+		let val = row[1];
+		
+		if (row[0]=='Email') {
+			val = parseEmail(row[1]);
+		}
+		dangBoi[THONGTINLIENHE_MAP[row[0]]] = val;
+	}
+
+	let addothiBds = {
+		title:  	dothiBds.title,
+		loaiTin:  	dothiBds.loaiTin,
+		image:{
+			cover:      dothiBds.images[0],
+			images:  	dothiBds.images
+		},
+		
+		area_raw:  	dothiBds.area_raw,
+		chiTiet:  	dothiBds.chiTiet[0],
+		ngayDangTin:  	dothiBds.ngayDangTin,
+		dangBoi:dangBoi,
+		
+		price_raw : dothiBds.price_raw,
+	}
+	//Extract dacDiem
+	for (var i = 0; i < dothiBds.dacDiemLabel.length; i++ ) {
+		addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
+	}
+	addothiBds.url = URLCache[addothiBds.maSo];
+	
+	//Convert diaChi, diaChinh
+	if (!dothiBds.diaChi) {
+		logUtil.error("Khong co' thong tin diaChi");
+	} else {
+		var dc = dothiBds.diaChi.replace(/.* tại /, "");
+		var dcObj = null;
+		
+		var spl = dc.split("-");
+		if (spl.length < 2) {
+			logUtil.error("DiaChi khong dung:", dc, dothiBds.url);
+		} else {
+			dcObj = {
+				huyen : spl[spl.length-2].trim().replace("Quận ", "").replace("Huyện ", ""),
+				tinh : spl[spl.length-1].trim()
+			}
+		}
+		
+		addothiBds.place = {
+			diaChi: dc,
+			diaChinh:dcObj,
+			geo:{
+				lat: Number(dothiBds.hdLat),
+				lon: Number(dothiBds.hdLong)
+			},
+		}
+	}
+	
+	addothiBds.dienTich = addothiBds.area_raw && Number(addothiBds.area_raw.substr(0, addothiBds.area_raw.length-2));
+	
+	addothiBds.gia = convertGia(addothiBds.price_raw, addothiBds.dienTich),
+	addothiBds.adsID = "Ads_dothi_" + addothiBds.maSo;
+	addothiBds.type = "Ads";
+	addothiBds.source = "DOTHI.NET";
+	if (addothiBds.gia && addothiBds.dienTich) {
+		addothiBds.giaM2 = Number((addothiBds.gia/addothiBds.dienTich).toFixed(3));
+	}
+	
+	if(addothiBds.place.diaChinh.huyen) {
+		addothiBds.place.diaChinh.huyenKhongDau = util.locDau(addothiBds.place.diaChinh.huyen);
+	}
+
+	if(addothiBds.place.diaChinh.tinh) {
+		addothiBds.place.diaChinh.tinhKhongDau = util.locDau(addothiBds.place.diaChinh.tinh);
+	}
+
+	if(addothiBds.loaiNhaDat){
+		var loaiNhaDat = (addothiBds.loaiNhaDat).toUpperCase();
+		if(loaiNhaDat.indexOf("BÁN") > -1){
+			addothiBds.loaiTin = 0;
+		}
+		if(loaiNhaDat.indexOf("THUÊ") > -1){
+			addothiBds.loaiTin = 1;
+		}
+		addothiBds.loaiNhaDat = DoThiExtractor.convertDataLoaiNhaDat(loaiNhaDat);
+	}
+	if(addothiBds.huongNha){
+		var huongNha = (addothiBds.huongNha).toUpperCase();
+		addothiBds.huongNha = DoThiExtractor.convertDataHuongNha(huongNha);
+	} else {
+		addothiBds.huongNha = undefined;
+	}
+	
+	if (addothiBds.soPhong) {
+		addothiBds.soPhongNgu = Number(addothiBds.soPhong);
+	}
+	addothiBds.soPhong=undefined;
+
+	addothiBds.soPhongTam = addothiBds.soPhongTam ? Number(addothiBds.soPhongTam) : undefined;
+	addothiBds.soTang = addothiBds.soTang ? Number(addothiBds.soTang) : undefined;
+
+	if(addothiBds.ngayHetHan){
+		var ngayHetHan = addothiBds.ngayHetHan;
+		addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
+	} else {
+		addothiBds.ngayHetHan = undefined;
+	}
+	
+	
+
+	if(addothiBds.ngayDangTin){
+	 	var ngayDang = addothiBds.ngayDangTin;
+		 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
+
+		adsModel.upsert(addothiBds);
+	 }
+}
+
 class DoThiExtractor {
 	constructor() {
 	}
@@ -238,120 +362,12 @@ class DoThiExtractor {
 			'custInfo05'	:['.pd-contact > table  > tr[5] > td'],
 		})
 		.data(function(dothiBds) {
-			//Convert diaChi, diaChinh
-			var dc = dothiBds.diaChi.replace(/.* tại /, "");
-			var spl = dc.split("-");
-			if (spl.length < 2) {
-				console.log("DiaChi khong dung:", dc, dothiBds.url);
-				return;
-			}
-			var huyen = spl[spl.length-2].trim().replace("Quận ", "").replace("Huyện ", "");
-			var tinh = spl[spl.length-1].trim();
-			
-			// customer information : thong tin lien lac
-			var dangBoi = {};
-			for (var i = 1; i <= 5; i++) {
-				//transform first:
-				let row = dothiBds['custInfo0'+i];
-				let val = row[1];
-				
-				if (row[0]=='Email') {
-					val = parseEmail(row[1]);
-				}
-				dangBoi[THONGTINLIENHE_MAP[row[0]]] = val;
-			}
-
-			let addothiBds = {
-				title:  	dothiBds.title,
-				loaiTin:  	dothiBds.loaiTin,
-				image:{
-					cover:      dothiBds.images[0],
-					images:  	dothiBds.images
-				},
-				
-				area_raw:  	dothiBds.area_raw,
-				chiTiet:  	dothiBds.chiTiet[0],
-				ngayDangTin:  	dothiBds.ngayDangTin,
-				dangBoi:dangBoi,
-				place:{
-					diaChi: 	dc,
-					diaChinh:{
-						huyen: huyen,
-						tinh: tinh
-					},
-					geo:{
-						lat: Number(dothiBds.hdLat),
-						lon: Number(dothiBds.hdLong)
-					},
-				},
-				price_raw : dothiBds.price_raw,
-			}
-			//Extract dacDiem
-			for (var i = 0; i < dothiBds.dacDiemLabel.length; i++ ) {
-				addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
-			}
-
-			addothiBds.dienTich = addothiBds.area_raw && Number(addothiBds.area_raw.substr(0, addothiBds.area_raw.length-2));
-			
-			addothiBds.gia = convertGia(addothiBds.price_raw, addothiBds.dienTich),
-			addothiBds.adsID = "Ads_dothi_" + addothiBds.maSo;
-			addothiBds.type = "Ads";
-			addothiBds.source = "DOTHI.NET";
-			if (addothiBds.gia && addothiBds.dienTich) {
-				addothiBds.giaM2 = Number((addothiBds.gia/addothiBds.dienTich).toFixed(3));
+			try {
+				handle(dothiBds);
+			} catch(e) {
+				logUtil.error("CANT EXTRACT",e, dothiBds);
 			}
 			
-			if(addothiBds.place.diaChinh.huyen) {
-				addothiBds.place.diaChinh.huyenKhongDau = util.locDau(addothiBds.place.diaChinh.huyen);
-			}
-
-			if(addothiBds.place.diaChinh.tinh) {
-				addothiBds.place.diaChinh.tinhKhongDau = util.locDau(addothiBds.place.diaChinh.tinh);
-			}
-
-			if(addothiBds.loaiNhaDat){
-				var loaiNhaDat = (addothiBds.loaiNhaDat).toUpperCase();
-				if(loaiNhaDat.indexOf("BÁN") > -1){
-					addothiBds.loaiTin = 0;
-				}
-				if(loaiNhaDat.indexOf("THUÊ") > -1){
-					addothiBds.loaiTin = 1;
-				}
-				addothiBds.loaiNhaDat = DoThiExtractor.convertDataLoaiNhaDat(loaiNhaDat);
-			}
-			if(addothiBds.huongNha){
-				var huongNha = (addothiBds.huongNha).toUpperCase();
-				addothiBds.huongNha = DoThiExtractor.convertDataHuongNha(huongNha);
-			} else {
-				addothiBds.huongNha = undefined;
-			}
-			
-			if (addothiBds.soPhong) {
-				addothiBds.soPhongNgu = Number(addothiBds.soPhong);
-			}
-			addothiBds.soPhong=undefined;
-	
-			addothiBds.soPhongTam = addothiBds.soPhongTam ? Number(addothiBds.soPhongTam) : undefined;
-			addothiBds.soTang = addothiBds.soTang ? Number(addothiBds.soTang) : undefined;
-
-			if(addothiBds.ngayHetHan){
-				var ngayHetHan = addothiBds.ngayHetHan;
-				addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
-			} else {
-				addothiBds.ngayHetHan = undefined;
-			}
-			
-			addothiBds.url = URLCache[addothiBds.maSo];
-
-			if(addothiBds.ngayDangTin){
-			 	var ngayDang = addothiBds.ngayDangTin;
-				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
-
-			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
-					adsModel.upsert(addothiBds);
-			 	}
-			 }
-
 		})
 		.log(console.log)
 		.error(console.log)
