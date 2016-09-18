@@ -151,7 +151,7 @@ function _mergeViewportWithCircleBox(q) {
 }
 
 internals.findAds = function (q, reply) {
-  if (q.userID) {
+  if (q.userID && q.updateLastSearch) {
     //console.log(JSON.stringify(q));
     _updateLastSearch(q);
   }

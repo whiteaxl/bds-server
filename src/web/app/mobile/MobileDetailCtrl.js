@@ -17,26 +17,19 @@
 		vm.reportCode = 1;
 		vm.searchDataXungQuanh = {
 			// "loaiTin": vm.ads.loaiTin,
-			"loaiNhaDat": 0, 
-			"limit": 9,
-			"soPhongNguGREATER": 0,
+			// "loaiNhaDat": [0], 
+			"loaiTin": 0,
+		    "giaBETWEEN": [0, 99999999999999],
+		    "dienTichBETWEEN" : [0, 99999999999999],
+		    "soPhongNguGREATER": 0,
   			"soPhongTamGREATER": 0,
   			"soTangGREATER": 0,
-  			"dienTichBETWEEN": [0,99999999999999],
-  			"giaBETWEEN": [0,99999999999999],
-  			"radiusInKm": 2,
-			//"diaChinh": vm.ads.place.diaChinh,
-			// "place": {
-	  //     			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-   // 				radiusInKm :  2,
-			// 	    currentLocation: {
-			// 	    	lat: vm.ads.place.geo.lat,
-			// 	    	lon: vm.ads.place.geo.lon
-			// 	    }
-			// },
-			"updateLastSearch": false,
-		  	"orderBy": "ngayDangTinDESC",
-		  	"pageNo": 1
+		    "ngayDangTinGREATER" : "20150601",
+		    "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
+		    "limit" : 9,
+		    "pageNo" : 1,
+		    "isIncludeCountInResponse" : false,
+		    "updateLastSearch": false,			
 		};
 		vm.searchDataTuongTu = {
 			// "loaiTin": vm.ads.loaiTin,
@@ -47,13 +40,8 @@
   			"soTangGREATER": 0,
   			"dienTichBETWEEN": [0,99999999999999],
   			"giaBETWEEN": [0,99999999999999],
-  			"radiusInKm": 2,
-			// "diaChinh": {
-			// 	tinh: vm.ads.place.diaChinh.tinhKhongDau,
-			// 	huyen: vm.ads.place.diaChinh.huyenKhongDau
-			// },
-			"updateLastSearch": false,
-		  	"orderBy": "ngayDangTinDESC",
+  			"updateLastSearch": false,
+		  	"orderBy": {name: "ngayDangTin", type: "DESC"},
 		  	"pageNo": 1
 		};
 		HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
@@ -282,14 +270,14 @@
                 $('body').scrollTop(0);
 			}, 0);
 
-			vm.searchDataXungQuanh.place = {
-	      		//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-   				radiusInKm :  2,
-			    currentLocation: {
+			vm.searchDataXungQuanh.circle = {
+   				radius :  2,
+			    center: {
 			    	lat: vm.ads.place.geo.lat,
 			    	lon: vm.ads.place.geo.lon
 			    }
 			};
+
 			vm.searchDataXungQuanh.loaiTin = vm.ads.loaiTin;
 
 			HouseService.findAdsSpatial(vm.searchDataXungQuanh).then(function(res){
@@ -297,10 +285,10 @@
 			});			
 
 			vm.searchDataTuongTu.loaiTin = vm.ads.loaiTin;
-			vm.searchDataTuongTu.loaiNhaDat = vm.ads.loaiNhaDat;
+			vm.searchDataTuongTu.loaiNhaDat = [vm.ads.loaiNhaDat];
 			vm.searchDataTuongTu.diaChinh = {
-				tinh: vm.ads.place.diaChinh.tinhKhongDau,
-				huyen: vm.ads.place.diaChinh.huyenKhongDau
+				tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
+				huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau
 			}
 			if(vm.ads.dienTich){
 				vm.searchDataTuongTu.dienTichBETWEEN[0] = vm.ads.dienTich*0.8;

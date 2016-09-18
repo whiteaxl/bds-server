@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5befc35115afd4258ab8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "64a408690015bcd9fd47"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21430,14 +21430,23 @@
 
 	            if (vm.placeId) {
 	                HouseService.getPlaceByID({ placeId: vm.placeId }).then(function (res) {
-	                    vm.viewPort = res.place.viewPort;
+	                    vm.viewport = res.data.place.geometry.viewport;
+	                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.tinhKhongDau;
+	                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.huyenKhongDau;
+	                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.xaKhongDau;
+	                    vm.search(function () {
+	                        if (vm.viewMode == "list") {
+	                            vm.initMap = false;
+	                        }
+	                    });
+	                });
+	            } else {
+	                vm.search(function () {
+	                    if (vm.viewMode == "list") {
+	                        vm.initMap = false;
+	                    }
 	                });
 	            }
-	            vm.search(function () {
-	                if (vm.viewMode == "list") {
-	                    vm.initMap = false;
-	                }
-	            });
 	        };
 
 	        vm.showList = function () {
@@ -21448,8 +21457,9 @@
 	            vm.viewMode = "map";
 	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
 	        };
-	        vm.sort = function (sortBy) {
-	            $rootScope.searchData.orderBy = sortBy;
+	        vm.sort = function (sortByName, sortByType) {
+	            $rootScope.searchData.orderBy.name = sortByName;
+	            $rootScope.searchData.orderBy.type = sortByType;
 	            vm.search();
 	        };
 
@@ -21506,7 +21516,17 @@
 	                if (vm.initialized == true) {
 	                    vm.initialized = false;
 	                    vm.humanZoom = true;
-	                    $rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(), vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(), vm.map.getBounds().getNorthEast().lng()];
+	                    // $rootScope.searchData.viewport = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+	                    $rootScope.searchData.viewport = {
+	                        southwest: {
+	                            lat: vm.map.getBounds().getSouthWest().lat(),
+	                            lon: vm.map.getBounds().getSouthWest().lng()
+	                        },
+	                        northeast: {
+	                            lat: vm.map.getBounds().getNorthEast().lat(),
+	                            lon: vm.map.getBounds().getNorthEast().lng()
+	                        }
+	                    };
 	                    // $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 	                    // //var bounds = vm.map.getBounds();
 	                    // //alert($rootScope.searchData.geoBox);
@@ -21607,7 +21627,7 @@
 	            vm.page = vm.page + 1;
 	            $rootScope.searchData.pageNo = vm.page;
 	            if ($rootScope.searchData.place) $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;
-	            $rootScope.searchData.userID = $rootScope.user.userID;
+	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
 	                for (var i = 0; i < result.length; i++) {
@@ -21737,12 +21757,14 @@
 	                vm.currentPageStart = vm.pageSize * ($rootScope.searchData.pageNo - 1) + 1;
 	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length - 1;
 	                vm.currentPage = $rootScope.searchData.pageNo;
-	                $scope.center = [res.data.viewport.center.lat, res.data.viewport.center.lon];
-	                var southWest = new google.maps.LatLng(res.data.viewport.southwest.lat, res.data.viewport.southwest.lon);
-	                var northEast = new google.maps.LatLng(res.data.viewport.northeast.lat, res.data.viewport.northeast.lon);
-	                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+	                if (vm.viewport) {
+	                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
+	                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+	                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+	                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
 
-	                if (vm.humanZoom != true && res.data.viewport.northeast.lat && res.data.viewport.southwest.lat) vm.map.fitBounds(bounds);
+	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat) vm.map.fitBounds(bounds);
+	                }
 
 	                $timeout(function () {
 	                    $('body').scrollTop(0);
@@ -21879,26 +21901,19 @@
 			vm.reportCode = 1;
 			vm.searchDataXungQuanh = {
 				// "loaiTin": vm.ads.loaiTin,
-				"loaiNhaDat": 0,
-				"limit": 9,
+				// "loaiNhaDat": [0], 
+				"loaiTin": 0,
+				"giaBETWEEN": [0, 99999999999999],
+				"dienTichBETWEEN": [0, 99999999999999],
 				"soPhongNguGREATER": 0,
 				"soPhongTamGREATER": 0,
 				"soTangGREATER": 0,
-				"dienTichBETWEEN": [0, 99999999999999],
-				"giaBETWEEN": [0, 99999999999999],
-				"radiusInKm": 2,
-				//"diaChinh": vm.ads.place.diaChinh,
-				// "place": {
-				//     			//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-				// 				radiusInKm :  2,
-				// 	    currentLocation: {
-				// 	    	lat: vm.ads.place.geo.lat,
-				// 	    	lon: vm.ads.place.geo.lon
-				// 	    }
-				// },
-				"updateLastSearch": false,
-				"orderBy": "ngayDangTinDESC",
-				"pageNo": 1
+				"ngayDangTinGREATER": "20150601",
+				"orderBy": { "name": "ngayDangTin", "type": "ASC" },
+				"limit": 9,
+				"pageNo": 1,
+				"isIncludeCountInResponse": false,
+				"updateLastSearch": false
 			};
 			vm.searchDataTuongTu = {
 				// "loaiTin": vm.ads.loaiTin,
@@ -21909,13 +21924,8 @@
 				"soTangGREATER": 0,
 				"dienTichBETWEEN": [0, 99999999999999],
 				"giaBETWEEN": [0, 99999999999999],
-				"radiusInKm": 2,
-				// "diaChinh": {
-				// 	tinh: vm.ads.place.diaChinh.tinhKhongDau,
-				// 	huyen: vm.ads.place.diaChinh.huyenKhongDau
-				// },
 				"updateLastSearch": false,
-				"orderBy": "ngayDangTinDESC",
+				"orderBy": { name: "ngayDangTin", type: "DESC" },
 				"pageNo": 1
 			};
 			HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
@@ -22127,14 +22137,14 @@
 					$('body').scrollTop(0);
 				}, 0);
 
-				vm.searchDataXungQuanh.place = {
-					//relandTypeName : window.RewayPlaceUtil.getTypeName(googlePlace),
-					radiusInKm: 2,
-					currentLocation: {
+				vm.searchDataXungQuanh.circle = {
+					radius: 2,
+					center: {
 						lat: vm.ads.place.geo.lat,
 						lon: vm.ads.place.geo.lon
 					}
 				};
+
 				vm.searchDataXungQuanh.loaiTin = vm.ads.loaiTin;
 
 				HouseService.findAdsSpatial(vm.searchDataXungQuanh).then(function (res) {
@@ -22142,10 +22152,10 @@
 				});
 
 				vm.searchDataTuongTu.loaiTin = vm.ads.loaiTin;
-				vm.searchDataTuongTu.loaiNhaDat = vm.ads.loaiNhaDat;
+				vm.searchDataTuongTu.loaiNhaDat = [vm.ads.loaiNhaDat];
 				vm.searchDataTuongTu.diaChinh = {
-					tinh: vm.ads.place.diaChinh.tinhKhongDau,
-					huyen: vm.ads.place.diaChinh.huyenKhongDau
+					tinhKhongDau: vm.ads.place.diaChinh.tinhKhongDau,
+					huyenKhongDau: vm.ads.place.diaChinh.huyenKhongDau
 				};
 				if (vm.ads.dienTich) {
 					vm.searchDataTuongTu.dienTichBETWEEN[0] = vm.ads.dienTich * 0.8;
@@ -23564,6 +23574,11 @@
 	        }
 	    }
 
+	    //todo: Name tu liem ? harded code for now
+	    if (huyen == "Từ Liêm") {
+	        huyen = "Nam Từ Liêm";
+	    }
+
 	    var diaChinh = {
 	        tinh: this.chuanHoa(tinh),
 	        huyen: this.chuanHoa(huyen),
@@ -23578,6 +23593,10 @@
 
 	placeUtil.getDiaChinh = function (diaChi) {
 	    var spl = diaChi.split(",");
+	    if (!spl || spl.length == 0) {
+	        spl = diaChi.split("-");
+	    }
+
 	    var diaChinh = {};
 
 	    var i = spl.length;
@@ -23909,38 +23928,6 @@
 	        if (idx > 0) kq = kqReplaceA.substring(0, idx);else kq = kqReplaceA;
 	    }
 	    return kq;
-	};
-
-	util.getDiaChinhFromDoThi = function (inputString, removeString, type) {
-	    var kq = "";
-	    var khuVuc = 'Khu vực';
-
-	    var kqReplaceA = striptags(inputString).trim();
-
-	    kqReplaceA = kqReplaceA.replace(removeString, "");
-	    kqReplaceA = kqReplaceA.replace(khuVuc, "");
-
-	    kqReplaceA = kqReplaceA.toUpperCase();
-	    if (kqReplaceA.includes("QUẬN")) {
-	        kqReplaceA = kqReplaceA.replace("QUẬN", "");
-	    }
-	    if (kqReplaceA.includes("HUYỆN")) {
-	        kqReplaceA = kqReplaceA.replace("HUYỆN", "");
-	    }
-
-	    if (kqReplaceA) {
-	        var idx = kqReplaceA.indexOf("-");
-	        var lastIdx = kqReplaceA.lastIndexOf("-");
-
-	        if (type == "HUYEN") {
-	            if (idx > 0 && lastIdx > idx) kq = kqReplaceA.substring(idx + 1, lastIdx);else kq = kqReplaceA;
-	        }
-	        if (type == "TINH") {
-	            if (idx > 0 && lastIdx > idx) kq = kqReplaceA.substring(lastIdx + 1, kqReplaceA.length);else kq = kqReplaceA;
-	        }
-	    }
-
-	    return kq.trim();
 	};
 
 	util.removeAllHtmlTagAndReplaceOneString = function (inputString, replaceString) {
@@ -38099,6 +38086,7 @@
 	  EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
 	  SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
 	  SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
+	  SUCCESS_UNLIKE_ADS: "Đã unlike bất động sản thành công",
 	  EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
 	  USER_NOT_EXIST: "User không tồn tại",
 	  SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công"

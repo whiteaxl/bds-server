@@ -832,6 +832,7 @@ internals.endpoints = [
           soPhongNguGREATER: Joi.number().integer(),
           soPhongTamGREATER: Joi.number().integer(),
           soTangGREATER: Joi.number().integer(),
+          soTang: Joi.number().integer(),
           huongNha: Joi.array().items(Joi.number())
             .description('tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js'),
           viewport: Joi.object({
@@ -863,7 +864,8 @@ internals.endpoints = [
           isIncludeCountInResponse : Joi.boolean(), 
           userID : Joi.string().description("to keep track history - last search"),
           soPhongNgu: Joi.number().integer(),
-          soPhongTam: Joi.number().integer()
+          soPhongTam: Joi.number().integer(),
+          updateLastSearch: Joi.boolean()
         }
       },
       response: {

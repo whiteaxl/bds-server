@@ -45,15 +45,23 @@
 
             if(vm.placeId){
                 HouseService.getPlaceByID({placeId: vm.placeId}).then(function(res){
-                    vm.viewPort = res.place.viewPort;
+                    vm.viewport = res.data.place.geometry.viewport;
+                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.tinhKhongDau;
+                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.huyenKhongDau;
+                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.xaKhongDau;
+                    vm.search(function(){
+                        if(vm.viewMode=="list"){
+                            vm.initMap = false;
+                        }
+                    });
+                });
+            }else {
+                vm.search(function(){
+                    if(vm.viewMode=="list"){
+                        vm.initMap = false;
+                    }
                 });
             }
-            vm.search(function(){
-                if(vm.viewMode=="list"){
-                    vm.initMap = false;
-                }
-            });
-            
         }
 
 		vm.showList = function(){
@@ -64,8 +72,9 @@
 			vm.viewMode = "map";
 			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
 		}
-		vm.sort = function(sortBy){
-			$rootScope.searchData.orderBy = sortBy;
+		vm.sort = function(sortByName, sortByType){
+			$rootScope.searchData.orderBy.name = sortByName;
+            $rootScope.searchData.orderBy.type = sortByType;
 			vm.search();
 		}
 
@@ -123,7 +132,17 @@
             		if(vm.initialized == true){
 		   				vm.initialized = false;
 		   				vm.humanZoom = true;
-		   				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+		   				// $rootScope.searchData.viewport = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+                        $rootScope.searchData.viewport = {
+                            southwest: {
+                                lat: vm.map.getBounds().getSouthWest().lat(),
+                                lon: vm.map.getBounds().getSouthWest().lng()
+                            },
+                            northeast: {
+                                lat: vm.map.getBounds().getNorthEast().lat(),
+                                lon: vm.map.getBounds().getNorthEast().lng()
+                            }
+                        };
 						// $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 						// //var bounds = vm.map.getBounds();
 						// //alert($rootScope.searchData.geoBox);
@@ -229,7 +248,7 @@
         	$rootScope.searchData.pageNo = vm.page;       
             if($rootScope.searchData.place)
                 $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;  
-            $rootScope.searchData.userID = $rootScope.user.userID;
+            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
             HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
                 var result = res.data.list;
                 for (var i = 0; i < result.length; i++) { 
@@ -367,13 +386,17 @@
                 vm.currentPageStart = vm.pageSize*($rootScope.searchData.pageNo-1) + 1
                 vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
                 vm.currentPage = $rootScope.searchData.pageNo;
-                $scope.center = [res.data.viewport.center.lat,res.data.viewport.center.lon];
-                var southWest = new google.maps.LatLng(res.data.viewport.southwest.lat, res.data.viewport.southwest.lon);
-			    var northEast = new google.maps.LatLng(res.data.viewport.northeast.lat, res.data.viewport.northeast.lon);
-			    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                if(vm.viewport){
+                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
+                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                    
+                    if(vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat)
+                        vm.map.fitBounds(bounds);  
+                }
                 
-                if(vm.humanZoom != true && res.data.viewport.northeast.lat && res.data.viewport.southwest.lat)
-                	vm.map.fitBounds(bounds);
+                
                 
                 $timeout(function() {
                     $('body').scrollTop(0);

@@ -30,7 +30,7 @@
 
 
 
-<div ng-if="msc.ads_list && msc.ads_list.length>0" class="bottom clb ovh uln">
+<div ng-if="msc.viewMode=='list' && msc.ads_list && msc.ads_list.length>0" class="bottom clb ovh uln">
     <div class="app">
         <h5>Reland App (IOS/Android)</h5>
         <ul>
@@ -92,13 +92,13 @@
             <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a>
             <div class="list-sort popovers top uln">
                 <ul>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDangASC')" class="active">Mặc định</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDangASC')">Ngày đăng</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('giaDESC')">Giá (giảm dần)</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('giaASC')">Giá (tăng dần)</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNguASC')">Số phòng ngủ</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTamASC')">Số phòng tắm</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('dienTichASC')">Diện tích</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')" class="active">Mặc định</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')">Ngày đăng</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('gia','DESC')">Giá (giảm dần)</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('gia','ASC')">Giá (tăng dần)</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNgu','ASC')">Số phòng ngủ</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTam','ASC')">Số phòng tắm</a></li>
+                    <li><a href="javascript:void(0)" ng-click="msc.sort('dienTich','ASC')">Diện tích</a></li>
                 </ul>
             </div>
         </li>
