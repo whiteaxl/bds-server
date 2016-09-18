@@ -28,10 +28,11 @@ var DACDIEM_MAP = {
 };
 
 var THONGTINLIENHE_MAP = {
-	'Tên liên lạc' : "tenLienLacTTLH",
-	'Địa chỉ'      : "diaChiTTLH",
-	'Điện thoại'   : "dienThoaiTTLH",
-	'Di động'      : "diDongTTLH",
+	'Tên liên lạc' : "name",
+	'Địa chỉ'      : "diaChi",
+	'Điện thoại'   : "dienThoai",
+	'Di động'      : "phone",
+	'Email'        : "email",
 };
 
 
@@ -69,6 +70,22 @@ function convertGia(priceRaw, dienTich) {
 	
 	return gia;
 }
+
+
+var parseEmail = function(encEmail) {
+	let idx1 = encEmail.indexOf('mailto:');
+	if (~idx1) {
+		var idx2 = encEmail.indexOf('\'', idx1);
+		if (~idx2) {
+			var onlyEncEmail = encEmail.substring(idx1+7, idx2);
+
+			return entities.decodeHTML(onlyEncEmail);
+		}
+	}
+
+	return '';
+};
+
 
 var URLCache = {};
 
@@ -160,8 +177,18 @@ class DoThiExtractor {
 		.get(url)
 		.find('.for-user')
 		.set({
-			'url'			   :'ul > li > a@href'
+			'urls'			   :['ul > li > a@href']
 		})
+		.data((dat => {
+			dat.urls.forEach((url) => {
+				let idx = url.lastIndexOf("-");
+				let tail = url.substr(idx+3);
+				let code = tail.substr(0, tail.length-4);
+				
+				URLCache[code] = url;
+			})
+			
+		}))
 		.follow('ul > li > a@href')
 		.set({
 			'title'			   :'.product-detail > h1',
@@ -176,29 +203,37 @@ class DoThiExtractor {
 			'diaChi'		:'.pd-location',
 			'hdLat'		    :'.divmaps input[id="hddLatitude"]@value',
 			'hdLong'	    :'.divmaps input[id="hddLongtitude"]@value',
-			'adsID'		    :'#tbl1 > tbody > tr[1] > td[2]',
 			'ngayDangTin'	:['.pd-dacdiem > table > tbody > tr[3] > td[2]'],
-			'dangBoiName'	:['.pd-contact > table  > tr[1] > td[2]'],
-			'dangBoiPhone'	:['.pd-contact > table  > tr[3] > td[2]'],
-			'dangBoiDiDong'	:['.pd-contact > table  > tr[4] > td[2]']
+			'custInfo01'	:['.pd-contact > table  > tr[1] > td'],
+			'custInfo02'	:['.pd-contact > table  > tr[3] > td'],
+			'custInfo03'	:['.pd-contact > table  > tr[4] > td'],
+			'custInfo04'	:['.pd-contact > table  > tr[2] > td'],
+			'custInfo05'	:['.pd-contact > table  > tr[5] > td'],
+			'custInfo'	:['.pd-contact > table  > tr > td'],
 		})
 		.data(function(dothiBds) {
-		
-			//console.log("AAAAAAA=", dothiBds.url);
-			
+			//Convert diaChi, diaChinh
 			var dc = dothiBds.diaChi.replace(/.* tại /, "");
 			var spl = dc.split("-");
-			
 			if (spl.length < 2) {
 				console.log("DiaChi khong dung:", dc, dothiBds.url);
 				return;
 			}
-			
 			var huyen = spl[spl.length-2].trim().replace("Quận ", "").replace("Huyện ", "");
 			var tinh = spl[spl.length-1].trim();
 			
-			
-			//console.log("AAAAAAA=", dc);
+			// customer information : thong tin lien lac
+			var dangBoi = {};
+			for (var i = 1; i <= 4; i++) {
+				//transform first:
+				let row = dothiBds['custInfo0'+i];
+				let val = row[1];
+				
+				if (row[0]=='Email') {
+					val = parseEmail(row[1]);
+				}
+				dangBoi[THONGTINLIENHE_MAP[row[0]]] = val;
+			}
 
 			let addothiBds = {
 				title:  	dothiBds.title,
@@ -210,12 +245,8 @@ class DoThiExtractor {
 				
 				area_raw:  	dothiBds.area_raw,
 				chiTiet:  	dothiBds.chiTiet[0],
-				adsID:  	dothiBds.adsID,
 				ngayDangTin:  	dothiBds.ngayDangTin,
-				dangBoi:{
-					name: dothiBds.dangBoiName[0],
-					phone: dothiBds.dangBoiPhone[0]||dothiBds.dangBoiDiDong[0]
-				},
+				dangBoi:dangBoi,
 				place:{
 					diaChi: 	dc,
 					diaChinh:{
@@ -227,10 +258,7 @@ class DoThiExtractor {
 						lon: Number(dothiBds.hdLong)
 					},
 				},
-				url : dothiBds.url,
 				price_raw : dothiBds.price_raw,
-				
-
 			}
 			//Extract dacDiem
 			for (var i = 0; i < dothiBds.dacDiemLabel.length; i++ ) {
@@ -282,14 +310,16 @@ class DoThiExtractor {
 
 			if(addothiBds.ngayHetHan){
 				var ngayHetHan = addothiBds.ngayHetHan;
-				addothiBds.ngayHetHan = Number(util.convertFormatDatetoYYYYMMDD(ngayHetHan));
+				addothiBds.ngayHetHan = util.convertFormatDatetoYYYYMMDD(ngayHetHan);
 			} else {
 				addothiBds.ngayHetHan = undefined;
 			}
+			
+			addothiBds.url = URLCache[addothiBds.maSo];
 
 			if(addothiBds.ngayDangTin){
 			 	var ngayDang = addothiBds.ngayDangTin;
-				 addothiBds.ngayDangTin = Number(util.convertFormatDatetoYYYYMMDD(ngayDang));
+				 addothiBds.ngayDangTin = util.convertFormatDatetoYYYYMMDD(ngayDang);
 
 			 	if(!ngayDangTin || addothiBds.ngayDangTin == ngayDangTin){
 					adsModel.upsert(addothiBds);
