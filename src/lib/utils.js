@@ -44,6 +44,10 @@ var locDauInt = function(str) {
     return str;
 };
 
+util.roundToTwo = function(num) {    
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
 util.getPriceDisplay = function(val, loaiTin,forWeb) {
     try {
         if (!val) {
@@ -54,12 +58,12 @@ util.getPriceDisplay = function(val, loaiTin,forWeb) {
 
         if (loaiTin===0) { //ban
             if (val < 1000) {
-                return val.toFixed(2)+ " triệu";
+                return util.roundToTwo(val) + " triệu";
             }
 
-            return (val/1000).toFixed(2) + " tỷ";
+            return util.roundToTwo(val/1000) + " tỷ";
         } else {
-            return val.toFixed(2) +  (forWeb?"triệu":"triệu");
+            return util.roundToTwo(val) +  (forWeb?"triệu":"triệu");
         }
     } catch(ex) {
         console.log("Error when getPriceDisplay of " + val, ex)
