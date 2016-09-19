@@ -737,7 +737,12 @@ class AdsModel {
         let sql = "";
 
         if (q.orderBy) {
-            sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
+            //sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
+            //todo: not support DESC order for now, wait couchbase 4.5.1
+            if (q.orderBy.type=='DESC') {
+                logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
+            }
+            sql = sql + " ORDER BY " + q.orderBy.name;
         }
 
         if(q.dbLimit)
