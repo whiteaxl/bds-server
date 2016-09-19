@@ -37,7 +37,7 @@ const ListResultModel = Joi.object({
   soTang: Joi.number().allow(null),
   soTangFmt: Joi.string().allow(null),
   image: Joi.object({
-    cover: Joi.string(),
+    cover: Joi.string().allow(null),
     images: Joi.array().items(Joi.string())
   }),
   diaChi: Joi.string().allow(null),
