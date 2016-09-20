@@ -14,8 +14,8 @@
 		   relandTypeName: 'Tỉnh',
 		   fullName: 'Hanoi',
 		   radiusInKm: 20 },
-		   limit: 200,
-		   polygon: []
+		   limit: 200
+		   // polygon: []
 	   	}
 	   	var homeDataSearch = {
           timeModified: undefined,

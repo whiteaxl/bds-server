@@ -91,7 +91,8 @@
         return $http.post("/api/findDuAnHotByDiaChinhForDetailPage",data);
       },
       homeDataForApp: function(data){
-        return $http.post("/api/homeData4App",data);  
+        // return $http.post("/api/homeData4App",data);  
+        return $http.post("/api/v2/homeData4App",data);  
       },
       reportReland: function(data){
         return $http.post("/api/reportReland",data);  

@@ -6,6 +6,7 @@ var placeUtil = require('../../lib/placeUtil');
 var danhMuc = require('../../lib/DanhMuc');
 var utils = require('../../lib/utils');
 var cfg = require('../../config');
+var _ = require("lodash");
 
 var DuAnNoiBatService = require('../../dbservices/DuAnNoiBat');
 var duAnNoiBatService = new DuAnNoiBatService();
@@ -107,6 +108,57 @@ function searchAds(title1, title2, query, callback) {
   });
 }
 
+function generateSearchNgangGiaFn(query,diaChinh){
+  let results = [];
+  let loaiNhaDat = [];
+  let loaiTin = query.loaiTin;
+  if(!diaChinh)
+    diaChinh = {};
+  if(loaiTin ==0){
+    loaiNhaDat = [1,2,3,4,7,5];
+  }else if(loaiTin==1){
+    loaiNhaDat = [1,2,3,4];
+  }
+  
+  _(loaiNhaDat).forEach(function(value) {
+    // console.log("tim log loaiNhaDat" + value);
+    results.push(function(callback){
+      let queryNgangGia = {}; Object.assign(queryNgangGia, query);
+      let loaiNhaDatName = danhMuc.getLoaiNhaDatForDisplayNew(loaiTin,value);
+      let giaDisplay = " ngang giá";
+      if(!queryNgangGia.giaBETWEEN || (queryNgangGia.giaBETWEEN[0]==0 && queryNgangGia.giaBETWEEN[1]> 99999)){
+        queryNgangGia.giaBETWEEN = [];
+        queryNgangGia.giaBETWEEN[0] = [0];
+        queryNgangGia.giaBETWEEN[1] = 5000;
+        if(loaiTin==0){
+          if(value == 1 || value ==2 || value ==5 || value ==7){
+            loaiNhaDatName = loaiNhaDatName + " dưới 5 tỷ";
+          }else{
+            loaiNhaDatName = loaiNhaDatName + " dưới 20 tỷ";    
+          }
+        }else if(loaiTin == 1){
+          if(value == 4){
+            loaiNhaDatName = loaiNhaDatName + " dưới 5 triệu";
+          }else{
+            loaiNhaDatName = loaiNhaDatName + " dưới 20 triệu";    
+          }
+        }
+        
+      }else{
+        loaiNhaDatName = loaiNhaDatName + " ngang giá";
+      }
+      queryNgangGia.ngayDaDang = 700;  
+      queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
+      queryNgangGia.loaiNhaDat = [value];
+      searchAds(loaiNhaDatName   ,query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryNgangGia,callback);
+
+    });
+    // console.log("tim log " + results[0]);
+  });
+  
+  return results;
+
+}
 
 function getGiaTrungBinh(lastQuery) {
   let giaBETWEEN = lastQuery.giaBETWEEN;
@@ -122,8 +174,11 @@ internals.homeData4App = function (req, reply) {
   //console.log(req);
 
   var query = req.payload.query;
-  var lastQuery = {};
-  Object.assign(lastQuery, query);
+  var lastQuery = undefined;
+  if(query){
+    lastQuery = {};
+    Object.assign(lastQuery, query);
+  }
 
 
   console.log("homeData4App V2 " + JSON.stringify(query));
@@ -142,28 +197,25 @@ internals.homeData4App = function (req, reply) {
 
       var async = require("async");
       var fl = [];
+      let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
 
-      fl.push(function (callback) {
-        let queryNearBy = {};
-        Object.assign(queryNearBy, query);
+      if(diaChinh){
+        fl.push(function (callback) {
+          let queryNearBy = {};
+          Object.assign(queryNearBy, query);
 
-        queryNearBy.diaChinh = {
-          fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
-                                        diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
-          tinhKhongDau : diaChinh.tinh,
-          huyenKhongDau : diaChinh.huyen,
-          xaKhongDau: diaChinh.xa || undefined
-        };
-        console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
-        searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
-      });
-
-      let ngayDangTinBegin = moment().subtract(28, 'days').format('YYYYMMDD');
-
-      if (!diaChinh) {
-        //diaChinh = lastQuery
-        // need to get diaChinh from lastQuery
-        if (lastQuery) {
+          queryNearBy.diaChinh = {
+            fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
+                                          diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
+            tinhKhongDau : diaChinh.tinh,
+            huyenKhongDau : diaChinh.huyen,
+            xaKhongDau: diaChinh.xa || undefined
+          };
+          console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
+          searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
+        });
+      } else{
+        if(lastQuery){
           fl.push(
             function (callback) {
               let queryMoiDang = {};
@@ -176,19 +228,76 @@ internals.homeData4App = function (req, reply) {
               searchAds("Nhà Mới Đăng Hôm Nay", query.fullName, queryMoiDang, callback);
             }
           );
+          if(lastQuery.giaBETWEEN && !(lastQuery.giaBETWEEN[0] ==0 && lastQuery.giaBETWEEN[1] > 999999)){
+            
+          }
+          let ngangGiaFl = generateSearchNgangGiaFn(lastQuery,diaChinh); 
+          fl = _.concat(fl,ngangGiaFl);
+          console.log("tim log bc " + ngangGiaFl[1]);
           async.series(fl,
-            function (err, results) {
+            function(err, results){
               reply({
-                data: results,
-                status: 0,
+                data : results,
+                status : 0,
                 lastQuery
               });
             }
           );
+
           return;
+        }else{
+          console.log("tim log not have last query")
         }
-        //reply({status: 1, msg: 'Không xác định được vị trí hiện tại của bạn!'});
+
       }
+
+
+
+
+      // if (!diaChinh) { // not know current location
+      //   //diaChinh = lastQuery
+      //   // need to get diaChinh from lastQuery
+      //   if (lastQuery) {
+      //     fl.push(
+      //       function (callback) {
+      //         let queryMoiDang = {};
+      //         Object.assign(queryMoiDang, query);
+      //         queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
+      //         queryMoiDang.orderBy = {
+      //           name: "ngayDangTin",
+      //           type: "DESC"
+      //         };
+      //         searchAds("Nhà Mới Đăng Hôm Nay", query.fullName, queryMoiDang, callback);
+      //       }
+      //     );
+      //     async.series(fl,
+      //       function (err, results) {
+      //         reply({
+      //           data: results,
+      //           status: 0,
+      //           lastQuery
+      //         });
+      //       }
+      //     );
+      //     return;
+      //   }
+      //   //reply({status: 1, msg: 'Không xác định được vị trí hiện tại của bạn!'});
+      // } else{
+      //   fl.push(function (callback) {
+      //     let queryNearBy = {};
+      //     Object.assign(queryNearBy, query);
+
+      //     queryNearBy.diaChinh = {
+      //       fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
+      //                                     diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
+      //       tinhKhongDau : diaChinh.tinh,
+      //       huyenKhongDau : diaChinh.huyen,
+      //       xaKhongDau: diaChinh.xa || undefined
+      //     };
+      //     console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
+      //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
+      //   });
+      // }
 
       fl.push(
         function (callback) {

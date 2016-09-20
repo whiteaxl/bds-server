@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "64a408690015bcd9fd47"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d07645583a36591d0bf9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20460,7 +20460,8 @@
 	        return $http.post("/api/findDuAnHotByDiaChinhForDetailPage", data);
 	      },
 	      homeDataForApp: function homeDataForApp(data) {
-	        return $http.post("/api/homeData4App", data);
+	        // return $http.post("/api/homeData4App",data);  
+	        return $http.post("/api/v2/homeData4App", data);
 	      },
 	      reportReland: function reportReland(data) {
 	        return $http.post("/api/reportReland", data);
@@ -21283,8 +21284,8 @@
 					relandTypeName: 'Tỉnh',
 					fullName: 'Hanoi',
 					radiusInKm: 20 },
-				limit: 200,
-				polygon: []
+				limit: 200
+				// polygon: []
 			};
 			var homeDataSearch = {
 				timeModified: undefined,
