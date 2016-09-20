@@ -174,8 +174,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 
                 vm.gotoSearchPage = function(event){
                     //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
-                    if(!vm.place)
-                        vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
+                    // if(!vm.place)
+                    //     vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
                     // $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
                     //     reload: true,
                     //     inherit: false,
@@ -194,8 +194,18 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.giaKhacTo = undefined;
                       
                     }
+                    if(vm.place){
+                        $scope.searchData.diaChinh = {
+                            tinhKhongDau: vm.place.tinh,
+                            huyenKhongDau: vm.place.huyen,
+                            xaKhongDau: vm.place.xa,
+                            fullName: vm.place.description
+                        };                            
+                    }
+                    
                     // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
-                    $state.go("msearch", { "tinh" : vm.place.tinh,"huyen" : vm.place.huyen,"xa" : vm.place.xa, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData,"placeId": vm.place.placeId, "viewMode": "list"});
+
+                    $state.go("msearch", { "placeId": vm.place?vm.place.placeId:undefined, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
                     $(".overlay").click();
                 }
                 vm.gotoRelandApp = function(event){

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d07645583a36591d0bf9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b1053f1b9dd3ea45a893"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1042,8 +1042,8 @@
 
 	    $rootScope.searchData = {
 	      "loaiTin": 0,
-	      "giaBETWEEN": [0, 3000],
-	      "dienTichBETWEEN": [20, 100],
+	      "giaBETWEEN": [0, 999999999],
+	      "dienTichBETWEEN": [0, 99999999999],
 	      "ngayDangTinGREATER": "20150601",
 	      "viewport": {
 	        "northeast": {
@@ -22393,7 +22393,8 @@
 
 	            vm.gotoSearchPage = function (event) {
 	                //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
-	                if (!vm.place) vm.place = { place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc" };
+	                // if(!vm.place)
+	                //     vm.place = {place_id: "ChIJoRyG2ZurNTERqRfKcnt_iOc"};
 	                // $state.transitionTo("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"}, {
 	                //     reload: true,
 	                //     inherit: false,
@@ -22411,8 +22412,18 @@
 	                    $scope.searchData.giaKhacFrom = undefined;
 	                    $scope.searchData.giaKhacTo = undefined;
 	                }
+	                if (vm.place) {
+	                    $scope.searchData.diaChinh = {
+	                        tinhKhongDau: vm.place.tinh,
+	                        huyenKhongDau: vm.place.huyen,
+	                        xaKhongDau: vm.place.xa,
+	                        fullName: vm.place.description
+	                    };
+	                }
+
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
-	                $state.go("msearch", { "tinh": vm.place.tinh, "huyen": vm.place.huyen, "xa": vm.place.xa, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "placeId": vm.place.placeId, "viewMode": "list" });
+
+	                $state.go("msearch", { "placeId": vm.place ? vm.place.placeId : undefined, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": "list" });
 	                $(".overlay").click();
 	            };
 	            vm.gotoRelandApp = function (event) {};
@@ -23879,6 +23890,10 @@
 	    return str;
 	};
 
+	util.roundToTwo = function (num) {
+	    return +(Math.round(num + "e+2") + "e-2");
+	};
+
 	util.getPriceDisplay = function (val, loaiTin, forWeb) {
 	    try {
 	        if (!val) {
@@ -23890,12 +23905,12 @@
 	        if (loaiTin === 0) {
 	            //ban
 	            if (val < 1000) {
-	                return val.toFixed(2) + " triệu";
+	                return util.roundToTwo(val) + " triệu";
 	            }
 
-	            return (val / 1000).toFixed(2) + " tỷ";
+	            return util.roundToTwo(val / 1000) + " tỷ";
 	        } else {
-	            return val.toFixed(2) + (forWeb ? "triệu" : "triệu");
+	            return util.roundToTwo(val) + (forWeb ? "triệu" : "triệu");
 	        }
 	    } catch (ex) {
 	        console.log("Error when getPriceDisplay of " + val, ex);

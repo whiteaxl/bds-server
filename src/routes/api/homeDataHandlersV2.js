@@ -150,7 +150,7 @@ function generateSearchNgangGiaFn(query,diaChinh){
       queryNgangGia.ngayDaDang = 700;  
       queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
       queryNgangGia.loaiNhaDat = [value];
-      searchAds(loaiNhaDatName   ,query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,queryNgangGia,callback);
+      searchAds(loaiNhaDatName   ,diaChinh?diaChinh.fullName:"",queryNgangGia,callback);
 
     });
     // console.log("tim log " + results[0]);
@@ -174,11 +174,7 @@ internals.homeData4App = function (req, reply) {
   //console.log(req);
 
   var query = req.payload.query;
-  var lastQuery = undefined;
-  if(query){
-    lastQuery = {};
-    Object.assign(lastQuery, query);
-  }
+  
 
 
   console.log("homeData4App V2 " + JSON.stringify(query));
@@ -189,15 +185,23 @@ internals.homeData4App = function (req, reply) {
 
   query.limit = 5;
   query.pageNo = 1;
+  let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
+  query.ngayDangTinGREATER = ngayDangTinBegin;
   //todo: order ?
+
+  var lastQuery = undefined;
+  if(query){
+    lastQuery = {};
+    Object.assign(lastQuery, query);
+  }
 
   services.getDiaChinhKhongDauByGeocode(currentLocation.lat, currentLocation.lon)
     .then((diaChinh) => {
 
       var async = require("async");
       var fl = [];
-      let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
+      
 
       if(diaChinh){
         fl.push(function (callback) {
@@ -205,35 +209,33 @@ internals.homeData4App = function (req, reply) {
           Object.assign(queryNearBy, query);
 
           queryNearBy.diaChinh = {
-            fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
-                                          diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
+            fullName : diaChinh.fullName,
             tinhKhongDau : diaChinh.tinh,
             huyenKhongDau : diaChinh.huyen,
             xaKhongDau: diaChinh.xa || undefined
           };
           console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
-          searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
+          searchAds("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy, callback);
         });
-      } else{
+      } else {
         if(lastQuery){
           fl.push(
             function (callback) {
               let queryMoiDang = {};
               Object.assign(queryMoiDang, query);
-              queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
               queryMoiDang.orderBy = {
                 name: "ngayDangTin",
                 type: "DESC"
               };
-              searchAds("Nhà Mới Đăng Hôm Nay", query.fullName, queryMoiDang, callback);
+              searchAds("Nhà Mới Đăng", query.diaChinh?(query.diaChinh.fullName):query.fullName, queryMoiDang, callback);
             }
           );
           if(lastQuery.giaBETWEEN && !(lastQuery.giaBETWEEN[0] ==0 && lastQuery.giaBETWEEN[1] > 999999)){
             
           }
-          let ngangGiaFl = generateSearchNgangGiaFn(lastQuery,diaChinh); 
+          let ngangGiaFl = generateSearchNgangGiaFn(lastQuery,query.diaChinh); 
           fl = _.concat(fl,ngangGiaFl);
-          console.log("tim log bc " + ngangGiaFl[1]);
+          // console.log("tim log bc " + ngangGiaFl[1]);
           async.series(fl,
             function(err, results){
               reply({
@@ -302,18 +304,17 @@ internals.homeData4App = function (req, reply) {
       fl.push(
         function (callback) {
           let queryMoiDang = {};
-          Object.assign(queryMoiDang, query);
-          queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
+          Object.assign(queryMoiDang, query);          
           queryMoiDang.orderBy = {
             name: "ngayDangTin",
             type: "DESC"
           };
 
-          searchAds("Nhà Mới Đăng Hôm Nay", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
+          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
         }
       );
 
-      if (lastQuery && lastQuery.giaBETWEEN) {
+      /*if (lastQuery && lastQuery.giaBETWEEN) {
         fl.push(
           function (callback) {
             let queryDuoiGia = {};
@@ -322,10 +323,10 @@ internals.homeData4App = function (req, reply) {
             searchAds("Nhà Có Giá Dưới " + mid, diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryDuoiGia, callback);
           }
         );
-      }
+      }*/
 
       //if no history, defaul if current Tinh and loaiTin=BAN
-      if (query.loaiTin == null || query.loaiTin == undefined) {
+      /*if (query.loaiTin == null || query.loaiTin == undefined) {
         query.loaiTin = 0;
         query.diaChinh = {
           tinhKhongDau: diaChinh.tinhKhongDau

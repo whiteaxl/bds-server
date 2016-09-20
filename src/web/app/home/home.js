@@ -50,8 +50,8 @@
 
     $rootScope.searchData = {
         "loaiTin": 0,
-        "giaBETWEEN": [0, 3000],
-        "dienTichBETWEEN" : [20, 100],
+        "giaBETWEEN": [0, 999999999],
+        "dienTichBETWEEN" : [0, 99999999999],
         "ngayDangTinGREATER" : "20150601",
         "viewport" : {
           "northeast" : {
