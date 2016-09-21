@@ -25,6 +25,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 //Object.assign($scope.searchData,$rootScope.searchData);
                 _.assign($scope.searchData,$rootScope.searchData);
 
+
                 vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
                 vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 
@@ -32,79 +33,179 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.sellPrices  =[                    
                     {
-                        value: 0.5,
-                        lable: "500 triệu"
+                        value: [0,9999999999999],
+                        lable: "Bất kỳ"
                     },
                     {
-                        value: 0.8,
-                        lable: "800 triệu"
+                        value: [0,500],
+                        lable: "<500 triệu"
+                    },                    
+                    {
+                        value: [500,800],
+                        lable: "500-800 triệu"
                     },
                     {
-                        value: 1,
-                        lable: "1 tỷ"
+                        value: [800,1000],
+                        lable: "800 triệu - 1 tỷ"
                     },
                     {
-                        value: 2,
-                        lable: "2 tỷ"
+                        value: [1000,2000],
+                        lable: "1-2 tỷ"
                     },
                     {
-                        value: 3,
-                        lable: "3 tỷ"
+                        value: [2000,3000],
+                        lable: "2-3 tỷ"
                     },
                     {
-                        value: 5,
-                        lable: "5 tỷ"
+                        value: [3000,5000],
+                        lable: "3-5 tỷ"
                     },
                     {
-                        value: 7,
-                        lable: "7 tỷ"
+                        value: [5000,7000],
+                        lable: "5-7 tỷ"
                     },
                     {
-                        value: 10,
-                        lable: "10 tỷ"
+                        value: [7000,10000],
+                        lable: "7-10 tỷ"
                     },
                     {
-                        value: 20,
-                        lable: "20 tỷ"
+                        value: [10000,20000],
+                        lable: "10-20 tỷ"
                     },
                     {
-                        value: 30,
-                        lable: "30 tỷ"
+                        value: [20000-30000],
+                        lable: "20-30 tỷ"
+                    },
+                    {
+                        value: [30000-99999999999999],
+                        lable: ">30 tỷ"
                     }
                 ];
 
-                vm.rentPrices  =[                    
+                vm.rentPrices  =[
                     {
-                        value: 1,
-                        lable: "1 triệu"
+                        value: [0,9999999999999],
+                        lable: "Bất kỳ"
+                    },                    
+                    {
+                        value: [0,1],
+                        lable: "<1 triệu"
                     },
                     {
-                        value: 3,
-                        lable: "3 triệu"
+                        value: [1,3],
+                        lable: "1-3 triệu"
                     },
                     {
-                        value: 5,
-                        lable: "5 triệu"
+                        value: [3,5],
+                        lable: "3-5 triệu"
                     },
                     {
-                        value: 10,
-                        lable: "10 triệu"
+                        value: [5,10],
+                        lable: "5-10 triệu"
                     },
                     {
-                        value: 20,
-                        lable: "20 triệu"
+                        value: [10,20],
+                        lable: "10-20 triệu"
                     },
                     {
-                        value: 40,
-                        lable: "40 triệu"
+                        value: [20,40],
+                        lable: "20-40 triệu"
                     },
                     {
-                        value: 70,
-                        lable: "70 triệu"
+                        value: [40,70],
+                        lable: "40-70 triệu"
                     },
                     {
-                        value: 100,
-                        lable: "100 triệu"
+                        value: [70,100],
+                        lable: "70-100 triệu"
+                    },
+                    {
+                        value: [100,999999999999],
+                        lable: ">100 triệu"
+                    }
+                ];
+                vm.areas = [
+                    {
+                        value: [0,9999999999999],
+                        lable: "Bất kỳ"
+                    },                    
+                    {
+                        value: [0,30],
+                        lable: "<30 m2"
+                    },                    
+                    {
+                        value: [30,50],
+                        lable: "30-50 m2"
+                    },                    
+                    {
+                        value: [50,80],
+                        lable: "50-80 m2"
+                    },                    
+                    {
+                        value: [80,100],
+                        lable: "80-100 m2"
+                    },                    
+                    {
+                        value: [100,150],
+                        lable: "100-150 m2"
+                    },                    
+                    {
+                        value: [150,200],
+                        lable: "150-200 m2"
+                    },                    
+                    {
+                        value: [200,250],
+                        lable: "200-250 m2"
+                    },                    
+                    {
+                        value: [250,300],
+                        lable: "250-300 m2"
+                    },                    
+                    {
+                        value: [300,500],
+                        lable: "300-500 m2"
+                    },                    
+                    {
+                        value: [500,9999999999999999],
+                        lable: ">500 m2"
+                    }
+                ];
+                vm.ngayDangTinList = [
+                    {
+                        value: "19810101",
+                        lable: "Bất kỳ"
+                    },                    
+                    {
+                        value: Date.today().add(-1).days().toString('yyyyMMdd'),
+                        lable: "1 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-2).days().toString('yyyyMMdd'),
+                        lable: "2 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-3).days().toString('yyyyMMdd'),
+                        lable: "3 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-5).days().toString('yyyyMMdd'),
+                        lable: "5 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-7).days().toString('yyyyMMdd'),
+                        lable: "7 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-14).days().toString('yyyyMMdd'),
+                        lable: "14 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-30).days().toString('yyyyMMdd'),
+                        lable: "30 ngày"
+                    },                    
+                    {
+                        value: Date.today().add(-90).days().toString('yyyyMMdd'),
+                        lable: "90 ngày"
                     }
                 ];
 
@@ -254,12 +355,13 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 var setDrumValues = function(select, value){
                     var options = select[0].options;                    
-                    if(value>100000){
-                         select.drum('setIndex', 1); 
+                    if(value.indexOf("[0,9999999")>-1){
+                         select.drum('setIndex', 0); 
                     }else{
                         for(var i =0;i<options.length;i++){
                             if(options[i].value==value){
                                 select.drum('setIndex', i); 
+                                $("#"+select.attr("id") + "_value").html(options[i].label);                                
                                 break;
                             }
                         }
@@ -357,39 +459,33 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     Hammer.plugins.fakeMultitouch();
                     $("select.drum").drum({
                         onChange : function (selected) {
-                            //if (selected.value !=0) 
-                            $("#" + selected.id + "_value").html($("#"+selected.id+" option:selected").text());
-                            if(selected.id =="prices1"){
-                                $scope.searchData.giaBETWEEN[0] = selected.value*1000;
-                            }else if(selected.id =="prices2"){
-                                $scope.searchData.giaBETWEEN[1] = selected.value *1000;
-                            }else if(selected.id =="area1"){
-                                $scope.searchData.dienTichBETWEEN[0] = selected.value ;
-                            }else if(selected.id =="area2"){
-                                $scope.searchData.dienTichBETWEEN[1] = selected.value;
+                            //if (selected.value !=0)                             
+                            $("#" + selected.id + "_value").html($(selected).find(":selected").html());
+                            let array = JSON.parse(selected.value);
+                            if(selected.id =="prices"){
+                                $scope.searchData.giaBETWEEN = array;
+                            }else if(selected.id =="area"){
+                                $scope.searchData.dienTichBETWEEN = array;
                             }else if(selected.id=="datepost"){
-                                $scope.searchData.ngayDaDang = selected.value;
+                                $scope.searchData.ngayDangTinGREATER = selected.value;
                             }
                         }
                     });
                     //set price drum
-                    var prices1 = $scope.searchData.giaBETWEEN[0]/1000;
-                    var prices1Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices1");
-                    setDrumValues(prices1Elm, prices1);
+                    var prices = "["+$scope.searchData.giaBETWEEN[0]+"," +$scope.searchData.giaBETWEEN[1]+"]";
+                    var pricesElm = $("#price_" + $scope.searchData.loaiTin + " select#prices");
+                    setDrumValues(pricesElm, prices);
                     
-                    var prices2 = $scope.searchData.giaBETWEEN[1]/1000;
-                    var prices2Elm = $("#price_" + $scope.searchData.loaiTin + " select#prices2");
-                    setDrumValues(prices2Elm,prices2);
+                    
+                    // var area1 = $scope.searchData.dienTichBETWEEN[0];
+                    // var area1Elm = $("select#area1");
+                    // setDrumValues(area1Elm,area1);
 
-                    var area1 = $scope.searchData.dienTichBETWEEN[0];
-                    var area1Elm = $("select#area1");
-                    setDrumValues(area1Elm,area1);
+                    var area = "["+$scope.searchData.dienTichBETWEEN[0]+","+$scope.searchData.dienTichBETWEEN[1]+"]";
+                    var areaElm = $("select#area");
+                    setDrumValues(areaElm,area);
 
-                    var area2 = $scope.searchData.dienTichBETWEEN[1];
-                    var area2Elm = $("select#area2");
-                    setDrumValues(area2Elm,area2);
-
-                    var datepost = $scope.searchData.ngayDaDang;
+                    var datepost = $scope.searchData.ngayDangTinGREATER;
                     var datepostElm = $("select#datepost");
                     setDrumValues(datepostElm,datepost);   
 

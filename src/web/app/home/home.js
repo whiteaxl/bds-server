@@ -52,7 +52,7 @@
         "loaiTin": 0,
         "giaBETWEEN": [0, 999999999],
         "dienTichBETWEEN" : [0, 99999999999],
-        "ngayDangTinGREATER" : "20150601",
+        "ngayDangTinGREATER" : "19810101",
         "viewport" : {
           "northeast" : {
             "lat" : 21.385027,
