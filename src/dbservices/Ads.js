@@ -754,7 +754,7 @@ class AdsModel {
     }
 
     _buildWhere(q){
-        var sql = ` WHERE loaiTin = ${q.loaiTin}`;
+        var sql = ` WHERE type='Ads' and loaiTin = ${q.loaiTin}`;
 
         if(q.loaiNhaDat){
             var condition = " and loaiNhaDat in [";

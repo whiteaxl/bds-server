@@ -1,0 +1,1 @@
+create index ads_101_idx on ngayDangTin, loaiTin, loaiNhaDat, gia, dienTich, soPhongNgu, soPhongTam, soTang, huongNha, place.diaChinh.tinhKhongDau, place.diaChinh.huongKhongDau, place.diaChinh.xaKhongDau, place.geo.lat, place.geo.lon 
