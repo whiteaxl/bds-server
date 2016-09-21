@@ -70,7 +70,7 @@ placeUtil.getDiaChinhFromGooglePlace = function(place) {
     return diaChinh;
 };
 
-placeUtil.getDiaChinh = function(diaChi) {
+placeUtil.getDiaChinh = function(diaChi, needRemovePrefix) {
     var spl = diaChi.split(",");
     if (!spl || spl.length == 0) {
         spl = diaChi.split("-");
@@ -85,7 +85,12 @@ placeUtil.getDiaChinh = function(diaChi) {
 
     var rawHuyen = spl[--i];
     if (rawHuyen) {
-        diaChinh.huyen = rawHuyen.trim();
+        if (needRemovePrefix) {
+            diaChinh.huyen = rawHuyen.trim().replace("Quận ", "").replace("Huyện ", "");
+        } else {
+            diaChinh.huyen = rawHuyen.trim();
+        }
+        
         if(diaChinh.huyen)
             diaChinh.huyenKhongDau =util.locDau(diaChinh.huyen);
     } else {

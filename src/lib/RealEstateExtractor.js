@@ -112,7 +112,7 @@ function buildPlace(adsDto) {
 		lon: adsDto.hdLong
 	};
 	adsDto.place.diaChi = adsDto.diaChi;
-	adsDto.place.diaChinh = placeUtil.getDiaChinh(adsDto.place.diaChi);
+	adsDto.place.diaChinh = placeUtil.getDiaChinh(adsDto.place.diaChi, true);
 
 	//for convenience
 	adsDto.place.duAnFullName = placeUtil.getDuAnFullName(adsDto.place);
@@ -133,16 +133,23 @@ function convertGia(ads) {
 		ads.gia = ads.price_value*1000;
 		return;
 	}
+	
+	
+	if (~ads.price_unit.indexOf('nghìn/m2/tháng')) {
+		ads.gia = ads.price_value * ads.dienTich / 1000;
+		return;
+	}
+
+	if (~ads.price_unit.indexOf('m nghìn/m')) { //Trăm nghìn/m²
+		ads.gia = ads.price_value * ads.dienTich / 10;
+		return;
+	}
 
 	if (~ads.price_unit.indexOf('u/m')) { //trieu/m2
 		ads.gia = ads.price_value * ads.dienTich;
 		return;
 	}
 
-	if (~ads.price_unit.indexOf('nghìn/m2/tháng')) {
-		ads.gia = ads.price_value * ads.dienTich / 1000;
-		return;
-	}
 
 	ads.gia = ads.price_value*1;
 }

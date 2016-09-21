@@ -24,13 +24,16 @@ function _getFromCache(input, reply) {
     let e = placeCache[i];
 
     //console.log(e.nameKhongDau);
-
-    if (e.nameKhongDau.indexOf(inputKhongDau) > -1) {
-      ret.push(e);
-      if (ret.length >= 10) {
-        break;
-      }
+    
+    //exceptional for Quan-1, quan-2...
+    if ((e.nameKhongDau.indexOf(inputKhongDau) > -1)
+      || (!isNaN(e.nameKhongDau) && ('quan-'+e.nameKhongDau).indexOf(inputKhongDau) > -1)) {
+        ret.push(e);
+        if (ret.length >= 10) {
+          break;
+        }
     }
+    
   }
 
   _returnToClient(ret, reply);

@@ -103,8 +103,6 @@ var parseEmail = function(encEmail) {
 var URLCache = {};
 
 function handle(dothiBds) {
-	
-	
 	// customer information : thong tin lien lac
 	var dangBoi = {};
 	for (var i = 1; i <= 5; i++) {
@@ -282,39 +280,18 @@ class DoThiExtractor {
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
-	extractWithLimit(rootURL, start, end,ngayDangTin) {
-		start = Number(start);
-		end = Number(end);
-		console.log("Enter extractWithLimit .... " + start + ", " + end);
-		var startDate = new Date();
-		var count = start-1;
-		var _done = () => {
-			count++;
-		};
-
-		/*
-		var i = start;
-		for (i=start; i<=end; i++) {
-			let fullUrl = rootURL + '/p'+i+'.htm';
-			console.log("Extracting for page: " + fullUrl);
-			//this.extractOnePage(fullUrl, _done,ngayDangTin);
-			
-		}
-		*/
+	extractWithLimit(rootURL) {
 		
-		this.extractOnePage(rootURL, _done,ngayDangTin);
+		var startDate = new Date();
+		var _done = () => {
+			console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
+		}
 
-		var myInterval = setInterval(function(){
-			 if (count==end) {
-			 	console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
-			 	clearInterval(myInterval);
-			 	//handleDone();
-			 }
-		}, 1000);
+		this.extractOnePage(rootURL, _done);
 	}
 
 
-	extractOnePage(url, handleDone,ngayDangTin) {
+	extractOnePage(url, handleDone) {
 		osmosis
 		
 		.get(url)
@@ -360,6 +337,9 @@ class DoThiExtractor {
 			'custInfo03'	:['.pd-contact > table  > tr[4] > td'],
 			'custInfo04'	:['.pd-contact > table  > tr[2] > td'],
 			'custInfo05'	:['.pd-contact > table  > tr[5] > td'],
+			'city'          :'#cboCity .cboCity .segtext',
+			'dist'          :'#cboDist .segtext',
+			'ward'          :'#cboWard .segtext',
 		})
 		.data(function(dothiBds) {
 			try {

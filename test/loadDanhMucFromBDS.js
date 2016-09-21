@@ -19,7 +19,7 @@ function loadViewportFromGG(list, idx, geoUrl) {
   if (!geoUrl) {
     let keyword = dc.fullName;
     keyword = keyword.replace("Thị xã ", "");
-    keyword = keyword.replace("Quận ", "");
+    //keyword = keyword.replace("Quận ", "");
     keyword = keyword.replace("Huyện ", "");
     keyword = keyword.replace("Thành phố ", "");
 
@@ -139,7 +139,7 @@ function mapWithGoogle(diaChinh, geocodes) {
 
 function useGoogleToAddMissingViewportInDB() {
   //let sql = `select t.* from default t where type='Place' and ggMatched=false and (placeType = 'T' or placeType = 'H' or placeType = 'X')`;
-  let sql = `select t.* from default t where type='Place' and ggMatched=false  and geometry is missing limit 3000`;
+  let sql = `select t.* from default t where type='Place' and ggMatched=false  and tinhKhongDau='ho-chi-minh' limit 3000`;
 
   commonService.query(sql, (err, res) => {
     console.log("COUNT=", res.length);
