@@ -280,24 +280,29 @@ class DoThiExtractor {
 	}
 
 	//rootURL = http://batdongsan.com.vn/cao-oc-van-phong
-	extractWithLimit(rootURL) {
+	extractWithLimit(rootURL, deepth) {
 		
 		var startDate = new Date();
 		var _done = () => {
 			console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
 		}
 
-		this.extractOnePage(rootURL, _done);
+		this.extractOnePage(rootURL, _done, deepth);
 	}
 
 
-	extractOnePage(url, handleDone) {
-		osmosis
+//deepth: diaChinh level, 0 mean no dive into into any level, 3 mean dive into XA
+	extractOnePage(url, handleDone, deepth) {
+		let osmosisRoot  = 	osmosis
+								.get(url);
+		deepth = deepth || 0;
 		
-		.get(url)
+		for (var i=0; i < deepth; i++) {
+			console.log("Will dive into one more level");
+			osmosisRoot = osmosisRoot.follow('#ulProductCount > li > h4 > a@href');
+		}
 		
-		.follow('#ulProductCount > li > h4 > a@href')
-		.follow('#ulProductCount > li > h4 > a@href')
+		osmosisRoot
 		.paginate(".pager_controls a[title!='P1']:has(.style-pager-button-next-first-last)[1]")
 		
 		.set({
