@@ -185,6 +185,7 @@ internals.homeData4App = function (req, reply) {
 
   query.limit = 5;
   query.pageNo = 1;
+  query.loaiTin = query.loaiTin ? query.loaiTin : 0;
   let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
   query.ngayDangTinGREATER = ngayDangTinBegin;
@@ -236,17 +237,6 @@ internals.homeData4App = function (req, reply) {
           let ngangGiaFl = generateSearchNgangGiaFn(lastQuery,query.diaChinh); 
           fl = _.concat(fl,ngangGiaFl);
           // console.log("tim log bc " + ngangGiaFl[1]);
-          async.series(fl,
-            function(err, results){
-              reply({
-                data : results,
-                status : 0,
-                lastQuery
-              });
-            }
-          );
-
-          return;
         }else{
           console.log("tim log not have last query")
         }
@@ -423,6 +413,16 @@ internals.homeData4App = function (req, reply) {
        }
        });
        */
+
+      async.series(fl,
+          function(err, results){
+            reply({
+              data : results,
+              status : 0,
+              lastQuery
+            });
+          }
+      );
     });
 };
 
