@@ -865,7 +865,8 @@ internals.endpoints = [
           userID : Joi.string().description("to keep track history - last search"),
           soPhongNgu: Joi.number().integer(),
           soPhongTam: Joi.number().integer(),
-          updateLastSearch: Joi.boolean()
+          updateLastSearch: Joi.boolean(), 
+          gia : Joi.number().integer().description("-1=thoa thuan"),
         }
       },
       response: {

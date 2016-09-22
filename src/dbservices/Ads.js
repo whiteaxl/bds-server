@@ -844,9 +844,16 @@ class AdsModel {
             let soPhongTam = Number(q.soPhongTam);
             sql = sql + " AND soPhongTam  = " + soPhongTam;
         }
+
         if(q.soTang){
             let soTang = Number(q.soTang);
             sql = sql + " AND soTang  = " + soTang;
+        }
+        
+        if (q.gia === -1) {
+            sql = sql + " AND gia is missing";
+        } else if (q.gia) {
+            sql = sql + " AND gia = " + q.gia ;
         }
 
 
@@ -854,5 +861,6 @@ class AdsModel {
 
     }
 }
+
 
 module.exports = AdsModel;
