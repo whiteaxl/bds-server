@@ -202,7 +202,8 @@ internals.homeData4App = function (req, reply) {
 
       var async = require("async");
       var fl = [];
-      
+      console.log("================ dia chinh")   ;
+      console.log(diaChinh);
 
       if(diaChinh){
         fl.push(function (callback) {
@@ -287,22 +288,22 @@ internals.homeData4App = function (req, reply) {
       //       xaKhongDau: diaChinh.xa || undefined
       //     };
       //     console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
-      //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
+      //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.huyenCoDau, queryNearBy, callback);
       //   });
       // }
-
-      fl.push(
+      // Note : hoi Hung xem doan nay can ko
+      /*fl.push(
         function (callback) {
           let queryMoiDang = {};
-          Object.assign(queryMoiDang, query);          
+          Object.assign(queryMoiDang, query);
           queryMoiDang.orderBy = {
             name: "ngayDangTin",
             type: "DESC"
           };
 
-          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyen + ", " + diaChinh.tinh, queryMoiDang, callback);
+          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
         }
-      );
+      );*/
 
       /*if (lastQuery && lastQuery.giaBETWEEN) {
         fl.push(
