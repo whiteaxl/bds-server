@@ -186,7 +186,7 @@ internals.homeData4App = function (req, reply) {
   query.limit = 5;
   query.pageNo = 1;
   query.loaiTin = query.loaiTin ? query.loaiTin : 0;
-  let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
+  let ngayDangTinBegin = moment().subtract(365, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
   query.ngayDangTinGREATER = ngayDangTinBegin;
   //todo: order ?
@@ -202,8 +202,6 @@ internals.homeData4App = function (req, reply) {
 
       var async = require("async");
       var fl = [];
-      console.log("================ dia chinh")   ;
-      console.log(diaChinh);
 
       if(diaChinh){
         fl.push(function (callback) {

@@ -47,7 +47,7 @@ function _handleDBFindResult(error, allAds, q) {
         }) : [cfg.noCoverUrl]
       },
       diaChi: ads.place.diaChi,
-      ngayDangTin: ads.ngayDangTin,
+      ngayDangTin: ads.ngayDangTin && !isNaN(ads.ngayDangTin) ? ads.ngayDangTin.toString() : "",
       giaM2: ads.giaM2,
       loaiNhaDat: ads.loaiNhaDat,
       loaiTin: ads.loaiTin,
