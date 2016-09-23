@@ -300,7 +300,7 @@ internals.homeData4App = function (req, reply) {
             type: "DESC"
           };
 
-          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
+          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyen + ", " + diaChinh.tinh, queryMoiDang, callback);
         }
       );
 
