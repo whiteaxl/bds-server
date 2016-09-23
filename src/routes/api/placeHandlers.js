@@ -35,6 +35,10 @@ function _getFromCache(input, reply) {
     }
     
   }
+  
+  if (ret.length == 0) {
+    console.log("Not match!!!");
+  }
 
   _returnToClient(ret, reply);
 }
