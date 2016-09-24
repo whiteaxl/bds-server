@@ -742,9 +742,9 @@ class AdsModel {
                 logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
             }
             let name = q.orderBy.name;
-            sql = `${sql} AND ${name} is not missing ORDER BY ${name}`;
+            sql = `${sql} ORDER BY ${name}`;
         } else {
-            sql = sql + " AND ngayDangTin is not missing ORDER BY ngayDangTin"
+            sql = `${sql} ORDER BY ngayDangTin`; 
         }
 
         if(q.dbLimit)
@@ -858,6 +858,13 @@ class AdsModel {
             sql = sql + " AND gia = " + q.gia ;
         }
 
+        //need add not missing for order by also
+        if (q.orderBy) {
+            let name = q.orderBy.name;
+            sql = `${sql} AND ${name} is not missing`;
+        } else {
+            sql = sql + " AND ngayDangTin is not missing"
+        }
 
         return sql;
 
