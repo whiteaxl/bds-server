@@ -585,8 +585,7 @@ class AdsModel {
             }else{
                 sql = sql + ((filter.loaiNhaDat && filter.loaiNhaDat>0) ? " AND loaiNhaDat=" + filter.loaiNhaDat : "");        
             }
-        }
-        
+        } 
 
         if (filter.geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + filter.geoBox[0] + " AND " + filter.geoBox[2] + ")";
@@ -614,7 +613,7 @@ class AdsModel {
 
         if (filter.ngayDangTinFrom) { //ngayDangTinFrom: 20-04-2016
             sql = `${sql} and ngayDangTin > '${filter.ngayDangTinFrom}'`;
-        }
+        } 
 
         if (filter.giaBETWEEN && (filter.giaBETWEEN[0] > 1 || filter.giaBETWEEN[1] < 9999999)) {
             sql = `${sql} AND (gia BETWEEN ${filter.giaBETWEEN[0]} AND ${filter.giaBETWEEN[1]})`;
@@ -734,17 +733,18 @@ class AdsModel {
     }
 
     _buildOrderByAndPaging(q) {
-        let sql = "";
-
+        let sql = " ";
+       
         if (q.orderBy) {
-            sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
+            //sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
             //todo: not support DESC order for now, wait couchbase 4.5.1
-            //if (q.orderBy.type=='DESC') {
-            //    logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
-            //}
-            //sql = sql + " ORDER BY " + q.orderBy.name;
+            if (q.orderBy.type=='DESC') {
+                logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
+            }
+            let name = q.orderBy.name;
+            sql = `${sql} AND ${name} is not missing ORDER BY ${name}`;
         } else {
-            sql = sql + " ORDER BY ngayDangTin"
+            sql = sql + " ngayDangTin is not missing ORDER BY ngayDangTin"
         }
 
         if(q.dbLimit)
