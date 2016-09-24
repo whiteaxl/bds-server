@@ -728,7 +728,16 @@ class AdsModel {
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, res) {
-            callback(err, res[0].cnt);
+            if (err) {
+                logUtil.error("count error:", err);
+            } else {
+                if (!res[0]) {
+                    logUtil.error("count warn, no res[0]");
+                } else {
+                    callback(err, res[0].cnt);
+                }
+            }
+            
         });
     }
 
