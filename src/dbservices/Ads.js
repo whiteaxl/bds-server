@@ -744,7 +744,7 @@ class AdsModel {
             let name = q.orderBy.name;
             sql = `${sql} AND ${name} is not missing ORDER BY ${name}`;
         } else {
-            sql = sql + " ngayDangTin is not missing ORDER BY ngayDangTin"
+            sql = sql + " AND ngayDangTin is not missing ORDER BY ngayDangTin"
         }
 
         if(q.dbLimit)
