@@ -772,6 +772,8 @@ class AdsModel {
                 }
             }
             sql = sql + condition;
+        } else {
+            sql = sql + " and loaiNhaDat is not missing "; //always have this
         }
 
         if (q.viewport) {
