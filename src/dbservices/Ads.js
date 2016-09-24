@@ -742,7 +742,7 @@ class AdsModel {
     }
 
     _buildOrderByAndPaging(q) {
-        let sql = " ";
+        let sql = " AND ngayDangTin is not missing AND loaiNhaDat is not missing ";
        
         if (q.orderBy) {
             //sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
@@ -782,7 +782,7 @@ class AdsModel {
             }
             sql = sql + condition;
         } else {
-            sql = sql + " and loaiNhaDat is not missing "; //always have this
+            //sql = sql + " and loaiNhaDat is not missing "; //always have this
         }
 
         if (q.viewport) {
@@ -870,12 +870,14 @@ class AdsModel {
         }
 
         //need add not missing for order by also
+        /*
         if (q.orderBy) {
             let name = q.orderBy.name;
             sql = `${sql} AND ${name} is not missing`;
         } else {
             sql = sql + " AND ngayDangTin is not missing"
         }
+        */
 
         return sql;
 
