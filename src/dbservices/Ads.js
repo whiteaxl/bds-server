@@ -753,7 +753,7 @@ class AdsModel {
             //let name = q.orderBy.name;
             //sql = `${sql} ORDER BY ${name}`;
         } else {
-            sql = `${sql} ORDER BY ngayDangTin`; 
+            sql = `${sql} ORDER BY ngayDangTin DESC`;
         }
 
         if(q.dbLimit)
