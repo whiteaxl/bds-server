@@ -585,8 +585,7 @@ class AdsModel {
             }else{
                 sql = sql + ((filter.loaiNhaDat && filter.loaiNhaDat>0) ? " AND loaiNhaDat=" + filter.loaiNhaDat : "");        
             }
-        }
-        
+        } 
 
         if (filter.geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + filter.geoBox[0] + " AND " + filter.geoBox[2] + ")";
@@ -614,7 +613,7 @@ class AdsModel {
 
         if (filter.ngayDangTinFrom) { //ngayDangTinFrom: 20-04-2016
             sql = `${sql} and ngayDangTin > '${filter.ngayDangTinFrom}'`;
-        }
+        } 
 
         if (filter.giaBETWEEN && (filter.giaBETWEEN[0] > 1 || filter.giaBETWEEN[1] < 9999999)) {
             sql = `${sql} AND (gia BETWEEN ${filter.giaBETWEEN[0]} AND ${filter.giaBETWEEN[1]})`;
@@ -729,20 +728,32 @@ class AdsModel {
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, res) {
-            callback(err, res[0].cnt);
+            if (err) {
+                logUtil.error("count error:", err);
+            } else {
+                if (!res[0]) {
+                    logUtil.error("count warn, no res[0]");
+                } else {
+                    callback(err, res[0].cnt);
+                }
+            }
+            
         });
     }
 
     _buildOrderByAndPaging(q) {
-        let sql = "";
-
+        let sql = " AND ngayDangTin is not missing AND loaiNhaDat is not missing ";
+       
         if (q.orderBy) {
             //sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
             //todo: not support DESC order for now, wait couchbase 4.5.1
             if (q.orderBy.type=='DESC') {
                 logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
             }
-            sql = sql + " ORDER BY " + q.orderBy.name;
+            let name = q.orderBy.name;
+            sql = `${sql} ORDER BY ${name}`;
+        } else {
+            sql = `${sql} ORDER BY ngayDangTin`; 
         }
 
         if(q.dbLimit)
@@ -770,6 +781,8 @@ class AdsModel {
                 }
             }
             sql = sql + condition;
+        } else {
+            //sql = sql + " and loaiNhaDat is not missing "; //always have this
         }
 
         if (q.viewport) {
@@ -844,15 +857,32 @@ class AdsModel {
             let soPhongTam = Number(q.soPhongTam);
             sql = sql + " AND soPhongTam  = " + soPhongTam;
         }
+
         if(q.soTang){
             let soTang = Number(q.soTang);
             sql = sql + " AND soTang  = " + soTang;
         }
+        
+        if (q.gia === -1) {
+            sql = sql + " AND gia is missing";
+        } else if (q.gia) {
+            sql = sql + " AND gia = " + q.gia ;
+        }
 
+        //need add not missing for order by also
+        /*
+        if (q.orderBy) {
+            let name = q.orderBy.name;
+            sql = `${sql} AND ${name} is not missing`;
+        } else {
+            sql = sql + " AND ngayDangTin is not missing"
+        }
+        */
 
         return sql;
 
     }
 }
+
 
 module.exports = AdsModel;

@@ -1,1 +1,4 @@
-create index ads_101_idx on ngayDangTin, loaiTin, loaiNhaDat, gia, dienTich, soPhongNgu, soPhongTam, soTang, huongNha, place.diaChinh.tinhKhongDau, place.diaChinh.huongKhongDau, place.diaChinh.xaKhongDau, place.geo.lat, place.geo.lon 
+create index ads_001_idx on default(ngayDangTin, loaiTin, loaiNhaDat, gia, dienTich
+, soPhongNgu, soPhongTam, soTang, huongNha, place.diaChinh.tinhKhongDau
+, place.diaChinh.huongKhongDau, place.diaChinh.xaKhongDau, place.geo.lat, place.geo.lon) 
+where type='Ads'

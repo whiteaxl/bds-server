@@ -159,7 +159,8 @@ describe("01.Find API testsuite", function () {
         "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
         "limit" : 25,
         "pageNo" : 1,
-        "isIncludeCountInResponse" : false
+        "isIncludeCountInResponse" : false,
+        "gia" : -1
       })
       .expect("Content-type", /json/)
       .expect(200) // THis is HTTP response

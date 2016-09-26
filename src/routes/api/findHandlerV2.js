@@ -41,13 +41,13 @@ function _handleDBFindResult(error, allAds, q) {
       soPhongTam: ads.soPhongTam,
       soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "p.tắm" : null,
       image: {
-        cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize) : null,
+        cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize) : cfg.noCoverUrl,
         images: ads.image.images ? ads.image.images.map((e) => {
           return e.replace("80x60", targetSize);
-        }) : null
+        }) : [cfg.noCoverUrl]
       },
       diaChi: ads.place.diaChi,
-      ngayDangTin: ads.ngayDangTin,
+      ngayDangTin: ads.ngayDangTin && !isNaN(ads.ngayDangTin) ? ads.ngayDangTin.toString() : "",
       giaM2: ads.giaM2,
       loaiNhaDat: ads.loaiNhaDat,
       loaiTin: ads.loaiTin,

@@ -185,7 +185,8 @@ internals.homeData4App = function (req, reply) {
 
   query.limit = 5;
   query.pageNo = 1;
-  let ngayDangTinBegin = moment().subtract(2800, 'days').format('YYYYMMDD');
+  query.loaiTin = query.loaiTin ? query.loaiTin : 0;
+  let ngayDangTinBegin = moment().subtract(365, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
   query.ngayDangTinGREATER = ngayDangTinBegin;
   //todo: order ?
@@ -201,7 +202,6 @@ internals.homeData4App = function (req, reply) {
 
       var async = require("async");
       var fl = [];
-      
 
       if(diaChinh){
         fl.push(function (callback) {
@@ -236,17 +236,6 @@ internals.homeData4App = function (req, reply) {
           let ngangGiaFl = generateSearchNgangGiaFn(lastQuery,query.diaChinh); 
           fl = _.concat(fl,ngangGiaFl);
           // console.log("tim log bc " + ngangGiaFl[1]);
-          async.series(fl,
-            function(err, results){
-              reply({
-                data : results,
-                status : 0,
-                lastQuery
-              });
-            }
-          );
-
-          return;
         }else{
           console.log("tim log not have last query")
         }
@@ -297,14 +286,14 @@ internals.homeData4App = function (req, reply) {
       //       xaKhongDau: diaChinh.xa || undefined
       //     };
       //     console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
-      //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryNearBy, callback);
+      //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.huyenCoDau, queryNearBy, callback);
       //   });
       // }
-
-      fl.push(
+      // Note : hoi Hung xem doan nay can ko
+      /*fl.push(
         function (callback) {
           let queryMoiDang = {};
-          Object.assign(queryMoiDang, query);          
+          Object.assign(queryMoiDang, query);
           queryMoiDang.orderBy = {
             name: "ngayDangTin",
             type: "DESC"
@@ -312,7 +301,7 @@ internals.homeData4App = function (req, reply) {
 
           searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
         }
-      );
+      );*/
 
       /*if (lastQuery && lastQuery.giaBETWEEN) {
         fl.push(
@@ -423,6 +412,16 @@ internals.homeData4App = function (req, reply) {
        }
        });
        */
+
+      async.series(fl,
+          function(err, results){
+            reply({
+              data : results,
+              status : 0,
+              lastQuery
+            });
+          }
+      );
     });
 };
 

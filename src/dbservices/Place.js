@@ -35,6 +35,7 @@ class PlaceModel {
 	getAllPlaces(callback) {
 		var sql = "select default.* from default where type='Place'";
 		var query = N1qlQuery.fromString(sql);
+		console.log("getAllPlaces, sql=", sql);
 
 		bucket.query(query, callback);
 	}
