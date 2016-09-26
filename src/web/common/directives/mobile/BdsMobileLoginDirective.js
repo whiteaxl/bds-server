@@ -116,6 +116,7 @@ angular.module('bds')
                           //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                           //$window.token = res.data.token;
                           $localStorage.relandToken = res.data.token;
+                          $localStorage.lastSearch = res.data.lastSearch;
                           $rootScope.user.userName = res.data.userName;
                           $rootScope.user.userID = res.data.userID;
                           $rootScope.user.userAvatar = res.data.avatar;
@@ -172,6 +173,7 @@ angular.module('bds')
                         //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                         //$window.token = res.data.token;
                         $localStorage.relandToken = res.data.token;
+                        $localStorage.lastSearch = res.data.lastSearch;
                         $rootScope.user.userName = res.data.userName;
                         $rootScope.user.userID = res.data.userID;
                         $rootScope.user.userAvatar = res.data.avatar;

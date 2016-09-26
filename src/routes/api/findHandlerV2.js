@@ -101,7 +101,13 @@ function _updateLastSearch(q) {
     else {
       console.log(JSON.stringify(res));
       var user = res[0];
-      user.lastSearch = q;
+      if(!user.lastSearch){
+        user.lastSearch = [];
+      }else if (user.lastSearch.length==2){
+        user.lastSearch =  _(user.lastSearch).slice(1,user.lastSearch.length);                
+      }
+      user.lastSearch.push(q);
+      console.log("tim log " + JSON.stringify(user.lastSearch));
       userService.upsert(user);
     }
   });

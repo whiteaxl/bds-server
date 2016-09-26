@@ -70,7 +70,8 @@
         "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
         "limit" : 25,
         "pageNo" : 1,
-        "isIncludeCountInResponse" : false
+        "isIncludeCountInResponse" : false,
+        "updateLastSearch": true
       }
     //mobile login box controll
 

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4d13ca93990970a33db2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "32c3c220195b9d7a7cde"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1062,7 +1062,8 @@
 	      "orderBy": { "name": "ngayDangTin", "type": "ASC" },
 	      "limit": 25,
 	      "pageNo": 1,
-	      "isIncludeCountInResponse": false
+	      "isIncludeCountInResponse": false,
+	      "updateLastSearch": true
 	    };
 	    //mobile login box controll
 
@@ -21274,7 +21275,8 @@
 		var controllerId = 'MobileHomeCtrl';
 		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
 			var vm = this;
-			var query = { loaiTin: 0,
+			var query = {
+				loaiTin: 0,
 				//giaBETWEEN: [ 0, 9999999 ],
 				soPhongNguGREATER: '0',
 				soTangGREATER: '0',
@@ -22695,6 +22697,7 @@
 	                $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
 	                $("body").removeClass("bodyNavShow");
 	                $(".search-footer").removeClass("fixed");
+	                $(".search-btn").css("display", "none");
 	                vm.reset();
 	            };
 	            vm.reset = function () {
@@ -22715,6 +22718,7 @@
 	                    //$("body").addClass("bodyNavShow");
 	                    $(".search").scrollTop(0);
 	                    $(".search-footer").addClass("fixed");
+	                    $(".search-btn").css("display", "block");
 	                } else {
 	                    vm.searchfr();
 	                }
@@ -22850,6 +22854,7 @@
 	                  //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
 	                  //$window.token = res.data.token;
 	                  $localStorage.relandToken = res.data.token;
+	                  $localStorage.lastSearch = res.data.lastSearch;
 	                  $rootScope.user.userName = res.data.userName;
 	                  $rootScope.user.userID = res.data.userID;
 	                  $rootScope.user.userAvatar = res.data.avatar;
@@ -22904,6 +22909,7 @@
 	                //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
 	                //$window.token = res.data.token;
 	                $localStorage.relandToken = res.data.token;
+	                $localStorage.lastSearch = res.data.lastSearch;
 	                $rootScope.user.userName = res.data.userName;
 	                $rootScope.user.userID = res.data.userID;
 	                $rootScope.user.userAvatar = res.data.avatar;
@@ -23671,7 +23677,7 @@
 	    return diaChinh;
 	};
 
-	placeUtil.getDiaChinh = function (diaChi) {
+	placeUtil.getDiaChinh = function (diaChi, needRemovePrefix) {
 	    var spl = diaChi.split(",");
 	    if (!spl || spl.length == 0) {
 	        spl = diaChi.split("-");
@@ -23685,7 +23691,12 @@
 
 	    var rawHuyen = spl[--i];
 	    if (rawHuyen) {
-	        diaChinh.huyen = rawHuyen.trim();
+	        if (needRemovePrefix) {
+	            diaChinh.huyen = rawHuyen.trim().replace("Quận ", "").replace("Huyện ", "");
+	        } else {
+	            diaChinh.huyen = rawHuyen.trim();
+	        }
+
 	        if (diaChinh.huyen) diaChinh.huyenKhongDau = util.locDau(diaChinh.huyen);
 	    } else {
 	        console.log("WARN -- no HUYEN information " + diaChi);

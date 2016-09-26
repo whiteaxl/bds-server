@@ -13,6 +13,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
                     $("body").removeClass("bodyNavShow");
                     $(".search-footer").removeClass("fixed");
+                    $(".search-btn").css("display","none");
                     vm.reset();
                 }                     
                 vm.reset =function(){
@@ -33,6 +34,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         //$("body").addClass("bodyNavShow");
                         $(".search").scrollTop(0);
                         $(".search-footer").addClass("fixed");
+                        $(".search-btn").css("display","block");
                     }else{
                         vm.searchfr();
                     }
