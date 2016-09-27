@@ -741,11 +741,24 @@ class AdsModel {
         });
     }
 
+
+
     _buildOrderByAndPaging(q) {
-        let sql = " AND ngayDangTin is not missing AND loaiNhaDat is not missing ";
+        let sql = " ";
        
         if (q.orderBy) {
-            sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
+            let name = q.orderBy.name;
+            
+            if (q.orderBy.type == 'DESC') {
+                sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
+            } else {
+                if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
+                    sql = `${sql} ORDER BY case when ${name} is not null then ${name} else 999999999 end ${q.orderBy.type}`;
+                } else {
+                    sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
+                } 
+            }
+            
             //todo: not support DESC order for now, wait couchbase 4.5.1
             //if (q.orderBy.type=='DESC') {
             //    logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
