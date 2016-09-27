@@ -741,19 +741,32 @@ class AdsModel {
         });
     }
 
+
+
     _buildOrderByAndPaging(q) {
-        let sql = " AND ngayDangTin is not missing AND loaiNhaDat is not missing ";
+        let sql = " ";
        
         if (q.orderBy) {
-            //sql = sql + " ORDER BY " + q.orderBy.name + "  " + q.orderBy.type;
-            //todo: not support DESC order for now, wait couchbase 4.5.1
-            if (q.orderBy.type=='DESC') {
-                logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
-            }
             let name = q.orderBy.name;
-            sql = `${sql} ORDER BY ${name}`;
+            
+            if (q.orderBy.type == 'DESC') {
+                sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
+            } else {
+                if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
+                    sql = `${sql} ORDER BY case when ${name} is not null then ${name} else 999999999 end ${q.orderBy.type}`;
+                } else {
+                    sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
+                } 
+            }
+            
+            //todo: not support DESC order for now, wait couchbase 4.5.1
+            //if (q.orderBy.type=='DESC') {
+            //    logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
+            //}
+            //let name = q.orderBy.name;
+            //sql = `${sql} ORDER BY ${name}`;
         } else {
-            sql = `${sql} ORDER BY ngayDangTin`; 
+            sql = `${sql} ORDER BY ngayDangTin DESC`;
         }
 
         if(q.dbLimit)
@@ -867,6 +880,12 @@ class AdsModel {
             sql = sql + " AND gia is missing";
         } else if (q.gia) {
             sql = sql + " AND gia = " + q.gia ;
+        }
+
+        if (q.dienTich === -1) {
+            sql = sql + " AND dienTich is missing";
+        } else if (q.dienTich) {
+            sql = sql + " AND dienTich = " + q.dienTich ;
         }
 
         //need add not missing for order by also
