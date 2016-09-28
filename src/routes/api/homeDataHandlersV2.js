@@ -175,8 +175,6 @@ internals.homeData4App = function (req, reply) {
 
   var query = req.payload.query;
   
-
-
   console.log("homeData4App V2 " + JSON.stringify(query));
 
   var currentLocation = req.payload.currentLocation;
@@ -197,6 +195,8 @@ internals.homeData4App = function (req, reply) {
     Object.assign(lastQuery, query);
   }
 
+  let searchDiaChinh = query.diaChinh;
+
   services.getDiaChinhKhongDauByGeocode(currentLocation.lat, currentLocation.lon)
     .then((diaChinh) => {
 
@@ -204,6 +204,7 @@ internals.homeData4App = function (req, reply) {
       var fl = [];
 
       if(diaChinh){
+        query.diaChinh = diaChinh;
         fl.push(function (callback) {
           let queryNearBy = {};
           Object.assign(queryNearBy, query);
@@ -217,7 +218,8 @@ internals.homeData4App = function (req, reply) {
           console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
           searchAds("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy, callback);
         });
-      } else {
+      }
+
         if(lastQuery){
           fl.push(
             function (callback) {
@@ -240,7 +242,7 @@ internals.homeData4App = function (req, reply) {
           console.log("tim log not have last query")
         }
 
-      }
+
 
 
 
@@ -290,7 +292,7 @@ internals.homeData4App = function (req, reply) {
       //   });
       // }
       // Note : hoi Hung xem doan nay can ko
-      /*fl.push(
+      fl.push(
         function (callback) {
           let queryMoiDang = {};
           Object.assign(queryMoiDang, query);
@@ -299,9 +301,9 @@ internals.homeData4App = function (req, reply) {
             type: "DESC"
           };
 
-          searchAds("Nhà Mới Đăng", query.fullName || diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryMoiDang, callback);
+          searchAds("Nhà Mới Đăng", query.diaChinh?(query.diaChinh.fullName):query.fullName, queryMoiDang, callback);
         }
-      );*/
+      );
 
       /*if (lastQuery && lastQuery.giaBETWEEN) {
         fl.push(
