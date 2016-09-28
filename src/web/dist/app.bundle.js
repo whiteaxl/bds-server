@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "32c3c220195b9d7a7cde"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1a98687248cedbb9151e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1002,6 +1002,8 @@
 	    console.log(JSON.stringify(e));
 	  });
 
+	  var _ = __webpack_require__(5);
+
 	  var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll']).run(['$rootScope', '$cookieStore', '$http', '$compile', function ($rootScope, $cookieStore, $http, $compile, $sce) {
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
@@ -1081,6 +1083,31 @@
 	      lon: undefined
 	    };
 	    $rootScope.lastSearch = undefined;
+
+	    $rootScope.getLastSearch = function (localStorage) {
+	      if (localStorage && localStorage.lastSearch && localStorage.lastSearch.length > 0) {
+	        return localStorage.lastSearch[localStorage.lastSearch.length - 1];
+	      }
+	      return undefined;
+	    };
+	    $rootScope.getAllLastSearch = function (localStorage) {
+	      if (localStorage) {
+	        return localStorage.lastSearch;
+	      }
+	    };
+	    $rootScope.addLastSearch = function (localStorage, lastSearch) {
+	      if (localStorage) {
+	        if (!localStorage.lastSearch || localStorage.lastSearch.length == 0) {
+	          localStorage.lastSearch = [];
+	        } else if (localStorage.lastSearch.length == 2) {
+	          localStorage.lastSearch = _(localStorage.lastSearch).slice(1, localStorage.lastSearch.length).value();
+	        }
+	        localStorage.lastSearch.push({
+	          time: new Date().toString('yyyyMMdd HH:mm:ss'),
+	          query: lastSearch
+	        });
+	      }
+	    };
 
 	    $rootScope.signin = function () {};
 	    //end mobild login box controll
@@ -21273,7 +21300,7 @@
 		'use strict';
 
 		var controllerId = 'MobileHomeCtrl';
-		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location, $localStorage) {
 			var vm = this;
 			var query = {
 				loaiTin: 0,
@@ -21294,7 +21321,7 @@
 				query: query,
 				currentLocation: undefined
 			};
-			if ($rootScope.lastSearch) homeDataSearch.query = $rootScope.lastSearch;
+			if ($rootScope.getLastSearch($localStorage)) homeDataSearch.query = $rootScope.getLastSearch($localStorage).query;
 			//    $rootScope.currentLocation.lat = 20.9898098;
 			// $rootScope.currentLocation.lon = 105.7098334;
 			homeDataSearch.currentLocation = $rootScope.currentLocation;
@@ -21391,7 +21418,7 @@
 	    'use strict';
 
 	    var controllerId = 'MobileSearchCtrl';
-	    angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
+	    angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location, $localStorage) {
 	        var vm = this;
 	        // vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 	        // vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
@@ -21594,7 +21621,7 @@
 	                return;
 	            }
 	            var data = {
-	                query: vm.searchData,
+	                query: $rootScope.searchData,
 	                userID: $rootScope.user.userID,
 	                saveSearchName: vm.saveSearchName
 	            };
@@ -21606,6 +21633,7 @@
 	                    vm.saveSearchName = '';
 	                    vm.nameSaveSearch = false;
 	                    $('#saveBox').modal("hide");
+	                    $rootScope.user.saveSearch.push(data);
 	                }
 	            });
 	        };
@@ -21775,9 +21803,10 @@
 	                    vm.doneSearch = true;
 	                }, 100);
 
-	                if ($rootScope.isLoggedIn()) {
-	                    $rootScope.user.lastSearch = $rootScope.searchData;
-	                }
+	                // if($rootScope.isLoggedIn()){
+	                //     $rootScope.user.lastSearch = $rootScope.searchData;
+	                // }
+	                $rootScope.addLastSearch($localStorage, $rootScope.searchData);
 
 	                if (vm.ads_list && vm.ads_list.length > 0) {
 	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
@@ -22439,11 +22468,11 @@
 	            vm.setSearchDataSpt = function (val) {
 	                $scope.searchData.soPhongTamGREATER = val;
 	            };
-	            vm.selectPlaceCallback = function (place) {
-	                $rootScope.searchData.place = place;
-	            };
 	            vm.setSearchDataGia = function (event, index) {
 	                var value = event.target;
+	            };
+	            vm.setSearchDataRadius = function (val) {
+	                $scope.searchData.radius = val;
 	            };
 
 	            vm.gotoHomePage = function (event) {
@@ -22488,26 +22517,38 @@
 	                    $scope.searchData.giaKhacFrom = undefined;
 	                    $scope.searchData.giaKhacTo = undefined;
 	                }
-	                if (vm.place) {
-	                    $scope.searchData.diaChinh = {
-	                        tinhKhongDau: vm.place.tinh,
-	                        huyenKhongDau: vm.place.huyen,
-	                        xaKhongDau: vm.place.xa,
-	                        fullName: vm.place.description
-	                    };
+	                if (vm.item) {
+	                    if (vm.item.query) {
+	                        $scope.searchData = vm.item.query;
+	                    } else {
+	                        $scope.searchData.diaChinh = {
+	                            tinhKhongDau: vm.place.tinh,
+	                            huyenKhongDau: vm.place.huyen,
+	                            xaKhongDau: vm.place.xa,
+	                            fullName: vm.place.description
+	                        };
+	                    }
 	                }
 
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
-	                $state.go("msearch", { "placeId": vm.place ? vm.place.placeId : undefined, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": "list" });
+	                $state.go("msearch", { "placeId": vm.place ? vm.place.placeId : undefined, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": "list" }, { reload: true });
 	                $(".overlay").click();
 	            };
 	            vm.gotoRelandApp = function (event) {};
 	            vm.profile = function () {
 	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
 	            };
-	            vm.selectPlaceCallback = function (place) {
-	                vm.place = place;
+	            vm.selectPlaceCallback = function (item) {
+	                vm.item = item;
+	                if (item.query) {
+	                    vm.place = vm.item.place;
+	                    $scope.searchData = item.query;
+	                    vm.updateDrums();
+	                } else {
+	                    vm.place = item;
+	                }
+	                $scope.$apply();
 	            };
 
 	            NgMap.getMap("filtermap").then(function (map) {
@@ -22545,6 +22586,7 @@
 	                var options = select[0].options;
 	                if (value.indexOf("[0,9999999") > -1) {
 	                    select.drum('setIndex', 0);
+	                    $("#" + select.attr("id") + "_value").html(options[0].label);
 	                } else {
 	                    for (var i = 0; i < options.length; i++) {
 	                        if (options[i].value == value) {
@@ -22578,16 +22620,11 @@
 	                });
 	            };
 	            vm.favoriteSearchSource = [{
-	                description: "1",
-	                types: "1",
-	                place_id: "111",
-	                class: "iconLocation gray"
-	            }, {
-	                description: "2",
-	                types: "1",
-	                place_id: "111",
+	                description: "Vị trí hiện tại",
+	                location: true,
 	                class: "iconLocation gray"
 	            }];
+
 	            vm.keyPress = function (event) {
 	                vm.showFrequentSearch = false;
 	                $("#searchadd").autocomplete("option", "source", vm.autocompleteSource);
@@ -22628,6 +22665,39 @@
 	                }
 	            };
 
+	            vm.userLoggedIn = function () {
+	                var saveSearches = $rootScope.user.saveSearch;
+	                if (saveSearches) {
+	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
+	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: saveSearches[i].name + " - " + des,
+	                            query: saveSearches[i].query,
+	                            class: "iconLocation grasy"
+	                        });
+	                    }
+	                }
+	            };
+
+	            vm.updateDrums = function () {
+	                //set price drum
+	                var prices = "[" + $scope.searchData.giaBETWEEN[0] + "," + $scope.searchData.giaBETWEEN[1] + "]";
+	                var pricesElm = $("#price_" + $scope.searchData.loaiTin + " select#prices");
+	                setDrumValues(pricesElm, prices);
+
+	                // var area1 = $scope.searchData.dienTichBETWEEN[0];
+	                // var area1Elm = $("select#area1");
+	                // setDrumValues(area1Elm,area1);
+
+	                var area = "[" + $scope.searchData.dienTichBETWEEN[0] + "," + $scope.searchData.dienTichBETWEEN[1] + "]";
+	                var areaElm = $("select#area");
+	                setDrumValues(areaElm, area);
+
+	                var datepost = $scope.searchData.ngayDangTinGREATER;
+	                var datepostElm = $("select#datepost");
+	                setDrumValues(datepostElm, datepost);
+	            };
 	            vm.init = function () {
 	                $("#typeBox .type-list li a").click(function () {
 	                    $(".type-box .collapse-title span label").html($(this).html());
@@ -22650,22 +22720,30 @@
 	                        }
 	                    }
 	                });
-	                //set price drum
-	                var prices = "[" + $scope.searchData.giaBETWEEN[0] + "," + $scope.searchData.giaBETWEEN[1] + "]";
-	                var pricesElm = $("#price_" + $scope.searchData.loaiTin + " select#prices");
-	                setDrumValues(pricesElm, prices);
+	                vm.updateDrums();
 
-	                // var area1 = $scope.searchData.dienTichBETWEEN[0];
-	                // var area1Elm = $("select#area1");
-	                // setDrumValues(area1Elm,area1);
+	                if ($rootScope.getAllLastSearch($localStorage)) {
+	                    var lastSearches = $rootScope.getAllLastSearch($localStorage);
+	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: lastSearches[i].time + " - " + des,
+	                            query: lastSearches[i].query,
+	                            class: "iconLocation grasy"
+	                        });
+	                    }
+	                }
+	                vm.userLoggedIn();
 
-	                var area = "[" + $scope.searchData.dienTichBETWEEN[0] + "," + $scope.searchData.dienTichBETWEEN[1] + "]";
-	                var areaElm = $("select#area");
-	                setDrumValues(areaElm, area);
-
-	                var datepost = $scope.searchData.ngayDangTinGREATER;
-	                var datepostElm = $("select#datepost");
-	                setDrumValues(datepostElm, datepost);
+	                $scope.$bus.subscribe({
+	                    channel: 'user',
+	                    topic: 'logged-in',
+	                    callback: function callback(data, envelope) {
+	                        //console.log('add new chat box', data, envelope);
+	                        vm.userLoggedIn();
+	                    }
+	                });
 	            };
 	            $timeout(function () {
 	                vm.init();
@@ -22855,6 +22933,7 @@
 	                  //$window.token = res.data.token;
 	                  $localStorage.relandToken = res.data.token;
 	                  $localStorage.lastSearch = res.data.lastSearch;
+
 	                  $rootScope.user.userName = res.data.userName;
 	                  $rootScope.user.userID = res.data.userID;
 	                  $rootScope.user.userAvatar = res.data.avatar;
@@ -22866,6 +22945,7 @@
 	                  $rootScope.user.phone = res.data.phone;
 	                  $rootScope.user.lastSearch = res.data.lastSearch;
 	                  $rootScope.user.lastViewAds = res.data.lastViewAds;
+	                  $rootScope.user.saveSearch = res.data.saveSearch;
 
 	                  vm.class = "has-sub";
 	                  vm.state = vm.LOGGED_IN;
@@ -22910,6 +22990,7 @@
 	                //$window.token = res.data.token;
 	                $localStorage.relandToken = res.data.token;
 	                $localStorage.lastSearch = res.data.lastSearch;
+
 	                $rootScope.user.userName = res.data.userName;
 	                $rootScope.user.userID = res.data.userID;
 	                $rootScope.user.userAvatar = res.data.avatar;
@@ -22921,6 +23002,7 @@
 	                $rootScope.user.phone = res.data.phone;
 	                $rootScope.user.lastSearch = res.data.lastSearch;
 	                $rootScope.user.lastViewAds = res.data.lastViewAds;
+	                $rootScope.user.saveSearch = res.data.saveSearch;
 	                vm.class = "has-sub";
 	                vm.state = vm.LOGGED_IN;
 	                vm.userExist = false;
@@ -23929,6 +24011,7 @@
 	var striptags = __webpack_require__(40);
 	var moment = __webpack_require__(41);
 	var constant = __webpack_require__(147);
+	var DanhMuc = __webpack_require__(37);
 	var util = {};
 
 	util.locDau = function (str) {
@@ -24112,7 +24195,40 @@
 	    return Number(val);
 	};
 
-	module.exports = util;
+	util.convertQuery2String = function (query) {
+	    var toStrRange = function toStrRange(range) {
+	        if (range && range[0] == 0 && range[1] == DanhMuc.BIG) {
+	            return undefined;
+	        }
+	        return range;
+	    };
+
+	    // let {loaiTin, loaiNhaDat, giaBETWEEN, soPhongNguGREATER, dienTichBETWEEN,
+	    //   orderBy, limit, huongNha, ngayDangTinGREATER, polygon, pageNo, soPhongTamGREATER,
+	    //   diaChinh, circle, viewport, isIncludeCountInResponse
+	    // } = query;
+
+	    var tmp = {
+	        'tin': query.loaiTin,
+	        'nhà đất': query.loaiNhaDat == 0 ? undefined : query.loaiNhaDat,
+	        'giá': toStrRange(query.giaBETWEEN),
+	        'ngủ': query.soPhongNguGREATER == 0 ? undefined : query.soPhongNguGREATER,
+	        'tắm': query.soPhongTamGREATER == 0 ? undefined : query.soPhongTamGREATER,
+	        'dt': toStrRange(query.dienTichBETWEEN),
+	        'orderBy': query.orderBy,
+	        'diaChinh': query.diaChinh,
+	        'viewport': query.viewport,
+	        'circle': query.circle,
+	        'limit': query.limit || 250 || undefined,
+	        'hướng': query.huongNha || undefined,
+	        'ngày': query.ngayDangTinGREATER || undefined,
+	        'polygon': query.polygon || undefined,
+	        'pageNo': query.pageNo || undefined,
+	        'isIncludeCountInResponse': query.isIncludeCountInResponse || undefined
+	    };
+
+	    return JSON.stringify(tmp);
+	}, module.exports = util;
 
 	if (typeof window !== 'undefined') window.RewayUtil = util;
 

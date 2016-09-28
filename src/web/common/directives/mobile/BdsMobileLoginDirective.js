@@ -117,6 +117,7 @@ angular.module('bds')
                           //$window.token = res.data.token;
                           $localStorage.relandToken = res.data.token;
                           $localStorage.lastSearch = res.data.lastSearch;
+                          
                           $rootScope.user.userName = res.data.userName;
                           $rootScope.user.userID = res.data.userID;
                           $rootScope.user.userAvatar = res.data.avatar;
@@ -128,6 +129,7 @@ angular.module('bds')
                           $rootScope.user.phone = res.data.phone;
                           $rootScope.user.lastSearch = res.data.lastSearch;
                           $rootScope.user.lastViewAds = res.data.lastViewAds;
+                          $rootScope.user.saveSearch = res.data.saveSearch;
 
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
@@ -174,6 +176,7 @@ angular.module('bds')
                         //$window.token = res.data.token;
                         $localStorage.relandToken = res.data.token;
                         $localStorage.lastSearch = res.data.lastSearch;
+                        
                         $rootScope.user.userName = res.data.userName;
                         $rootScope.user.userID = res.data.userID;
                         $rootScope.user.userAvatar = res.data.avatar;
@@ -185,6 +188,7 @@ angular.module('bds')
                         $rootScope.user.phone = res.data.phone;
                         $rootScope.user.lastSearch = res.data.lastSearch;
                         $rootScope.user.lastViewAds = res.data.lastViewAds;
+                        $rootScope.user.saveSearch = res.data.saveSearch;
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;

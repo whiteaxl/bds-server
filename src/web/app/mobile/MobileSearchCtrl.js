@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileSearchCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 		// vm.soPhongNguList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongNgu);
 		// vm.soPhongTamList = window.RewayListValue.getNameValueArray(window.RewayListValue.SoPhongTam);
@@ -209,7 +209,7 @@
 				return;
 			}			
 			var data = {
-				query: vm.searchData,
+				query: $rootScope.searchData,
 				userID: $rootScope.user.userID,
 				saveSearchName: vm.saveSearchName
 			};
@@ -221,6 +221,7 @@
 					vm.saveSearchName = '';					
 					vm.nameSaveSearch = false;
 					$('#saveBox').modal("hide");
+                    $rootScope.user.saveSearch.push(data);
 				}
 			})
         	
@@ -404,9 +405,11 @@
                     vm.doneSearch = true;                    
                 },100);
                 
-                if($rootScope.isLoggedIn()){
-                    $rootScope.user.lastSearch = $rootScope.searchData;
-                }
+                // if($rootScope.isLoggedIn()){
+                //     $rootScope.user.lastSearch = $rootScope.searchData;
+                // }
+                $rootScope.addLastSearch($localStorage,$rootScope.searchData);
+
                 
                 if(vm.ads_list && vm.ads_list.length>0){                    
                     if(vm.diaChinh)

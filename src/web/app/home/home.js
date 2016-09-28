@@ -8,6 +8,7 @@
     console.log( JSON.stringify( e ) );
   });
 
+  var _ = require('lodash');
 
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
   .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
@@ -89,6 +90,33 @@
       lon: undefined
     } 
     $rootScope.lastSearch = undefined;
+
+    $rootScope.getLastSearch = function(localStorage){
+      if(localStorage && localStorage.lastSearch && localStorage.lastSearch.length>0){
+        return localStorage.lastSearch[localStorage.lastSearch.length-1];
+      }
+      return undefined
+    }
+    $rootScope.getAllLastSearch = function(localStorage){
+      if(localStorage){
+        return localStorage.lastSearch;
+      }      
+    }
+    $rootScope.addLastSearch = function(localStorage, lastSearch){
+      if(localStorage){
+        if(!localStorage.lastSearch || localStorage.lastSearch.length==0){
+          localStorage.lastSearch = [];
+        } else if (localStorage.lastSearch.length==2){
+            localStorage.lastSearch =  _(localStorage.lastSearch).slice(1,localStorage.lastSearch.length).value();                
+        }
+        localStorage.lastSearch.push(
+          {
+            time: new Date().toString('yyyyMMdd HH:mm:ss'),
+            query: lastSearch
+          }
+        );
+      }      
+    }
 
     $rootScope.signin = function(){
 
@@ -249,8 +277,7 @@
   }]);
   bds.config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
       // For any unmatched url, send to /route1
-      $locationProvider.html5Mode(true);
-
+      $locationProvider.html5Mode(true);      
 
       $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
        Object.defineProperty($delegate.constructor.prototype, 

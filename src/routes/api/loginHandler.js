@@ -85,6 +85,7 @@ internals.login = function(req, reply){
                     result.lastViewAds = res[0].lastViewAds;
                     result.adsLikes = res[0].adsLikes;
                     result.phone = res[0].phone;
+                    result.saveSearch = res[0].saveSearch;
                 }else{
                 	result.message = "Mật khẩu không đúng ";
                 }
@@ -278,7 +279,7 @@ internals.updateProfile = function(req,reply){
             user.email = req.payload.email;
             user.phone = ""+req.payload.phone;
             user.diaChi = req.payload.diaChi;
-            user.avatar = req.payload.avatar;
+            user.avatar = req.payload.avatar;            
             if(req.payload.newPass)
                 user.matKhau = req.payload.newPass;
 

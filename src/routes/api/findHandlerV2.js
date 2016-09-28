@@ -106,7 +106,11 @@ function _updateLastSearch(q) {
       }else if (user.lastSearch.length==2){
         user.lastSearch =  _(user.lastSearch).slice(1,user.lastSearch.length);                
       }
-      user.lastSearch.push(q);
+      user.lastSearch.push({
+        time: moment().format('YYYYMMDD hh:mm:ss'),
+        query: q        
+        }        
+      );
       console.log("tim log " + JSON.stringify(user.lastSearch));
       userService.upsert(user);
     }

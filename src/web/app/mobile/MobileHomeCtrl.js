@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileHomeCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 		var query = { 
 			loaiTin: 0,
@@ -23,8 +23,8 @@
           query: query,
           currentLocation : undefined
         }
-        if($rootScope.lastSearch)
-        	homeDataSearch.query = $rootScope.lastSearch;
+        if($rootScope.getLastSearch($localStorage))
+        	homeDataSearch.query = $rootScope.getLastSearch($localStorage).query;
      //    $rootScope.currentLocation.lat = 20.9898098;
     	// $rootScope.currentLocation.lon = 105.7098334;
     	homeDataSearch.currentLocation = $rootScope.currentLocation;

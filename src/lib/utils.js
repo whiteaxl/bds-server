@@ -3,6 +3,7 @@
 var striptags = require('striptags');
 var moment = require('moment');
 var constant = require("../lib/constant");
+var DanhMuc = require("../lib/DanhMuc");
 var util = {};
 
 
@@ -201,6 +202,42 @@ util.toNumber = function(val) {
 
     return Number(val);
 };
+
+
+util.convertQuery2String = function(query) {
+    let toStrRange = (range) => {
+      if (range && range[0] == 0 && range[1] == DanhMuc.BIG) {
+        return undefined;
+      }
+      return range;
+    };
+
+    // let {loaiTin, loaiNhaDat, giaBETWEEN, soPhongNguGREATER, dienTichBETWEEN,
+    //   orderBy, limit, huongNha, ngayDangTinGREATER, polygon, pageNo, soPhongTamGREATER,
+    //   diaChinh, circle, viewport, isIncludeCountInResponse
+    // } = query;
+
+    let tmp = {
+      'tin' : query.loaiTin,
+      'nhà đất' : query.loaiNhaDat == 0 ? undefined : query.loaiNhaDat,
+      'giá' : toStrRange(query.giaBETWEEN),
+      'ngủ' : query.soPhongNguGREATER == 0 ? undefined : query.soPhongNguGREATER,
+      'tắm' : query.soPhongTamGREATER == 0 ? undefined : query.soPhongTamGREATER,
+      'dt' : toStrRange(query.dienTichBETWEEN),
+      'orderBy' : query.orderBy ,
+      'diaChinh': query.diaChinh ,
+      'viewport' : query.viewport,
+      'circle' : query.circle,
+      'limit' : query.limit || 250 || undefined,
+      'hướng' : query.huongNha || undefined,
+      'ngày' : query.ngayDangTinGREATER || undefined,
+      'polygon' : query.polygon || undefined,
+      'pageNo' : query.pageNo || undefined,
+      'isIncludeCountInResponse' : query.isIncludeCountInResponse || undefined
+    };
+
+    return JSON.stringify(tmp);
+  },
 
 module.exports = util;
 
