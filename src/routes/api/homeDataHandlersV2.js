@@ -49,7 +49,7 @@ const defaultItemInCollection = {
   soPhongNguFmt: " ",
   soPhongTamFmt: " ",
   dienTichFmt: " ",
-  cover: "http://203.162.13.40:5000/web/asset/img/reland_house_large.jpg"
+  cover: "http://203.162.13.177:5000/web/asset/img/reland_house_large.jpg"
 };
 
 function appDefault(collection) {
@@ -82,7 +82,7 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 
 
 function searchAds(title1, title2, query, callback) {
-  console.log("searchAds" + JSON.stringify(query));
+  console.log("searchAds: " + title1, JSON.stringify(query));
   var origQuery = {}; Object.assign(origQuery, query);
   
   findHandlerV2.findAds(query, (res) => {
@@ -204,18 +204,18 @@ internals.homeData4App = function (req, reply) {
       var fl = [];
 
       if(diaChinh){
-        query.diaChinh = diaChinh;
+        query.diaChinh = {
+          fullName : diaChinh.fullName,
+          tinhKhongDau : diaChinh.tinh,
+          huyenKhongDau : diaChinh.huyen
+        };
+
         fl.push(function (callback) {
           let queryNearBy = {};
           Object.assign(queryNearBy, query);
 
-          queryNearBy.diaChinh = {
-            fullName : diaChinh.fullName,
-            tinhKhongDau : diaChinh.tinh,
-            huyenKhongDau : diaChinh.huyen,
-            xaKhongDau: diaChinh.xa || undefined
-          };
-          console.log("nha gan vi tri " + JSON.stringify(queryNearBy));
+          queryNearBy.diaChinh.xaKhongDau = diaChinh.xa || undefined;
+
           searchAds("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy, callback);
         });
       }
