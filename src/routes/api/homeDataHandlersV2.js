@@ -239,7 +239,19 @@ internals.homeData4App = function (req, reply) {
           fl = _.concat(fl,ngangGiaFl);
           // console.log("tim log bc " + ngangGiaFl[1]);
         }else{
-          console.log("tim log not have last query")
+          console.log("tim log not have last query");
+          fl.push(
+              function (callback) {
+                let queryMoiDang = {};
+                Object.assign(queryMoiDang, query);
+                queryMoiDang.orderBy = {
+                  name: "ngayDangTin",
+                  type: "DESC"
+                };
+
+                searchAds("Nhà Mới Đăng", query.diaChinh?(query.diaChinh.fullName):query.fullName, queryMoiDang, callback);
+              }
+          );
         }
 
 
@@ -291,19 +303,6 @@ internals.homeData4App = function (req, reply) {
       //     searchAds("Nhà Gần Vị Trí Bạn", diaChinh.huyenCoDau + ", " + diaChinh.huyenCoDau, queryNearBy, callback);
       //   });
       // }
-      // Note : hoi Hung xem doan nay can ko
-      fl.push(
-        function (callback) {
-          let queryMoiDang = {};
-          Object.assign(queryMoiDang, query);
-          queryMoiDang.orderBy = {
-            name: "ngayDangTin",
-            type: "DESC"
-          };
-
-          searchAds("Nhà Mới Đăng", query.diaChinh?(query.diaChinh.fullName):query.fullName, queryMoiDang, callback);
-        }
-      );
 
       /*if (lastQuery && lastQuery.giaBETWEEN) {
         fl.push(
