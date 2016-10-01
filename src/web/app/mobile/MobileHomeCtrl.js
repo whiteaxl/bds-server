@@ -10,11 +10,6 @@
 		   soTangGREATER: '0',
 		   soPhongTamGREATER: '0',
 		   dienTichBETWEEN: [ 0, 9999999 ],
-		   place:
-		   { placeId: 'ChIJKQqAE44ANTERDbkQYkF-mAI',
-		   relandTypeName: 'Tỉnh',
-		   fullName: 'Hanoi',
-		   radiusInKm: 20 },
 		   limit: 200
 		   // polygon: []
 	   	}
@@ -28,7 +23,8 @@
      //    $rootScope.currentLocation.lat = 20.9898098;
     	// $rootScope.currentLocation.lon = 105.7098334;
     	homeDataSearch.currentLocation = $rootScope.currentLocation;
-    	
+
+
         vm.getLocation = function() {
 		  //   if (navigator.geolocation) {
 		  //       navigator.geolocation.getCurrentPosition(function(position){
@@ -47,16 +43,42 @@
 				// 	vm.boSuuTap = res.data.data; 
 				// });
 		  //   }
-		  	homeDataSearch.currentLocation = $rootScope.currentLocation;
-			HouseService.homeDataForApp(homeDataSearch).then(function(res){
-				//alert(JSON.stringify(res));
-				vm.boSuuTap = [];
-				res.data.data.forEach(function(item,index){
-					if(item.data.length>0)
-						vm.boSuuTap.push(item);
-				});
-				vm.doneSearch = true;
-			});
+		  	var async = require("async");
+		  	vm.boSuuTap = [];
+      		var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
+      			if(res.data.list && res.data.list.data.length>0)
+      				vm.boSuuTap.push(res.data.list);
+      			//alert(res.data.length);
+      		});
+
+    //   		fl.push(function (callback) {
+	   //        let queryNearBy = {};
+	   //        Object.assign(queryNearBy, query);
+
+	   //        queryNearBy.diaChinh.xaKhongDau = diaChinh.xa || undefined;
+	   //        HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
+				// callback(null,window.RewayUtil.searchBst("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy,res.data));	          	
+	   //        });
+	   //      });
+	        async.series(fl,
+	          function(err, results){
+	            // alert(results.length);
+	          }
+		    );
+
+
+		 //  	homeDataSearch.currentLocation = $rootScope.currentLocation;
+			// HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
+			// 	//alert(JSON.stringify(res));
+			// 	vm.boSuuTap = [];
+			// 	res.data.data.forEach(function(item,index){
+			// 		if(item.data.length>0)
+			// 			vm.boSuuTap.push(item);
+			// 	});
+			// 	vm.doneSearch = true;
+			// });
+
+
 		}
 		vm.goDetail = function(ads){
 			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
@@ -87,7 +109,8 @@
 			_.assign(query,vm.boSuuTap[index].query);
 			query.limit = 20;
 			query.duAnID = vm.boSuuTap[index].query.duAnID;
-			$state.go('msearch',{place: query.place.placeId || query.place.place_id,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+			let pid = query.place?(query.place.placeId || query.place.place_id):undefined;
+			$state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
 			//$state.go('msearch', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 			//alert('showmore');
 		}

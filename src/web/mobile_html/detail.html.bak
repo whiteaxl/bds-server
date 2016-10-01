@@ -159,7 +159,7 @@
                     	<span class="titlelbl">Vị trí</span>
                     </div>
                     <div class="lined map">
-                    	<a role="button" class="collapse-title" data-toggle="modal" data-target="#mapsBox1"><img src="images/maps.jpg" style="height:210px; width:100%"></a>
+                    	<a role="button" class="collapse-title" data-toggle="modal" data-target="#mapsBox"><img src="images/maps.jpg" style="height:210px; width:100%"></a>
                     </div>
                 </div>
             </div>

@@ -240,7 +240,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     var value = event.target;
                 }
                 vm.setSearchDataRadius = function(val){
-                    $scope.searchData.radius = val;
+                    vm.radius = val;
                 }
 
 
@@ -296,9 +296,15 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                       
                     }
                     if(vm.item){
+
                         if(vm.item.query){
                             $scope.searchData = vm.item.query;                            
-                        }else{
+                        } else if(vm.item.location){
+                            $scope.searchData.circle = {
+                                center: $rootScope.currentLocation,
+                                radius: vm.radius
+                            }
+                        } else{
                             $scope.searchData.diaChinh = {
                                 tinhKhongDau: vm.place.tinh,
                                 huyenKhongDau: vm.place.huyen,
@@ -328,7 +334,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         vm.updateDrums();
                     }else{
                         vm.place = item;
-                    }     
+                    } 
+                    if(!item.location){
+                        $scope.searchData.circle = undefined;
+                    }    
                     $scope.$apply();               
                 }
 
@@ -496,6 +505,21 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     setDrumValues(datepostElm,datepost);   
                 }
                 vm.init = function(){
+                    $scope.$bus.subscribe({
+                        channel: 'search',
+                        topic: 'search',
+                        callback: function(data, envelope) {
+                            //console.log('add new chat box', data, envelope);
+                            let des = window.RewayUtil.convertQuery2String(data.query);
+                            if(des && des.length>20)
+                                des = des.substring(0,20) + "...";
+                            vm.favoriteSearchSource.push({
+                                description: (data.time + " - " + des),
+                                query: data.query,
+                                class: "iconLocation grasy"                        
+                            }); 
+                        }
+                    });
                     $("#typeBox .type-list li a").click(function(){
                         $(".type-box .collapse-title span label").html($(this).html());
                     });

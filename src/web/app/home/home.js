@@ -68,6 +68,10 @@
           "tinhKhongDau" : "ha-noi",
           "huyenKhongDau" : "cau-giay"
         },
+        // circle : {
+        //   center : PointModel,
+        //   radius : Joi.number()
+        // },
         "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
         "limit" : 25,
         "pageNo" : 1,
@@ -115,6 +119,13 @@
             query: lastSearch
           }
         );
+
+        $rootScope.$bus.publish({
+            channel: 'search',
+            topic: 'search',
+            data: $rootScope.getLastSearch(localStorage)
+        });
+
       }      
     }
 

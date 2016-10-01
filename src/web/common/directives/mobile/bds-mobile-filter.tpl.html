@@ -92,23 +92,23 @@
 	                <div ng-if="mf.item.location" class="room-box collapse-box collapse-cus group-cus ovh">
 	                	<a class="collapse-title">Bán kính tìm kiếm(Km)</a>
 	                    <div class="btn-group" data-toggle="buttons">
-	                        <label class="btn {{searchData.radius=='0'?'active':''}}" ng-click="mf.setSearchDataRadius(0)" >
-	                        	<input type="radio"  id="bathroom0" value="0" autocomplete="off" ng-value="searchData.radius">Bất kỳ
+	                        <label class="btn {{mf.radius=='0'?'active':''}}" ng-click="mf.setSearchDataRadius(0)" >
+	                        	<input type="radio"  id="bathroom0" value="0" autocomplete="off" ng-value="mf.radius">Bất kỳ
 	                        </label>
-	                        <label class="btn {{searchData.radius=='0.5'?'active':''}}" ng-click="searchData.radiusmf.setSearchDataRadius(0.5)">
-	                        	<input type="radio"  id="bathroom2" value="0.5" autocomplete="off" ng-value="searchData.radius">0.5
+	                        <label class="btn {{mf.radius=='0.5'?'active':''}}" ng-click="mf.setSearchDataRadius(0.5)">
+	                        	<input type="radio"  id="bathroom2" value="0.5" autocomplete="off" ng-value="mf.radius">0.5
 	                        </label>
-	                        <label class="btn {{searchData.radius=='1'?'active':''}}" ng-click="searchData.radiusmf.setSearchDataRadius(1)">
-	                        	<input type="radio"  id="bathroom3" value="1" autocomplete="off" ng-value="searchData.radius">1
+	                        <label class="btn {{mf.radius=='1'?'active':''}}" ng-click="mf.setSearchDataRadius(1)">
+	                        	<input type="radio"  id="bathroom3" value="1" autocomplete="off" ng-value="mf.radius">1
 	                        </label>
-	                        <label class="btn {{searchData.radius=='2'?'active':''}}" ng-click="searchData.radiusmf.setSearchDataRadius(2)">
-	                        	<input type="radio"  id="bathroom4" value="2" autocomplete="off" ng-value="searchData.radius">2
+	                        <label class="btn {{mf.radius=='2'?'active':''}}" ng-click="mf.setSearchDataRadius(2)">
+	                        	<input type="radio"  id="bathroom4" value="2" autocomplete="off" ng-value="mf.radius">2
 	                        </label>
-	                        <label class="btn {{searchData.radius=='3'?'active':''}}" ng-click="searchData.radiusmf.setSearchDataRadius(3)">
-	                        	<input type="radio" id="bathroom5" value="5" autocomplete="off" ng-value="searchData.radius">3
+	                        <label class="btn {{mf.radius=='3'?'active':''}}" ng-click="mf.setSearchDataRadius(3)">
+	                        	<input type="radio" id="bathroom5" value="5" autocomplete="off" ng-value="mf.radius">3
 	                        </label>
-	                        <label class="btn {{searchData.radius=='5'?'active':''}}" ng-click="searchData.radiusmf.setSearchDataRadius(5)">
-	                        	<input type="radio" id="bathroom5" value="5" autocomplete="off" ng-value="searchData.radius">5
+	                        <label class="btn {{mf.radius=='5'?'active':''}}" ng-click="mf.setSearchDataRadius(5)">
+	                        	<input type="radio" id="bathroom5" value="5" autocomplete="off" ng-value="mf.radius">5
 	                        </label>
 	                    </div>
 	                </div>
@@ -148,7 +148,7 @@
                     	<button type="reset" ng-click="mf.reset();" class="collapse-title red">Thiết lập lại</button>
                     </div>
 					<div class="clb ovh mb10">&nbsp;</div>
-					<div class="search-btn" style="display: block;">
+					<div class="search-btn" style="display: none;">
 						<button class="btn btn-organe btn-block" ng-click="mf.gotoSearchPage();">Tìm kiếm</button>
 					</div>
 	            </div>

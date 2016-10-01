@@ -15,6 +15,7 @@
 		}
 		vm.center= [21.0363818591319,105.80105538518103];
 		vm.reportCode = 1;
+		vm.showStreetView = false;
 		vm.searchDataXungQuanh = {
 			// "loaiTin": vm.ads.loaiTin,
 			// "loaiNhaDat": [0], 
@@ -167,6 +168,41 @@
 			}
 			vm.showMoreXungQuanh = function(){
 				showMore(vm.searchDataXungQuanh);
+			}
+			$('#mapsBox').on('show.bs.modal', function (e) {
+		    	$timeout(function() {
+		    		if(!vm.fullMap){
+		    			vm.fullMap = NgMap.initMap('fullMap');
+		    		}   
+		    		vm.fullMap.getStreetView().setVisible(vm.showStreetView);	 				
+    				if(vm.showStreetView == true){
+    					vm.fullMap.getStreetView().setPosition(vm.ads.streetviewLatLng);
+						// vm.showStreetView = false;
+    				}
+    			},300);
+			});
+
+			vm.updateStreetview = function(ads,fn){
+				var STREETVIEW_MAX_DISTANCE = 500;
+				var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
+				var streetViewService = new google.maps.StreetViewService();
+		        streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function(streetViewPanoramaData, status,res) {
+		        	if (status === google.maps.StreetViewStatus.OK) {
+						ads.streetviewLatLng = streetViewPanoramaData.location.latLng;
+					}
+				});
+				
+			}
+
+			vm.updateStreetview(vm.ads);
+
+			vm.showFullMap =function(){
+				vm.showStreetView = false;
+				$('#mapsBox').modal("show");				
+			}
+			vm.showFullMapWithStreetView = function(){
+				vm.showStreetView = true;
+				$('#mapsBox').modal("show");	
 			}
 
 			vm.userLoggedIn = function(){

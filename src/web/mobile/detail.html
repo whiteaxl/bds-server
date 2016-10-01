@@ -49,10 +49,10 @@
                 
             </div>
             <div class="dir-box collapse-box border-top">
-                <a role="button" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>
+                <a role="button" ng-click="mdt.showFullMap();" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>                
             </div>
             <div class="dir-box collapse-box">
-                <a role="button" class="collapse-title" href="#"><i class="fa fa-street-view"></i> Street view <span><i class="iconRightOpen"></i></span></a>
+                <a role="button" class="collapse-title" ng-click="mdt.showFullMapWithStreetView();" href="#"><i class="fa fa-street-view"></i> Street view <span><i class="iconRightOpen"></i></span></a>                
             </div>
             <div class="area-box collapse-box">
                 <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconUpOpen"></i></span></a>
@@ -104,20 +104,29 @@
                     <div class="lined">
                     	<span class="titlelbl" style="width: 100%; text-align: justify; white-space: normal;">Vị trí: Kéo và thả icon hình người (icon) vào những điểm hình tròn màu xanh (icon) trên bản đồ để xem ảnh khu vực đó . Zoom nhỏ bản đồ lại để nhìn thấy nhiều điểm streetview hơn.</span>
                     </div>
-                    <div class="lined map">
-                    	<ng-map center="{{mdt.center}}" zoom="15" class="ngmap" default-style="true">
+                    
+                    <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
+                    	<ng-map center="{{mdt.center}}" draggable="false" zoom="15" class="ngmap" default-style="true">
                             <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
                               <div class = "marker">
                                 {{mdt.marker.content}} 
                               </div>
                             </custom-marker>
-                            <custom-control id="home" position="TOP_RIGHT" index="1" on-click="mdt.showMinimapHome();">
-                              <div style="background-color: black; color:#fff;cursor:pointer">Nhà</div>
-                            </custom-control>
-                        </ng-map>
+                            <custom-marker position="Hanoi">
+                              <div class = "marker">
+                                Vị trí của bạn
+                              </div>
+                            </custom-marker>
+                            <directions
+                              draggable="true"                              
+                              travel-mode="DRIVING"
+                              origin="Hanoi"
+                              destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
+                            </directions>                                                  
                     </div>
                 </div>
             </div>
+
             <div class="share-box collapse-box">
             	<div class="pull-left">
                 	<a href="fb:" class="p-icon i-fb"></a>                    
@@ -267,6 +276,38 @@
                     <div class="mb10"></div>
                     <div class="title border-top background-none"></div>
                     <div class="pd15"><button type="button" ng-click="mdt.sendReport();" class="btn btn-organe btn-block">Gửi</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-choose modal-none" id="mapsBox" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <h4 class="modal-title" id="mapsBoxLabel">{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h4>
+                </div>
+                <div class="modal-body uln"">
+                    <ng-map center="{{mdt.center}}" id="fullMap" lazy-init="true" class="ngmap">
+                        <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
+                          <div class = "marker">
+                            {{mdt.marker.content}} 
+                          </div>
+                        </custom-marker>
+                        <custom-marker position="Hanoi">
+                          <div class = "marker">
+                            Vị trí của bạn
+                          </div>
+                        </custom-marker>
+                        <directions
+                          draggable="false"                              
+                          travel-mode="DRIVING"
+                          origin="Hanoi"
+                          destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
+                        </directions> 
+                        <street-view-panorama>
+                        </street-view-panorama> 
+                    </ng-map>
                 </div>
             </div>
         </div>

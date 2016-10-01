@@ -105,7 +105,18 @@
 			// alert('aa');
 			vm.dragendHanlder = google.maps.event.addListener(map, "dragend", function() {
             	//alert(vm.map.getBounds());
-				$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+				//$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+
+                $rootScope.searchData.viewport = {
+                    southwest: {
+                        lat: vm.map.getBounds().getSouthWest().lat(),
+                        lon: vm.map.getBounds().getSouthWest().lng()
+                    },
+                    northeast: {
+                        lat: vm.map.getBounds().getNorthEast().lat(),
+                        lon: vm.map.getBounds().getNorthEast().lng()
+                    }
+                };
 				//alert($rootScope.searchData.geoBox);
 				$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
 				vm.marker = {
