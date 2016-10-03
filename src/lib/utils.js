@@ -428,7 +428,7 @@ util.generateHomeSearchSeries = function(query,currentLocation, searcher, search
                 lat: currentLocation.lat,
                 lon: currentLocation.lon
             },
-            radius : 500
+            radius : 2
         }
         fl.push(function (callback) {
           let queryNearBy = {};
