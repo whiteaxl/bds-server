@@ -44,7 +44,7 @@ internals.server.connection({
 });
 
 internals.server.connection({
-  port: 443,
+  port: 4432,
   address: '127.0.0.1',
   tls: {
       key: Fs.readFileSync('key.pem'),
