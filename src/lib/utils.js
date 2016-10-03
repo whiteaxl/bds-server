@@ -422,14 +422,20 @@ util.generateHomeSearchSeries = function(query,currentLocation, searcher, search
     }
     if(currentLocation){
         var fl = [];
-        query.diaChinh = currentLocation;
-
+        // query.diaChinh = currentLocation;
+        query.circle = {
+            center : {
+                lat: currentLocation.lat,
+                lon: currentLocation.lon
+            },
+            radius : 500
+        }
         fl.push(function (callback) {
           let queryNearBy = {};
           Object.assign(queryNearBy, query);
-          queryNearBy.diaChinh.xaKhongDau = query.diaChinh.xa || undefined;
+          // queryNearBy.diaChinh.xaKhongDau = query.diaChinh.xa || undefined;
           searcher(queryNearBy).then(function(res){            
-            res.data.list =  formatBst("Nhà Gần Vị Trí Bạn", query.diaChinh.fullName, queryNearBy,res.data);
+            res.data.list =  formatBst("Nhà Gần Vị Trí Bạn", undefined, queryNearBy,res.data);
             searcherCallback(res);
             callback(null,res.data.list);
           });              

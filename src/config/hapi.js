@@ -23,6 +23,7 @@ var Plugins = require('./plugins');
 var Routes = require('./routes');
     // the view, mainly for admin
 var Views = require('./views');
+const Fs = require('fs');
 
 var JWT    = require('jsonwebtoken');
   
@@ -42,14 +43,14 @@ internals.server.connection({
   }
 });
 
-// internals.server.connection({
-//   port: 443,
-//   address: '127.0.0.1',
-//   tls: {
-//       // key: unde,
-//       // cert: config.https.cert
-//   }
-// });
+internals.server.connection({
+  port: 443,
+  address: '127.0.0.1',
+  tls: {
+      key: Fs.readFileSync('key.pem'),
+      cert: Fs.readFileSync('cert.pem')
+  }
+});
 
 
 var validate = function (decoded, request, callback) {

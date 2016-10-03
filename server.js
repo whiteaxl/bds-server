@@ -121,7 +121,7 @@ HapiServer.start(function () {
   // dbChangeHandler.initAPN(this);
   // dbChangeHandler.init(this);
 
-  console.log('Server is running: ' + HapiServer.info.uri);
+  //console.log('Server is running: ' + HapiServer.info.uri);
 
 });
 

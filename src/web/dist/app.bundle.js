@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "61107ea359ee91364594"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b63cecdf945a186beef8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21322,6 +21322,7 @@
 				limit: 200
 				// polygon: []
 			};
+			// vm.showAskCurrentLocation = false;
 			var homeDataSearch = {
 				timeModified: undefined,
 				query: query,
@@ -21333,42 +21334,41 @@
 			homeDataSearch.currentLocation = $rootScope.currentLocation;
 
 			vm.getLocation = function () {
-				//   if (navigator.geolocation) {
-				//       navigator.geolocation.getCurrentPosition(function(position){
-				//       	$rootScope.currentLocation.lat = position.coords.latitude;
-				//       	$rootScope.currentLocation.lon = position.coords.longitude;
-				//       	homeDataSearch.currentLocation = $rootScope.currentLocation;
-				//       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-				// 		//alert(JSON.stringify(res));
-				// 		vm.boSuuTap = res.data.data; 
-				// 	});
-				//       });
-				//   } else {
-				//       //x.innerHTML = "Geolocation is not supported by this browser.";		        
-				//       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-				// 	//alert(JSON.stringify(res));
-				// 	vm.boSuuTap = res.data.data; 
-				// });
-				//   }
-				var async = __webpack_require__(30);
-				vm.boSuuTap = [];
-				var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query, homeDataSearch.currentLocation, HouseService.findAdsSpatial, function (res) {
-					if (res.data.list && res.data.list.data.length > 0) vm.boSuuTap.push(res.data.list);
-					//alert(res.data.length);
-				});
-
-				//   		fl.push(function (callback) {
-				//        let queryNearBy = {};
-				//        Object.assign(queryNearBy, query);
-
-				//        queryNearBy.diaChinh.xaKhongDau = diaChinh.xa || undefined;
-				//        HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
-				// callback(null,window.RewayUtil.searchBst("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy,res.data));	          	
-				//        });
-				//      });
-				async.series(fl, function (err, results) {
-					// alert(results.length);
-				});
+				function fetchHomeData() {
+					var async = __webpack_require__(30);
+					vm.boSuuTap = [];
+					var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query, homeDataSearch.currentLocation, HouseService.findAdsSpatial, function (res) {
+						if (res.data.list && res.data.list.data.length > 0) vm.boSuuTap.push(res.data.list);
+						//alert(res.data.length);
+					});
+					async.series(fl, function (err, results) {
+						// alert(results.length);
+					});
+				}
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function (position) {
+						$rootScope.currentLocation.lat = position.coords.latitude;
+						$rootScope.currentLocation.lon = position.coords.longitude;
+						homeDataSearch.currentLocation = $rootScope.currentLocation;
+						//      	HouseService.homeDataForApp(homeDataSearch).then(function(res){
+						// 	//alert(JSON.stringify(res));
+						// 	vm.boSuuTap = res.data.data; 
+						// });
+						fetchHomeData();
+					}, function (error) {
+						console.log(error);
+						// vm.showAskCurrentLocation  = true;
+						fetchHomeData();
+					});
+				} else {
+					//x.innerHTML = "Geolocation is not supported by this browser.";		        
+					//       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					// 	//alert(JSON.stringify(res));
+					// 	vm.boSuuTap = res.data.data; 
+					// });
+					// vm.showAskCurrentLocation  = true;
+					fetchHomeData();
+				}
 
 				//  	homeDataSearch.currentLocation = $rootScope.currentLocation;
 				// HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
@@ -31542,14 +31542,20 @@
 	    }
 	    if (currentLocation) {
 	        var fl = [];
-	        query.diaChinh = currentLocation;
-
+	        // query.diaChinh = currentLocation;
+	        query.circle = {
+	            center: {
+	                lat: currentLocation.lat,
+	                lon: currentLocation.lon
+	            },
+	            radius: 500
+	        };
 	        fl.push(function (callback) {
 	            var queryNearBy = {};
 	            Object.assign(queryNearBy, query);
-	            queryNearBy.diaChinh.xaKhongDau = query.diaChinh.xa || undefined;
+	            // queryNearBy.diaChinh.xaKhongDau = query.diaChinh.xa || undefined;
 	            searcher(queryNearBy).then(function (res) {
-	                res.data.list = formatBst("Nhà Gần Vị Trí Bạn", query.diaChinh.fullName, queryNearBy, res.data);
+	                res.data.list = formatBst("Nhà Gần Vị Trí Bạn", undefined, queryNearBy, res.data);
 	                searcherCallback(res);
 	                callback(null, res.data.list);
 	            });

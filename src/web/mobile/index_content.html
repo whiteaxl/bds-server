@@ -34,7 +34,7 @@
     </div>
     <!--END-->
 </div>
-<div ng-if="!$root.currentLocation.lat && !$root.lastSearch">
+<div ng-if="mhc.showAskCurrentLocation">
     <span>Hãy cho chúng tôi sử dụng vị trí hiện tại của bạn hoặc hãy thực hiện lệnh tìm kiếm để chúng tôi có thể gợi ý những nhà phù hợp với bạn.</span>
 </div>
 <div class="loadingBox text-center" ng-show="mhc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>

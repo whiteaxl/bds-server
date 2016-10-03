@@ -56,7 +56,9 @@ ChatHandler.sendImage = function(data,callback){
 
 
 ChatHandler.init = function(server){
-	var io = require('socket.io')(server.listener);
+  // console.log(JSON.stringify(server[0]));
+
+	var io = require('socket.io')(server.connections[1].listener);
 	var ios = io.listen(server);
 	ios.on('connection', function(socket){  
 		console.log("socket.io on connection");

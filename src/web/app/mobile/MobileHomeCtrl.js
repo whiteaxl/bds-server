@@ -13,6 +13,7 @@
 		   limit: 200
 		   // polygon: []
 	   	}
+	   	// vm.showAskCurrentLocation = false;
 	   	var homeDataSearch = {
           timeModified: undefined,
           query: query,
@@ -26,45 +27,45 @@
 
 
         vm.getLocation = function() {
-		  //   if (navigator.geolocation) {
-		  //       navigator.geolocation.getCurrentPosition(function(position){
-		  //       	$rootScope.currentLocation.lat = position.coords.latitude;
-		  //       	$rootScope.currentLocation.lon = position.coords.longitude;
-		  //       	homeDataSearch.currentLocation = $rootScope.currentLocation;
-		  //       	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-				// 		//alert(JSON.stringify(res));
-				// 		vm.boSuuTap = res.data.data; 
-				// 	});
-		  //       });
-		  //   } else {
-		  //       //x.innerHTML = "Geolocation is not supported by this browser.";		        
+        	function fetchHomeData(){
+        		var async = require("async");
+			  	vm.boSuuTap = [];
+	      		var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
+	      			if(res.data.list && res.data.list.data.length>0)
+	      				vm.boSuuTap.push(res.data.list);
+	      			//alert(res.data.length);
+	      		});
+		        async.series(fl,
+		          function(err, results){
+		            // alert(results.length);
+		          }
+			    );
+        	}
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(function(position){
+		        	$rootScope.currentLocation.lat = position.coords.latitude;
+		        	$rootScope.currentLocation.lon = position.coords.longitude;
+		        	homeDataSearch.currentLocation = $rootScope.currentLocation;
+		   //      	HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					// 	//alert(JSON.stringify(res));
+					// 	vm.boSuuTap = res.data.data; 
+					// });
+					fetchHomeData();
+		        }, function(error){
+		        	console.log(error);		        	
+		        	// vm.showAskCurrentLocation  = true;
+		        	fetchHomeData();
+		        });
+		    } else {
+		        //x.innerHTML = "Geolocation is not supported by this browser.";		        
 		  //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
 				// 	//alert(JSON.stringify(res));
 				// 	vm.boSuuTap = res.data.data; 
 				// });
-		  //   }
-		  	var async = require("async");
-		  	vm.boSuuTap = [];
-      		var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
-      			if(res.data.list && res.data.list.data.length>0)
-      				vm.boSuuTap.push(res.data.list);
-      			//alert(res.data.length);
-      		});
-
-    //   		fl.push(function (callback) {
-	   //        let queryNearBy = {};
-	   //        Object.assign(queryNearBy, query);
-
-	   //        queryNearBy.diaChinh.xaKhongDau = diaChinh.xa || undefined;
-	   //        HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
-				// callback(null,window.RewayUtil.searchBst("Nhà Gần Vị Trí Bạn", diaChinh.fullName, queryNearBy,res.data));	          	
-	   //        });
-	   //      });
-	        async.series(fl,
-	          function(err, results){
-	            // alert(results.length);
-	          }
-		    );
+				// vm.showAskCurrentLocation  = true;
+				fetchHomeData();
+		    }
+		  	
 
 
 		 //  	homeDataSearch.currentLocation = $rootScope.currentLocation;
