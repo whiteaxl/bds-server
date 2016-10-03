@@ -224,12 +224,12 @@ internals.homeData4App = function (req, reply) {
         fl.push(
           function (callback) {
             let queryMoiDang = {};
-            Object.assign(queryMoiDang, query);
+            Object.assign(queryMoiDang, lastQuery);
             queryMoiDang.orderBy = {
               name: "ngayDangTin",
               type: "DESC"
             };
-            searchAds("Nhà Mới Đăng", query.diaChinh?(query.diaChinh.fullName):query.fullName, queryMoiDang, callback);
+            searchAds("Nhà Mới Đăng", lastQuery.diaChinh? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
           }
         );
         if(lastQuery.giaBETWEEN && !(lastQuery.giaBETWEEN[0] ==0 && lastQuery.giaBETWEEN[1] > 999999)){
@@ -300,7 +300,7 @@ internals.homeData4App = function (req, reply) {
       //   });
       // }
 
-      if (lastQuery && lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0]!=-1 && lastQuery.giaBETWEEN[0]!=999999) {
+      if (lastQuery && lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0] >= 0 && lastQuery.giaBETWEEN[1] < 999999) {
         fl.push(
           function (callback) {
             let queryDuoiGia = {};
