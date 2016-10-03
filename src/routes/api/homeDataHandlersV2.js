@@ -304,16 +304,18 @@ internals.homeData4App = function (req, reply) {
       //   });
       // }
 
-      /*if (lastQuery && lastQuery.giaBETWEEN) {
+      if (lastQuery && lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0]!=-1 && lastQuery.giaBETWEEN[0]!=999999) {
         fl.push(
           function (callback) {
             let queryDuoiGia = {};
             Object.assign(queryDuoiGia, query);
             let mid = getGiaTrungBinh(lastQuery);
-            searchAds("Nhà Có Giá Dưới " + mid, diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau, queryDuoiGia, callback);
+            queryDuoiGia.giaBETWEEN = [0, mid];
+            let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
+            searchAds("Nhà Có Giá Dưới " + giaFmt, query.diaChinh?(query.diaChinh.fullName):query.fullName, queryDuoiGia, callback);
           }
         );
-      }*/
+      }
 
       //if no history, defaul if current Tinh and loaiTin=BAN
       /*if (query.loaiTin == null || query.loaiTin == undefined) {
