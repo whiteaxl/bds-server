@@ -207,6 +207,13 @@ util.toNumber = function(val) {
     return Number(val);
 };
 
+util.upperFirstCharacter = function(str) {
+    if (!str || str.length==0){
+        return "";
+    }
+
+    return str[0].toUpperCase() + str.slice(1);;
+};
 
 util.convertQuery2String = function(query) {
     let toStrRange = (range) => {
