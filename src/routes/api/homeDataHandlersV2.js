@@ -248,18 +248,24 @@ internals.homeData4App = function (req, reply) {
           }
         );
 
-        if (lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0] >= 0 && lastQuery.giaBETWEEN[1] < 999999) {
-          fl.push(
-              function (callback) {
-                let queryDuoiGia = {};
-                Object.assign(queryDuoiGia, lastQuery);
-                let mid = getGiaTrungBinh(lastQuery);
-                queryDuoiGia.giaBETWEEN = [0, mid];
-                let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
-                searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
+        fl.push(
+            function (callback) {
+              let queryDuoiGia = {};
+              Object.assign(queryDuoiGia, lastQuery);
+
+              let mid = 0;
+
+              if (lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0] >= 0 && lastQuery.giaBETWEEN[1] < 999999) {
+                mid = getGiaTrungBinh(lastQuery);
+              }else{
+                mid = lastQuery.loaiTin==0 ? 5000 : 20;
               }
-          );
-        }
+
+              queryDuoiGia.giaBETWEEN = [0, mid];
+              let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
+              searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
+            }
+        );
 
         let ngangGiaFl = generateSearchNgangGiaFn(lastQuery, lastQuery.diaChinh);
         fl = _.concat(fl,ngangGiaFl);
@@ -276,6 +282,17 @@ internals.homeData4App = function (req, reply) {
               };
 
               searchAds("Nhà Mới Đăng", query.diaChinh ? query.diaChinh.fullName : query.fullName, queryMoiDang, callback);
+            }
+        );
+
+        fl.push(
+            function (callback) {
+              let queryDuoiGia = {};
+              Object.assign(queryDuoiGia, query);
+              let mid = lastQuery.loaiTin==0 ? 5000 : 20;
+              queryDuoiGia.giaBETWEEN = [0, mid];
+              let giaFmt = utils.getPriceDisplay(mid, query.loaiTin);
+              searchAds("Nhà Có Giá Dưới " + giaFmt, query.diaChinh ? query.diaChinh.fullName :query.fullName, queryDuoiGia, callback);
             }
         );
       }
