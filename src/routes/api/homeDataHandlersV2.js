@@ -126,7 +126,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
     loaiNhaDat = loaiNhaDat.filter(x => loaiNhaDatLastSearch.indexOf(x) == -1);
   
   _(loaiNhaDat).forEach(function(value) {
-    console.log("tim log loaiNhaDat" + value);
+    //console.log("tim log loaiNhaDat" + value);
     results.push(function(callback){
       let queryNgangGia = {}; Object.assign(queryNgangGia, query);
       let loaiNhaDatName = danhMuc.getLoaiNhaDatForDisplayNew(loaiTin,value);
