@@ -117,7 +117,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
     diaChinh = {};
 
   if(loaiTin ==0){
-    loaiNhaDat = [1,2,3,4,7,5];
+    loaiNhaDat = [1,2,3,4,5,6];
   }else if(loaiTin==1){
     loaiNhaDat = [1,2,3,4];
   }

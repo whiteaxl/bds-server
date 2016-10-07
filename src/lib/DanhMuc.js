@@ -419,13 +419,13 @@ danhMuc.LoaiTinTuc = [
 danhMuc.LoaiNhaDatBan = {
     1  : "Bán căn hộ chung cư",
     2  : "Bán nhà riêng",
-    3  : "Bán nhà mặt phố",
-    4  : "Bán biệt thự, liền kề",
-    6  : "Bán Shophouse",
-    7  : "Bán đất nền dự án",
-    5  : "Bán đất",
-    8  : "Bán trang trại, khu nghỉ dưỡng",
-    99 : "Bán các BDS khác",
+    3  : "Bán biệt thự, liền kề",
+    4  : "Bán nhà mặt phố",
+    5  : "Bán đất nền dự án",
+    6  : "Bán đất",
+    7  : "Bán trang trại, khu nghỉ dưỡng",
+    8  : "Bán kho, nhà xưởng",
+    99 : "Bán loại bất động sản khác",
     10 : "Tìm kiếm nâng cao",
     0 : "Tất cả"
 }
@@ -530,11 +530,11 @@ danhMuc.LoaiNhaDatThue = {
     1 : "Cho Thuê căn hộ chung cư",
     2 : "Cho Thuê nhà riêng",
     3 : "Cho Thuê nhà mặt phố",
-    6 : "Cho thuê nhà trọ, phòng trọ",
-    4 : "Cho Thuê văn phòng",
-    5 : "Cho Thuê cửa hàng, ki-ốt",
-    7 : "Cho thuê kho, nhà xưởng, đất",
-    99: "Cho Thuê các BDS khác",
+    4 : "Cho Thuê nhà trọ, phòng trọ",
+    5 : "Cho Thuê văn phòng",
+    6 : "Cho Thuê cửa hàng, ki-ốt",
+    7 : "Cho Thuê kho, nhà xưởng, đất",
+    99: "Cho Thuê loại bất động sản khác",
     8 : "Tìm kiếm nâng cao",
     0 : "Tất cả"
 }
