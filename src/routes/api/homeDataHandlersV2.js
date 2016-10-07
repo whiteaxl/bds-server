@@ -126,7 +126,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
     loaiNhaDat = loaiNhaDat.filter(x => loaiNhaDatLastSearch.indexOf(x) == -1);
   
   _(loaiNhaDat).forEach(function(value) {
-    // console.log("tim log loaiNhaDat" + value);
+    console.log("tim log loaiNhaDat" + value);
     results.push(function(callback){
       let queryNgangGia = {}; Object.assign(queryNgangGia, query);
       let loaiNhaDatName = danhMuc.getLoaiNhaDatForDisplayNew(loaiTin,value);
@@ -155,9 +155,11 @@ function generateSearchNgangGiaFn(query, diaChinh){
       loaiNhaDatName = loaiNhaDatName.replace("Cho Thuê ", "").replace("Bán ","");
       loaiNhaDatName = utils.upperFirstCharacter(loaiNhaDatName);
       //queryNgangGia.ngayDaDang = 700;
+      queryNgangGia.loaiNhaDat = [value];
       queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
 
       // reset search conditions
+
       queryNgangGia.soPhongNguGREATER = 0;
       queryNgangGia.soPhongTamGREATER = 0;
       queryNgangGia.huongNha = [0];
@@ -197,6 +199,8 @@ internals.homeData4App = function (req, reply) {
   query.limit = 5;
   query.pageNo = 1;
   query.loaiTin = query.loaiTin ? query.loaiTin : 0;
+  query.viewport = undefined;
+
   let ngayDangTinBegin = moment().subtract(365, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
   query.ngayDangTinGREATER = ngayDangTinBegin;
