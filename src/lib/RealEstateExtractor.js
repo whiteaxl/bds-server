@@ -12,7 +12,7 @@ var util = require("./utils");
 var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
 
-var headerCache = {};
+var URLCache = {};
 
 var REALESTATE_NAME_MAP = {
 	'Thuộc dự án' :'duAn',
@@ -170,16 +170,16 @@ var setHuongNha = function (ads, url) {
 };
 
 function _saveData(adsDto) {
-	let t = adsDto.title;
-	if (!headerCache[t]) {
-		logUtil.error("Error, duplicate:", t);
+	let maSo = adsDto.maSo;
+	if (!URLCache[maSo]) {
+		logUtil.error("Error, duplicate or not exist:", t);
 		return
 	}
 
   let adsObj = {};
 
   adsObj.type = "Ads_Raw";
-  let coverSmall = headerCache[t] ? headerCache[t].cover : null;
+  let coverSmall = URLCache[maSo] ? URLCache[maSo].cover : null;
   /*
    let images = [];
    if (adsDto.images_small) {
@@ -224,9 +224,9 @@ function _saveData(adsDto) {
   adsObj.maSo = Number(adsDto.maSo);
 
 
-  adsObj.url = headerCache[t].adsUrl;
+  adsObj.url = URLCache[maSo].adsUrl;
 	//cleanup
-	headerCache[t] = null;
+	URLCache[maSo] = null;
 
   if (adsObj.gia && adsObj.dienTich) {
     adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
@@ -265,13 +265,24 @@ class RealEstateExtractor {
 		osmosisRoot
 			.paginate(".background-pager-right-controls a:skip-last:last", 100)
 			.set({
-				'adsUrl' : '.search-productItem .p-title > a@href',
-        'title'  : '.search-productItem .p-title a',
-				'cover'  : '.search-productItem .p-main > div > a > img@src',
+				'urls' : ['.search-productItem .p-title > a@href'],
+				'covers'  : ['.search-productItem .p-main > div > a > img@src'],
         //'nexts' : [".background-pager-right-controls a:skip-last:last@href"]
 			})
       .data((dto) => {
-        headerCache[dto.title] = dto;
+				let url, idx, tail, code, cover;
+
+				for (let i = 0; i < dto.urls.length; i++) {
+					url = dto.urls[i];
+					cover = dto.covers[i];
+
+					idx = url.lastIndexOf("-");
+					tail = url.substr(idx+3);
+					code = tail;
+
+					URLCache[code] = {url, cover};
+				}
+
         //console.log("AAAAAA", dto.nexts);
       })
 			.follow('.search-productItem .p-title > a@href')
@@ -291,11 +302,11 @@ class RealEstateExtractor {
 				'duAnID'      :'#product-detail .inproject > a@href'
 			})
 			.data(function(listing) {
-				//console.log("listing:", listing);
+				//console.log("Processing listing:", listing.title, URLCache);
         let price = listing.prices[0];
         let dienTich = listing.prices[1];
 				let ads = {
-					title: listing.title[0],
+					title: listing.title,
 					images_small: listing.images,
 					price_raw: price,
 					price_value: price && price.split(' ')[0],
