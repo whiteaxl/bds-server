@@ -201,7 +201,7 @@ util.isEmail = function(str) {
 util.toNumber = function(val) {
     if (isNaN(val)) {
         console.log("Not a number, will return null:" + val);
-        return null;
+        return undefined;
     }
 
     return Number(val);
