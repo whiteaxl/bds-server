@@ -13,7 +13,7 @@ var commonService = new CommonService();
 //prepare.loadTinhHuyenXa("tinhhuyenxa.json");
 //prepare.loadViewport("tinhhuyenxa.json");
 
-prepare.loadFromFile("place_01.json");
+prepare.loadFromFile("place_2.json");
 
 //prepare.addNameKhongDau();
 

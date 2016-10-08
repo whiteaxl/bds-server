@@ -69,7 +69,7 @@ class AdsModel {
     }
 
     upsert(adsDto) {
-        adsDto.id = adsDto.adsID;
+        adsDto.id = adsDto.id || adsDto.adsID;
         adsDto.timeModified = new Date().getTime();
 
         bucket.upsert(adsDto.id, adsDto, function (err, res) {

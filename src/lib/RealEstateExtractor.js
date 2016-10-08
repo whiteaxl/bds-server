@@ -38,17 +38,14 @@ var REALESTATE_NAME_MAP = {
 //(x,y), x is Ban/Thue, y is loaiNhaDat
 var REALESTATE_TYPE_NAME_MAP = {
 	'Bán nhà biệt thự, liền kề' : '0,3',
-	'Bán nhà biệt thự, liền kề (nhà trong dự án quy hoạch)' : '0,3',
 	'Bán căn hộ chung cư' :'0,1',
 	'Bán nhà riêng' : '0,2',
 	'Bán nhà mặt phố' : '0,4',
 	'Bán đất nền dự án' : '0,5',
-	'Bán đất nền dự án (đất trong dự án quy hoạch)' :'0,5',
 	'Bán trang trại, khu nghỉ dưỡng' : '0,7',
 	'Bán kho, nhà xưởng' : '0,8',
 	'Bán loại bất động sản khác' : '0,99',
 	'Bán đất' : '0,6',
-  'Bán nhà mặt phố (nhà mặt tiền trên các tuyến phố)' : '0,4',
 	//thue
 	'Cho thuê căn hộ chung cư' : '1,1',
 	'Cho thuê nhà riêng' : '1,2',
@@ -78,7 +75,17 @@ var parseEmail = function(encEmail) {
 
 function _convertLoaiTinGiao(ads) {
 	if (ads.loaiTinRao) {
+    for (let key in REALESTATE_TYPE_NAME_MAP) {
+      if (ads.loaiTinRao.indexOf(key) != -1) {
+        let val = REALESTATE_TYPE_NAME_MAP[key];
 
+        var spl = val.split(",");
+        ads.loaiTin = Number(spl[0]);
+        ads.loaiNhaDat = Number(spl[1]);
+      }
+    }
+
+    /*
 		var mapped = REALESTATE_TYPE_NAME_MAP[ads.loaiTinRao];
 		if (!mapped) {
 			console.log("WARN can't find ads.loaiTinRao:" + ads.loaiTinRao);
@@ -100,6 +107,7 @@ function _convertLoaiTinGiao(ads) {
 				ads.ten_loaiNhaDat = DSLoaiNhaDat.thue[ads.loaiNhaDat];
 			}
 		}
+		*/
 	}
 }
 
@@ -165,7 +173,7 @@ var setHuongNha = function (ads, url) {
 function _saveData(adsDto) {
   let adsObj = {};
 
-  adsObj.type = "Ads";
+  adsObj.type = "Ads_Raw";
   let coverSmall = headerCache[adsDto.title] ? headerCache[adsDto.title].cover : null;
   /*
    let images = [];
@@ -209,63 +217,55 @@ function _saveData(adsDto) {
   adsObj.chiTiet = adsDto.chiTiet;
   adsObj.huongNha = adsDto.huongNha;
   adsObj.maSo = Number(adsDto.maSo);
-  adsObj.adsUrl = headerCache[adsDto.title].adsUrl;
+  adsObj.url = headerCache[adsDto.title].adsUrl;
 
   if (adsObj.gia && adsObj.dienTich) {
     adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
   }
 
   adsObj.adsID = "Ads_bds_" + adsObj.maSo;
-  adsObj.id = adsObj.adsID;
+  adsObj.id = "Ads_bds_raw_" + adsObj.maSo;
   adsObj.source = adsDto.source;
   adsObj.duAnID = adsDto.duAnID;
+
+  adsObj.extLoaiNhaDat = adsDto.loaiTinRao;
 
 
   adsModel.upsert(adsObj);
 }
 
 class RealEstateExtractor {
-  //rootURL = http://batdongsan.com.vn/nha-dat-ban ; nha-dat-cho-thue
-	extractRealEstateWithLimit(rootURL,start, end,ngayDangTin) {
-		console.log("Enter extractWithLimit .... " + start + ", " + end);
-		var startDate = new Date();
-
-		var count = start;
-
+  extractWithLimit(rootURL, depth) {
+    var startDate = new Date();
     var _done = () => {
-      count++;
-      if (count>end) {
-        return;
-      }
-
-      this.extractOnePage(rootURL + '/p'+count, _done,ngayDangTin);
+      console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
     };
 
-    this.extractOnePage(rootURL + '/p'+count, _done,ngayDangTin);
-
-    /*
-		var i = start;
-		for (i=start; i<=end; i++) {
-			console.log("Extracting for page: " + rootURL + '/p'+i);
-      this.extractOnePage(rootURL + '/p'+x, _done,ngayDangTin);
-		}
-
-		*/
+    this.extractOnePage(rootURL, _done, depth);
 	}
 
-	extractOnePage(url, handleDone,ngayDangTin) {
-		osmosis
-			.get(url)
-			.find('.search-productItem')
+	extractOnePage(url, handleDone, depth) {
+		let osmosisRoot  = 	osmosis.get(url);
+		depth = depth || 0;
+
+		for (var i=0; i < depth; i++) {
+			console.log("Will dive into one more level");
+			osmosisRoot = osmosisRoot.follow('#divCountByAreas > ul > li > a@href');
+		}
+
+		osmosisRoot
+			.paginate(".background-pager-right-controls a:skip-last:last", 100)
 			.set({
-				'adsUrl' : '.p-title > a@href',
-        'title' : '.p-title a',
-				'cover' : '.p-main > div > a > img@src',
+				'adsUrl' : '.search-productItem .p-title > a@href',
+        'title'  : '.search-productItem .p-title a',
+				'cover'  : '.search-productItem .p-main > div > a > img@src',
+        //'nexts' : [".background-pager-right-controls a:skip-last:last@href"]
 			})
       .data((dto) => {
         headerCache[dto.title] = dto;
+        //console.log("AAAAAA", dto.nexts);
       })
-			.follow('.p-title > a@href')
+			.follow('.search-productItem .p-title > a@href')
 			.set({
 				'title'			:'#product-detail .pm-title > h1',
 				'images'		:['#product-detail .list-img > ul > li > img@src'],
@@ -288,7 +288,7 @@ class RealEstateExtractor {
 				let ads = {
 					title: listing.title[0],
 					images_small: listing.images,
-					price_raw: listing.price,
+					price_raw: price,
 					price_value: price && price.split(' ')[0],
 					price_unit: price && price.split(' ')[1],
 					dienTich: dienTich && Number(dienTich.substr(0, dienTich.length-2)),
@@ -303,12 +303,12 @@ class RealEstateExtractor {
 				//var {detailLefts, detailRights, custLefts, custRights} = listing;
 
 				// detail
-				for (var i = 0; i < listing.detailLefts.length; i++) {
+				for (let i = 0; i < listing.detailLefts.length; i++) {
 					ads[REALESTATE_NAME_MAP[listing.detailLefts[i]]] = listing.detailRights[i];
 				}
 
 				// customer information : thong tin lien lac
-				for (var i = 0; i < listing.custLefts.length; i++) {
+				for (let i = 0; i < listing.custLefts.length; i++) {
 					//transform first:
 					var val = listing.custRights[i];
 					if (listing.custLefts[i]=='Email') {
@@ -348,14 +348,7 @@ class RealEstateExtractor {
 
         ads.ngayDangTin = ads.ngayDangTin && util.convertFormatDate(ads.ngayDangTin);
 
-        if (ngayDangTin) {
-          if(ads.ngayDangTin == ngayDangTin){
-            console.log("Lay dung ngay dang tin");
-            _saveData(ads);
-          }
-        } else {
-          _saveData(ads);
-        }
+				_saveData(ads);
 			})
 
 			.log(console.log)

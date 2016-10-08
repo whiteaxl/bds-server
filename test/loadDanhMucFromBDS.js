@@ -277,7 +277,7 @@ function loadViewport(dc) {
     })
 }
 
-function processDuAn(projects) {
+function processDuAn(projects, huyenObj) {
   projects.forEach((p) => {
     let projectKhongDau = placeUtil.chuanHoaAndLocDau(p.name);
 
@@ -285,20 +285,20 @@ function processDuAn(projects) {
     let geoBox = geoUtil.getBox({lat:p.lat, lon:p.lng} , geoUtil.meter2degree(radiusInKm));
 
     let projectObj = {
-      "fullName": p.name + ", " + d.name + ", " + tinh.name,
+      "fullName": p.name + ", " + huyenObj.fullName,
       "ggMatched": false,
-      "huyen": d.name,
-      "huyenKhongDau": huyenKhongDau,
-      "id": "Place_" + p.id,
+      "huyen": huyenObj.placeName,
+      "huyenKhongDau": huyenObj.huyenKhongDau,
+      "id": "Place_A_" + p.id,
       "nameKhongDau": projectKhongDau,
       "placeName": p.name,
       "placeType": "A",
-      "tinh": tinh.name,
-      "tinhKhongDau": tinhNameKhongDau,
+      "tinh": huyenObj.tinh,
+      "tinhKhongDau": huyenObj.tinhKhongDau,
       "type": "Place",
       "duAn": p.name,
       "duAnKhongDau": projectKhongDau,
-      "parentId" : huyenId,
+      "parentId" : huyenObj.id,
       geometry : {
         location : {
           lat : p.lat,
@@ -411,11 +411,11 @@ function processHuyen(districts, tinhObj) {
       "code" : d.id
     };
 
-    insert(huyenObj, (res) => {console.log("Success", res);});
+    //insert(huyenObj, (res) => {console.log("Success", res);});
 
 
-    processXa(d.ward, huyenObj);
-    //processDuAn(d.project);
+    //processXa(d.ward, huyenObj);
+    processDuAn(d.project, huyenObj);
     //processStreet(d.street);
   });
 }
@@ -443,15 +443,14 @@ function load(fn) {
       "code" : tinh.code,
     };
 
-    insert(tinhObj, (res) => {console.log("Success", res);});
+    //insert(tinhObj, (res) => {console.log("Success", res);});
 
     processHuyen(tinh.district, tinhObj);
   });
 }
+load("city1.json");
+load("city2.json");
+load("city3.json");
+load("city4.json");
 
-
-//load("city1.json");
-
-//useBCAToAddMissingViewportInDB(1000);
-
-useGoogleToAddMissingViewportInDB();
+//useGoogleToAddMissingViewportInDB();
