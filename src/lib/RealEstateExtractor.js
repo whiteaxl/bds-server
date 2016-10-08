@@ -119,6 +119,10 @@ function buildPlace(adsDto) {
 		lon: adsDto.hdLong
 	};
 	adsDto.place.diaChi = adsDto.diaChi;
+	if (!adsDto.diaChi) {
+		logUtil.warn("Dont' have diaChi", adsDto.maSo, adsDto.title);
+		return;
+	}
 	adsDto.place.diaChinh = placeUtil.getDiaChinh(adsDto.place.diaChi, true);
 
 	//for convenience
@@ -172,7 +176,7 @@ var setHuongNha = function (ads, url) {
 function _saveData(adsDto) {
 	let maSo = adsDto.maSo;
 	if (!URLCache[maSo]) {
-		logUtil.error("Error, duplicate or not exist:", t);
+		logUtil.error("Error, duplicate or not exist:", maSo);
 		return
 	}
 
@@ -263,24 +267,28 @@ class RealEstateExtractor {
 		}
 
 		osmosisRoot
-			.paginate(".background-pager-right-controls a:skip-last:last", 100)
+			.paginate(".background-pager-right-controls a:skip-last:last:contains('...')", 100)
 			.set({
 				'urls' : ['.search-productItem .p-title > a@href'],
+				'titles' : ['.search-productItem .p-title > a@title'],
 				'covers'  : ['.search-productItem .p-main > div > a > img@src'],
-        //'nexts' : [".background-pager-right-controls a:skip-last:last@href"]
+        //'nexts' : [".background-pager-right-controls a:skip-last:last@href"],
+				//'nexts3' : ".background-pager-right-controls a:skip-last:last:contains('...')@href",
+				//'nexts1' : [".background-pager-right-controls a:skip-last@href"],
+				//'nexts2' : [".background-pager-right-controls a:contains('...')@href"]
 			})
       .data((dto) => {
-				let url, idx, tail, code, cover;
+				let myUrl, idx, tail, code, cover;
 
 				for (let i = 0; i < dto.urls.length; i++) {
-					url = dto.urls[i];
+					myUrl = dto.urls[i];
 					cover = dto.covers[i];
 
-					idx = url.lastIndexOf("-");
-					tail = url.substr(idx+3);
+					idx = myUrl.lastIndexOf("-");
+					tail = myUrl.substr(idx+3);
 					code = tail;
 
-					URLCache[code] = {url, cover};
+					URLCache[code] = {myUrl, cover};
 				}
 
         //console.log("AAAAAA", dto.nexts);
@@ -305,6 +313,13 @@ class RealEstateExtractor {
 				//console.log("Processing listing:", listing.title, URLCache);
         let price = listing.prices[0];
         let dienTich = listing.prices[1];
+				let chiTiet;
+				try {
+					chiTiet = util.replaceBrToDowntoLine(listing.chiTiet);
+				} catch (e) {
+					logUtil.warn("Error when replaceBrToDowntoLine", listing.chiTiet)
+				}
+
 				let ads = {
 					title: listing.title,
 					images_small: listing.images,
@@ -314,7 +329,7 @@ class RealEstateExtractor {
 					dienTich: dienTich && Number(dienTich.substr(0, dienTich.length-2)),
 					area_raw: dienTich,
 					loc: listing.loc && listing.loc.length > 9 ? listing.loc.substring(9): '',
-					chiTiet: util.replaceBrToDowntoLine(listing.chiTiet),
+					chiTiet: chiTiet,
 					hdLat : Number(listing.hdLat),
 					hdLong : Number(listing.hdLong),
 					duAnID  : listing.duAnID
