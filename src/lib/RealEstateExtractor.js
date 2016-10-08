@@ -170,10 +170,12 @@ var setHuongNha = function (ads, url) {
 };
 
 function _saveData(adsDto) {
+	let t = adsDto.title;
+
   let adsObj = {};
 
   adsObj.type = "Ads_Raw";
-  let coverSmall = headerCache[adsDto.title] ? headerCache[adsDto.title].cover : null;
+  let coverSmall = headerCache[t] ? headerCache[t].cover : null;
   /*
    let images = [];
    if (adsDto.images_small) {
@@ -216,7 +218,11 @@ function _saveData(adsDto) {
   adsObj.chiTiet = adsDto.chiTiet;
   adsObj.huongNha = adsDto.huongNha;
   adsObj.maSo = Number(adsDto.maSo);
-  adsObj.url = headerCache[adsDto.title].adsUrl;
+
+
+  adsObj.url = headerCache[t].adsUrl;
+	//cleanup
+	headerCache[t] = null;
 
   if (adsObj.gia && adsObj.dienTich) {
     adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
@@ -229,9 +235,6 @@ function _saveData(adsDto) {
 
   adsObj.extLoaiNhaDat = adsDto.loaiTinRao;
 
-
-	//cleanup
-	headerCache[adsDto.title] = null;
 
   adsModel.upsert(adsObj);
 }

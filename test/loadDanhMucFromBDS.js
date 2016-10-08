@@ -299,6 +299,7 @@ function processDuAn(projects, huyenObj) {
       "duAn": p.name,
       "duAnKhongDau": projectKhongDau,
       "parentId" : huyenObj.id,
+      "code" : p.id,
       geometry : {
         location : {
           lat : p.lat,
@@ -374,7 +375,8 @@ function processStreet(streets) {
       "duong": p.name,
       "duongKhongDau": streetKhongDau,
       "parentId" : huyenId,
-      "pre" : p.pre
+      "pre" : p.pre,
+      "code" : p.id
     };
 
     upsert(streetObj);
