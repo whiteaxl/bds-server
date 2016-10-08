@@ -288,6 +288,7 @@ internals.detail = function(req, reply) {
             console.log("luotXem " + ads.luotXem);
 
             ads = _transformDetailAds(ads);
+            logUtil.info("Detail response:", ads);
             reply({
                 ads: ads,
                 status : constant.STS.SUCCESS
