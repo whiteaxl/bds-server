@@ -222,7 +222,7 @@ function _saveData(adsDto) {
 
   adsObj.url = headerCache[t].adsUrl;
 	//cleanup
-	headerCache[t] = null;
+	//headerCache[t] = null;
 
   if (adsObj.gia && adsObj.dienTich) {
     adsObj.giaM2 = Number((adsObj.gia/adsObj.dienTich).toFixed(3));
