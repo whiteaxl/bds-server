@@ -6,7 +6,6 @@ var osmosis = require('osmosis');
 //html entity coding
 var entities = require("entities");
 
-var DSLoaiNhaDat = require("./LoaiNhaDat");
 var logUtil = require("./logUtil");
 var placeUtil = require('./placeUtil');
 var util = require("./utils");
@@ -62,7 +61,7 @@ var REALESTATE_TYPE_NAME_MAP = {
 var parseEmail = function(encEmail) {
 	let idx1 = encEmail.indexOf('mailto:');
 	if (~idx1) {
-		var idx2 = encEmail.indexOf('\'', idx1);
+		let idx2 = encEmail.indexOf('\'', idx1);
 		if (~idx2) {
 			var onlyEncEmail = encEmail.substring(idx1+7, idx2);
 
@@ -79,7 +78,7 @@ function _convertLoaiTinGiao(ads) {
       if (ads.loaiTinRao.indexOf(key) != -1) {
         let val = REALESTATE_TYPE_NAME_MAP[key];
 
-        var spl = val.split(",");
+        let spl = val.split(",");
         ads.loaiTin = Number(spl[0]);
         ads.loaiNhaDat = Number(spl[1]);
       }
@@ -163,7 +162,7 @@ function convertGia(ads) {
 }
 
 var setHuongNha = function (ads, url) {
-	for (var i=1; i<=8; i++) {
+	for (let i=1; i<=8; i++) {
 		if (url.indexOf("/-1/-1/-1/"+i) > -1) {
 			ads.huongNha = i;
 		}
@@ -231,12 +230,15 @@ function _saveData(adsDto) {
   adsObj.extLoaiNhaDat = adsDto.loaiTinRao;
 
 
+	//cleanup
+	headerCache[adsDto.title] = null;
+
   adsModel.upsert(adsObj);
 }
 
 class RealEstateExtractor {
   extractWithLimit(rootURL, depth) {
-    var startDate = new Date();
+    let startDate = new Date();
     var _done = () => {
       console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
     };
@@ -248,7 +250,7 @@ class RealEstateExtractor {
 		let osmosisRoot  = 	osmosis.get(url);
 		depth = depth || 0;
 
-		for (var i=0; i < depth; i++) {
+		for (let i=0; i < depth; i++) {
 			console.log("Will dive into one more level");
 			osmosisRoot = osmosisRoot.follow('#divCountByAreas > ul > li > a@href');
 		}
@@ -310,7 +312,7 @@ class RealEstateExtractor {
 				// customer information : thong tin lien lac
 				for (let i = 0; i < listing.custLefts.length; i++) {
 					//transform first:
-					var val = listing.custRights[i];
+					let val = listing.custRights[i];
 					if (listing.custLefts[i]=='Email') {
 						val = parseEmail(listing.custRights[i]);
 					}
