@@ -15,4 +15,6 @@ var bdsEx = new RealEstateExtractor();
 //bdsEx.extractRealEstateWithLimit("http://batdongsan.com.vn/nha-dat-ban/-1/-1/-1/"+1, 1, 5);
 
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ba-dinh', 0);
+//bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ba-vi', 0);
+
 

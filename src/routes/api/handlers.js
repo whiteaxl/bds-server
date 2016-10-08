@@ -378,27 +378,6 @@ function _transformDetailAds(adsFromDb) {
     //dummy
     ads.luotXem = adsFromDb.luotXem;
 
-    //dummy moi gioi
-    var mg1 = {
-        userID : "12345",
-        cover : "http://www.odilederousiers.fr/charles/dl/profile.png",
-        diemDanhGia: 3,
-        numberOfAds : 10,
-        phone: "0123456789",
-        name: "Nguyen Van Thang"
-    };
-
-    var mg2 = {
-        cover : "https://avatars0.githubusercontent.com/u/12259246?v=3&s=96",
-        userID : "12346",
-        diemDanhGia: 5,
-        numberOfAds : 20,
-        phone: "0123456781",
-        name: "Phan Nhat Vuong"
-    };
-
-    ads.moiGioiTuongTu = [mg1, mg2];
-
     return ads;
 }
 
