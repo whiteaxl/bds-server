@@ -781,21 +781,7 @@ class AdsModel {
         var sql = ` WHERE type='Ads' and loaiTin = ${q.loaiTin}`;
 
         if(q.loaiNhaDat){
-            var condition = " and loaiNhaDat in [";
-            for(var i = 0; i<q.loaiNhaDat.length;i++){
-                if(i==q.loaiNhaDat.length-1){
-                    condition = condition + q.loaiNhaDat[i] + "]";
-                }else{
-                    condition = condition + q.loaiNhaDat[i] + ",";
-                }
-                if(q.loaiNhaDat[i] == 0){
-                    condition = "";
-                    break;
-                }
-            }
-            sql = sql + condition;
-        } else {
-            //sql = sql + " and loaiNhaDat is not missing "; //always have this
+            sql = sql + " and loaiNhaDat in [" + q.loaiNhaDat.join() + "]";
         }
 
         if (q.viewport) {
@@ -847,19 +833,8 @@ class AdsModel {
         }
 
         if(q.huongNha){
-            var condition = " and huongNha in [";
-            for(var i = 0; i<q.huongNha.length;i++){
-                if(i==q.huongNha.length-1){
-                    condition = condition + q.huongNha[i] + "]";
-                }else{
-                    condition = condition + q.huongNha[i] + ",";
-                }
-                if(q.huongNha[i] == 0){
-                    condition = "";
-                    break;
-                }
-            }
-            sql = sql + condition;
+            var huongNhaArrayAsString = q.huongNha.join();
+            sql = sql + " and huongNha in [" + huongNhaArrayAsString + "]";
         }
 
         if(q.soPhongNgu){
