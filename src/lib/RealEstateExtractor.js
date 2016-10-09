@@ -13,6 +13,9 @@ var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
 
 var URLCache = {};
+var g_countAds = 0;
+var g_countDup = 0;
+
 
 var REALESTATE_NAME_MAP = {
 	'Thuộc dự án' :'duAn',
@@ -165,6 +168,16 @@ function convertGia(ads) {
 	ads.gia = ads.price_value*1;
 }
 
+var parseEmailRegisterLink = function(ads, link) {
+	let queryString = link.substring(link.indexOf('?')+1);
+	let spl = queryString.split("&");
+	let oneSpl;
+	spl.forEach(e => {
+		oneSpl = e.split("=");
+		ads["emailRegister_"+oneSpl[0]] = oneSpl[1];
+	});
+};
+
 var setHuongNha = function (ads, url) {
 	for (let i=1; i<=8; i++) {
 		if (url.indexOf("/-1/-1/-1/"+i) > -1) {
@@ -177,6 +190,7 @@ function _saveData(adsDto) {
 	let maSo = adsDto.maSo;
 	if (!URLCache[maSo]) {
 		logUtil.error("Error, duplicate or not exist:", maSo);
+		g_countDup++;
 		return
 	}
 
@@ -228,7 +242,7 @@ function _saveData(adsDto) {
   adsObj.maSo = Number(adsDto.maSo);
 
 
-  adsObj.url = URLCache[maSo].adsUrl;
+  adsObj.url = URLCache[maSo].myUrl;
 	//cleanup
 	URLCache[maSo] = null;
 
@@ -237,21 +251,23 @@ function _saveData(adsDto) {
   }
 
   adsObj.adsID = "Ads_bds_" + adsObj.maSo;
-  adsObj.id = "Ads_bds_raw_" + adsObj.maSo;
+  adsObj.id = "Ads_raw_bds_" + adsObj.maSo;
   adsObj.source = adsDto.source;
   adsObj.duAnID = adsDto.duAnID;
 
   adsObj.extLoaiNhaDat = adsDto.loaiTinRao;
 
+	//get detail ads features
+	parseEmailRegisterLink(adsObj, adsDto.emailRegisterLink);
 
-  adsModel.upsert(adsObj);
+	adsModel.upsert(adsObj);
 }
 
 class RealEstateExtractor {
   extractWithLimit(rootURL, depth) {
     let startDate = new Date();
     var _done = () => {
-      console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
+      console.log('=================> DONE in ' + (new Date() - startDate) + 'ms' + ', countAds:' + g_countAds + ', countDup:' + g_countDup);
     };
 
     this.extractOnePage(rootURL, _done, depth);
@@ -263,7 +279,7 @@ class RealEstateExtractor {
 
 		for (let i=0; i < depth; i++) {
 			console.log("Will dive into one more level");
-			osmosisRoot = osmosisRoot.follow('#divCountByAreas > ul > li > a@href');
+			osmosisRoot = osmosisRoot.follow('#RightMainContent__productCountByContext_bodyContainer ul > li > a@href');
 		}
 
 		osmosisRoot
@@ -307,10 +323,13 @@ class RealEstateExtractor {
 				'chiTiet'	:'#product-detail .pm-content:source',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
-				'duAnID'      :'#product-detail .inproject > a@href'
+				'duAnID'      :'#product-detail .inproject > a@href',
+				'emailRegisterLink' : '#emailregister@href'
 			})
 			.data(function(listing) {
 				//console.log("Processing listing:", listing.title, URLCache);
+				g_countAds++;
+
         let price = listing.prices[0];
         let dienTich = listing.prices[1];
 				let chiTiet;
@@ -332,7 +351,8 @@ class RealEstateExtractor {
 					chiTiet: chiTiet,
 					hdLat : Number(listing.hdLat),
 					hdLong : Number(listing.hdLong),
-					duAnID  : listing.duAnID
+					duAnID  : listing.duAnID,
+					emailRegisterLink : listing.emailRegisterLink
 				};
 
 				//var {detailLefts, detailRights, custLefts, custRights} = listing;
@@ -378,7 +398,7 @@ class RealEstateExtractor {
 				ads.source = "BATDONGSAN.COM.VN";
 
 				if(ads.duAnID){
-					ads.duAnID  = "DA_" + (ads.duAnID).replace("/","");
+					ads.duAnID  = ads.duAnID.replace("/","");
 				}
 
         ads.ngayDangTin = ads.ngayDangTin && util.convertFormatDate(ads.ngayDangTin);
