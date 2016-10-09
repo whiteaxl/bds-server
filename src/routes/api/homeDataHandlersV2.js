@@ -88,13 +88,14 @@ function searchAds(title1, title2, query, callback) {
   findHandlerV2.findAds(query, (res) => {
     
     if (!res.list || res.list.length == 0) {
-      callback(null
+        callback(null
         , {
           title1: title1,
           title2: title2,
           data: [],
           query: origQuery
         });
+
       return;
     }
     let collection = {
@@ -116,9 +117,9 @@ function generateSearchNgangGiaFn(query, diaChinh){
   if(!diaChinh)
     diaChinh = {};
 
-  if(loaiTin ==0){
+  if(loaiTin == 0){
     loaiNhaDat = [1,2,3,4,5,6];
-  }else if(loaiTin==1){
+  }else if(loaiTin == 1){
     loaiNhaDat = [1,2,3,4];
   }
 
@@ -126,17 +127,18 @@ function generateSearchNgangGiaFn(query, diaChinh){
     loaiNhaDat = loaiNhaDat.filter(x => loaiNhaDatLastSearch.indexOf(x) == -1);
   
   _(loaiNhaDat).forEach(function(value) {
-    //console.log("tim log loaiNhaDat" + value);
     results.push(function(callback){
-      let queryNgangGia = {}; Object.assign(queryNgangGia, query);
+      //let queryNgangGia = {}; Object.assign(queryNgangGia, query);
+      let  queryNgangGia = JSON.parse(JSON.stringify(query));
+
       let loaiNhaDatName = danhMuc.getLoaiNhaDatForDisplayNew(loaiTin,value);
-      let giaDisplay = " ngang giá";
-      if(!queryNgangGia.giaBETWEEN || (queryNgangGia.giaBETWEEN[0]==0 && queryNgangGia.giaBETWEEN[1]> 99999)){
+      
+      if(!queryNgangGia.giaBETWEEN || (queryNgangGia.giaBETWEEN[0]<=-1 && queryNgangGia.giaBETWEEN[1]> 99999)){
         queryNgangGia.giaBETWEEN = [];
-        queryNgangGia.giaBETWEEN[0] = [0];
+        queryNgangGia.giaBETWEEN[0] = 0;
         queryNgangGia.giaBETWEEN[1] = 5000;
         if(loaiTin==0){
-          if(value == 1 || value ==2 || value ==5 || value ==7){
+          if(value == 1 || value ==2 || value ==5 || value ==6){
             loaiNhaDatName = loaiNhaDatName + " dưới 5 tỷ";
           }else{
             loaiNhaDatName = loaiNhaDatName + " dưới 20 tỷ";    
@@ -149,23 +151,24 @@ function generateSearchNgangGiaFn(query, diaChinh){
           }
         }
         
-      }else{
+      } else {
         loaiNhaDatName = loaiNhaDatName + " ngang giá";
+        queryNgangGia.giaBETWEEN[0] = queryNgangGia.giaBETWEEN[0] * 0.8;
+        queryNgangGia.giaBETWEEN[1] = queryNgangGia.giaBETWEEN[1] * 1.2;
       }
       loaiNhaDatName = loaiNhaDatName.replace("Cho Thuê ", "").replace("Bán ","");
       loaiNhaDatName = utils.upperFirstCharacter(loaiNhaDatName);
-      //queryNgangGia.ngayDaDang = 700;
+
       queryNgangGia.loaiNhaDat = [value];
       queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
 
       // reset search conditions
-
       queryNgangGia.soPhongNguGREATER = 0;
       queryNgangGia.soPhongTamGREATER = 0;
       queryNgangGia.huongNha = [0];
       queryNgangGia.dienTichBETWEEN = [-1,9999999];
 
-      searchAds(loaiNhaDatName, query.diaChinh ? query.diaChinh.fullName : query.fullName, queryNgangGia,callback);
+      searchAds(loaiNhaDatName, query.diaChinh ? query.diaChinh.fullName : query.fullName, queryNgangGia, callback);
 
     });
     // console.log("tim log " + results[0]);
@@ -200,6 +203,7 @@ internals.homeData4App = function (req, reply) {
   query.pageNo = 1;
   query.loaiTin = query.loaiTin ? query.loaiTin : 0;
   query.viewport = undefined;
+  query.polygon = (query.polygon && query.polygon.length >=2) ? query.polygon : undefined;
 
   let ngayDangTinBegin = moment().subtract(365, 'days').format('YYYYMMDD');
   query.isIncludeCountInResponse = false; //no need count
@@ -447,7 +451,6 @@ internals.homeData4App = function (req, reply) {
        }
        });
        */
-
       async.series(fl,
           function(err, results){
             reply({
