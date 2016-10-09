@@ -31,13 +31,14 @@
         		var async = require("async");
 			  	vm.boSuuTap = [];
 	      		var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
-	      			if(res.data.list && res.data.list.data.length>0)
+	      			if(res.data.list && res.data.list.data.length>=5)
 	      				vm.boSuuTap.push(res.data.list);
 	      			//alert(res.data.length);
 	      		});
 		        async.series(fl,
 		          function(err, results){
 		            // alert(results.length);
+		            vm.doneSearch = true;
 		          }
 			    );
         	}

@@ -1,5 +1,5 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
-<bds-mobile-filter></bds-mobile-filter>
+<bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
 <bds-mobile-header></bds-mobile-header>
 
 <div ng-if="msc.viewMode=='list'" class="wapper">
@@ -49,7 +49,7 @@
  <div class="notifyBox heartNotify"></div>
 <div  class="wapper">
     <div class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}">
-        <ng-map id="searchmap"  center="{{center}}" zoom-to-include-markers="{{msc.zoomMode}}" custom-zoom-to-include-markers="{{msc.zoomMode}}"   map-initialized="msc.mapInitialized(map)"  class="ngmap">
+        <ng-map id="searchmap"  center="{{center}}" lazy-init="true"   class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
             <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
                  id="m_{{$index}}" >

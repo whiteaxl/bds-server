@@ -1,7 +1,7 @@
 angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeout) {
     var def = {
         restrict: 'E',
-        scope: {},
+        scope: {mode: '=mode', searchData: "=searchData"},
         terminal: true,
         templateUrl: "/web/common/directives/mobile/bds-mobile-filter.tpl.html",
         replace: 'true',
@@ -21,15 +21,17 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
                 vm.pageSize = 25;
                 vm.initialized = false;
-                $scope.searchData = {};
-                //Object.assign($scope.searchData,$rootScope.searchData);
-                _.assign($scope.searchData,$rootScope.searchData);
-
+                vm.keepViewport = true;
+                // $scope.searchData = {};
+                // //Object.assign($scope.searchData,$rootScope.searchData);
+                // _.assign($scope.searchData,$rootScope.searchData);
+                // $scope.sd.abc = 'd';
 
                 vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
                 vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 
                 vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+                
 
                 vm.sellPrices  =[                    
                     {
@@ -292,13 +294,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.giaBETWEEN[0] = $scope.searchData.giaKhacFrom || 0;
                         $scope.searchData.giaBETWEEN[1] = $scope.searchData.giaKhacTo || 9999999999999999;  
                         $scope.searchData.giaKhacFrom = undefined;
-                        $scope.searchData.giaKhacTo = undefined;
-                      
+                        $scope.searchData.giaKhacTo = undefined;                      
                     }
                     if(vm.item){
-
                         if(vm.item.query){
-                            $scope.searchData = vm.item.query;                            
+                            $scope.searchData = vm.item.query;                             
                         } else if(vm.item.location){
                             $scope.searchData.circle = {
                                 center: $rootScope.currentLocation,
@@ -317,7 +317,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     
                     // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
-                    $state.go("msearch", { "placeId": vm.place?vm.place.placeId:undefined, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"},{reload: true});
+                    $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $scope.searchData, "viewMode": $scope.mode?$scope.mode:"list"},{reload: true});
                     $(".overlay").click();
                 }
                 vm.gotoRelandApp = function(event){
@@ -327,7 +327,13 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $state.go('profile', { userID: $rootScope.user.userID}, {location: true});
                 }
                 vm.selectPlaceCallback = function(item){
+                    if(item.lastSearchSeparator==true){
+                        return;
+                    }
                     vm.item = item;
+                    if(vm.item.placeId)
+                        $rootScope.searchData.placeId = vm.item.placeId;
+                    vm.keepViewport = false;
                     if(item.query){
                         vm.place = vm.item.place;
                         $scope.searchData = item.query;                        
@@ -419,7 +425,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     {
                         description: "Vị trí hiện tại",
                         location: true,
-                        class: "iconLocation gray"
+                        class: "ui-autocomplete-category"
                     }
                 ];
 
@@ -471,15 +477,16 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.userLoggedIn = function(){                   
                     let saveSearches = $rootScope.user.saveSearch;
                     if(saveSearches ){
-                        for (var i = saveSearches.length - 1; i >= 0; i--) {
+                        for (var i = saveSearches.length - 1; i >= 0; i--) {                              
                             let des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
                             if(des && des.length>20)
-                                des = des.substring(0,20) + "...";
-                            vm.favoriteSearchSource.push({
-                                description: saveSearches[i].name + " - " + des,
+                                des = des.substring(0,20) + "...";                            
+                            vm.favoriteSearchSource.splice(1,0,{
+                                description: saveSearches[i].name,
+                                subDescription: des,
                                 query: saveSearches[i].query,
-                                class: "iconLocation grasy"                        
-                            });                                 
+                                class: "fa fa-heart red ui-menu-item-wrapper"                        
+                            });                                
                         }
 
                     }                
@@ -514,9 +521,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             if(des && des.length>20)
                                 des = des.substring(0,20) + "...";
                             vm.favoriteSearchSource.push({
-                                description: (data.time + " - " + des),
+                                description: "Tìm kiếm lúc " + data.time,
+                                subDescription: des,
                                 query: data.query,
-                                class: "iconLocation grasy"                        
+                                class: "fa fa-history gray ui-menu-item-wrapper"                        
                             }); 
                         }
                     });
@@ -545,17 +553,25 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                     if($rootScope.getAllLastSearch($localStorage)){
                         let lastSearches = $rootScope.getAllLastSearch($localStorage);
+                        if(lastSearches.length>0){
+                            vm.favoriteSearchSource.push({
+                                description: "Tìm kiếm gần đây",
+                                lastSearchSeparator: true
+                            });
+                        }
                         for (var i = lastSearches.length - 1; i >= 0; i--) {
                             let des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
                             if(des && des.length>20)
                                 des = des.substring(0,20) + "...";
                             vm.favoriteSearchSource.push({
-                                description: (lastSearches[i].time + " - " + des),
+                                description: "Tìm kiếm lúc " + lastSearches[i].time,
+                                subDescription: des,
                                 query: lastSearches[i].query,
-                                class: "iconLocation grasy"                        
+                                class: "fa fa-history gray ui-menu-item-wrapper"                        
                             }); 
                         }
                     }
+
                     vm.userLoggedIn();
 
                     $scope.$bus.subscribe({

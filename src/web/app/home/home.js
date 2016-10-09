@@ -50,20 +50,31 @@
     // }
 
     $rootScope.searchData = {
+        "placeId": undefined,
         "loaiTin": 0,
         "giaBETWEEN": [0, 999999999],
         "dienTichBETWEEN" : [0, 99999999999],
         "ngayDangTinGREATER" : "19810101",
         "viewport" : {
-          "northeast" : {
-            "lat" : 21.385027,
-            "lon" : 106.0198859
-          },
-          "southwest" : {
-            "lat" : 20.562323,
-            "lon" : 105.2854659
-          }
+               "northeast" : {
+                  "lat" : 23.393395,
+                  "lon" : 109.4689483
+               },
+               "southwest" : {
+                  "lat" : 8.412729499999999,
+                  "lon" : 102.14441
+               }
         },
+        // "viewport" : {
+        //   "northeast" : {
+        //     "lat" : 21.385027,
+        //     "lon" : 106.0198859
+        //   },
+        //   "southwest" : {
+        //     "lat" : 20.562323,
+        //     "lon" : 105.2854659
+        //   }
+        // },
         "diaChinh" : {
           "tinhKhongDau" : "ha-noi",
           "huyenKhongDau" : "cau-giay"

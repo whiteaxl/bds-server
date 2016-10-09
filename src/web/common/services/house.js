@@ -20,7 +20,9 @@
         // var url = "/api/findAds";
         // var url = "/api/search";
         var url = "/api/v2/find";
-        return $http.post(url,data);
+        let sendData = {}; Object.assign(sendData, data);
+        sendData.placeId = undefined;
+        return $http.post(url,sendData);
       },
       countAds: function(data){
         //var url = "/api/find";

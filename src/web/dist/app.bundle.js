@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b63cecdf945a186beef8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1b1c6b4d052cb8c8bd2a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1043,20 +1043,31 @@
 	    // }
 
 	    $rootScope.searchData = {
+	      "placeId": undefined,
 	      "loaiTin": 0,
 	      "giaBETWEEN": [0, 999999999],
 	      "dienTichBETWEEN": [0, 99999999999],
 	      "ngayDangTinGREATER": "19810101",
 	      "viewport": {
 	        "northeast": {
-	          "lat": 21.385027,
-	          "lon": 106.0198859
+	          "lat": 23.393395,
+	          "lon": 109.4689483
 	        },
 	        "southwest": {
-	          "lat": 20.562323,
-	          "lon": 105.2854659
+	          "lat": 8.412729499999999,
+	          "lon": 102.14441
 	        }
 	      },
+	      // "viewport" : {
+	      //   "northeast" : {
+	      //     "lat" : 21.385027,
+	      //     "lon" : 106.0198859
+	      //   },
+	      //   "southwest" : {
+	      //     "lat" : 20.562323,
+	      //     "lon" : 105.2854659
+	      //   }
+	      // },
 	      "diaChinh": {
 	        "tinhKhongDau": "ha-noi",
 	        "huyenKhongDau": "cau-giay"
@@ -20427,7 +20438,9 @@
 	        // var url = "/api/findAds";
 	        // var url = "/api/search";
 	        var url = "/api/v2/find";
-	        return $http.post(url, data);
+	        var sendData = {};Object.assign(sendData, data);
+	        sendData.placeId = undefined;
+	        return $http.post(url, sendData);
 	      },
 	      countAds: function countAds(data) {
 	        //var url = "/api/find";
@@ -20551,22 +20564,82 @@
 	          });
 	        };
 	        if (source) sourceP = source;
+
+	        // $.widget( "custom.catcomplete", $.ui.autocomplete, {
+	        //   _create: function() {
+	        //   this._super();
+	        //   this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	        //   },
+	        //   _renderMenu: function( ul, items ) {
+	        //   var that = this,
+	        //     currentCategory = "";
+	        //   ul.addClass('relandAuto');
+	        //   $.each( items, function( index, item ) {
+	        //     var li;
+	        //     if ( item.category != currentCategory ) {
+	        //     ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+	        //     currentCategory = item.category;
+	        //     }
+	        //     li = that._renderItemData( ul, item );
+	        //     if ( item.category ) {
+	        //     li.html("<i class='" + item.labelicon + "'></i>" + item.label + "<span>" + item.labeldes + "</span>");
+	        //     }
+	        //   });
+	        //   }
+	        // });
+
+	        // $( "#" + inputTagId).catcomplete({
+	        //   delay:0 ,
+	        //   source: sourceP
+	        // });
 	        $("#" + inputTagId).autocomplete({
 	          minLength: 0,
 	          source: sourceP,
 	          focus: function focus(event, ui) {
-	            $("#" + inputTagId).val(ui.item.description);
-	            return false;
+	            if (ui.item.lastSearchSeparator == true) {
+	              event.preventDefault();
+	            } else {
+	              $("#" + inputTagId).val(ui.item.description);
+	              return false;
+	            }
+	          },
+	          _create: function _create() {
+	            this._super();
+	            this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
 	          },
 	          select: function select(event, ui) {
-	            $("#" + inputTagId).val(ui.item.description);
-	            callback(ui.item);
-	            return false;
+	            if (ui.item.lastSearchSeparator == true) {
+	              event.preventDefault();
+	            } else {
+	              $("#" + inputTagId).val(ui.item.description);
+	              callback(ui.item);
+	              return false;
+	            }
 	          }
 	        }).autocomplete("instance")._renderItem = function (ul, item) {
-	          ul.addClass('relandAutoOne');
-	          return $("<li class='googlemap'>").append("<p><i class='" + item.class + "'></i>" + item.description + "<span>" + window.RewayPlaceUtil.getTypeName(item) + "</span></p>").appendTo(ul);
+	          ul.addClass('relandAuto');
+	          if (item.location == true || item.lastSearchSeparator == true) {
+	            return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo(ul);
+	          } else {
+	            return $("<li class='ui-menu-item'>").append('<i class="' + item.class + '"></i>' + item.description + '<span class="ui-menu-item-wrapper">' + item.subDescription + '</span></li>').appendTo(ul);
+	          }
 	        };
+	        // .autocomplete( "instance" )._renderMenu = function( ul, items ) {
+	        //   var that = this,
+	        //   currentCategory = "";
+	        //   ul.addClass('relandAuto');
+	        //   $.each( items, function( index, item ) {
+	        //     var li;
+	        //     if ( item.location == true || item.lastSearchSeparator == true ) {
+	        //       ul.append( "<li class='ui-autocomplete-category'>" + item.description + "</li>" );              
+	        //       // li = that._renderItemData( ul, item );
+	        //     }else{
+	        //       li = that._renderItemData( ul, item );
+	        //       li.html("<i class='" + item.class + "'></i>" + item.description + "<span>" + item.subDescription + "</span>");
+	        //     }
+
+	        //   });
+	        // };
 	      }
 	    };
 	  });
@@ -21338,11 +21411,12 @@
 					var async = __webpack_require__(30);
 					vm.boSuuTap = [];
 					var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query, homeDataSearch.currentLocation, HouseService.findAdsSpatial, function (res) {
-						if (res.data.list && res.data.list.data.length > 0) vm.boSuuTap.push(res.data.list);
+						if (res.data.list && res.data.list.data.length >= 5) vm.boSuuTap.push(res.data.list);
 						//alert(res.data.length);
 					});
 					async.series(fl, function (err, results) {
 						// alert(results.length);
+						vm.doneSearch = true;
 					});
 				}
 				if (navigator.geolocation) {
@@ -28500,7 +28574,7 @@
 
 	        vm.init = function () {
 	            vm.ads_list = [];
-	            $scope.center = "Hanoi Vietnam";
+	            $scope.center = "Danang";
 	            vm.zoomMode = "false";
 	            vm.loaiTin = $state.params.loaiTin;
 	            vm.loaiNhaDat = $state.params.loaiNhaDat;
@@ -28525,10 +28599,15 @@
 
 	            if (vm.placeId) {
 	                HouseService.getPlaceByID({ placeId: vm.placeId }).then(function (res) {
-	                    vm.viewport = res.data.place.geometry.viewport;
+	                    if ($state.params.keepViewport && $state.params.keepViewport == true) {} else {
+	                        vm.viewport = res.data.place.geometry.viewport;
+	                    }
+	                    $scope.center = "[" + res.data.place.geometry.location.lat + "," + res.data.place.geometry.location.lon + "]";
 	                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.tinhKhongDau;
 	                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.huyenKhongDau;
 	                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.xaKhongDau;
+	                    $rootScope.searchData.viewport = vm.viewport;
+	                    $rootScope.searchData.placeId = vm.placeId;
 	                    vm.search(function () {
 	                        if (vm.viewMode == "list") {
 	                            vm.initMap = false;
@@ -28536,6 +28615,9 @@
 	                    });
 	                });
 	            } else {
+	                vm.viewport = $rootScope.searchData.viewport;
+	                $rootScope.searchData.diaChinh = undefined;
+	                $scope.center = "[14.058324,108.277199]";
 	                vm.search(function () {
 	                    if (vm.viewMode == "list") {
 	                        vm.initMap = false;
@@ -28579,46 +28661,12 @@
 	            });
 	        };
 
-	        vm.mapInitialized = function (map) {
-	            //vm.initialized = true;
-	            // alert('aa');
-	            vm.dragendHanlder = google.maps.event.addListener(map, "dragend", function () {
-	                //alert(vm.map.getBounds());
-	                //$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-
-	                $rootScope.searchData.viewport = {
-	                    southwest: {
-	                        lat: vm.map.getBounds().getSouthWest().lat(),
-	                        lon: vm.map.getBounds().getSouthWest().lng()
-	                    },
-	                    northeast: {
-	                        lat: vm.map.getBounds().getNorthEast().lat(),
-	                        lon: vm.map.getBounds().getNorthEast().lng()
-	                    }
-	                };
-	                //alert($rootScope.searchData.geoBox);
-	                $scope.center = "[" + vm.map.getCenter().lat() + "," + vm.map.getCenter().lng() + "]";
-	                vm.marker = {
-	                    id: -1,
-	                    coords: { latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng() },
-	                    content: 'you are here'
-	                };
-	                // $scope.$apply();
-	                vm.search();
-	                //alert('dragend');
-	                //alert($rootScope.searchData.geoBox);
-	            });
-
-	            $scope.$on("$destroy", function () {
-	                google.maps.event.removeListener(vm.zoomChangeHanlder);
-	                google.maps.event.removeListener(vm.dragendHanlder);
-	            });
-
-	            // google.maps.event.removeListener(zoomChangeHanlder);
-	            // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
-	            // google.maps.event.clearInstanceListeners(map);
-	            vm.humanZoom = false;
-	            vm.zoomChangeHanlder = google.maps.event.addListener(map, "zoom_changed", function () {
+	        vm.disableIdleHandler = function () {
+	            if (vm.zoomChangeHanlder) google.maps.event.removeListener(vm.zoomChangeHanlder);
+	        };
+	        vm.enableMapIdleHandler = function () {
+	            vm.disableIdleHandler();
+	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function () {
 	                if (vm.initialized == true) {
 	                    vm.initialized = false;
 	                    vm.humanZoom = true;
@@ -28637,22 +28685,77 @@
 	                    // //var bounds = vm.map.getBounds();
 	                    // //alert($rootScope.searchData.geoBox);
 	                    // vm.marker = {
-	                    // 	id: -1,
-	                    // 	coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-	                    // 	content: 'you are here'
+	                    //  id: -1,
+	                    //  coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+	                    //  content: 'you are here'
 	                    // };
+	                    vm.viewport = $rootScope.searchData.viewport;
 	                    vm.search(function () {
 	                        $timeout(function () {
-	                            //vm.initialized = true;
+	                            vm.initialized = true;
 	                            //vm.map.fitBounds(bounds);
 	                            vm.humanZoom = false;
-	                        }, 10);
+	                        }, 0);
 	                    });
 	                    // alert('human zoom');
 	                } else {
-	                    console.log("not human zoom");
+	                    console.log("not human zoom and turn to human zoom");
+	                    $timeout(function () {
+	                        vm.initialized = true;
+	                        //vm.map.fitBounds(bounds);
+	                        vm.humanZoom = false;
+	                    }, 200);
 	                }
 	            });
+	        };
+	        $scope.$on("$destroy", function () {
+	            // google.maps.event.removeListener(vm.zoomChangeHanlder);
+	            // google.maps.event.removeListener(vm.dragendHanlder);
+	            vm.disableIdleHandler();
+	        });
+
+	        vm.mapInitialized = function () {
+	            //vm.initialized = true;
+	            // alert('aa');
+
+	            if (!vm.map) {
+	                vm.map = NgMap.initMap('searchmap');
+
+	                // google.maps.event.removeListener(zoomChangeHanlder);
+	                // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
+	                // google.maps.event.clearInstanceListeners(map);
+	                vm.enableMapIdleHandler();
+	                vm.humanZoom = false;
+	            }
+
+	            // vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
+	            //          	//alert(vm.map.getBounds());
+	            // 	//$rootScope.searchData.geoBox = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(),vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+
+	            //              $rootScope.searchData.viewport = {
+	            //                  southwest: {
+	            //                      lat: vm.map.getBounds().getSouthWest().lat(),
+	            //                      lon: vm.map.getBounds().getSouthWest().lng()
+	            //                  },
+	            //                  northeast: {
+	            //                      lat: vm.map.getBounds().getNorthEast().lat(),
+	            //                      lon: vm.map.getBounds().getNorthEast().lng()
+	            //                  }
+	            //              };
+	            // 	//alert($rootScope.searchData.geoBox);
+	            // 	$scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+	            // 	vm.marker = {
+	            // 		id: -1,
+	            // 		coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+	            // 		content: 'you are here'
+	            // 	};
+	            //              vm.viewport = $rootScope.searchData.viewport;
+	            // 	// $scope.$apply();
+	            //         	vm.search();
+	            //  			//alert('dragend');
+	            //  			//alert($rootScope.searchData.geoBox);
+	            //       });
+
 
 	            // }
 	        };
@@ -28791,12 +28894,19 @@
 	                $('#searchmap').show();
 	            });
 	        };
+	        // vm.initMap = function(){
+	        //     if(!vm.map){
+	        //         vm.map = NgMap.initMap('searchmap');
+	        //         vm.mapInitialized(vm.map);
+	        //     } 
+	        // }
 	        vm.searchPage = function (i, callback) {
 	            $rootScope.searchData.pageNo = i;
 	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
 	            //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
 	            //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
 	            vm.initialized = false;
+
 	            // vm.khoangGiaList[]
 	            // $rootScope.searchData.khoangGia
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
@@ -28864,20 +28974,34 @@
 	                vm.currentPageStart = vm.pageSize * ($rootScope.searchData.pageNo - 1) + 1;
 	                vm.currentPageEnd = vm.currentPageStart + res.data.list.length - 1;
 	                vm.currentPage = $rootScope.searchData.pageNo;
+
+	                vm.mapInitialized();
+	                // if(vm.map){
+	                //     vm.disableIdleHandler();
+	                //     google.maps.event.addListenerOnce(vm.map, 'idle', function() {
+	                //         vm.enableMapIdleHandler();
+	                //         vm.initialized = true;
+	                //         vm.doneSearch = true;   
+	                //     });    
+	                // }            
 	                if (vm.viewport) {
 	                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
 	                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
 	                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
 	                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
 
-	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat) vm.map.fitBounds(bounds);
+	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat) {
+	                        vm.map.fitBounds(bounds);
+	                        //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+	                        //$scope.center = 'Hanoi';
+	                    }
 	                }
 
 	                $timeout(function () {
 	                    $('body').scrollTop(0);
-	                    vm.initialized = true;
+	                    // vm.initialized = true;  
 	                    vm.doneSearch = true;
-	                }, 100);
+	                }, 0);
 
 	                // if($rootScope.isLoggedIn()){
 	                //     $rootScope.user.lastSearch = $rootScope.searchData;
@@ -28939,45 +29063,45 @@
 
 	        //vm.search();
 
-	        NgMap.getMap('searchmap').then(function (map) {
-	            vm.map = map;
+	        /*NgMap.getMap('searchmap').then(function(map){
+	        	vm.map = map; 
 	            // window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map);
-	            vm.PlacesService = new google.maps.places.PlacesService(map);
-	            if (vm.placeId) {
+	            vm.PlacesService =  new google.maps.places.PlacesService(map);
+	            if(vm.placeId){
 	                vm.PlacesService.getDetails({
 	                    placeId: vm.placeId
-	                }, function (place, status) {
+	                }, function(place, status) {
 	                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-	                        vm.place = place;
+	                    	vm.place = place;
 	                        $rootScope.searchData.place = place;
 	                        $rootScope.searchData.geoBox = undefined;
 	                        //var map = $scope.map.control.getGMap();
 	                        var current_bounds = map.getBounds();
 	                        //$scope.map.center =  
-	                        $scope.center = "[" + place.geometry.location.lat() + "," + place.geometry.location.lng() + "]";
-	                        if (place.geometry.viewport) {
+	                        $scope.center = "["+place.geometry.location.lat() +"," +place.geometry.location.lng() +"]";
+	                        if(place.geometry.viewport){
 	                            //map.fitBounds(place.geometry.viewport);   
 	                            //$scope.map
-	                        } else if (!current_bounds.contains(place.geometry.location)) {
+	                        } else if( !current_bounds.contains( place.geometry.location ) ){
 	                            var new_bounds = current_bounds.extend(place.geometry.location);
 	                            //map.fitBounds(new_bounds);
 	                            //$digest();
 	                        }
 	                        vm.marker = {
-	                            id: -1,
-	                            coords: { latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() },
-	                            content: 'you are here'
-	                        };
+	        id: -1,
+	        coords: {latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng()},
+	        content: 'you are here'
+	        };
 	                        $scope.$apply();
-	                        vm.search(function () {
-	                            if (vm.viewMode == "list") {
-	                                vm.initMap = false;
-	                            }
+	                        vm.search(function(){
+	                        	if(vm.viewMode=="list"){
+	                        		vm.initMap = false;
+	                        	}
 	                        });
 	                    }
 	                });
-	            }
-	        });
+	            }            
+	        });*/
 
 	        vm.init();
 	    });
@@ -29394,7 +29518,7 @@
 	angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {},
+	        scope: { mode: '=mode', searchData: "=searchData" },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-filter.tpl.html",
 	        replace: 'true',
@@ -29413,9 +29537,11 @@
 	            };
 	            vm.pageSize = 25;
 	            vm.initialized = false;
-	            $scope.searchData = {};
-	            //Object.assign($scope.searchData,$rootScope.searchData);
-	            _.assign($scope.searchData, $rootScope.searchData);
+	            vm.keepViewport = true;
+	            // $scope.searchData = {};
+	            // //Object.assign($scope.searchData,$rootScope.searchData);
+	            // _.assign($scope.searchData,$rootScope.searchData);
+	            // $scope.sd.abc = 'd';
 
 	            vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
 	            vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
@@ -29629,7 +29755,6 @@
 	                    $scope.searchData.giaKhacTo = undefined;
 	                }
 	                if (vm.item) {
-
 	                    if (vm.item.query) {
 	                        $scope.searchData = vm.item.query;
 	                    } else if (vm.item.location) {
@@ -29649,7 +29774,7 @@
 
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
-	                $state.go("msearch", { "placeId": vm.place ? vm.place.placeId : undefined, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": "list" }, { reload: true });
+	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
 	                $(".overlay").click();
 	            };
 	            vm.gotoRelandApp = function (event) {};
@@ -29657,7 +29782,12 @@
 	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
 	            };
 	            vm.selectPlaceCallback = function (item) {
+	                if (item.lastSearchSeparator == true) {
+	                    return;
+	                }
 	                vm.item = item;
+	                if (vm.item.placeId) $rootScope.searchData.placeId = vm.item.placeId;
+	                vm.keepViewport = false;
 	                if (item.query) {
 	                    vm.place = vm.item.place;
 	                    $scope.searchData = item.query;
@@ -29742,7 +29872,7 @@
 	            vm.favoriteSearchSource = [{
 	                description: "Vị trí hiện tại",
 	                location: true,
-	                class: "iconLocation gray"
+	                class: "ui-autocomplete-category"
 	            }];
 
 	            vm.keyPress = function (event) {
@@ -29791,10 +29921,11 @@
 	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
 	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
 	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
-	                        vm.favoriteSearchSource.push({
-	                            description: saveSearches[i].name + " - " + des,
+	                        vm.favoriteSearchSource.splice(1, 0, {
+	                            description: saveSearches[i].name,
+	                            subDescription: des,
 	                            query: saveSearches[i].query,
-	                            class: "iconLocation grasy"
+	                            class: "fa fa-heart red ui-menu-item-wrapper"
 	                        });
 	                    }
 	                }
@@ -29827,9 +29958,10 @@
 	                        var des = window.RewayUtil.convertQuery2String(data.query);
 	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
 	                        vm.favoriteSearchSource.push({
-	                            description: data.time + " - " + des,
+	                            description: "Tìm kiếm lúc " + data.time,
+	                            subDescription: des,
 	                            query: data.query,
-	                            class: "iconLocation grasy"
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
 	                        });
 	                    }
 	                });
@@ -29858,16 +29990,24 @@
 
 	                if ($rootScope.getAllLastSearch($localStorage)) {
 	                    var lastSearches = $rootScope.getAllLastSearch($localStorage);
+	                    if (lastSearches.length > 0) {
+	                        vm.favoriteSearchSource.push({
+	                            description: "Tìm kiếm gần đây",
+	                            lastSearchSeparator: true
+	                        });
+	                    }
 	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
 	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
 	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
 	                        vm.favoriteSearchSource.push({
-	                            description: lastSearches[i].time + " - " + des,
+	                            description: "Tìm kiếm lúc " + lastSearches[i].time,
+	                            subDescription: des,
 	                            query: lastSearches[i].query,
-	                            class: "iconLocation grasy"
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
 	                        });
 	                    }
 	                }
+
 	                vm.userLoggedIn();
 
 	                $scope.$bus.subscribe({
@@ -30583,13 +30723,13 @@
 	danhMuc.LoaiNhaDatBan = {
 	    1: "Bán căn hộ chung cư",
 	    2: "Bán nhà riêng",
-	    3: "Bán nhà mặt phố",
-	    4: "Bán biệt thự, liền kề",
-	    6: "Bán Shophouse",
-	    7: "Bán đất nền dự án",
-	    5: "Bán đất",
-	    8: "Bán trang trại, khu nghỉ dưỡng",
-	    99: "Bán các BDS khác",
+	    3: "Bán biệt thự, liền kề",
+	    4: "Bán nhà mặt phố",
+	    5: "Bán đất nền dự án",
+	    6: "Bán đất",
+	    7: "Bán trang trại, khu nghỉ dưỡng",
+	    8: "Bán kho, nhà xưởng",
+	    99: "Bán loại bất động sản khác",
 	    10: "Tìm kiếm nâng cao",
 	    0: "Tất cả"
 	};
@@ -30623,11 +30763,11 @@
 	    1: "Cho Thuê căn hộ chung cư",
 	    2: "Cho Thuê nhà riêng",
 	    3: "Cho Thuê nhà mặt phố",
-	    6: "Cho thuê nhà trọ, phòng trọ",
-	    4: "Cho Thuê văn phòng",
-	    5: "Cho Thuê cửa hàng, ki-ốt",
-	    7: "Cho thuê kho, nhà xưởng, đất",
-	    99: "Cho Thuê các BDS khác",
+	    4: "Cho Thuê nhà trọ, phòng trọ",
+	    5: "Cho Thuê văn phòng",
+	    6: "Cho Thuê cửa hàng, ki-ốt",
+	    7: "Cho Thuê kho, nhà xưởng, đất",
+	    99: "Cho Thuê loại bất động sản khác",
 	    8: "Tìm kiếm nâng cao",
 	    0: "Tất cả"
 	};
@@ -31326,10 +31466,18 @@
 	util.toNumber = function (val) {
 	    if (isNaN(val)) {
 	        console.log("Not a number, will return null:" + val);
-	        return null;
+	        return undefined;
 	    }
 
 	    return Number(val);
+	};
+
+	util.upperFirstCharacter = function (str) {
+	    if (!str || str.length == 0) {
+	        return "";
+	    }
+
+	    return str[0].toUpperCase() + str.slice(1);;
 	};
 
 	util.convertQuery2String = function (query) {
@@ -31548,7 +31696,7 @@
 	                lat: currentLocation.lat,
 	                lon: currentLocation.lon
 	            },
-	            radius: 500
+	            radius: 2
 	        };
 	        fl.push(function (callback) {
 	            var queryNearBy = {};
