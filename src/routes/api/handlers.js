@@ -297,6 +297,10 @@ internals.detail = function(req, reply) {
     }
 };
 
+function minutesOne2Undefined(val) {
+    return val == -1 ? undefined : val;
+}
+
 //to client format
 /*
 
@@ -311,8 +315,9 @@ function _transformDetailAds(adsFromDb) {
     ads.dangBoi.phone = adsFromDb.dangBoi.phone;
     ads.dangBoi.userID = adsFromDb.dangBoi.userID;
 
-    ads.gia = util.toNumber(adsFromDb.gia);
-    ads.dienTich = util.toNumber(adsFromDb.dienTich);
+    ads.gia = minutesOne2Undefined(adsFromDb.gia);
+    ads.dienTich = minutesOne2Undefined(adsFromDb.dienTich);
+
     ads.soPhongNgu = adsFromDb.soPhongNgu;
     ads.soTang = adsFromDb.soTang;
     ads.soPhongTam = adsFromDb.soPhongTam;
@@ -327,10 +332,10 @@ function _transformDetailAds(adsFromDb) {
 
     ads.diaChi = adsFromDb.diaChi;
     ads.ngayDangTin = adsFromDb.ngayDangTin;
-    ads.giaM2 = adsFromDb.giaM2;
+    ads.giaM2 = minutesOne2Undefined(adsFromDb.giaM2);
     ads.loaiNhaDat = adsFromDb.loaiNhaDat;
     ads.loaiTin = adsFromDb.loaiTin;
-    ads.huongNha = adsFromDb.huongNha;
+    ads.huongNha = minutesOne2Undefined(adsFromDb.huongNha);
     ads.chiTiet = adsFromDb.chiTiet;
 
     ads.place = {};

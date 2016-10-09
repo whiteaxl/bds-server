@@ -55,7 +55,7 @@ util.roundToTwo = function(num) {
 
 util.getPriceDisplay = function(val, loaiTin,forWeb) {
     try {
-        if (!val) {
+        if (!val || val == -1) {
             return "Thỏa thuận";
         }
 
@@ -77,7 +77,7 @@ util.getPriceDisplay = function(val, loaiTin,forWeb) {
 };
 
 util.getDienTichDisplay = function(val) {
-    if (!val) {
+    if (!val || val == -1) {
         return "Không rõ";
     }
 

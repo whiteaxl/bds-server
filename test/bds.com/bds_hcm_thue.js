@@ -32,7 +32,7 @@ bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-tan-binh', 1);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-tan-phu', 1);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-thu-duc', 1);
 
-/*
+
 //Huyen
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-quan-1', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-quan-2', 0);
@@ -58,4 +58,3 @@ bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-phu-nhuan', 0)
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-tan-binh', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-tan-phu', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-thu-duc', 0);
-*/

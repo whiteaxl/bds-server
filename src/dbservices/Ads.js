@@ -753,18 +753,11 @@ class AdsModel {
                 sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
             } else {
                 if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
-                    sql = `${sql} ORDER BY case when ${name} is not null then ${name} else 999999999 end ${q.orderBy.type}`;
+                    sql = `${sql} ORDER BY case when ${name} != -1 then ${name} else 999999999 end ${q.orderBy.type}`;
                 } else {
                     sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
                 } 
             }
-            
-            //todo: not support DESC order for now, wait couchbase 4.5.1
-            //if (q.orderBy.type=='DESC') {
-            //    logUtil.warn("TODO:  not support DESC order for now, wait couchbase 4.5.1 | ", q.orderBy);
-            //}
-            //let name = q.orderBy.name;
-            //sql = `${sql} ORDER BY ${name}`;
         } else {
             sql = `${sql} ORDER BY ngayDangTin DESC`;
         }
@@ -793,17 +786,17 @@ class AdsModel {
         if (q.diaChinh) {
             let dc = q.diaChinh;
             if (dc.tinhKhongDau) {
-                sql = `${sql} AND place.diaChinh.tinhKhongDau='${dc.tinhKhongDau}'`;
+                sql = `${sql} AND place.diaChinh.codeTinh='${dc.tinhKhongDau}'`;
             }
 
             if (dc.huyenKhongDau) {
-                sql = `${sql} AND place.diaChinh.huyenKhongDau='${dc.huyenKhongDau}'`;
+                sql = `${sql} AND place.diaChinh.codeHuyen='${dc.huyenKhongDau}'`;
             }
             if (dc.xaKhongDau) {
-                sql = `${sql} AND place.diaChinh.xaKhongDau='${dc.xaKhongDau}'`;
+                sql = `${sql} AND place.diaChinh.codeXa='${dc.xaKhongDau}'`;
             }
             if (dc.duAnKhongDau) {
-                sql = `${sql} AND place.diaChinh.duAnKhongDau='${dc.duAnKhongDau}'`;
+                sql = `${sql} AND place.diaChinh.codeDuAn='${dc.duAnKhongDau}'`;
             }
         }
 
@@ -833,8 +826,10 @@ class AdsModel {
         }
 
         if(q.huongNha){
-            var huongNhaArrayAsString = q.huongNha.join();
-            sql = sql + " and huongNha in [" + huongNhaArrayAsString + "]";
+            var huongNhaArrayAsString = q.huongNha.filter(e => e != 0).join();
+            if (huongNhaArrayAsString) {
+                sql = sql + " and huongNha in [" + huongNhaArrayAsString + "]";
+            }
         }
 
         if(q.soPhongNgu){
@@ -851,15 +846,11 @@ class AdsModel {
             sql = sql + " AND soTang  = " + soTang;
         }
         
-        if (q.gia === -1) {
-            sql = sql + " AND gia is missing";
-        } else if (q.gia) {
+        if (q.gia) {
             sql = sql + " AND gia = " + q.gia ;
         }
 
-        if (q.dienTich === -1) {
-            sql = sql + " AND dienTich is missing";
-        } else if (q.dienTich) {
+        if (q.dienTich) {
             sql = sql + " AND dienTich = " + q.dienTich ;
         }
 

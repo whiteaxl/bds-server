@@ -40,6 +40,30 @@ function _getFromCache(input, reply) {
     console.log("Not match!!!");
   }
 
+  //sort
+  let map = {
+    "T" : 1,
+    "H" : 2,
+    "X" : 3,
+    "A" : 4
+  };
+
+  ret.sort((a, b) => {
+    if (map[a.placeType] > map[b.placeType]) {
+      return 1;
+    }
+
+    if (map[a.placeType] < map[b.placeType]) {
+      return -1;
+    }
+
+    if (a.placeName > b.placeName) {
+      return 1;
+    }
+
+    return 0;
+  });
+
   _returnToClient(ret, reply);
 }
 
@@ -57,9 +81,10 @@ function _returnToClient(list, reply) {
         shortName : placeUtil.getShortName(e.fullName),
         placeType : e.placeType,
         placeId : e.id,
-        tinh : e.tinhKhongDau,
-        huyen: e.huyenKhongDau,
-        xa : e.xaKhongDau,
+        tinh : e.codeTinh,
+        huyen: e.codeHuyen,
+        xa : e.codeXa,
+        duAn : e.codeDuAn,
         viewport : {
           "northeast": {
             "lat": vp.northeast.lat,
