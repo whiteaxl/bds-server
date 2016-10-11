@@ -94,10 +94,10 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
   let start = new Date().getTime();
   let condition = "";
   if (ngayDangFrom) {
-    condition = `and ngayDangTin > ${ngayDangFrom}`
+    condition = `and ngayDangTin > '${ngayDangFrom}'`
   }
   if (ngayDangTo) {
-    condition = `${condition} and ngayDangTin > ${ngayDangTo}`
+    condition = `${condition} and ngayDangTin > '${ngayDangTo}'`
   }
 
   let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' " + condition;
@@ -107,7 +107,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
       logUtil.error(err);
       return;
     }
-    
+
     let ads = null;
     list.forEach(e => {
       ads = convertBds(e);
