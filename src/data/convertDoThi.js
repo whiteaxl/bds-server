@@ -85,15 +85,23 @@ function convertBds(bds) {
   return ads;
 }
 
-function convertAllBds(callback) {
+function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
   let start = new Date().getTime();
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null";
+  let condition = "";
+  if (ngayDangFrom) {
+    condition = `and ngayDangTin >= '${ngayDangFrom}'`
+  }
+  if (ngayDangTo) {
+    condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
+  }
+
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null " + condition;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
       return;
     }
-    
+
     let ads = null;
     list.forEach(e => {
       ads = convertBds(e);
@@ -130,8 +138,17 @@ function loadPlaces(callback) {
 }
 
 //-----------------------------------------------------------
+let ngayDangFrom, ngayDangTo;
+if (process.argv.length > 2) {
+  ngayDangFrom = process.argv[2]
+}
+if (process.argv.length > 3) {
+  ngayDangTo = process.argv[3]
+}
+
+
 loadPlaces(() => {
   convertAllBds(()=> {
     logUtil.info("DONE ALL");
-  });
+  }, ngayDangFrom, ngayDangTo);
 });
