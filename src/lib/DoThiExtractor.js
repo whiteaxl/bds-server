@@ -140,7 +140,11 @@ function handle(dothiBds) {
 
 	//Extract dacDiem
 	for (var i = 0; i < dothiBds.dacDiemLabel.length; i++ ) {
-		addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
+		if (DACDIEM_MAP[dothiBds.dacDiemLabel[i]]) {
+			addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
+		} else {
+			logUtil.warn("Khong co feature:" + dothiBds.dacDiemLabel[i]);
+		}
 	}
 	addothiBds.url = URLCache[addothiBds.maSo];
 	if (!URLCache[addothiBds.maSo]) {
