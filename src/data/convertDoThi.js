@@ -109,6 +109,11 @@ function convertAllBds(callback) {
 function loadPlaces(callback) {
   let sql = "select t.* from default t where type='Place' ";
   commonService.query(sql, (err, list) => {
+    if (err) {
+      logUtil.error(err);
+      return;
+    }
+
     list.forEach(e => {
       g_cachePlaces[e.id] = e;
     });

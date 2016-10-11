@@ -12,6 +12,10 @@ var danhMuc = require("./DanhMuc.js");
 var AdsModel = require("../dbservices/Ads");
 var adsModel = new AdsModel();
 
+var g_countAds = 0;
+var g_countDup = 0;
+
+
 var DACDIEM_MAP = {
 	'Mã số' : "maSo",
 	'Loại tin rao' : "loaiNhaDat",
@@ -139,6 +143,11 @@ function handle(dothiBds) {
 		addothiBds[DACDIEM_MAP[dothiBds.dacDiemLabel[i]]] = dothiBds.dacDiemValue[i];
 	}
 	addothiBds.url = URLCache[addothiBds.maSo];
+	if (!URLCache[addothiBds.maSo]) {
+		log.warn("Seem duplicate:", addothiBds.maSo);
+		g_countDup++;
+	}
+	URLCache[addothiBds.maSo] = null;
 	
 	//Convert diaChi, diaChinh
 	if (!dothiBds.diaChi) {
@@ -170,7 +179,7 @@ function handle(dothiBds) {
 			}
 
 			if (!dcObj.l3) {
-				logUtil.error("DiaChi khong co thong tin L3:", dc, dothiBds.url);
+				logUtil.warn("DiaChi khong co thong tin L3:", dc, dothiBds.url);
 			}
 
 		}
@@ -329,7 +338,7 @@ class DoThiExtractor {
 		
 		var startDate = new Date();
 		var _done = () => {
-			console.log('=================> DONE in ' + (new Date() - startDate) + 'ms');
+			console.log('=================> DONE in ' + (new Date() - startDate) + 'ms' + ', countAds:' + g_countAds + ", countDup=" + g_countDup );
 		};
 
 		this.extractOnePage(rootURL, _done, depth);
@@ -396,6 +405,8 @@ class DoThiExtractor {
 		})
 		.data(function(dothiBds) {
 			try {
+				g_countAds++;
+
 				handle(dothiBds);
 			} catch(e) {
 				logUtil.error("CANT EXTRACT",e, dothiBds);
