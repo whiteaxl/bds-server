@@ -101,6 +101,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
   }
 
   let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' " + condition;
+  
   commonService.query(sql, (err, list) => {
     let ads = null;
     list.forEach(e => {
@@ -130,7 +131,7 @@ function loadPlaces(callback) {
       g_cachePlaces[e.id] = e;
     });
 
-    logUtil.info("Done load Places");
+    logUtil.info("Done load Places", list.length);
 
     callback();
   });

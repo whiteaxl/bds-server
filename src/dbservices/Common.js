@@ -2,6 +2,7 @@
 
 var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
+var logUtil = require("../logUtil");
 
 class CommonModel {
 	upsert(dto,callback) {
@@ -25,7 +26,7 @@ class CommonModel {
 	}
 
 	query(sql, callback) {
-	
+		logUtil.info("Call query:",sql);
 
 		var query = N1qlQuery.fromString(sql);
 		bucket.query(query, callback);
