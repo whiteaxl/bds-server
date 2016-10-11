@@ -89,6 +89,11 @@ function convertAllBds(callback) {
   let start = new Date().getTime();
   let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null";
   commonService.query(sql, (err, list) => {
+    if (err) {
+      logUtil.error(err);
+      return;
+    }
+    
     let ads = null;
     list.forEach(e => {
       ads = convertBds(e);
