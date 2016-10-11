@@ -115,6 +115,7 @@ const DetailResultModel = Joi.object({
   soPhongTam: Joi.number(),
   soPhongTamFmt: Joi.string().allow(null).allow(''),
   giaM2Fmt:Joi.string(),
+  maSo:Joi.string(),
 });
 
 

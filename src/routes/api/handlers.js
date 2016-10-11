@@ -383,9 +383,10 @@ function _transformDetailAds(adsFromDb) {
     ads.luotXem = adsFromDb.luotXem;
 
     if (ads.giaM2) {
-        ads.giaM2Fmt = ads.giaM2.toFixed(2) + "tr/m²"
+        ads.giaM2Fmt = util.roundToTwo(ads.giaM2) + " tr/m²"
     }
 
+    ads.maSo = adsFromDb.maSo;
 
     return ads;
 }
