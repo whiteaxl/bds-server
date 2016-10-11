@@ -382,6 +382,11 @@ function _transformDetailAds(adsFromDb) {
     //dummy
     ads.luotXem = adsFromDb.luotXem;
 
+    if (ads.giaM2) {
+        ads.giaM2Fmt = ads.giaM2.toFixed(2) + "tr/m²"
+    }
+
+
     return ads;
 }
 
@@ -393,7 +398,7 @@ internals.saveSearch = function(req, reply){
     var data = {
         name: name,
         query: query
-    }
+    };
     userService.saveSearch(data,userID,function(res){
         reply( JSON.stringify(res));    
     });
