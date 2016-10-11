@@ -39,7 +39,12 @@ function getDiaChinh(bds) {
   diaChinh.tinh = g_cachePlaces["Place_T_" + diaChinh.codeTinh].placeName;
   diaChinh.huyen = g_cachePlaces["Place_H_" + diaChinh.codeHuyen].placeName;
   if (diaChinh.codeXa) {
-    diaChinh.xa = g_cachePlaces["Place_X_" + diaChinh.codeXa].placeName;
+    let tmp = g_cachePlaces["Place_X_" + diaChinh.codeXa];
+    if (!tmp) {
+      logUtil.error("NO XA:", diaChinh.codeDuAn);
+    } else {
+      diaChinh.xa = tmp.placeName;
+    }
   }
   if (diaChinh.codeDuAn) {
     let tmp = g_cachePlaces["Place_A_" + diaChinh.codeDuAn];
