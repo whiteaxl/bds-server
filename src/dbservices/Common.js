@@ -2,7 +2,7 @@
 
 var bucket = require("../database/mydb");
 var N1qlQuery = require('couchbase').N1qlQuery;
-var logUtil = require("../logUtil");
+var logUtil = require("../lib/logUtil");
 
 class CommonModel {
 	upsert(dto,callback) {
