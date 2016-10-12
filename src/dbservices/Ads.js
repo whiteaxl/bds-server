@@ -707,6 +707,7 @@ class AdsModel {
     }
 
     query(q, callback){
+        let startTime = new Date().getTime();
         var sql ="SELECT " +
           " id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, " +
           " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin " +
@@ -718,6 +719,10 @@ class AdsModel {
         bucket.query(query, function(err, all) {
             if (!all)
                 all = [];
+
+            let endTime = new Date().getTime();
+            logUtil.info("Done SQL: ", sql + "\n There are " + all.length + " records, In " +  (endTime-startTime) + "ms");
+
             callback(err, all);
         });
     }

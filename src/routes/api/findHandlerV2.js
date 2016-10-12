@@ -186,7 +186,10 @@ internals.findAds = function (q, reply) {
       reply(Boom.badImplementation());
       return;
     }
+    let startTime = new Date().getTime();
     let filtered = _handleDBFindResult(err, listAds, q);
+    let endTime = new Date().getTime();
+    logUtil.info("Time todo filter:" + (endTime-startTime) + "ms");
 
     logUtil.info("There are " + filtered.length + " ads");
     let totalCount = filtered.length;
