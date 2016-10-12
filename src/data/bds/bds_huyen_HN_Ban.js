@@ -1,12 +1,10 @@
 'use strict';
 
-var BdsExtractor = require("../../src/lib/RealEstateExtractor");
+var BdsExtractor = require("../../lib/RealEstateExtractor");
 
 var bdsEx = new BdsExtractor();
 
-
-//it self
-/*
+//Hanoi ban
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ba-dinh', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ba-vi', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-bac-tu-liem', 0);
@@ -37,20 +35,3 @@ bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thanh-tri', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thanh-xuan', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thuong-tin', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ung-hoa', 0);
-
-*/
-
-//DuAn
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-2t-corporation', 1);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-toa-nha-101-lang-ha', 1);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-16b-nguyen-thai-hoc', 1);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-130-nguyen-duc-canh', 1);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-bo-tong-tham-muu', 1);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-to-hop-108-nguyen-trai', 1);
-
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-2t-corporation', 0);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-toa-nha-101-lang-ha', 0);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-16b-nguyen-thai-hoc', 0);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-130-nguyen-duc-canh', 0);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-chung-cu-bo-tong-tham-muu', 0);
-bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-to-hop-108-nguyen-trai', 0);

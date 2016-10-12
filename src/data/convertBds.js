@@ -66,6 +66,11 @@ function convertBds(bds) {
   ads.dienTich = bds.dienTich || -1;
   ads.gia = bds.gia || -1;
   ads.giaM2 = bds.giaM2 || -1;
+  if (ads.gia > 10000000 || ads.giaM2 > 5000) { //wrong data
+    ads.gia = -1;
+    ads.giaM2 = -1;
+  }
+
   ads.image = getBdsImage(bds);
   ads.loaiNhaDat = bds.loaiNhaDat;
   ads.loaiTin = bds.loaiTin;
@@ -80,7 +85,7 @@ function convertBds(bds) {
   ads.soTang = bds.soTang;
   ads.huongNha = bds.emailRegister_direction == "0" ? -1 : Number(bds.emailRegister_direction);
 
-  ads.timeModified = bds.timeModified;
+  ads.timeExtracted = bds.timeModified;
 
   ads.source = "bds";
   ads.type = "Ads";
