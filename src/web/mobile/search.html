@@ -47,7 +47,7 @@
     </div>
 </div>
  <div class="notifyBox heartNotify"></div>
-<div  class="wapper">
+<div  class="wapper">    
     <div class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}">
         <ng-map id="searchmap"  center="{{center}}" lazy-init="true"   class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
@@ -58,7 +58,9 @@
               </div>
             </custom-marker>
             <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
-            
+            <custom-control ng-if="msc.showCC" id="home" position="TOP_RIGHT" index="1" on-click="msc.drawMode($event)">
+                <div style="background-color: black; color:#fff;cursor:pointer">{{msc.drawText}}</div>
+            </custom-control>
                 
             <!-- <street-view-panorama
               click-to-go="false"

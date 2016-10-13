@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1b1c6b4d052cb8c8bd2a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8345f726143c10f40c68"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28720,6 +28720,7 @@
 
 	            if (!vm.map) {
 	                vm.map = NgMap.initMap('searchmap');
+	                vm.showCC = true;
 
 	                // google.maps.event.removeListener(zoomChangeHanlder);
 	                // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
@@ -28816,6 +28817,93 @@
 	                }
 	            });
 	        };
+	        /*start draw freehand*/
+	        vm.drawText = "Draw";
+
+	        vm.drawFreeHand = function () {
+
+	            //the polygon
+	            vm.poly = new google.maps.Polyline({ map: vm.map, clickable: false });
+
+	            //move-listener
+	            if (vm.drawMove) google.maps.event.removeListener(vm.drawMove);
+
+	            vm.drawMove = google.maps.event.addListener(vm.map, 'mousemove', function (e) {
+	                vm.poly.getPath().push(e.latLng);
+	            });
+
+	            //mouseup-listener
+	            google.maps.event.addListenerOnce(vm.map, 'mouseup', function (e) {
+	                //google.maps.event.removeListener(vm.drawMove);
+	                var path = vm.poly.getPath();
+	                vm.poly.setMap(null);
+	                vm.poly = new google.maps.Polygon({ map: vm.map, path: path });
+
+	                //search here
+	                $rootScope.searchData.polygon = [];
+	                var polyData = vm.poly.latLngs.b[0].b;
+	                for (var i = polyData.length - 1; i >= 0; i--) {
+	                    $rootScope.searchData.polygon.push({
+	                        lat: polyData[i].lat(),
+	                        lon: polyData[i].lng()
+	                    });
+	                }
+
+	                vm.search(function () {
+	                    if (vm.viewMode == "list") {
+	                        vm.initMap = false;
+	                    }
+	                });
+
+	                //google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
+
+	                //vm.enable()
+	            });
+	        };
+	        vm.disable = function () {
+	            vm.map.setOptions({
+	                draggable: false,
+	                zoomControl: false,
+	                scrollwheel: false,
+	                disableDoubleClickZoom: false
+	            });
+	        };
+
+	        vm.enable = function () {
+	            vm.map.setOptions({
+	                draggable: true,
+	                zoomControl: true,
+	                scrollwheel: true,
+	                disableDoubleClickZoom: true
+	            });
+	            if (vm.drawMove) {
+	                google.maps.event.removeListener(vm.drawMove);
+	                vm.drawMove = undefined;
+	            }
+	        };
+	        vm.drawMode = function (e) {
+	            if (vm.drawText == "Draw") {
+	                e.preventDefault();
+	                console.log("enable draws");
+	                vm.drawText = "Exit";
+
+	                vm.disable();
+	                google.maps.event.addDomListener(vm.map.getDiv(), 'mousedown', function (e) {
+	                    if (vm.poly) {
+	                        vm.poly.setMap(null);
+	                    }
+	                    vm.drawFreeHand();
+	                });
+	            } else {
+
+	                // google.maps.event.clearListeners(vm.map.getDiv(), 'mousemove');                   
+	                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
+	                vm.enable();
+	                vm.drawText = "Draw";
+	                $rootScope.searchData.polygon = undefined;
+	            }
+	        };
+	        /*end draw freehand*/
 	        vm.updateStreetview = function (ads, fn) {
 	            var STREETVIEW_MAX_DISTANCE = 100;
 	            var latLng = new google.maps.LatLng(ads.place.geo.lat, ads.place.geo.lon);
