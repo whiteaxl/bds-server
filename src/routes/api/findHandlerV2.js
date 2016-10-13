@@ -60,12 +60,8 @@ function _handleDBFindResult(error, allAds, q) {
   //
   let polygonCoords = null;
   if (q.polygonCoords) {
-    polygonCoords = {};
-    Object.assign(polygonCoords, q.polygonCoords);
+    polygonCoords = _.cloneDeep(q.polygonCoords);
     geolib.preparePolygonForIsPointInsideOptimized(polygonCoords);
-
-    logUtil.info("prepread polygonCoords=", polygonCoords);
-
     prepareLatLon(polygonCoords);
   }
 
@@ -126,7 +122,7 @@ function _handleDBFindResult(error, allAds, q) {
 
     //filter by polygon
     if (valid && q.polygonCoords) {
-      if (!geolib.isPointInsideWithPreparedPolygon({
+      if (!isPointInsideWithPreparedPolygon({
         latitude : place.geo.lat,
         longitude : place.geo.lon,
       }, polygonCoords)) {
