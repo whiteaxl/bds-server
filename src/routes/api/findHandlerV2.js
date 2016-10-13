@@ -64,6 +64,8 @@ function _handleDBFindResult(error, allAds, q) {
     Object.assign(polygonCoords, q.polygonCoords);
     geolib.preparePolygonForIsPointInsideOptimized(polygonCoords);
 
+    logUtil.info("prepread polygonCoords=", polygonCoords);
+
     prepareLatLon(polygonCoords);
   }
 
@@ -239,7 +241,7 @@ internals.findAds = function (q, reply) {
     let startTime = new Date().getTime();
     let filtered = _handleDBFindResult(err, listAds, q);
     let endTime = new Date().getTime();
-    logUtil.info("Time todo filter:" + (endTime-startTime) + "ms");
+    logUtil.info("Time todo filter:" + (endTime-startTime) + "ms" + " for "  + (filtered.length) + " records");
 
     logUtil.info("There are " + filtered.length + " ads");
     let totalCount = filtered.length;
