@@ -124,7 +124,7 @@ function _handleDBFindResult(error, allAds, q) {
 
     //filter by polygon
     if (valid && q.polygonCoords) {
-      if (!isPointInsideWithPreparedPolygon({
+      if (!geolib.isPointInsideWithPreparedPolygon({
         latitude : place.geo.lat,
         longitude : place.geo.lon,
       }, polygonCoords)) {
