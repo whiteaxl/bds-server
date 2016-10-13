@@ -21,8 +21,51 @@ var _ = require("lodash");
 
 var internals = {};
 
+var geolib = require("geolib");
+
+function prepareLatLon(coords) {
+  let e;
+ for (let i =0; i < coords.length; i++) {
+   e = coords[i];
+   e.lat = geolib.longitude(e);
+   e.lon = geolib.longitude(e);
+ }
+}
+
+function isPointInsideWithPreparedPolygon(point, coords) {
+  var flgPointInside = false,
+    y = geolib.longitude(point),
+    x = geolib.latitude(point);
+
+  for(var i = 0, j = coords.length-1; i < coords.length; i++) {
+
+    if (coords[i].lon < y && coords[j].lon >=y ||
+      coords[j].lon < y && coords[i].lon >= y) {
+
+      flgPointInside^=(y*coords[i].multiple+coords[i].constant < x);
+
+    }
+
+    j=i;
+
+  }
+
+  return flgPointInside;
+}
+
+
 function _handleDBFindResult(error, allAds, q) {
   let transformeds = [];
+
+  //
+  let polygonCoords = null;
+  if (q.polygonCoords) {
+    polygonCoords = {};
+    Object.assign(polygonCoords, q.polygonCoords);
+    geolib.preparePolygonForIsPointInsideOptimized(polygonCoords);
+
+    prepareLatLon(polygonCoords);
+  }
 
   allAds.forEach((ads) => {
     //images:
@@ -81,9 +124,16 @@ function _handleDBFindResult(error, allAds, q) {
 
     //filter by polygon
     if (valid && q.polygonCoords) {
-      if (!geoUtil.isPointInside(place.geo, q.polygonCoords)) {
+      if (!isPointInsideWithPreparedPolygon({
+        latitude : place.geo.lat,
+        longitude : place.geo.lon,
+      }, polygonCoords)) {
         valid = false;
       }
+
+      //if (!geoUtil.isPointInside(place.geo, q.polygonCoords)) {
+      //  valid = false;
+      //}
     }
 
     if (valid) {
