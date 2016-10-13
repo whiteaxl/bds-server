@@ -161,7 +161,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
       loaiNhaDatName = utils.upperFirstCharacter(loaiNhaDatName);
 
       queryNgangGia.loaiNhaDat = [value];
-      queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
+      //queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
 
       // reset search conditions
       queryNgangGia.soPhongNguGREATER = 0;
@@ -314,11 +314,7 @@ internals.homeData4App = function (req, reply) {
             //Object.assign(queryMoiDang, lastQuery);
 
             queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
-            queryMoiDang.orderBy = {
-
-              name: "ngayDangTin",
-              type: "DESC"
-            };
+            //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
             searchAds("Nhà Mới Đăng", lastQuery.diaChinh ? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
           }
         );
@@ -366,10 +362,7 @@ internals.homeData4App = function (req, reply) {
                     let queryMoiDang = JSON.parse(JSON.stringify(query));
                     //Object.assign(queryMoiDang, query);
                     queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
-                    queryMoiDang.orderBy = {
-                        name: "ngayDangTin",
-                        type: "DESC"
-                    };
+                    //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
 
                     searchAds("Nhà Mới Đăng", "", queryMoiDang, callback);
                 }
