@@ -148,7 +148,7 @@ function handle(dothiBds) {
 	}
 	addothiBds.url = URLCache[addothiBds.maSo];
 	if (!URLCache[addothiBds.maSo]) {
-		log.warn("Seem duplicate:", addothiBds.maSo);
+		logUtil.warn("Seem duplicate:", addothiBds.maSo);
 		g_countDup++;
 	}
 	URLCache[addothiBds.maSo] = null;
