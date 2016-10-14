@@ -1,6 +1,7 @@
 'use strict';
 var convert = require("./convertDoThi");
 var m = require("moment");
+var logUtil = require("../lib/logUtil");
 
 let ngayDangFrom, ngayDangTo;
 if (process.argv.length > 2) {
