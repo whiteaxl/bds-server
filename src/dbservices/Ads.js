@@ -779,7 +779,7 @@ class AdsModel {
             }
         } else {
             if (!q.excludeOrderBy || q.excludeOrderBy != 1){
-                sql = `${sql} ORDER BY ngayDangTin DESC`;
+                sql = `${sql} ORDER BY ngayDangTin DESC, timeModified DESC`;
             }
         }
 
