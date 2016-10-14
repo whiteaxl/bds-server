@@ -409,7 +409,7 @@ class RealEstateExtractor {
 			.log(console.log)
 			.error(console.log)
 			.done(() => {
-				console.log("Done all!");
+				logUtil.info("Done all!", new Date());
 				handleDone();
 			})
 	}

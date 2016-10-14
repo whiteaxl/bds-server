@@ -422,7 +422,7 @@ class DoThiExtractor {
 		.error(console.log)
 		.debug(console.log)
 		.done(() => {
-			console.log("Done all!");
+			logUtil.info("Done all!", new Date());
 			handleDone();
 		})
 	}
