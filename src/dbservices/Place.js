@@ -40,6 +40,14 @@ class PlaceModel {
 		bucket.query(query, callback);
 	}
 
+	getAllPlaces4Autocomplete(callback) {
+		var sql = "select default.* from default where type='Place' and (notAllowToSearch = false or notAllowToSearch is missing)";
+		var query = N1qlQuery.fromString(sql);
+		console.log("getAllPlaces, sql=", sql);
+
+		bucket.query(query, callback);
+	}
+
 	getPlaceByID(placeID,callback){
 		var sql = "select default.* from default where type='Place' and id='" + placeID + "'";
 		console.log("getPlaceByID" + sql);

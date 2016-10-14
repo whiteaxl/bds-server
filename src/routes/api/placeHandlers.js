@@ -150,7 +150,7 @@ internals.autocomplete = function(req, reply) {
 
   //
   if (!placeCache) {
-    place.getAllPlaces((err, res) => {
+    place.getAllPlaces4Autocomplete((err, res) => {
       if (err) {
         console.log("getAllPlaces error:", err);
 
