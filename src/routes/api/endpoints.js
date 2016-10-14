@@ -875,6 +875,7 @@ internals.endpoints = [
           length: Joi.number().integer(),
           list: Joi.array().items(ListResultModel),
           totalCount : Joi.number().integer().allow(null),
+          errMsg : Joi.string()
         }
       }
     }

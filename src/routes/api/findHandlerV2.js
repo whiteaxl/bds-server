@@ -208,6 +208,24 @@ function _mergeViewportWithCircleBox(q) {
   _mergeViewportWithBox(q, box);
 }
 
+function viewportTooLarge(vp) {
+  let sw = vp.southwest;
+  let ne = vp.northeast;
+
+  let a = geoUtil.measure(sw.lat, sw.lon, sw.lat, ne.lon);
+  let b = geoUtil.measure(sw.lat, sw.lon, ne.lat, sw.lon);
+
+  let MAX = (50*1000) * (20*1000)
+
+  let tooLarge = (a * b) > MAX;
+
+  if (tooLarge) {
+    logUtil.warn("Khu vu qua rong:" + (a/1000).toFixed(2) + " x " + (b/1000).toFixed(2) + ". Lon nhat cho phep la:" + MAX/(1000*1000) + "km2");
+  }
+
+  return tooLarge;
+}
+
 internals.findAds = function (q, reply) {
   if (q.userID && q.updateLastSearch) {
     //console.log(JSON.stringify(q));
@@ -217,6 +235,18 @@ internals.findAds = function (q, reply) {
 
   _mergeViewportWithPolygonBox(q);
   _mergeViewportWithCircleBox(q);
+
+  //not allow viewport more than 50km
+  if (q.viewport && viewportTooLarge(q.viewport)) {
+    reply({
+      length: 0,
+      list: [],
+      totalCount : 0,
+      errMsg : "Khu vực tìm kiếm quá rộng, bạn cần zoom bé lại!"
+    });
+
+    return;
+  }
 
   //can't get count from db incase search by Circle or Polygon, so need get all from DB
   if (needFilterInMemory) {
@@ -282,7 +312,7 @@ internals.findAds = function (q, reply) {
 internals.find = function (req, reply) {
   console.log("Find v2:", req.payload);
     internals.findAds(req.payload, (res) => {
-      //logUtil.info("Will resonse:", res);
+      logUtil.info("Will response: count=" + res.length + " res.errMsg=" +  res.errMsg );
       reply(res);
     })
 
