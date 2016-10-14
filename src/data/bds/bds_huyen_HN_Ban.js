@@ -35,3 +35,7 @@ bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thanh-tri', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thanh-xuan', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-thuong-tin', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-ban-ung-hoa', 0);
+
+setTimeout(() => {
+  process.exit();
+}, 2*60*60*1000);

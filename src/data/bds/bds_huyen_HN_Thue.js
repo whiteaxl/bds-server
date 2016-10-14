@@ -35,3 +35,7 @@ bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-thanh-tri', 0)
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-thanh-xuan', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-thuong-tin', 0);
 bdsEx.extractWithLimit('http://batdongsan.com.vn/nha-dat-cho-thue-ung-hoa', 0);
+
+setTimeout(() => {
+  process.exit();
+}, 1*60*60*1000);

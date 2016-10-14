@@ -25,3 +25,7 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-me-linh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-ba-vi.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-phuc-tho.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-bac-tu-liem.htm', 0);
+
+setTimeout(() => {
+  process.exit();
+}, 1*60*60*1000);
