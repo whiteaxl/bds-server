@@ -378,7 +378,7 @@ internals.homeData4App = function (req, reply) {
 
       }
 
-      async.series(fl,
+      async.parallel(fl,
           function(err, results){
             reply({
               data : results,

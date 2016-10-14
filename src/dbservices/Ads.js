@@ -706,12 +706,26 @@ class AdsModel {
         });
     }
 
+  _buildIndexHint(q) {
+    let dc = q.diaChinh;
+    if (dc && dc.tinhKhongDau && dc.huyenKhongDau) {
+      return "use index(ads_dc01_idx)"
+    }
+
+    if (q.viewport) {
+      return "use index(ads_geo01_idx)"
+    }
+
+    return "";
+  }
+
     query(q, callback){
         let startTime = new Date().getTime();
         var sql ="SELECT " +
           " id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, " +
           " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin " +
           " FROM default t "
+          + this._buildIndexHint(q)
           + this._buildWhere(q) + this._buildOrderByAndPaging(q);
 
         logUtil.info(sql);
