@@ -764,7 +764,9 @@ class AdsModel {
                 } 
             }
         } else {
-            sql = `${sql} ORDER BY ngayDangTin DESC`;
+            if (!q.excludeOrderBy || q.excludeOrderBy != 1){
+                sql = `${sql} ORDER BY ngayDangTin DESC`;
+            }
         }
 
         if(q.dbLimit)

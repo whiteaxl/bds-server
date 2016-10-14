@@ -80,6 +80,7 @@ function doSearchAds(collections, title1, title2, queryToday, doneToday) {
 function searchAds(title1, title2, query, callback) {
   console.log("searchAds: " + title1, JSON.stringify(query));
   var origQuery = {}; Object.assign(origQuery, query);
+  origQuery.excludeOrderBy = undefined;
   
   findHandlerV2.findAds(query, (res) => {
     
@@ -162,6 +163,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
 
       queryNgangGia.loaiNhaDat = [value];
       //queryNgangGia.orderBy = {name:"ngayDangTin", type: "DESC"};
+      queryNgangGia.excludeOrderBy = 1;
 
       // reset search conditions
       queryNgangGia.soPhongNguGREATER = 0;
@@ -315,6 +317,8 @@ internals.homeData4App = function (req, reply) {
 
             queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
             //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
+            queryMoiDang.excludeOrderBy = 1;
+
             searchAds("Nhà Mới Đăng", lastQuery.diaChinh ? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
           }
         );
@@ -332,7 +336,9 @@ internals.homeData4App = function (req, reply) {
                 mid = lastQuery.loaiTin==0 ? 5000 : 20;
               }
 
-              queryDuoiGia.giaBETWEEN = [0, mid];
+              queryDuoiGia.giaBETWEEN = [lastQuery.giaBETWEEN[0], mid];
+              queryDuoiGia.excludeOrderBy = 1;
+
               let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
               searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
             }
@@ -363,6 +369,7 @@ internals.homeData4App = function (req, reply) {
                     //Object.assign(queryMoiDang, query);
                     queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
                     //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
+                    queryMoiDang.orderBy = undefined;
 
                     searchAds("Nhà Mới Đăng", "", queryMoiDang, callback);
                 }
