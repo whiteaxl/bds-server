@@ -220,8 +220,15 @@ internals.findAds = function (q, reply) {
 
   //can't get count from db incase search by Circle or Polygon, so need get all from DB
   if (needFilterInMemory) {
-    q.dbLimit =  null;
-    q.dbPageNo =  null;
+
+    //search for homepage
+    if (q.limit==5) {
+      q.dbLimit =  100; //4 are enough to filter later
+      q.dbPageNo =  null;
+    } else {
+      q.dbLimit =  null;
+      q.dbPageNo =  null;
+    }
   } else {
     q.dbLimit = q.limit;
     q.dbPageNo =  q.pageNo;
