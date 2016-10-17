@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8345f726143c10f40c68"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e6a3029ed969e9eaee12"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28549,7 +28549,7 @@
 
 /***/ },
 /* 33 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -28571,6 +28571,57 @@
 	        // vm.dien_tich_min = 0;
 	        // vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 	        // vm.zoomMode = "auto";
+
+	        vm.getLocation = function () {
+	            function fetchHomeData() {
+	                var async = __webpack_require__(30);
+	                vm.boSuuTap = [];
+	                var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query, homeDataSearch.currentLocation, HouseService.findAdsSpatial, function (res) {
+	                    if (res.data.list && res.data.list.data.length >= 5) vm.boSuuTap.push(res.data.list);
+	                    //alert(res.data.length);
+	                });
+	                async.series(fl, function (err, results) {
+	                    // alert(results.length);
+	                    vm.doneSearch = true;
+	                });
+	            }
+	            if (navigator.geolocation) {
+	                navigator.geolocation.getCurrentPosition(function (position) {
+	                    $rootScope.currentLocation.lat = position.coords.latitude;
+	                    $rootScope.currentLocation.lon = position.coords.longitude;
+	                    homeDataSearch.currentLocation = $rootScope.currentLocation;
+	                    //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+	                    //  //alert(JSON.stringify(res));
+	                    //  vm.boSuuTap = res.data.data; 
+	                    // });
+	                    fetchHomeData();
+	                }, function (error) {
+	                    console.log(error);
+	                    // vm.showAskCurrentLocation  = true;
+	                    fetchHomeData();
+	                });
+	            } else {
+	                //x.innerHTML = "Geolocation is not supported by this browser.";                
+	                //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+	                //  //alert(JSON.stringify(res));
+	                //  vm.boSuuTap = res.data.data; 
+	                // });
+	                // vm.showAskCurrentLocation  = true;
+	                fetchHomeData();
+	            }
+
+	            //     homeDataSearch.currentLocation = $rootScope.currentLocation;
+	            // HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
+	            //  //alert(JSON.stringify(res));
+	            //  vm.boSuuTap = [];
+	            //  res.data.data.forEach(function(item,index){
+	            //      if(item.data.length>0)
+	            //          vm.boSuuTap.push(item);
+	            //  });
+	            //  vm.doneSearch = true;
+	            // });
+
+	        };
 
 	        vm.init = function () {
 	            vm.ads_list = [];
@@ -28603,9 +28654,9 @@
 	                        vm.viewport = res.data.place.geometry.viewport;
 	                    }
 	                    $scope.center = "[" + res.data.place.geometry.location.lat + "," + res.data.place.geometry.location.lon + "]";
-	                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.tinhKhongDau;
-	                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.huyenKhongDau;
-	                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.xaKhongDau;
+	                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.codeTinh;
+	                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.codeHuyen;
+	                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.codeXa;
 	                    $rootScope.searchData.viewport = vm.viewport;
 	                    $rootScope.searchData.placeId = vm.placeId;
 	                    vm.search(function () {
@@ -31423,7 +31474,7 @@
 
 	util.getPriceDisplay = function (val, loaiTin, forWeb) {
 	    try {
-	        if (!val) {
+	        if (!val || val == -1) {
 	            return "Thỏa thuận";
 	        }
 
@@ -31445,7 +31496,7 @@
 	};
 
 	util.getDienTichDisplay = function (val) {
-	    if (!val) {
+	    if (!val || val == -1) {
 	        return "Không rõ";
 	    }
 

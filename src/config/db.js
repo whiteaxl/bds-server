@@ -1,4 +1,4 @@
-var shareIP = process.env.DB_IP || process.env.IP || 'localhost'; //'203.162.13.40';
+var shareIP = process.env.DB_IP || process.env.IP || '203.162.13.177'; //'203.162.13.40';
 
 var cfg = {
   n1ql: `${shareIP}:8093`,

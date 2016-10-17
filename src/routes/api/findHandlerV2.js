@@ -319,7 +319,7 @@ internals.find = function (req, reply) {
 };
 
 internals.count = function (req, reply) {
-  let q = req.query;
+  let q = req.payload;
   try {
     let needFilterInMemory = q.circle || q.polygon;
 

@@ -745,6 +745,7 @@ class AdsModel {
         var sql ="SELECT count(*) cnt FROM default t " + this._buildWhere(q);
 
         logUtil.info(sql);
+        logUtil.info(JSON.stringify(q));
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, res) {
             if (err) {
