@@ -75,7 +75,7 @@ class UserModel {
     }
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
-
+    
     bucket.query(query, callback);
   }
 
@@ -203,6 +203,7 @@ class UserModel {
         } else {
           //create on sync gateway, only can have phone or email
           let loginName=userDto.phone||userDto.email;
+
           bucket.counter(constant.DB_SEQ.User, 1, {initial: 0}, (err, res)=> {
             if (err) {
               callback(err, res);
@@ -387,7 +388,6 @@ class UserModel {
       }
     });       
   }
-
   
   _checkSaveSearchExist(data, user){
     if(!user.saveSearch)
@@ -412,9 +412,7 @@ class UserModel {
       sql = `${sql} AND email='${data.email}'`
     }
     var query = N1qlQuery.fromString(sql);
-
     
-
     bucket.query(query, function (err, res) {
       if (err) {
           console.log('query failed'.red, err);
@@ -426,16 +424,15 @@ class UserModel {
     });
   }
 
-  createUserForWeb(reply,data, callback){
-    this.isUserExist(data,function(isExist){
+  createUserForWeb(reply, data, callback){
+    this.isUserExist(data, function(isExist){
       if(isExist==true){
         reply({
           result: undefined,
           err: constant.DB_ERR.USER_EXISTS
         })
       }else{
-
-        bucket.counter("idGeneratorForUsers", 1, {initial: 0}, (err, res)=> {
+        bucket.counter(constant.DB_SEQ.User, 1, {initial: 0}, (err, res)=> {
           if (err) {
             callback(err, res);
           } else {
@@ -446,10 +443,10 @@ class UserModel {
             data.type = "User";
             data.id = userID;
             data._id = userID;
-            data.name = data.email;
+            data.name = data.email || data.phone;
             data.userID = data.id;
             console.log("before upsert " + data.id);
-
+        
             bucket.upsert(data.id, data, function (err, res) {
               if (err) {
                 console.log("ERROR:" + err);
@@ -461,8 +458,6 @@ class UserModel {
             });
           }
         });
-
-        
       }
     });
   }
@@ -518,7 +513,6 @@ class UserModel {
   }
 
   updateDevice(dto, callback) {
-   
     console.log('updateDevice dto:', dto);
     bucket.upsert(dto.deviceID, dto, callback)
   }

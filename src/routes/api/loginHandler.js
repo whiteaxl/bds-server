@@ -96,11 +96,35 @@ internals.login = function(req, reply){
         reply(result);
     })
 }
+
 internals.signup = function(req, reply){
-	userService.createUserForWeb(reply,req.payload, function(err, user){
+    var deviceDto = {
+        deviceID: req.payload.deviceID || undefined,
+        deviceModel: req.payload.deviceModel || undefined,
+        type: 'Device'
+    }
+
+    req.payload.deviceID = undefined;
+    req.payload.deviceModel = undefined;
+
+	userService.createUserForWeb(reply, req.payload, function(err, user){
 		if(err!=null){
 			reply(err);
 		}else{
+
+            if(deviceDto.deviceID){
+                deviceDto.userID = user.userID;
+
+                userService.updateDevice(deviceDto, (err, res) => {
+                    let toClient = {};
+                    if (err) {
+                        toClient.login = false;
+                        toClient.msg = err.msg;
+                        reply(toClient);
+                    }
+                 });
+            }
+            
 			var token = JWT.sign({
 				uid: user.userID,
 	          	exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
