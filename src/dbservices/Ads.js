@@ -71,7 +71,6 @@ class AdsModel {
     upsert(adsDto) {
         adsDto.id = adsDto.id || adsDto.adsID;
         adsDto.timeModified = new Date().getTime();
-
         bucket.upsert(adsDto.id, adsDto, function (err, res) {
             if (err) {
                 logUtil.error("ERROR:" + err);
@@ -95,10 +94,41 @@ class AdsModel {
     }
 
     getAds(adsID, callback) {
-       
         bucket.get(adsID, callback);
     }
 
+    uploadAds(adsDto, callback) {
+        adsDto.type = constant.DATA_TYPE.ADS;
+        adsDto.timeModified = new Date().getTime();
+        adsDto.source = adsDto.source || constant.ADS_SOURCE.REWAY ;
+
+        if (adsDto.id){
+            bucket.upsert(adsDto.id, adsDto, function (err, res) {
+                if (err) {
+                    callback({code: 99, msg: err.toString()}, {userId: adsDto.dangBoi.userId});
+                } else {
+                    callback(null, adsDto);
+                }
+            });
+        } else {
+            bucket.counter(constant.DB_SEQ.Ads, 1, {initial: 0}, function (err, res) {
+                if (err) {
+                    callback(err, res);
+                } else {
+                    let adsId = constant.ADS_ID_PREFIX.REWAY + "_" + res.value;
+                    adsDto.id = adsId;
+
+                    bucket.upsert(adsDto.id, adsDto, function (err, res) {
+                        if (err) {
+                            callback({code: 99, msg: err.toString()}, {userId: adsDto.dangBoi.userId});
+                        } else {
+                            callback(null, adsDto);
+                        }
+                    });
+                }
+            });
+        }
+    }
    
     buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, duAnID,orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;

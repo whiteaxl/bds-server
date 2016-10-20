@@ -1,6 +1,7 @@
 var Handlers = require('./handlers');
 var findHandler = require('./findHandler');
 var findHandlerV2 = require('./findHandlerV2');
+var adsHandler = require('./adsHandler');
 var loginHandler = require('./loginHandler');
 var fileUploadHandler = require('./fileUploadHandler');
 
@@ -190,6 +191,16 @@ internals.endpoints = [
         }
       }
 
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/uploadAds',
+    handler: adsHandler.upload,
+    config: {
+      description: 'upload Ads',
+      tags: ['api'],
+      auth: 'jwt'
     }
   },
   {

@@ -40,8 +40,29 @@ internals.FORMAT = {
 
 internals.DB_SEQ = {
   ScratchTopup: "idGeneratorForScratchTopup",
-  User : "idGeneratorForUsers"
+  User : "idGeneratorForUsers",
+  Ads  : "idGeneratorForAds"
 };
+
+internals.ADS_ID_PREFIX = {
+    REWAY: "ADS_00",
+    BATDONGSAN: "ADS_01",
+    DOTHI: "ADS_02"
+}
+
+internals.ADS_SOURCE = {
+    REWAY: "reway",
+    BATDONGSAN: "bds",
+    DOTHI: "dothi"
+}
+
+internals.DATA_TYPE = {
+    ADS: "Ads",
+    USER: "User",
+    PLACE: "Place",
+    DEVICE: "Device",
+    CHAT: "Chat"
+}
 
 internals.TOPUP_STAGE = {
   INIT : -1,
