@@ -36,7 +36,18 @@ function getDiaChinh(bds) {
     codeDuAn : toRewayCode(bds.extMaProject)
   };
 
+  if (!g_cachePlaces["Place_T_" + diaChinh.codeTinh]) {
+    logUtil.error("Dont have Tinh:", "Place_T_" + diaChinh.codeTinh);
+    return diaChinh;
+  }
+
   diaChinh.tinh = g_cachePlaces["Place_T_" + diaChinh.codeTinh].placeName;
+
+  if (!g_cachePlaces["Place_H_" + diaChinh.codeHuyen]) {
+    logUtil.error("Dont have Tinh:", "Place_H_" + diaChinh.codeHuyen);
+    return diaChinh;
+  }
+
   diaChinh.huyen = g_cachePlaces["Place_H_" + diaChinh.codeHuyen].placeName;
   if (diaChinh.codeXa) {
     diaChinh.xa = g_cachePlaces["Place_X_" + diaChinh.codeXa].placeName;
@@ -136,7 +147,7 @@ function loadPlaces(callback) {
       g_cachePlaces[e.id] = e;
     });
 
-    logUtil.info("Done load Places");
+    logUtil.info("Done load Places:", list.length);
 
     callback();
   });
