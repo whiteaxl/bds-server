@@ -92,6 +92,7 @@ function convertBds(bds) {
   ads.huongNha = bds.huongNha ? bds.huongNha : -1;
 
   ads.timeExtracted = bds.timeModified;
+  ads.timeModified = new Date().getTime();
 
   ads.source = "dothi";
   ads.type = "Ads";

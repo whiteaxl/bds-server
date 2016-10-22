@@ -86,6 +86,8 @@ function convertBds(bds) {
   ads.huongNha = bds.emailRegister_direction == "0" ? -1 : Number(bds.emailRegister_direction);
 
   ads.timeExtracted = bds.timeModified;
+  ads.timeModified = new Date().getTime();
+
 
   ads.source = "bds";
   ads.type = "Ads";
@@ -105,7 +107,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' " + condition;
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' and place.geo.lat is not null " + condition;
 
   commonService.query(sql, (err, list) => {
     if (err) {
