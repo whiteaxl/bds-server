@@ -12,5 +12,6 @@ logUtil.info("start from " + ngayDangFrom);
 convert.loadPlaces(() => {
   convert.convertAllBds(()=> {
     logUtil.info("DONE ALL");
+    process.exit();
   }, ngayDangFrom, null);
 });
