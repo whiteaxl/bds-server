@@ -53,9 +53,17 @@ function isPointInsideWithPreparedPolygon(point, coords) {
   return flgPointInside;
 }
 
-
-function _handleDBFindResult(error, allAds, q) {
-  let transformeds = [];
+function _doFilterAndCount(allAds, q, callback) {
+  if (!q.circle && !q.polygonCoords) {
+    if (q.isIncludeCountInResponse) {
+      adsModel.count(q, (err, cnt) => {
+        callback(err, allAds, cnt);
+      });
+    } else {
+      callback(null, allAds, undefined);
+    }
+    return;
+  }
 
   //
   let polygonCoords = null;
@@ -65,7 +73,56 @@ function _handleDBFindResult(error, allAds, q) {
     prepareLatLon(polygonCoords);
   }
 
+  //
+  let distance;
+  let filtered = []; //id only
+
   allAds.forEach((ads) => {
+    let lat = ads.lat;
+    let lon = ads.lon;
+    let valid = true;
+
+    //filter by radius
+    if (q.circle) {
+      let center = q.circle.center;
+      distance = geoUtil.measure(center.lat, center.lon, lat, lon);
+      if (distance > q.circle.radius * 1000) {
+        valid = false;
+      }
+    }
+
+    //filter by polygon
+    if (valid && q.polygonCoords) {
+      if (!isPointInsideWithPreparedPolygon({
+          latitude : lat,
+          longitude : lon,
+        }, polygonCoords)) {
+        valid = false;
+      }
+
+      //if (!geoUtil.isPointInside(place.geo, q.polygonCoords)) {
+      //  valid = false;
+      //}
+    }
+
+    if (valid) {
+      filtered.push(ads.id);
+    }
+  });
+
+  //backup length first
+  let count = filtered.length;
+
+  //do paging
+  filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
+
+  return adsModel.getListAdsByIds(filtered, (err, listAds) => {
+    callback(err, listAds, count);
+  });
+}
+
+function _transform(allAds, q) {
+  let transformeds = allAds.map((ads) => {
     //images:
     var targetSize = "745x510"; //350x280
 
@@ -92,7 +149,8 @@ function _handleDBFindResult(error, allAds, q) {
       giaM2: ads.giaM2,
       loaiNhaDat: ads.loaiNhaDat,
       loaiTin: ads.loaiTin,
-      huongNha: ads.huongNha && !isNaN(ads.huongNha) ? ads.huongNha : Number(0)
+      huongNha: ads.huongNha && !isNaN(ads.huongNha) ? ads.huongNha : Number(0),
+      place : ads.place
     };
     //console.log(tmp.cover);
 
@@ -107,36 +165,7 @@ function _handleDBFindResult(error, allAds, q) {
       tmp.soNgayDaDangTin = moment().diff(ngayDangTinDate, 'days');
     }
 
-    let place = ads.place;
-    tmp.place = ads.place;
-    let valid = true;
-
-    //filter by radius
-    if (q.circle) {
-      let center = q.circle.center;
-      tmp.distance = geoUtil.measure(center.lat, center.lon, place.geo.lat, place.geo.lon);
-      if (tmp.distance > q.circle.radius * 1000) {
-        valid = false;
-      }
-    }
-
-    //filter by polygon
-    if (valid && q.polygonCoords) {
-      if (!isPointInsideWithPreparedPolygon({
-        latitude : place.geo.lat,
-        longitude : place.geo.lon,
-      }, polygonCoords)) {
-        valid = false;
-      }
-
-      //if (!geoUtil.isPointInside(place.geo, q.polygonCoords)) {
-      //  valid = false;
-      //}
-    }
-
-    if (valid) {
-      transformeds.push(tmp);
-    }
+    return tmp;
   });
 
   return transformeds;
@@ -249,8 +278,8 @@ internals.findAds = function (q, reply) {
   }
 
   //can't get count from db incase search by Circle or Polygon, so need get all from DB
+  let projectionClause = null;
   if (needFilterInMemory) {
-
     //search for homepage
     if (q.limit==5) {
       q.dbLimit =  100; //4 are enough to filter later
@@ -259,6 +288,8 @@ internals.findAds = function (q, reply) {
       q.dbLimit =  null;
       q.dbPageNo =  null;
     }
+
+    projectionClause = " id, place.geo.lat, place.geo.lon ";
   } else {
     q.dbLimit = q.limit;
     q.dbPageNo =  q.pageNo;
@@ -267,52 +298,37 @@ internals.findAds = function (q, reply) {
   adsModel.query(q, (err, listAds) => {
     if (err) {
       console.log("Error when query ADS:", err);
-
       reply(Boom.badImplementation());
       return;
     }
     let startTime = new Date().getTime();
-    let filtered = _handleDBFindResult(err, listAds, q);
-    let endTime = new Date().getTime();
-    logUtil.info("Time todo filter:" + (endTime-startTime) + "ms" + " for "  + (filtered.length) + " records");
 
-    logUtil.info("There are " + filtered.length + " ads");
-    let totalCount = filtered.length;
 
-    if (needFilterInMemory) {
-      filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
-    } else { //need perform count stmt
-      if (q.isIncludeCountInResponse) {
-        adsModel.count(q, (err, cnt) => {
-          if (err) {
-            logUtil.error("Error", err);
-            reply(Boom.badImplementation());
-            return;
-          }
-
-          reply({
-            length: filtered.length,
-            list: filtered,
-            totalCount : cnt,
-          });
-        });
-
+    _doFilterAndCount(listAds, q, (err1, filtered, count) => {
+      if (err1) {
+        console.log("Error when query ADS:", err1);
+        reply(Boom.badImplementation());
         return;
       }
-    }
 
-    reply({
-      length: filtered.length,
-      list: filtered,
-      totalCount : q.isIncludeCountInResponse ? totalCount : null
+      let endTime = new Date().getTime();
+      logUtil.info("Time todo filter/count:" + (endTime-startTime) + "ms" + " for "  + (filtered.length) + " records");
+
+      let transformed = _transform(filtered, q);
+
+      reply({
+        length: transformed.length,
+        list: transformed,
+        totalCount : q.isIncludeCountInResponse ? count : null
+      });
     });
-  });
+  }, projectionClause);
 };
 
 internals.find = function (req, reply) {
   console.log("Find v2:", req.payload);
     internals.findAds(req.payload, (res) => {
-      logUtil.info("Will response: count=" + res.length + " res.errMsg=" +  res.errMsg );
+      logUtil.info("Will response to client:" + res.length + " out of " + res.totalCount + ", res.errMsg=" +  res.errMsg );
       reply(res);
     })
 

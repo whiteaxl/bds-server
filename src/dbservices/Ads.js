@@ -749,12 +749,16 @@ class AdsModel {
     return "";
   }
 
-    query(q, callback){
+    query(q, callback, projectionClause){
         let startTime = new Date().getTime();
-        var sql ="SELECT " +
-          " id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, " +
-          " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin " +
-          " FROM default t "
+        if (!projectionClause) {
+            projectionClause =  "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, "
+              + " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
+        }
+
+        var sql ="SELECT "
+          + projectionClause
+          + " FROM default t "
           + this._buildIndexHint(q)
           + this._buildWhere(q) + this._buildOrderByAndPaging(q);
 
@@ -917,6 +921,31 @@ class AdsModel {
         */
 
         return sql;
+
+    }
+
+  //for small number of ids
+    getListAdsByIds(adsIds, callback) {
+      let startTime = new Date().getTime();
+
+      let sql = "SELECT "
+        + "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, "
+        + " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin "
+        + " FROM default "
+        + " WHERE id in "
+        + JSON.stringify(adsIds);
+
+      //logUtil.info(sql);
+      var query = N1qlQuery.fromString(sql);
+      bucket.query(query, function(err, all) {
+        if (!all)
+          all = [];
+
+        let endTime = new Date().getTime();
+        logUtil.info("Done SQL: ", sql + "\n There are " + all.length + " records, In " +  (endTime-startTime) + "ms");
+
+        callback(err, all);
+      });
 
     }
 }
