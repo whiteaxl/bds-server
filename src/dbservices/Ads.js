@@ -799,23 +799,22 @@ class AdsModel {
 
     _buildOrderByAndPaging(q) {
         let sql = " ";
+
+        let orderBy = q.dbOrderBy;
        
-        if (q.orderBy) {
-            let name = q.orderBy.name;
-            
-            if (q.orderBy.type == 'DESC') {
-                sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
-            } else {
-                if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
-                    sql = `${sql} ORDER BY case when ${name} != -1 then ${name} else 999999999 end ${q.orderBy.type}`;
-                } else {
-                    sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
-                } 
-            }
-        } else {
-            if (!q.excludeOrderBy || q.excludeOrderBy != 1){
-                sql = `${sql} ORDER BY ngayDangTin DESC, timeModified DESC`;
-            }
+        if (orderBy) {
+          let name = orderBy.name;
+
+          if (orderBy.type == 'DESC') {
+              sql = sql + " ORDER BY " + name + "  " + orderBy.type;
+          } else {
+              if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
+                  sql = `${sql} ORDER BY case when ${name} != -1 then ${name} else 999999999 end ${orderBy.type}`;
+              } else {
+                  sql = sql + " ORDER BY " + name + "  " + orderBy.type;
+              }
+          }
+          sql = `${sql} , timeModified DESC`;
         }
 
         if(q.dbLimit)

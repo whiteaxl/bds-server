@@ -24,8 +24,8 @@ var internals = {};
 var geolib = require("geolib");
 
 //const
-var MAX_POLYGON_OR_CIRCLE_RESULT = 1000;
-var POLYGON_BATCH_SIZE = 1500;
+var MAX_POLYGON_OR_CIRCLE_RESULT = 2000;
+var POLYGON_BATCH_SIZE = 3000;
 var GEO_PROJECTION = " id, place.geo.lat, place.geo.lon ";
 
 
@@ -72,8 +72,8 @@ function _doPolygonOrCircleFilter(allAds, q) {
 
   for (let i = 0; i < allAds.length; i++) {
     ads = allAds[i];
-    let lat = ads.lat;
-    let lon = ads.lon;
+    let lat = ads.place.geo.lat;
+    let lon = ads.place.geo.lon;
     let valid = true;
 
     //filter by radius
@@ -96,23 +96,11 @@ function _doPolygonOrCircleFilter(allAds, q) {
     }
 
     if (valid) {
-      filtered.push(ads.id);
+      filtered.push(ads);
     }
   }
 
   return filtered;
-
-  /*
-  //backup length first
-  let count = filtered.length;
-
-  //do paging
-  filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
-
-  return adsModel.getListAdsByIds(filtered, (err, listAds) => {
-    callback(err, listAds, count);
-  });
-  */
 }
 
 function _transform(allAds, q) {
@@ -249,15 +237,47 @@ function viewportTooLarge(vp) {
   return tooLarge;
 }
 
-function _doPagingAndFetchByIds(q, reply, filtered) {
+function _doPagingAndReply(q, reply, filtered) {
   let count = filtered.length;
+
+  //sorting
+  let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+  let startTime = new Date().getTime();
+  filtered.sort((a, b) => {
+    if (a[orderBy.name] > b[orderBy.name]) {
+      return 1;
+    }
+
+    if (a[orderBy.name] < b[orderBy.name]) {
+      return -1;
+    }
+
+    if (a.timeModified > b.timeModified) {
+      return 1;
+    }
+    if (a.timeModified < b.timeModified) {
+      return -1;
+    }
+
+    return 0;
+  });
+  let endTime = new Date().getTime();
+
+  logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
 
   //do paging
   filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
 
+  //
+  count = count > MAX_POLYGON_OR_CIRCLE_RESULT ? MAX_POLYGON_OR_CIRCLE_RESULT : count;
+
+  _transformAndReply(q, reply, null, filtered, count);
+
+  /*
   return adsModel.getListAdsByIds(filtered, (err, listAds) => {
     _transformAndReply(q, reply, err, listAds, count);
   });
+  */
 }
 
 function _doQueryAllIntoMemory(q, reply, allResults) {
@@ -276,7 +296,7 @@ function _doQueryAllIntoMemory(q, reply, allResults) {
     logUtil.info("Time to do one round of query:" + (endTime-startTime) + "ms" + " for "  + (listAds.length) + " records");
 
     if (listAds.length == 0) {
-      return _doPagingAndFetchByIds(q, reply, allResults);
+      return _doPagingAndReply(q, reply, allResults);
     }
 
     let filtered = _doPolygonOrCircleFilter(listAds, q);
@@ -286,19 +306,19 @@ function _doQueryAllIntoMemory(q, reply, allResults) {
     logUtil.info("Time to do geo filter:" + (endTime3-endTime) + "ms" + ", new length:"  + (allResults.length) + " records");
 
     if (allResults.length >= MAX_POLYGON_OR_CIRCLE_RESULT) {
-      allResults = allResults.slice(0, MAX_POLYGON_OR_CIRCLE_RESULT);
-      return _doPagingAndFetchByIds(q, reply, allResults);
+      //allResults = allResults.slice(0, MAX_POLYGON_OR_CIRCLE_RESULT);
+      return _doPagingAndReply(q, reply, allResults);
     }
 
     if (listAds.length < POLYGON_BATCH_SIZE) {
-      return _doPagingAndFetchByIds(q, reply, allResults);
+      return _doPagingAndReply(q, reply, allResults);
     }
 
     //fetch next batch
     q.dbPageNo++;
     _doQueryAllIntoMemory(q, reply, allResults);
 
-  }, GEO_PROJECTION);
+  }, null);
 }
 
 function _transformAndReply(q, reply, err, filtered, count) {
@@ -363,6 +383,8 @@ internals.findAds = function (q, reply) {
   if (!needFilterInMemory) {
     q.dbLimit = q.limit;
     q.dbPageNo =  q.pageNo;
+    q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
     _doDBQueryAndCount(q, reply);
   } else {
     //can't get count from db incase search by Circle or Polygon, so need get all from DB
@@ -374,6 +396,8 @@ internals.findAds = function (q, reply) {
       q.dbLimit =  POLYGON_BATCH_SIZE; // limit 1000 results when search in a poylygon or circle
       q.dbPageNo =  1;
     }
+
+    q.dbOrderBy = null; //no need orderBy, will do it in memory for only first 1000 result
     _doQueryAllIntoMemory(q, reply, []);
   }
 };
