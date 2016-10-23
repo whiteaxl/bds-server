@@ -37,6 +37,7 @@ internals.endpoints = [
 	method: 'GET',
 	path: '/web/index.html', 
 	handler: function(requet,reply){
+		console.log("ttttttttttttttttttt" + requet.url.protocol);
 		var md = new MobileDetect(requet.headers['user-agent']);
 		if(md.mobile()){
 			// reply.view('./mobile/index.html');

@@ -64,6 +64,7 @@ function searchreset(){
 // search function
 function searchfr(){
 	$(".search").removeAttr("style");
+	$(".search-btn").removeAttr("style");
 	$("body").removeClass("bodySearchShow");
 	searchreset();
 }
@@ -73,6 +74,7 @@ function searchopen(){
 		$(".search").animate({
 			right: 0
 		}, 120);
+		$(".search-btn").show();
 		$("body").addClass("bodySearchShow");
 		$(".search").scrollTop(0);
 		$(".search-footer").addClass("fixed");
@@ -183,6 +185,7 @@ $(function(){
 			$(".search").animate({
 				right: 0
 			}, 120);
+			$(".search-btn").show();
 			$("body").addClass("bodySearchShow");
 			$(".search").scrollTop(0);
 			$(".search-footer").addClass("fixed");
@@ -233,10 +236,12 @@ $(function(){
 	$(".btn-more .collapse-title").click(function(){
 		$(this).parent().hide();
 		$(this).parent().parent().find(".more-box").removeClass("more-box-hide");
+		$(this).parent().parent().find(".title-more").hide();
 	});
 	// click button reset in search
 	$(".btn-reset .collapse-title").click(function(){
 		$(this).parent().parent().find(".btn-more").removeAttr("style");
+		$(this).parent().parent().find(".title-more").removeAttr("style");
 		$(this).parent().parent().find(".more-box").addClass("more-box-hide");
 		$(this).parent().parent().find(".spinner").addClass("spinner-hide");
 		$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");

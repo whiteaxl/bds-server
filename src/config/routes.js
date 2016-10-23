@@ -29,7 +29,7 @@ internals.routes = [].concat(ApiRoutes.endpoints,
 
 //set the routes for the server
 internals.init = function (server) {
-  server.route(internals.routes);
+  server.select('https').route(internals.routes);
 };
 
 module.exports = internals;

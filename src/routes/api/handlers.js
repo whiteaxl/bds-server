@@ -77,6 +77,9 @@ internals.findGooglePlaceById = function(req, reply){
     });
 };
 
+internals.httpsRedirect = function(req,reply){
+    reply.redirect('https://your.site/' + this.params.path);
+}
 
 //Nhannc
 internals.findRencentAds = function(req, reply) {

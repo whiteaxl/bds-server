@@ -62,6 +62,11 @@ var hapiReact = require('hapi-react-views');
  */
  internals.init = function (server) {
 
+  // server.register({
+  //   register: require('hapi-require-https'),
+  //   options: {}
+  // })
+
   /**
    * ### vision
    *
@@ -119,9 +124,25 @@ var hapiReact = require('hapi-react-views');
       path: '/web/{param*}',
       handler: {
         directory: {
-          path: Path.join(__dirname, '../web')          
+          path: Path.join(__dirname, '../web')
         }
       },
+      // handler: function (request, reply) {
+
+      //   // let path = 'plain.txt';
+      //   // if (request.headers['x-magic'] === 'sekret') {
+      //   //     path = 'awesome.png';
+      //   // }
+
+      //   // return reply.file(request.url.path);
+      //   if(request.url.protocol = "http"){
+      //     console.log("tim log " + request.url.path);
+      //     return reply.redirect("https://" +request.info.host +  request.url.path);
+      //   }else{
+      //     return reply.file("src/" + request.url.path);  
+      //   }
+        
+      // },
       config: { auth: false }
     },
     {

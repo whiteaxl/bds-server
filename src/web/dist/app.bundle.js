@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e6a3029ed969e9eaee12"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4513559958f91c7ae15d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28549,7 +28549,7 @@
 
 /***/ },
 /* 33 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -28571,56 +28571,64 @@
 	        // vm.dien_tich_min = 0;
 	        // vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 	        // vm.zoomMode = "auto";
+	        vm.pageSize = 25;
+	        vm.resetResultList = function () {
+	            vm.currentPage = 0;
+	            vm.lastPageNo = 0;
+	            vm.startPageNo = 0;
+	            vm.ads_list = [];
+	            vm.viewport = undefined;
+	            $scope.markers = [];
+	            //$scope.$apply();
+	        };
 
 	        vm.getLocation = function () {
-	            function fetchHomeData() {
-	                var async = __webpack_require__(30);
-	                vm.boSuuTap = [];
-	                var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query, homeDataSearch.currentLocation, HouseService.findAdsSpatial, function (res) {
-	                    if (res.data.list && res.data.list.data.length >= 5) vm.boSuuTap.push(res.data.list);
-	                    //alert(res.data.length);
-	                });
-	                async.series(fl, function (err, results) {
-	                    // alert(results.length);
-	                    vm.doneSearch = true;
-	                });
-	            }
+	            alert('bbb');
 	            if (navigator.geolocation) {
 	                navigator.geolocation.getCurrentPosition(function (position) {
+	                    $rootScope.searchData.circle = {
+	                        center: {
+	                            lat: position.coords.latitude,
+	                            lon: position.coords.longitude
+	                        },
+	                        radius: 2
+	                    };
+	                    vm.initialized = false;
+
+	                    vm.disableIdleHandler();
+	                    $rootScope.searchData.viewport = undefined;
+	                    $rootScope.searchData.diaChinh = undefined;
+	                    $rootScope.searchData.polygon = undefined;
 	                    $rootScope.currentLocation.lat = position.coords.latitude;
 	                    $rootScope.currentLocation.lon = position.coords.longitude;
-	                    homeDataSearch.currentLocation = $rootScope.currentLocation;
+	                    $scope.center = "[" + position.coords.latitude + "," + position.coords.longitude + "]";
+	                    vm.marker = position;
+	                    // homeDataSearch.currentLocation = $rootScope.currentLocation;
 	                    //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
 	                    //  //alert(JSON.stringify(res));
 	                    //  vm.boSuuTap = res.data.data; 
 	                    // });
-	                    fetchHomeData();
+	                    // fetchHomeData();                    
+	                    vm.resetResultList();
+	                    //vm.map.setCenter($scope.center);
+	                    vm.search(function () {
+	                        //vm.initialized = true;
+
+	                        $timeout(function () {
+	                            vm.initialized = true;
+	                            //vm.map.fitBounds(bounds);
+	                            vm.humanZoom = false;
+	                            vm.enableMapIdleHandler();
+	                        }, 0);
+	                    });
 	                }, function (error) {
 	                    console.log(error);
 	                    // vm.showAskCurrentLocation  = true;
-	                    fetchHomeData();
+	                    // fetchHomeData();
 	                });
 	            } else {
-	                //x.innerHTML = "Geolocation is not supported by this browser.";                
-	                //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-	                //  //alert(JSON.stringify(res));
-	                //  vm.boSuuTap = res.data.data; 
-	                // });
-	                // vm.showAskCurrentLocation  = true;
-	                fetchHomeData();
-	            }
-
-	            //     homeDataSearch.currentLocation = $rootScope.currentLocation;
-	            // HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
-	            //  //alert(JSON.stringify(res));
-	            //  vm.boSuuTap = [];
-	            //  res.data.data.forEach(function(item,index){
-	            //      if(item.data.length>0)
-	            //          vm.boSuuTap.push(item);
-	            //  });
-	            //  vm.doneSearch = true;
-	            // });
-
+	                    // fetchHomeData();
+	                }
 	        };
 
 	        vm.init = function () {
@@ -28880,6 +28888,7 @@
 	            if (vm.drawMove) google.maps.event.removeListener(vm.drawMove);
 
 	            vm.drawMove = google.maps.event.addListener(vm.map, 'mousemove', function (e) {
+	                //e.preventDefault();
 	                vm.poly.getPath().push(e.latLng);
 	            });
 
@@ -28967,14 +28976,14 @@
 	        };
 	        vm.disableScrolling = true;
 
-	        vm.page = 1;
+	        //vm.page =1;
 	        vm.nextPage = function () {
 	            vm.disableScrolling = true;
 	            //vm.initialized = false;   
 	            $('#searchmap').hide();
 	            //alert('aaaa');
-	            vm.page = vm.page + 1;
-	            $rootScope.searchData.pageNo = vm.page;
+	            vm.currentPage = vm.currentPage + 1;
+	            $rootScope.searchData.pageNo = vm.currentPage;
 	            if ($rootScope.searchData.place) $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;
 	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
@@ -29039,6 +29048,7 @@
 	        //         vm.mapInitialized(vm.map);
 	        //     } 
 	        // }
+
 	        vm.searchPage = function (i, callback) {
 	            $rootScope.searchData.pageNo = i;
 	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
@@ -29154,10 +29164,25 @@
 	                }
 	                vm.disableScrolling = false;
 
-	                if (callback) callback.call(this);
+	                if (callback) callback(res);
 	            });
 	        };
 
+	        vm.prev = function () {
+	            if (vm.currentPage >= 2) {
+	                vm.currentPage = vm.currentPage - 1;
+	                vm.searchPage(vm.currentPage);
+	            }
+	        };
+	        vm.next = function () {
+	            if (vm.totalResultCounts > 0 && vm.totalResultCounts > (vm.currentPage + 1) * vm.pageSize) {
+	                vm.currentPage = vm.currentPage + 1;
+	                vm.searchPage(vm.currentPage);
+	            }
+	        };
+	        vm.refreshPage = function () {
+	            vm.searchPage(vm.currentPage);
+	        };
 	        vm.search = function (callback) {
 	            // if($scope.searchPlaceSelected.geometry.viewport){
 	            /*if($rootScope.searchData.viewport){
@@ -29181,10 +29206,26 @@
 	            $rootScope.searchData.userID = $rootScope.user.userID;
 	            $rootScope.lastSearch = $rootScope.searchData;
 
-	            HouseService.countAds($rootScope.searchData).then(function (res) {
+	            /*HouseService.countAds($rootScope.searchData).then(function(res){
 	                vm.totalResultCounts = res.data.countResult;
-	                $scope.markers = [];
+	                $scope.markers =[];
 	                vm.ads_list = [];
+	                if(vm.totalResultCounts>0){
+	                    vm.currentPage = 1;
+	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+	                    vm.currentPageStart = 1;
+	                    vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
+	                  } else{
+	                    vm.currentPage = 0;
+	                    vm.lastPageNo = 0;
+	                    vm.startPageNo = 0;
+	                }
+	                vm.searchPage(1,callback);
+	            });*/
+	            $rootScope.searchData.isIncludeCountInResponse = true;
+	            vm.searchPage(1, function (res) {
+	                $rootScope.searchData.isIncludeCountInResponse = false;
+	                vm.totalResultCounts = res.data.totalCount;
 	                if (vm.totalResultCounts > 0) {
 	                    vm.currentPage = 1;
 	                    vm.lastPageNo = Math.ceil(vm.totalResultCounts / vm.pageSize);
@@ -29195,7 +29236,7 @@
 	                    vm.lastPageNo = 0;
 	                    vm.startPageNo = 0;
 	                }
-	                vm.searchPage(1, callback);
+	                if (callback) callback(res);
 	            });
 	            // vm.searchPage(1,null);
 	        };
@@ -46559,61 +46600,82 @@
 
 	var internals = {};
 	internals.STS = {
-	  SUCCESS: 0,
-	  FAILURE: 1
+	    SUCCESS: 0,
+	    FAILURE: 1
 	};
 
 	internals.CHAT_MESSAGE_TYPE = {
-	  TEXT: 1,
-	  IMAGE: 2,
-	  FILE: 3,
-	  SYSTEM: 4
+	    TEXT: 1,
+	    IMAGE: 2,
+	    FILE: 3,
+	    SYSTEM: 4
 	};
 
 	internals.MSG = {
-	  DIA_DIEM_NOTFOUND: "Địa điểm bạn tìm kiếm không tồn tại!",
-	  USER_EXISTS: "Người sử dụng đã tồn tại!",
-	  LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
-	  USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline",
-	  EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
-	  SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
-	  SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
-	  SUCCESS_UNLIKE_ADS: "Đã unlike bất động sản thành công",
-	  EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
-	  USER_NOT_EXIST: "User không tồn tại",
-	  SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công"
+	    DIA_DIEM_NOTFOUND: "Địa điểm bạn tìm kiếm không tồn tại!",
+	    USER_EXISTS: "Người sử dụng đã tồn tại!",
+	    LOGIN_REQUIRED: "Đăng nhập để sử dụng tính năng này",
+	    USER_OFFLINE: "Tin nhắn được gửi đi trong chế độ offline",
+	    EXIST_SAVE_SEARCH: "Điều kiện tìm kiếm này đã được lưu",
+	    SUCCESS_SAVE_SEARCH: "Điều kiện tìm kiếm được lưu thành công",
+	    SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
+	    SUCCESS_UNLIKE_ADS: "Đã unlike bất động sản thành công",
+	    EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
+	    USER_NOT_EXIST: "User không tồn tại",
+	    SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công"
 
 	};
 
 	internals.DB_ERR = {
-	  USER_EXISTS: {
-	    code: 101,
-	    message: "Người sử dụng đã tồn tại"
-	  }
+	    USER_EXISTS: {
+	        code: 101,
+	        message: "Người sử dụng đã tồn tại"
+	    }
 	};
 
 	internals.FORMAT = {
-	  DATE_IN_DB: 'YYYYMMDD',
-	  DATE_IN_GUI: 'DD/MM/YYYY'
+	    DATE_IN_DB: 'YYYYMMDD',
+	    DATE_IN_GUI: 'DD/MM/YYYY'
 	};
 
 	internals.DB_SEQ = {
-	  ScratchTopup: "idGeneratorForScratchTopup",
-	  User: "idGeneratorForUsers"
+	    ScratchTopup: "idGeneratorForScratchTopup",
+	    User: "idGeneratorForUsers",
+	    Ads: "idGeneratorForAds"
+	};
+
+	internals.ADS_ID_PREFIX = {
+	    REWAY: "ADS_00",
+	    BATDONGSAN: "ADS_01",
+	    DOTHI: "ADS_02"
+	};
+
+	internals.ADS_SOURCE = {
+	    REWAY: "reway",
+	    BATDONGSAN: "bds",
+	    DOTHI: "dothi"
+	};
+
+	internals.DATA_TYPE = {
+	    ADS: "Ads",
+	    USER: "User",
+	    PLACE: "Place",
+	    DEVICE: "Device",
+	    CHAT: "Chat"
 	};
 
 	internals.TOPUP_STAGE = {
-	  INIT: -1,
-	  SUCCESS: 0,
-	  FAIL: 1
+	    INIT: -1,
+	    SUCCESS: 0,
+	    FAIL: 1
 	};
 
 	//topup type
 	internals.PAYMENT = {
-	  SCRATCH: "scratch",
-	  SMSPLUS: "smsplus",
-	  IN_APP_PURCHASE: "inAppPurchase",
-	  MANUAL_BANK_TRANSFER: "manualBankTransfer"
+	    SCRATCH: "scratch",
+	    SMSPLUS: "smsplus",
+	    IN_APP_PURCHASE: "inAppPurchase",
+	    MANUAL_BANK_TRANSFER: "manualBankTransfer"
 	};
 
 	if (typeof window !== 'undefined') window.RewayConst = internals;

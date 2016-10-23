@@ -15,62 +15,64 @@
 		// vm.dien_tich_min = 0;
 		// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 		// vm.zoomMode = "auto";
+        vm.pageSize = 25;
+        vm.resetResultList = function(){
+            vm.currentPage = 0;
+            vm.lastPageNo = 0;
+            vm.startPageNo = 0;
+            vm.ads_list = [];
+            vm.viewport = undefined;
+            $scope.markers = [];        
+            //$scope.$apply();
+        }
 
-         vm.getLocation = function() {
-            function fetchHomeData(){
-                var async = require("async");
-                vm.boSuuTap = [];
-                var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
-                    if(res.data.list && res.data.list.data.length>=5)
-                        vm.boSuuTap.push(res.data.list);
-                    //alert(res.data.length);
-                });
-                async.series(fl,
-                  function(err, results){
-                    // alert(results.length);
-                    vm.doneSearch = true;
-                  }
-                );
-            }
+         vm.getLocation = function() {     
+            alert('bbb');       
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position){
+                    $rootScope.searchData.circle = {
+                      center : {
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude
+                      },
+                      radius : 2
+                    };
+                    vm.initialized = false
+
+                    vm.disableIdleHandler();
+                    $rootScope.searchData.viewport = undefined;
+                    $rootScope.searchData.diaChinh = undefined;
+                    $rootScope.searchData.polygon = undefined;
                     $rootScope.currentLocation.lat = position.coords.latitude;
                     $rootScope.currentLocation.lon = position.coords.longitude;
-                    homeDataSearch.currentLocation = $rootScope.currentLocation;
+                    $scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
+                    vm.marker = position;
+                    // homeDataSearch.currentLocation = $rootScope.currentLocation;
            //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
                     //  //alert(JSON.stringify(res));
                     //  vm.boSuuTap = res.data.data; 
                     // });
-                    fetchHomeData();
+                    // fetchHomeData();                    
+                    vm.resetResultList();
+                    //vm.map.setCenter($scope.center);
+                    vm.search(function(){
+                        //vm.initialized = true;
+
+                        $timeout(function() {
+                            vm.initialized = true;
+                            //vm.map.fitBounds(bounds);
+                            vm.humanZoom = false;
+                            vm.enableMapIdleHandler();
+                        }, 0);
+                    });
                 }, function(error){
                     console.log(error);                 
                     // vm.showAskCurrentLocation  = true;
-                    fetchHomeData();
+                    // fetchHomeData();
                 });
             } else {
-                //x.innerHTML = "Geolocation is not supported by this browser.";                
-          //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-                //  //alert(JSON.stringify(res));
-                //  vm.boSuuTap = res.data.data; 
-                // });
-                // vm.showAskCurrentLocation  = true;
-                fetchHomeData();
+                // fetchHomeData();
             }
-            
-
-
-         //     homeDataSearch.currentLocation = $rootScope.currentLocation;
-            // HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
-            //  //alert(JSON.stringify(res));
-            //  vm.boSuuTap = [];
-            //  res.data.data.forEach(function(item,index){
-            //      if(item.data.length>0)
-            //          vm.boSuuTap.push(item);
-            //  });
-            //  vm.doneSearch = true;
-            // });
-
-
         }
 		
 		vm.init = function(){
@@ -341,6 +343,7 @@
                 google.maps.event.removeListener(vm.drawMove);     
 
             vm.drawMove =google.maps.event.addListener(vm.map,'mousemove',function(e){
+                //e.preventDefault();
                 vm.poly.getPath().push(e.latLng);
             });
             
@@ -431,14 +434,14 @@
         }
         vm.disableScrolling = true;
         
-        vm.page =1;
+        //vm.page =1;
         vm.nextPage =function(){        	
         	vm.disableScrolling = true;
         	//vm.initialized = false;   
         	$('#searchmap').hide();
         	//alert('aaaa');
-        	vm.page = vm.page+1;
-        	$rootScope.searchData.pageNo = vm.page;       
+        	vm.currentPage = vm.currentPage+1;
+        	$rootScope.searchData.pageNo = vm.currentPage;       
             if($rootScope.searchData.place)
                 $rootScope.searchData.place.radiusInKm = $rootScope.searchData.radiusInKm;  
             $rootScope.searchData.userID = $rootScope.user.userID || undefined;
@@ -508,6 +511,7 @@
         //         vm.mapInitialized(vm.map);
         //     } 
         // }
+
 		vm.searchPage = function(i, callback){
             $rootScope.searchData.pageNo = i;       
             $rootScope.searchData.userID = $rootScope.user.userID || undefined;
@@ -634,10 +638,26 @@
 
                  
                 if(callback)
-                    callback.call(this);
+                    callback(res);
             });
         }
 
+        vm.prev = function(){
+            if(vm.currentPage>=2){
+                vm.currentPage = vm.currentPage-1;
+                vm.searchPage(vm.currentPage);
+            }
+        }
+        vm.next = function(){
+            if(vm.totalResultCounts>0 && vm.totalResultCounts > (vm.currentPage+1)*vm.pageSize){
+                vm.currentPage = vm.currentPage+1;
+                vm.searchPage(vm.currentPage);
+            }
+
+        }
+        vm.refreshPage = function(){
+            vm.searchPage(vm.currentPage);
+        }
 		vm.search = function(callback){
             // if($scope.searchPlaceSelected.geometry.viewport){
             /*if($rootScope.searchData.viewport){
@@ -661,7 +681,9 @@
             $rootScope.searchData.userID = $rootScope.user.userID;
             $rootScope.lastSearch = $rootScope.searchData;
 
-            HouseService.countAds($rootScope.searchData).then(function(res){
+
+
+            /*HouseService.countAds($rootScope.searchData).then(function(res){
                 vm.totalResultCounts = res.data.countResult;
                 $scope.markers =[];
                 vm.ads_list = [];
@@ -677,7 +699,25 @@
                     vm.startPageNo = 0;
                 }
                 vm.searchPage(1,callback);
-            });
+            });*/
+            $rootScope.searchData.isIncludeCountInResponse = true;
+            vm.searchPage(1,function(res){
+                $rootScope.searchData.isIncludeCountInResponse = false;
+                vm.totalResultCounts = res.data.totalCount;
+                if(vm.totalResultCounts>0){
+                    vm.currentPage = 1;
+                    vm.lastPageNo = Math.ceil(vm.totalResultCounts/vm.pageSize);
+                    vm.currentPageStart = 1;
+                    vm.currentPageEnd = (vm.totalResultCounts >= vm.pageSize?vm.pageSize-1: vm.totalResultCounts-1);
+
+                } else{
+                    vm.currentPage = 0;
+                    vm.lastPageNo = 0;
+                    vm.startPageNo = 0;
+                }
+                if(callback)
+                    callback(res);
+            })
             // vm.searchPage(1,null);
         }
 

@@ -8,15 +8,17 @@
  *
  *  Hapi is configured in this import
  */
-var HapiServer = require('./src/config/hapi');
 
+var HapiServers = require('./src/config/hapi');  
+var https = HapiServers.server;
+var http = HapiServers.http;
 
 require('babel-core/register')({
     presets: ['react', 'es2015']
 });
 
 var chatHandler = require('./src/lib/ChatHandler');
-chatHandler.init(HapiServer);
+chatHandler.init(https);
 
 // var dbChangeHandler = require('./src/lib/dbChangeHandler');
 
@@ -117,11 +119,13 @@ chatHandler.init(HapiServer);
 /**
  * When hapi starts up, some info is displayed
  */
-HapiServer.start(function () {
+https.start(function () {
   // dbChangeHandler.initAPN(this);
   // dbChangeHandler.init(this);
 
   //console.log('Server is running: ' + HapiServer.info.uri);
 
 });
+
+http.start();
 
