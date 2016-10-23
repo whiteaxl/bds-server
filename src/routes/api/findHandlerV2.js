@@ -25,7 +25,7 @@ var geolib = require("geolib");
 
 //const
 var MAX_POLYGON_OR_CIRCLE_RESULT = 1000;
-var POLYGON_BATCH_SIZE = 2500;
+var POLYGON_BATCH_SIZE = 1500;
 var GEO_PROJECTION = " id, place.geo.lat, place.geo.lon ";
 
 
