@@ -37,7 +37,7 @@ internals.http = new Hapi.Server();
 // var http = new Hapi.Server();
 // // Setup the connection for the environment
 internals.http.connection({
-  port: process.env.PORT || 80,
+  port: process.env.PORT || 5000,
   address: process.env.IP || '127.0.0.1',
   routes: {
     cors: {
@@ -48,7 +48,7 @@ internals.http.connection({
 });
 
 internals.server.connection({
-  port: 443,
+  port: 4432,
   address: process.env.IP || '127.0.0.1',
   tls: {
       key: Fs.readFileSync('key.pem'),
@@ -126,6 +126,7 @@ internals.http.route({
         // credit to Matt for the URL.format
         var newURL = Url.format({
             protocol: 'https',
+            port: 4432,
             hostname: request.info.hostname,
             pathname: request.url.path
         });
