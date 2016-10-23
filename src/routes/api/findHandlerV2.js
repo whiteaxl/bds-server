@@ -23,6 +23,12 @@ var internals = {};
 
 var geolib = require("geolib");
 
+//const
+var MAX_POLYGON_OR_CIRCLE_RESULT = 1000;
+var POLYGON_BATCH_SIZE = 2500;
+var GEO_PROJECTION = " id, place.geo.lat, place.geo.lon ";
+
+
 function prepareLatLon(coords) {
   let e;
  for (let i =0; i < coords.length; i++) {
@@ -43,7 +49,6 @@ function isPointInsideWithPreparedPolygon(point, coords) {
       coords[j].lon < y && coords[i].lon >= y) {
 
       flgPointInside^=(y*coords[i].multiple+coords[i].constant < x);
-
     }
 
     j=i;
@@ -53,19 +58,7 @@ function isPointInsideWithPreparedPolygon(point, coords) {
   return flgPointInside;
 }
 
-function _doFilterAndCount(allAds, q, callback) {
-  if (!q.circle && !q.polygonCoords) {
-    if (q.isIncludeCountInResponse) {
-      adsModel.count(q, (err, cnt) => {
-        callback(err, allAds, cnt);
-      });
-    } else {
-      callback(null, allAds, undefined);
-    }
-    return;
-  }
-
-  //
+function _doPolygonOrCircleFilter(allAds, q) {
   let polygonCoords = null;
   if (q.polygonCoords) {
     polygonCoords = _.cloneDeep(q.polygonCoords);
@@ -74,10 +67,11 @@ function _doFilterAndCount(allAds, q, callback) {
   }
 
   //
-  let distance;
+  let distance, ads;
   let filtered = []; //id only
 
-  allAds.forEach((ads) => {
+  for (let i = 0; i < allAds.length; i++) {
+    ads = allAds[i];
     let lat = ads.lat;
     let lon = ads.lon;
     let valid = true;
@@ -99,17 +93,16 @@ function _doFilterAndCount(allAds, q, callback) {
         }, polygonCoords)) {
         valid = false;
       }
-
-      //if (!geoUtil.isPointInside(place.geo, q.polygonCoords)) {
-      //  valid = false;
-      //}
     }
 
     if (valid) {
       filtered.push(ads.id);
     }
-  });
+  }
 
+  return filtered;
+
+  /*
   //backup length first
   let count = filtered.length;
 
@@ -119,6 +112,7 @@ function _doFilterAndCount(allAds, q, callback) {
   return adsModel.getListAdsByIds(filtered, (err, listAds) => {
     callback(err, listAds, count);
   });
+  */
 }
 
 function _transform(allAds, q) {
@@ -255,13 +249,100 @@ function viewportTooLarge(vp) {
   return tooLarge;
 }
 
+function _doPagingAndFetchByIds(q, reply, filtered) {
+  let count = filtered.length;
+
+  //do paging
+  filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
+
+  return adsModel.getListAdsByIds(filtered, (err, listAds) => {
+    _transformAndReply(q, reply, err, listAds, count);
+  });
+}
+
+function _doQueryAllIntoMemory(q, reply, allResults) {
+
+  let startTime = new Date().getTime();
+  adsModel.query(q, (err, listAds) => {
+    if (err) {
+      console.log("Error when query ADS:", err);
+      reply(Boom.badImplementation());
+      return;
+    }
+
+    listAds = listAds || [];
+
+    let endTime = new Date().getTime();
+    logUtil.info("Time to do one round of query:" + (endTime-startTime) + "ms" + " for "  + (listAds.length) + " records");
+
+    if (listAds.length == 0) {
+      return _doPagingAndFetchByIds(q, reply, allResults);
+    }
+
+    let filtered = _doPolygonOrCircleFilter(listAds, q);
+    allResults = allResults.concat(filtered);
+
+    let endTime3 = new Date().getTime();
+    logUtil.info("Time to do geo filter:" + (endTime3-endTime) + "ms" + ", new length:"  + (allResults.length) + " records");
+
+    if (allResults.length >= MAX_POLYGON_OR_CIRCLE_RESULT) {
+      allResults = allResults.slice(0, MAX_POLYGON_OR_CIRCLE_RESULT);
+      return _doPagingAndFetchByIds(q, reply, allResults);
+    }
+
+    if (listAds.length < POLYGON_BATCH_SIZE) {
+      return _doPagingAndFetchByIds(q, reply, allResults);
+    }
+
+    //fetch next batch
+    q.dbPageNo++;
+    _doQueryAllIntoMemory(q, reply, allResults);
+
+  }, GEO_PROJECTION);
+}
+
+function _transformAndReply(q, reply, err, filtered, count) {
+  if (err) {
+    console.log("Error when query ADS:", err);
+    reply(Boom.badImplementation());
+    return;
+  }
+
+  //let endTime = new Date().getTime();
+  //logUtil.info("Time todo filter/count:" + (endTime-startTime) + "ms" + " for "  + (filtered.length) + " records");
+
+  let transformed = _transform(filtered, q);
+
+  reply({
+    length: transformed.length,
+    list: transformed,
+    totalCount : q.isIncludeCountInResponse ? count : null
+  });
+}
+
+function _doDBQueryAndCount(q, reply) {
+  adsModel.query(q, (err, listAds) => {
+    if (err) {
+      console.log("Error when query ADS:", err);
+      reply(Boom.badImplementation());
+      return;
+    }
+
+    if (q.isIncludeCountInResponse) {
+      adsModel.count(q, (err, cnt) => {
+        _transformAndReply(q, reply, err, listAds, cnt);
+      });
+    } else {
+      _transformAndReply(q, reply, null, listAds, undefined);
+    }
+  });
+}
+
 internals.findAds = function (q, reply) {
   if (q.userID && q.updateLastSearch) {
     //console.log(JSON.stringify(q));
     _updateLastSearch(q);
   }
-  let needFilterInMemory = q.circle || q.polygon;
-
   _mergeViewportWithPolygonBox(q);
   _mergeViewportWithCircleBox(q);
 
@@ -277,52 +358,24 @@ internals.findAds = function (q, reply) {
     return;
   }
 
-  //can't get count from db incase search by Circle or Polygon, so need get all from DB
-  let projectionClause = null;
-  if (needFilterInMemory) {
+  let needFilterInMemory = q.circle || q.polygon;
+  //if no needFilterInMemory
+  if (!needFilterInMemory) {
+    q.dbLimit = q.limit;
+    q.dbPageNo =  q.pageNo;
+    _doDBQueryAndCount(q, reply);
+  } else {
+    //can't get count from db incase search by Circle or Polygon, so need get all from DB
     //search for homepage
     if (q.limit==5) {
       q.dbLimit =  100; //4 are enough to filter later
       q.dbPageNo =  null;
     } else {
-      q.dbLimit =  null;
-      q.dbPageNo =  null;
+      q.dbLimit =  POLYGON_BATCH_SIZE; // limit 1000 results when search in a poylygon or circle
+      q.dbPageNo =  1;
     }
-
-    projectionClause = " id, place.geo.lat, place.geo.lon ";
-  } else {
-    q.dbLimit = q.limit;
-    q.dbPageNo =  q.pageNo;
+    _doQueryAllIntoMemory(q, reply, []);
   }
-
-  adsModel.query(q, (err, listAds) => {
-    if (err) {
-      console.log("Error when query ADS:", err);
-      reply(Boom.badImplementation());
-      return;
-    }
-    let startTime = new Date().getTime();
-
-
-    _doFilterAndCount(listAds, q, (err1, filtered, count) => {
-      if (err1) {
-        console.log("Error when query ADS:", err1);
-        reply(Boom.badImplementation());
-        return;
-      }
-
-      let endTime = new Date().getTime();
-      logUtil.info("Time todo filter/count:" + (endTime-startTime) + "ms" + " for "  + (filtered.length) + " records");
-
-      let transformed = _transform(filtered, q);
-
-      reply({
-        length: transformed.length,
-        list: transformed,
-        totalCount : q.isIncludeCountInResponse ? count : null
-      });
-    });
-  }, projectionClause);
 };
 
 internals.find = function (req, reply) {
