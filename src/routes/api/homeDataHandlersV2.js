@@ -316,7 +316,7 @@ internals.homeData4App = function (req, reply) {
 
             queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
             //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
-            queryNgangGia.orderBy = undefined;
+            queryMoiDang.orderBy = undefined;
 
             searchAds("Nhà Mới Đăng", lastQuery.diaChinh ? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
           }
@@ -336,7 +336,7 @@ internals.homeData4App = function (req, reply) {
               }
 
               queryDuoiGia.giaBETWEEN = [lastQuery.giaBETWEEN[0], mid];
-              queryNgangGia.orderBy = undefined;
+              queryDuoiGia.orderBy = undefined;
 
               let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
               searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
