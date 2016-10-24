@@ -73,29 +73,7 @@ function _returnToClient(list, reply) {
 
   if (list) {
     predictions = list.map((e) => {
-      let vp = e.geometry.viewport;
-
-      return {
-        placeName : e.placeName,
-        fullName : e.fullName,
-        shortName : placeUtil.getShortName(e.fullName),
-        placeType : e.placeType,
-        placeId : e.id,
-        tinh : e.codeTinh,
-        huyen: e.codeHuyen,
-        xa : e.codeXa,
-        duAn : e.codeDuAn,
-        viewport : {
-          "northeast": {
-            "lat": vp.northeast.lat,
-            "lon": vp.northeast.lon
-          },
-          "southwest": {
-            "lat": vp.southwest.lat,
-            "lon": vp.southwest.lon
-          }
-        }
-      }
+      return _convertFromPlaceRaw(e);
     });
   }
 
@@ -106,6 +84,69 @@ function _returnToClient(list, reply) {
     status: "OK"
   });
 }
+
+function _convertFromPlaceRawList(placeRawList){
+  var result = [];
+
+  if (placeRawList) {
+    result = placeRawList.map((e) => {
+          return _convertFromPlaceRaw(e);
+    });
+  }
+
+  console.log("matched:", result);
+  return result
+}
+
+function _convertFromPlaceRaw(placeRaw){
+  let vp = placeRaw.geometry.viewport;
+
+  return {
+    placeName : placeRaw.placeName,
+    fullName : placeRaw.fullName,
+    shortName : placeUtil.getShortName(placeRaw.fullName),
+    placeType : placeRaw.placeType,
+    placeId : placeRaw.id,
+    tinh : placeRaw.codeTinh,
+    huyen: placeRaw.codeHuyen,
+    xa : placeRaw.codeXa,
+    duAn : placeRaw.codeDuAn,
+    viewport : {
+      "northeast": {
+        "lat": vp.northeast.lat,
+        "lon": vp.northeast.lon
+      },
+      "southwest": {
+        "lat": vp.southwest.lat,
+        "lon": vp.southwest.lon
+      }
+    }
+  }
+}
+
+function _getDuAnFromCache(diaChinhQuan) {
+  if (!placeCache){
+    return undefined;
+  }
+
+  let ret = [];
+  for (var i=0; i < placeCache.length; i++) {
+    let e = placeCache[i];
+    if ((e.codeTinh==diaChinhQuan.tinh)
+         && (e.codeHuyen==diaChinhQuan.huyen)
+         && e.placeType=='A') {
+      ret.push(e);
+    }
+  }
+
+  if (ret.length == 0) {
+    console.log("Not match!!!");
+    return undefined;
+  }
+
+  return ret;
+}
+
 
 internals.getPlaceByID = function(req,reply){
   var payload = req.payload;
@@ -133,6 +174,58 @@ internals.getPlaceByID = function(req,reply){
       status: "OK"
     });
   });
+}
+
+/*
+{
+  tinhKhongDau:
+  huyenKhongDau:
+  XaKhongDau:
+  placeType:
+}
+ */
+internals.getPlaceByDiaChinhKhongDau = function(req,reply){
+  var payload = req.payload;
+  log.info("getPlaceByDiaChinhKhongDau, payload=", payload);
+
+  if (!payload.tinhKhongDau) {
+    reply({
+      diaChinh : undefined,
+      duAn: undefined,
+      status: "ERROR "
+    });
+
+    return;
+  }
+  place.getPlaceByDiaChinhKhongDau(payload,function(err,res){
+    if(err){
+      console.log("getPlaceByDiaChinhKhongDau error ", err);
+      reply({
+        diaChinh : undefined,
+        duAn: undefined,
+        status: "ERROR "
+      });
+      return;
+    }
+    if (res && res.length >0){
+      var diaChinh = _convertFromPlaceRaw(res[0]);
+      var duAn = _getDuAnFromCache(diaChinh);
+
+      duAn = (duAn && duAn.length>0) ? _convertFromPlaceRawList(duAn) : undefined;
+      reply({
+        diaChinh : diaChinh,
+        duAn: duAn,
+        status: "OK"
+      });
+    } else {
+      reply({
+        diaChinh : undefined,
+        duAn: undefined,
+        status: "OK"
+      });
+    }
+
+});
 }
 
 internals.autocomplete = function(req, reply) {

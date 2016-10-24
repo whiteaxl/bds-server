@@ -303,7 +303,12 @@ internals.updateProfile = function(req,reply){
             user.email = req.payload.email;
             user.phone = ""+req.payload.phone;
             user.diaChi = req.payload.diaChi;
-            user.avatar = req.payload.avatar;            
+            user.gioiThieu = req.payload.gioiThieu;
+            user.avatar = req.payload.avatar;
+            user.sex = req.payload.sex;
+            user.birthDate = req.payload.birthDate;
+            user.website = req.payload.website;
+            user.broker = req.payload.website;
             if(req.payload.newPass)
                 user.matKhau = req.payload.newPass;
 

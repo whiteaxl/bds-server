@@ -45,9 +45,9 @@ internals.DB_SEQ = {
 };
 
 internals.ADS_ID_PREFIX = {
-    REWAY: "ADS_00",
-    BATDONGSAN: "ADS_01",
-    DOTHI: "ADS_02"
+    REWAY: "Ads_00",
+    BATDONGSAN: "Ads_01",
+    DOTHI: "Ads_02"
 }
 
 internals.ADS_SOURCE = {

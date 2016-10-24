@@ -81,7 +81,6 @@ class AdsModel {
     countAllAds(onSuccess) {
         var sql = "select count(*) cnt from default where type = 'Ads'";
         var query = N1qlQuery.fromString(sql);
-
         bucket.query(query, function (err, res) {
             if (err) {
                 logUtil.info('query failed'.red, err);
@@ -370,7 +369,6 @@ class AdsModel {
         });
         */
 
-
         var query = N1qlQuery.fromString(sql);
 
         bucket.query(query, function(err, all) {
@@ -432,7 +430,6 @@ class AdsModel {
         var query = N1qlQuery.fromString(sql);
 
         var handleDBFindResult = this._handleDBFindResultByPolygon;
-
         bucket.query(query, function(err, all) {
             //logUtil.info("err=", err);
             if (!all)
@@ -764,6 +761,7 @@ class AdsModel {
 
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
+
         bucket.query(query, function(err, all) {
             if (!all)
                 all = [];
@@ -809,7 +807,8 @@ class AdsModel {
               sql = sql + " ORDER BY " + name + "  " + orderBy.type;
           } else {
               if (name == 'gia' || name == 'dienTich' || name == 'giaM2') {
-                  sql = `${sql} ORDER BY case when ${name} != -1 then ${name} else 999999999 end ${orderBy.type}`;
+                  //sql = `${sql} ORDER BY case when ${name} != -1 then ${name} else 999999999 end ${orderBy.type}`;
+                  sql = sql + " ORDER BY " + name + "  " + q.orderBy.type;
               } else {
                   sql = sql + " ORDER BY " + name + "  " + orderBy.type;
               }

@@ -195,10 +195,10 @@ internals.endpoints = [
   },
   {
     method: 'POST',
-    path: '/api/uploadAds',
-    handler: adsHandler.upload,
+    path: '/api/postAds',
+    handler: adsHandler.postAds,
     config: {
-      description: 'upload Ads',
+      description: 'post Ads',
       tags: ['api'],
       auth: 'jwt'
     }
@@ -226,7 +226,7 @@ internals.endpoints = [
     path: '/api/saveSearch',
     handler: Handlers.saveSearch,
     config: {
-      description: 'Lay danh sach cac bai dang thoa man tieu chi tim kiem',
+      description: 'Luu tim kiem',
       tags: ['api'],
       auth: 'jwt'
     }
@@ -254,7 +254,7 @@ internals.endpoints = [
     path: '/api/signup',
     handler: loginHandler.signup,
     config: {
-      description: 'login',
+      description: 'signup',
       tags: ['api']
     }
   },
@@ -340,7 +340,8 @@ internals.endpoints = [
         schema: Joi.object({
           status: Joi.number(),
           success: Joi.boolean(),
-          msg: Joi.string()
+          msg: Joi.string(),
+          adsLikes: Joi.array()
         })
       }
     }
@@ -363,7 +364,8 @@ internals.endpoints = [
         schema: Joi.object({
           status: Joi.number(),
           success: Joi.boolean(),
-          msg: Joi.string()
+          msg: Joi.string(),
+          adsLikes: Joi.array()
         })
       }
     }
@@ -375,6 +377,28 @@ internals.endpoints = [
     handler: userHandlers.getAdsLikes,
     config: {
       description: 'Lay ds likes cua mot user',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          data: Joi.array(),
+          status: Joi.number().required(),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/user/getMyAds',
+    handler: userHandlers.getMyAds,
+    config: {
+      description: 'Lay ds Ads da dang cua mot user',
       tags: ['api'],
       validate: {
         payload: {
@@ -820,6 +844,30 @@ internals.endpoints = [
       }
     }
   },
+  {
+    method: 'POST',
+    path: '/api/place/getPlaceByDiaChinhKhongDau',
+    handler: placeHandlers.getPlaceByDiaChinhKhongDau,
+    config: {
+      description: 'Tra ve dia chinh/du an by dia chinh khong dau',
+      tags: ['api'],
+      validate: {
+        payload: {
+          tinhKhongDau: Joi.string().description("Tên tỉnh không dấu"),
+          huyenKhongDau : Joi.string().description("Tên huyện không dấu"),
+          xaKhongDau: Joi.string().description("Tên xã không dấu"),
+          placeType : Joi.string().description("Loại địa chính T/H/Xß")
+        }
+      },
+      response: {
+        schema: Joi.object({
+          diaChinh: Joi.object().description("dia chinh thoa man"),
+          duAn: Joi.array().description("ds du an thuoc dia chinh cap Quan/Huyen"),
+          status: Joi.string().description("mô tả trạng thái OK/ERROR"),
+        })
+      }
+    }
+  },  
 
 
   {

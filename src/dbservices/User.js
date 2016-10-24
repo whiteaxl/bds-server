@@ -75,7 +75,7 @@ class UserModel {
     }
     console.log(sql);
     var query = N1qlQuery.fromString(sql);
-    
+
     bucket.query(query, callback);
   }
 
@@ -83,8 +83,8 @@ class UserModel {
     var sql = `select default.* from default where type='User' and id='${userID}'`;
 
     var query = N1qlQuery.fromString(sql);
-   
-    console.log("getUserByID: " + sql);
+
+    log.info("getUserByID: " + sql);
     bucket.query(query, callback);
   }
 
@@ -92,7 +92,7 @@ class UserModel {
     var sql = `select t.adsLikes from default t where type='User' and id='${userID}'`;
 
     var query = N1qlQuery.fromString(sql);
-   
+
     console.log("getAdsLikes, sql=", sql);
     bucket.query(query, (err, res) => {
       if (err) {
@@ -104,7 +104,7 @@ class UserModel {
           return;
         }
         let adsLikes = res[0].adsLikes;
-        let sql2 = `select a.* from default a where a.type='Ads' and a.adsID in ${JSON.stringify(adsLikes)}`;
+        let sql2 = `select a.* from default a where a.type='Ads' and a.id in ${JSON.stringify(adsLikes)}`;
         console.log("getAdsLikes, sql 2:", sql2);
 
         var query2 = N1qlQuery.fromString(sql2);
@@ -113,7 +113,13 @@ class UserModel {
     });
   }
 
+  getMyAds(userID,callback){
+    let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}'`;
+    console.log("getMyAds, sql:", sql);
 
+    var query = N1qlQuery.fromString(sql);
+    bucket.query(query, callback);
+  }
 
   //userDto
   createLoginOnSyncGateway(userDto, callback) {
@@ -279,7 +285,7 @@ class UserModel {
           console.log(user);
 
           if(this._checkSaveSearchExist(data,user)==true){
-            onSuccess({success: true,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH});
+            onSuccess({success: true,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH, savedSearch: user.saveSearch});
           }else{
             console.log("going to push query " + JSON.stringify(data));            
             user.saveSearch.push(data);
@@ -287,7 +293,7 @@ class UserModel {
               if (err) {
                   console.log("ERROR:" + err);
               }
-              onSuccess({success:true,status:0,msg: constant.MSG.SUCCESS_SAVE_SEARCH});
+              onSuccess({success:true,status:0,msg: constant.MSG.SUCCESS_SAVE_SEARCH, savedSearch: user.saveSearch});
             })
           } 
         }
@@ -322,7 +328,7 @@ class UserModel {
                   console.log("ERROR:" + err);
               }
               console.log("likeAds, reply SUCCESS_LIKE_ADS");
-              reply({success:true,status:0,msg: constant.MSG.SUCCESS_LIKE_ADS});
+              reply({success:true,status:0,msg: constant.MSG.SUCCESS_LIKE_ADS,adsLikes: user.adsLikes});
             })
           }else{
             console.log("likeAds, reply EXIST_LIKE_ADS");
@@ -355,7 +361,7 @@ class UserModel {
               console.log("ERROR:" + err);
             }
             console.log("likeAds, reply SUCCESS_UNLIKE_ADS");
-            reply({success:true,status:0,msg: constant.MSG.SUCCESS_UNLIKE_ADS});
+            reply({success:true,status:0,msg: constant.MSG.SUCCESS_UNLIKE_ADS,adsLikes: user.adsLikes});
           });
         } else {
           reply({success:false,status:2, msg: constant.MSG.USER_NOT_EXIST});
@@ -412,7 +418,7 @@ class UserModel {
       sql = `${sql} AND email='${data.email}'`
     }
     var query = N1qlQuery.fromString(sql);
-    
+
     bucket.query(query, function (err, res) {
       if (err) {
           console.log('query failed'.red, err);
@@ -446,7 +452,7 @@ class UserModel {
             data.name = data.email || data.phone;
             data.userID = data.id;
             console.log("before upsert " + data.id);
-        
+
             bucket.upsert(data.id, data, function (err, res) {
               if (err) {
                 console.log("ERROR:" + err);

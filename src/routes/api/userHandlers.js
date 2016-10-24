@@ -129,7 +129,7 @@ function convertAds(ads) {
   var targetSize = "745x510"; //350x280
 
   let tmp = {
-    adsID : ads.adsID,
+    adsID : ads.adsID||ads.id,
     gia : ads.gia,
     giaFmt: util.getPriceDisplay(ads.gia, ads.loaiTin),
     dienTich: ads.dienTich, dienTichFmt: util.getDienTichDisplay(ads.dienTich),
@@ -195,8 +195,44 @@ internals.getAdsLikes = function (req, reply) {
       msg : ex.toString()
     });
   }
+};
 
+internals.getMyAds = function (req, reply) {
+  log.info("Call getMyAds:", req.payload);
+  let userID = req.payload.userID;
 
+  if (!userID || userID.length <=0){
+    reply({
+      status : 99,
+      msg : 'Không có thông tin user'
+    });
+  }
+
+  try {
+    userService.getMyAds(userID, (err, res) => {
+      if (!err) { //exists
+      console.log("Callback getMyAds", err, res);
+      let listAds = res.map(e => {
+            return convertAds(e);
+    });
+      reply({
+        data : listAds,
+        status : 0,
+      });
+    } else {
+      reply({
+        status : 99,
+        msg : err.msg
+      });
+    }
+  });
+  } catch (ex) {
+    log.error(ex);
+    reply({
+      status : 99,
+      msg : ex.toString()
+    });
+  }
 };
 
 
