@@ -112,32 +112,35 @@ internals.server.register(Plugins.get(), (err) => {
 
 //setup views for resetpassword
 Views.init(internals.server);
+Views.init(internals.http);
 // set routes
 
 
 const Url = require('url');
 
-internals.http.route({
-    method: '*',
-    path: '/{p*}',
-    handler: function (request, reply) {
+// internals.http.route({
+//     method: '*',
+//     path: '/{p*}',
+//     handler: function (request, reply) {
 
-        // redirect all http traffic to https
-        // credit to Matt for the URL.format
-        var newURL = Url.format({
-            protocol: 'https',
-            port: 4432,
-            hostname: request.info.hostname,
-            pathname: request.url.path
-        });
-        console.log('tim log ' + newURL);
-        return reply.redirect(newURL);
-    },
-    config: {
-        description: 'Http catch route. Will redirect every http call to https'
-    }
-});
+//         // redirect all http traffic to https
+//         // credit to Matt for the URL.format
+//         var newURL = Url.format({
+//             protocol: 'https',
+//             port: 4432,
+//             hostname: request.info.hostname,
+//             pathname: request.url.path
+//         });
+//         console.log('tim log ' + newURL);
+//         return reply.redirect(newURL);
+//     },
+//     config: {
+//         description: 'Http catch route. Will redirect every http call to https'
+//     }
+// });
+
 Routes.init(internals.server);
+
 
 
 internals.http.register(Plugins.get(), (err) => {
@@ -151,6 +154,7 @@ internals.http.register(Plugins.get(), (err) => {
   //internals.server.auth.default('jwt');
 
 });
+Routes.init(internals.http);
 
 
 // internals.server.views({

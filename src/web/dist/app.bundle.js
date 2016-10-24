@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4513559958f91c7ae15d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7639af58a958b404bcb0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28583,7 +28583,7 @@
 	        };
 
 	        vm.getLocation = function () {
-	            alert('bbb');
+	            if (vm.poly) vm.poly.setMap(null);
 	            if (navigator.geolocation) {
 	                navigator.geolocation.getCurrentPosition(function (position) {
 	                    $rootScope.searchData.circle = {

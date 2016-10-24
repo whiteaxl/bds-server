@@ -27,7 +27,8 @@
         }
 
          vm.getLocation = function() {     
-            alert('bbb');       
+            if(vm.poly)
+                vm.poly.setMap(null);            
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position){
                     $rootScope.searchData.circle = {
