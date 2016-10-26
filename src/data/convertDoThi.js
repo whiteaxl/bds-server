@@ -120,6 +120,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     }
 
     let ads = null;
+    let cnt = 0;
     list.forEach(e => {
       ads = convertBds(e);
       commonService.upsert(ads, (err, res) => {
@@ -132,7 +133,11 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     let end = new Date().getTime();
     logUtil.info("Done " + list.length + " in " + (end-start) + "ms");
 
-    callback();
+    setInterval(() => {
+      if (cnt == list.length) {
+        callback();
+      }
+    })
   });
 }
 
