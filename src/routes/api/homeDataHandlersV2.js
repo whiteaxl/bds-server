@@ -81,7 +81,7 @@ function searchAds(title1, title2, query, callback) {
   console.log("searchAds: " + title1, JSON.stringify(query));
   var origQuery = {}; Object.assign(origQuery, query);
   origQuery.excludeOrderBy = undefined;
-    
+
   findHandlerV2.findAds(query, (res) => {
     
     if (!res.list || res.list.length == 0) {
@@ -170,6 +170,7 @@ function generateSearchNgangGiaFn(query, diaChinh){
       queryNgangGia.soPhongTamGREATER = 0;
       queryNgangGia.huongNha = [0];
       queryNgangGia.dienTichBETWEEN = [-1,9999999];
+      queryNgangGia.excludeOrderBy = 1;
 
       searchAds(loaiNhaDatName, query.diaChinh ? query.diaChinh.fullName : query.fullName, queryNgangGia, callback);
 
