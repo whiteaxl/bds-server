@@ -43,17 +43,17 @@ let geoHanders = {
     if (!place) {
       logUtil.warn("No place:", id);
 
-      return true;
+      return false;
     }
 
     if (!place.geometry) {
       logUtil.warn("Place no geometry:", place);
-      return true;
+      return false;
     }
 
     if (!place.geometry.viewport) {
       logUtil.warn("Place no viewport:", place);
-      return true;
+      return false;
     }
 
     let inVP = true;
@@ -61,7 +61,8 @@ let geoHanders = {
     if (place && place.geometry && place.geometry.viewport) {
       let ne = place.geometry.viewport.northeast;
       let sw = place.geometry.viewport.southwest;
-      inVP = (sw.lon <= myPlace.geo.lon <= ne.lon) && (sw.lat <= myPlace.geo.lat <= ne.lat);
+      inVP = (sw.lon <= myPlace.geo.lon) && (myPlace.geo.lon <= ne.lon)
+        && (sw.lat <= myPlace.geo.lat) && (myPlace.geo.lat <= ne.lat);
     }
 
     return !inVP;
