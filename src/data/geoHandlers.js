@@ -83,16 +83,29 @@ let geoHanders = {
         return;
       }
 
-      let count = 0;
+      let count = 0, cntXa=0, cntDuAn = 0, cntHuyen=0;
       list.forEach(e => {
         if (this._notMatchDiaChinhAndGeo(e.place)) {
-          logUtil.warn("Wrong:", e.id);
+
+
+          let dc = e.place.diaChinh;
+
+          if (dc.codeXa) {
+            cntXa++;
+          } else if (dc.codeDuAn) {
+            cntDuAn++;
+          } else {
+            cntHuyen++;
+          }
+
+          logUtil.warn("Wrong:", e.id, "codeXa="+e.place.diaChinh.codeXa);
+
           count++;
         }
       });
 
       let end = new Date().getTime();
-      logUtil.info("Done " + list.length + " in " + (end-start) + "ms" + ", mismatch:" + count);
+      logUtil.info("Done " + list.length + " in " + (end-start) + "ms" + ", mismatch:" + count + ", cntXa:"+cntXa +", cntDuAn:"+cntDuAn);
 
       callback();
     });
