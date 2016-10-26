@@ -124,6 +124,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     list.forEach(e => {
       ads = convertBds(e);
       commonService.upsert(ads, (err, res) => {
+        cnt++;
         if (err) {
           logUtil.error(err);
         }
@@ -134,10 +135,11 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     logUtil.info("Done " + list.length + " in " + (end-start) + "ms");
 
     setInterval(() => {
+      logUtil.info("Check count:", cnt, list.length);
       if (cnt == list.length) {
         callback();
       }
-    })
+    }, 1000)
   });
 }
 
