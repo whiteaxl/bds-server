@@ -69,7 +69,7 @@ let geoHanders = {
 
   getDiaChinhNotMatchGeo : function(callback, from) {
     let start = new Date().getTime();
-    let sql = "select t.place from default t where type='Ads' ";
+    let sql = "select t.id,t.place from default t where type='Ads' ";
 
     if (from) {
       sql = `${sql} and ngayDangTin >= '${from}'`;
@@ -85,7 +85,7 @@ let geoHanders = {
       let count = 0;
       list.forEach(e => {
         if (this._notMatchDiaChinhAndGeo(e.place)) {
-          logUtil.warn(e.id);
+          logUtil.warn("Wrong:", e.id);
           count++;
         }
       });
