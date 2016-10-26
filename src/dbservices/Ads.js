@@ -370,7 +370,6 @@ class AdsModel {
         */
 
         var query = N1qlQuery.fromString(sql);
-
         bucket.query(query, function(err, all) {
             //logUtil.info("err=", err);
             if (!all)
@@ -428,7 +427,6 @@ class AdsModel {
          */
 
         var query = N1qlQuery.fromString(sql);
-
         var handleDBFindResult = this._handleDBFindResultByPolygon;
         bucket.query(query, function(err, all) {
             //logUtil.info("err=", err);
@@ -531,7 +529,6 @@ class AdsModel {
         var query = N1qlQuery.fromString(sql);
 
         logUtil.info("queryRecentAds: " + sql);
-
         bucket.query(query, function(err, all) {
             
             if (!all)
@@ -761,7 +758,6 @@ class AdsModel {
 
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
-
         bucket.query(query, function(err, all) {
             if (!all)
                 all = [];
@@ -799,8 +795,8 @@ class AdsModel {
         let sql = " ";
 
         let orderBy = q.dbOrderBy;
-       
-        if (orderBy) {
+
+        if (orderBy && (!q.excludeOrderBy)) {
           let name = orderBy.name;
 
           if (orderBy.type == 'DESC') {
@@ -935,6 +931,7 @@ class AdsModel {
 
       //logUtil.info(sql);
       var query = N1qlQuery.fromString(sql);
+
       bucket.query(query, function(err, all) {
         if (!all)
           all = [];
