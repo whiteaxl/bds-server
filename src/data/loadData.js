@@ -15,7 +15,10 @@ var loadFromFile = function(fn) {
     commonService.upsert(tmp, (err, res) => {
       if (err) {
         logUtil.error(err);
+      } else {
+        logUtil.info("Done 1");
       }
+
     });
   }
 };
@@ -24,6 +27,7 @@ var loadFromFile = function(fn) {
 loadFromFile("./danhMuc/place_1.json");
 loadFromFile("./danhMuc/place_2.json");
 loadFromFile("./danhMuc/place_3.json");
+loadFromFile("./danhMuc/huyen.json");
 
 var times = 0;
 var timer = setInterval(
