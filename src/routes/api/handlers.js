@@ -310,7 +310,7 @@ function minutesOne2Undefined(val) {
  */
 function _transformDetailAds(adsFromDb) {
     let ads = {};
-    ads.adsID = adsFromDb.adsID;
+    ads.adsID = adsFromDb.adsID||adsFromDb.id;
     ads.dangBoi = {};
 
     ads.dangBoi.email = adsFromDb.dangBoi.email;
