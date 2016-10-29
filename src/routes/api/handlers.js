@@ -322,9 +322,18 @@ function _transformDetailAds(adsFromDb) {
     ads.dienTich = minutesOne2Undefined(adsFromDb.dienTich);
 
     ads.soPhongNgu = adsFromDb.soPhongNgu;
+    if(ads.soPhongNgu){
+        ads.soPhongNguFmt = ads.soPhongNgu + " phòng ngủ";
+    }
+    
     ads.soTang = adsFromDb.soTang;
+    if(ads.soTang){
+        ads.soTangFmt = ads.soTang + " tầng";
+    }
     ads.soPhongTam = adsFromDb.soPhongTam;
-
+    if(ads.soPhongTam){
+        ads.soPhongTamFmt = ads.soPhongTam + " phòng tắm";
+    }
     ads.image = {};
     ads.image.cover = adsFromDb.image.cover || cfg.noCoverUrl;
     if(ads.image.cover.indexOf("no-photo")>-1){
@@ -336,9 +345,14 @@ function _transformDetailAds(adsFromDb) {
     ads.diaChi = adsFromDb.diaChi;
     ads.ngayDangTin = adsFromDb.ngayDangTin;
     ads.giaM2 = minutesOne2Undefined(adsFromDb.giaM2);
+
     ads.loaiNhaDat = adsFromDb.loaiNhaDat;
     ads.loaiTin = adsFromDb.loaiTin;
     ads.huongNha = minutesOne2Undefined(adsFromDb.huongNha);
+    if(ads.huongNha){
+        ads.huongNhaFmt = danhMuc.getHuongNhaDisplay(ads.huongNha);
+    }
+
     ads.chiTiet = adsFromDb.chiTiet;
 
     ads.place = {};
@@ -358,6 +372,7 @@ function _transformDetailAds(adsFromDb) {
     }
 
     ads.giaFmt = util.getPriceDisplay(ads.gia, ads.loaiTin);
+
     ads.dienTichFmt = util.getDienTichDisplay(ads.dienTich);
 
     if (ads.ngayDangTin) {
@@ -386,7 +401,7 @@ function _transformDetailAds(adsFromDb) {
     ads.luotXem = adsFromDb.luotXem;
 
     if (ads.giaM2) {
-        ads.giaM2Fmt = util.roundToTwo(ads.giaM2) + " tr/m²"
+        ads.giaM2Fmt = util.getPriceM2Display(ads.giaM2);
     }
 
     ads.maSo = adsFromDb.maSo;

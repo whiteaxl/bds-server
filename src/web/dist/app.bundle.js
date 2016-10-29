@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2baa7fabf09a71da1342"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d603b48eac3b28df96a9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -29323,7 +29323,7 @@
 				"soTangGREATER": 0,
 				"ngayDangTinGREATER": "20150601",
 				"orderBy": { "name": "ngayDangTin", "type": "ASC" },
-				"limit": 9,
+				"limit": 5,
 				"pageNo": 1,
 				"isIncludeCountInResponse": false,
 				"updateLastSearch": false
@@ -29617,9 +29617,10 @@
 				} else if (vm.ads.soTang) {
 					vm.searchDataTuongTu.soTang = vm.ads.soTang;
 				}
-				HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function (res) {
-					vm.nhaTuongTu = res.data.list;
-				});
+				// HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function(res){
+				// 	vm.nhaTuongTu = res.data.list;					
+				// });
+
 			});
 		});
 	})();
@@ -29873,10 +29874,12 @@
 	            vm.selectLoaiTin($scope.searchData.loaiTin);
 
 	            vm.selectLoaiNhaDat = function (lnd) {
-	                $scope.searchData.loaiNhaDat = lnd.value;
+	                $scope.searchData.loaiNhaDat = [lnd.value];
+	                $('#typeBox').modal("hide");
 	            };
 	            vm.selectHuongNha = function (hn) {
-	                $scope.searchData.huongNha = hn.value;
+	                $scope.searchData.huongNha = [hn.value];
+	                $('#trendBox').modal("hide");
 	            };
 
 	            vm.setSearchDataSpn = function (val) {
@@ -30224,6 +30227,7 @@
 	        replace: 'true',
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
 	            var vm = this;
+	            vm.stateName = $state.current.name;
 	            vm.searchfr = function () {
 	                $(".search").removeAttr("style");
 	                $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
@@ -30933,7 +30937,7 @@
 	    items: [{ value: {}, label: "Môi giới" }, { value: {}, label: "Ứng dụng Mobile" }]
 	}];
 
-	danhMuc.LoaiNhaDatBanWeb = [{ value: "1", lable: "Bán căn hộ chung cư" }, { value: "2", lable: "Bán nhà riêng" }, { value: "3", lable: "Bán nhà mặt phố" }, { value: "4", lable: "Bán biệt thự, liền kề" }, { value: "6", lable: "Bán Shophouse" }, { value: "7", lable: "Bán đất nền dự án" }, { value: "5", lable: "Bán đất" }, { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" }, { value: "99", lable: "Bán các BDS khác" }, { value: "10", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
+	danhMuc.LoaiNhaDatBanWeb = [{ value: "0", lable: "Bất kỳ" }, { value: "1", lable: "Bán căn hộ chung cư" }, { value: "2", lable: "Bán nhà riêng" }, { value: "3", lable: "Bán biệt thự, liền kề" }, { value: "4", lable: "Bán nhà mặt phố" }, { value: "5", lable: "Bán đất nền dự án" }, { value: "6", lable: "Bán đất" }, { value: "7", lable: "Bán trang trại, khu nghỉ dưỡng" }, { value: "8", lable: "Bán kho, nhà xưởng" }, { value: "99", lable: "Bán loại bất động sản khác" }];
 
 	danhMuc.LoaiNhaDatCanMuaWeb = [{ value: "1", lable: "Mua căn hộ chung cư" }, { value: "2", lable: "Mua nhà riêng" }, { value: "3", lable: "Mua biệt thự, liền kề" }, { value: "4", lable: "Mua nhà mặt phố" }, { value: "5", lable: "Mua đất nền dự án" }, { value: "6", lable: "Mua đất" }, { value: "7", lable: "Mua trang trại, khu nghỉ dưỡng" }, { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" }, { value: "9", lable: "Mua kho, nhà xưởng" }, { value: "10", lable: "Mua loại BĐS khác" }, { value: "11", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
 
@@ -30952,7 +30956,7 @@
 	    0: "Tất cả"
 	};
 
-	danhMuc.LoaiNhaDatThueWeb = [{ value: "1", lable: "Cho Thuê căn hộ chung cư" }, { value: "2", lable: "Cho Thuê nhà riêng" }, { value: "3", lable: "Cho Thuê nhà mặt phố" }, { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" }, { value: "4", lable: "Cho Thuê văn phòng" }, { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" }, { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" }, { value: "99", lable: "Cho Thuê các BDS khác" }, { value: "8", lable: "Tìm kiếm nâng cao" }, { value: "0", lable: "Tất cả" }];
+	danhMuc.LoaiNhaDatThueWeb = [{ value: "0", lable: "Bất kỳ" }, { value: "1", lable: "Cho Thuê căn hộ chung cư" }, { value: "2", lable: "Cho Thuê nhà riêng" }, { value: "3", lable: "Cho Thuê nhà mặt phố" }, { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" }, { value: "4", lable: "Cho Thuê văn phòng" }, { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" }, { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" }, { value: "99", lable: "Cho Thuê loại bất động sản khác" }];
 
 	danhMuc.SoPhongNgu = {
 	    0: BAT_KY,

@@ -28,15 +28,19 @@
                 <div class="address">{{mdt.ads.place.diaChi}}</div>
                 <div class="note">
                 	<ul>                    	
-                        <li ng-if="mdt.ads.loaiTinFmt"><label>{{mdt.ads.loaiTinFmt}}</label></li>
+                        <!-- <li ng-if="mdt.ads.loaiTinFmt"><label>{{mdt.ads.loaiTinFmt}}</label></li>
+                         -->
                         <li ng-if="mdt.ads.loaiNhaDatFmt"><label>{{mdt.ads.loaiNhaDatFmt}}</label></li>
                         <li ng-if="mdt.ads.dienTichFmt"><label>{{mdt.ads.dienTichFmt}}</label></li>
-                        <li ng-if="mdt.ads.soPhongNguFmt"><label>{{mdt.ads.soPhongNguFmt}}</label></li>
+                        <li ng-if="mdt.ads.soTangFmt"><label>{{mdt.ads.soTangFmt}}</label></li>
                         <li ng-if="mdt.ads.soPhongTamFmt"><label>{{mdt.ads.soPhongTamFmt}}</label></li>
+                        <li ng-if="mdt.ads.soPhongNguFmt"><label>{{mdt.ads.soPhongNguFmt}}</label></li>
+                        <li ng-if="mdt.ads.huongNhaFmt"><label>{{mdt.ads.huongNhaFmt}}</label></li>
                         <li ng-if="mdt.ads.soNgayDaDangTinFmt"><label>{{mdt.ads.soNgayDaDangTinFmt}}</label></li>
                     </ul>
                 </div>
             </div>
+            <div class="title background-none border-none border-top"></div>
             <div class="desDetail ovh clb">
             	<h3 class="collapse-title">Chi tiết</h3>
                 <div onClick="detailMore('.more', '.detailMore', '... Xem thêm', '... Thu gọn', '.less')">
@@ -57,39 +61,39 @@
             <div class="area-box collapse-box">
                 <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconUpOpen"></i></span></a>
                 <div class="areaBox spinner">
-                    <div class="lined">
-                    	<span class="titlelbl">Loại tin giao</span>
-                        <label>{{mdt.ads.loaiTinFmt}}</label>
+                    <div ng-if="mdt.ads.loaiNhaDatFmt" class="lined">
+                    	<span class="titlelbl">Loại nhà đất</span>
+                        <label>{{mdt.ads.loaiNhaDatFmt}}</label>
                     </div>
-                    <div class="lined">
+                    <div class="lined" style="display: none;">
                     	<span class="titlelbl">Gía</span>
                         <label>{{mdt.ads.giaFmt}}</label>
                     </div>
-                    <div class="lined">
-                    	<span class="titlelbl">Giá/m2</span>
-                        <label>{{mdt.ads.giaM2}}</label>
+                    <div ng-if="mdt.ads.giaM2Fmt" class="lined">
+                    	<span class="titlelbl">Giá/m²</span>
+                        <label>{{mdt.ads.giaM2Fmt}}</label>
                     </div>
-                    <div class="lined">
+                    <div class="lined" ng-if="mdt.ads.soPhongNgu">
                     	<span class="titlelbl">Số phòng ngủ</span>
                         <label>{{mdt.ads.soPhongNgu}}</label>
                     </div>
-                    <div class="lined">
+                    <div class="lined" ng-if="mdt.ads.soPhongTam">
                     	<span class="titlelbl">Số phòng tắm</span>
                         <label>{{mdt.ads.soPhongTam}}</label>
                     </div>
-                    <div class="lined">
+                    <div class="lined" ng-if="mdt.ads.dienTichFmt">
                     	<span class="titlelbl">Diện tích</span>
                         <label>{{mdt.ads.dienTichFmt}}</label>
                     </div>
-					<div class="lined">
+					<div class="lined" ng-if="mdt.ads.huongNha">
                     	<span class="titlelbl">Hướng nhà</span>
                         <label>{{mdt.ads.huongNha}}</label>
                     </div>
-					<div class="lined">
+					<div class="lined" ng-if="mdt.ads.duAn">
                     	<span class="titlelbl">Thuộc dự án</span>
                         <label>{{mdt.ads.place.duAn}}</label>
                     </div>					
-                    <div class="lined">
+                    <div class="lined" ng-if="mdt.ads.ngayDangTinFmt">
                     	<span class="titlelbl">Ngày đăng tin</span>
                         <label>{{mdt.ads.ngayDangTinFmt}}</label>
                     </div>
@@ -97,16 +101,20 @@
                     	<span class="titlelbl">Lượt xem</span>
                         <label>{{mdt.ads.luotXem}}</label>
                     </div>
-                    <div class="lined">
+                    <div class="lined" ng-if="mdt.ads.diaChi">
                     	<span class="titlelbl">Địa chỉ</span>
                         <label>{{mdt.ads.place.diaChi}}</label>
                     </div>
-                    <div class="lined">
-                    	<span class="titlelbl" style="width: 100%; text-align: justify; white-space: normal;">Vị trí: Kéo và thả icon hình người (icon) vào những điểm hình tròn màu xanh (icon) trên bản đồ để xem ảnh khu vực đó . Zoom nhỏ bản đồ lại để nhìn thấy nhiều điểm streetview hơn.</span>
+                    <div class="lined" ng-if="mdt.ads.maSo">
+                        <span class="titlelbl">Mã tin</span>
+                        <label>{{mdt.ads.maSo}}</label>
                     </div>
-                    
-                    <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
-                    	<ng-map center="{{mdt.center}}" draggable="false" zoom="15" class="ngmap" default-style="true">
+                </div>
+                <div class="title background-none border-none"></div>
+                <div class="title background-none border-none border-top"></div>
+                <div>Vị trí</div>
+                <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
+                        <ng-map center="{{mdt.center}}" draggable="false" zoom="15" class="ngmap" default-style="true">
                             <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
                               <div class = "marker">
                                 {{mdt.marker.content}} 
@@ -125,7 +133,6 @@
                             </directions>                                                  
                     </div>
                 </div>
-            </div>
 
             <div class="share-box collapse-box">
             	<div class="pull-left">
@@ -184,9 +191,8 @@
 					</div>
                 </div>
             </div>
-            <div class="other-box collapse-box uln border-none"><div class="collapse-title">Khám phá thêm</div></div>
-			<div class="other-box collapse-box uln border-none">
-                <div class="otherBox spinner">
+            <div class="other-box collapse-box uln border-none">
+                <div class="otherBox spinner" ng-if="mdt.nhaXungQuanh">
                     <div class="reland-box uln">
                         <div class="reland-title">
                             <h4>Bộ sưu tập</h4>
@@ -211,9 +217,9 @@
 					</div>
                 </div>
                 <div class="clb ovh mb10"></div>
-                <div class="btn-box"><a rol="button" href="#" ng-click="mdt.showMoreXungQuanh()"  class="btn btn-primary btn-block">Xem thêm</a></div>
-                <div class="clb ovh"></div>
-                <div class="reland-box home-page reland-box_1 uln" reland-item="reland-box_1">
+                <div class="btn-box"><a rol="button" ng-if="mdt.nhaXungQuanh" href="#" ng-click="mdt.showMoreXungQuanh()"  class="btn btn-primary btn-block">Xem thêm</a></div>
+                <div class="clb ovh" style="display: none;"></div>
+                <div class="reland-box home-page reland-box_1 uln" style="display: none;" reland-item="reland-box_1">
                     <div class="reland-title">
                         <h4>Bộ sưu tập</h4>
                         <h3>Nhà tương tự</h3>
@@ -256,7 +262,7 @@
     </footer>
     <div class="overlay"></div>
 
-    <div class="modal fade modal-choose modal-none" id="detailAlertBox" tabindex="-1" role="dialog" aria-labelledby="detailAlertBoxLabel">
+    <div class="modal fade modal-choose modal-none modal-list" id="detailAlertBox" tabindex="-1" role="dialog" aria-labelledby="detailAlertBoxLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -266,12 +272,9 @@
                 <div class="modal-body uln">
                     <div class="title border-bottom">Chọn lý do</div>
                     <ul class="type-list">
-                        <li><a ng-click="mdt.setReportCode(1);" href="javascript:void(0)" class="active">Thông tin vị trí không chính xác</a></li>
-                        <li><a ng-click="mdt.setReportCode(2);" href="javascript:void(0)">Hình ảnh không phù hợp</a></li>
-                        <li><a ng-click="mdt.setReportCode(3);" href="javascript:void(0)">Tin bài sao chép</a></li>
-                        <li><a ng-click="mdt.setReportCode(4);" href="javascript:void(0)">Nội dung thông tin không có thật</a></li>
-                        <li><a ng-click="mdt.setReportCode(5);" href="javascript:void(0)">Nhà đã được bán</a></li>
-                        <li class="pdr15"><a ng-click="mdt.setReportCode(6);" href="javascript:void(0)" class="border-none">Khác</a><input type="text" ng-model="mdt.reportContent" class="form-control" placeholder="Lý do thông báo..."></li>
+                        <li><a ng-click="mdt.setReportCode(1);" href="javascript:void(0)" class="active">Nhà không có thật</a></li>
+                        <li><a ng-click="mdt.setReportCode(2);" href="javascript:void(0)">Nhà đã bị bán hoặc cho thuê</a></li>
+                        <li class="pdr15"><a ng-click="mdt.setReportCode(6);" href="javascript:void(0)" class="border-none">Lý do khác</a><input type="text" ng-model="mdt.reportContent" class="form-control" placeholder="Lý do thông báo..."></li>
                     </ul>
                     <div class="mb10"></div>
                     <div class="title border-top background-none"></div>

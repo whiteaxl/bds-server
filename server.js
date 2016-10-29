@@ -20,6 +20,7 @@ require('babel-core/register')({
 var chatHandler = require('./src/lib/ChatHandler');
 chatHandler.init(https);
 
+
 // var dbChangeHandler = require('./src/lib/dbChangeHandler');
 
 
@@ -124,6 +125,7 @@ https.start(function () {
   // dbChangeHandler.init(this);
 
   //console.log('Server is running: ' + HapiServer.info.uri);
+
 
 });
 

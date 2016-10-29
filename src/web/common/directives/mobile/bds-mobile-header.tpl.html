@@ -1,7 +1,24 @@
-<header class="main blue">
- 	<a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
-	<a href="javascript:void(0)" class="pull-left"><img src="/web/mobile/img/logo.png" /></a>
-	<span ng-if="mhdr.page=='list'">Quận Hà Đông - Hà Nội</span>
-	<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><i class="iconChat"></i></a>
-    <a href="javascript:void(0)" ng-click="mhdr.toggleFilter();" class="search_mobile header-icon"><i class="iconSearch"></i></a>    
+<header class="main blue" style="z-index=10;">
+
+ 	  
+
+    <div ng-if="mhdr.stateName=='msearch'">
+    	<a href="javascript:void(0)" class="nav_mobile header-icon"><i class="iconMenu"></i><span style="display: none;">33</span></a>
+		<i class="iconSearch search-head"></i>
+		<a href="javascript:void(0)" class="search_mobile search-txt" ng-click="mhdr.toggleFilter();">Lọc</a>
+		<input type="search" placeholder="Tìm tất cả theo khung nhìn" />
+    </div>
+    <div ng-if="mhdr.stateName!='msearch'">
+    	<!-- <a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
+		<a href="javascript:void(0)" class="pull-left"><img src="/web/mobile/img/logo.png" /></a>
+		<span ng-if="mhdr.page=='list'">Quận Hà Đông - Hà Nội</span>
+		<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><i class="iconChat"></i></a>
+	    <a href="javascript:void(0)" ng-click="mhdr.toggleFilter();" class="search_mobile header-icon"><i class="iconSearch"></i></a> -->  
+
+	    <a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i><span>33</span></a>
+		<a href="javascript:void(0)" class="pull-left"><img src="/web/mobile/img/logo.svg" width="110" /></a>
+		<a href="javascript:void(0)" class="chat_mobile header-icon pull-right"><img src="/web/mobile/img/location.png" class="location"/></a>
+        <a href="javascript:void(0)" ng-click="mhdr.toggleFilter();" class="search_mobile header-icon"><i class="iconSearch"></i></a>
+
+    </div>
 </header>

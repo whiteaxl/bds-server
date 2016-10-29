@@ -1,6 +1,6 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
-<bds-mobile-header></bds-mobile-header>
+<bds-mobile-header ></bds-mobile-header>
 
 <div ng-if="msc.viewMode=='list'" class="wapper">
     <div class="reland-box uln" infinite-scroll='msc.nextPage()' infinite-scroll-disabled='msc.disableScrolling' infinite-scroll-distance='1' >
@@ -10,9 +10,9 @@
                 <a href="#" ng-click="msc.goDetail($event,$index)">
                     <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                     <span class="des bgOpa">
-                        <span class="btn btn-primary">Cần bán gấp</span>
+                        <!-- <span class="btn btn-primary">Cần bán gấp</span>
                         <span class="btn btn-warning">Nhà mới xây</span>
-                        <span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
+                         --><span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
                         <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
                         <span class="split text-center">.</span>
                         <span>{{ads.soPhongNguFmt}}</span>
@@ -95,9 +95,10 @@
     </div>
     <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
     <footer class="main border uln">
-    <ul class="navmain nav-3 blue">
+    <ul class="navmain nav-3 blue nav-text">
         <li>
-            <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a>
+            <!-- <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a> -->
+            <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
             <div class="list-sort popovers top uln">
                 <ul>
                     <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')" class="active">Mặc định</a></li>
@@ -110,9 +111,11 @@
                 </ul>
             </div>
         </li>
-        <li><a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();"><i class="fa fa-hdd-o"></i> Lưu tìm kiếm</a></li>
-        <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#"><i class="iconMap"></i> Bản đồ</a></li>
-        <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#"><i class="iconMap"></i> Danh sách</a></li>
+        <li>
+            <a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();">Lưu tìm kiếm</a>            
+        </li>
+        <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#">Bản đồ</a></li>
+        <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#">Danh sách</a></li>
     </ul>
 </footer>
 </div>

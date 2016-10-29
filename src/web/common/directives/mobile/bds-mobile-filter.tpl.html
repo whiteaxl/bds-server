@@ -23,6 +23,22 @@
 	        <div class="tab-content">
 	            <div role="tabpanel" class="tab-pane active" id="searchbuy">
 	            	<div class="title">Các điều kiện</div>
+	            	<div class="type-box collapse-box">
+	                	<a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBox">Loại nhà đất <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>
+	                </div>
+
+	                <div class="area-box collapse-box">
+                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
+	                    <div class="areaBox spinner spinner-hide">
+	                    	<div class="mb10 ovh">
+                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacFrom" class="form-control" /></div>
+                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacTo" class="form-control" /></div>
+                            </div>
+	                    	<select id="area" class="drum">
+	                    		<option ng-repeat="area in mf.areas track by $index" value="{{area.value}}">{{area.lable}}</option>	
+	                        </select>
+	                    </div>
+	                </div>
 	                <div class="price-box collapse-box">
 	                	<a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')" >Mức giá<span><label id="prices_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div id="price_0" ng-show="searchData.loaiTin==0 || mf.initialized==false" class="priceBox spinner spinner-hide">
@@ -39,9 +55,6 @@
 	                        	<option ng-repeat="price in mf.rentPrices track by $index" value="{{price.value}}">{{price.lable}}</option>	
                             </select>
 	                    </div>
-	                </div>
-	                <div class="type-box collapse-box">
-	                	<a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBox">Loại nhà đất <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>
 	                </div>
 	                <div class="room-box collapse-box collapse-cus group-cus ovh">
 	                	<a class="collapse-title">Số phòng ngủ</a>
@@ -66,29 +79,11 @@
 	                        </label>
 	                    </div>
 	                </div>
-	                <div class="room-box collapse-box collapse-cus group-cus ovh">
-	                	<a class="collapse-title">Số phòng tắm</a>
-	                    <div class="btn-group" data-toggle="buttons">
-	                        <label class="btn {{searchData.soPhongTamGREATER=='0'?'active':''}}" ng-click="mf.setSearchDataSpt(0)" >
-	                        	<input type="radio"  id="bathroom0" value="0" autocomplete="off" ng-value="searchData.soPhongTamGREATER">Bất kỳ
-	                        </label>
-	                        <label class="btn {{searchData.soPhongTamGREATER=='1'?'active':''}}" ng-click="mf.setSearchDataSpt(1)">
-	                        	<input type="radio"  id="bathroom1" value="1" autocomplete="off" ng-value="searchData.soPhongTamGREATER">1+
-	                        </label>
-	                        <label class="btn {{searchData.soPhongTamGREATER=='2'?'active':''}}" ng-click="mf.setSearchDataSpt(2)">
-	                        	<input type="radio"  id="bathroom2" value="2" autocomplete="off" ng-value="searchData.soPhongTamGREATER">2+
-	                        </label>
-	                        <label class="btn {{searchData.soPhongTamGREATER=='3'?'active':''}}" ng-click="mf.setSearchDataSpt(3)">
-	                        	<input type="radio"  id="bathroom3" value="3" autocomplete="off" ng-value="searchData.soPhongTamGREATER">3+
-	                        </label>
-	                        <label class="btn {{searchData.soPhongTamGREATER=='4'?'active':''}}" ng-click="mf.setSearchDataSpt(4)">
-	                        	<input type="radio"  id="bathroom4" value="4" autocomplete="off" ng-value="searchData.soPhongTamGREATER">4+
-	                        </label>
-	                        <label class="btn {{searchData.soPhongTamGREATER=='5'?'active':''}}" ng-click="mf.setSearchDataSpt(5)">
-	                        	<input type="radio" id="bathroom5" value="1=5" autocomplete="off" ng-value="searchData.soPhongTamGREATER">5+
-	                        </label>
-	                    </div>
-	                </div>
+
+	                
+	                
+	                
+	                
 	                <div ng-if="mf.item.location" class="room-box collapse-box collapse-cus group-cus ovh">
 	                	<a class="collapse-title">Bán kính tìm kiếm(Km)</a>
 	                    <div class="btn-group" data-toggle="buttons">
@@ -113,23 +108,13 @@
 	                    </div>
 	                </div>
 
-	                <div class="area-box collapse-box">
-                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
-	                    <div class="areaBox spinner spinner-hide">
-	                    	<div class="mb10 ovh">
-                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacFrom" class="form-control" /></div>
-                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacTo" class="form-control" /></div>
-                            </div>
-	                    	<select id="area" class="drum">
-	                    		<option ng-repeat="area in mf.areas track by $index" value="{{area.value}}">{{area.lable}}</option>	
-	                        </select>
-	                    </div>
-	                </div>
+	                <div class="title border">&nbsp;</div>
 	                <div class="area-box collapse-box collapse-none"></div>
 	                <div class="btn-box collapse-box btn-more">
 	                	<a role="button" class="collapse-title blue">Mở rộng</a>
 	                </div>
 	                <div class="more-box more-box-hide">
+	                	
 	                	<div class="trend-box collapse-box">
 	                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#trendBox">Hướng nhà <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>
 	                    </div>
@@ -143,7 +128,7 @@
 	                    </div>
 	                    
 	                </div>
-	                
+	                <div class="title border">&nbsp;</div>
 	                <div class="btn-box collapse-box btn-reset border-none">
                     	<button type="reset" ng-click="mf.reset();" class="collapse-title red">Thiết lập lại</button>
                     </div>

@@ -27,7 +27,7 @@
   			"soTangGREATER": 0,
 		    "ngayDangTinGREATER" : "20150601",
 		    "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
-		    "limit" : 9,
+		    "limit" : 5,
 		    "pageNo" : 1,
 		    "isIncludeCountInResponse" : false,
 		    "updateLastSearch": false,			
@@ -339,9 +339,9 @@
 			}else if(vm.ads.soTang){
 				vm.searchDataTuongTu.soTang = vm.ads.soTang;
 			}
-			HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function(res){
-				vm.nhaTuongTu = res.data.list;					
-			});
+			// HouseService.findAdsSpatial(vm.searchDataTuongTu).then(function(res){
+			// 	vm.nhaTuongTu = res.data.list;					
+			// });
 
 		
 

@@ -7,7 +7,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-                var vm = this;  
+                var vm = this; 
+                vm.stateName = $state.current.name;                 
                 vm.searchfr = function(){
                     $(".search").removeAttr("style");
                     $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");

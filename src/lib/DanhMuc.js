@@ -485,17 +485,16 @@ danhMuc.menu = [
 
 
 danhMuc.LoaiNhaDatBanWeb = [
+    { value: "0", lable: "Bất kỳ" },
     { value: "1", lable: "Bán căn hộ chung cư" },
     { value: "2", lable: "Bán nhà riêng" },
-    { value: "3", lable: "Bán nhà mặt phố" },
-    { value: "4", lable: "Bán biệt thự, liền kề" },
-    { value: "6", lable: "Bán Shophouse" },
-    { value: "7", lable: "Bán đất nền dự án" },
-    { value: "5", lable: "Bán đất" },
-    { value: "8", lable: "Bán trang trại, khu nghỉ dưỡng" },
-    { value: "99", lable: "Bán các BDS khác" },
-    { value: "10", lable: "Tìm kiếm nâng cao" },
-    { value: "0", lable: "Tất cả" }
+    { value: "3", lable: "Bán biệt thự, liền kề" },
+    { value: "4", lable: "Bán nhà mặt phố" },
+    { value: "5", lable: "Bán đất nền dự án" },
+    { value: "6", lable: "Bán đất" },
+    { value: "7", lable: "Bán trang trại, khu nghỉ dưỡng" },
+    { value: "8", lable: "Bán kho, nhà xưởng" },
+    { value: "99", lable: "Bán loại bất động sản khác" }
     ];
 
 danhMuc.LoaiNhaDatCanMuaWeb = [
@@ -540,16 +539,15 @@ danhMuc.LoaiNhaDatThue = {
 }
 
 danhMuc.LoaiNhaDatThueWeb = [
+    { value: "0", lable: "Bất kỳ" },
     { value: "1", lable: "Cho Thuê căn hộ chung cư" },
     { value: "2", lable: "Cho Thuê nhà riêng" },
     { value: "3", lable: "Cho Thuê nhà mặt phố" },
     { value: "6", lable: "Cho thuê nhà trọ, phòng trọ" },
     { value: "4", lable: "Cho Thuê văn phòng" },
     { value: "5", lable: "Cho Thuê cửa hàng, ki-ốt" },
-    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },
-    { value: "99", lable: "Cho Thuê các BDS khác" },
-    { value: "8", lable: "Tìm kiếm nâng cao" },
-    { value: "0", lable: "Tất cả" }
+    { value: "7", lable: "Cho thuê kho, nhà xưởng, đất" },    
+    { value: "99", lable: "Cho Thuê loại bất động sản khác" }    
 ];
 
 danhMuc.SoPhongNgu = {
@@ -754,7 +752,7 @@ danhMuc.getHuongNhaDisplay = function(val){
     if (!val) {
         return "Không rõ";
     }
-    return eval('danhMuc.HuongNha['+val + ']');
+    return "Hướng " + eval('danhMuc.HuongNha['+val + ']');
 }
 
 

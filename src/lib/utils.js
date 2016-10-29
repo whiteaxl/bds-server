@@ -53,6 +53,7 @@ util.roundToTwo = function(num) {
     return +(Math.round(num + "e+2")  + "e-2");
 }
 
+
 util.getPriceDisplay = function(val, loaiTin,forWeb) {
     try {
         if (!val || val == -1) {
@@ -69,6 +70,33 @@ util.getPriceDisplay = function(val, loaiTin,forWeb) {
             return util.roundToTwo(val/1000) + " tỷ";
         } else {
             return util.roundToTwo(val) +  (forWeb?"triệu":"triệu");
+        }
+    } catch(ex) {
+        console.log("Error when getPriceDisplay of " + val, ex)
+    }
+
+};
+
+util.getPriceM2Display = function(val, loaiTin,forWeb) {
+    try {
+        if (!val || val == -1) {
+            return "Thỏa thuận";
+        }
+        val = Number(val);
+        if (loaiTin===0) { //ban
+          if (val >= 1000) {            
+            return (Math.round(val * 100000) / 100) + " tỷ/m²";
+          }else if(val< 1000 && val >= 1 ){
+            return (Math.round(val * 10) / 10) + " triệu/m²";            
+          }else{
+            return (Math.round(val*1000)) + " nghìn/m²";
+          }
+        } else {
+          if(val >=1){                        
+            return (Math.round(val * 10) / 10) + " triệu/m²";            
+          }else{            
+            return (Math.round(val*1000)) + " nghìn/m²";            
+          }
         }
     } catch(ex) {
         console.log("Error when getPriceDisplay of " + val, ex)
@@ -494,6 +522,18 @@ util.generateHomeSearchSeries = function(query,currentLocation, searcher, search
     
     return fl;
 }
+
+util.convertGiaM2 = function(value){
+  if(value){
+    if(value > 1000){
+      return value + " tỷ";      
+    }
+  }else{
+    return '';
+  }
+
+}
+
 
 module.exports = util;
 

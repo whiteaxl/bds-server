@@ -224,10 +224,13 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.selectLoaiTin($scope.searchData.loaiTin);
                 
                 vm.selectLoaiNhaDat = function(lnd){
-                    $scope.searchData.loaiNhaDat = lnd.value;
+                    $scope.searchData.loaiNhaDat = [lnd.value];
+                    $('#typeBox').modal("hide");
                 }
                 vm.selectHuongNha = function(hn){
-                    $scope.searchData.huongNha = hn.value;
+                    $scope.searchData.huongNha = [hn.value];
+                    $('#trendBox').modal("hide");
+                    
 
                 }
 
@@ -472,6 +475,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     }
 
                 }
+
 
 
                 vm.userLoggedIn = function(){                   

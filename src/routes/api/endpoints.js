@@ -91,6 +91,7 @@ const DetailResultModel = Joi.object({
   loaiNhaDat: Joi.number(),
   loaiTin: Joi.number().integer(),
   huongNha: Joi.number().integer(),
+  huongNhaFmt: Joi.string(),
   chiTiet: Joi.string().allow(null).allow(''),
   soNgayDaDangTin: Joi.number().description('So ngay da dang tin'),
   place: Joi.object({
