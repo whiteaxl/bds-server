@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7639af58a958b404bcb0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2baa7fabf09a71da1342"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -46645,9 +46645,9 @@
 	};
 
 	internals.ADS_ID_PREFIX = {
-	    REWAY: "ADS_00",
-	    BATDONGSAN: "ADS_01",
-	    DOTHI: "ADS_02"
+	    REWAY: "Ads_00",
+	    BATDONGSAN: "Ads_01",
+	    DOTHI: "Ads_02"
 	};
 
 	internals.ADS_SOURCE = {
