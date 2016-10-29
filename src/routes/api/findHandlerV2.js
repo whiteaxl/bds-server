@@ -162,11 +162,12 @@ function _updateLastSearch(q) {
       var user = res[0];
       if(!user.lastSearch){
         user.lastSearch = [];
-      }else if (user.lastSearch.length==2){
+      }else if (user.lastSearch.length==10){
         user.lastSearch =  _(user.lastSearch).slice(1,user.lastSearch.length);                
       }
       user.lastSearch.push({
         time: moment().format('YYYYMMDD hh:mm:ss'),
+        timeModified :  new Date().getTime(),
         query: q        
         }        
       );

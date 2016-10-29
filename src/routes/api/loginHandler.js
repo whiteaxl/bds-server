@@ -62,7 +62,6 @@ internals.login = function(req, reply){
     		message: undefined
     	}
     	console.log(req.payload);
-        console.log(JSON.stringify(res));
 
         if(res && res.length==1){
         	console.log(res[0]);
@@ -308,9 +307,8 @@ internals.updateProfile = function(req,reply){
             user.sex = req.payload.sex;
             user.birthDate = req.payload.birthDate;
             user.website = req.payload.website;
-            user.broker = req.payload.website;
-            if(req.payload.newPass)
-                user.matKhau = req.payload.newPass;
+            user.broker = req.payload.broker;
+            user.timeModified = (new Date()).getTime();
 
             userService.upsert(user,function(uerr,ures){
                 if(uerr){
