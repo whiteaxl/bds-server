@@ -13,11 +13,14 @@ var rp = require("request-promise");
 var PlaceModel = require("../../dbservices/Place");
 var place = new PlaceModel();
 
+var DBCache = require("../../lib/DBCache");
+
 var internals = {};
-var placeCache = null;
 
 function _getFromCache(input, reply) {
   let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
+
+  let placeCache = DBCache.placeAsArray();
 
   let ret = [];
   for (var i=0; i < placeCache.length; i++) {
@@ -125,6 +128,8 @@ function _convertFromPlaceRaw(placeRaw){
 }
 
 function _getDuAnFromCache(diaChinhQuan) {
+  let placeCache = DBCache.placeAsArray();
+
   if (!placeCache){
     return undefined;
   }
@@ -226,7 +231,7 @@ internals.getPlaceByDiaChinhKhongDau = function(req,reply){
     }
 
 });
-}
+};
 
 internals.autocomplete = function(req, reply) {
   var query = req.query;
@@ -237,27 +242,6 @@ internals.autocomplete = function(req, reply) {
       predictions : [],
       status: "OK"
     });
-
-    return;
-  }
-
-  //
-  if (!placeCache) {
-    place.getAllPlaces4Autocomplete((err, res) => {
-      if (err) {
-        console.log("getAllPlaces error:", err);
-
-        reply({
-          predictions : [],
-          status: "ERROR " + err
-        });
-        return;
-      }
-
-      placeCache = res;
-
-      return _getFromCache(query.input, reply)
-    }) ;
 
     return;
   }

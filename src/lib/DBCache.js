@@ -34,18 +34,58 @@ function loadDoc(type, callback) {
 }
 
 
+function loadAds(callback) {
+  let type = 'Ads';
+  let sql = `select t.* from default t where type='Ads' `;
+  commonService.query(sql, (err, list) => {
+    if (err) {
+      logUtil.error(err);
+      return;
+    }
+    global.rwcache[type] = {
+      asMap : {},
+      sale : [],
+      rent : []
+    };
+
+    list.forEach(e => {
+      global.rwcache[type].asMap[e.id] = e;
+      global.rwcache[type].sale.push(e);
+      global.rwcache[type].rent.push(e);
+    });
+
+    logUtil.info("Done load all " + type, list.length + " records");
+
+    callback();
+  });
+}
+
+
+
 var cache = {
   init() {
     this.reloadAds();
+    this.reloadPlaces();
   },
   reloadAds() {
-    loadDoc("Ads", ()=> {
-
+    loadAds(()=> {
     });
   },
 
-  adsAsArray() {
-    return global.rwcache.Ads.asArray;
+  reloadPlaces() {
+    loadDoc("Place", ()=> {
+    });
+  },
+
+  adsSaleAsArray() {
+    return global.rwcache.Ads.sale;
+  },
+  adsRentAsArray() {
+    return global.rwcache.Ads.rent;
+  },
+
+  placeAsArray() {
+    return global.rwcache.Place.asArray;
   },
 
   query(q, callback){
@@ -56,7 +96,9 @@ var cache = {
     }
 
     let filtered = [];
-    this.adsAsArray().forEach((e) => {
+    let allAds = q.loaiTin == 0 ? this.adsSaleAsArray() : this.adsRentAsArray();
+
+    allAds.forEach((e) => {
       if (this._match(q, e)) {
         filtered.push(e);
       }
@@ -106,7 +148,6 @@ var cache = {
 
   _match(q, ads){
     if (q.loaiTin !== ads.loaiTin) {
-      //logUtil.info("Not match loaiTin", q.loaiTin, ads.loaiTin);
       return false;
     }
 
