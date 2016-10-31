@@ -93,7 +93,7 @@ var cache = {
     logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
 
     //do paging
-    filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);
+    filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
 
     let endQuery = new Date().getTime();
 

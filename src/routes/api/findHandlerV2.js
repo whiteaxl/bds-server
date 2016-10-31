@@ -25,10 +25,8 @@ var internals = {};
 var geolib = require("geolib");
 
 //const
-var MAX_POLYGON_OR_CIRCLE_RESULT = 2000;
-var POLYGON_BATCH_SIZE = 3000;
-var GEO_PROJECTION = " id, place.geo.lat, place.geo.lon ";
-
+var MAX_POLYGON_OR_CIRCLE_RESULT = 500000;
+var POLYGON_BATCH_SIZE = 500000;
 
 function prepareLatLon(coords) {
   let e;
