@@ -16,6 +16,7 @@ if (cluster.isMaster) {
     console.log('worker ' + worker.process.pid + ' died');
   });
 } else {
+  global.loadCluster = true;
 
   //change this line to Your Node.js app entry point.
   require("./server.js");
