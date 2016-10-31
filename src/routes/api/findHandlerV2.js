@@ -240,8 +240,10 @@ function viewportTooLarge(vp) {
 function _doPagingAndReply(q, reply, filtered) {
   let count = filtered.length;
 
-  //sorting
+  //no need sort
+  /*
   let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
   let startTime = new Date().getTime();
   filtered.sort((a, b) => {
     if (a[orderBy.name] > b[orderBy.name]) {
@@ -264,6 +266,7 @@ function _doPagingAndReply(q, reply, filtered) {
   let endTime = new Date().getTime();
 
   logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
+  */
 
   //do paging
   filtered = filtered.slice((q.pageNo-1)*q.limit, q.pageNo*q.limit);

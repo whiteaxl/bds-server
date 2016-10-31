@@ -111,21 +111,29 @@ var cache = {
 
     //sorting
     let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+
+    let sign = 1;
+    if (orderBy.type == 'DESC') {
+      sign = -1;
+    }
+    console.log("Will sort by ", orderBy, sign);
+
     let startTime = new Date().getTime();
     filtered.sort((a, b) => {
       if (a[orderBy.name] > b[orderBy.name]) {
-        return 1;
+        return sign;
       }
 
       if (a[orderBy.name] < b[orderBy.name]) {
-        return -1;
+        return -1 * sign;
       }
 
       if (a.timeModified > b.timeModified) {
-        return 1;
+        return sign;
       }
       if (a.timeModified < b.timeModified) {
-        return -1;
+        return -1 * sign;
       }
 
       return 0;
@@ -133,6 +141,7 @@ var cache = {
     let endTime = new Date().getTime();
 
     logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
+    logUtil.info("Top 5", filtered.slice(0, 5));
 
     //do paging
     filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
