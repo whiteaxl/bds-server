@@ -72,16 +72,18 @@ var cache = {
   },
   reloadAds_01() {
     let t = Math.floor((Math.random() * 10) + 1);
+    let interval = 30000;
+    if (global.delayLoadTime) {
+      interval = global.delayLoadTime;
+    }
 
     if (global.loadCluster) {
       setTimeout(() => {
         loadAds(()=> {});
-      }, t * 30000)
+      }, t * interval)
     } else {
       loadAds(()=> {});
     }
-
-
   },
 
   reloadPlaces() {

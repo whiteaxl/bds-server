@@ -2,8 +2,17 @@ var cluster = require('cluster');
 
 var numCPUs = require('os').cpus().length;
 
+
 if (numCPUs > 2) {
   numCPUs = numCPUs / 2
+}
+
+if (process.argv[2]) {
+  numCPUs = process.argv[2];
+}
+
+if (process.argv[3]) {
+  global.delayLoadTime = process.argv[3]*1000;
 }
 
 if (cluster.isMaster) {
