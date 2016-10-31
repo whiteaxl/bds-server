@@ -2,6 +2,10 @@ var cluster = require('cluster');
 
 var numCPUs = require('os').cpus().length;
 
+if (numCPUs > 4) {
+  numCPUs = numCPUs - 4; //4 cores to run couchbase
+}
+
 if (cluster.isMaster) {
 
   for (var i = 0; i < numCPUs; i++) {
