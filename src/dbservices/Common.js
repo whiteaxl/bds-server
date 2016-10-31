@@ -32,6 +32,26 @@ class CommonModel {
 		bucket.query(query, callback);
 	}
 
+	byId(id, callback) {
+		let sql  = `select t.* from default t where id ='${id}'`;
+
+		var query = N1qlQuery.fromString(sql);
+		bucket.query(query, (err ,list) => {
+			if (err) {
+				logUtil.error("Error:", err);
+				callback(err, null);
+				return null;
+			}
+
+			if (!list || list.length==0) {
+				callback(null, null);
+				return null;
+			}
+
+			callback(null, list[0]);
+		});
+	}
+
 	countByType(type, onSuccess) {
 	
 		

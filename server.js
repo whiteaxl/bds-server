@@ -23,6 +23,10 @@ chatHandler.init(https);
 
 // var dbChangeHandler = require('./src/lib/dbChangeHandler');
 
+var DBCache = require("./src/lib/DBCache");
+
+//inti cache
+DBCache.init();
 
 // var io = require('socket.io')(HapiServer.listener);
 
@@ -125,6 +129,7 @@ https.start(function () {
   // dbChangeHandler.init(this);
 
   //console.log('Server is running: ' + HapiServer.info.uri);
+
 
 
 });

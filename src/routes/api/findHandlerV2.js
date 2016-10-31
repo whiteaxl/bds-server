@@ -8,6 +8,7 @@ var AdsModel = require('../../dbservices/Ads');
 var adsModel = new AdsModel();
 
 var placeUtil = require("../../lib/placeUtil");
+var dbCache = require("../../lib/DBCache");
 
 var constant = require("../../lib/constant");
 var moment = require("moment");
@@ -284,7 +285,7 @@ function _doPagingAndReply(q, reply, filtered) {
 function _doQueryAllIntoMemory(q, reply, allResults) {
 
   let startTime = new Date().getTime();
-  adsModel.query(q, (err, listAds) => {
+  dbCache.query(q, (err, listAds) => {
     if (err) {
       console.log("Error when query ADS:", err);
       reply(Boom.badImplementation());
@@ -342,7 +343,7 @@ function _transformAndReply(q, reply, err, filtered, count) {
 }
 
 function _doDBQueryAndCount(q, reply) {
-  adsModel.query(q, (err, listAds) => {
+  dbCache.query(q, (err, listAds, count) => {
     if (err) {
       console.log("Error when query ADS:", err);
       reply(Boom.badImplementation());
@@ -350,9 +351,13 @@ function _doDBQueryAndCount(q, reply) {
     }
 
     if (q.isIncludeCountInResponse) {
-      adsModel.count(q, (err, cnt) => {
-        _transformAndReply(q, reply, err, listAds, cnt);
-      });
+      if (count || count === 0 ) {
+        _transformAndReply(q, reply, err, listAds, count);
+      } else {
+        adsModel.count(q, (err, cnt) => {
+          _transformAndReply(q, reply, err, listAds, cnt);
+        });
+      }
     } else {
       _transformAndReply(q, reply, null, listAds, undefined);
     }
