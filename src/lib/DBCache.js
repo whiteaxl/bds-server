@@ -44,7 +44,8 @@ function loadAds(callback) {
       asMap : {},
       sale : [],
       rent : [],
-      index: {}
+      tinhIdx: {},
+      huyenIdx: {},
     };
 
     list.forEach(e => {
@@ -75,7 +76,7 @@ var cache = {
     if (global.loadCluster) {
       setTimeout(() => {
         loadAds(()=> {});
-      }, t * 10000)
+      }, t * 30000)
     } else {
       loadAds(()=> {});
     }
