@@ -5,8 +5,6 @@ var _ = require("lodash");
 var CommonService = require("../dbservices/Common");
 var commonService = new CommonService;
 
-
-
 //declare global cache
 global.rwcache = {};
 
@@ -50,8 +48,11 @@ function loadAds(callback) {
 
     list.forEach(e => {
       global.rwcache[type].asMap[e.id] = e;
-      global.rwcache[type].sale.push(e);
-      global.rwcache[type].rent.push(e);
+      if (e.loaiTin ==0) {
+        global.rwcache[type].sale.push(e);
+      } else {
+        global.rwcache[type].rent.push(e);
+      }
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
@@ -64,10 +65,10 @@ function loadAds(callback) {
 
 var cache = {
   init() {
-    this.reloadAds();
+    this.reloadAds_01();
     this.reloadPlaces();
   },
-  reloadAds() {
+  reloadAds_01() {
     loadAds(()=> {
     });
   },
@@ -141,7 +142,6 @@ var cache = {
     let endTime = new Date().getTime();
 
     logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
-    logUtil.info("Top 5", filtered.slice(0, 5));
 
     //do paging
     filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
