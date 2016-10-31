@@ -43,11 +43,14 @@ function loadAds(callback) {
     global.rwcache[type] = {
       asMap : {},
       sale : [],
-      rent : []
+      rent : [],
+      index: {}
     };
 
     list.forEach(e => {
       global.rwcache[type].asMap[e.id] = e;
+      global.rwcache[type].tinhIdx[e.loaiTin + e.place.diaChinh.codeTinh] = e;
+      global.rwcache[type].huyenIdx[e.loaiTin + e.place.diaChinh.codeTinh + e.place.diaChinh.codeHuyen] = e;
       if (e.loaiTin ==0) {
         global.rwcache[type].sale.push(e);
       } else {
@@ -61,16 +64,23 @@ function loadAds(callback) {
   });
 }
 
-
-
 var cache = {
   init() {
     this.reloadAds_01();
     this.reloadPlaces();
   },
   reloadAds_01() {
-    loadAds(()=> {
-    });
+    let t = Math.floor((Math.random() * 10) + 1);
+
+    if (global.loadCluster) {
+      setTimeout(() => {
+        loadAds(()=> {});
+      }, t * 10000)
+    } else {
+      loadAds(()=> {});
+    }
+
+
   },
 
   reloadPlaces() {
