@@ -71,13 +71,11 @@ var cache = {
     this.reloadPlaces();
   },
   reloadAds_01() {
-    let t = Math.floor((Math.random() * 10) + 1);
-    let interval = 30000;
-    if (global.delayLoadTime) {
-      interval = global.delayLoadTime;
-    }
-
     if (global.loadCluster) {
+      let n = global.numCPUs;
+      let t = Math.floor((Math.random() * n) + 1);
+      let interval = global.delayLoadTime || 30000;
+
       setTimeout(() => {
         loadAds(()=> {});
       }, t * interval)

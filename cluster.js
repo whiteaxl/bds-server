@@ -11,6 +11,8 @@ if (process.argv[2]) {
   numCPUs = process.argv[2];
 }
 
+global.numCPUs = numCPUs;
+
 if (process.argv[3]) {
   global.delayLoadTime = process.argv[3]*1000;
 }
