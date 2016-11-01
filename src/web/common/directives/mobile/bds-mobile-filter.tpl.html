@@ -8,7 +8,7 @@
 	<form>
 		<div class="search-fr">
 	    	<i class="iconSearch"></i>
-	    	<input type="text" ng-change="mf.autoCompleteChange();" ng-model="mf.autoCompleteText" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />	
+	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-change="mf.autoCompleteChange();" ng-model="mf.autoCompleteText" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />	
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>

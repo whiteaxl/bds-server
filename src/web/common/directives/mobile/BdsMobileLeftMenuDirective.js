@@ -21,6 +21,14 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
                     $(".overlay").click();
                 }
+                vm.showFilter = function(){
+                    $scope.$bus.publish({
+                        channel: 'search',
+                        topic: 'show search',
+                        data: null
+                    });
+                    $(".overlay").click();
+                }
                 vm.gotoRelandApp = function(event){
 
                 }

@@ -4,7 +4,7 @@ var supertest = require("supertest");
 var should = require("should");
 var moment = require('moment');
 var constant = require('../src/lib/constant');
-var url  =`http://${process.env.IP || '192.168.11.9'}:${process.env.PORT || 5000}`;
+var url  =`http://${process.env.IP || '127.0.0.1'}:${process.env.PORT || 5000}`;
 
 console.log("Server URL:", url);
 

@@ -3,10 +3,11 @@
  	  
 
     <div ng-if="mhdr.stateName=='msearch'">
-    	<a href="javascript:void(0)" class="nav_mobile header-icon"><i class="iconMenu"></i><span style="display: none;">33</span></a>
+    	<a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i><span style="display: none;">33</span></a>
 		<i class="iconSearch search-head"></i>
 		<a href="javascript:void(0)" class="search_mobile search-txt" ng-click="mhdr.toggleFilter();">Lọc</a>
-		<input type="search" placeholder="Tìm tất cả theo khung nhìn" />
+		<!-- <input type="search" placeholder="Tìm tất cả theo khung nhìn" /> -->
+		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model="mhdr.autoCompleteText" ng-click="mhdr.showFavorite($event)" ng-keypress="mhdr.keyPress($event)" class="input-fr" id="searchadd1" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />
     </div>
     <div ng-if="mhdr.stateName!='msearch'">
     	<!-- <a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
