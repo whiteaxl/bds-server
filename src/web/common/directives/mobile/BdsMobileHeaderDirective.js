@@ -7,8 +7,25 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-                var vm = this; 
-                vm.stateName = $state.current.name;                 
+                var vm = this;
+                vm.stateName = $state.current.name;
+                //nhannc
+                $scope.isPostPage = false;
+                vm.openPost = function(){
+                    $(".post").animate({
+                        right: 0
+                    }, 120);
+                    $("body").addClass("bodySearchShow");
+                    $(".post").scrollTop(0);
+                    $(".post-footer").addClass("fixed");
+                    overlay(".overlay");
+                }
+                vm.exitPost = function(){
+                    $(".post").removeAttr("style");
+                    $("body").removeClass("bodySearchShow");
+                    $(".post-footer").removeClass("fixed");
+                }
+                //end nhannc
                 vm.searchfr = function(){
                     $(".search").removeAttr("style");
                     $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
@@ -28,6 +45,10 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 vm.toggleFilter = function(){
 
                     if($(".search_mobile").find("i").hasClass("iconSearch")){
+                        if($(".post").css("right")=="0px"){
+                            $scope.isPostPage = true;
+                            vm.exitPost();
+                        }
                         $(".search").animate({
                             right: 0
                         }, 120);
@@ -37,6 +58,10 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $(".search-footer").addClass("fixed");
                         $(".search-btn").css("display","block");
                     }else{
+                        if($scope.isPostPage){
+                            vm.openPost();
+                        }
+                        $scope.isPostPage = false;
                         vm.searchfr();
                     }
                 }

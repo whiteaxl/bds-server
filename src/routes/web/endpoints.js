@@ -180,6 +180,19 @@ internals.endpoints = [
 	// 	auth: 'jwt'
 	// }	
 }
+	
+,{
+	method: 'GET',
+	path: '/web/mobile/post',
+	handler: function(requet,reply){
+		var md = new MobileDetect(requet.headers['user-agent']);
+		if(md.mobile()){
+			reply.view('mobile/index.html');
+		}else{
+			reply.redirect(convertDesktopPath(requet));
+		}
+	}
+}
 
 
 ];

@@ -18,9 +18,17 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 }
                 
                 vm.gotoSearchPage = function(event){
+                    console.log("-------vao msearch");
                     $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
                     $(".overlay").click();
                 }
+                //nhannc
+                vm.gotoDangTinPage = function(event){
+                    console.log("-------vao mpost");
+                    $state.go('mpost');
+                    $(".overlay").click();
+                }
+                //nhannc end
                 vm.gotoRelandApp = function(event){
 
                 }

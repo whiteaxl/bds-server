@@ -528,6 +528,11 @@
         templateUrl: "/web/mobile/chats.html",
         controller: "MobileChatCtrl",
         controllerAs: 'mcc'
+      }).state('mpost', {
+          url: "/mobile/post",
+          templateUrl: "/web/mobile/post.html",
+          controller: "MobilePostCtrl",
+          controllerAs: 'mpc'
       })
     });
   bds.factory('socket', function (socketFactory) {

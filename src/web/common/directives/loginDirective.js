@@ -204,6 +204,7 @@ angular.module('bds')
                     HouseService.signup(data).then(function(res){
                       $localStorage.relandToken = res.data.token;
                       $rootScope.user.userName = res.data.userName;
+                      
                       vm.class = "has-sub";
                       vm.state = vm.LOGGED_IN;
                       socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
