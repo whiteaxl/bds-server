@@ -1,0 +1,1829 @@
+[
+  {
+    "code": "AG",
+    "fullName": "An Giang",
+    "geometry": {
+      "location": {
+        "lat": 10.5721068,
+        "lon": 105.173456
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.9609417,
+          "lon": 105.5713839
+        },
+        "southwest": {
+          "lat": 10.1832719,
+          "lon": 104.775528
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "An Giang Province, Vietnam",
+    "id": "Place_T_AG",
+    "nameKhongDau": "an-giang",
+    "placeName": "An Giang",
+    "placeType": "T",
+    "tinh": "An Giang",
+    "tinhKhongDau": "an-giang",
+    "type": "Place"
+  },
+  {
+    "code": "BD",
+    "fullName": "Bình Dương",
+    "geometry": {
+      "location": {
+        "lat": 11.1821788,
+        "lon": 106.6510413
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.5013477,
+          "lon": 106.966831
+        },
+        "southwest": {
+          "lat": 10.8630099,
+          "lon": 106.3352516
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Binh Duong, Vietnam",
+    "id": "Place_T_BD",
+    "nameKhongDau": "binh-duong",
+    "placeName": "Bình Dương",
+    "placeType": "T",
+    "tinh": "Bình Dương",
+    "tinhKhongDau": "binh-duong",
+    "type": "Place"
+  },
+  {
+    "code": "BDD",
+    "fullName": "Bình Định",
+    "geometry": {
+      "location": {
+        "lat": 14.1033175,
+        "lon": 108.979661
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 14.703603,
+          "lon": 109.361996
+        },
+        "southwest": {
+          "lat": 13.503032,
+          "lon": 108.597326
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Binh Dinh Province, Vietnam",
+    "id": "Place_T_BDD",
+    "nameKhongDau": "binh-dinh",
+    "placeName": "Bình Định",
+    "placeType": "T",
+    "tinh": "Bình Định",
+    "tinhKhongDau": "binh-dinh",
+    "type": "Place"
+  },
+  {
+    "code": "BG",
+    "fullName": "Bắc Giang",
+    "geometry": {
+      "location": {
+        "lat": 21.3752838,
+        "lon": 106.4568644
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.6262909,
+          "lon": 107.0333649
+        },
+        "southwest": {
+          "lat": 21.1242766,
+          "lon": 105.8803639
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Bac Giang, Vietnam",
+    "id": "Place_T_BG",
+    "nameKhongDau": "bac-giang",
+    "placeName": "Bắc Giang",
+    "placeType": "T",
+    "tinh": "Bắc Giang",
+    "tinhKhongDau": "bac-giang",
+    "type": "Place"
+  },
+  {
+    "code": "BK",
+    "fullName": "Bắc Kạn",
+    "geometry": {
+      "location": {
+        "lat": 22.2723765,
+        "lon": 105.8388145
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.74044,
+          "lon": 106.246758
+        },
+        "southwest": {
+          "lat": 21.804313,
+          "lon": 105.430871
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Bắc Kạn Province, Vietnam",
+    "id": "Place_T_BK",
+    "nameKhongDau": "bac-kan",
+    "placeName": "Bắc Kạn",
+    "placeType": "T",
+    "tinh": "Bắc Kạn",
+    "tinhKhongDau": "bac-kan",
+    "type": "Place"
+  },
+  {
+    "code": "BL",
+    "fullName": "Bạc Liêu",
+    "geometry": {
+      "location": {
+        "lat": 9.3285243,
+        "lon": 105.5459389
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 9.6370539,
+          "lon": 105.859674
+        },
+        "southwest": {
+          "lat": 9.0199946,
+          "lon": 105.2322039
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Bac Lieu, Vietnam",
+    "id": "Place_T_BL",
+    "nameKhongDau": "bac-lieu",
+    "placeName": "Bạc Liêu",
+    "placeType": "T",
+    "tinh": "Bạc Liêu",
+    "tinhKhongDau": "bac-lieu",
+    "type": "Place"
+  },
+  {
+    "code": "BN",
+    "fullName": "Bắc Ninh",
+    "geometry": {
+      "location": {
+        "lat": 21.1164733,
+        "lon": 106.0987777
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.2635677,
+          "lon": 106.3085117
+        },
+        "southwest": {
+          "lat": 20.9693789,
+          "lon": 105.8890438
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Bac Ninh Province, Vietnam",
+    "id": "Place_T_BN",
+    "nameKhongDau": "bac-ninh",
+    "placeName": "Bắc Ninh",
+    "placeType": "T",
+    "tinh": "Bắc Ninh",
+    "tinhKhongDau": "bac-ninh",
+    "type": "Place"
+  },
+  {
+    "code": "BP",
+    "fullName": "Bình Phước",
+    "geometry": {
+      "location": {
+        "lat": 11.7994709,
+        "lon": 106.9189214
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 12.2978089,
+          "lon": 107.426986
+        },
+        "southwest": {
+          "lat": 11.301133,
+          "lon": 106.4108568
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Binh Phuoc 77000, Vietnam",
+    "id": "Place_T_BP",
+    "nameKhongDau": "binh-phuoc",
+    "placeName": "Bình Phước",
+    "placeType": "T",
+    "tinh": "Bình Phước",
+    "tinhKhongDau": "binh-phuoc",
+    "type": "Place"
+  },
+  {
+    "code": "BTH",
+    "fullName": "Bình Thuận  ",
+    "geometry": {
+      "location": {
+        "lat": 11.0320761,
+        "lon": 108.1810641
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.555304,
+          "lon": 108.9675354
+        },
+        "southwest": {
+          "lat": 10.5088481,
+          "lon": 107.3945929
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Binh Thuan, Vietnam",
+    "id": "Place_T_BTH",
+    "nameKhongDau": "binh-thuan",
+    "placeName": "Bình Thuận  ",
+    "placeType": "T",
+    "tinh": "Bình Thuận  ",
+    "tinhKhongDau": "binh-thuan",
+    "type": "Place"
+  },
+  {
+    "code": "BTR",
+    "fullName": "Bến Tre",
+    "geometry": {
+      "location": {
+        "lat": 10.0662681,
+        "lon": 106.4127054
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.3373312,
+          "lon": 106.7976378
+        },
+        "southwest": {
+          "lat": 9.7952051,
+          "lon": 106.027773
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ben Tre, Vietnam",
+    "id": "Place_T_BTR",
+    "nameKhongDau": "ben-tre",
+    "placeName": "Bến Tre",
+    "placeType": "T",
+    "tinh": "Bến Tre",
+    "tinhKhongDau": "ben-tre",
+    "type": "Place"
+  },
+  {
+    "code": "CB",
+    "fullName": "Cao Bằng",
+    "geometry": {
+      "location": {
+        "lat": 22.7387704,
+        "lon": 106.05253
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 23.1206139,
+          "lon": 106.839176
+        },
+        "southwest": {
+          "lat": 22.356927,
+          "lon": 105.265884
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Cao Bang, Vietnam",
+    "id": "Place_T_CB",
+    "nameKhongDau": "cao-bang",
+    "placeName": "Cao Bằng",
+    "placeType": "T",
+    "tinh": "Cao Bằng",
+    "tinhKhongDau": "cao-bang",
+    "type": "Place"
+  },
+  {
+    "code": "CM",
+    "fullName": "Cà Mau",
+    "geometry": {
+      "location": {
+        "lat": 9.0623502,
+        "lon": 105.0652019
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 9.5610929,
+          "lon": 105.4179904
+        },
+        "southwest": {
+          "lat": 8.5636076,
+          "lon": 104.7124134
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ca Mau, Vietnam",
+    "id": "Place_T_CM",
+    "nameKhongDau": "ca-mau",
+    "placeName": "Cà Mau",
+    "placeType": "T",
+    "tinh": "Cà Mau",
+    "tinhKhongDau": "ca-mau",
+    "type": "Place"
+  },
+  {
+    "code": "CT",
+    "fullName": "Cần Thơ",
+    "geometry": {
+      "location": {
+        "lat": 10.1224248,
+        "lon": 105.5297523
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.3257367,
+          "lon": 105.8384048
+        },
+        "southwest": {
+          "lat": 9.9191129,
+          "lon": 105.2210999
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Can Tho, Vietnam",
+    "id": "Place_T_CT",
+    "nameKhongDau": "can-tho",
+    "placeName": "Cần Thơ",
+    "placeType": "T",
+    "tinh": "Cần Thơ",
+    "tinhKhongDau": "can-tho",
+    "type": "Place"
+  },
+  {
+    "code": "DDB",
+    "fullName": "Điện Biên",
+    "geometry": {
+      "location": {
+        "lat": 21.7209569,
+        "lon": 102.8715974
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.5492899,
+          "lon": 103.5984499
+        },
+        "southwest": {
+          "lat": 20.8926239,
+          "lon": 102.1447449
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Dien Bien, Vietnam",
+    "id": "Place_T_DDB",
+    "nameKhongDau": "dien-bien",
+    "placeName": "Điện Biên",
+    "placeType": "T",
+    "tinh": "Điện Biên",
+    "tinhKhongDau": "dien-bien",
+    "type": "Place"
+  },
+  {
+    "code": "DDL",
+    "fullName": "Đắk Lắk",
+    "geometry": {
+      "location": {
+        "lat": 12.7879395,
+        "lon": 108.2397999
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 13.41631,
+          "lon": 108.9952129
+        },
+        "southwest": {
+          "lat": 12.159569,
+          "lon": 107.484387
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Đắk Lắk Province, Vietnam",
+    "id": "Place_T_DDL",
+    "nameKhongDau": "dak-lak",
+    "placeName": "Đắk Lắk",
+    "placeType": "T",
+    "tinh": "Đắk Lắk",
+    "tinhKhongDau": "dak-lak",
+    "type": "Place"
+  },
+  {
+    "code": "DDN",
+    "fullName": "Đà Nẵng",
+    "geometry": {
+      "location": {
+        "lat": 16.071809,
+        "lon": 108.0781264
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 16.225518,
+          "lon": 108.3379139
+        },
+        "southwest": {
+          "lat": 15.9180999,
+          "lon": 107.818339
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Da Nang, Vietnam",
+    "id": "Place_T_DDN",
+    "nameKhongDau": "da-nang",
+    "placeName": "Đà Nẵng",
+    "placeType": "T",
+    "tinh": "Đà Nẵng",
+    "tinhKhongDau": "da-nang",
+    "type": "Place"
+  },
+  {
+    "code": "DDT",
+    "fullName": "Đồng Tháp",
+    "geometry": {
+      "location": {
+        "lat": 10.5558553,
+        "lon": 105.5647965
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.974052,
+          "lon": 105.942224
+        },
+        "southwest": {
+          "lat": 10.1376586,
+          "lon": 105.187369
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Đồng Tháp Province, Vietnam",
+    "id": "Place_T_DDT",
+    "nameKhongDau": "dong-thap",
+    "placeName": "Đồng Tháp",
+    "placeType": "T",
+    "tinh": "Đồng Tháp",
+    "tinhKhongDau": "dong-thap",
+    "type": "Place"
+  },
+  {
+    "code": "DNA",
+    "fullName": "Đồng Nai",
+    "geometry": {
+      "location": {
+        "lat": 11.0546762,
+        "lon": 107.1674473
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.5809949,
+          "lon": 107.5778619
+        },
+        "southwest": {
+          "lat": 10.5283574,
+          "lon": 106.7570326
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Dong Nai, Vietnam",
+    "id": "Place_T_DNA",
+    "nameKhongDau": "dong-nai",
+    "placeName": "Đồng Nai",
+    "placeType": "T",
+    "tinh": "Đồng Nai",
+    "tinhKhongDau": "dong-nai",
+    "type": "Place"
+  },
+  {
+    "code": "DNO",
+    "fullName": "Đắk Nông",
+    "geometry": {
+      "location": {
+        "lat": 12.2800994,
+        "lon": 107.6607415
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 12.8121539,
+          "lon": 108.115649
+        },
+        "southwest": {
+          "lat": 11.7480449,
+          "lon": 107.2058339
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Dak Nong, Vietnam",
+    "id": "Place_T_DNO",
+    "nameKhongDau": "dak-nong",
+    "placeName": "Đắk Nông",
+    "placeType": "T",
+    "tinh": "Đắk Nông",
+    "tinhKhongDau": "dak-nong",
+    "type": "Place"
+  },
+  {
+    "code": "GL",
+    "fullName": "Gia Lai",
+    "geometry": {
+      "location": {
+        "lat": 13.799589,
+        "lon": 108.1613835
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 14.6030659,
+          "lon": 108.8725979
+        },
+        "southwest": {
+          "lat": 12.996112,
+          "lon": 107.450169
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Gia Lai Province, Vietnam",
+    "id": "Place_T_GL",
+    "nameKhongDau": "gia-lai",
+    "placeName": "Gia Lai",
+    "placeType": "T",
+    "tinh": "Gia Lai",
+    "tinhKhongDau": "gia-lai",
+    "type": "Place"
+  },
+  {
+    "code": "HB",
+    "fullName": "Hòa Bình",
+    "geometry": {
+      "location": {
+        "lat": 20.7090975,
+        "lon": 105.3463645
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.1128249,
+          "lon": 105.857624
+        },
+        "southwest": {
+          "lat": 20.30537,
+          "lon": 104.835105
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hoa Binh, Vietnam",
+    "id": "Place_T_HB",
+    "nameKhongDau": "hoa-binh",
+    "placeName": "Hòa Bình",
+    "placeType": "T",
+    "tinh": "Hòa Bình",
+    "tinhKhongDau": "hoa-binh",
+    "type": "Place"
+  },
+  {
+    "code": "HD",
+    "fullName": "Hải Dương",
+    "geometry": {
+      "location": {
+        "lat": 20.9590962,
+        "lon": 106.367829
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.236959,
+          "lon": 106.6109619
+        },
+        "southwest": {
+          "lat": 20.6812334,
+          "lon": 106.124696
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hai Duong, Vietnam",
+    "id": "Place_T_HD",
+    "nameKhongDau": "hai-duong",
+    "placeName": "Hải Dương",
+    "placeType": "T",
+    "tinh": "Hải Dương",
+    "tinhKhongDau": "hai-duong",
+    "type": "Place"
+  },
+  {
+    "code": "HG",
+    "fullName": "Hà Giang",
+    "geometry": {
+      "location": {
+        "lat": 22.7791529,
+        "lon": 104.9631019
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 23.3926749,
+          "lon": 105.5911659
+        },
+        "southwest": {
+          "lat": 22.1656309,
+          "lon": 104.3350379
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ha Giang, Vietnam",
+    "id": "Place_T_HG",
+    "nameKhongDau": "ha-giang",
+    "placeName": "Hà Giang",
+    "placeType": "T",
+    "tinh": "Hà Giang",
+    "tinhKhongDau": "ha-giang",
+    "type": "Place"
+  },
+  {
+    "code": "HGI",
+    "fullName": "Hậu Giang",
+    "geometry": {
+      "location": {
+        "lat": 9.7885684,
+        "lon": 105.6110082
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 9.995069899999999,
+          "lon": 105.8932686
+        },
+        "southwest": {
+          "lat": 9.5820669,
+          "lon": 105.3287479
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hau Giang, Vietnam",
+    "id": "Place_T_HGI",
+    "nameKhongDau": "hau-giang",
+    "placeName": "Hậu Giang",
+    "placeType": "T",
+    "tinh": "Hậu Giang",
+    "tinhKhongDau": "hau-giang",
+    "type": "Place"
+  },
+  {
+    "code": "HN",
+    "fullName": "Hà Nội",
+    "geometry": {
+      "location": {
+        "lat": 20.973675,
+        "lon": 105.6526759
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.385027,
+          "lon": 106.0198859
+        },
+        "southwest": {
+          "lat": 20.562323,
+          "lon": 105.2854659
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hanoi, Vietnam",
+    "id": "Place_T_HN",
+    "nameKhongDau": "ha-noi",
+    "placeName": "Hà Nội",
+    "placeType": "T",
+    "tinh": "Hà Nội",
+    "tinhKhongDau": "ha-noi",
+    "type": "Place"
+  },
+  {
+    "code": "HNA",
+    "fullName": "Hà Nam",
+    "geometry": {
+      "location": {
+        "lat": 20.5337995,
+        "lon": 105.9761924
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 20.7049599,
+          "lon": 106.1830589
+        },
+        "southwest": {
+          "lat": 20.362639,
+          "lon": 105.7693259
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hà Nam Province, Vietnam",
+    "id": "Place_T_HNA",
+    "nameKhongDau": "ha-nam",
+    "placeName": "Hà Nam",
+    "placeType": "T",
+    "tinh": "Hà Nam",
+    "tinhKhongDau": "ha-nam",
+    "type": "Place"
+  },
+  {
+    "code": "HP",
+    "fullName": "Hải Phòng",
+    "geometry": {
+      "location": {
+        "lat": 20.8094625,
+        "lon": 106.8054925
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.0207559,
+          "lon": 107.210627
+        },
+        "southwest": {
+          "lat": 20.5981692,
+          "lon": 106.400358
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Haiphong, Vietnam",
+    "id": "Place_T_HP",
+    "nameKhongDau": "hai-phong",
+    "placeName": "Hải Phòng",
+    "placeType": "T",
+    "tinh": "Hải Phòng",
+    "tinhKhongDau": "hai-phong",
+    "type": "Place"
+  },
+  {
+    "code": "HT",
+    "fullName": "Hà Tĩnh",
+    "geometry": {
+      "location": {
+        "lat": 18.3388336,
+        "lon": 105.8039469
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 18.7640184,
+          "lon": 106.5045399
+        },
+        "southwest": {
+          "lat": 17.9136489,
+          "lon": 105.103354
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ha Tinh Province, Vietnam",
+    "id": "Place_T_HT",
+    "nameKhongDau": "ha-tinh",
+    "placeName": "Hà Tĩnh",
+    "placeType": "T",
+    "tinh": "Hà Tĩnh",
+    "tinhKhongDau": "ha-tinh",
+    "type": "Place"
+  },
+  {
+    "code": "HY",
+    "fullName": "Hưng Yên",
+    "geometry": {
+      "location": {
+        "lat": 20.810118,
+        "lon": 106.0802546
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.005412,
+          "lon": 106.2658413
+        },
+        "southwest": {
+          "lat": 20.614824,
+          "lon": 105.8946679
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Hung Yen Province, Vietnam",
+    "id": "Place_T_HY",
+    "nameKhongDau": "hung-yen",
+    "placeName": "Hưng Yên",
+    "placeType": "T",
+    "tinh": "Hưng Yên",
+    "tinhKhongDau": "hung-yen",
+    "type": "Place"
+  },
+  {
+    "code": "KG",
+    "fullName": "Kiên Giang",
+    "geometry": {
+      "location": {
+        "lat": 9.9695564,
+        "lon": 104.9421785
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.540138,
+          "lon": 105.5390449
+        },
+        "southwest": {
+          "lat": 9.398974899999999,
+          "lon": 104.3453121
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Kien Giang, Vietnam",
+    "id": "Place_T_KG",
+    "nameKhongDau": "kien-giang",
+    "placeName": "Kiên Giang",
+    "placeType": "T",
+    "tinh": "Kiên Giang",
+    "tinhKhongDau": "kien-giang",
+    "type": "Place"
+  },
+  {
+    "code": "KH",
+    "fullName": "Khánh Hòa",
+    "geometry": {
+      "location": {
+        "lat": 12.318796,
+        "lon": 109.0690509
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 12.868734,
+          "lon": 109.4690069
+        },
+        "southwest": {
+          "lat": 11.7688581,
+          "lon": 108.669095
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Khanh Hoa Province, Vietnam",
+    "id": "Place_T_KH",
+    "nameKhongDau": "khanh-hoa",
+    "placeName": "Khánh Hòa",
+    "placeType": "T",
+    "tinh": "Khánh Hòa",
+    "tinhKhongDau": "khanh-hoa",
+    "type": "Place"
+  },
+  {
+    "code": "KT",
+    "fullName": "Kon Tum",
+    "geometry": {
+      "location": {
+        "lat": 14.6686049,
+        "lon": 107.939805
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 15.4165399,
+          "lon": 108.547447
+        },
+        "southwest": {
+          "lat": 13.9206699,
+          "lon": 107.332163
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Kon Tum Province, Vietnam",
+    "id": "Place_T_KT",
+    "nameKhongDau": "kon-tum",
+    "placeName": "Kon Tum",
+    "placeType": "T",
+    "tinh": "Kon Tum",
+    "tinhKhongDau": "kon-tum",
+    "type": "Place"
+  },
+  {
+    "code": "LA",
+    "fullName": "Long An",
+    "geometry": {
+      "location": {
+        "lat": 10.7116984,
+        "lon": 106.1247999
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.0293568,
+          "lon": 106.7458859
+        },
+        "southwest": {
+          "lat": 10.39404,
+          "lon": 105.5037139
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Long An Province, Vietnam",
+    "id": "Place_T_LA",
+    "nameKhongDau": "long-an",
+    "placeName": "Long An",
+    "placeType": "T",
+    "tinh": "Long An",
+    "tinhKhongDau": "long-an",
+    "type": "Place"
+  },
+  {
+    "code": "LCA",
+    "fullName": "Lào Cai",
+    "geometry": {
+      "location": {
+        "lat": 22.3599984,
+        "lon": 104.079538
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.8446789,
+          "lon": 104.628431
+        },
+        "southwest": {
+          "lat": 21.8753179,
+          "lon": 103.5306449
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Lao Cai, Vietnam",
+    "id": "Place_T_LCA",
+    "nameKhongDau": "lao-cai",
+    "placeName": "Lào Cai",
+    "placeType": "T",
+    "tinh": "Lào Cai",
+    "tinhKhongDau": "lao-cai",
+    "type": "Place"
+  },
+  {
+    "code": "LCH",
+    "fullName": "Lai Châu",
+    "geometry": {
+      "location": {
+        "lat": 22.2515804,
+        "lon": 103.15155
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.8174069,
+          "lon": 103.98491
+        },
+        "southwest": {
+          "lat": 21.685754,
+          "lon": 102.3181899
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Lai Chau, Vietnam",
+    "id": "Place_T_LCH",
+    "nameKhongDau": "lai-chau",
+    "placeName": "Lai Châu",
+    "placeType": "T",
+    "tinh": "Lai Châu",
+    "tinhKhongDau": "lai-chau",
+    "type": "Place"
+  },
+  {
+    "code": "LDD",
+    "fullName": "Lâm Đồng",
+    "geometry": {
+      "location": {
+        "lat": 11.7652785,
+        "lon": 107.997833
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 12.315675,
+          "lon": 108.7285549
+        },
+        "southwest": {
+          "lat": 11.214882,
+          "lon": 107.267111
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Lâm Đồng, Vietnam",
+    "id": "Place_T_LDD",
+    "nameKhongDau": "lam-dong",
+    "placeName": "Lâm Đồng",
+    "placeType": "T",
+    "tinh": "Lâm Đồng",
+    "tinhKhongDau": "lam-dong",
+    "type": "Place"
+  },
+  {
+    "code": "LS",
+    "fullName": "Lạng Sơn",
+    "geometry": {
+      "location": {
+        "lat": 21.8930655,
+        "lon": 106.7293695
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.4613209,
+          "lon": 107.363812
+        },
+        "southwest": {
+          "lat": 21.32481,
+          "lon": 106.0949269
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Lang Son Province, Vietnam",
+    "id": "Place_T_LS",
+    "nameKhongDau": "lang-son",
+    "placeName": "Lạng Sơn",
+    "placeType": "T",
+    "tinh": "Lạng Sơn",
+    "tinhKhongDau": "lang-son",
+    "type": "Place"
+  },
+  {
+    "code": "NA",
+    "fullName": "Nghệ An",
+    "geometry": {
+      "location": {
+        "lat": 19.274302,
+        "lon": 104.8402612
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.995705,
+          "lon": 105.8059714
+        },
+        "southwest": {
+          "lat": 18.5528989,
+          "lon": 103.874551
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Nghe An, Vietnam",
+    "id": "Place_T_NA",
+    "nameKhongDau": "nghe-an",
+    "placeName": "Nghệ An",
+    "placeType": "T",
+    "tinh": "Nghệ An",
+    "tinhKhongDau": "nghe-an",
+    "type": "Place"
+  },
+  {
+    "code": "NB",
+    "fullName": "Ninh Bình",
+    "geometry": {
+      "location": {
+        "lat": 20.1873364,
+        "lon": 105.8547482
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 20.4438039,
+          "lon": 106.1669325
+        },
+        "southwest": {
+          "lat": 19.9308689,
+          "lon": 105.5425639
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ninh Bình Province, Vietnam",
+    "id": "Place_T_NB",
+    "nameKhongDau": "ninh-binh",
+    "placeName": "Ninh Bình",
+    "placeType": "T",
+    "tinh": "Ninh Bình",
+    "tinhKhongDau": "ninh-binh",
+    "type": "Place"
+  },
+  {
+    "code": "NDD",
+    "fullName": "Nam Định",
+    "geometry": {
+      "location": {
+        "lat": 20.2184044,
+        "lon": 106.2551112
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 20.5002539,
+          "lon": 106.5861993
+        },
+        "southwest": {
+          "lat": 19.9365549,
+          "lon": 105.924023
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Nam Dinh 084, Vietnam",
+    "id": "Place_T_NDD",
+    "nameKhongDau": "nam-dinh",
+    "placeName": "Nam Định",
+    "placeType": "T",
+    "tinh": "Nam Định",
+    "tinhKhongDau": "nam-dinh",
+    "type": "Place"
+  },
+  {
+    "code": "NT",
+    "fullName": "Ninh Thuận",
+    "geometry": {
+      "location": {
+        "lat": 11.7383616,
+        "lon": 108.8921164
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 12.169476,
+          "lon": 109.2333109
+        },
+        "southwest": {
+          "lat": 11.3072471,
+          "lon": 108.5509219
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ninh Thuan Province, Vietnam",
+    "id": "Place_T_NT",
+    "nameKhongDau": "ninh-thuan",
+    "placeName": "Ninh Thuận",
+    "placeType": "T",
+    "tinh": "Ninh Thuận",
+    "tinhKhongDau": "ninh-thuan",
+    "type": "Place"
+  },
+  {
+    "code": "PT",
+    "fullName": "Phú Thọ",
+    "geometry": {
+      "location": {
+        "lat": 21.3182104,
+        "lon": 105.1352229
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.7198179,
+          "lon": 105.4565259
+        },
+        "southwest": {
+          "lat": 20.9166028,
+          "lon": 104.81392
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Phu Tho Province, Vietnam",
+    "id": "Place_T_PT",
+    "nameKhongDau": "phu-tho",
+    "placeName": "Phú Thọ",
+    "placeType": "T",
+    "tinh": "Phú Thọ",
+    "tinhKhongDau": "phu-tho",
+    "type": "Place"
+  },
+  {
+    "code": "PY",
+    "fullName": "Phú Yên",
+    "geometry": {
+      "location": {
+        "lat": 13.2012589,
+        "lon": 109.0651519
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 13.6959149,
+          "lon": 109.4587549
+        },
+        "southwest": {
+          "lat": 12.7066029,
+          "lon": 108.6715489
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Phú Yên Province, Vietnam",
+    "id": "Place_T_PY",
+    "nameKhongDau": "phu-yen",
+    "placeName": "Phú Yên",
+    "placeType": "T",
+    "tinh": "Phú Yên",
+    "tinhKhongDau": "phu-yen",
+    "type": "Place"
+  },
+  {
+    "code": "QB",
+    "fullName": "Quảng Bình",
+    "geometry": {
+      "location": {
+        "lat": 17.5051549,
+        "lon": 106.3022074
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 18.0897489,
+          "lon": 106.9932399
+        },
+        "southwest": {
+          "lat": 16.920561,
+          "lon": 105.6111749
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Quang Binh Province, Vietnam",
+    "id": "Place_T_QB",
+    "nameKhongDau": "quang-binh",
+    "placeName": "Quảng Bình",
+    "placeType": "T",
+    "tinh": "Quảng Bình",
+    "tinhKhongDau": "quang-binh",
+    "type": "Place"
+  },
+  {
+    "code": "QNA",
+    "fullName": "Quảng Nam",
+    "geometry": {
+      "location": {
+        "lat": 15.509218,
+        "lon": 107.9744695
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 16.066792,
+          "lon": 108.7381839
+        },
+        "southwest": {
+          "lat": 14.951644,
+          "lon": 107.210755
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Quang Nam Province, Vietnam",
+    "id": "Place_T_QNA",
+    "nameKhongDau": "quang-nam",
+    "placeName": "Quảng Nam",
+    "placeType": "T",
+    "tinh": "Quảng Nam",
+    "tinhKhongDau": "quang-nam",
+    "type": "Place"
+  },
+  {
+    "code": "QNG",
+    "fullName": "Quảng Ngãi",
+    "geometry": {
+      "location": {
+        "lat": 14.9781045,
+        "lon": 108.6592314
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 15.4247859,
+          "lon": 109.0836169
+        },
+        "southwest": {
+          "lat": 14.531423,
+          "lon": 108.2348459
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Quang Ngai, Vietnam",
+    "id": "Place_T_QNG",
+    "nameKhongDau": "quang-ngai",
+    "placeName": "Quảng Ngãi",
+    "placeType": "T",
+    "tinh": "Quảng Ngãi",
+    "tinhKhongDau": "quang-ngai",
+    "type": "Place"
+  },
+  {
+    "code": "QNI",
+    "fullName": "Quảng Ninh",
+    "geometry": {
+      "location": {
+        "lat": 21.1909041,
+        "lon": 107.2560941
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.665348,
+          "lon": 108.0736083
+        },
+        "southwest": {
+          "lat": 20.7164602,
+          "lon": 106.43858
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Quảng Ninh Province, Vietnam",
+    "id": "Place_T_QNI",
+    "nameKhongDau": "quang-ninh",
+    "placeName": "Quảng Ninh",
+    "placeType": "T",
+    "tinh": "Quảng Ninh",
+    "tinhKhongDau": "quang-ninh",
+    "type": "Place"
+  },
+  {
+    "code": "QT",
+    "fullName": "Quảng Trị",
+    "geometry": {
+      "location": {
+        "lat": 16.7345226,
+        "lon": 106.952433
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 17.1665644,
+          "lon": 107.3890159
+        },
+        "southwest": {
+          "lat": 16.3024809,
+          "lon": 106.51585
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Quảng Trị Province, Vietnam",
+    "id": "Place_T_QT",
+    "nameKhongDau": "quang-tri",
+    "placeName": "Quảng Trị",
+    "placeType": "T",
+    "tinh": "Quảng Trị",
+    "tinhKhongDau": "quang-tri",
+    "type": "Place"
+  },
+  {
+    "code": "SG",
+    "fullName": "Hồ Chí Minh",
+    "geometry": {
+      "location": {
+        "lat": 10.7681934,
+        "lon": 106.6817925
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.1599008,
+          "lon": 107.0078199
+        },
+        "southwest": {
+          "lat": 10.3764859,
+          "lon": 106.355765
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ho Chi Minh, Vietnam",
+    "id": "Place_T_SG",
+    "nameKhongDau": "ho-chi-minh",
+    "placeName": "Hồ Chí Minh",
+    "placeType": "T",
+    "tinh": "Hồ Chí Minh",
+    "tinhKhongDau": "ho-chi-minh",
+    "type": "Place"
+  },
+  {
+    "code": "SL",
+    "fullName": "Sơn La",
+    "geometry": {
+      "location": {
+        "lat": 21.3018528,
+        "lon": 104.1186125
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.0308979,
+          "lon": 105.025034
+        },
+        "southwest": {
+          "lat": 20.5728078,
+          "lon": 103.212191
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Son La, Vietnam",
+    "id": "Place_T_SL",
+    "nameKhongDau": "son-la",
+    "placeName": "Sơn La",
+    "placeType": "T",
+    "tinh": "Sơn La",
+    "tinhKhongDau": "son-la",
+    "type": "Place"
+  },
+  {
+    "code": "ST",
+    "fullName": "Sóc Trăng",
+    "geometry": {
+      "location": {
+        "lat": 9.5879902,
+        "lon": 105.9182371
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 9.932338399999999,
+          "lon": 106.2926422
+        },
+        "southwest": {
+          "lat": 9.243642,
+          "lon": 105.543832
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Soc Trang, Vietnam",
+    "id": "Place_T_ST",
+    "nameKhongDau": "soc-trang",
+    "placeName": "Sóc Trăng",
+    "placeType": "T",
+    "tinh": "Sóc Trăng",
+    "tinhKhongDau": "soc-trang",
+    "type": "Place"
+  },
+  {
+    "code": "TB",
+    "fullName": "Thái Bình",
+    "geometry": {
+      "location": {
+        "lat": 20.5019965,
+        "lon": 106.3702014
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 20.729132,
+          "lon": 106.630944
+        },
+        "southwest": {
+          "lat": 20.274861,
+          "lon": 106.1094589
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Thai Binh, Vietnam",
+    "id": "Place_T_TB",
+    "nameKhongDau": "thai-binh",
+    "placeName": "Thái Bình",
+    "placeType": "T",
+    "tinh": "Thái Bình",
+    "tinhKhongDau": "thai-binh",
+    "type": "Place"
+  },
+  {
+    "code": "TG",
+    "fullName": "Tiền Giang",
+    "geometry": {
+      "location": {
+        "lat": 10.395536,
+        "lon": 106.3031754
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.5868784,
+          "lon": 106.7868459
+        },
+        "southwest": {
+          "lat": 10.2041936,
+          "lon": 105.8195049
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Tien Giang, Vietnam",
+    "id": "Place_T_TG",
+    "nameKhongDau": "tien-giang",
+    "placeName": "Tiền Giang",
+    "placeType": "T",
+    "tinh": "Tiền Giang",
+    "tinhKhongDau": "tien-giang",
+    "type": "Place"
+  },
+  {
+    "code": "TH",
+    "fullName": "Thanh Hóa",
+    "geometry": {
+      "location": {
+        "lat": 19.9785509,
+        "lon": 105.2249999
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 20.6702129,
+          "lon": 106.0759378
+        },
+        "southwest": {
+          "lat": 19.2868889,
+          "lon": 104.374062
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Thanh Hoa, Vietnam",
+    "id": "Place_T_TH",
+    "nameKhongDau": "thanh-hoa",
+    "placeName": "Thanh Hóa",
+    "placeType": "T",
+    "tinh": "Thanh Hóa",
+    "tinhKhongDau": "thanh-hoa",
+    "type": "Place"
+  },
+  {
+    "code": "TN",
+    "fullName": "Thái Nguyên",
+    "geometry": {
+      "location": {
+        "lat": 21.687706,
+        "lon": 105.8572719
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.0480629,
+          "lon": 106.237427
+        },
+        "southwest": {
+          "lat": 21.327349,
+          "lon": 105.4771169
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Thai Nguyen, Vietnam",
+    "id": "Place_T_TN",
+    "nameKhongDau": "thai-nguyen",
+    "placeName": "Thái Nguyên",
+    "placeType": "T",
+    "tinh": "Thái Nguyên",
+    "tinhKhongDau": "thai-nguyen",
+    "type": "Place"
+  },
+  {
+    "code": "TNI",
+    "fullName": "Tây Ninh",
+    "geometry": {
+      "location": {
+        "lat": 11.3710944,
+        "lon": 106.1499874
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 11.7795119,
+          "lon": 106.490683
+        },
+        "southwest": {
+          "lat": 10.962677,
+          "lon": 105.8092919
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Tây Ninh Province, Vietnam",
+    "id": "Place_T_TNI",
+    "nameKhongDau": "tay-ninh",
+    "placeName": "Tây Ninh",
+    "placeType": "T",
+    "tinh": "Tây Ninh",
+    "tinhKhongDau": "tay-ninh",
+    "type": "Place"
+  },
+  {
+    "code": "TQ",
+    "fullName": "Tuyên Quang",
+    "geometry": {
+      "location": {
+        "lat": 22.0971936,
+        "lon": 105.2230824
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.696103,
+          "lon": 105.597981
+        },
+        "southwest": {
+          "lat": 21.4982841,
+          "lon": 104.8481839
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Tuyên Quang Province, Vietnam",
+    "id": "Place_T_TQ",
+    "nameKhongDau": "tuyen-quang",
+    "placeName": "Tuyên Quang",
+    "placeType": "T",
+    "tinh": "Tuyên Quang",
+    "tinhKhongDau": "tuyen-quang",
+    "type": "Place"
+  },
+  {
+    "code": "TTH",
+    "fullName": "Thừa Thiên Huế",
+    "geometry": {
+      "location": {
+        "lat": 16.3688205,
+        "lon": 107.603906
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 16.742823,
+          "lon": 108.194138
+        },
+        "southwest": {
+          "lat": 15.9948179,
+          "lon": 107.013674
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Thua Thien Hue, Vietnam",
+    "id": "Place_T_TTH",
+    "nameKhongDau": "thua-thien-hue",
+    "placeName": "Thừa Thiên Huế",
+    "placeType": "T",
+    "tinh": "Thừa Thiên Huế",
+    "tinhKhongDau": "thua-thien-hue",
+    "type": "Place"
+  },
+  {
+    "code": "TV",
+    "fullName": "Trà Vinh",
+    "geometry": {
+      "location": {
+        "lat": 9.8035766,
+        "lon": 106.2673626
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.0780336,
+          "lon": 106.5789169
+        },
+        "southwest": {
+          "lat": 9.5291196,
+          "lon": 105.9558082
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Tra Vinh, Vietnam",
+    "id": "Place_T_TV",
+    "nameKhongDau": "tra-vinh",
+    "placeName": "Trà Vinh",
+    "placeType": "T",
+    "tinh": "Trà Vinh",
+    "tinhKhongDau": "tra-vinh",
+    "type": "Place"
+  },
+  {
+    "code": "VL",
+    "fullName": "Vĩnh Long",
+    "geometry": {
+      "location": {
+        "lat": 10.1084442,
+        "lon": 105.9787238
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.3277431,
+          "lon": 106.2732238
+        },
+        "southwest": {
+          "lat": 9.8891454,
+          "lon": 105.6842239
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Vinh Long, Vietnam",
+    "id": "Place_T_VL",
+    "nameKhongDau": "vinh-long",
+    "placeName": "Vĩnh Long",
+    "placeType": "T",
+    "tinh": "Vĩnh Long",
+    "tinhKhongDau": "vinh-long",
+    "type": "Place"
+  },
+  {
+    "code": "VP",
+    "fullName": "Vĩnh Phúc",
+    "geometry": {
+      "location": {
+        "lat": 21.3630049,
+        "lon": 105.558257
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 21.5739379,
+          "lon": 105.794323
+        },
+        "southwest": {
+          "lat": 21.1520719,
+          "lon": 105.322191
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Vinh Phuc Province, Vietnam",
+    "id": "Place_T_VP",
+    "nameKhongDau": "vinh-phuc",
+    "placeName": "Vĩnh Phúc",
+    "placeType": "T",
+    "tinh": "Vĩnh Phúc",
+    "tinhKhongDau": "vinh-phuc",
+    "type": "Place"
+  },
+  {
+    "code": "VT",
+    "fullName": "Bà Rịa Vũng Tàu",
+    "geometry": {
+      "location": {
+        "lat": 10.5623339,
+        "lon": 107.2902994
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 10.804375,
+          "lon": 107.582345
+        },
+        "southwest": {
+          "lat": 10.3202928,
+          "lon": 106.9982538
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Ba Ria - Vung Tau, Vietnam",
+    "id": "Place_T_VT",
+    "nameKhongDau": "ba-ria-vung-tau",
+    "placeName": "Bà Rịa Vũng Tàu",
+    "placeType": "T",
+    "tinh": "Bà Rịa Vũng Tàu",
+    "tinhKhongDau": "ba-ria-vung-tau",
+    "type": "Place"
+  },
+  {
+    "code": "YB",
+    "fullName": "Yên Bái",
+    "geometry": {
+      "location": {
+        "lat": 21.8088385,
+        "lon": 104.4929639
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 22.291709,
+          "lon": 105.1001579
+        },
+        "southwest": {
+          "lat": 21.325968,
+          "lon": 103.8857699
+        }
+      }
+    },
+    "ggMatched": true,
+    "gg_formatted_address": "Yen Bai Province, Vietnam",
+    "id": "Place_T_YB",
+    "nameKhongDau": "yen-bai",
+    "placeName": "Yên Bái",
+    "placeType": "T",
+    "tinh": "Yên Bái",
+    "tinhKhongDau": "yen-bai",
+    "type": "Place"
+  }
+]

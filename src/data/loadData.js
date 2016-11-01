@@ -24,10 +24,12 @@ var loadFromFile = function(fn) {
 };
 
 //------------------------------------------------------------
-loadFromFile("./danhMuc/place_1.json");
-loadFromFile("./danhMuc/place_2.json");
-loadFromFile("./danhMuc/place_3.json");
+//loadFromFile("./danhMuc/place_1.json");
+//loadFromFile("./danhMuc/place_2.json");
+//loadFromFile("./danhMuc/place_3.json");
+loadFromFile("./danhMuc/tinh.json");
 loadFromFile("./danhMuc/huyen.json");
+loadFromFile("./danhMuc/xa_hn_hcm.json");
 
 var times = 0;
 var timer = setInterval(
