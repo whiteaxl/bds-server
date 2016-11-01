@@ -3,7 +3,10 @@
 var CommonService = require("../dbservices/Common");
 var commonService = new CommonService;
 
+var geoHandlers = require("./geoHandlers");
+
 var logUtil = require("../lib/logUtil");
+var geoUtil = require("../lib/geoUtil");
 
 var g_cachePlaces = {};
 
@@ -94,6 +97,14 @@ function convertBds(bds) {
   ads.maSo = "01_" + bds.maSo; //01 => from bds.com
   ads.id = "Ads_" + ads.maSo;
 
+  ads.url = bds.url;
+
+  //check geo vs place
+  let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place, g_cachePlaces);
+  ads.GEOvsDC = checkGeo.inVP;
+  ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
+  ads.DC_radius = checkGeo.DC_radius;
+
   return ads;
 }
 
@@ -119,6 +130,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     let cnt = 0;
     list.forEach(e => {
       ads = convertBds(e);
+
       commonService.upsert(ads, (err, res) => {
         cnt++;
 

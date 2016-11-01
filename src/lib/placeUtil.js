@@ -275,6 +275,12 @@ placeUtil.isHuyen = function(place) {
         return true;
     }
 
+    if (_.indexOf(placeTypes, 'political') > -1 && _.indexOf(placeTypes, 'locality') > -1
+       && (place.address_components.length == 3 || place.formatted_address.split(",").length == 3)) {
+        return true;
+    }
+
+    /*
     if (_.indexOf(placeTypes, 'political') > -1
         && _.indexOf(placeTypes, 'sublocality') > -1
       && _.indexOf(placeTypes, 'sublocality_level_1') > -1
@@ -283,6 +289,9 @@ placeUtil.isHuyen = function(place) {
     ) {
         return true;
     }
+    */
+
+    return false;
 };
 
 placeUtil.getTypeName = function(place) {
@@ -300,6 +309,15 @@ placeUtil.getTypeName = function(place) {
     }
 
     if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+        return placeUtil.typeName.XA;
+    }
+
+    if (_.indexOf(placeTypes, 'political') > -1
+      && (_.indexOf(placeTypes, 'locality') > -1
+            || _.indexOf(placeTypes, 'sublocality_level_1') > -1
+            || _.indexOf(placeTypes, 'neighborhood') > -1
+      )
+      && (place.address_components.length == 4 || place.formatted_address.split(",").length == 4)) {
         return placeUtil.typeName.XA;
     }
 

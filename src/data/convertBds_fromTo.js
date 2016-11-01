@@ -15,6 +15,7 @@ if (process.argv.length > 3) {
 convertBds.loadPlaces(() => {
   convertBds.convertAllBds(()=> {
     logUtil.info("DONE ALL");
+    process.exit(0);
   }, ngayDangFrom, ngayDangTo);
 });
 
