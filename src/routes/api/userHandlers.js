@@ -7,6 +7,8 @@ var log = require("../../lib/logUtil");
 var constant = require("../../lib/constant");
 var util = require("../../lib/utils");
 
+var JWT    = require('jsonwebtoken');
+
 var userService = new User();
 
 var internals = {};
@@ -168,6 +170,7 @@ function convertAds(ads) {
 
 internals.getAdsLikes = function (req, reply) {
   log.info("Call getAdsLikes:", req.payload);
+
   let userID = req.payload.userID;
 
   try {
@@ -235,6 +238,31 @@ internals.getMyAds = function (req, reply) {
   }
 };
 
+internals.deleteAds = function(req,reply){
+  var mydecoded = JWT.decode(req.auth.token,{complete: true});
+  var userID = mydecoded.payload.userID;
+  var dto = {
+    userID: userID,
+    adsID: req.payload.adsID
+  }
+  userService.deleteAds(dto, reply);
+}
+
+internals.getUpdateAds = function(req,reply){
+  var mydecoded = JWT.decode(req.auth.token,{complete: true});
+  var userID = mydecoded.payload.userID;
+  var adsID = req.payload.adsID;
+
+  if (!adsID || adsID.length<=0){
+    reply({success: false, msg: "Không tồn tại tin đăng trong hệ thống"});
+  } else {
+    var dto = {
+      userID: userID,
+      adsID: adsID
+    }
+    userService.getUpdateAds(dto, reply);
+  }
+}
 
 module.exports = internals;
 

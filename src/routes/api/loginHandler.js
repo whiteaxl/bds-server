@@ -64,14 +64,13 @@ internals.login = function(req, reply){
     	console.log(req.payload);
 
         if(res && res.length==1){
-        	console.log(res[0]);
             if(req.payload.matKhau){
                 if(res[0].matKhau == req.payload.matKhau){
                 	var token = JWT.sign({
-	          			uid: res[0].userId,
+	          			uid: res[0].userID,
 	          			exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
 	          			userName: res[0].name,
-	          			userID: res[0].userId
+	          			userID: res[0].userID
         			}, JWT_SECRET);
         			//console.log("token" + token);
         			result.login = true;
@@ -91,7 +90,6 @@ internals.login = function(req, reply){
             }
             
         }
-        console.log(result);
         reply(result);
     })
 }
@@ -230,8 +228,19 @@ internals.forgotPassword = function(req,reply){
         result.msg = "TODO";
         reply(result);
     }
-    
+}
 
+internals.changePassword = function(req,reply){
+    var mydecoded = JWT.decode(req.auth.token,{complete: true});
+    var userID = mydecoded.payload.userID;
+
+    var userDto = {
+        userID: userID,
+        password: req.payload.password,
+        newPassword: req.payload.newPassword
+    }
+
+    userService.changePassword(userDto, reply)
 }
 
 internals.resetPassword = function(req,reply){
@@ -243,7 +252,7 @@ internals.resetPassword = function(req,reply){
     var userID = mydecoded.payload.userID;
     var userName = mydecoded.payload.userName;
     //var pass = mydecoded.payload.pass;
-    
+
     userService.resetPassword({"userID": userID, "pass": pass}, reply)
 }
 

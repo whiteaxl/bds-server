@@ -21,8 +21,10 @@ internals.MSG = {
     SUCCESS_LIKE_ADS: "Đã like bất động sản thành công",
     SUCCESS_UNLIKE_ADS: "Đã unlike bất động sản thành công",
     EXIST_LIKE_ADS: "Bất động sản đã được like từ trước",
+    PASSWORD_NOT_CORRECT: "Mật khẩu không đúng",
     USER_NOT_EXIST: "User không tồn tại",
     SUCCESS_UPDATE_PASSWORD: "Cập nhật mật khẩu thành công",
+    SUCCESS_DELETE_ADS: "Xóa thành công tin đăng"
 
 };
 

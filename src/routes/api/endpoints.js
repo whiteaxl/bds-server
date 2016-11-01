@@ -462,6 +462,16 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/changePassword',
+    handler: loginHandler.changePassword,
+    config: {
+      description: 'change password',
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/findNews',
     handler: newsHandlers.findNews,
     config: {
@@ -558,6 +568,26 @@ internals.endpoints = [
     handler: loginHandler.updateProfile,
     config : {
       description: 'update user profile information (name,phone,email,password)',
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/user/deleteAds',
+    handler: userHandlers.deleteAds,
+    config : {
+      description: 'delete Ads',
+      tags: ['api'],
+      auth: 'jwt'
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/user/getUpdateAds',
+    handler: userHandlers.getUpdateAds,
+    config : {
+      description: 'get update Ads',
       tags: ['api'],
       auth: 'jwt'
     }
