@@ -34,7 +34,8 @@ function loadDoc(type, callback) {
 
 function loadAds(callback) {
   let type = 'Ads';
-  let sql = `select t.* from default t where type='Ads' `;
+  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, "
+              + " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads' `;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
@@ -44,14 +45,10 @@ function loadAds(callback) {
       asMap : {},
       sale : [],
       rent : [],
-      tinhIdx: {},
-      huyenIdx: {},
     };
 
     list.forEach(e => {
       global.rwcache[type].asMap[e.id] = e;
-      global.rwcache[type].tinhIdx[e.loaiTin + e.place.diaChinh.codeTinh] = e;
-      global.rwcache[type].huyenIdx[e.loaiTin + e.place.diaChinh.codeTinh + e.place.diaChinh.codeHuyen] = e;
       if (e.loaiTin ==0) {
         global.rwcache[type].sale.push(e);
       } else {
@@ -181,7 +178,7 @@ var cache = {
       let geo = ads.place.geo;
 
       if (geo.lat < vp.southwest.lat || geo.lat > vp.northeast.lat
-        || geo.lon < vp.southwest.lon || geo.lat > vp.northeast.lon
+        || geo.lon < vp.southwest.lon || geo.lon > vp.northeast.lon
       ) {
         //logUtil.info("Not match viewport", vp, geo);
         return false;
