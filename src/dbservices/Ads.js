@@ -100,7 +100,6 @@ class AdsModel {
         adsDto.type = constant.DATA_TYPE.ADS;
         adsDto.timeModified = new Date().getTime();
         adsDto.source = adsDto.source || constant.ADS_SOURCE.REWAY ;
-
         if (adsDto.id){
             bucket.upsert(adsDto.id, adsDto, function (err, res) {
                 if (err) {
@@ -128,11 +127,11 @@ class AdsModel {
             });
         }
     }
-   
+
     buildWhereForAllData(geoBox, diaChinh, loaiTin, loaiNhaDat, gia, dienTich, soPhongNguGREATER, soPhongTamGREATER, ngayDangTinFrom, huongNha, duAnID,orderBy, limit, pageNo) {
         var sql = ` WHERE loaiTin = ${loaiTin}`;
 
-        
+
         if(loaiNhaDat){
             if(loaiNhaDat.constructor === Array && loaiNhaDat.length>0){
                 var condition = " and loaiNhaDat in [";
@@ -149,10 +148,10 @@ class AdsModel {
                 }
                 sql = sql + condition;
             }else{
-                sql = sql + ((loaiNhaDat && loaiNhaDat>0) ? " AND loaiNhaDat=" + loaiNhaDat : "");        
+                sql = sql + ((loaiNhaDat && loaiNhaDat>0) ? " AND loaiNhaDat=" + loaiNhaDat : "");
             }
         }
-        
+
 
         if (geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + geoBox[0] + " AND " + geoBox[2] + ")";
@@ -213,7 +212,7 @@ class AdsModel {
                 }
                 sql = sql + condition;
             }else{
-                sql = sql + ((huongNha && huongNha>0) ? " AND huongNha=" + huongNha : "");        
+                sql = sql + ((huongNha && huongNha>0) ? " AND huongNha=" + huongNha : "");
             }
         }
         if(duAnID)
@@ -227,8 +226,8 @@ class AdsModel {
 
         if(limit)
             sql = sql + " LIMIT  " + limit;
-        if(pageNo) 
-            sql = sql + " OFFSET  " + ((pageNo-1)*limit);    
+        if(pageNo)
+            sql = sql + " OFFSET  " + ((pageNo-1)*limit);
 
         return sql;
     }
@@ -299,11 +298,11 @@ class AdsModel {
         , duAnID
     ){
         var sql ="SELECT count(*) FROM default t" + this.buildWhereForAllData(geoBox
-            , diaChinh 
+            , diaChinh
             , loaiTin
             , loaiNhaDat
-            , gia 
-            , dienTich 
+            , gia
+            , dienTich
             , soPhongNguGREATER
             , soPhongTamGREATER
             , ngayDangTinFrom
@@ -346,11 +345,11 @@ class AdsModel {
         }
 
         var sql ="SELECT t.* FROM default t" + this.buildWhereForAllData(geoBox
-            , diaChinh 
+            , diaChinh
             , loaiTin
             , loaiNhaDat
-            , gia 
-            , dienTich 
+            , gia
+            , dienTich
             , soPhongNguGREATER
             , soPhongTamGREATER
             , ngayDangTinFrom
@@ -360,7 +359,7 @@ class AdsModel {
             , limit
             , pageNo?pageNo:1
         );
-        
+
         logUtil.info(sql);
         /*
         var query = N1qlQuery.fromString('select count(*) from default');
@@ -530,7 +529,7 @@ class AdsModel {
 
         logUtil.info("queryRecentAds: " + sql);
         bucket.query(query, function(err, all) {
-            
+
             if (!all)
                 all = [];
             logUtil.info("number of ads:" + all.length);
@@ -566,7 +565,7 @@ class AdsModel {
         logUtil.info("queryBelowPriceAds: " + sql);
 
         bucket.query(query, function(err, all) {
-            
+
             if (!all)
                 all = [];
             logUtil.info("number of ads:" + all.length);
@@ -580,17 +579,10 @@ class AdsModel {
     }
     //End nhannc
 
-    likeAds(payload,reply){
-        var adsID = req.payload.adsID;
-        var userID = req.payload.userID;
-
-
-    }
-
     buildWhereForFilter(filter){
 
         var sql = ` WHERE loaiTin = ${filter.loaiTin}`;
-        
+
         if(filter.loaiNhaDat){
             if(filter.loaiNhaDat.constructor === Array && filter.loaiNhaDat.length>0){
                 var condition = " and loaiNhaDat in [";
@@ -607,9 +599,9 @@ class AdsModel {
                 }
                 sql = sql + condition;
             }else{
-                sql = sql + ((filter.loaiNhaDat && filter.loaiNhaDat>0) ? " AND loaiNhaDat=" + filter.loaiNhaDat : "");        
+                sql = sql + ((filter.loaiNhaDat && filter.loaiNhaDat>0) ? " AND loaiNhaDat=" + filter.loaiNhaDat : "");
             }
-        } 
+        }
 
         if (filter.geoBox) {
             sql = sql + " AND (place.geo.lat BETWEEN " + filter.geoBox[0] + " AND " + filter.geoBox[2] + ")";
@@ -637,14 +629,14 @@ class AdsModel {
 
         if (filter.ngayDangTinFrom) { //ngayDangTinFrom: 20-04-2016
             sql = `${sql} and ngayDangTin > '${filter.ngayDangTinFrom}'`;
-        } 
+        }
 
         if (filter.giaBETWEEN && (filter.giaBETWEEN[0] > 1 || filter.giaBETWEEN[1] < 9999999)) {
             sql = `${sql} AND (gia BETWEEN ${filter.giaBETWEEN[0]} AND ${filter.giaBETWEEN[1]})`;
         }
 
         if(filter.soPhongNguGREATER){
-            let soPhongNguGREATER = Number(filter.soPhongNguGREATER);    
+            let soPhongNguGREATER = Number(filter.soPhongNguGREATER);
             sql = sql + (soPhongNguGREATER ? " AND soPhongNgu  >= " + soPhongNguGREATER : "");
         }
         if(filter.soPhongTamGREATER){
@@ -672,7 +664,7 @@ class AdsModel {
                 }
                 sql = sql + condition;
             }else{
-                sql = sql + ((filter.huongNha && filter.huongNha>0) ? " AND huongNha=" + filter.huongNha : "");        
+                sql = sql + ((filter.huongNha && filter.huongNha>0) ? " AND huongNha=" + filter.huongNha : "");
             }
         }
         if(filter.duAnID)
@@ -697,8 +689,8 @@ class AdsModel {
 
         if(filter.limit)
             sql = sql + " LIMIT  " + filter.limit;
-        if(filter.pageNo) 
-            sql = sql + " OFFSET  " + ((filter.pageNo-1)*filter.limit);    
+        if(filter.pageNo)
+            sql = sql + " OFFSET  " + ((filter.pageNo-1)*filter.limit);
 
         return sql;
 
@@ -707,8 +699,8 @@ class AdsModel {
     countWithFilter(callback,filter){
         filter.limit = undefined;
         filter.pageNo = undefined;
-        filter.orderBy = undefined;        
-        var sql ="SELECT count(*) FROM default t " + this.buildWhereForFilter(filter);        
+        filter.orderBy = undefined;
+        var sql ="SELECT count(*) FROM default t " + this.buildWhereForFilter(filter);
         logUtil.info(sql);
         var query = N1qlQuery.fromString(sql);
         bucket.query(query, function(err, all) {
@@ -785,7 +777,7 @@ class AdsModel {
                     callback(err, res[0].cnt);
                 }
             }
-            
+
         });
     }
 
@@ -895,7 +887,7 @@ class AdsModel {
             let soTang = Number(q.soTang);
             sql = sql + " AND soTang  = " + soTang;
         }
-        
+
         if (q.gia) {
             sql = sql + " AND gia = " + q.gia ;
         }
@@ -931,7 +923,6 @@ class AdsModel {
 
       //logUtil.info(sql);
       var query = N1qlQuery.fromString(sql);
-
       bucket.query(query, function(err, all) {
         if (!all)
           all = [];

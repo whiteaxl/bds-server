@@ -92,7 +92,6 @@ class UserModel {
     var sql = `select t.adsLikes from default t where type='User' and id='${userID}'`;
 
     var query = N1qlQuery.fromString(sql);
-
     console.log("getAdsLikes, sql=", sql);
     bucket.query(query, (err, res) => {
       if (err) {
@@ -104,11 +103,16 @@ class UserModel {
           return;
         }
         let adsLikes = res[0].adsLikes;
-        let sql2 = `select a.* from default a where a.type='Ads' and a.id in ${JSON.stringify(adsLikes)}`;
-        console.log("getAdsLikes, sql 2:", sql2);
+        if (adsLikes && adsLikes.length>0) {
+          let sql2 = `select a.* from default a where a.type='Ads' and a.id in ${JSON.stringify(adsLikes)}`;
+          console.log("getAdsLikes, sql 2:", sql2);
 
-        var query2 = N1qlQuery.fromString(sql2);
-        bucket.query(query2, callback);
+          var query2 = N1qlQuery.fromString(sql2);
+          bucket.query(query2, callback);
+        } else{
+          callback(null, []);
+          return;
+        }
       }
     });
   }
@@ -116,7 +120,6 @@ class UserModel {
   getMyAds(userID,callback){
     let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}'`;
     console.log("getMyAds, sql:", sql);
-
     var query = N1qlQuery.fromString(sql);
     bucket.query(query, callback);
   }
@@ -254,7 +257,6 @@ class UserModel {
   }
 
   upsert(userDto,callback) {
-    
     bucket.upsert(userDto.userID, userDto, function (err, res) {
         if (err) {
             console.log("ERROR:" + err);
@@ -282,12 +284,13 @@ class UserModel {
         if(res && res.length==1){
           //get user from database
           var user = res[0];
-          console.log(user);
 
           if(this._checkSaveSearchExist(data,user)==true){
             onSuccess({success: true,status:1,msg: constant.MSG.EXIST_SAVE_SEARCH, savedSearch: user.saveSearch});
           }else{
-            console.log("going to push query " + JSON.stringify(data));            
+            console.log("going to push query " + JSON.stringify(data));
+
+            data.timeModified =  new Date().getTime();
             user.saveSearch.push(data);
             bucket.upsert(user.id, user, function (err, res) {
               if (err) {
@@ -394,7 +397,109 @@ class UserModel {
       }
     });       
   }
-  
+
+  changePassword(payload,reply){
+    var password = payload.password;
+    var newPassword = payload.newPassword;
+    var userID = payload.userID;
+
+    console.log('find user for ' + userID);
+
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+        reply({success: false, msg: err});
+      }else{
+        if(res && res.length==1){
+          //get user from database
+          var user = res[0];
+          if (user.matKhau != password){
+            reply({success: false, msg: constant.MSG.PASSWORD_NOT_CORRECT});
+          } else {
+            user.matKhau = newPassword;
+            bucket.upsert(user.id, user, function (err, res) {
+              if (err) {
+                console.log("ERROR:" + err);
+                reply({success: false, msg: err});
+              } else {
+                reply({success: true, msg: constant.MSG.SUCCESS_UPDATE_PASSWORD});
+              }
+            })
+          }
+        }else{
+          reply({success: false, msg: constant.MSG.USER_NOT_EXIST});
+        }
+      }
+    });
+  }
+
+  deleteAds(payload,reply){
+    var adsID = payload.adsID;
+    var userID = payload.userID;
+
+    console.log('find user for ' + userID);
+
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+        reply({success: false, msg: err});
+      }else{
+        if(res && res.length==1){
+          var sql = `delete from default where type='Ads' and id='${adsID}'`;
+
+          console.log(sql);
+          var query = N1qlQuery.fromString(sql);
+
+          bucket.query(query, function(err, res){
+            if (err) {
+              console.log("ERROR:" + err);
+              reply({success: false, msg: err});
+            } else {
+              reply({success: true, msg: constant.MSG.SUCCESS_DELETE_ADS});
+            }
+          });
+        }else{
+          reply({success: false, msg: constant.MSG.USER_NOT_EXIST});
+        }
+      }
+    });
+  }
+
+  getUpdateAds(payload,reply){
+    var adsID = payload.adsID;
+    var userID = payload.userID;
+
+    console.log('find Ads for ' + userID + ', adsID = ' + adsID);
+
+    this.getUserByID(userID, (err,res) => {
+      if (err) {
+        console.log("ERROR:" + err);
+        reply({success: false, msg: err});
+      }else{
+        if(res && res.length==1){
+      var sql = `select * from default where type='Ads' and id='${adsID}'`;
+
+      console.log(sql);
+      var query = N1qlQuery.fromString(sql);
+      bucket.query(query, function(err, res){
+        if (err) {
+          console.log("ERROR:" + err);
+          reply({success: false, msg: err});
+        } else {
+          console.log("Get UpdateAds:");
+          console.log(res[0]);
+          reply({success: true, data: res[0].default});
+        }
+      });
+    }else{
+      reply({success: false, msg: constant.MSG.USER_NOT_EXIST});
+    }
+  }
+  });
+  }
+
+
+
   _checkSaveSearchExist(data, user){
     if(!user.saveSearch)
       user.saveSearch = [];
@@ -404,7 +509,7 @@ class UserModel {
           return true;
       }
     }else{
-      return false;  
+      return false;
     }
   }
 
