@@ -34,8 +34,7 @@ function loadDoc(type, callback) {
 
 function loadAds(callback) {
   let type = 'Ads';
-  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, "
-              + " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads' `;
+  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads'`;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
