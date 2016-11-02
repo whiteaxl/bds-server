@@ -11,7 +11,7 @@
                     <img src="{{mpc.ads.image.cover}}" />
                     <span class="des">Ảnh bìa</span>
                 </li>
-                <li ng-repeat="img in mpc.ads.image.images">
+                <li ng-repeat="img in mpc.ads.image.images track by $index">
                     <a href="javascript:void(0)" class="close"><i class="iconCancel"></i></a><img src="{{img}}" />
                 </li>
                 <li ngf-select="uploadFiles($files)" multiple accept="image/*"><input type="file" multiple id="file" /><label for="file"><i class="iconPlus"></i></label></li>

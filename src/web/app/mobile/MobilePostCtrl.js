@@ -51,15 +51,18 @@
 					}).then(function (resp) {
 						console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
 
-						var fileUrl = location.protocol;
-						fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
 
-						console.log("----fileUrl: " + fileUrl);
-						if(($scope.count == 0) && (vm.ads.image.cover.trim().length == 0)){
-							vm.ads.image.cover = fileUrl;
-						} else{
-							vm.ads.image.images.push(fileUrl);
-						}
+						$timeout(function() {
+							var fileUrl = location.protocol;
+							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+
+							console.log("----fileUrl: " + fileUrl);
+							if(($scope.count == 0) && (vm.ads.image.cover.trim().length == 0)){
+								vm.ads.image.cover = fileUrl;
+							} else{
+								vm.ads.image.images.push(fileUrl);
+							}
+						},100);
 
 					}, function (resp) {
 						console.log('Error status: ' + resp.status);

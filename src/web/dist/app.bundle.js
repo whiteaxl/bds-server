@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0dd5a111cc06bbb45cd8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f2e254b14dbcd692d63c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -27970,15 +27970,17 @@
 						}).then(function (resp) {
 							console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
 
-							var fileUrl = location.protocol;
-							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+							$timeout(function () {
+								var fileUrl = location.protocol;
+								fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
 
-							console.log("----fileUrl: " + fileUrl);
-							if ($scope.count == 0 && vm.ads.image.cover.trim().length == 0) {
-								vm.ads.image.cover = fileUrl;
-							} else {
-								vm.ads.image.images.push(fileUrl);
-							}
+								console.log("----fileUrl: " + fileUrl);
+								if ($scope.count == 0 && vm.ads.image.cover.trim().length == 0) {
+									vm.ads.image.cover = fileUrl;
+								} else {
+									vm.ads.image.images.push(fileUrl);
+								}
+							}, 100);
 						}, function (resp) {
 							console.log('Error status: ' + resp.status);
 						}, function (evt) {
