@@ -5,6 +5,13 @@ var _ = require("lodash");
 var CommonService = require("../dbservices/Common");
 var commonService = new CommonService;
 
+var loki = require("lokijs");
+var db = new loki('rw.json');
+var adsCol = db.addCollection('ads', {
+  indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
+});
+
+
 //declare global cache
 global.rwcache = {};
 
@@ -40,19 +47,17 @@ function loadAds(callback) {
       logUtil.error(err);
       return;
     }
-    global.rwcache[type] = {
-      asMap : {},
-      sale : [],
-      rent : [],
-    };
 
     list.forEach(e => {
+      adsCol.insert(e);
+      /*
       global.rwcache[type].asMap[e.id] = e;
       if (e.loaiTin ==0) {
         global.rwcache[type].sale.push(e);
       } else {
         global.rwcache[type].rent.push(e);
       }
+      */
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
@@ -85,13 +90,6 @@ var cache = {
     });
   },
 
-  adsSaleAsArray() {
-    return global.rwcache.Ads.sale;
-  },
-  adsRentAsArray() {
-    return global.rwcache.Ads.rent;
-  },
-
   placeAsArray() {
     return global.rwcache.Place.asArray;
   },
@@ -102,24 +100,23 @@ var cache = {
     if (q.huongNha && q.huongNha.length==1 && q.huongNha[0] == 0) {
       q.huongNha = null;
     }
+    //sorting
+    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+    let that = this;
 
     let filtered = [];
-    let allAds = q.loaiTin == 0 ? this.adsSaleAsArray() : this.adsRentAsArray();
-
-    allAds.forEach((e) => {
-      if (this._match(q, e)) {
-        filtered.push(e);
-      }
-    });
+    filtered = adsCol.chain()
+      .find({loaiTin:q.loaiTin})
+      .where((e) => {
+        return that._match(q, e)
+      })
+      .data();
 
     //ordering
     let count = filtered.length;
 
     console.log("Filterred length: ", count);
-
-    //sorting
-    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
-
 
     let sign = 1;
     if (orderBy.type == 'DESC') {
