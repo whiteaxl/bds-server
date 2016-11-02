@@ -32,7 +32,7 @@ internals.uploadFiles = function(req,reply){
 
 		console.log(files);
 
-		
+
     	var newFileMaps = [];
 
 		var fp = files[Object.keys(files)[0]][0].path;
