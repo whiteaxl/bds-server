@@ -75,7 +75,7 @@ var cache = {
     let limit = 100000;
     let total = 0;
     let cnt = 0;
-    let n = 5;
+    let n = 3;
 
     for (let i = 0; i < n; i++) {
       setTimeout(()=> {
@@ -86,7 +86,7 @@ var cache = {
             logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
           }
         });
-      }, 15000*i);
+      }, 20000*i);
     }
   },
 
