@@ -39,9 +39,9 @@ function loadDoc(type, callback) {
 }
 
 
-function loadAds(callback) {
+function loadAds(limit, offset, callback) {
   let type = 'Ads';
-  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads'`;
+  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads' limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
@@ -60,9 +60,9 @@ function loadAds(callback) {
       */
     });
 
-    logUtil.info("Done load all " + type, list.length + " records");
+    logUtil.info("Done load all " + type, list.length + " records" + ", offset="+offset);
 
-    callback();
+    callback(list.length);
   });
 }
 
@@ -72,16 +72,21 @@ var cache = {
     this.reloadPlaces();
   },
   reloadAds_01() {
-    if (global.loadCluster) {
-      let n = global.numCPUs;
-      let t = Math.floor((Math.random() * n) + 1);
-      let interval = global.delayLoadTime || 30000;
+    let limit = 100000;
+    let total = 0;
+    let cnt = 0;
+    let n = 5;
 
-      setTimeout(() => {
-        loadAds(()=> {});
-      }, t * interval)
-    } else {
-      loadAds(()=> {});
+    for (let i = 0; i < n; i++) {
+      setTimeout(()=> {
+        loadAds(limit, limit * i, (length)=> {
+          total += length;
+          cnt ++;
+          if (cnt == n) {
+            logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
+          }
+        });
+      }, 15000*i);
     }
   },
 
