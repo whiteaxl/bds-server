@@ -9,7 +9,7 @@ var loki = require("lokijs");
 
 var REFRESH_INTERVAL = 60;//seconds
 var ADS_BATCH_SIZE = 100000; //each loading batch
-var ADS_NUMBER_OF_BATCH = 2;
+var ADS_NUMBER_OF_BATCH = 3;
 var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
 
 var db = new loki('rw.json');
