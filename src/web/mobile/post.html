@@ -257,6 +257,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade modal-choose modal-none" id="mapsBox" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <h4 class="modal-title" id="mapsBoxLabel">Bản đồ</h4>
+                </div>
+                <div class="modal-body uln">
+                    <ng-map center="{{mdt.center}}" id="fullMap" lazy-init="true" class="ngmap">
+                        <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
+                            <div class = "marker">
+                                {{mdt.marker.content}}
+                            </div>
+                        </custom-marker>
+                        <street-view-panorama>
+                        </street-view-panorama>
+                    </ng-map>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="/web/mobile/js/javascript.min.js"></script>

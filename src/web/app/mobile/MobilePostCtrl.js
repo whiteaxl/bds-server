@@ -20,6 +20,57 @@
 		$(".btn-more .collapse-title").click(function() {
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
+
+		vm.getLocation = function() {
+			if(vm.poly)
+				vm.poly.setMap(null);
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position){
+					$rootScope.searchData.circle = {
+						center : {
+							lat: position.coords.latitude,
+							lon: position.coords.longitude
+						},
+						radius : 2
+					};
+					vm.initialized = false
+
+					vm.disableIdleHandler();
+					$rootScope.searchData.viewport = undefined;
+					$rootScope.searchData.diaChinh = undefined;
+					$rootScope.searchData.polygon = undefined;
+					$rootScope.currentLocation.lat = position.coords.latitude;
+					$rootScope.currentLocation.lon = position.coords.longitude;
+					$scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
+					vm.marker = position;
+					// homeDataSearch.currentLocation = $rootScope.currentLocation;
+					//       HouseService.homeDataForApp(homeDataSearch).then(function(res){
+					//  //alert(JSON.stringify(res));
+					//  vm.boSuuTap = res.data.data; 
+					// });
+					// fetchHomeData();                    
+					vm.resetResultList();
+					//vm.map.setCenter($scope.center);
+					vm.search(function(){
+						//vm.initialized = true;
+
+						$timeout(function() {
+							vm.initialized = true;
+							//vm.map.fitBounds(bounds);
+							vm.humanZoom = false;
+							vm.enableMapIdleHandler();
+						}, 0);
+					});
+				}, function(error){
+					console.log(error);
+					// vm.showAskCurrentLocation  = true;
+					// fetchHomeData();
+				});
+			} else {
+				// fetchHomeData();
+			}
+		}
+		
 		$scope.namXayDungList = [
 			{
 				value: "19810101",
