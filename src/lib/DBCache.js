@@ -53,7 +53,7 @@ function loadAds(limit, offset, isFull, callback) {
 
   projection = isFull ? "default.*" : projection;
 
-  let sql = `select ${projection} from default where type='Ads' and source='bds' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
+  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
