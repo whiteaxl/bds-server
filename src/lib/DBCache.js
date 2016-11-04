@@ -100,7 +100,10 @@ var cache = {
 
         //schedule to reload
         setInterval(()=> {
-          that.reloadAds(() => {}, isFull);
+          let lastSyncTime = new Date().getTime();
+          that.reloadAds(() => {
+            this.updateLastSyncTime(lastSyncTime);
+          }, isFull);
         }, REFRESH_INTERVAL*1000);
 
         done && done();
@@ -134,9 +137,7 @@ var cache = {
           if (cnt == n) {
             logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
             that._loadingAds = false;
-            if (done) {
-              done();
-            }
+            done && done();
           }
         });
       }, ADS_BATCH_WAIT*1000*i);
