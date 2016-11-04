@@ -522,11 +522,10 @@ function load(fn) {
     processHuyen(tinh.district, tinhObj);
   });
 }
-/*
 load("city1.json");
 load("city2.json");
 load("city3.json");
 load("city4.json");
-*/
 
-useGoogleToAddMissingViewportInDB();
+
+//useGoogleToAddMissingViewportInDB();

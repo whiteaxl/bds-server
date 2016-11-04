@@ -2,18 +2,26 @@
 
 var logUtil = require("./logUtil");
 var _ = require("lodash");
-var CommonService = require("../dbservices/Common");
-var commonService = new CommonService;
+var CommonModel = require("../dbservices/Common");
+var commonService = new CommonModel;
 
 var loki = require("lokijs");
+
+var REFRESH_INTERVAL = 60;//seconds
+var ADS_BATCH_SIZE = 100000; //each loading batch
+var ADS_NUMBER_OF_BATCH = 2;
+var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
+
 var db = new loki('rw.json');
 var adsCol = db.addCollection('ads', {
+  unique : ['id'],
   indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
 });
 
-
 //declare global cache
 global.rwcache = {};
+
+global.lastSyncTime = 0;
 
 function loadDoc(type, callback) {
   let sql = `select t.* from default t where type='${type}' `;
@@ -39,25 +47,34 @@ function loadDoc(type, callback) {
 }
 
 
-function loadAds(limit, offset, callback) {
+function loadAds(limit, offset, isFull, callback) {
   let type = 'Ads';
-  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads' limit ${limit} offset ${offset} `   ;
+  let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
+
+  projection = isFull ? "default.*" : projection;
+
+  let sql = `select ${projection} from default where type='Ads' and source='bds' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
       return;
     }
 
+    let adsColNotEmpty = adsCol.count() !== 0;
+
     list.forEach(e => {
-      adsCol.insert(e);
-      /*
-      global.rwcache[type].asMap[e.id] = e;
-      if (e.loaiTin ==0) {
-        global.rwcache[type].sale.push(e);
+      if (adsColNotEmpty) { // first time fullload, just simply insert
+        let inCache = adsCol.by('id', e.id);
+        if (inCache) {
+          Object.assign(inCache, e);
+
+          adsCol.update(inCache);
+        } else {
+          adsCol.insert(e);
+        }
       } else {
-        global.rwcache[type].rent.push(e);
+        adsCol.insert(e);
       }
-      */
     });
 
     logUtil.info("Done load all " + type, list.length + " records" + ", offset="+offset);
@@ -67,36 +84,114 @@ function loadAds(limit, offset, callback) {
 }
 
 var cache = {
-  init() {
-    this.reloadAds_01();
-    this.reloadPlaces();
+  updateLastSyncTime(lastSyncTime) {
+    global.lastSyncTime = lastSyncTime || new Date().getTime();
   },
-  reloadAds_01() {
-    let limit = 100000;
+
+  init(done, isFull) {
+    let lastSyncTime = new Date().getTime();
+    let cnt = 0;
+    let that = this;
+
+    let checkDone = () => {
+      cnt ++ ;
+      if (cnt==2) {
+        this.updateLastSyncTime(lastSyncTime);
+
+        //schedule to reload
+        setInterval(()=> {
+          that.reloadAds(() => {}, isFull);
+        }, REFRESH_INTERVAL*1000);
+
+        done && done();
+      }
+    };
+
+    this.reloadAds(checkDone, isFull);
+    this.reloadPlaces(checkDone);
+
+  },
+  _loadingAds : false,
+
+  reloadAds(done, isFull) {
+    if (this._loadingAds) {
+      logUtil.warn("Can't perform reloadAds, there is readAds running!");
+      return;
+    }
+    this._loadingAds = true;
+    let that = this;
+
+    let limit = ADS_BATCH_SIZE;
     let total = 0;
     let cnt = 0;
-    let n = 3;
+    let n = ADS_NUMBER_OF_BATCH;
 
     for (let i = 0; i < n; i++) {
       setTimeout(()=> {
-        loadAds(limit, limit * i, (length)=> {
+        loadAds(limit, limit * i, isFull, (length)=> {
           total += length;
           cnt ++;
           if (cnt == n) {
             logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
+            that._loadingAds = false;
+            if (done) {
+              done();
+            }
           }
         });
-      }, 20000*i);
+      }, ADS_BATCH_WAIT*1000*i);
     }
   },
 
-  reloadPlaces() {
-    loadDoc("Place", ()=> {
-    });
+  reloadPlaces(done) {
+    loadDoc("Place", done);
   },
 
   placeAsArray() {
     return global.rwcache.Place.asArray;
+  },
+
+  placeAsMap() {
+    return global.rwcache.Place.asMap;
+  },
+
+  placeById(id) {
+    return this.placeAsMap()[id];
+  },
+
+  adsById(id) {
+    return adsCol.by('id', id);
+  },
+
+  upsertAdsIfChanged(ads, callback) {
+    let fromDB = this.adsById(ads.id);
+    if (!fromDB) { //insert
+      commonService.upsert(ads, (err, res) => {
+        callback(err, 1);
+      });
+    } else {
+      let c1 = _.clone(fromDB);
+      let c2 = _.clone(ads);
+      c2 = JSON.parse(JSON.stringify(c2));
+
+      c1.$loki = null;
+      c2.$loki = null;
+      c1.meta = null;
+      c2.meta = null;
+
+      c1.timeExtracted = null;
+      c2.timeExtracted = null;
+      c1.timeModified = null;
+      c2.timeModified = null;
+
+      if (!_.isEqual(c1, c2)) { //update
+        commonService.upsert(ads, (err, res) => {
+          callback(err, 2);
+        });
+      } else { //same, no need any action
+        callback(null, 0);
+      }
+    }
   },
 
   query(q, callback){

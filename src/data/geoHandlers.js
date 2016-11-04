@@ -6,7 +6,8 @@ var commonService = new CommonService;
 var logUtil = require("../lib/logUtil");
 var geoUtil = require("../lib/geoUtil");
 
-var g_cachePlaces = {};
+var DBCache = require("../lib/DBCache");
+
 
 function loadPlaces(callback) {
   let sql = "select t.* from default t where type='Place' ";
@@ -27,11 +28,8 @@ function loadPlaces(callback) {
 
 
 let geoHanders = {
-  notMatchDiaChinhAndGeo : function(myPlace, cachePlace) {
+  notMatchDiaChinhAndGeo : function(myPlace) {
     let ret = 0;
-    if (!cachePlace) {
-      cachePlace = g_cachePlaces;
-    }
 
     let dc = myPlace.diaChinh;
     let id;
@@ -46,7 +44,7 @@ let geoHanders = {
       ret = 3;
     }
 
-    let place = cachePlace[id];
+    let place = DBCache.placeById(id);
 
     if (!place) {
       logUtil.warn("No place:", id);
