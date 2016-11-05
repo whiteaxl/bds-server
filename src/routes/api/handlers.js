@@ -387,7 +387,7 @@ function _transformDetailAds(adsFromDb) {
 
     if (ads.image.images_small) {
         ads.image.images = ads.image.images.map((one) => {
-            return one.replace("80x60", "745x510");
+            return one.replace("80x60", "745x510").replace("200x200", "745x510");
         });
     }
 
