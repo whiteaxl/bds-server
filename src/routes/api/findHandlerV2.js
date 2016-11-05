@@ -120,7 +120,7 @@ function _transform(allAds, q) {
       soPhongTam: ads.soPhongTam,
       soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "p.tắm" : null,
       image: {
-        cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize) : cfg.noCoverUrl,
+        cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize) : cfg.noCoverUrl,
         images: ads.image.images ? ads.image.images.map((e) => {
           return e.replace("80x60", targetSize);
         }) : [cfg.noCoverUrl]
