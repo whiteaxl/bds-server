@@ -2,7 +2,7 @@
 	'use strict';
 
 	var controllerId = 'MobilePostCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 
 		var chicago = new google.maps.LatLng(41.850033, -87.6500523);
@@ -37,6 +37,139 @@
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
 
+		// autocomplete
+		vm.favoriteSearchSource = [
+			{
+				description: "Vị trí hiện tại",
+				location: true,
+				class: "ui-autocomplete-category"
+			}
+		];
+
+		vm.autoCompleteChange = function(event){
+			//console.log("------------post---autoCompleteChange--------------");
+			if(vm.autoCompleteText == ''){
+				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchAddPost").autocomplete( "search", "" );
+			}
+			vm.toggleQuickClearAutoComplete();
+		}
+
+		vm.showFavorite = function(event){
+			//console.log("------------post---showFavorite--------------");
+			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchAddPost").autocomplete( "search", "" );
+			}
+
+		}
+
+		vm.mapClick =function(event){
+			vm.showStreetView = false;
+			//$('#mapsBox').modal("show");
+		}
+		$scope.chonDiaChinh = function(){
+			console.log("----------------chonDiaChinh----------------");
+			console.log($scope.listDiaChinh[0]);
+			if($scope.listDiaChinh){
+				vm.viewPort =  $scope.listDiaChinh[0].viewPort;;
+				if(vm.viewPort){
+					//$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];
+					var southWest = new google.maps.LatLng(vm.viewPort.southwest.lat, vm.viewPort.southwest.lon);
+					var northEast = new google.maps.LatLng(vm.viewPort.northeast.lat, vm.viewPort.northeast.lon);
+					var bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+
+					vm.fullMapPost.fitBounds(bounds);
+
+
+				}
+			}
+		}
+
+		vm.autocompleteSource = function (request, response) {
+			var results = [];
+			console.log("------------post---autocompleteSource--------------");
+			$http.get("/api/place/autocomplete?input=" + request.term).then(function(res){
+				console.log("------------post---autocompleteSource-----1---------");
+				var predictions = res.data.predictions;
+				console.log(predictions);
+				if(res.status == '200'){
+					for (var i = 0, prediction; prediction = predictions[i]; i++) {
+						results.push(
+							{
+								description: prediction.fullName,
+								types:    prediction.placeType,
+								viewPort:   prediction.viewport,
+								tinh: prediction.tinh,
+								huyen: prediction.huyen,
+								xa: prediction.xa,
+								placeId: prediction.placeId,
+								class: "iconLocation gray"
+							}
+						);
+					}
+				}
+				$scope.listDiaChinh = results;
+				response(results);
+			});
+		}
+
+		vm.keyPress = function(event){
+			console.log("------------post---keyPress--------------");
+			vm.showFrequentSearch = false;
+			$( "#searchAddPost").autocomplete( "option", "source",vm.autocompleteSource);
+			var $ww = $(window).width();
+
+
+		}
+
+		vm.toggleQuickClearAutoComplete = function(){
+			//console.log("------------post---toggleQuickClearAutoComplete--------------");
+			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchAddPost").autocomplete( "search", "" );
+				$(".close-search").removeAttr("style");
+				$(".input-fr").removeAttr("style");
+			}else{
+				$(".close-search").show();
+				$(".input-fr").css("width", $ww-78);
+			}
+			// if($(".search").find("input").hasClass("input-fr")){
+
+			//     if($(".input-fr").val().length>0) {
+			//         $(".close-search").show();
+			//         $(".input-fr").css("width", $ww-78);
+			//     }else{
+			//         $(".close-search").removeAttr("style");
+			//         $(".input-fr").removeAttr("style");
+			//     }
+			// }
+		}
+
+		vm.selectPlaceCallback = function(item){
+			console.log("--------------------selectPlaceCallback-----------------");
+			if(item.lastSearchSeparator==true){
+				return;
+			}
+			vm.item = item;
+			if(vm.item.placeId)
+				$rootScope.searchData.placeId = vm.item.placeId;
+			vm.keepViewport = false;
+			if(item.query){
+				vm.place = vm.item.place;
+				$scope.searchData = item.query;
+				vm.updateDrums();
+			}else{
+				vm.place = item;
+			}
+			if(!item.location){
+				$scope.searchData.circle = undefined;
+			}
+			$scope.$apply();
+		}
+		// end auto
+
 		vm.setDacTinhNha = function( value){
 			if(value==0){
 				vm.ads.nhaMoiXay = !vm.ads.nhaMoiXay;
@@ -68,53 +201,37 @@
 			}
 		}
 		vm.getLocation = function() {
-			if(vm.poly)
-				vm.poly.setMap(null);
+			console.log("---------------getLocation-------1-----------");
 			if (navigator.geolocation) {
+				console.log("---------------geolocation-------2-----------");
 				navigator.geolocation.getCurrentPosition(function(position){
-					$rootScope.searchData.circle = {
-						center : {
-							lat: position.coords.latitude,
-							lon: position.coords.longitude
-						},
-						radius : 2
-					};
-					vm.initialized = false
-
-					vm.disableIdleHandler();
-					$rootScope.searchData.viewport = undefined;
-					$rootScope.searchData.diaChinh = undefined;
-					$rootScope.searchData.polygon = undefined;
+					console.log("---------------getCurrentPosition-------1--1---------");
+					console.log(position);
 					$rootScope.currentLocation.lat = position.coords.latitude;
 					$rootScope.currentLocation.lon = position.coords.longitude;
-					$scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
-					vm.marker = position;
-					// homeDataSearch.currentLocation = $rootScope.currentLocation;
-					//       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-					//  //alert(JSON.stringify(res));
-					//  vm.boSuuTap = res.data.data; 
-					// });
-					// fetchHomeData();                    
-					vm.resetResultList();
-					//vm.map.setCenter($scope.center);
-					vm.search(function(){
-						//vm.initialized = true;
-
-						$timeout(function() {
-							vm.initialized = true;
-							//vm.map.fitBounds(bounds);
-							vm.humanZoom = false;
-							vm.enableMapIdleHandler();
-						}, 0);
-					});
+					$scope.currentLocation = $rootScope.currentLocation;
+					vm.getPlace();
 				}, function(error){
 					console.log(error);
-					// vm.showAskCurrentLocation  = true;
-					// fetchHomeData();
 				});
 			} else {
-				// fetchHomeData();
+				console.log("---------------getLocation--------2----------");
 			}
+		}
+
+		vm.getPlace = function(){
+			console.log("-------------getPlace----------------");
+			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
+				"&latlng=" + $scope.currentLocation.lat + ',' + $scope.currentLocation.lon;
+			console.log(url);
+			console.log("-------------showMore------1----------");
+			console.log($scope.currentLocation);
+			$http.get(url,{}).then(function(res){
+				console.log("-------------showMore-----getUrl-1----------");
+				console.log(res.data.results[0]);
+				$scope.place = res.data.results[0];
+			});
 		}
 
 		vm.showFullMap =function(){
@@ -130,6 +247,11 @@
 					if(!vm.fullMapPost){
 						console.log("------------show.bs.modal-----1-----");
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
+
+						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
+							vm.lat = event.latLng.lat();
+							vm.lon = event.latLng.lng();
+						});
 						console.log("------------show.bs.modal----2------");
 					}
 					/*
@@ -145,13 +267,11 @@
 		vm.initPost = function() {
 			initDataPost();
 			vm.initMapData();
+			vm.getLocation();
+			RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback,"searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 			})
-
-			NgMap.getMap().then(function(map) {
-				vm.fullMapPost = map;
-			});
 
 			//vm.updateDrumsPost();
 
