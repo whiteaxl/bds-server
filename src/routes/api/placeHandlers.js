@@ -32,9 +32,9 @@ function _getFromCache(input, reply) {
     if ((e.nameKhongDau.indexOf(inputKhongDau) > -1)
       || (!isNaN(e.nameKhongDau) && ('quan-'+e.nameKhongDau).indexOf(inputKhongDau) > -1)) {
         ret.push(e);
-        if (ret.length >= 10) {
-          break;
-        }
+        //if (ret.length >= 10) {
+        //  break;
+        //}
     }
     
   }
@@ -67,7 +67,7 @@ function _getFromCache(input, reply) {
     return 0;
   });
 
-  _returnToClient(ret, reply);
+  _returnToClient(ret && ret.slice(0, 10), reply);
 }
 
 
