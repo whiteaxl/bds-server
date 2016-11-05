@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ff28904f46ead1735bec"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9d91e4e15b605cdb2bc0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1018,7 +1018,8 @@
 	    $rootScope.user = {
 	      userID: null,
 	      adsLikes: [],
-	      lastSearch: null
+	      lastSearch: null,
+	      autoSearch: false
 	    };
 	    $rootScope.pageSize = 25;
 
@@ -28685,13 +28686,27 @@
 	            }
 	        };
 
+	        vm.changeBrowserHistory = function () {
+	            var url = window.location.href;
+	            var index = url.lastIndexOf("/");
+	            url = url.substring(0, index + 1) + vm.viewMode;
+	            //history.replaceState(null, null, url);            
+	        };
+
 	        vm.showList = function () {
 	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
 	            vm.viewMode = "list";
+	            vm.disableIdleHandler();
+	            vm.changeBrowserHistory();
+	            vm.map = undefined;
 	        };
 	        vm.showMap = function () {
 	            vm.viewMode = "map";
 	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
+	            $timeout(function () {
+	                vm.mapInitialized();
+	            }, 0);
+	            vm.changeBrowserHistory();
 	        };
 	        vm.sort = function (sortByName, sortByType) {
 	            $rootScope.searchData.orderBy.name = sortByName;
@@ -28725,6 +28740,7 @@
 	        };
 	        vm.enableMapIdleHandler = function () {
 	            vm.disableIdleHandler();
+	            if (!vm.map) return;
 	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function () {
 	                if (vm.initialized == true) {
 	                    vm.initialized = false;
@@ -28749,6 +28765,7 @@
 	                    //  content: 'you are here'
 	                    // };
 	                    vm.viewport = $rootScope.searchData.viewport;
+	                    if ($rootScope.user.autoSearch == false) return;
 	                    vm.search(function () {
 	                        $timeout(function () {
 	                            vm.initialized = true;
@@ -28777,15 +28794,26 @@
 	            //vm.initialized = true;
 	            // alert('aa');
 
-	            if (!vm.map) {
+	            if (!vm.map && vm.viewMode == 'map') {
 	                vm.map = NgMap.initMap('searchmap');
-	                vm.showCC = true;
-
-	                // google.maps.event.removeListener(zoomChangeHanlder);
-	                // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
-	                // google.maps.event.clearInstanceListeners(map);
-	                vm.enableMapIdleHandler();
-	                vm.humanZoom = false;
+	                vm.initialized = false;
+	                var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+	                var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+	                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+	                if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map) {
+	                    vm.map.fitBounds(bounds);
+	                    //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+	                    //$scope.center = 'Hanoi';
+	                }
+	                $timeout(function () {
+	                    vm.showCC = true;
+	                    // google.maps.event.removeListener(zoomChangeHanlder);
+	                    // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
+	                    // google.maps.event.clearInstanceListeners(map);
+	                    vm.enableMapIdleHandler();
+	                    vm.humanZoom = false;
+	                    vm.initialized = true;
+	                }, 500);
 	            }
 
 	            // vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
@@ -29139,7 +29167,7 @@
 	                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
 	                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
 
-	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat) {
+	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map) {
 	                        vm.map.fitBounds(bounds);
 	                        //vm.map.setCenter(vm.map.getBounds().getCenter());                         
 	                        //$scope.center = 'Hanoi';
@@ -29404,13 +29432,14 @@
 				}
 
 				vm.goBack = function () {
-					if ($rootScope.lastState.abstract == true) {
-						var webIdx = window.location.href.indexOf("/web/");
-						var homeUrl = window.location.href.substring(0, webIdx) + "/web/index.html";
-						window.location.href = homeUrl;
-					} else {
-						$state.go($rootScope.lastState, $rootScope.lastStateParams);
-					}
+					// if($rootScope.lastState.abstract == true){
+					// 	var webIdx = window.location.href.indexOf("/web/");
+					//         		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
+					//         		window.location.href = homeUrl;
+					// }else{
+					// 	$state.go($rootScope.lastState, $rootScope.lastStateParams);
+					// }
+					$window.history.back();
 				};
 
 				vm.setReportCode = function (reportCode) {
@@ -30231,7 +30260,7 @@
 	angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {},
+	        scope: { mode: '=mode' },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
 	        replace: 'true',
@@ -31610,9 +31639,21 @@
 	        return true;
 	    }
 
-	    if (_.indexOf(placeTypes, 'political') > -1 && _.indexOf(placeTypes, 'sublocality') > -1 && _.indexOf(placeTypes, 'sublocality_level_1') > -1 && place.formatted_address.indexOf("District") > -1) {
+	    if (_.indexOf(placeTypes, 'political') > -1 && _.indexOf(placeTypes, 'locality') > -1 && (place.address_components.length == 3 || place.formatted_address.split(",").length == 3)) {
 	        return true;
 	    }
+
+	    /*
+	    if (_.indexOf(placeTypes, 'political') > -1
+	        && _.indexOf(placeTypes, 'sublocality') > -1
+	      && _.indexOf(placeTypes, 'sublocality_level_1') > -1
+	          && ( place.formatted_address.indexOf("District") > -1 )
+	    ) {
+	        return true;
+	    }
+	    */
+
+	    return false;
 	};
 
 	placeUtil.getTypeName = function (place) {
@@ -31630,6 +31671,10 @@
 	    }
 
 	    if (_.indexOf(placeTypes, placeUtil.type.XA2) > -1) {
+	        return placeUtil.typeName.XA;
+	    }
+
+	    if (_.indexOf(placeTypes, 'political') > -1 && (_.indexOf(placeTypes, 'locality') > -1 || _.indexOf(placeTypes, 'sublocality_level_1') > -1 || _.indexOf(placeTypes, 'neighborhood') > -1) && (place.address_components.length == 4 || place.formatted_address.split(",").length == 4)) {
 	        return placeUtil.typeName.XA;
 	    }
 

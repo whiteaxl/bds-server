@@ -1,7 +1,7 @@
 angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
     var def = {
         restrict: 'E',
-        scope: {},
+        scope: {mode: '=mode'},
         terminal: true,
         templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
         replace: 'true',

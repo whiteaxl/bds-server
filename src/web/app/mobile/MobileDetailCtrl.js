@@ -111,13 +111,14 @@
 			}
 
 			vm.goBack = function(){
-				if($rootScope.lastState.abstract == true){
-					var webIdx = window.location.href.indexOf("/web/");
-            		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
-            		window.location.href = homeUrl;
-				}else{
-					$state.go($rootScope.lastState, $rootScope.lastStateParams);
-				}
+				// if($rootScope.lastState.abstract == true){
+				// 	var webIdx = window.location.href.indexOf("/web/");
+    //         		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
+    //         		window.location.href = homeUrl;
+				// }else{
+				// 	$state.go($rootScope.lastState, $rootScope.lastStateParams);
+				// }
+				$window.history.back();
 				
 			}
 

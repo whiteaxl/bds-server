@@ -1,10 +1,13 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
-<bds-mobile-header ></bds-mobile-header>
+<bds-mobile-header mode="msc.viewMode"></bds-mobile-header>
 
 <div ng-if="msc.viewMode=='list'" class="wapper">
-    <div class="reland-box uln" infinite-scroll='msc.nextPage()' infinite-scroll-disabled='msc.disableScrolling' infinite-scroll-distance='1' >
+    <div class="reland-box uln">
         <ul class="reland-list full" >
+            <li ng-if="msc.currentPage >1" ng-click="msc.prev();">
+                <a href="#"> preious page {{msc.currentPage}}</a>                
+            </li>
             <li ng-repeat="ads in msc.ads_list track by $index" >
                 <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
                 <a href="#" ng-click="msc.goDetail($event,$index)">
@@ -21,11 +24,13 @@
                     </span>
                 </a>
             </li>
+            <li ng-click="msc.next();" ng-if="msc.currentPage < msc.lastPageNo">
+                <a href="#"> next page {{msc.lastPageNo}}</a>                
+            </li>
         </ul>
         <div class="clb ovh"></div>
     </div>
     <!--END-->
-    <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
 </div>
 
 
@@ -48,7 +53,8 @@
 </div>
  <div class="notifyBox heartNotify"></div>
 <div  class="wapper">    
-    <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;">
+    <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
+    <div  class="maps" ng-if="msc.viewMode!='list'" style="bottom: 44px;">
         <div ontouchstart="return false" style="height: 100%;width: 100%;">
             <ng-map id="searchmap"  center="{{center}}" lazy-init="true"   class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
@@ -69,9 +75,6 @@
               visible="false">
             </street-view-panorama>  -->   
             <!-- </marker> -->
-
-            
-
             <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
                 <div ng-non-bindable="">
                     id: {{$index}}<br/>
@@ -83,15 +86,15 @@
         </ng-map>     
         </div>
         
-        <div class="mapsBtn">
-                <a href="#" ng-click="msc.prev($event)"><i class="p-icon i-mapprev"></i></i></a>
-                <a href="#" ng-click="msc.refreshPage($event)"><i class="p-icon i-maprefresh"></i></i></a>
-                <a href="#" ng-click="msc.next($event)"><i class="p-icon i-mapnext"></i></i></a>
-            </div>   
+        <div class="mapsBtn" ng-if="$root.user.autoSearch==false">
+            <a href="#" ng-click="msc.prev($event)"><i class="p-icon i-mapprev"></i></i></a>
+            <a href="#" ng-click="msc.refreshPage($event)"><i class="p-icon i-maprefresh"></i></i></a>
+            <a href="#" ng-click="msc.next($event)"><i class="p-icon i-mapnext"></i></i></a>
+        </div>   
         <div class="actions">
-                <a href="#" ng-click="msc.drawMode($event)"><i class="p-icon i-mapdraw" ></i></i></a>
-                <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
-            </div>
+            <a href="#" ng-click="msc.drawMode($event)"><i class="p-icon i-mapdraw" ></i></i></a>
+            <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
+        </div>
     </div>
     <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
     <footer class="main border uln">

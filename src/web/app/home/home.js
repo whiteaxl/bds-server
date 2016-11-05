@@ -25,7 +25,8 @@
     $rootScope.user = {
       userID: null,
       adsLikes: [],
-      lastSearch: null
+      lastSearch: null,
+      autoSearch: false
     }    
     $rootScope.pageSize = 25;
 
