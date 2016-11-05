@@ -185,7 +185,18 @@ var cache = {
       c1.timeModified = null;
       c2.timeModified = null;
 
+      if (c1.image.images && c1.image.images.length == 0) {
+        c1.image.images = null;
+      }
+      if (c2.image.images && c2.image.images.length == 0) {
+        c2.image.images = null;
+      }
+
+      //c1 = JSON.stringify(c1);
+      //c2 = JSON.stringify(c2);
+
       if (!_.isEqual(c1, c2)) { //update
+      //if (c1 !== c2) { //update
         commonService.upsert(ads, (err, res) => {
           callback(err, 2);
         });
