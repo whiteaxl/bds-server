@@ -8,7 +8,7 @@ var commonService = new CommonModel;
 var loki = require("lokijs");
 
 var REFRESH_INTERVAL = 180;//seconds
-var ADS_BATCH_SIZE = 500000; //each loading batch
+var ADS_BATCH_SIZE = 800000; //each loading batch
 var ADS_NUMBER_OF_BATCH = 1;
 var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
 
@@ -51,7 +51,7 @@ function loadAds(limit, offset, isFull, callback) {
   let type = 'Ads';
   let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
 
-  projection = isFull ? "default.*" : projection;
+  projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
 
   let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
