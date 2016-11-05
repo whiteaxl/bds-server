@@ -4,7 +4,7 @@ var supertest = require("supertest");
 var should = require("should");
 var moment = require('moment');
 var constant = require('../src/lib/constant');
-var url  =`http://${process.env.IP || '192.168.11.9'}:${process.env.PORT || 5000}`;
+var url  =`http://${process.env.IP || '203.162.13.170'|| '127.0.0.1' }:${process.env.PORT || 5000}`;
 
 console.log("Server URL:", url);
 
@@ -21,7 +21,7 @@ describe("01.Find API testsuite", function () {
         viewport:
         { southwest: { lat: 21.00788690844453, lon: 105.82188297047948 },
           northeast: { lat: 21.032189565113654, lon: 105.83934842206385 } },
-        limit: 200,
+        limit: 10,
         huongNha: [ 0 ],
         polygon:
           [ { lat: 21.010895110828983, lon: 105.82660858522243 },
@@ -82,6 +82,10 @@ describe("01.Find API testsuite", function () {
       .end(function (err, res) {
         console.log("\ntestFind, length:" + res.body.length);
 
+        console.log("\ntestFind, 1:", res.body.list[0].image);
+        console.log("\ntestFind, 1:", res.body.list[1].image);
+        console.log("\ntestFind, 1:", res.body.list[2].image);
+
         done();
       });
   };
@@ -92,34 +96,28 @@ describe("01.Find API testsuite", function () {
   var testFind_02 = function (done) {
     server
       .post("/api/v2/find")
-      .send({
+      .send(
+        {
         "loaiTin": 0,
-        "giaBETWEEN": [0, 3000],
-        "dienTichBETWEEN" : [20, 100],
         "ngayDangTinGREATER" : "20150601",
-        "viewport" : {
-          "northeast" : {
-            "lat" : 21.385027,
-            "lon" : 106.0198859
-          },
-          "southwest" : {
-            "lat" : 20.562323,
-            "lon" : 105.2854659
-          }
-        },
         "diaChinh" : {
-          "tinhKhongDau" : "ha-noi",
-          "huyenKhongDau" : "cau-giay"
+          "tinhKhongDau" : "HN",
+          "huyenKhongDau" : "7"
         },
-        "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
-        "limit" : 25,
+        "orderBy" : {"name": "ngayDangTin", "type":"DESC"},
+        "limit" : 50,
         "pageNo" : 1,
         "isIncludeCountInResponse" : true
-      })
+      }
+      )
       .expect("Content-type", /json/)
       .expect(200) // THis is HTTP response
       .end(function (err, res) {
         console.log("\ntestFind, length:" + res.body.length);
+
+        res.body.list.forEach((e) => {
+          console.log("\n", e.image);
+        });
 
         done();
       });
@@ -130,36 +128,48 @@ describe("01.Find API testsuite", function () {
   var testFind_03 = function (done) {
     server
       .post("/api/v2/find")
-      .send({
-        "loaiTin": 0,
-        "giaBETWEEN": [0, 3000],
-        "dienTichBETWEEN" : [20, 100],
-        "ngayDangTinGREATER" : "20150601",
-        "viewport" : {
-          "northeast" : {
-            "lat" : 21.385027,
-            "lon" : 106.0198859
+      .send(
+
+        {
+          "loaiTin": 0,
+          "diaChinh": {
+            "tinhKhongDau": "HN",
+            "huyenKhongDau": "13",
+            "fullName": "Huyện Thanh Trì, Hà Nội"
           },
-          "southwest" : {
-            "lat" : 20.562323,
-            "lon" : 105.2854659
-          }
-        },
-        "diaChinh" : {
-          "tinhKhongDau" : "ha-noi",
-          "huyenKhongDau" : "cau-giay"
-        },
-        "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
-        "limit" : 25,
-        "pageNo" : 1,
-        "isIncludeCountInResponse" : false,
-        "gia" : -1
-      })
+          "viewport": {
+            "northeast": {
+              "lat": 21.003782,
+              "lon": 105.90903
+            },
+            "southwest": {
+              "lat": 20.986124,
+              "lon": 105.875885
+            }
+          },
+          "limit": 25,
+          "huongNha": [
+            -1
+          ],
+          "pageNo": 1,
+          "isIncludeCountInResponse": true,
+          "userID": "User_1",
+          "updateLastSearch": true,
+          "giaBETWEEN": [
+            -1,
+            9999999
+          ],
+          "dienTichBETWEEN": [
+            -1,
+            9999999
+          ]
+        }
+
+      )
       .expect("Content-type", /json/)
       .expect(200) // THis is HTTP response
       .end(function (err, res) {
         console.log("\ntestFind, length:", res.body);
-
         done();
       });
   };
