@@ -252,7 +252,8 @@
 							vm.lat = event.latLng.lat();
 							vm.lon = event.latLng.lng();
 						});
-						console.log("------------show.bs.modal----2------");
+						console.log("------------vm.lat: " + vm.lat);
+						console.log("------------vm.lon: " + vm.lon);
 					}
 					/*
 					 vm.fullMapPost.getStreetView().setVisible(vm.showStreetView);
