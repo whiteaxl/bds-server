@@ -131,7 +131,7 @@
                     </div>
                     <div class="title border">Vị trí</div>
                     <div class="maps-box collapse-box">
-                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#mapsBox">Bản đồ <span><label>Chọn vị trí</label> <i class="iconRightOpen"></i></span></a>
+                        <a role="button" ng-click="mpc.showFullMap()" class="collapse-title" href="#">Bản đồ <span><label>Chọn vị trí</label> <i class="iconRightOpen"></i></span></a>
                     </div>
                     <div class="address-box collapse-box">
                         <a role="button" class="collapse-title" data-toggle="modal" data-target="#addressBox">Địa chỉ <span><label>Đường Phùng Hưng...</label> <i class="iconRightOpen"></i></span></a>
@@ -164,21 +164,16 @@
                         <div class="year-box drum-full collapse-box border-none">
                             <a class="collapse-title" ng-click="mpc.spinner($event, '.spinner', 'spinner-hide')">Năm xây dựng <span><label id="yearBuild_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
                             <div class="yearBox spinner spinner-hide">
-                                <select id="yearBuild" class="drum" ng-model="mpc.ads.namXayDung" ng-init="upDateList()">
-                                    <option ng-repeat="nam in namXayDungList track by $index" value="{{nam.value}}">{{nam.lable}}</option>
+                                <select id="yearBuild">
+                                    <option ng-repeat="namXd in namXayDungList track by $index" value="{{namXd.value}}">{{namXd.lable}}</option>
                                 </select>
                             </div>
-                        </div>
 
+                        </div>
                         <div class="title border">&nbsp;</div>
                         <div class="other-box uln">
                             <ul class="list-check">
-                                <li><a href="javascript:void(0)">Nhà mới xây <i class="iconCheck"></i></a></li>
-                                <li><a href="javascript:void(0)">Nhà lô góc <i class="iconCheck"></i></a></li>
-                                <li><a href="javascript:void(0)">Ôtô đỗ cửa <i class="iconCheck"></i></a></li>
-                                <li><a href="javascript:void(0)">Đồng ý bán qua môi giới <i class="iconCheck"></i></a></li>
-                                <li><a href="javascript:void(0)">Nội thất đầy đủ <i class="iconCheck"></i></a></li>
-                                <li><a href="javascript:void(0)">Chính chủ đăng tin <i class="iconCheck"></i></a></li>
+                                <li ng-repeat="dtn in mpc.dacTinhNha track by $index"><a href="#" ng-click="mpc.setDacTinhNha(dtn.value)" class="{{mpc.isActiveClass(dtn.value)?'active':''}}">{{dtn.lable}} <i class="iconCheck"></i></a></li>
                             </ul>
                         </div>
                         <div class="title background-none border-none border-top">&nbsp;</div>
@@ -190,6 +185,7 @@
                     <div class="btn-box collapse-box btn-reset border-none">
                         <button type="reset" class="collapse-title red">Thiết lập lại</button>
                     </div>
+
                     <div class="clb ovh mb10">&nbsp;</div>
                 </div>
             </div>
@@ -257,24 +253,38 @@
             </div>
         </div>
     </div>
-    <div class="modal fade modal-choose modal-none" id="mapsBox" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabel">
+    <div class="modal fade modal-choose modal-none modal-bg" id="addressBox" tabindex="-1" role="dialog" aria-labelledby="addressBoxLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="mapsBoxLabel">Bản đồ</h4>
+                    <h4 class="modal-title" id="addressBoxLabel">Địa chỉ</h4>
                 </div>
                 <div class="modal-body uln">
-                    <ng-map center="{{mdt.center}}" id="fullMap" lazy-init="true" class="ngmap">
-                        <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
-                            <div class = "marker">
-                                {{mdt.marker.content}}
-                            </div>
-                        </custom-marker>
-                        <street-view-panorama>
-                        </street-view-panorama>
-                    </ng-map>
+                    <div class="title">Số nhà, ngõ, đường</div>
+                    <div class="pd15"><input type="text" class="form-control mb10"></div>
+                    <div class="note-fr pd15">Ví dụ: Số 15, ngõ 68 Hai Bà Trưng</div>
+                    <div class="clb">&nbsp;</div>
+                    <div class="title">Phường, quận, thành phố</div>
+                    <div class="pd15"><input type="text" class="form-control mb10" value="Phường Phúc La, Hà Đông, Hà Nội"></div>
+                    <div class="note-fr pd15">Thông tin này được lấy từ vị trí bạn chọn trên bản đồ. Nếu chưa thấy đúng bạn quay lại bản đồ chọn lại vị trí nhà.</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade modal-choose modal-none" id="mapsBoxPost" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabelPost">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="mapsBoxLabelPost">Bản đồ</h4>
+            </div>
+            <div class="modal-body uln">
+                <ng-map center="41.850033, -87.6500523" lazy-init="true" id="fullMapPost">
+
+                </ng-map>
             </div>
         </div>
     </div>

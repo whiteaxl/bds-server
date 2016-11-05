@@ -1,26 +1,72 @@
 (function() {
 	'use strict';
+
 	var controllerId = 'MobilePostCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
+
+		var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+		vm.click = function() {
+			vm.map.setCenter(chicago);
+		};
 		vm.ads = {};
 		$scope.loaiTin = 0;
 		$scope.soPhongNgu;
 		$scope.soPhongTam;
 		$scope.soTang;
+		vm.showStreetView = false;
 		$scope.currentYear = new Date().getFullYear();
 		vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
 		vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
+		vm.dacTinhNha = window.RewayListValue.DacTinhNha;
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-		vm.namXayDungList1 = [$scope.currentYear,$scope.currentYear - 1, $scope.currentYear - 2, $scope.currentYear - 3,
-			$scope.currentYear - 4, $scope.currentYear - 5, $scope.currentYear - 6, $scope.currentYear - 7,
-			$scope.currentYear - 8, $scope.currentYear - 9
+		$scope.namXayDungList = [
+			{ value: $scope.currentYear, lable: "Năm " + $scope.currentYear },
+			{ value: $scope.currentYear-1, lable: "Năm " + ($scope.currentYear -1) },
+			{ value: $scope.currentYear-2, lable: "Năm " + ($scope.currentYear -2) },
+			{ value: $scope.currentYear-3, lable: "Năm " + ($scope.currentYear -3) },
+			{ value: $scope.currentYear-4, lable: "Năm " + ($scope.currentYear -4) },
+			{ value: $scope.currentYear-5, lable: "Năm " + ($scope.currentYear -5) },
+			{ value: $scope.currentYear-6, lable: "Năm " + ($scope.currentYear -6) },
+			{ value: $scope.currentYear-7, lable: "Năm " + ($scope.currentYear -7) },
+			{ value: $scope.currentYear-8, lable: "Năm " + ($scope.currentYear -8) },
+			{ value: $scope.currentYear-9, lable: "Năm " + ($scope.currentYear -9) }
 		];
 
 		$(".btn-more .collapse-title").click(function() {
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
 
+		vm.setDacTinhNha = function( value){
+			if(value==0){
+				vm.ads.nhaMoiXay = !vm.ads.nhaMoiXay;
+			} else if(value==1){
+				vm.ads.nhaLoGoc = !vm.ads.nhaLoGoc;
+			} else if(value==2){
+				vm.ads.otoDoCua = !vm.ads.otoDoCua;
+			} else if(value==3){
+				vm.ads.nhaKinhDoanhDuoc = !vm.ads.nhaKinhDoanhDuoc;
+			} else if(value==4){
+				vm.ads.noiThatDayDu = !vm.ads.noiThatDayDu;
+			} else if(value==5){
+				vm.ads.chinhChuDangTin = !vm.ads.chinhChuDangTin;
+			}
+		}
+		vm.isActiveClass = function(value){
+			if(value==0){
+				return vm.ads.nhaMoiXay;
+			} else if(value==1){
+				return vm.ads.nhaLoGoc;
+			} else if(value==2){
+				return vm.ads.otoDoCua;
+			} else if(value==3){
+				return vm.ads.nhaKinhDoanhDuoc;
+			} else if(value==4){
+				return vm.ads.noiThatDayDu;
+			} else if(value==5){
+				return vm.ads.chinhChuDangTin;
+			}
+		}
 		vm.getLocation = function() {
 			if(vm.poly)
 				vm.poly.setMap(null);
@@ -70,95 +116,44 @@
 				// fetchHomeData();
 			}
 		}
-		
-		$scope.namXayDungList = [
-			{
-				value: "19810101",
-				lable: "Bất kỳ"
-			},
-			{
-				value: Date.today().add(-1).days().toString('yyyyMMdd'),
-				lable: "1 ngày"
-			},
-			{
-				value: Date.today().add(-2).days().toString('yyyyMMdd'),
-				lable: "2 ngày"
-			},
-			{
-				value: Date.today().add(-3).days().toString('yyyyMMdd'),
-				lable: "3 ngày"
-			},
-			{
-				value: Date.today().add(-5).days().toString('yyyyMMdd'),
-				lable: "5 ngày"
-			},
-			{
-				value: Date.today().add(-7).days().toString('yyyyMMdd'),
-				lable: "7 ngày"
-			},
-			{
-				value: Date.today().add(-14).days().toString('yyyyMMdd'),
-				lable: "14 ngày"
-			},
-			{
-				value: Date.today().add(-30).days().toString('yyyyMMdd'),
-				lable: "30 ngày"
-			},
-			{
-				value: Date.today().add(-90).days().toString('yyyyMMdd'),
-				lable: "90 ngày"
-			}
-		];
 
-		$scope.upDateList = function(){
-			console.log("------------upDateList-------");
-			vm.namXayDungList = [
-				{
-					value: "19810101",
-					lable: "Bất kỳ"
-				},
-				{
-					value: Date.today().add(-1).days().toString('yyyyMMdd'),
-					lable: "1 ngày"
-				},
-				{
-					value: Date.today().add(-2).days().toString('yyyyMMdd'),
-					lable: "2 ngày"
-				},
-				{
-					value: Date.today().add(-3).days().toString('yyyyMMdd'),
-					lable: "3 ngày"
-				},
-				{
-					value: Date.today().add(-5).days().toString('yyyyMMdd'),
-					lable: "5 ngày"
-				},
-				{
-					value: Date.today().add(-7).days().toString('yyyyMMdd'),
-					lable: "7 ngày"
-				},
-				{
-					value: Date.today().add(-14).days().toString('yyyyMMdd'),
-					lable: "14 ngày"
-				},
-				{
-					value: Date.today().add(-30).days().toString('yyyyMMdd'),
-					lable: "30 ngày"
-				},
-				{
-					value: Date.today().add(-90).days().toString('yyyyMMdd'),
-					lable: "90 ngày"
-				}
-			];
+		vm.showFullMap =function(){
+			console.log("------------showFullMap----------");
+			vm.showStreetView = false;
+			$('#mapsBoxPost').modal("show");
 		}
 
+		vm.initMapData = function(){
+			$('#mapsBoxPost').on('show.bs.modal', function (e) {
+				$timeout(function() {
+					console.log("----------post--show modal- new123----------");
+					if(!vm.fullMapPost){
+						console.log("------------show.bs.modal-----1-----");
+						vm.fullMapPost = NgMap.initMap('fullMapPost');
+						console.log("------------show.bs.modal----2------");
+					}
+					/*
+					 vm.fullMapPost.getStreetView().setVisible(vm.showStreetView);
+					 if(vm.showStreetView == true){
+					 console.log("------------show.bs.modal----3------");
+					 vm.fullMapPost.getStreetView().setPosition(vm.ads.streetviewLatLng);
+					 // vm.showStreetView = false;
+					 }*/
+				},300);
+			});
+		}
 		vm.initPost = function() {
 			initDataPost();
+			vm.initMapData();
 			$(".btn-more .collapse-title").click(function() {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 			})
 
-			vm.updateDrumsPost();
+			NgMap.getMap().then(function(map) {
+				vm.fullMapPost = map;
+			});
+
+			//vm.updateDrumsPost();
 
 			$(".post").animate({
 				right: 0
@@ -169,12 +164,9 @@
 			overlay(".overlay");
 
 			Hammer.plugins.fakeMultitouch();
-			$("select.drum").drum({
+			$("select#yearBuild").drum({
 				onChange : function (selected) {
-					console.log("------------drum-aaaaaaaaaaaaaaa---------");
-					console.log(selected);
 					$("#" + selected.id + "_value").html($(selected).find(":selected").html());
-					let array = JSON.parse(selected.value);
 					if(selected.id=="yearBuild"){
 						vm.ads.namXayDung = selected.value;
 					}
@@ -193,9 +185,14 @@
 				showEmail: false
 			};
 			vm.ads.chiTiet = '';
-			vm.ads.namXayDung = $rootScope.searchData.ngayDangTinGREATER;
+			vm.ads.nhaMoiXay = false;
+			vm.ads.nhaLoGoc = false;
+			vm.ads.otoDoCua = false;
+			vm.ads.nhaKinhDoanhDuoc = false;
+			vm.ads.noiThatDayDu = false;
+			vm.ads.chinhChuDangTin = false;
 		}
-
+/*
 		var setDrumValues = function(select, value){
 			var options = select[0].options;
 			console.log("---------setDrumValues-----------");
@@ -226,7 +223,7 @@
 			console.log(yearXdElm);
 			setDrumValues(yearXdElm, yearXd);
 		}
-
+*/
 
 
 		vm.selectLoaiTin = function(loaiTin){
@@ -253,6 +250,7 @@
 
 		vm.setSoPhongNgu = function (value) {
 			console.log("-----setSoPhongNgu-----");
+			console.log(vm.ads.namXayDung);
 			vm.ads.soPhongNgu = value;
 			console.log(vm.ads.soPhongNgu);
 			if(vm.ads.soPhongNgu && (vm.ads.soPhongNgu != $scope.soPhongNgu)){
@@ -323,7 +321,10 @@
 			}
 		}
 
-		vm.initPost();
+
+		$timeout(function() {
+			vm.initPost();
+		},0);
 
 		$scope.uploadFiles = function (files) {
 			if($rootScope.isLoggedIn()==false){

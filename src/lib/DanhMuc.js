@@ -550,6 +550,15 @@ danhMuc.LoaiNhaDatThueWeb = [
     { value: "99", lable: "Cho Thuê loại bất động sản khác" }    
 ];
 
+danhMuc.DacTinhNha = [
+    { value: "0", lable: "Nhà mới xây" },
+    { value: "1", lable: "Nhà lô góc" },
+    { value: "2", lable: "Ôtô đỗ cửa" },
+    { value: "3", lable: "Nhà kinh doanh được" },
+    { value: "4", lable: "Nội thất đầy đủ" },
+    { value: "5", lable: "Chính chủ đăng tin" }
+];
+
 danhMuc.SoPhongNgu = {
     0: BAT_KY,
     1: "1+",
