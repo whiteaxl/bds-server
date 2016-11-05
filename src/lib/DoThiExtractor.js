@@ -98,6 +98,16 @@ var parseEmail = function(encEmail) {
 
 			return entities.decodeHTML(onlyEncEmail);
 		}
+	} else {
+		let decode = entities.decodeHTML(encEmail);
+		let idx1 = decode.indexOf("\"");
+		let idx2 = decode.indexOf("\"",idx1+1);
+
+		if (idx1 > -1 && idx2 > -1) {
+			let email = decode.substring(idx1, idx2);
+
+			return email;
+		}
 	}
 
 	return '';
