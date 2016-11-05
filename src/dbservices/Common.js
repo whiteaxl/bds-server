@@ -53,8 +53,6 @@ class CommonModel {
 	}
 
 	countByType(type, onSuccess) {
-	
-		
 		var sql = `select count(*) cnt from default where type = '${type}'`;
 		var query = N1qlQuery.fromString(sql);
 

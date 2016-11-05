@@ -2,6 +2,7 @@
 var convertBds = require("./convertBds");
 var m = require("moment");
 var logUtil = require("../lib/logUtil");
+var DBCache = require("../lib/DBCache");
 
 let ngayDangFrom, ngayDangTo;
 if (process.argv.length > 2) {
@@ -12,10 +13,11 @@ if (process.argv.length > 3) {
 }
 
 
-convertBds.loadPlaces(() => {
+DBCache.init(() => {
   convertBds.convertAllBds(()=> {
     logUtil.info("DONE ALL");
+    process.exit(0);
   }, ngayDangFrom, ngayDangTo);
-});
+}, true);
 
 

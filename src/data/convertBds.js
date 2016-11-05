@@ -3,9 +3,13 @@
 var CommonService = require("../dbservices/Common");
 var commonService = new CommonService;
 
-var logUtil = require("../lib/logUtil");
+var geoHandlers = require("./geoHandlers");
 
-var g_cachePlaces = {};
+var logUtil = require("../lib/logUtil");
+var geoUtil = require("../lib/geoUtil");
+
+var DBCache = require("../lib/DBCache");
+var _ = require("lodash");
 
 function getBdsImage(bds) {
   let image = {
@@ -36,10 +40,10 @@ function getDiaChinh(bds) {
     codeDuAn : toRewayCode(bds.emailRegister_projId)
   };
 
-  diaChinh.tinh = g_cachePlaces["Place_T_" + diaChinh.codeTinh].placeName;
-  diaChinh.huyen = g_cachePlaces["Place_H_" + diaChinh.codeHuyen].placeName;
+  diaChinh.tinh = DBCache.placeById("Place_T_" + diaChinh.codeTinh).placeName;
+  diaChinh.huyen =DBCache.placeById("Place_H_" + diaChinh.codeHuyen).placeName;
   if (diaChinh.codeXa) {
-    let tmp = g_cachePlaces["Place_X_" + diaChinh.codeXa];
+    let tmp = DBCache.placeById("Place_X_" + diaChinh.codeXa);
     if (!tmp) {
       logUtil.error("NO XA:", diaChinh.codeDuAn);
     } else {
@@ -47,7 +51,7 @@ function getDiaChinh(bds) {
     }
   }
   if (diaChinh.codeDuAn) {
-    let tmp = g_cachePlaces["Place_A_" + diaChinh.codeDuAn];
+    let tmp = DBCache.placeById("Place_A_" + diaChinh.codeDuAn);
     if (!tmp) {
       logUtil.error("NO DuAn:", diaChinh.codeDuAn);
     } else {
@@ -94,6 +98,14 @@ function convertBds(bds) {
   ads.maSo = "01_" + bds.maSo; //01 => from bds.com
   ads.id = "Ads_" + ads.maSo;
 
+  ads.url = bds.url;
+
+  //check geo vs place
+  let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
+  ads.GEOvsDC = checkGeo.inVP;
+  ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
+  ads.DC_radius = checkGeo.DC_radius;
+
   return ads;
 }
 
@@ -107,7 +119,10 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' and place.geo.lat is not null " + condition;
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' and place.geo.lat is not null "
+    + condition;
+    //+ " limit 5000";
+    //+ " and id = 'Ads_raw_bds_10473652' ";
 
   commonService.query(sql, (err, list) => {
     if (err) {
@@ -115,15 +130,21 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
       return;
     }
 
-    let ads = null;
-    let cnt = 0;
+    let ads;
+    let cnt = 0, cntChanged = 0, cntNew = 0;
     list.forEach(e => {
       ads = convertBds(e);
-      commonService.upsert(ads, (err, res) => {
-        cnt++;
-
-        if (err) {
-          logUtil.error(err);
+      DBCache.upsertAdsIfChanged(ads, (err, res) => {
+        if (res == 0) { //same, no need any action
+          cnt++;
+        }
+        if (res == 1) { //insert
+          cnt++;
+          cntNew++;
+        }
+        if (res == 2) { //update
+          cnt++;
+          cntChanged++;
         }
       });
     });
@@ -134,6 +155,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     setInterval(() => {
       logUtil.info("Check count:", cnt, list.length);
       if (cnt == list.length) {
+        logUtil.info("Number of new records: " + cntNew + ", number of changed records: " + cntChanged + ", total: " + cnt);
         callback();
       }
     }, 1000)

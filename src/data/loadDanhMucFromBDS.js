@@ -6,7 +6,7 @@ var placeUtil = require("../lib/placeUtil");
 var geoUtil = require("../lib/geoUtil");
 var rp = require("request-promise");
 
-function loadViewportFromGG(list, idx, geoUrl) {
+function loadViewportFromGG(list, idx, geoUrl, retry) {
   if (list.length == idx) {
     console.log("DONE!!!!!");
     return;
@@ -19,7 +19,9 @@ function loadViewportFromGG(list, idx, geoUrl) {
   if (!geoUrl) {
     let keyword = dc.fullName;
     keyword = keyword.replace("Thị xã ", "");
-    //keyword = keyword.replace("Quận ", "");
+    keyword = keyword.replace("Quận ", "");
+    keyword = keyword.replace("Xã ", "");
+
     keyword = keyword.replace("Huyện ", "");
     keyword = keyword.replace("Thành phố ", "");
 
@@ -28,8 +30,8 @@ function loadViewportFromGG(list, idx, geoUrl) {
     }
 
     url = "https://maps.googleapis.com/maps/api/geocode/json?" +
-      "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
-      "&address=" + encodeURIComponent(keyword);
+      "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+      "address=" + encodeURIComponent(keyword);
   } else {
     url = geoUrl;
   }
@@ -43,10 +45,6 @@ function loadViewportFromGG(list, idx, geoUrl) {
 
   rp(options)
     .then((res) => {
-      if (dc.fullName == 'Quận Cầu Giấy, Hà Nội') {
-        console.log("here" + res.results.length, url)
-      }
-
       mapWithGoogle(dc, res.results);
 
       if (dc.placeType=='X' && (res.results.length == 0 || dc.ggMatched == false)) {
@@ -56,14 +54,82 @@ function loadViewportFromGG(list, idx, geoUrl) {
           let xaTinh  =dc.xa + "," + dc.tinh;
 
           let url2 = "https://maps.googleapis.com/maps/api/geocode/json?" +
-            "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
-            "&address=" + encodeURIComponent(xaTinh);
+            "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+            "address=" + encodeURIComponent(xaTinh);
 
           console.log("Will try geoCode for :" + xaTinh);
 
           loadViewportFromGG(list, idx, url2);
           return;
         }
+      }
+
+      if (dc.placeType =='H' && dc.ggMatched == false && !retry ) {
+        let keyword = dc.fullName;
+
+        keyword = keyword.replace("Thị xã ", "");
+        //keyword = keyword.replace("Quận ", "");
+        keyword = keyword.replace("Huyện ", "");
+        keyword = keyword.replace("Thành phố ", "");
+
+        let url2 = "https://maps.googleapis.com/maps/api/geocode/json?" +
+          //"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+          "address=" + encodeURIComponent(keyword);
+
+
+        loadViewportFromGG(list, idx, url2, 1);
+        return;
+      }
+
+      if (dc.placeType =='H' && dc.ggMatched == false && retry==1 ) {
+        let keyword  =dc.huyen + ", tinh " + dc.tinh;
+
+        let url2 = "https://maps.googleapis.com/maps/api/geocode/json?" +
+          //"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+          "address=" + encodeURIComponent(keyword);
+
+
+        loadViewportFromGG(list, idx, url2, 2);
+        return;
+      }
+
+      if (dc.placeType =='H' && dc.ggMatched == false && retry==2 ) {
+        let keyword = dc.huyen;
+
+        keyword = keyword.replace("Thị xã ", "");
+        //keyword = keyword.replace("Quận ", "");
+        keyword = keyword.replace("Huyện ", "");
+        keyword = keyword.replace("Thành phố ", "");
+
+        keyword  = keyword + ", tinh " + dc.tinh;
+
+        let url2 = "https://maps.googleapis.com/maps/api/geocode/json?" +
+          //"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+          "address=" + encodeURIComponent(keyword);
+
+
+        loadViewportFromGG(list, idx, url2, 3);
+        return;
+      }
+
+
+      if (dc.placeType =='H' && dc.ggMatched == false && retry==3 ) {
+        let keyword = dc.huyen;
+
+        keyword = keyword.replace("Thị xã ", "");
+        //keyword = keyword.replace("Quận ", "");
+        keyword = keyword.replace("Huyện ", "");
+        keyword = keyword.replace("Thành phố ", "");
+
+        keyword  = "Tx." + keyword + ", tinh " + dc.tinh;
+
+        let url2 = "https://maps.googleapis.com/maps/api/geocode/json?" +
+          //"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU&" +
+          "address=" + encodeURIComponent(keyword);
+
+
+        loadViewportFromGG(list, idx, url2, 4);
+        return;
       }
 
       //console.log("dc:", dc.ggMatched, dc.id, dc.fullName);
@@ -138,8 +204,8 @@ function mapWithGoogle(diaChinh, geocodes) {
 }
 
 function useGoogleToAddMissingViewportInDB() {
-  //let sql = `select t.* from default t where type='Place' and ggMatched=false and (placeType = 'T' or placeType = 'H' or placeType = 'X')`;
-  let sql = `select t.* from default t where type='Place' and ggMatched=false  and tinhKhongDau='ho-chi-minh' limit 3000`;
+  let sql = `select t.* from default t where type='Place' and (placeType = 'X') and codeTinh!='SG' and codeTinh!='HN' and ggMatched=false `;
+  //let sql = `select t.* from default t where type='Place' and ggMatched=false  and tinhKhongDau='ho-chi-minh' limit 3000`;
 
   commonService.query(sql, (err, res) => {
     console.log("COUNT=", res.length);
@@ -299,7 +365,10 @@ function processDuAn(projects, huyenObj) {
       "duAn": p.name,
       "duAnKhongDau": projectKhongDau,
       "parentId" : huyenObj.id,
-      "code" : p.id,
+      "code" : String(p.id),
+      "codeHuyen" : String(huyenObj.code),
+      "codeTinh" : huyenObj.codeTinh,
+      "codeDuAn" : String(p.id),
       geometry : {
         location : {
           lat : p.lat,
@@ -410,7 +479,9 @@ function processHuyen(districts, tinhObj) {
       "type": "Place",
       "pre" : d.pre,
       "parentId" : tinhObj.id,
-      "code" : d.id
+      "codeTinh" : tinhObj.code,
+      "codeHuyen" : String(d.id),
+      "code" : String(d.id)
     };
 
     //insert(huyenObj, (res) => {console.log("Success", res);});
@@ -443,6 +514,7 @@ function load(fn) {
       "tinhKhongDau": tinhNameKhongDau,
       "type": "Place",
       "code" : tinh.code,
+      "codeTinh" : tinh.code,
     };
 
     //insert(tinhObj, (res) => {console.log("Success", res);});
@@ -454,5 +526,6 @@ load("city1.json");
 load("city2.json");
 load("city3.json");
 load("city4.json");
+
 
 //useGoogleToAddMissingViewportInDB();

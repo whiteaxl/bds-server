@@ -2,11 +2,26 @@
 
 var logUtil = require("./logUtil");
 var _ = require("lodash");
-var CommonService = require("../dbservices/Common");
-var commonService = new CommonService;
+var CommonModel = require("../dbservices/Common");
+var commonService = new CommonModel;
+
+var loki = require("lokijs");
+
+var REFRESH_INTERVAL = 180;//seconds
+var ADS_BATCH_SIZE = 800000; //each loading batch
+var ADS_NUMBER_OF_BATCH = 1;
+var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
+
+var db = new loki('rw.json');
+var adsCol = db.addCollection('ads', {
+  unique : ['id'],
+  indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
+});
 
 //declare global cache
 global.rwcache = {};
+
+global.lastSyncTime = 0;
 
 function loadDoc(type, callback) {
   let sql = `select t.* from default t where type='${type}' `;
@@ -32,69 +47,163 @@ function loadDoc(type, callback) {
 }
 
 
-function loadAds(callback) {
+function loadAds(limit, offset, isFull, callback) {
   let type = 'Ads';
-  let sql = `select id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, "
-              + " image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin from default where type='Ads' `;
+  let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
+
+  projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
+
+  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
       return;
     }
-    global.rwcache[type] = {
-      asMap : {},
-      sale : [],
-      rent : [],
-    };
+
+    let adsColNotEmpty = adsCol.count() !== 0;
 
     list.forEach(e => {
-      global.rwcache[type].asMap[e.id] = e;
-      if (e.loaiTin ==0) {
-        global.rwcache[type].sale.push(e);
+      if (adsColNotEmpty) { // first time fullload, just simply insert
+        let inCache = adsCol.by('id', e.id);
+        if (inCache) {
+          Object.assign(inCache, e);
+
+          adsCol.update(inCache);
+        } else {
+          adsCol.insert(e);
+        }
       } else {
-        global.rwcache[type].rent.push(e);
+        adsCol.insert(e);
       }
     });
 
-    logUtil.info("Done load all " + type, list.length + " records");
+    logUtil.info("Done load all " + type, list.length + " records" + ", offset="+offset);
 
-    callback();
+    callback(list.length);
   });
 }
 
 var cache = {
-  init() {
-    this.reloadAds_01();
-    this.reloadPlaces();
+  updateLastSyncTime(lastSyncTime) {
+    global.lastSyncTime = lastSyncTime || new Date().getTime();
   },
-  reloadAds_01() {
-    if (global.loadCluster) {
-      let n = global.numCPUs;
-      let t = Math.floor((Math.random() * n) + 1);
-      let interval = global.delayLoadTime || 30000;
 
-      setTimeout(() => {
-        loadAds(()=> {});
-      }, t * interval)
-    } else {
-      loadAds(()=> {});
+  init(done, isFull) {
+    let lastSyncTime = new Date().getTime();
+    let cnt = 0;
+    let that = this;
+
+    let checkDone = () => {
+      cnt ++ ;
+      if (cnt==2) {
+        this.updateLastSyncTime(lastSyncTime);
+
+        //schedule to reload
+        setInterval(()=> {
+          let lastSyncTime = new Date().getTime();
+          that.reloadAds(() => {
+            this.updateLastSyncTime(lastSyncTime);
+          }, isFull);
+        }, REFRESH_INTERVAL*1000);
+
+        done && done();
+      }
+    };
+
+    this.reloadAds(checkDone, isFull);
+    this.reloadPlaces(checkDone);
+
+  },
+  _loadingAds : false,
+
+  reloadAds(done, isFull) {
+    if (this._loadingAds) {
+      logUtil.warn("Can't perform reloadAds, there is readAds running!");
+      return;
+    }
+    this._loadingAds = true;
+    let that = this;
+
+    let limit = ADS_BATCH_SIZE;
+    let total = 0;
+    let cnt = 0;
+    let n = ADS_NUMBER_OF_BATCH;
+
+    for (let i = 0; i < n; i++) {
+      setTimeout(()=> {
+        loadAds(limit, limit * i, isFull, (length)=> {
+          total += length;
+          cnt ++;
+          if (cnt == n) {
+            logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
+            that._loadingAds = false;
+            done && done();
+          }
+        });
+      }, ADS_BATCH_WAIT*1000*i);
     }
   },
 
-  reloadPlaces() {
-    loadDoc("Place", ()=> {
-    });
-  },
-
-  adsSaleAsArray() {
-    return global.rwcache.Ads.sale;
-  },
-  adsRentAsArray() {
-    return global.rwcache.Ads.rent;
+  reloadPlaces(done) {
+    loadDoc("Place", done);
   },
 
   placeAsArray() {
     return global.rwcache.Place.asArray;
+  },
+
+  placeAsMap() {
+    return global.rwcache.Place.asMap;
+  },
+
+  placeById(id) {
+    return this.placeAsMap()[id];
+  },
+
+  adsById(id) {
+    return adsCol.by('id', id);
+  },
+
+  upsertAdsIfChanged(ads, callback) {
+    let fromDB = this.adsById(ads.id);
+    if (!fromDB) { //insert
+      commonService.upsert(ads, (err, res) => {
+        callback(err, 1);
+      });
+    } else {
+      let c1 = _.clone(fromDB);
+      let c2 = _.clone(ads);
+      c2 = JSON.parse(JSON.stringify(c2));
+
+      c1.$loki = null;
+      c2.$loki = null;
+      c1.meta = null;
+      c2.meta = null;
+
+      c1.timeExtracted = null;
+      c2.timeExtracted = null;
+      c1.timeModified = null;
+      c2.timeModified = null;
+
+      if (c1.image.images && c1.image.images.length == 0) {
+        c1.image.images = null;
+      }
+      if (c2.image.images && c2.image.images.length == 0) {
+        c2.image.images = null;
+      }
+
+      //c1 = JSON.stringify(c1);
+      //c2 = JSON.stringify(c2);
+
+      if (!_.isEqual(c1, c2)) { //update
+      //if (c1 !== c2) { //update
+        commonService.upsert(ads, (err, res) => {
+          callback(err, 2);
+        });
+      } else { //same, no need any action
+        callback(null, 0);
+      }
+    }
   },
 
   query(q, callback){
@@ -103,24 +212,23 @@ var cache = {
     if (q.huongNha && q.huongNha.length==1 && q.huongNha[0] == 0) {
       q.huongNha = null;
     }
+    //sorting
+    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+    let that = this;
 
     let filtered = [];
-    let allAds = q.loaiTin == 0 ? this.adsSaleAsArray() : this.adsRentAsArray();
-
-    allAds.forEach((e) => {
-      if (this._match(q, e)) {
-        filtered.push(e);
-      }
-    });
+    filtered = adsCol.chain()
+      .find({loaiTin:q.loaiTin})
+      .where((e) => {
+        return that._match(q, e)
+      })
+      .data();
 
     //ordering
     let count = filtered.length;
 
     console.log("Filterred length: ", count);
-
-    //sorting
-    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
-
 
     let sign = 1;
     if (orderBy.type == 'DESC') {
