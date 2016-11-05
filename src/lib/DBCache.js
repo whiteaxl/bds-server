@@ -374,13 +374,13 @@ var cache = {
     }
 
     if (q.gia) {
-      if (ads.gia !== gia) {
+      if (ads.gia !== q.gia) {
         return false;
       }
     }
 
     if (q.dienTich) {
-      if (ads.dienTich !== dienTich) {
+      if (ads.dienTich !== q.dienTich) {
         return false;
       }
     }
