@@ -5,7 +5,8 @@ var commonService = new CommonService;
 
 var logUtil = require("../lib/logUtil");
 
-var g_cachePlaces = {};
+var DBCache = require("../lib/DBCache");
+var _ = require("lodash");
 
 function getBdsImage(bds) {
   let image = {
@@ -36,24 +37,24 @@ function getDiaChinh(bds) {
     codeDuAn : toRewayCode(bds.extMaProject)
   };
 
-  if (!g_cachePlaces["Place_T_" + diaChinh.codeTinh]) {
+  if (!DBCache.placeById("Place_T_" + diaChinh.codeTinh)) {
     logUtil.error("Dont have Tinh:", "Place_T_" + diaChinh.codeTinh);
     return diaChinh;
   }
 
-  diaChinh.tinh = g_cachePlaces["Place_T_" + diaChinh.codeTinh].placeName;
+  diaChinh.tinh = DBCache.placeById("Place_T_" + diaChinh.codeTinh).placeName;
 
-  if (!g_cachePlaces["Place_H_" + diaChinh.codeHuyen]) {
+  if (!DBCache.placeById("Place_H_" + diaChinh.codeHuyen)) {
     logUtil.error("Dont have Tinh:", "Place_H_" + diaChinh.codeHuyen);
     return diaChinh;
   }
 
-  diaChinh.huyen = g_cachePlaces["Place_H_" + diaChinh.codeHuyen].placeName;
+  diaChinh.huyen = DBCache.placeById("Place_H_" + diaChinh.codeHuyen).placeName;
   if (diaChinh.codeXa) {
-    diaChinh.xa = g_cachePlaces["Place_X_" + diaChinh.codeXa].placeName;
+    diaChinh.xa = DBCache.placeById("Place_X_" + diaChinh.codeXa).placeName;
   }
   if (diaChinh.codeDuAn) {
-    let tmp = g_cachePlaces["Place_A_" + diaChinh.codeDuAn];
+    let tmp = DBCache.placeById("Place_A_" + diaChinh.codeDuAn);
     if (!tmp) {
       logUtil.error("NO DuAn:", diaChinh.codeDuAn);
     } else {
@@ -120,13 +121,20 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     }
 
     let ads = null;
-    let cnt = 0;
+    let cnt = 0, cntChanged = 0, cntNew = 0;
     list.forEach(e => {
       ads = convertBds(e);
-      commonService.upsert(ads, (err, res) => {
-        cnt++;
-        if (err) {
-          logUtil.error(err);
+      DBCache.upsertAdsIfChanged(ads, (err, res) => {
+        if (res == 0) { //same, no need any action
+          cnt++;
+        }
+        if (res == 1) { //insert
+          cnt++;
+          cntNew++;
+        }
+        if (res == 2) { //update
+          cnt++;
+          cntChanged++;
         }
       });
     });
@@ -137,6 +145,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     setInterval(() => {
       logUtil.info("Check count:", cnt, list.length);
       if (cnt == list.length) {
+        logUtil.info("Number of new records: " + cntNew + ", number of changed records: " + cntChanged + ", total: " + cnt);
         callback();
       }
     }, 1000)
