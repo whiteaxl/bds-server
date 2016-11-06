@@ -104,10 +104,14 @@
       },
       getPlaceByID: function(data){
         return $http.post("/api/place/getPlaceByID",data);
+      },
+      getPlaceByDiaChinhKhongDau: function(data){
+        return $http.post("/api/place/getPlaceByDiaChinhKhongDau",data);
+      },
+      postAds: function(data){
+        return $http.post("/api/postAds",data);
       }
 
-
-      
     };
   });
 })();

@@ -14,8 +14,13 @@
 		$scope.soPhongNgu;
 		$scope.soPhongTam;
 		$scope.soTang;
+		$scope.addressDetail = '';
 		vm.showStreetView = false;
 		$scope.currentYear = new Date().getFullYear();
+		vm.duAn =[];
+		vm.diaChinh ={};
+		vm.location = {};
+		vm.diaChinh = {};
 		vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
 		vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.dacTinhNha = window.RewayListValue.DacTinhNha;
@@ -79,10 +84,8 @@
 					var northEast = new google.maps.LatLng(vm.viewPort.northeast.lat, vm.viewPort.northeast.lon);
 					var bounds = new google.maps.LatLngBounds(southWest, northEast);
 
-
+					// move map to viewport
 					vm.fullMapPost.fitBounds(bounds);
-
-
 				}
 			}
 		}
@@ -210,7 +213,8 @@
 					$rootScope.currentLocation.lat = position.coords.latitude;
 					$rootScope.currentLocation.lon = position.coords.longitude;
 					$scope.currentLocation = $rootScope.currentLocation;
-					vm.getPlace();
+					vm.location.lat = $rootScope.currentLocation.lat;
+					vm.location.lon = $rootScope.currentLocation.lon;
 				}, function(error){
 					console.log(error);
 				});
@@ -219,19 +223,108 @@
 			}
 		}
 
-		vm.getPlace = function(){
-			console.log("-------------getPlace----------------");
+		vm.changeAddressDetail = function(){
+			console.log("----------------changeAddressDetail----------");
+			if(vm.diaChinh.fullName)
+				vm.ads.place.diaChi = $scope.addressDetail + ", " + vm.diaChinh.fullName;
+			else
+				vm.ads.place.diaChi = $scope.addressDetail;
+			console.log(vm.ads.place.diaChi);
+		}
+
+		//get place in danh muc dia chinh
+		vm.getDiaChinhInDb = function(lat, lon){
+			console.log("-----------------------------MobilePost--------getDiaChinhInDb------------");
+			vm.getGeoCode(lat, lon, function(res){
+				console.log("-----------------------------MobilePost--------getDiaChinhInDb---------------callBack-------");
+				console.log(res);
+				if(res.data.results){
+					var places = res.data.results;
+					var newPlace = places[0];
+					for (var i=0; i<places.length; i++) {
+						var xa = window.RewayPlaceUtil.getXa(places[i]);
+						if (xa != '') {
+							newPlace = places[i];
+							break;
+						}
+					}
+					var tinh = window.RewayPlaceUtil.getTinh(newPlace);
+					var huyen = window.RewayPlaceUtil.getHuyen(newPlace);
+					var xa = window.RewayPlaceUtil.getXa(newPlace);
+					var diaChinh = {};
+					vm.location.tinh = tinh;
+					vm.location.huyen = huyen;
+					vm.location.xa = xa;
+					diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+					diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+					diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+					var placeType = 'T';
+					if (diaChinh.huyenKhongDau)
+						placeType = 'H';
+					if (diaChinh.xaKhongDau)
+						placeType = 'X';
+					var diaChinhDto = {
+						tinhKhongDau: diaChinh.tinhKhongDau,
+						huyenKhongDau: diaChinh.huyenKhongDau,
+						xaKhongDau: diaChinh.xaKhongDau,
+						placeType: placeType
+					}
+					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+						console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
+						if(res){
+							vm.diaChinh = res.data.diaChinh;
+							vm.duAn = res.data.duAn;
+							vm.ads.place.diaChi = vm.diaChinh.fullName;
+							vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+							vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+							vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+							vm.ads.place.diaChinh.tinh = vm.location.tinh;
+							vm.ads.place.diaChinh.huyen = vm.location.huyen;
+							vm.ads.place.diaChinh.xa = vm.location.xa;
+							vm.ads.place.geo.lat = vm.location.lat;
+							vm.ads.place.geo.lon = vm.location.lon;
+							console.log(vm.diaChinh);
+							console.log(vm.duAn);
+						}
+					});
+				}
+			})
+		}
+
+		vm.getGeoCode = function(lat, lon, callback){
+			console.log("-------------getPlace-----token-----------");
+
+			console.log($localStorage.relandToken );
+			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+				"key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" +
+				"&latlng=" + lat + ',' + lon;
+			$http.post(url,{
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin' : '*',
+					'Access-Control-Allow-Headers' : 'Origin, X-Requested-With, Content-Type, Accept',
+					'Access-Control-Allow-Methods' : 'GET, POST, PUT',
+					'Authorization': 'Bearer ' + $localStorage.relandToken
+				}
+			}).then(function(res){
+				console.log(res);
+				callback(res);
+				//console.log(res.data.results[0]);
+			});
+		}
+		vm.getGeoCode12 = function(lat,lon,callback){
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
-				"&latlng=" + $scope.currentLocation.lat + ',' + $scope.currentLocation.lon;
-			console.log(url);
-			console.log("-------------showMore------1----------");
-			console.log($scope.currentLocation);
-			$http.get(url,{}).then(function(res){
-				console.log("-------------showMore-----getUrl-1----------");
-				console.log(res.data.results[0]);
-				$scope.place = res.data.results[0];
-			});
+				"&latlng=" + lat + ',' + lon;
+
+			return fetch(url)
+				.then(function (data) {
+					console.log("-------------getPlace---------------");
+					console.log(data );
+					callback(data);
+				})
+				.catch(e => e);
 		}
 
 		vm.showFullMap =function(){
@@ -267,12 +360,17 @@
 		}
 		vm.initPost = function() {
 			initDataPost();
+			$("#projectBoxPost .type-list li a").click(function(){
+				$(".project-box .collapse-title span label").html($(this).html());
+			});
 			vm.initMapData();
 			vm.getLocation();
 			RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback,"searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 			})
+
+
 
 			//vm.updateDrumsPost();
 
@@ -300,6 +398,20 @@
 			vm.ads.image.cover = '';
 			vm.ads.image.images = [];
 			vm.ads.loaiTin = 0;
+			vm.ads.place={
+				diaChi: '',
+				diaChinh: {
+					codeTinh: '',
+					codeHuyen: '',
+					codeXa: '',
+					codeDuAn: '',
+					tinh: '',
+					huyen :'',
+					xa: '',
+					duAn: ''
+				},
+				geo: {lat: '', lon: ''}
+			}
 			vm.ads.lienHe={
 				showTenLienLac: false,
 				showPhone: false,
@@ -345,7 +457,16 @@
 			setDrumValues(yearXdElm, yearXd);
 		}
 */
+		vm.dangTin = function(){
+			console.log("--------------dangTin----------------");
+			var adsDto = JSON.stringify(vm.ads)
+			console.log(adsDto);
 
+			HouseService.postAds(adsDto).then(function(res){
+				console.log("------------HouseService.postAds-------------");
+				console.log(res);
+			})
+		}
 
 		vm.selectLoaiTin = function(loaiTin){
 			console.log('--------selectLoaiTin-------------------' );
@@ -367,6 +488,13 @@
 		vm.selectHuongNha = function(hn){
 			vm.ads.huongNha = [hn.value];
 			$("#huongNhaLbl").text(hn.lable);
+		}
+
+		vm.selectDuAn = function(da){
+			vm.ads.place.diaChinh.codeDuAn = da.duAn;
+			vm.ads.place.diaChinh.duAn = da.fullName;
+			$("#duAnLbl").text(da.placeName);
+			console.log(vm.ads.place.diaChinh.codeDuAn);
 		}
 
 		vm.setSoPhongNgu = function (value) {
