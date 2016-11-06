@@ -52,11 +52,11 @@
     </div>
 </div>
  <div class="notifyBox heartNotify"></div>
-<div  class="wapper">    
+<div  class="wapper" style="top: 42px;">    
     <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
-    <div  class="maps" ng-if="msc.viewMode!='list'" style="bottom: 44px;">
-        <div ontouchstart="return false" style="height: 100%;width: 100%;">
-            <ng-map id="searchmap"  center="{{center}}" lazy-init="true"   class="ngmap">
+    <div  class="maps"  ng-show ="msc.viewMode!='list'">
+        <div ontouchstart="return false"  ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
+            <ng-map id="searchmap"  ng-show ="msc.viewMode!='list'" custom-zoom-to-include-markers="true" center="{{center}}" lazy-init="true"   class="ngmap">
         <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
             <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
                  id="m_{{$index}}" >

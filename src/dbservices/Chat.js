@@ -89,6 +89,58 @@ class ChatModel {
     });  	
   }
 
+  getAllChatMsg(payload,callback) {
+     var userID = payload.userID;
+     var partnerUserID = payload.partnerUserID;
+     var adsID = payload.adsID;
+     var limit = 100;
+
+     var sql = `select * from default where type='Chat' `;
+     sql = `${sql} and ((fromUserID='${partnerUserID}' and toUserID='${userID}') or (fromUserID='${userID}' and toUserID='${partnerUserID}'))`
+     sql = `${sql} and relatedToAds.adsID='${adsID}'`;
+     sql = `${sql} order by date desc limit ${limit}`;
+
+    console.log("sql: " + sql);
+
+     var query = N1qlQuery.fromString(sql);
+
+     bucket.query(query, function (err, all) {
+         if (err) {
+             console.log('query failed'.red, err);
+             return;
+         }
+         console.log("number of msg:" + all.length);
+         if (!all)
+             all = [];
+         callback(err, all);
+     });
+  }
+
+    getInboxMsg(payload,callback){
+      var userID = payload.userID;
+
+      var sql = `select distinct {"userID": toUserID, "fullName": toFullName, "avatar": toUserAvatar } as partner, relatedToAds from default where type='Chat'`;
+      sql = `${sql} and fromUserID='${userID}'`;
+      sql = `${sql} union`;
+      sql = `${sql} select distinct {"userID": fromUserID, "fullName": fromFullName, "avatar": fromUserAvatar } as partner, relatedToAds from default where type='Chat'`;
+      sql = `${sql} and toUserID='${userID}'`;
+
+      console.log("sql: " + sql);
+
+      var query = N1qlQuery.fromString(sql);
+      //TODO: remove from
+  bucket.query(query, function (err, all) {
+          if (err) {
+              console.log("ERROR:" + err);
+              callback(err, null);
+          } else {
+              console.log("Get Inbox Msg:");
+              console.log(all);
+              callback(null, all);
+          }
+      });
+  }
+
   confirmRead(chat,callback){
   	chat.read = true;
   	console.log(chat);
