@@ -25,6 +25,18 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-me-linh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-ba-vi.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-phuc-tho.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-bac-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-nam-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-dan-phuong.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-hoai-duc.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-quoc-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thach-that.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-chuong-my.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thanh-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thuong-tin.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-phu-xuyen.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-ung-hoa.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-my-duc.htm', 0);
+
 
 setTimeout(() => {
   process.exit();

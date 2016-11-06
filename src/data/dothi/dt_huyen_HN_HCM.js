@@ -25,6 +25,10 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-tan-binh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-tan-phu.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-thu-duc.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-nha-be.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-binh-chanh.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-can-gio.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-cu-chi.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-hoc-mon.htm', 0);
 
 //hcm thue
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-quan-1.htm', 0);
@@ -47,6 +51,10 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-tan-binh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-tan-phu.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thu-duc.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-nha-be.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-binh-chanh.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-can-gio.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-cu-chi.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-hoc-mon.htm', 0);
 
 //HN ban
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-hoan-kiem.htm', 0);
@@ -69,6 +77,18 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-me-linh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-ba-vi.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-phuc-tho.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-bac-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-nam-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-dan-phuong.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-hoai-duc.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-quoc-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-thach-that.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-chuong-my.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-thanh-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-thuong-tin.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-phu-xuyen.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-ung-hoa.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-ban-my-duc.htm', 0);
+
 
 //HN thue
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-hoan-kiem.htm', 0);
@@ -91,3 +111,14 @@ bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-me-linh.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-ba-vi.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-phuc-tho.htm', 0);
 bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-bac-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-nam-tu-liem.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-dan-phuong.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-hoai-duc.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-quoc-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thach-that.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-chuong-my.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thanh-oai.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-thuong-tin.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-phu-xuyen.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-ung-hoa.htm', 0);
+bdsEx.extractWithLimit('http://dothi.net/nha-dat-cho-thue-my-duc.htm', 0);

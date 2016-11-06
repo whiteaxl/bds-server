@@ -1,10 +1,13 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
-<bds-mobile-header ></bds-mobile-header>
+<bds-mobile-header mode="msc.viewMode"></bds-mobile-header>
 
 <div ng-if="msc.viewMode=='list'" class="wapper">
-    <div class="reland-box uln" infinite-scroll='msc.nextPage()' infinite-scroll-disabled='msc.disableScrolling' infinite-scroll-distance='1' >
+    <div class="reland-box uln">
         <ul class="reland-list full" >
+            <li ng-if="msc.currentPage >1" ng-click="msc.prev();">
+                <a href="#"> preious page {{msc.currentPage}}</a>
+            </li>
             <li ng-repeat="ads in msc.ads_list track by $index" >
                 <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
                 <a href="#" ng-click="msc.goDetail($event,$index)">
@@ -21,11 +24,13 @@
                     </span>
                 </a>
             </li>
+            <li ng-click="msc.next();" ng-if="msc.currentPage < msc.lastPageNo">
+                <a href="#"> next page {{msc.lastPageNo}}</a>
+            </li>
         </ul>
         <div class="clb ovh"></div>
     </div>
     <!--END-->
-    <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
 </div>
 
 
@@ -46,78 +51,76 @@
         <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
     </div>
 </div>
- <div class="notifyBox heartNotify"></div>
-<div  class="wapper">
-    <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;">
-        <div ontouchstart="return false" style="height: 100%;width: 100%;">
-            <ng-map id="searchmap"  center="{{center}}" lazy-init="true"   class="ngmap">
-        <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-            <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
-                 id="m_{{$index}}" >
-              <div class="marker">
-                {{m.content}}
-              </div>
-            </custom-marker>
-            <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
-            <!-- <street-view-panorama
-              click-to-go="false"
-              disable-default-u-i="false"
-              disable-double-click-zoom="false"
-              pov="{heading: heading, pitch: pitch}"
-              scrollwheel="false"
-              enable-close-button="true"
-              visible="false">
-            </street-view-panorama>  -->
-            <!-- </marker> -->
+<div class="notifyBox mapsnotify">Hiện có 24 thông báo mới</div>
+<div  class="wapper" style="top: 42px;">
+    <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
+    <div  class="maps"  ng-show ="msc.viewMode!='list'">
+        <div ontouchstart="return false"  ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
+            <ng-map id="searchmap"  ng-show ="msc.viewMode!='list'" custom-zoom-to-include-markers="true" center="{{center}}" lazy-init="true"   class="ngmap">
+                <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
+                <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})" on-mouseout="msc.mouseout()" on-click="msc.goDetail({{$index}});"
+                                id="m_{{$index}}" >
+                    <div class="marker">
+                        {{m.content}}
+                    </div>
+                </custom-marker>
+                <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
+                <!-- <street-view-panorama
+                  click-to-go="false"
+                  disable-default-u-i="false"
+                  disable-double-click-zoom="false"
+                  pov="{heading: heading, pitch: pitch}"
+                  scrollwheel="false"
+                  enable-close-button="true"
+                  visible="false">
+                </street-view-panorama>  -->
+                <!-- </marker> -->
+                <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
+                    <div ng-non-bindable="">
+                        id: {{$index}}<br/>
+                        name: {{msc.highlightAds.name}}<br/>
 
-
-
-            <!-- <info-window ng-repeat="m in markers track by $index" id="{{$index}}">
-                <div ng-non-bindable="">
-                    id: {{$index}}<br/>
-                    name: {{msc.highlightAds.name}}<br/>
-
-                    <a href="#">Click Here</a>
-                </div>
-            </info-window> -->
-        </ng-map>
+                        <a href="#">Click Here</a>
+                    </div>
+                </info-window> -->
+            </ng-map>
         </div>
 
-        <div class="mapsBtn">
-                <a href="#" ng-click="msc.prev($event)"><i class="p-icon i-mapprev"></i></i></a>
-                <a href="#" ng-click="msc.refreshPage($event)"><i class="p-icon i-maprefresh"></i></i></a>
-                <a href="#" ng-click="msc.next($event)"><i class="p-icon i-mapnext"></i></i></a>
-            </div>
+        <div class="mapsBtn" ng-if="$root.user.autoSearch==false">
+            <a href="#" ng-click="msc.prev($event)"><i class="p-icon i-mapprev"></i></i></a>
+            <a href="#" ng-click="msc.refreshPage($event)"><i class="p-icon i-maprefresh"></i></i></a>
+            <a href="#" ng-click="msc.next($event)"><i class="p-icon i-mapnext"></i></i></a>
+        </div>
         <div class="actions">
-                <a href="#" ng-click="msc.drawMode($event)"><i class="p-icon i-mapdraw" ></i></i></a>
-                <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
-            </div>
+            <a href="#" ng-click="msc.drawMode($event)"><i class="p-icon i-mapdraw" ></i></i></a>
+            <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
+        </div>
     </div>
     <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
     <footer class="main border uln">
-    <ul class="navmain nav-3 blue nav-text">
-        <li>
-            <!-- <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a> -->
-            <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
-            <div class="list-sort popovers top uln">
-                <ul>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')" class="active">Mặc định</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')">Ngày đăng</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('gia','DESC')">Giá (giảm dần)</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('gia','ASC')">Giá (tăng dần)</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNgu','ASC')">Số phòng ngủ</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTam','ASC')">Số phòng tắm</a></li>
-                    <li><a href="javascript:void(0)" ng-click="msc.sort('dienTich','ASC')">Diện tích</a></li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();">Lưu tìm kiếm</a>
-        </li>
-        <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#">Bản đồ</a></li>
-        <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#">Danh sách</a></li>
-    </ul>
-</footer>
+        <ul class="navmain nav-3 blue nav-text">
+            <li>
+                <!-- <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a> -->
+                <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
+                <div class="list-sort popovers top uln">
+                    <ul>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')" class="active">Mặc định</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')">Ngày đăng</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('gia','DESC')">Giá (giảm dần)</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('gia','ASC')">Giá (tăng dần)</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNgu','ASC')">Số phòng ngủ</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTam','ASC')">Số phòng tắm</a></li>
+                        <li><a href="javascript:void(0)" ng-click="msc.sort('dienTich','ASC')">Diện tích</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();">Lưu tìm kiếm</a>
+            </li>
+            <li ng-if="msc.viewMode=='list'" ng-click="msc.showMap();"><a href="#">Bản đồ</a></li>
+            <li ng-if="msc.viewMode=='map'" ng-click="msc.showList();"><a href="#">Danh sách</a></li>
+        </ul>
+    </footer>
 </div>
 
 

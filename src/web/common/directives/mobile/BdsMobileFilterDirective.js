@@ -22,6 +22,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.pageSize = 25;
                 vm.initialized = false;
                 vm.keepViewport = true;
+                vm.stateName = $state.current.name;  
                 // $scope.searchData = {};
                 // //Object.assign($scope.searchData,$rootScope.searchData);
                 // _.assign($scope.searchData,$rootScope.searchData);
@@ -532,6 +533,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             }); 
                         }
                     });
+
                     $("#typeBox .type-list li a").click(function(){
                         $(".type-box .collapse-title span label").html($(this).html());
                     });

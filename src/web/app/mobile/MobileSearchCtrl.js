@@ -134,13 +134,27 @@
             }
         }
 
+        vm.changeBrowserHistory = function(){
+            let url = window.location.href;
+            let index = url.lastIndexOf("/");
+            url = url.substring(0,index+1) + vm.viewMode;
+            //history.replaceState(null, null, url);            
+        }
+
 		vm.showList = function(){
 			vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
-			vm.viewMode = "list";			
+			vm.viewMode = "list";
+            // vm.disableIdleHandler();
+            vm.changeBrowserHistory();
+            //vm.map = undefined;			
 		}
 		vm.showMap = function(){
 			vm.viewMode = "map";
 			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
+            $timeout(function() {
+                vm.mapInitialized();
+            }, 0);            
+            vm.changeBrowserHistory();
 		}
 		vm.sort = function(sortByName, sortByType){
 			$rootScope.searchData.orderBy.name = sortByName;
@@ -174,6 +188,9 @@
                 google.maps.event.removeListener(vm.zoomChangeHanlder);
         }
         vm.enableMapIdleHandler = function(){
+            
+            if(!vm.map)
+                return;
             vm.disableIdleHandler();
             vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function(){
                 if(vm.initialized == true){
@@ -199,6 +216,11 @@
                     //  content: 'you are here'
                     // };
                     vm.viewport = $rootScope.searchData.viewport;
+                    if($rootScope.user.autoSearch==false){
+                        vm.initialized = true;
+                        vm.humanZoom = false;
+                        return;
+                    }
                     vm.search(function(){
                         $timeout(function() {
                             vm.initialized = true;
@@ -228,16 +250,30 @@
 			//vm.initialized = true;
 			// alert('aa');
 
-            if(!vm.map){
-                vm.map = NgMap.initMap('searchmap');      
-               vm.showCC = true;
-            
-            // google.maps.event.removeListener(zoomChangeHanlder);
-            // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
-                // google.maps.event.clearInstanceListeners(map);
-                vm.enableMapIdleHandler();
-                vm.humanZoom = false;
-                        
+            if(!vm.map && vm.viewMode=='map'){
+                vm.map = NgMap.initMap('searchmap');  
+                vm.initialized = false;    
+                var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+                var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                if(vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map){
+                    let zoom = vm.map.zoom;
+                    // vm.map.setZoom(20);
+                    vm.map.fitBounds(bounds);
+                    // vm.map.setCenter(bounds.getCenter());  
+                    // vm.map.setZoom(zoom);
+                    //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+                    //$scope.center = 'Hanoi';
+                }
+                $timeout(function() {
+                    vm.showCC = true;
+                // google.maps.event.removeListener(zoomChangeHanlder);
+                // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
+                    // google.maps.event.clearInstanceListeners(map);
+                    vm.enableMapIdleHandler();
+                    vm.humanZoom = false;    
+                    vm.initialized = true;
+                },500);                        
             }
 
 			// vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
@@ -563,7 +599,8 @@
                                         longitude:  result[i].place.geo.lon
                                     },
                                     content: result[i].giaFmt,
-                                    data: 'test'
+                                    data: 'test',
+                                    count: 1
                                 },
                                 options:{
                                     scrollwheel: false
@@ -576,11 +613,46 @@
                     
                 }
                 vm.ads_list = res.data.list;
+
                 $scope.markers = [];
+                if(vm.viewport){
+                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
+                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                    
+
+                    if(vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map){
+                        let zoom = vm.map.zoom;
+                        // vm.map.setZoom(20);
+                        vm.map.fitBounds(bounds);
+                        // vm.map.setCenter(bounds.getCenter());  
+                        vm.map.setZoom(zoom);
+                        //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+                        //$scope.center = 'Hanoi';
+                    }
+                        
+                }
+
+
                 for(var i = 0; i < res.data.list.length; i++) { 
                     var ads = res.data.list[i];
-                    if(res.data.list[i].map)
-                        $scope.markers.push(res.data.list[i].map.marker);
+                    if(res.data.list[i].map){  
+                        var dup = false;
+                        for(var j=0;j<$scope.markers.length;j++){
+                            var marker = $scope.markers[j];
+                            if(marker.coords.latitude==res.data.list[i].map.marker.latitude 
+                                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+                                marker.count = marker.count + 1;
+                                dup = true;
+                                break;
+                            }
+                        }                      
+                        if(dup == false){
+                            $scope.markers.push(res.data.list[i].map.marker);    
+                        }
+                        
+                    }
                 }
                 /*if(vm.ads_list.length==0){
                     vm.zoomMode = "false";
@@ -601,20 +673,7 @@
                 //         vm.doneSearch = true;   
                 //     });    
                 // }            
-                if(vm.viewport){
-                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
-                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
-                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
-                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                    
-
-                    if(vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat){
-                        vm.map.fitBounds(bounds);  
-                        //vm.map.setCenter(vm.map.getBounds().getCenter());                         
-                        //$scope.center = 'Hanoi';
-                    }
-                        
-                }
+                
                 
                 $timeout(function() {
                     $('body').scrollTop(0);
@@ -636,8 +695,11 @@
                         });
                 }
                 vm.disableScrolling = false; 
-
-                 
+                if($rootScope.searchData.pageNo>1 && result && result.length >0){
+                    $timeout(function() {
+                        $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                    },100);    
+                }                
                 if(callback)
                     callback(res);
             });
@@ -657,7 +719,13 @@
 
         }
         vm.refreshPage = function(){
-            vm.searchPage(vm.currentPage);
+            if($rootScope.user.autoSearch==true){
+
+            }else{
+                //vm.searchPage(vm.currentPage);
+                // vm.searchPage(1);
+                vm.search();
+            }            
         }
 		vm.search = function(callback){
             // if($scope.searchPlaceSelected.geometry.viewport){
@@ -716,6 +784,10 @@
                     vm.lastPageNo = 0;
                     vm.startPageNo = 0;
                 }
+                $timeout(function() {
+                    $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                },100);
+                
                 if(callback)
                     callback(res);
             })

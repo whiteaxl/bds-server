@@ -4,6 +4,7 @@ var findHandlerV2 = require('./findHandlerV2');
 var adsHandler = require('./adsHandler');
 var loginHandler = require('./loginHandler');
 var fileUploadHandler = require('./fileUploadHandler');
+var chatApiHandle = require('./chatApiHandler');
 
 var userHandlers = require('./userHandlers');
 var newsHandlers = require('./newsHandlers');
@@ -367,6 +368,52 @@ internals.endpoints = [
           success: Joi.boolean(),
           msg: Joi.string(),
           adsLikes: Joi.array()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/getAllChatMsg',
+    handler: chatApiHandle.getAllChatMsg,
+    config: {
+      description: 'Get all chat message by User, Partner and Ads',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+          partnerUserID: Joi.string().required(),
+          adsID: Joi.string().required(),
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          error: Joi.object(),
+          data: Joi.array()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/getInboxMsg',
+    handler: chatApiHandle.getInboxMsg,
+    config: {
+      description: 'Get all chat message by user, loaiTin',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required()
+        }
+      },
+
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          error: Joi.object(),
+          data: Joi.array()
         })
       }
     }

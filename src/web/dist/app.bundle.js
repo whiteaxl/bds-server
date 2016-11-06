@@ -1019,7 +1019,8 @@
 	    $rootScope.user = {
 	      userID: null,
 	      adsLikes: [],
-	      lastSearch: null
+	      lastSearch: null,
+	      autoSearch: false
 	    };
 	    $rootScope.pageSize = 25;
 
@@ -26959,13 +26960,27 @@
 	            }
 	        };
 
+	        vm.changeBrowserHistory = function () {
+	            var url = window.location.href;
+	            var index = url.lastIndexOf("/");
+	            url = url.substring(0, index + 1) + vm.viewMode;
+	            //history.replaceState(null, null, url);            
+	        };
+
 	        vm.showList = function () {
 	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
 	            vm.viewMode = "list";
+	            // vm.disableIdleHandler();
+	            vm.changeBrowserHistory();
+	            //vm.map = undefined;			
 	        };
 	        vm.showMap = function () {
 	            vm.viewMode = "map";
 	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
+	            $timeout(function () {
+	                vm.mapInitialized();
+	            }, 0);
+	            vm.changeBrowserHistory();
 	        };
 	        vm.sort = function (sortByName, sortByType) {
 	            $rootScope.searchData.orderBy.name = sortByName;
@@ -26998,6 +27013,8 @@
 	            if (vm.zoomChangeHanlder) google.maps.event.removeListener(vm.zoomChangeHanlder);
 	        };
 	        vm.enableMapIdleHandler = function () {
+
+	            if (!vm.map) return;
 	            vm.disableIdleHandler();
 	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function () {
 	                if (vm.initialized == true) {
@@ -27023,6 +27040,11 @@
 	                    //  content: 'you are here'
 	                    // };
 	                    vm.viewport = $rootScope.searchData.viewport;
+	                    if ($rootScope.user.autoSearch == false) {
+	                        vm.initialized = true;
+	                        vm.humanZoom = false;
+	                        return;
+	                    }
 	                    vm.search(function () {
 	                        $timeout(function () {
 	                            vm.initialized = true;
@@ -27051,15 +27073,30 @@
 	            //vm.initialized = true;
 	            // alert('aa');
 
-	            if (!vm.map) {
+	            if (!vm.map && vm.viewMode == 'map') {
 	                vm.map = NgMap.initMap('searchmap');
-	                vm.showCC = true;
-
-	                // google.maps.event.removeListener(zoomChangeHanlder);
-	                // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
-	                // google.maps.event.clearInstanceListeners(map);
-	                vm.enableMapIdleHandler();
-	                vm.humanZoom = false;
+	                vm.initialized = false;
+	                var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+	                var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+	                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+	                if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map) {
+	                    var zoom = vm.map.zoom;
+	                    // vm.map.setZoom(20);
+	                    vm.map.fitBounds(bounds);
+	                    // vm.map.setCenter(bounds.getCenter());  
+	                    // vm.map.setZoom(zoom);
+	                    //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+	                    //$scope.center = 'Hanoi';
+	                }
+	                $timeout(function () {
+	                    vm.showCC = true;
+	                    // google.maps.event.removeListener(zoomChangeHanlder);
+	                    // if(google.maps.event.hasListeners(map,'zoom_changed')!=true){
+	                    // google.maps.event.clearInstanceListeners(map);
+	                    vm.enableMapIdleHandler();
+	                    vm.humanZoom = false;
+	                    vm.initialized = true;
+	                }, 500);
 	            }
 
 	            // vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
@@ -27371,7 +27408,8 @@
 	                                        longitude: result[i].place.geo.lon
 	                                    },
 	                                    content: result[i].giaFmt,
-	                                    data: 'test'
+	                                    data: 'test',
+	                                    count: 1
 	                                },
 	                                options: {
 	                                    scrollwheel: false
@@ -27382,10 +27420,41 @@
 	                    }
 	                }
 	                vm.ads_list = res.data.list;
+
 	                $scope.markers = [];
+	                if (vm.viewport) {
+	                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
+	                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+	                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+	                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map) {
+	                        var zoom = vm.map.zoom;
+	                        // vm.map.setZoom(20);
+	                        vm.map.fitBounds(bounds);
+	                        // vm.map.setCenter(bounds.getCenter());  
+	                        vm.map.setZoom(zoom);
+	                        //vm.map.setCenter(vm.map.getBounds().getCenter());                         
+	                        //$scope.center = 'Hanoi';
+	                    }
+	                }
+
 	                for (var i = 0; i < res.data.list.length; i++) {
 	                    var ads = res.data.list[i];
-	                    if (res.data.list[i].map) $scope.markers.push(res.data.list[i].map.marker);
+	                    if (res.data.list[i].map) {
+	                        var dup = false;
+	                        for (var j = 0; j < $scope.markers.length; j++) {
+	                            var marker = $scope.markers[j];
+	                            if (marker.coords.latitude == res.data.list[i].map.marker.latitude && marker.coords.longitude == res.data.list[i].map.marker.longitude) {
+	                                marker.count = marker.count + 1;
+	                                dup = true;
+	                                break;
+	                            }
+	                        }
+	                        if (dup == false) {
+	                            $scope.markers.push(res.data.list[i].map.marker);
+	                        }
+	                    }
 	                }
 	                /*if(vm.ads_list.length==0){
 	                    vm.zoomMode = "false";
@@ -27403,21 +27472,6 @@
 	                //     google.maps.event.addListenerOnce(vm.map, 'idle', function() {
 	                //         vm.enableMapIdleHandler();
 	                //         vm.initialized = true;
-	                //         vm.doneSearch = true;  
-	                //     });   
-	                // }           
-	                if (vm.viewport) {
-	                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon]; 
-	                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
-	                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
-	                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
-
-	                    if (vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat) {
-	                        vm.map.fitBounds(bounds);
-	                        //vm.map.setCenter(vm.map.getBounds().getCenter());                        
-	                        //$scope.center = 'Hanoi';
-	                    }
-	                }
 
 	                $timeout(function () {
 	                    $('body').scrollTop(0);
@@ -27436,7 +27490,11 @@
 	                    });
 	                }
 	                vm.disableScrolling = false;
-
+	                if ($rootScope.searchData.pageNo > 1 && result && result.length > 0) {
+	                    $timeout(function () {
+	                        $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
+	                    }, 100);
+	                }
 	                if (callback) callback(res);
 	            });
 	        };
@@ -27454,7 +27512,11 @@
 	            }
 	        };
 	        vm.refreshPage = function () {
-	            vm.searchPage(vm.currentPage);
+	            if ($rootScope.user.autoSearch == true) {} else {
+	                //vm.searchPage(vm.currentPage);
+	                // vm.searchPage(1);
+	                vm.search();
+	            }
 	        };
 	        vm.search = function (callback) {
 	            // if($scope.searchPlaceSelected.geometry.viewport){
@@ -27509,6 +27571,10 @@
 	                    vm.lastPageNo = 0;
 	                    vm.startPageNo = 0;
 	                }
+	                $timeout(function () {
+	                    $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
+	                }, 100);
+
 	                if (callback) callback(res);
 	            });
 	            // vm.searchPage(1,null);
@@ -27677,13 +27743,14 @@
 				}
 
 				vm.goBack = function () {
-					if ($rootScope.lastState.abstract == true) {
-						var webIdx = window.location.href.indexOf("/web/");
-						var homeUrl = window.location.href.substring(0, webIdx) + "/web/index.html";
-						window.location.href = homeUrl;
-					} else {
-						$state.go($rootScope.lastState, $rootScope.lastStateParams);
-					}
+					// if($rootScope.lastState.abstract == true){
+					// 	var webIdx = window.location.href.indexOf("/web/");
+					//         		var homeUrl = window.location.href.substring(0,webIdx) + "/web/index.html";
+					//         		window.location.href = homeUrl;
+					// }else{
+					// 	$state.go($rootScope.lastState, $rootScope.lastStateParams);
+					// }
+					$window.history.back();
 				};
 
 				vm.setReportCode = function (reportCode) {
@@ -28238,13 +28305,7 @@
 	                $state.go('msearch', { "place": 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin": 0, "loaiNhaDat": 0, "viewMode": "list" }, { location: true });
 	                $(".overlay").click();
 	            };
-	            //nhannc
-	            vm.gotoDangTinPage = function (event) {
-	                console.log("-------vao mpost");
-	                $state.go('mpost');
-	                $(".overlay").click();
-	            };
-	            //nhannc end
+
 	            vm.gotoRelandApp = function (event) {};
 	            vm.profile = function () {
 	                $state.go('profile', { userID: $rootScope.user.userID }, { location: true });
@@ -28296,6 +28357,7 @@
 	            vm.pageSize = 25;
 	            vm.initialized = false;
 	            vm.keepViewport = true;
+	            vm.stateName = $state.current.name;
 	            // $scope.searchData = {};
 	            // //Object.assign($scope.searchData,$rootScope.searchData);
 	            // _.assign($scope.searchData,$rootScope.searchData);
@@ -28725,6 +28787,7 @@
 	                        });
 	                    }
 	                });
+
 	                $("#typeBox .type-list li a").click(function () {
 	                    $(".type-box .collapse-title span label").html($(this).html());
 	                });
@@ -28798,11 +28861,11 @@
 	angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: {},
+	        scope: { mode: '=mode' },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
 	        replace: 'true',
-	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
+	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'RewayCommonUtil', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, RewayCommonUtil) {
 	            var vm = this;
 	            vm.stateName = $state.current.name;
 	            //nhannc
@@ -28831,20 +28894,22 @@
 	                vm.reset();
 	            };
 	            vm.reset = function () {
-	                $(".btn-more").removeAttr("style");
-	                $(".more-box").addClass("more-box-hide");
+	                // $(".btn-more").removeAttr("style");
+	                // $(".more-box").addClass("more-box-hide");
+	                // $(".spinner").addClass("spinner-hide");
+	                // $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	                // $(".btn-group .btn").removeClass("active");
+	                // $(".btn-group .btn:first-child").addClass("active");
 	                $(".spinner").addClass("spinner-hide");
 	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	                $(".btn-group .btn").removeClass("active");
 	                $(".btn-group .btn:first-child").addClass("active");
+	                $(".search input").val('');
+	                $(".search_mobile").removeClass("active");
 	            };
 	            vm.toggleFilter = function () {
 
-	                if ($(".search_mobile").find("i").hasClass("iconSearch")) {
-	                    if ($(".post").css("right") == "0px") {
-	                        $scope.isPostPage = true;
-	                        vm.exitPost();
-	                    }
+	                if (!$('.search_mobile').hasClass("active")) {
 	                    $(".search").animate({
 	                        right: 0
 	                    }, 120);
@@ -28853,6 +28918,7 @@
 	                    $(".search").scrollTop(0);
 	                    $(".search-footer").addClass("fixed");
 	                    $(".search-btn").css("display", "block");
+	                    $(".search_mobile").addClass("active");
 	                } else {
 	                    if ($scope.isPostPage) {
 	                        vm.openPost();
@@ -28872,6 +28938,194 @@
 	                    left: 0
 	                }, 120);
 	            };
+
+	            $scope.$bus.subscribe({
+	                channel: 'search',
+	                topic: 'show search',
+	                callback: function callback(data, envelope) {
+	                    if (!$('.search_mobile').hasClass("active")) {
+	                        $(".search").animate({
+	                            right: 0
+	                        }, 120);
+	                        $(".search_mobile").find("i").removeClass("iconSearch").addClass("iconCancel");
+	                        //$("body").addClass("bodyNavShow");
+	                        $(".search").scrollTop(0);
+	                        $(".search-footer").addClass("fixed");
+	                        $(".search-btn").css("display", "block");
+	                        $(".search_mobile").addClass("active");
+	                    }
+	                }
+	            });
+
+	            vm.showFrequentSearch = false;
+	            vm.autocompleteSource = function (request, response) {
+	                var results = [];
+	                $http.get("/api/place/autocomplete?input=" + request.term).then(function (res) {
+	                    var predictions = res.data.predictions;
+	                    if (res.status == '200') {
+	                        for (var i = 0, prediction; prediction = predictions[i]; i++) {
+	                            results.push({
+	                                description: prediction.fullName,
+	                                types: prediction.placeType,
+	                                viewPort: prediction.viewPort,
+	                                tinh: prediction.tinh,
+	                                huyen: prediction.huyen,
+	                                xa: prediction.xa,
+	                                placeId: prediction.placeId,
+	                                class: "iconLocation gray"
+	                            });
+	                        }
+	                    }
+	                    response(results);
+	                });
+	            };
+	            vm.favoriteSearchSource = [{
+	                description: "Vị trí hiện tại",
+	                location: true,
+	                class: "ui-autocomplete-category"
+	            }];
+
+	            vm.keyPress = function (event) {
+	                vm.showFrequentSearch = false;
+	                $("#searchadd1").autocomplete("option", "source", vm.autocompleteSource);
+	                var $ww = $(window).width();
+	            };
+	            vm.toggleQuickClearAutoComplete = function () {
+	                if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+	                    $("#searchadd1").autocomplete("option", "source", vm.favoriteSearchSource);
+	                    $("#searchadd1").autocomplete("search", "");
+	                    $(".close-search").removeAttr("style");
+	                    $(".input-fr").removeAttr("style");
+	                } else {
+	                    $(".close-search").show();
+	                    $(".input-fr").css("width", $ww - 78);
+	                }
+	                // if($(".search").find("input").hasClass("input-fr")){
+
+	                //     if($(".input-fr").val().length>0) {
+	                //         $(".close-search").show();
+	                //         $(".input-fr").css("width", $ww-78);
+	                //     }else{
+	                //         $(".close-search").removeAttr("style");
+	                //         $(".input-fr").removeAttr("style");
+	                //     }
+	                // }
+	            };
+	            vm.autoCompleteChange = function (event) {
+	                if (vm.autoCompleteText == '') {
+	                    $("#searchadd1").autocomplete("option", "source", vm.favoriteSearchSource);
+	                    $("#searchadd1").autocomplete("search", "");
+	                }
+	                vm.toggleQuickClearAutoComplete();
+	            };
+	            vm.showFavorite = function (event) {
+	                if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+	                    $("#searchadd1").autocomplete("option", "source", vm.favoriteSearchSource);
+	                    $("#searchadd1").autocomplete("search", "");
+	                }
+	            };
+	            vm.userLoggedIn = function () {
+	                var saveSearches = $rootScope.user.saveSearch;
+	                if (saveSearches) {
+	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
+	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        vm.favoriteSearchSource.splice(1, 0, {
+	                            description: saveSearches[i].name,
+	                            subDescription: des,
+	                            query: saveSearches[i].query,
+	                            class: "fa fa-heart red ui-menu-item-wrapper"
+	                        });
+	                    }
+	                }
+	            };
+
+	            vm.selectPlaceCallback1 = function (item) {
+	                if (item.lastSearchSeparator == true) {
+	                    return;
+	                }
+	                vm.item = item;
+	                if (vm.item.placeId) $rootScope.searchData.placeId = vm.item.placeId;
+	                vm.keepViewport = false;
+	                if (item.query) {
+	                    $rootScope.searchData = item.query;
+	                    // vm.updateDrums();
+	                }
+	                if (!item.location) {
+	                    $rootScope.searchData.circle = undefined;
+	                }
+	                // $scope.$apply();   
+	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
+	                $(".overlay").click();
+	            };
+	            vm.init = function () {
+	                RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1, "searchadd1", [{
+	                    description: "3",
+	                    types: "1",
+	                    place_id: "111",
+	                    class: "iconLocation grasy"
+	                }, {
+	                    description: "4",
+	                    types: "1",
+	                    place_id: "111",
+	                    class: "iconLocation grasy"
+	                }]);
+
+	                $scope.$bus.subscribe({
+	                    channel: 'search',
+	                    topic: 'search',
+	                    callback: function callback(data, envelope) {
+	                        //console.log('add new chat box', data, envelope);
+	                        var des = window.RewayUtil.convertQuery2String(data.query);
+	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: "Tìm kiếm lúc " + data.time,
+	                            subDescription: des,
+	                            query: data.query,
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
+	                        });
+	                    }
+	                });
+
+	                if ($rootScope.getAllLastSearch($localStorage)) {
+	                    var lastSearches = $rootScope.getAllLastSearch($localStorage);
+	                    if (lastSearches.length > 0) {
+	                        vm.favoriteSearchSource.push({
+	                            description: "Tìm kiếm gần đây",
+	                            lastSearchSeparator: true
+	                        });
+	                    }
+	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: "Tìm kiếm lúc " + lastSearches[i].time,
+	                            subDescription: des,
+	                            query: lastSearches[i].query,
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
+	                        });
+	                    }
+	                }
+
+	                vm.userLoggedIn();
+
+	                $scope.$bus.subscribe({
+	                    channel: 'user',
+	                    topic: 'logged-in',
+	                    callback: function callback(data, envelope) {
+	                        //console.log('add new chat box', data, envelope);
+	                        vm.userLoggedIn();
+	                    }
+	                });
+	            };
+
+	            $timeout(function () {
+	                vm.init();
+	            }, 0);
+
+	            $scope.$on("$destroy", function () {
+	                $('#searchadd1').autocomplete("destroy");
+	            });
 	        }],
 	        controllerAs: "mhdr"
 	    };

@@ -29,6 +29,14 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $(".overlay").click();
                 }
                 //nhannc end
+                vm.showFilter = function(){
+                    $scope.$bus.publish({
+                        channel: 'search',
+                        topic: 'show search',
+                        data: null
+                    });
+                    $(".overlay").click();
+                }
                 vm.gotoRelandApp = function(event){
 
                 }

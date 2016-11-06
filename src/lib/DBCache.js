@@ -8,8 +8,8 @@ var commonService = new CommonModel;
 var loki = require("lokijs");
 
 var REFRESH_INTERVAL = 180;//seconds
-var ADS_BATCH_SIZE = 100000; //each loading batch
-var ADS_NUMBER_OF_BATCH = 3;
+var ADS_BATCH_SIZE = 800000; //each loading batch
+var ADS_NUMBER_OF_BATCH = 1;
 var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
 
 var db = new loki('rw.json');
@@ -51,7 +51,7 @@ function loadAds(limit, offset, isFull, callback) {
   let type = 'Ads';
   let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
 
-  projection = isFull ? "default.*" : projection;
+  projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
 
   let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
   commonService.query(sql, (err, list) => {
@@ -185,7 +185,18 @@ var cache = {
       c1.timeModified = null;
       c2.timeModified = null;
 
+      if (c1.image.images && c1.image.images.length == 0) {
+        c1.image.images = null;
+      }
+      if (c2.image.images && c2.image.images.length == 0) {
+        c2.image.images = null;
+      }
+
+      //c1 = JSON.stringify(c1);
+      //c2 = JSON.stringify(c2);
+
       if (!_.isEqual(c1, c2)) { //update
+      //if (c1 !== c2) { //update
         commonService.upsert(ads, (err, res) => {
           callback(err, 2);
         });
@@ -363,13 +374,13 @@ var cache = {
     }
 
     if (q.gia) {
-      if (ads.gia !== gia) {
+      if (ads.gia !== q.gia) {
         return false;
       }
     }
 
     if (q.dienTich) {
-      if (ads.dienTich !== dienTich) {
+      if (ads.dienTich !== q.dienTich) {
         return false;
       }
     }
