@@ -20,14 +20,14 @@
         <div class="clb ovh"></div>
         <div class="search-box post-box">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="{{mpc.ads.loaiTin==0?'active':''}}"><a href="#" ng-click="mpc.selectLoaiTin(0)" aria-controls="postbuy">Bán</a></li>
-                <li role="presentation" class="{{mpc.ads.loaiTin==1?'active':''}}"><a href="#" ng-click="mpc.selectLoaiTin(1)" aria-controls="postsale">Cho thuê</a></li>
+                <li role="presentation" class="{{mpc.ads.loaiTin==0?'active':''}}"><a href="#" ng-click="mpc.selectLoaiTin(0)" aria-controls="postbuy" role="tab" data-toggle="tab">Bán</a></li>
+                <li role="presentation" class="{{mpc.ads.loaiTin==1?'active':''}}"><a href="#" ng-click="mpc.selectLoaiTin(1)" aria-controls="postbuy" role="tab" data-toggle="tab">Cho thuê</a></li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="postbuy">
                     <div class="title">Đặc điểm</div>
                     <div class="type-box collapse-box">
-                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBoxPost">Loại nhà <span><label id="loaiNhaLbl">Chung cư</label> <i class="iconRightOpen"></i></span></a>
+                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBoxPost">Loại nhà <span><label id="loaiNhaLbl"></label> <i class="iconRightOpen"></i></span></a>
                     </div>
                     <div class="dt-box collapse-box fr">
                         <a class="collapse-title"><label>Diện tích (m2)</label> <span><input ng-model="mpc.ads.dienTich" type="text" pattern="\d*" placeholder="200"></span></a>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="title border">Thông tin chi tiết</div>
                     <div class="detail-box collapse-box border-none">
-                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#detailBox">Chi tiết <span><label>Nội thất đầy đủ</label> <i class="iconRightOpen"></i></span></a>
+                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#detailBox">Chi tiết <span><label id="thongTinChiTietLbl"></label> <i class="iconRightOpen"></i></span></a>
                     </div>
                     <div class="more-box more-box-hide">
                         <div class="title border">Thông tin khác</div>
@@ -190,6 +190,9 @@
 
                     <div class="clb ovh mb10">&nbsp;</div>
                 </div>
+                <!--END tabs-->
+                <div role="tabpanel" class="tab-pane" id="postsale">Cho thuê</div>
+                <!--END tabs-->
             </div>
         </div>
     </form>
@@ -266,8 +269,7 @@
                     <h4 class="modal-title" id="detailBoxLabel">Chi tiết</h4>
                 </div>
                 <div class="modal-body uln">
-                    <textarea ng-model="mpc.ads.chiTiet" placeholder="Mô tả những gì bạn muốn bán (cho thuê). Ví dụ: Địa chỉ, diện tích, giá, hướng nhà..."></textarea>
-                    {{mpc.ads.chiTiet}}
+                    <textarea ng-model="mpc.ads.chiTiet" ng-change="changeDetailInfo()" placeholder="Mô tả những gì bạn muốn bán (cho thuê). Ví dụ: Địa chỉ, diện tích, giá, hướng nhà..."></textarea>
                 </div>
             </div>
         </div>
@@ -315,10 +317,10 @@
             </div>
 
             <div class="modal-body uln">
-                <ng-map center="[{{currentLocation.lat}},{{currentLocation.lon}}]" lazy-init="true" id="fullMapPost" class="ngmap">
-                    <custom-marker position="[{{currentLocation.lat}},{{currentLocation.lon}}]">
+                <ng-map center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" class="ngmap">
+                    <custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
                         <div class = "marker">
-                            Abc
+                            Position
                         </div>
                     </custom-marker>
                 </ng-map>

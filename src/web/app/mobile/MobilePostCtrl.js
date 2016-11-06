@@ -232,8 +232,14 @@
 			console.log(vm.ads.place.diaChi);
 		}
 
+		vm.changeDetailInfo = function(){
+			console.log("----------------changeAddressDetail----------");
+			$("#loaiNhaLbl").text(vm.ads.chiTiet);
+		}
+
 		//get place in danh muc dia chinh
-		vm.getDiaChinhInDb = function(lat, lon){
+		//dung voi post-get
+		vm.getDiaChinhInDbPostGet = function(lat, lon){
 			console.log("-----------------------------MobilePost--------getDiaChinhInDb------------");
 			vm.getGeoCode(lat, lon, function(res){
 				console.log("-----------------------------MobilePost--------getDiaChinhInDb---------------callBack-------");
@@ -291,36 +297,89 @@
 			})
 		}
 
-		vm.getGeoCode = function(lat, lon, callback){
+		vm.getGeoCodePostGet = function(lat, lon, callback){
 			console.log("-------------getPlace-----token-----------");
 
 			console.log($localStorage.relandToken );
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" +
 				"&latlng=" + lat + ',' + lon;
-			$http.post(url,{
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Origin' : '*',
-					'Access-Control-Allow-Headers' : 'Origin, X-Requested-With, Content-Type, Accept',
-					'Access-Control-Allow-Methods' : 'GET, POST, PUT',
-					'Authorization': 'Bearer ' + $localStorage.relandToken
-				}
-			}).then(function(res){
+			$http.post(url).then(function(res){
 				console.log(res);
 				callback(res);
 				//console.log(res.data.results[0]);
 			});
 		}
-		vm.getGeoCode12 = function(lat,lon,callback){
+
+		//get place in danh muc dia chinh
+		//dung voi fetch
+		vm.getDiaChinhInDb = function(lat, lon){
+			console.log("-----------------------------MobilePost--------getDiaChinhInDb------------");
+			vm.getGeoCode(lat, lon, function(res){
+				console.log("-----------------------------MobilePost--------getDiaChinhInDb---------------callBack-------");
+				console.log(res);
+				if(res.results){
+					var places = res.results;
+					var newPlace = places[0];
+					for (var i=0; i<places.length; i++) {
+						var xa = window.RewayPlaceUtil.getXa(places[i]);
+						if (xa != '') {
+							newPlace = places[i];
+							break;
+						}
+					}
+					var tinh = window.RewayPlaceUtil.getTinh(newPlace);
+					var huyen = window.RewayPlaceUtil.getHuyen(newPlace);
+					var xa = window.RewayPlaceUtil.getXa(newPlace);
+					var diaChinh = {};
+					vm.location.tinh = tinh;
+					vm.location.huyen = huyen;
+					vm.location.xa = xa;
+					diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+					diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+					diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+					var placeType = 'T';
+					if (diaChinh.huyenKhongDau)
+						placeType = 'H';
+					if (diaChinh.xaKhongDau)
+						placeType = 'X';
+					var diaChinhDto = {
+						tinhKhongDau: diaChinh.tinhKhongDau,
+						huyenKhongDau: diaChinh.huyenKhongDau,
+						xaKhongDau: diaChinh.xaKhongDau,
+						placeType: placeType
+					}
+					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+						console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
+						if(res){
+							vm.diaChinh = res.data.diaChinh;
+							vm.duAn = res.data.duAn;
+							vm.ads.place.diaChi = vm.diaChinh.fullName;
+							vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+							vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+							vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+							vm.ads.place.diaChinh.tinh = vm.location.tinh;
+							vm.ads.place.diaChinh.huyen = vm.location.huyen;
+							vm.ads.place.diaChinh.xa = vm.location.xa;
+							vm.ads.place.geo.lat = vm.location.lat;
+							vm.ads.place.geo.lon = vm.location.lon;
+							console.log(vm.diaChinh);
+							console.log(vm.duAn);
+						}
+					});
+				}
+			})
+		}
+
+		vm.getGeoCode = function(lat,lon,callback){
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
 				"&latlng=" + lat + ',' + lon;
 
 			return fetch(url)
+				.then(response => response.json())
 				.then(function (data) {
-					console.log("-------------getPlace---------------");
+					console.log("-------------getPlace---12------------");
 					console.log(data );
 					callback(data);
 				})
@@ -342,11 +401,11 @@
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
 
 						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
-							vm.lat = event.latLng.lat();
-							vm.lon = event.latLng.lng();
+							vm.location.lat = event.latLng.lat();
+							vm.location.lon = event.latLng.lng();
+							console.log("------------lat: " + vm.location.lat);
+							console.log("------------lon: " + vm.location.lon);
 						});
-						console.log("------------vm.lat: " + vm.lat);
-						console.log("------------vm.lon: " + vm.lon);
 					}
 					/*
 					 vm.fullMapPost.getStreetView().setVisible(vm.showStreetView);
@@ -425,38 +484,38 @@
 			vm.ads.noiThatDayDu = false;
 			vm.ads.chinhChuDangTin = false;
 		}
-/*
-		var setDrumValues = function(select, value){
-			var options = select[0].options;
-			console.log("---------setDrumValues-----------");
-			console.log("---------1-----------");
-			console.log(options);
+		/*
+		 var setDrumValues = function(select, value){
+		 var options = select[0].options;
+		 console.log("---------setDrumValues-----------");
+		 console.log("---------1-----------");
+		 console.log(options);
 
-				for(var i =0;i<options.length;i++){
-					console.log(i);
-					console.log(options[i]);
-					if(options[i].value==value){
-						console.log("---vao----");
-						select.drum('setIndex', i);
-						$("#"+select.attr("id") + "_value").html(options[i].label);
-						break;
-					}
-				}
+		 for(var i =0;i<options.length;i++){
+		 console.log(i);
+		 console.log(options[i]);
+		 if(options[i].value==value){
+		 console.log("---vao----");
+		 select.drum('setIndex', i);
+		 $("#"+select.attr("id") + "_value").html(options[i].label);
+		 break;
+		 }
+		 }
 
-		}
+		 }
 
 
 
-		vm.updateDrumsPost = function(){
-			//set years drum
-			var yearXd = vm.ads.namXayDung;
-			var yearXdElm = $("select#yearBuild");
-			console.log("----------updateDrumsPost---------");
-			console.log("----------1---------");
-			console.log(yearXdElm);
-			setDrumValues(yearXdElm, yearXd);
-		}
-*/
+		 vm.updateDrumsPost = function(){
+		 //set years drum
+		 var yearXd = vm.ads.namXayDung;
+		 var yearXdElm = $("select#yearBuild");
+		 console.log("----------updateDrumsPost---------");
+		 console.log("----------1---------");
+		 console.log(yearXdElm);
+		 setDrumValues(yearXdElm, yearXd);
+		 }
+		 */
 		vm.dangTin = function(){
 			console.log("--------------dangTin----------------");
 			var adsDto = JSON.stringify(vm.ads)
@@ -477,6 +536,7 @@
 			}else{
 				vm.loaiNhaDat = vm.loaiNhaDatThue;
 			}
+			$("#loaiNhaLbl").text("");
 		}
 		vm.selectLoaiTin($scope.loaiTin);
 
