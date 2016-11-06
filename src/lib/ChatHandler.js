@@ -74,6 +74,7 @@ ChatHandler.init = function(server){
   			socket.userID = data.userID;
   			socket.userAvatar = data.userAvatar;
   			online_users[data.userID] = socket;
+            console.log(online_users);
         chatModel.getUnreadMessages(data,function(err,res){
           if(!err)
             online_users[data.userID].emit('unread-messages', res);
