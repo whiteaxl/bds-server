@@ -599,7 +599,8 @@
                                         longitude:  result[i].place.geo.lon
                                     },
                                     content: result[i].giaFmt,
-                                    data: 'test'
+                                    data: 'test',
+                                    count: 1
                                 },
                                 options:{
                                     scrollwheel: false
@@ -632,10 +633,26 @@
                     }
                         
                 }
+
+
                 for(var i = 0; i < res.data.list.length; i++) { 
                     var ads = res.data.list[i];
-                    if(res.data.list[i].map)
-                        $scope.markers.push(res.data.list[i].map.marker);
+                    if(res.data.list[i].map){  
+                        var dup = false;
+                        for(var j=0;j<$scope.markers.length;j++){
+                            var marker = $scope.markers[j];
+                            if(marker.coords.latitude==res.data.list[i].map.marker.latitude 
+                                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+                                marker.count = marker.count + 1;
+                                dup = true;
+                                break;
+                            }
+                        }                      
+                        if(dup == false){
+                            $scope.markers.push(res.data.list[i].map.marker);    
+                        }
+                        
+                    }
                 }
                 /*if(vm.ads_list.length==0){
                     vm.zoomMode = "false";
@@ -678,8 +695,11 @@
                         });
                 }
                 vm.disableScrolling = false; 
-
-                 
+                if($rootScope.searchData.pageNo>1 && result && result.length >0){
+                    $timeout(function() {
+                        $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                    },100);    
+                }                
                 if(callback)
                     callback(res);
             });
@@ -703,7 +723,8 @@
 
             }else{
                 //vm.searchPage(vm.currentPage);
-                vm.searchPage(1);
+                // vm.searchPage(1);
+                vm.search();
             }            
         }
 		vm.search = function(callback){
@@ -763,6 +784,10 @@
                     vm.lastPageNo = 0;
                     vm.startPageNo = 0;
                 }
+                $timeout(function() {
+                    $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                },100);
+                
                 if(callback)
                     callback(res);
             })

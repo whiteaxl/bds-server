@@ -18,7 +18,7 @@ require('babel-core/register')({
 });
 
 var chatHandler = require('./src/lib/ChatHandler');
-chatHandler.init(http);
+chatHandler.init(https);
 
 
 // var dbChangeHandler = require('./src/lib/dbChangeHandler');
