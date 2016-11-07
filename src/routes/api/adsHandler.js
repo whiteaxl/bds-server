@@ -4,6 +4,7 @@ var logUtil = require("../../lib/logUtil");
 var constant = require("../../lib/constant");
 var AdsModel = require('../../dbservices/Ads');
 var adsModel = new AdsModel();
+var DBCache = require('../../lib/DBCache');
 
 var internals = {};
 
@@ -21,6 +22,9 @@ internals.postAds = function(req, reply){
             });
         } else {
             logUtil.info("Upload Ads sucessfully, id: ", res.id);
+
+            DBCache.updateCache(res);
+
             reply({
                 status: constant.STS.SUCCESS,
                 adsId: res.id

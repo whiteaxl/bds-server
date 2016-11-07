@@ -83,6 +83,17 @@ function loadAds(limit, offset, isFull, callback) {
   });
 }
 
+function updateCache(ads){
+  let inCache = adsCol.by('id', ads.id);
+  if (inCache) {
+    Object.assign(inCache, ads);
+
+    adsCol.update(inCache);
+  } else {
+    adsCol.insert(ads);
+  }
+}
+
 var cache = {
   updateLastSyncTime(lastSyncTime) {
     global.lastSyncTime = lastSyncTime || new Date().getTime();
@@ -163,6 +174,10 @@ var cache = {
   adsById(id) {
     return adsCol.by('id', id);
   },
+
+ updateCache(ads){
+   updateCache(ads);
+ },
 
   upsertAdsIfChanged(ads, callback) {
     let fromDB = this.adsById(ads.id);
