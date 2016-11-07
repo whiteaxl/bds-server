@@ -118,7 +118,10 @@
         return localStorage.lastSearch;
       }      
     }
-    $rootScope.addLastSearch = function(localStorage, lastSearch){
+    $rootScope.addLastSearch = function(localStorage, oLastSearch){
+      var lastSearch = {};
+      Object.assign(lastSearch, oLastSearch);
+
       if(localStorage){
         if(!localStorage.lastSearch || localStorage.lastSearch.length==0){
           localStorage.lastSearch = [];
