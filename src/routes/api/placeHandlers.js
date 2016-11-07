@@ -20,14 +20,14 @@ var internals = {};
 function _getFromCache(input, reply) {
   let inputKhongDau = placeUtil.chuanHoaAndLocDau(input);
 
-  let placeCache = DBCache.placeAsArray();
+  /*
+   let placeCache = DBCache.placeAsArray();
 
-  let ret = [];
-  for (var i=0; i < placeCache.length; i++) {
+   let ret = [];
+
+   for (var i=0; i < placeCache.length; i++) {
     let e = placeCache[i];
-
     //console.log(e.nameKhongDau);
-    
     //exceptional for Quan-1, quan-2...
     if ((e.nameKhongDau.indexOf(inputKhongDau) > -1)
       || (!isNaN(e.nameKhongDau) && ('quan-'+e.nameKhongDau).indexOf(inputKhongDau) > -1)) {
@@ -36,36 +36,40 @@ function _getFromCache(input, reply) {
         //  break;
         //}
     }
-    
   }
-  
+
+   //sort
+   let map = {
+   "T" : 1,
+   "H" : 2,
+   "X" : 3,
+   "A" : 4
+   };
+
+   ret.sort((a, b) => {
+   if (map[a.placeType] > map[b.placeType]) {
+   return 1;
+   }
+
+   if (map[a.placeType] < map[b.placeType]) {
+   return -1;
+   }
+
+   if (a.placeName > b.placeName) {
+   return 1;
+   }
+
+   return 0;
+   });
+
+   */
+
+
+  let ret = DBCache.searchPlace(inputKhongDau);
+
   if (ret.length == 0) {
     console.log("Not match!!!");
   }
-
-  //sort
-  let map = {
-    "T" : 1,
-    "H" : 2,
-    "X" : 3,
-    "A" : 4
-  };
-
-  ret.sort((a, b) => {
-    if (map[a.placeType] > map[b.placeType]) {
-      return 1;
-    }
-
-    if (map[a.placeType] < map[b.placeType]) {
-      return -1;
-    }
-
-    if (a.placeName > b.placeName) {
-      return 1;
-    }
-
-    return 0;
-  });
 
   _returnToClient(ret && ret.slice(0, 10), reply);
 }

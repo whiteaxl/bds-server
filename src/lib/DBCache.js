@@ -2,6 +2,7 @@
 
 var logUtil = require("./logUtil");
 var _ = require("lodash");
+var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
 
@@ -99,6 +100,38 @@ var cache = {
     global.lastSyncTime = lastSyncTime || new Date().getTime();
   },
 
+  placeFuse : null,
+
+  searchPlace(query) {
+    var result = this.placeFuse.search(query);
+
+    console.log("Matched from fuse:", query, result.length);
+
+    result.forEach((e) => {
+      console.log(e.fullName);
+    });
+
+    return result;
+  },
+
+  initPlaceAutoComplete() {
+    var options = {
+      shouldSort: true,
+      threshold: 0.2,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      keys: [
+        "searchKey"
+      ]
+    };
+    this.placeFuse = new Fuse(this.placeAsArray().map((e) => {
+      e.searchKey = isNaN(e.nameKhongDau) ? e.nameKhongDau : 'quan-'+e.nameKhongDau;
+      return e;
+    }), options); // "list" is the item array
+    //var result = this.placeFuse.search("");
+  },
+
   init(done, isFull) {
     let lastSyncTime = new Date().getTime();
     let cnt = 0;
@@ -122,8 +155,10 @@ var cache = {
     };
 
     this.reloadAds(checkDone, isFull);
-    this.reloadPlaces(checkDone);
-
+    this.reloadPlaces(() => {
+      that.initPlaceAutoComplete();
+      checkDone();
+    });
   },
   _loadingAds : false,
 
