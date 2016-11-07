@@ -453,7 +453,7 @@
 		vm.initPost = function() {
 			//vm.getDanhMucNamXd();
 			console.log("--------------initPost--------------");
-			console.log($scope.namXayDungList);
+			//console.log($scope.namXayDungList);
 			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
 				$(".project-box .collapse-title span label").html($(this).html());
@@ -515,10 +515,11 @@
 				geo: {lat: '', lon: ''}
 			}
 			vm.ads.lienHe={
-				showTenLienLac: false,
-				showPhone: false,
-				showEmail: false
+				showTenLienLac: true,
+				showPhone: true,
+				showEmail: true,
 			};
+
 			vm.ads.chiTiet = '';
 			vm.ads.nhaMoiXay = false;
 			vm.ads.nhaLoGoc = false;
@@ -569,6 +570,22 @@
 						vm.ads.place.diaChi = vm.ads.place.diaChiChiTiet + ", " + vm.ads.place.diaChi;
 					}
 				}
+				if($rootScope.userName){
+					vm.ads.lienHe.tenLienLac = $rootScope.userName;
+					vm.ads.dangBoi.name = $rootScope.userName;
+				}
+				if($rootScope.phone){
+					vm.ads.lienHe.phone = $rootScope.phone;
+					vm.ads.dangBoi.name = $rootScope.userName;
+				}
+				if($rootScope.email){
+					vm.ads.lienHe.email = $rootScope.email;
+					vm.ads.dangBoi.email = $rootScope.email;
+				}
+				if($rootScope.userID){
+					vm.ads.dangBoi.userID = $rootScope.userID;
+				}
+
 				var adsDto = JSON.stringify(vm.ads)
 				console.log("--------------dangTin------1----------");
 				console.log(adsDto);
