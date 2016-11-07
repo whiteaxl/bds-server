@@ -296,23 +296,23 @@
 
 </div>
 <div class="modal fade modal-choose modal-none" id="mapsBoxPost" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabelPost">
-    <div class="search-fr">
+    <!--div class="search-fr">
         <i class="iconSearch"></i>
         <input type="text" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" class="input-fr" id="searchAddPost" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />
         <!-- <ul ng-if="mf.showFrequentSearch==true" >
             <li>1</li>
             <li>2</li>
         </ul> -->
-        <a href="#" ng-click="mpc.autoCompleteText='';mpc.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
+        <!--a href="#" ng-click="mpc.autoCompleteText='';mpc.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
     </div>
     <div class="btn-box collapse-box btn-reset border-none">
         <button type="button" ng-click="chonDiaChinh()">chon dia chinh</button>
         <button type="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)">accept</button>
-    </div>
+    </div-->
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)"><span aria-hidden="true" class="iconLeftOpen"></span></button>
                 <h4 class="modal-title" id="mapsBoxLabelPost">Bản đồ</h4>
             </div>
 
