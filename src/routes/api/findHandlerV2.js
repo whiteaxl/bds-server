@@ -327,6 +327,10 @@ function _doQueryAllIntoMemory(q, reply, allResults) {
 function _transformAndReply(q, reply, err, filtered, count) {
   if (err) {
     console.log("Error when query ADS:", err);
+    if (q.userID && q.updateLastSearch && count > 0) {
+      //console.log(JSON.stringify(q));
+      _updateLastSearch(q);
+    }
     reply(Boom.badImplementation());
     return;
   }
