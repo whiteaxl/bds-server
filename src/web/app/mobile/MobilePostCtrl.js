@@ -5,10 +5,6 @@
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 
-		var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-		vm.click = function() {
-			vm.map.setCenter(chicago);
-		};
 		vm.ads = {};
 		$scope.loaiTin = 0;
 		$scope.soPhongNgu;
@@ -16,7 +12,7 @@
 		$scope.soTang;
 		$scope.addressDetail = '';
 		vm.showStreetView = false;
-		$scope.currentYear = new Date().getFullYear();
+
 		vm.duAn =[];
 		vm.diaChinh ={};
 		vm.location = {};
@@ -25,22 +21,55 @@
 		vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.dacTinhNha = window.RewayListValue.DacTinhNha;
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
+		$scope.currentYear = new Date().getFullYear();
+
 		$scope.namXayDungList = [
-			{ value: $scope.currentYear, lable: "Năm " + $scope.currentYear },
-			{ value: $scope.currentYear-1, lable: "Năm " + ($scope.currentYear -1) },
-			{ value: $scope.currentYear-2, lable: "Năm " + ($scope.currentYear -2) },
-			{ value: $scope.currentYear-3, lable: "Năm " + ($scope.currentYear -3) },
-			{ value: $scope.currentYear-4, lable: "Năm " + ($scope.currentYear -4) },
-			{ value: $scope.currentYear-5, lable: "Năm " + ($scope.currentYear -5) },
-			{ value: $scope.currentYear-6, lable: "Năm " + ($scope.currentYear -6) },
-			{ value: $scope.currentYear-7, lable: "Năm " + ($scope.currentYear -7) },
-			{ value: $scope.currentYear-8, lable: "Năm " + ($scope.currentYear -8) },
-			{ value: $scope.currentYear-9, lable: "Năm " + ($scope.currentYear -9) }
+			{ value: $scope.currentYear, lable: $scope.currentYear },
+			{ value: $scope.currentYear-1, lable: ($scope.currentYear -1) },
+			{ value: $scope.currentYear-2, lable: ($scope.currentYear -2) },
+			{ value: $scope.currentYear-3, lable: ($scope.currentYear -3) },
+			{ value: $scope.currentYear-4, lable: ($scope.currentYear -4) },
+			{ value: $scope.currentYear-5, lable: ($scope.currentYear -5) },
+			{ value: $scope.currentYear-6, lable: ($scope.currentYear -6) },
+			{ value: $scope.currentYear-7, lable: ($scope.currentYear -7) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -8) },
+			{ value: $scope.currentYear-9, lable: ($scope.currentYear -9) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -10) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -11) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -12) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -13) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -14) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -15) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -16) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -17) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -18) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -19) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -20) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -21) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -23) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -24) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -25) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -26) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -27) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -28) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -29) },
+			{ value: $scope.currentYear-8, lable: ($scope.currentYear -30) }
 		];
 
 		$(".btn-more .collapse-title").click(function() {
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
+
+		/*
+		vm.getDanhMucNamXd = function(){
+			$scope.currentYear = new Date().getFullYear();
+			$scope.namXayDungList = [];
+			let varYear;
+			for (var i = 0; i< 100; i++) {
+				varYear = { value: $scope.currentYear, lable: $scope.currentYear };
+				$scope.namXayDungList.push(varYear);
+			}
+		}*/
 
 		// autocomplete
 		vm.favoriteSearchSource = [
@@ -67,6 +96,24 @@
 				$( "#searchAddPost").autocomplete( "search", "" );
 			}
 
+		}
+
+		//current only remove urlAdr, must delete real file on server
+		vm.removeAvatarImg = function(){
+			if(vm.ads.image.cover){
+
+				vm.ads.image.cover = '';
+			}
+		}
+
+		vm.removeNormalImg = function(img){
+			if(vm.ads.image.images){
+				console.log("-----------removeNormalImg---------: " + vm.ads.image.images.indexOf(img));
+				let removeIndex = vm.ads.image.images.indexOf(img);
+				if (removeIndex > -1) {
+					vm.ads.image.images.splice(removeIndex, 1);
+				}
+			}
 		}
 
 		vm.mapClick =function(event){
@@ -221,20 +268,6 @@
 			} else {
 				console.log("---------------getLocation--------2----------");
 			}
-		}
-
-		vm.changeAddressDetail = function(){
-			console.log("----------------changeAddressDetail----------");
-			if(vm.diaChinh.fullName)
-				vm.ads.place.diaChi = $scope.addressDetail + ", " + vm.diaChinh.fullName;
-			else
-				vm.ads.place.diaChi = $scope.addressDetail;
-			console.log(vm.ads.place.diaChi);
-		}
-
-		vm.changeDetailInfo = function(){
-			console.log("----------------changeAddressDetail----------");
-			$("#loaiNhaLbl").text(vm.ads.chiTiet);
 		}
 
 		//get place in danh muc dia chinh
@@ -418,12 +451,20 @@
 			});
 		}
 		vm.initPost = function() {
+			//vm.getDanhMucNamXd();
+			console.log("--------------initPost--------------");
+			console.log($scope.namXayDungList);
 			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
 				$(".project-box .collapse-title span label").html($(this).html());
 			});
+
 			vm.initMapData();
 			vm.getLocation();
+
+			vm.loaiNhaDatBan = vm.loaiNhaDatBan.splice(0,1);
+			vm.loaiNhaDatThue = vm.loaiNhaDatThue.splice(0,1);
+
 			RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback,"searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
@@ -453,6 +494,8 @@
 		}
 		function initDataPost(){
 			console.log('--------innitData-------------------' );
+			console.log("--------------innitData------1----------");
+			console.log($rootScope.user)
 			vm.ads.image = {};
 			vm.ads.image.cover = '';
 			vm.ads.image.images = [];
@@ -516,15 +559,32 @@
 		 setDrumValues(yearXdElm, yearXd);
 		 }
 		 */
-		vm.dangTin = function(){
-			console.log("--------------dangTin----------------");
-			var adsDto = JSON.stringify(vm.ads)
-			console.log(adsDto);
 
-			HouseService.postAds(adsDto).then(function(res){
-				console.log("------------HouseService.postAds-------------");
-				console.log(res);
-			})
+		vm.dangTin = function(isValid){
+
+			if (isValid) {
+				console.log("--------------dangTin----------------");
+				if(vm.ads.place.diaChi){
+					if(vm.ads.place.diaChiChiTiet){
+						vm.ads.place.diaChi = vm.ads.place.diaChiChiTiet + ", " + vm.ads.place.diaChi;
+					}
+				}
+				var adsDto = JSON.stringify(vm.ads)
+				console.log("--------------dangTin------1----------");
+				console.log(adsDto);
+				console.log("--------------dangTin------2----------");
+				console.log($rootScope.user)
+
+				HouseService.postAds(adsDto).then(function(res){
+					console.log("------------HouseService.postAds-------------");
+					console.log(res);
+				})
+			} else {
+				console.log("--------------invalid----------------");
+				console.log(angular.element('input.ng-invalid').first());
+				angular.element('input.ng-invalid').first().focus();
+			}
+
 		}
 
 		vm.selectLoaiTin = function(loaiTin){
@@ -553,7 +613,7 @@
 		vm.selectDuAn = function(da){
 			vm.ads.place.diaChinh.codeDuAn = da.duAn;
 			vm.ads.place.diaChinh.duAn = da.fullName;
-			$("#duAnLbl").text(da.placeName);
+			$("#duAnLbl").text(da.placeName.length > 30? da.placeName.substring(0,30) + "..." : da.placeName);
 			console.log(vm.ads.place.diaChinh.codeDuAn);
 		}
 
@@ -633,9 +693,10 @@
 
 		$timeout(function() {
 			vm.initPost();
-		},0);
+		},80);
 
 		$scope.uploadFiles = function (files) {
+			var async = require("async");
 			if($rootScope.isLoggedIn()==false){
 				$scope.$bus.publish({
 					channel: 'login',
@@ -647,6 +708,43 @@
 
 			$scope.files = files;
 			if (files && files.length) {
+
+				async.forEach(files,function(myFile){
+					console.log("----async.forEach--------------: ");
+					var fileName = myFile.name;
+					console.log(fileName);
+					fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);
+					fileName = "Ads_" + $rootScope.user.userID + "_" + new Date().getTime() + fileName;
+
+					Upload.upload({
+						url: '/api/upload',
+						data: {files: myFile, filename : fileName}
+					}).then(function (resp) {
+						console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
+
+						$timeout(function() {
+							var fileUrl = location.protocol;
+							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+
+							console.log("----fileUrl: " + fileUrl);
+							if(vm.ads.image.cover.trim().length == 0){
+								vm.ads.image.cover = fileUrl;
+							} else{
+								vm.ads.image.images.push(fileUrl);
+							}
+						},100);
+
+					}, function (resp) {
+						console.log('Error status: ' + resp.status);
+					}, function (evt) {
+						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+						console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
+					});
+				}, function(err){
+					if(err){throw err;}
+					console.log("processing all elements completed");
+				});
+				/*
 				angular.forEach(files, function (myFile) {
 					var fileName = myFile.name;
 					fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);
@@ -676,7 +774,7 @@
 						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 						console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
 					});
-				});
+				});*/
 			}
 		};
 	});

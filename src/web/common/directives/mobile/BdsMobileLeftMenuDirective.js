@@ -23,8 +23,23 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $(".overlay").click();
                 }
                 //nhannc
+                vm.hideMenuLeft = function(){
+                    $(".overlay").hide();
+                    $(".nav_mobile").find("i").removeClass("iconLeftOpen").addClass("iconMenu");
+                    $("body").removeClass("bodyNavShow").removeAttr("style");
+                    $("nav.main").removeAttr("style");
+                }
                 vm.gotoDangTinPage = function(event){
                     console.log("-------vao mpost");
+                    vm.hideMenuLeft();
+                    if($rootScope.isLoggedIn()==false){
+                        $scope.$bus.publish({
+                            channel: 'login',
+                            topic: 'show login',
+                            data: {label: "Đăng nhập để đăng tin"}
+                        });
+                        return true;
+                    }
                     $state.go('mpost');
                     $(".overlay").click();
                 }
