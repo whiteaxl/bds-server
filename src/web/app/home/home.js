@@ -537,6 +537,11 @@
           templateUrl: "/web/mobile/post.html",
           controller: "MobilePostCtrl",
           controllerAs: 'mpc'
+      }).state('madsMgmt', {
+          url: "/mobile/adsMgmt",
+          templateUrl: "/web/mobile/adsMgmt.html",
+          controller: "MobileAdsMgmtCtrl",
+          controllerAs: 'mamc'
       })
     });
   bds.factory('socket', function (socketFactory) {

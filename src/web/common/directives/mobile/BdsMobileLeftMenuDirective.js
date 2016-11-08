@@ -7,8 +7,9 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-                var vm = this;                                
+                var vm = this;
                 vm.gotoHomePage = function(event){
+                    vm.hideMenuLeft();
                    $state.go('mhome', { }, {location: true});
                    $(".overlay").click();
                 }
@@ -41,6 +42,20 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                         return true;
                     }
                     $state.go('mpost');
+                    $(".overlay").click();
+                }
+                vm.gotoQuanLyDangTin = function(event){
+                    console.log("-------vao madsMgmt");
+                    vm.hideMenuLeft();
+                    if($rootScope.isLoggedIn()==false){
+                        $scope.$bus.publish({
+                            channel: 'login',
+                            topic: 'show login',
+                            data: {label: "Đăng nhập để truy cập quản lý tin đăng"}
+                        });
+                        return true;
+                    }
+                    $state.go('madsMgmt');
                     $(".overlay").click();
                 }
                 //nhannc end

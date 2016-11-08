@@ -6,6 +6,15 @@
 		var vm = this;
 
 		vm.ads = {};
+		vm.marker = {
+			id: 1,
+			coords: {
+				latitude: 	16.0439,
+				longitude: 	108.199
+			},
+			content: undefined,
+			data: 'test'
+		}
 		$scope.loaiTin = 0;
 		$scope.soPhongNgu;
 		$scope.soPhongTam;
@@ -262,6 +271,8 @@
 					$scope.currentLocation = $rootScope.currentLocation;
 					vm.location.lat = $rootScope.currentLocation.lat;
 					vm.location.lon = $rootScope.currentLocation.lon;
+					vm.marker.coords.lat = vm.location.lat;
+					vm.marker.coords.lon = vm.location.lon;
 				}, function(error){
 					console.log(error);
 				});
@@ -428,14 +439,34 @@
 		vm.initMapData = function(){
 			$('#mapsBoxPost').on('show.bs.modal', function (e) {
 				$timeout(function() {
-					console.log("----------post--show modal- new123----------");
+					console.log("---------initMapData---------");
 					if(!vm.fullMapPost){
-						console.log("------------show.bs.modal-----1-----");
+						console.log("------------initMapData-----1-----");
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
+						var infoWnd = new google.maps.InfoWindow({
+							content :  "<font color='#FF0000'>Vị trí lựa chọn</font>",
+							position : vm.fullMapPost.getCenter(),
+							backgroundColor: 'rgb(57,57,57)',
+							borderWidth: 1,
+							borderColor: '#2c2c2c',
+							disableAutoPan: true
+						});
+						infoWnd.open(vm.fullMapPost);
 
 						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
 							vm.location.lat = event.latLng.lat();
 							vm.location.lon = event.latLng.lng();
+							console.log("------------lat: " + vm.location.lat);
+							console.log("------------lon: " + vm.location.lon);
+						});
+
+						google.maps.event.addListener(vm.fullMapPost, "center_changed", function() {
+							infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
+							infoWnd.setPosition(vm.fullMapPost.getCenter());
+							infoWnd.open(vm.fullMapPost);
+							vm.location.lat = vm.fullMapPost.getCenter().lat();
+							vm.location.lon = vm.fullMapPost.getCenter().lng();
+
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
 						});
@@ -450,10 +481,11 @@
 				},300);
 			});
 		}
+
 		vm.initPost = function() {
 			//vm.getDanhMucNamXd();
 			console.log("--------------initPost--------------");
-			//console.log($scope.namXayDungList);
+			console.log($rootScope.user);
 			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
 				$(".project-box .collapse-title span label").html($(this).html());
@@ -527,6 +559,14 @@
 			vm.ads.nhaKinhDoanhDuoc = false;
 			vm.ads.noiThatDayDu = false;
 			vm.ads.chinhChuDangTin = false;
+			if($rootScope.user){
+				if($rootScope.user.userName)
+					vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
+				if($rootScope.user.phone)
+					vm.ads.lienHe.phone = $rootScope.user.phone;
+				if($rootScope.user.userEmail)
+					vm.ads.lienHe.email = $rootScope.user.userEmail;
+			}
 		}
 		/*
 		 var setDrumValues = function(select, value){
@@ -570,27 +610,23 @@
 						vm.ads.place.diaChi = vm.ads.place.diaChiChiTiet + ", " + vm.ads.place.diaChi;
 					}
 				}
-				if($rootScope.userName){
-					vm.ads.lienHe.tenLienLac = $rootScope.userName;
-					vm.ads.dangBoi.name = $rootScope.userName;
-				}
-				if($rootScope.phone){
-					vm.ads.lienHe.phone = $rootScope.phone;
-					vm.ads.dangBoi.name = $rootScope.userName;
-				}
-				if($rootScope.email){
-					vm.ads.lienHe.email = $rootScope.email;
-					vm.ads.dangBoi.email = $rootScope.email;
-				}
-				if($rootScope.userID){
-					vm.ads.dangBoi.userID = $rootScope.userID;
+				if($rootScope.user){
+					vm.ads.dangBoi = {};
+					if($rootScope.user.userName){
+						vm.ads.dangBoi.name = $rootScope.user.userName;
+					}
+					if($rootScope.user.phone){
+						vm.ads.dangBoi.name = $rootScope.user.phone;
+					}
+					if($rootScope.user.userEmail){
+						vm.ads.dangBoi.email = $rootScope.user.userEmail;
+					}
+					if($rootScope.user.userID){
+						vm.ads.dangBoi.userID = $rootScope.user.userID;
+					}
 				}
 
 				var adsDto = JSON.stringify(vm.ads)
-				console.log("--------------dangTin------1----------");
-				console.log(adsDto);
-				console.log("--------------dangTin------2----------");
-				console.log($rootScope.user)
 
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
@@ -710,7 +746,7 @@
 
 		$timeout(function() {
 			vm.initPost();
-		},80);
+		},300);
 
 		$scope.uploadFiles = function (files) {
 			var async = require("async");
