@@ -235,6 +235,7 @@ angular.module('bds')
                       socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.user.userName);
                       });
+                      $('#loginBox').modal('hide');
                       $('#box-login').hide();
                     });
                   }

@@ -72,10 +72,9 @@ internals.login = function(req, reply){
 	          			userName: res[0].name,
 	          			userID: res[0].userID
         			}, JWT_SECRET);
-        			//console.log("token" + token);
         			result.login = true;
         			result.token = token;
-        			result.userName = res[0].fullName;
+        			result.userName = res[0].name;
         			result.userID = res[0].id;
                     result.email = res[0].email;
                     result.avatar = res[0].avatar;

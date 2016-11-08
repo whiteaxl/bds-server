@@ -428,9 +428,9 @@
 		vm.initMapData = function(){
 			$('#mapsBoxPost').on('show.bs.modal', function (e) {
 				$timeout(function() {
-					console.log("----------post--show modal- new123----------");
+					console.log("---------initMapData---------");
 					if(!vm.fullMapPost){
-						console.log("------------show.bs.modal-----1-----");
+						console.log("------------initMapData-----1-----");
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
 
 						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
@@ -450,10 +450,11 @@
 				},300);
 			});
 		}
+
 		vm.initPost = function() {
 			//vm.getDanhMucNamXd();
 			console.log("--------------initPost--------------");
-			//console.log($scope.namXayDungList);
+			console.log($rootScope.user);
 			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
 				$(".project-box .collapse-title span label").html($(this).html());
@@ -527,6 +528,14 @@
 			vm.ads.nhaKinhDoanhDuoc = false;
 			vm.ads.noiThatDayDu = false;
 			vm.ads.chinhChuDangTin = false;
+			if($rootScope.user){
+				if($rootScope.user.userName)
+					vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
+				if($rootScope.user.phone)
+					vm.ads.lienHe.phone = $rootScope.user.phone;
+				if($rootScope.user.userEmail)
+					vm.ads.lienHe.email = $rootScope.user.userEmail;
+			}
 		}
 		/*
 		 var setDrumValues = function(select, value){
@@ -570,20 +579,19 @@
 						vm.ads.place.diaChi = vm.ads.place.diaChiChiTiet + ", " + vm.ads.place.diaChi;
 					}
 				}
-				if($rootScope.userName){
-					vm.ads.lienHe.tenLienLac = $rootScope.userName;
-					vm.ads.dangBoi.name = $rootScope.userName;
-				}
-				if($rootScope.phone){
-					vm.ads.lienHe.phone = $rootScope.phone;
-					vm.ads.dangBoi.name = $rootScope.userName;
-				}
-				if($rootScope.email){
-					vm.ads.lienHe.email = $rootScope.email;
-					vm.ads.dangBoi.email = $rootScope.email;
-				}
-				if($rootScope.userID){
-					vm.ads.dangBoi.userID = $rootScope.userID;
+				if($rootScope.user){
+					if($rootScope.user.userName){
+						vm.ads.dangBoi.name = $rootScope.user.userName;
+					}
+					if($rootScope.user.phone){
+						vm.ads.dangBoi.name = $rootScope.user.phone;
+					}
+					if($rootScope.user.userEmail){
+						vm.ads.dangBoi.email = $rootScope.user.userEmail;
+					}
+					if($rootScope.user.userID){
+						vm.ads.dangBoi.userID = $rootScope.user.userID;
+					}
 				}
 
 				var adsDto = JSON.stringify(vm.ads)
