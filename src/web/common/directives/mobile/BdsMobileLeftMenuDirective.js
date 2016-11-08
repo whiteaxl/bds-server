@@ -7,8 +7,9 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-                var vm = this;                                
+                var vm = this;
                 vm.gotoHomePage = function(event){
+                    vm.hideMenuLeft();
                    $state.go('mhome', { }, {location: true});
                    $(".overlay").click();
                 }
