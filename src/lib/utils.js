@@ -455,8 +455,9 @@ util.generateHomeSearchSeries = function(query,currentLocation, searcher, search
       return results;
 
     }
+    var fl = [];
     if(currentLocation && currentLocation.lat){
-        var fl = [];
+        
         // query.diaChinh = currentLocation;
         query.circle = {
             center : {
