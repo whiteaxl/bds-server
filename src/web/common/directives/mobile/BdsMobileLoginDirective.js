@@ -222,6 +222,8 @@ angular.module('bds')
                       $rootScope.user.userName = res.data.userName;
                       //nhannc
                       $rootScope.user.userID = res.data.userID;
+                      $rootScope.user.email = res.data.email;
+                      $rootScope.user.phone = res.data.phone;
                       console.log('--------mloginDirective---------------------' );
                       console.log('--------10---------------------' );
                       console.log(res.data);
