@@ -135,7 +135,7 @@ internals.signup = function(req, reply){
         	result.userName = user.name;
         	result.userID = user.id;
             result.email = user.email;
-            result.phone = user.phone;
+            //result.phone = user.phone;
             chatHandler.addUser(user);
         	reply(result);
 		}
