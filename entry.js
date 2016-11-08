@@ -45,6 +45,7 @@ require("./src/web/app/mobile/MobileSearchCtrl.js");
 require("./src/web/app/mobile/MobileDetailCtrl.js");
 require("./src/web/app/mobile/MobileChatCtrl.js");
 require("./src/web/app/mobile/MobilePostCtrl.js");
+require("./src/web/app/mobile/MobileAdsMgmtCtrl.js");
 
 
 

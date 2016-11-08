@@ -596,10 +596,6 @@
 				}
 
 				var adsDto = JSON.stringify(vm.ads)
-				console.log("--------------dangTin------1----------");
-				console.log(adsDto);
-				console.log("--------------dangTin------2----------");
-				console.log($rootScope.user)
 
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
@@ -719,7 +715,7 @@
 
 		$timeout(function() {
 			vm.initPost();
-		},80);
+		},300);
 
 		$scope.uploadFiles = function (files) {
 			var async = require("async");

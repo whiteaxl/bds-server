@@ -44,6 +44,20 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $state.go('mpost');
                     $(".overlay").click();
                 }
+                vm.gotoQuanLyDangTin = function(event){
+                    console.log("-------vao madsMgmt");
+                    vm.hideMenuLeft();
+                    if($rootScope.isLoggedIn()==false){
+                        $scope.$bus.publish({
+                            channel: 'login',
+                            topic: 'show login',
+                            data: {label: "Đăng nhập để truy cập quản lý tin đăng"}
+                        });
+                        return true;
+                    }
+                    $state.go('madsMgmt');
+                    $(".overlay").click();
+                }
                 //nhannc end
                 vm.showFilter = function(){
                     $scope.$bus.publish({
