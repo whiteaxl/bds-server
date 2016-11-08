@@ -6,6 +6,15 @@
 		var vm = this;
 
 		vm.ads = {};
+		vm.marker = {
+			id: 1,
+			coords: {
+				latitude: 	16.0439,
+				longitude: 	108.199
+			},
+			content: undefined,
+			data: 'test'
+		}
 		$scope.loaiTin = 0;
 		$scope.soPhongNgu;
 		$scope.soPhongTam;
@@ -262,6 +271,8 @@
 					$scope.currentLocation = $rootScope.currentLocation;
 					vm.location.lat = $rootScope.currentLocation.lat;
 					vm.location.lon = $rootScope.currentLocation.lon;
+					vm.marker.coords.lat = vm.location.lat;
+					vm.marker.coords.lon = vm.location.lon;
 				}, function(error){
 					console.log(error);
 				});
@@ -432,10 +443,30 @@
 					if(!vm.fullMapPost){
 						console.log("------------initMapData-----1-----");
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
+						var infoWnd = new google.maps.InfoWindow({
+							content :  "<font color='#FF0000'>Vị trí lựa chọn</font>",
+							position : vm.fullMapPost.getCenter(),
+							backgroundColor: 'rgb(57,57,57)',
+							borderWidth: 1,
+							borderColor: '#2c2c2c',
+							disableAutoPan: true
+						});
+						infoWnd.open(vm.fullMapPost);
 
 						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
 							vm.location.lat = event.latLng.lat();
 							vm.location.lon = event.latLng.lng();
+							console.log("------------lat: " + vm.location.lat);
+							console.log("------------lon: " + vm.location.lon);
+						});
+
+						google.maps.event.addListener(vm.fullMapPost, "center_changed", function() {
+							infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
+							infoWnd.setPosition(vm.fullMapPost.getCenter());
+							infoWnd.open(vm.fullMapPost);
+							vm.location.lat = vm.fullMapPost.getCenter().lat();
+							vm.location.lon = vm.fullMapPost.getCenter().lng();
+
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
 						});

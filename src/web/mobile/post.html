@@ -336,11 +336,11 @@
                 </div>
                 <div class="modal-body uln">
                     <ng-map center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" class="ngmap">
-                        <custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
+                        <!--custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
                             <div class = "marker">
-                                Vị trí của bạn
+                                Vị trí của bạn: {{mpc.location.lat}},{{mpc.location.lon}}
                             </div>
-                        </custom-marker>
+                        </custom-marker-->
                     </ng-map>
                 </div>
             </div>
