@@ -119,6 +119,7 @@
         return localStorage.lastSearch;
       }      
     }
+    
     $rootScope.addLastSearch = function(localStorage, oLastSearch){
       let lastSearch = _.cloneDeep(oLastSearch);      
       if(localStorage){
