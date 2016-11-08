@@ -7,8 +7,9 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService) {
-                var vm = this;                                
+                var vm = this;
                 vm.gotoHomePage = function(event){
+                    vm.hideMenuLeft();
                    $state.go('mhome', { }, {location: true});
                    $(".overlay").click();
                 }
@@ -23,8 +24,23 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $(".overlay").click();
                 }
                 //nhannc
+                vm.hideMenuLeft = function(){
+                    $(".overlay").hide();
+                    $(".nav_mobile").find("i").removeClass("iconLeftOpen").addClass("iconMenu");
+                    $("body").removeClass("bodyNavShow").removeAttr("style");
+                    $("nav.main").removeAttr("style");
+                }
                 vm.gotoDangTinPage = function(event){
                     console.log("-------vao mpost");
+                    vm.hideMenuLeft();
+                    if($rootScope.isLoggedIn()==false){
+                        $scope.$bus.publish({
+                            channel: 'login',
+                            topic: 'show login',
+                            data: {label: "Đăng nhập để đăng tin"}
+                        });
+                        return true;
+                    }
                     $state.go('mpost');
                     $(".overlay").click();
                 }

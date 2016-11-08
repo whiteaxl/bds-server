@@ -54,7 +54,9 @@ function loadAds(limit, offset, isFull, callback) {
 
   projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
 
-  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
+  //let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
+
+  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime}`   ;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);

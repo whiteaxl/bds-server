@@ -222,6 +222,8 @@ angular.module('bds')
                       $rootScope.user.userName = res.data.userName;
                       //nhannc
                       $rootScope.user.userID = res.data.userID;
+                      $rootScope.user.email = res.data.email;
+                      $rootScope.user.phone = res.data.phone;
                       console.log('--------mloginDirective---------------------' );
                       console.log('--------10---------------------' );
                       console.log(res.data);
@@ -233,6 +235,7 @@ angular.module('bds')
                       socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.user.userName);
                       });
+                      $('#loginBox').modal('hide');
                       $('#box-login').hide();
                     });
                   }

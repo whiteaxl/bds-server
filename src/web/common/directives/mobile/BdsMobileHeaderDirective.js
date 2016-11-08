@@ -26,6 +26,65 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".post-footer").removeClass("fixed");
                 }
                 //end nhannc
+                vm.goToSearchPage = function(){
+                    if($rootScope.searchData.placeId){
+                        $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
+                    }else{
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(function(position){
+                                $rootScope.currentLocation.lat = position.coords.latitude;
+                                $rootScope.currentLocation.lon = position.coords.longitude;
+                                RewayCommonUtil.getGeoCodePostGet(position.coords.latitude,position.coords.longitude,function(results){                                    
+                                    if(results){
+                                        var places = results;
+                                        var newPlace = places[0];
+                                        for (var i=0; i<places.length; i++) {
+                                            var xa = window.RewayPlaceUtil.getXa(places[i]);
+                                            if (xa != '') {
+                                                newPlace = places[i];
+                                                break;
+                                            }
+                                        }
+                                        var tinh = window.RewayPlaceUtil.getTinh(newPlace);
+                                        var huyen = window.RewayPlaceUtil.getHuyen(newPlace);
+                                        var xa = window.RewayPlaceUtil.getXa(newPlace);
+                                        var diaChinh = {};
+                                        diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+                                        diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+                                        //diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+                                        var placeType = 'T';
+                                        if (diaChinh.huyenKhongDau)
+                                            placeType = 'H';
+                                        // if (diaChinh.xaKhongDau)
+                                        //     placeType = 'X';
+                                        var diaChinhDto = {
+                                            tinhKhongDau: diaChinh.tinhKhongDau,
+                                            huyenKhongDau: diaChinh.huyenKhongDau,
+                                            // xaKhongDau: diaChinh.xaKhongDau,
+                                            placeType: placeType
+                                        }
+                                        HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+                                            console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
+                                            if(res){                                                                                                
+                                                $state.go("msearch", { "placeId": res.data.diaChinh.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
+                                            }
+                                        });
+                                    }
+                                    
+                                });                                
+                            }, function(error){
+                                console.log(error);                 
+                                // vm.showAskCurrentLocation  = true;
+                                $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
+                            });
+                        } else {
+                            $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
+                        }
+
+                    }
+                    
+                    
+                }
                 vm.searchfr = function(){
                     $(".search").removeAttr("style");
                     $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
