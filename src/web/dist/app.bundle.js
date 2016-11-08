@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d2a0c755de38f2e42d6d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "382bdd98150c0ec4c662"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1104,7 +1104,8 @@
 
 	    $rootScope.getLastSearch = function (localStorage) {
 	      if (localStorage && localStorage.lastSearch && localStorage.lastSearch.length > 0) {
-	        return localStorage.lastSearch[localStorage.lastSearch.length - 1];
+	        var clone = _.cloneDeep(localStorage.lastSearch[localStorage.lastSearch.length - 1]);
+	        return clone;
 	      }
 	      return undefined;
 	    };
@@ -1114,9 +1115,7 @@
 	      }
 	    };
 	    $rootScope.addLastSearch = function (localStorage, oLastSearch) {
-	      var lastSearch = {};
-	      Object.assign(lastSearch, oLastSearch);
-
+	      var lastSearch = _.cloneDeep(oLastSearch);
 	      if (localStorage) {
 	        if (!localStorage.lastSearch || localStorage.lastSearch.length == 0) {
 	          localStorage.lastSearch = [];
@@ -21443,6 +21442,7 @@
 			//    $rootScope.currentLocation.lat = 20.9898098;
 			// $rootScope.currentLocation.lon = 105.7098334;
 			homeDataSearch.currentLocation = $rootScope.currentLocation;
+			homeDataSearch.query.updateLastSearch = false;
 
 			vm.getLocation = function () {
 				function fetchHomeData() {
@@ -29250,9 +29250,10 @@
 	                // if($rootScope.isLoggedIn()){
 	                //     $rootScope.user.lastSearch = $rootScope.searchData;
 	                // }
-	                $rootScope.addLastSearch($localStorage, $rootScope.searchData);
+
 
 	                if (vm.ads_list && vm.ads_list.length > 0) {
+	                    $rootScope.addLastSearch($localStorage, $rootScope.searchData);
 	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
 	                        if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
 	                    });

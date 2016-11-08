@@ -109,7 +109,8 @@
 
     $rootScope.getLastSearch = function(localStorage){
       if(localStorage && localStorage.lastSearch && localStorage.lastSearch.length>0){
-        return localStorage.lastSearch[localStorage.lastSearch.length-1];
+        var clone = _.cloneDeep(localStorage.lastSearch[localStorage.lastSearch.length-1]);
+        return clone;
       }
       return undefined
     }
@@ -119,9 +120,7 @@
       }      
     }
     $rootScope.addLastSearch = function(localStorage, oLastSearch){
-      var lastSearch = {};
-      Object.assign(lastSearch, oLastSearch);
-
+      let lastSearch = _.cloneDeep(oLastSearch);      
       if(localStorage){
         if(!localStorage.lastSearch || localStorage.lastSearch.length==0){
           localStorage.lastSearch = [];

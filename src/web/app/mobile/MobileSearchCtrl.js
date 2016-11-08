@@ -684,10 +684,12 @@
                 // if($rootScope.isLoggedIn()){
                 //     $rootScope.user.lastSearch = $rootScope.searchData;
                 // }
-                $rootScope.addLastSearch($localStorage,$rootScope.searchData);
 
                 
-                if(vm.ads_list && vm.ads_list.length>0){                    
+
+                
+                if(vm.ads_list && vm.ads_list.length>0){       
+                    $rootScope.addLastSearch($localStorage,$rootScope.searchData);             
                     if(vm.diaChinh)
                         HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
                             if(res.data.success==true)

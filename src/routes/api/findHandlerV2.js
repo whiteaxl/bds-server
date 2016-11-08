@@ -327,7 +327,7 @@ function _doQueryAllIntoMemory(q, reply, allResults) {
 function _transformAndReply(q, reply, err, filtered, count) {
   if (err) {
     console.log("Error when query ADS:", err);
-    if (q.userID && q.updateLastSearch && count > 0) {
+    if (q.userID && q.updateLastSearch==true && count > 0) {
       //console.log(JSON.stringify(q));
       _updateLastSearch(q);
     }
@@ -369,11 +369,7 @@ function _doDBQueryAndCount(q, reply) {
   });
 }
 
-internals.findAds = function (q, reply) {
-  if (q.userID && q.updateLastSearch) {
-    //console.log(JSON.stringify(q));
-    _updateLastSearch(q);
-  }
+internals.findAds = function (q, reply) { 
   _mergeViewportWithPolygonBox(q);
   _mergeViewportWithCircleBox(q);
 
