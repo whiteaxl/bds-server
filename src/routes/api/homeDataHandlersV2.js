@@ -171,6 +171,8 @@ function generateSearchNgangGiaFn(query, diaChinh){
       queryNgangGia.huongNha = [0];
       queryNgangGia.dienTichBETWEEN = [-1,9999999];
       queryNgangGia.excludeOrderBy = 1;
+      queryNgangGia.userID = undefined;
+      queryNgangGia.updateLastSearch = false;
 
       searchAds(loaiNhaDatName, query.diaChinh ? query.diaChinh.fullName : query.fullName, queryNgangGia, callback);
 
@@ -272,126 +274,95 @@ internals.homeData4App = function (req, reply) {
       lastQuery = {};
       Object.assign(lastQuery, query);
   }
-  
 
   console.log("homeData4App V2 " + JSON.stringify(req.payload));
-
-  var currentLocation = req.payload.currentLocation;
-  if (!currentLocation)
-    currentLocation = {};
 
   let ngayDangTinBegin = moment().subtract(7, 'days').format('YYYYMMDD');
 
   //todo: order ?
 
+  var async = require("async");
+  var fl = [];
 
-  services.getDiaChinhKhongDauByGeocode(currentLocation.lat, currentLocation.lon)
-    .then((diaChinh) => {
-      var async = require("async");
-      var fl = [];
+  if(lastQuery){
+    fl.push(
+      function (callback) {
+        let queryMoiDang = JSON.parse(JSON.stringify(lastQuery));
 
-      /*
-      if(diaChinh){
-        query.diaChinh = {
-          fullName : diaChinh.xaCoDau ? diaChinh.xaCoDau + ", " + diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau :
-                                                   diaChinh.huyenCoDau + ", " + diaChinh.tinhCoDau,
-          tinhKhongDau : diaChinh.tinh,
-          huyenKhongDau : diaChinh.huyen
-        };
+        queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
+        queryMoiDang.orderBy = undefined;
+        queryMoiDang.userID = undefined;
+        queryMoiDang.updateLastSearch = false;
+        queryMoiDang.excludeOrderBy = 1;
 
-        fl.push(function (callback) {
-          let queryNearBy = {};
-          Object.assign(queryNearBy, query);
-
-          queryNearBy.diaChinh.xaKhongDau = diaChinh.xa || undefined;
-
-          searchAds("Nhà Gần Vị Trí Bạn", query.diaChinh.fullName, queryNearBy, callback);
-        });
+        searchAds("Nhà Mới Đăng", lastQuery.diaChinh ? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
       }
-      */
+    );
 
-      if(lastQuery){
-        fl.push(
-          function (callback) {
-            let queryMoiDang = JSON.parse(JSON.stringify(lastQuery));
-            //Object.assign(queryMoiDang, lastQuery);
+    fl.push(
+        function (callback) {
+          let queryDuoiGia = {};
+          Object.assign(queryDuoiGia, lastQuery);
 
+          let mid = 0;
+
+          if (lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0] >= 0 && lastQuery.giaBETWEEN[1] < 999999) {
+            mid = getGiaTrungBinh(lastQuery);
+          } else {
+            mid = lastQuery.loaiTin==0 ? 5000 : 20;
+          }
+
+          queryDuoiGia.giaBETWEEN = [lastQuery.giaBETWEEN[0], mid];
+          queryDuoiGia.orderBy = undefined;
+          queryDuoiGia.userID = undefined;
+          queryDuoiGia.updateLastSearch = false;
+          queryDuoiGia.excludeOrderBy = 1;
+
+          let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
+          searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
+        }
+    );
+
+    let ngangGiaFl = generateSearchNgangGiaFn(lastQuery, lastQuery.diaChinh);
+    fl = _.concat(fl,ngangGiaFl);
+
+  } else {
+    console.log("tim log not have last query");
+    query = {};
+    query.limit = 5;
+    query.pageNo = 1;
+    query.loaiTin = 0;
+    query.viewport = undefined;
+    query.polygon = undefined;
+    query.userID = undefined;
+    query.updateLastSearch = false;
+    query.isIncludeCountInResponse = false; //no need count
+
+    fl.push(
+        function (callback) {
+            let queryMoiDang = JSON.parse(JSON.stringify(query));
             queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
-            //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
             queryMoiDang.orderBy = undefined;
+            queryMoiDang.userID = undefined;
+            queryMoiDang.updateLastSearch = false;
             queryMoiDang.excludeOrderBy = 1;
 
-            searchAds("Nhà Mới Đăng", lastQuery.diaChinh ? lastQuery.diaChinh.fullName : lastQuery.fullName, queryMoiDang, callback);
-          }
-        );
+            searchAds("Nhà Mới Đăng", "", queryMoiDang, callback);
+        }
+    );
 
-        fl.push(
-            function (callback) {
-              let queryDuoiGia = {};
-              Object.assign(queryDuoiGia, lastQuery);
+  }
 
-              let mid = 0;
-
-              if (lastQuery.giaBETWEEN && lastQuery.giaBETWEEN[0] >= 0 && lastQuery.giaBETWEEN[1] < 999999) {
-                mid = getGiaTrungBinh(lastQuery);
-              } else {
-                mid = lastQuery.loaiTin==0 ? 5000 : 20;
-              }
-
-              queryDuoiGia.giaBETWEEN = [lastQuery.giaBETWEEN[0], mid];
-              queryDuoiGia.orderBy = undefined;
-              queryDuoiGia.excludeOrderBy = 1;
-
-              let giaFmt = utils.getPriceDisplay(mid, lastQuery.loaiTin);
-              searchAds("Nhà Có Giá Dưới " + giaFmt, lastQuery.diaChinh ? lastQuery.diaChinh.fullName :lastQuery.fullName, queryDuoiGia, callback);
-            }
-        );
-
-        let ngangGiaFl = generateSearchNgangGiaFn(lastQuery, lastQuery.diaChinh);
-        fl = _.concat(fl,ngangGiaFl);
-
-      } else {
-        console.log("tim log not have last query");
-        query = {};
-        query.limit = 5;
-        query.pageNo = 1;
-        query.loaiTin = 0;
-        query.viewport = undefined;
-        query.polygon = undefined;
-        query.isIncludeCountInResponse = false; //no need count
-
-        /*if (diaChinh) {
-            // truong hop search lan dau va co dia chinh cua current location
-            let defaultFl = generateSearchDefaultFn(diaChinh);
-            fl = _.concat(fl, ngangGiaFl);
-        } else {*/
-            // truong hop ko tim duoc dia chinh cua current location thi hien thi 1 Category: Nha moi dang
-            fl.push(
-                function (callback) {
-                    let queryMoiDang = JSON.parse(JSON.stringify(query));
-                    //Object.assign(queryMoiDang, query);
-                    queryMoiDang.ngayDangTinGREATER = ngayDangTinBegin;
-                    //queryMoiDang.orderBy = {name: "ngayDangTin", type: "DESC"};
-                    queryMoiDang.orderBy = undefined;
-                    queryMoiDang.excludeOrderBy = 1;
-
-                    searchAds("Nhà Mới Đăng", "", queryMoiDang, callback);
-                }
-            );
-        //}
-
+  async.parallel(fl,
+      function(err, results){
+        reply({
+          data : results,
+          status : 0,
+          lastQuery
+        });
       }
+  );
 
-      async.parallel(fl,
-          function(err, results){
-            reply({
-              data : results,
-              status : 0,
-              lastQuery
-            });
-          }
-      );
-    });
 };
 
 module.exports = internals;
