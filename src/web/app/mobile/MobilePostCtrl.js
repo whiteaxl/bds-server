@@ -580,6 +580,7 @@
 					}
 				}
 				if($rootScope.user){
+					vm.ads.dangBoi = {};
 					if($rootScope.user.userName){
 						vm.ads.dangBoi.name = $rootScope.user.userName;
 					}
