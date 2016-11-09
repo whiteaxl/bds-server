@@ -37,6 +37,11 @@ function _getFromCache(input, reply) {
         //}
     }
   }
+  */
+
+  let ret = DBCache.searchPlace(inputKhongDau);
+
+  ret = ret && ret.slice(0, 10);
 
    //sort
    let map = {
@@ -47,31 +52,29 @@ function _getFromCache(input, reply) {
    };
 
    ret.sort((a, b) => {
-   if (map[a.placeType] > map[b.placeType]) {
-   return 1;
-   }
+     if (map[a.placeType] > map[b.placeType]) {
+      return 1;
+     }
 
-   if (map[a.placeType] < map[b.placeType]) {
-   return -1;
-   }
+     if (map[a.placeType] < map[b.placeType]) {
+     return -1;
+     }
 
-   if (a.placeName > b.placeName) {
-   return 1;
-   }
+     /*
+     if (a.placeName > b.placeName) {
+      return 1;
+     }
+     */
 
-   return 0;
+      return 0;
    });
 
-   */
-
-
-  let ret = DBCache.searchPlace(inputKhongDau);
 
   if (ret.length == 0) {
     console.log("Not match!!!");
   }
 
-  _returnToClient(ret && ret.slice(0, 10), reply);
+  _returnToClient(ret , reply);
 }
 
 

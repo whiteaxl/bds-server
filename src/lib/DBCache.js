@@ -6,6 +6,8 @@ var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
 
+var placeUtil = require('./placeUtil');
+
 var loki = require("lokijs");
 
 var REFRESH_INTERVAL = 180;//seconds
@@ -105,6 +107,7 @@ var cache = {
   placeFuse : null,
 
   searchPlace(query) {
+    console.log("Key search: ", query);
     var result = this.placeFuse.search(query);
 
     console.log("Matched from fuse:", query, result.length);
@@ -119,7 +122,7 @@ var cache = {
   initPlaceAutoComplete() {
     var options = {
       shouldSort: true,
-      threshold: 0.2,
+      threshold: 0.13,
       location: 0,
       distance: 100,
       maxPatternLength: 32,
@@ -128,7 +131,16 @@ var cache = {
       ]
     };
     this.placeFuse = new Fuse(this.placeAsArray().map((e) => {
-      e.searchKey = isNaN(e.nameKhongDau) ? e.nameKhongDau : 'quan-'+e.nameKhongDau;
+      /*
+      if (e.placeType=='H') {
+        e.searchKey = isNaN(e.nameKhongDau) ? e.nameKhongDau : 'quan-'+e.nameKhongDau;
+      }
+      if (e.placeType=='X') {
+        e.searchKey = isNaN(e.nameKhongDau) ? e.nameKhongDau : 'phuong-'+e.nameKhongDau;
+      }
+      */
+      e.searchKey = placeUtil.chuanHoaAndLocDau(e.fullName);
+
       return e;
     }), options); // "list" is the item array
     //var result = this.placeFuse.search("");

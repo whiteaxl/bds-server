@@ -206,6 +206,7 @@ placeUtil.chuanHoaAndLocDau = function(str) {
 
     var result = str;
 
+    /* No need this
     var COMMON_WORDS = [
         'Quận ','Huyện ',
         'Tỉnh ', 'Thành phố ','TP.' ,'Tp.' ,'tp.','tp ' ,'TP ',
@@ -217,6 +218,7 @@ placeUtil.chuanHoaAndLocDau = function(str) {
         result = result.substring(e.length)
       }
     });
+    */
 
     result = util.locDau(result);
 
