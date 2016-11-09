@@ -354,7 +354,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
                     <h4 class="modal-title" id="mapsBoxLabelPost">Bản đồ</h4>
                 </div>
                 <div class="modal-body uln">
@@ -370,8 +370,8 @@
                     </ng-map>
                     <footer class="main border blue uln">
                         <ul class="navmain nav-2 nav-text">
-                            <li><a role="button">Thoát</a></li>
-                            <li><a role="button">Chọn</a></li>
+                            <li><a role="button" ng-click="mpc.resetLocation()" data-dismiss="modal" >Thoát</a></li>
+                            <li><a role="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)" data-dismiss="modal">Chọn</a></li>
                         </ul>
                     </footer>
                 </div>

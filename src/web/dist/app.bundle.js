@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ed4f5516a48247ef5956"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "da4d4c7aa3cfdd2fc683"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28074,6 +28074,7 @@
 				content: undefined,
 				data: 'test'
 			};
+			$scope.location = {};
 			$scope.loaiTin = 0;
 			$scope.soPhongNgu;
 			$scope.soPhongTam;
@@ -28083,6 +28084,7 @@
 
 			vm.duAn = [];
 			vm.diaChinh = {};
+
 			vm.location = {};
 			vm.diaChinh = {};
 			vm.loaiNhaDatBan = window.RewayListValue.LoaiNhaDatBanWeb;
@@ -28306,6 +28308,13 @@
 			};
 			// end auto
 
+			vm.resetLocation = function () {
+				vm.autoCompleteText = "";
+				vm.location.lat = $scope.location.lat;
+				vm.location.lon = $scope.location.lon;
+				vm.toggleQuickClearAutoComplete();
+			};
+
 			vm.setDacTinhNha = function (value) {
 				if (value == 0) {
 					vm.ads.nhaMoiXay = !vm.ads.nhaMoiXay;
@@ -28348,6 +28357,9 @@
 						$scope.currentLocation = $rootScope.currentLocation;
 						vm.location.lat = $rootScope.currentLocation.lat;
 						vm.location.lon = $rootScope.currentLocation.lon;
+						$scope.location.lat = $rootScope.currentLocation.lat;
+						$scope.location.lon = $rootScope.currentLocation.lon;
+						vm.getDiaChinhInDb(vm.location.lat, vm.location.lon);
 						vm.marker.coords.lat = vm.location.lat;
 						vm.marker.coords.lon = vm.location.lon;
 					}, function (error) {
@@ -28478,6 +28490,8 @@
 								vm.ads.place.diaChinh.xa = vm.location.xa;
 								vm.ads.place.geo.lat = vm.location.lat;
 								vm.ads.place.geo.lon = vm.location.lon;
+
+								vm.autoCompleteText = vm.diaChinh.fullName;
 								console.log(vm.diaChinh);
 								console.log(vm.duAn);
 							}
@@ -28536,6 +28550,7 @@
 								infoWnd.open(vm.fullMapPost);
 								vm.location.lat = vm.fullMapPost.getCenter().lat();
 								vm.location.lon = vm.fullMapPost.getCenter().lng();
+								vm.getDiaChinhInDb(vm.location.lat, vm.location.lon);
 
 								console.log("------------lat: " + vm.location.lat);
 								console.log("------------lon: " + vm.location.lon);
@@ -31019,13 +31034,18 @@
 
 	    var result = str;
 
-	    var COMMON_WORDS = ['Quận ', 'Huyện ', 'Tỉnh ', 'Thành phố ', 'TP.', 'Tp.', 'tp.', 'tp ', 'TP ', 'Phường ', 'Xã ', 'Thị trấn '];
-
-	    COMMON_WORDS.forEach(function (e) {
-	        if (result.startsWith(e)) {
-	            result = result.substring(e.length);
-	        }
+	    /* No need this
+	    var COMMON_WORDS = [
+	        'Quận ','Huyện ',
+	        'Tỉnh ', 'Thành phố ','TP.' ,'Tp.' ,'tp.','tp ' ,'TP ',
+	        'Phường ' ,'Xã ', 'Thị trấn '
+	    ];
+	      COMMON_WORDS.forEach((e) => {
+	      if (result.startsWith(e)) {
+	        result = result.substring(e.length)
+	      }
 	    });
+	    */
 
 	    result = util.locDau(result);
 
