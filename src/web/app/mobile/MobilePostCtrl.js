@@ -32,6 +32,14 @@
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
 		$scope.currentYear = new Date().getFullYear();
 
+		vm.loaiGias = [
+				{ value: 1, lable: "Triệu"},
+				{ value: 2, lable: "Tỷ" },
+				{ value: 3, lable: "Trăm nghìn/m2" },
+				{ value: 4, lable: "Triệu/m2" },
+				{ value: 0, lable: "Thỏa thuận" }
+		];
+		vm.loaiGia = { value: 1, lable: "Triệu"};
 		$scope.namXayDungList = [
 			{ value: $scope.currentYear, lable: $scope.currentYear },
 			{ value: $scope.currentYear-1, lable: ($scope.currentYear -1) },
@@ -146,6 +154,39 @@
 			}
 		}
 
+		vm.autocompleteGoogleSource = function (request, response) {
+			console.log("--------------autocompleteGoogleSource---------------");
+			console.log(request);
+			var options = {
+				input: request.term,
+				//types: ['(cities)'],
+				//region: 'US',
+				componentRestrictions: { country: "vn" }
+			};
+			function callback(predictions, status) {
+				var results = [];
+				if(predictions){
+					console.log("--------------autocompleteGoogleSource-------1--------");
+					console.log(predictions);
+					for (var i = 0, prediction; prediction = predictions[i]; i++) {
+						results.push(
+							{
+								description: prediction.description,
+								types:  	prediction.types,
+								place_id: 	prediction.place_id,
+								class: "iconLocation gray"
+							}
+						);
+					}
+				}
+				console.log("--------------autocompleteGoogleSource-------2--------");
+				console.log(results);
+				response(results);
+			}
+			var service = new google.maps.places.AutocompleteService();
+			service.getPlacePredictions(options, callback);
+		}
+
 		vm.autocompleteSource = function (request, response) {
 			var results = [];
 			console.log("------------post---autocompleteSource--------------");
@@ -177,7 +218,7 @@
 		vm.keyPress = function(event){
 			console.log("------------post---keyPress--------------");
 			vm.showFrequentSearch = false;
-			$( "#searchAddPost").autocomplete( "option", "source",vm.autocompleteSource);
+			$( "#searchAddPost").autocomplete( "option", "source",vm.autocompleteGoogleSource);
 			var $ww = $(window).width();
 
 
@@ -208,6 +249,30 @@
 
 		vm.selectPlaceCallback = function(item){
 			console.log("--------------------selectPlaceCallback-----------------");
+			console.log(item);
+			if(item.lastSearchSeparator==true){
+				return;
+			}
+			vm.item = item;
+			if(vm.item.place_id){
+				var request = {
+					placeId: vm.item.place_id
+				};
+				var service = new google.maps.places.PlacesService(vm.fullMapPost);
+				service.getDetails(request, function(place, status) {
+					console.log("----------------------service.getDetails---------");
+					vm.fullMapPost.fitBounds(place.geometry.viewport);
+					vm.location.lat = vm.fullMapPost.getCenter().lat();
+					vm.location.lon = vm.fullMapPost.getCenter().lng();
+					console.log(vm.location.lat);
+					console.log(vm.location.lon);
+				});
+			}
+		}
+
+		vm.selectPlaceCallbackBk = function(item){
+			console.log("--------------------selectPlaceCallback-----------------");
+			console.log(item);
 			if(item.lastSearchSeparator==true){
 				return;
 			}
@@ -497,7 +562,7 @@
 			vm.loaiNhaDatBan = vm.loaiNhaDatBan.splice(0,1);
 			vm.loaiNhaDatThue = vm.loaiNhaDatThue.splice(0,1);
 
-			RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback,"searchAddPost");
+			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 			})
@@ -626,6 +691,31 @@
 					}
 				}
 
+				if(vm.loaiGia.value==0){
+					vm.ads.gia = -1;
+					vm.ads.giaM2 = -1;
+				} else if(loaiGia.value == 1){
+					vm.ads.gia = vm.gia;
+					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
+					giaM2 = parseFloat(giaM2);
+					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+				} else if(loaiGia.value == 2){
+					vm.ads.gia = vm.gia * 1000;
+					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
+					giaM2 = parseFloat(giaM2);
+					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+				} else if(loaiGia.value == 3){
+					vm.ads.giaM2 = vm.gia/10;
+					var gia = vm.ads.giaM2 * vm.ads.dienTich;
+					gia =  parseFloat(gia);
+					vm.ads.gia = Math.round(gia * 100)/100;
+				} else if(loaiGia.value == 4){
+					vm.ads.giaM2 = vm.gia;
+					var gia = vm.ads.giaM2 * vm.ads.dienTich;
+					gia =  parseFloat(gia);
+					vm.ads.gia = Math.round(gia * 100)/100;
+				}
+
 				var adsDto = JSON.stringify(vm.ads)
 
 				HouseService.postAds(adsDto).then(function(res){
@@ -661,6 +751,27 @@
 		vm.selectHuongNha = function(hn){
 			vm.ads.huongNha = [hn.value];
 			$("#huongNhaLbl").text(hn.lable);
+		}
+
+		vm.selectLoaiGia = function(lg){
+			vm.loaiGia = lg;
+			if(vm.loaiGia.value==0){
+				$("#giaTienPost").prop("readonly", true);
+				$("#lblGiaPost").text(vm.loaiGia.lable);
+			}else{
+				$("#giaTienPost").prop("readonly", false);
+				if(vm.gia && vm.gia > 0){
+					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+				}
+			}
+		}
+
+		vm.changeGiaTien = function(){
+			if(vm.loaiGia.value==0){
+				$("#lblGiaPost").text(vm.loaiGia.lable);
+			} else {
+				$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+			}
 		}
 
 		vm.selectDuAn = function(da){

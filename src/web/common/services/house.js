@@ -110,8 +110,10 @@
       },
       postAds: function(data){
         return $http.post("/api/postAds",data);
+      },
+      getAdsLikes: function(data){
+        return $http.post("/api/user/getAdsLikes",data);
       }
-
     };
   });
 })();

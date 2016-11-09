@@ -126,7 +126,46 @@
                 callback(results);
             }
         });
-    }
+    },
+    placeAutoCompletePost: function(callback, inputTagId, source){
+        console.log("-------------placeAutoComplete----------");
+        var sourceP;
+        $( "#" + inputTagId ).autocomplete({
+                minLength: 0,
+                source: sourceP,
+                focus: function( event, ui ) {
+                    console.log("-------------placeAutoComplete------2----");
+                    if(ui.item.lastSearchSeparator == true){
+                        event.preventDefault();
+                    }else{
+                        $( "#" + inputTagId ).val( ui.item.description );
+                        return false;
+                    }
+                },
+                _create: function() {
+                    console.log("-------------placeAutoComplete------3----");
+                    this._super();
+                    this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+                },
+                select: function( event, ui ) {
+                    console.log("-------------placeAutoComplete------4----");
+                    if(ui.item.lastSearchSeparator == true){
+                        event.preventDefault();
+                    }else{
+                        $( "#" + inputTagId ).val( ui.item.description );
+                        callback(ui.item);
+                        return false;
+                    }
+                }
+            })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            console.log("-------------placeAutoComplete------5----");
+            ul.addClass('relandAutoOne relandMaps');
+            return $( "<li>")
+                .append("<p><i class='iconLocation gray'></i>" + item.description + "</span></p></li>")
+                .appendTo( ul );
+        };
+    },
 
   };
 });

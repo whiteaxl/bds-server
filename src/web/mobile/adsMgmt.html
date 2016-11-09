@@ -12,10 +12,10 @@
         <div class="tab-content uln">
             <div role="tabpanel" class="tab-pane active" id="managerSaved">
                 <ul class="reland-list full">
-                    <li>
+                    <li ng-repeat="ads in mamc.adsLikes track by $index">
                         <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
                         <a href="detail-qly.html">
-                            <span class="img" style="background-image:url(images/big.jpg)"></span>
+                            <span class="img" style="background-image:url({{ads.image.cover}})"></span>
 								<span class="des bgOpa">
 									<span class="price">10,5 Ty</span>
 									<span class="name">KDT Xa La</span>
