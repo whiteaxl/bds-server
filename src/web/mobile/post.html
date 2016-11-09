@@ -159,13 +159,10 @@
                     <div class="title border">Giá và liên hệ</div>
                     <div class="pr-box collapse-box fr">
                         <a role="button" class="collapse-title" data-toggle="modal" data-target="#priceBox">Giá <span><label id="lblGiaPost"></label> <i class="iconRightOpen"></i></span></a>
-                        <!--
-                        <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Giá (triệu)<span><input name="gia" type="text" ng-model="mpc.ads.gia" required/></span></a>
-
+                        <input name="gia" type="hidden" ng-model="mpc.ads.gia" required/>
                         <div ng-show="postForm.$submitted">
                             <span style="color:red" ng-show="postForm.gia.$error.required">(Chưa nhập giá)</span>
                         </div>
-                        -->
                     </div>
                     <div class="contact-box collapse-box border-none">
                         <a role="button" class="collapse-title" data-toggle="modal" data-target="#contactBox">Liên hệ <span><label id="lienHeLbl"></label> <i class="iconRightOpen"></i></span></a>

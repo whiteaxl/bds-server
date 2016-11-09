@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "da4d4c7aa3cfdd2fc683"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "609f2c72891f1febb352"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28766,21 +28766,67 @@
 			vm.selectLoaiGia = function (lg) {
 				vm.loaiGia = lg;
 				if (vm.loaiGia.value == 0) {
+					vm.ads.gia = -1;
+					vm.ads.giaM2 = -1;
 					$("#giaTienPost").prop("readonly", true);
 					$("#lblGiaPost").text(vm.loaiGia.lable);
 				} else {
 					$("#giaTienPost").prop("readonly", false);
 					if (vm.gia && vm.gia > 0) {
 						$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+						if (loaiGia.value == 1) {
+							vm.ads.gia = vm.gia;
+							var giaM2 = vm.ads.gia / vm.ads.dienTich;
+							giaM2 = parseFloat(giaM2);
+							vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
+						} else if (loaiGia.value == 2) {
+							vm.ads.gia = vm.gia * 1000;
+							var giaM2 = vm.ads.gia / vm.ads.dienTich;
+							giaM2 = parseFloat(giaM2);
+							vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
+						} else if (loaiGia.value == 3) {
+							vm.ads.giaM2 = vm.gia / 10;
+							var gia = vm.ads.giaM2 * vm.ads.dienTich;
+							gia = parseFloat(gia);
+							vm.ads.gia = Math.round(gia * 100) / 100;
+						} else if (loaiGia.value == 4) {
+							vm.ads.giaM2 = vm.gia;
+							var gia = vm.ads.giaM2 * vm.ads.dienTich;
+							gia = parseFloat(gia);
+							vm.ads.gia = Math.round(gia * 100) / 100;
+						}
 					}
 				}
 			};
 
 			vm.changeGiaTien = function () {
 				if (vm.loaiGia.value == 0) {
+					vm.ads.gia = -1;
+					vm.ads.giaM2 = -1;
 					$("#lblGiaPost").text(vm.loaiGia.lable);
 				} else {
 					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+					if (loaiGia.value == 1) {
+						vm.ads.gia = vm.gia;
+						var giaM2 = vm.ads.gia / vm.ads.dienTich;
+						giaM2 = parseFloat(giaM2);
+						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
+					} else if (loaiGia.value == 2) {
+						vm.ads.gia = vm.gia * 1000;
+						var giaM2 = vm.ads.gia / vm.ads.dienTich;
+						giaM2 = parseFloat(giaM2);
+						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
+					} else if (loaiGia.value == 3) {
+						vm.ads.giaM2 = vm.gia / 10;
+						var gia = vm.ads.giaM2 * vm.ads.dienTich;
+						gia = parseFloat(gia);
+						vm.ads.gia = Math.round(gia * 100) / 100;
+					} else if (loaiGia.value == 4) {
+						vm.ads.giaM2 = vm.gia;
+						var gia = vm.ads.giaM2 * vm.ads.dienTich;
+						gia = parseFloat(gia);
+						vm.ads.gia = Math.round(gia * 100) / 100;
+					}
 				}
 			};
 
