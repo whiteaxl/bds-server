@@ -104,7 +104,7 @@ class UserModel {
         }
         let adsLikes = res[0].adsLikes;
         if (adsLikes && adsLikes.length>0) {
-          let sql2 = `select a.* from default a where a.type='Ads' and a.id in ${JSON.stringify(adsLikes)}`;
+          let sql2 = `select a.* from default a where a.type='Ads' and a.id in ${JSON.stringify(adsLikes)} order by a.id desc`;
           console.log("getAdsLikes, sql 2:", sql2);
 
           var query2 = N1qlQuery.fromString(sql2);

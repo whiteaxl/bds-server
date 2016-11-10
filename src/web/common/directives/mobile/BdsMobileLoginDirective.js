@@ -97,7 +97,6 @@ angular.module('bds')
 
 
           vm.signin = function(){
-            console.log('--------mloginDirective----signin-----------------' );
 
             var loginForm = $('#form-login');
               var data = {
@@ -110,7 +109,6 @@ angular.module('bds')
               }
               //if (loginForm.valid()) {
                 if(vm.state == vm.RESET_PASSWORD){
-                  console.log('--------1---------------------' );
                   HouseService.resetPassword({token: vm.resetPasswordToken,pass: vm.resetPassword}).then(function(resp){
                     if(resp.data.success == true){
                       //need to auto login here
@@ -157,7 +155,6 @@ angular.module('bds')
                     }
                   });
                 }else if(vm.state == vm.FORGOT_PASSWORD){
-                  console.log('--------2---------------------' );
                   HouseService.forgotPassword({
                     email: vm.email,
                     newPass: vm.password
@@ -168,15 +165,12 @@ angular.module('bds')
                        vm.subHead = res.data.msg;
                   });
                 } else if(vm.state == vm.ENTER_EMAIL){
-                  console.log('--------3---------------------' );
                   HouseService.checkUserExist(data).then(function(res){
                     vm.userExist = res.data.exist;
                     vm.changeState(vm.ENTER_PASSWORD,vm.userExist);
                   });
                 } else if(vm.state == vm.ENTER_PASSWORD || vm.state == vm.SENT_PASSWORD){
-                  console.log('--------4---------------------' );
                   if(vm.userExist==true){//sign in
-                    console.log('--------4--------1-------------' );
                     HouseService.login(data).then(function(res){
                       if(res.data.login==true){
                         //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
@@ -216,7 +210,6 @@ angular.module('bds')
                       }                    
                     });
                   }else{//register
-                    console.log('--------4--------2-------------' );
                     HouseService.signup(data).then(function(res){
                       $localStorage.relandToken = res.data.token;
                       $rootScope.user.userName = res.data.userName;
@@ -224,10 +217,6 @@ angular.module('bds')
                       $rootScope.user.userID = res.data.userID;
                       $rootScope.user.email = res.data.email;
                       $rootScope.user.phone = res.data.phone;
-                      console.log('--------mloginDirective---------------------' );
-                      console.log('--------10---------------------' );
-                      console.log(res.data);
-                      console.log('--------12---------------------' );
                       console.log($rootScope.user.userID);
                       //end nhannc
                       vm.class = "has-sub";

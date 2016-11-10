@@ -57,6 +57,10 @@
         var url = "/api/likeAds";
         return $http.post(url,data);
       },
+      unlikeAds: function(data){
+        var url = "/api/unlikeAds";
+        return $http.post(url,data);
+      },
       findGooglePlaceById: function(googlePlaceId){
         return $http.post("/api/findGooglePlaceById",{'googlePlaceId':googlePlaceId});
       },

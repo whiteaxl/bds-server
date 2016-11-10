@@ -100,7 +100,6 @@
 		];
 
 		vm.autoCompleteChange = function(event){
-			//console.log("------------post---autoCompleteChange--------------");
 			if(vm.autoCompleteText == ''){
 				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
 				$( "#searchAddPost").autocomplete( "search", "" );
@@ -109,7 +108,6 @@
 		}
 
 		vm.showFavorite = function(event){
-			//console.log("------------post---showFavorite--------------");
 			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
 				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
 				$( "#searchAddPost").autocomplete( "search", "" );
@@ -127,7 +125,6 @@
 
 		vm.removeNormalImg = function(img){
 			if(vm.ads.image.images){
-				console.log("-----------removeNormalImg---------: " + vm.ads.image.images.indexOf(img));
 				let removeIndex = vm.ads.image.images.indexOf(img);
 				if (removeIndex > -1) {
 					vm.ads.image.images.splice(removeIndex, 1);
@@ -140,7 +137,6 @@
 			//$('#mapsBox').modal("show");
 		}
 		$scope.chonDiaChinh = function(){
-			console.log("----------------chonDiaChinh----------------");
 			console.log($scope.listDiaChinh[0]);
 			if($scope.listDiaChinh){
 				vm.viewPort =  $scope.listDiaChinh[0].viewPort;;
@@ -157,7 +153,6 @@
 		}
 
 		vm.autocompleteGoogleSource = function (request, response) {
-			console.log("--------------autocompleteGoogleSource---------------");
 			console.log(request);
 			var options = {
 				input: request.term,
@@ -168,7 +163,6 @@
 			function callback(predictions, status) {
 				var results = [];
 				if(predictions){
-					console.log("--------------autocompleteGoogleSource-------1--------");
 					console.log(predictions);
 					for (var i = 0, prediction; prediction = predictions[i]; i++) {
 						results.push(
@@ -181,8 +175,6 @@
 						);
 					}
 				}
-				console.log("--------------autocompleteGoogleSource-------2--------");
-				console.log(results);
 				response(results);
 			}
 			var service = new google.maps.places.AutocompleteService();
@@ -191,9 +183,7 @@
 
 		vm.autocompleteSource = function (request, response) {
 			var results = [];
-			console.log("------------post---autocompleteSource--------------");
 			$http.get("/api/place/autocomplete?input=" + request.term).then(function(res){
-				console.log("------------post---autocompleteSource-----1---------");
 				var predictions = res.data.predictions;
 				console.log(predictions);
 				if(res.status == '200'){
@@ -218,7 +208,6 @@
 		}
 
 		vm.keyPress = function(event){
-			console.log("------------post---keyPress--------------");
 			vm.showFrequentSearch = false;
 			$( "#searchAddPost").autocomplete( "option", "source",vm.autocompleteGoogleSource);
 			var $ww = $(window).width();
@@ -227,7 +216,6 @@
 		}
 
 		vm.toggleQuickClearAutoComplete = function(){
-			//console.log("------------post---toggleQuickClearAutoComplete--------------");
 			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
 				$( "#searchAddPost").autocomplete( "option", "source",vm.favoriteSearchSource);
 				$( "#searchAddPost").autocomplete( "search", "" );
@@ -250,7 +238,6 @@
 		}
 
 		vm.selectPlaceCallback = function(item){
-			console.log("--------------------selectPlaceCallback-----------------");
 			console.log(item);
 			if(item.lastSearchSeparator==true){
 				return;
@@ -262,7 +249,6 @@
 				};
 				var service = new google.maps.places.PlacesService(vm.fullMapPost);
 				service.getDetails(request, function(place, status) {
-					console.log("----------------------service.getDetails---------");
 					vm.fullMapPost.fitBounds(place.geometry.viewport);
 					vm.location.lat = vm.fullMapPost.getCenter().lat();
 					vm.location.lon = vm.fullMapPost.getCenter().lng();
@@ -273,7 +259,6 @@
 		}
 
 		vm.selectPlaceCallbackBk = function(item){
-			console.log("--------------------selectPlaceCallback-----------------");
 			console.log(item);
 			if(item.lastSearchSeparator==true){
 				return;
@@ -334,11 +319,8 @@
 			}
 		}
 		vm.getLocation = function() {
-			console.log("---------------getLocation-------1-----------");
 			if (navigator.geolocation) {
-				console.log("---------------geolocation-------2-----------");
 				navigator.geolocation.getCurrentPosition(function(position){
-					console.log("---------------getCurrentPosition-------1--1---------");
 					console.log(position);
 					$rootScope.currentLocation.lat = position.coords.latitude;
 					$rootScope.currentLocation.lon = position.coords.longitude;
@@ -354,17 +336,13 @@
 					console.log(error);
 				});
 			} else {
-				console.log("---------------getLocation--------2----------");
 			}
 		}
 
 		//get place in danh muc dia chinh
 		//dung voi post-get
 		vm.getDiaChinhInDbPostGet = function(lat, lon){
-			console.log("-----------------------------MobilePost--------getDiaChinhInDb------------");
 			vm.getGeoCode(lat, lon, function(res){
-				console.log("-----------------------------MobilePost--------getDiaChinhInDb---------------callBack-------");
-				console.log(res);
 				if(res.data.results){
 					var places = res.data.results;
 					var newPlace = places[0];
@@ -397,7 +375,6 @@
 						placeType: placeType
 					}
 					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
-						console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
 						if(res){
 							vm.diaChinh = res.data.diaChinh;
 							vm.duAn = res.data.duAn;
@@ -419,8 +396,6 @@
 		}
 
 		vm.getGeoCodePostGet = function(lat, lon, callback){
-			console.log("-------------getPlace-----token-----------");
-
 			console.log($localStorage.relandToken );
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" +
@@ -435,10 +410,7 @@
 		//get place in danh muc dia chinh
 		//dung voi fetch
 		vm.getDiaChinhInDb = function(lat, lon){
-			console.log("-----------------------------MobilePost--------getDiaChinhInDb------------");
 			vm.getGeoCode(lat, lon, function(res){
-				console.log("-----------------------------MobilePost--------getDiaChinhInDb---------------callBack-------");
-				console.log(res);
 				if(res.results){
 					var places = res.results;
 					var newPlace = places[0];
@@ -471,7 +443,6 @@
 						placeType: placeType
 					}
 					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
-						console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
 						if(res){
 							vm.diaChinh = res.data.diaChinh;
 							vm.duAn = res.data.duAn;
@@ -502,7 +473,6 @@
 			return fetch(url)
 				.then(response => response.json())
 				.then(function (data) {
-					console.log("-------------getPlace---12------------");
 					console.log(data );
 					callback(data);
 				})
@@ -510,7 +480,6 @@
 		}
 
 		vm.showFullMap =function(){
-			console.log("------------showFullMap----------");
 			vm.showStreetView = false;
 			$('#mapsBoxPost').modal("show");
 		}
@@ -518,9 +487,7 @@
 		vm.initMapData = function(){
 			$('#mapsBoxPost').on('show.bs.modal', function (e) {
 				$timeout(function() {
-					console.log("---------initMapData---------");
 					if(!vm.fullMapPost){
-						console.log("------------initMapData-----1-----");
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
 						var infoWnd = new google.maps.InfoWindow({
 							content :  "<font color='#FF0000'>Vị trí lựa chọn</font>",
@@ -564,7 +531,6 @@
 
 		vm.initPost = function() {
 			//vm.getDanhMucNamXd();
-			console.log("--------------initPost--------------");
 			console.log($rootScope.user);
 			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
@@ -606,9 +572,6 @@
 			});
 		}
 		function initDataPost(){
-			console.log('--------innitData-------------------' );
-			console.log("--------------innitData------1----------");
-			console.log($rootScope.user)
 			vm.ads.image = {};
 			vm.ads.image.cover = '';
 			vm.ads.image.images = [];
@@ -747,7 +710,6 @@
 		}
 
 		vm.selectLoaiTin = function(loaiTin){
-			console.log('--------selectLoaiTin-------------------' );
 			$scope.loaiTin = loaiTin;
 			vm.ads.loaiTin = loaiTin;
 			if(vm.ads.loaiTin==0){
@@ -844,7 +806,6 @@
 		}
 
 		vm.setSoPhongNgu = function (value) {
-			console.log("-----setSoPhongNgu-----");
 			console.log(vm.ads.namXayDung);
 			vm.ads.soPhongNgu = value;
 			console.log(vm.ads.soPhongNgu);
@@ -853,7 +814,6 @@
 			}
 		}
 		vm.setSoTang = function (value) {
-			console.log("-----setSoTang-----");
 			vm.ads.soTang = value;
 			console.log(vm.ads.soTang);
 			if(vm.ads.soTang && (vm.ads.soTang != $scope.soTang)){
@@ -862,7 +822,6 @@
 		}
 
 		vm.setSoPhongTam = function (value) {
-			console.log("-----setSoPhongTam-----");
 			vm.ads.soPhongTam = value;
 			console.log(vm.ads.soPhongTam);
 			if(vm.ads.soPhongTam && (vm.ads.soPhongTam != $scope.soPhongTam)){
@@ -872,19 +831,16 @@
 
 		vm.toggleShowTenLL = function () {
 			vm.ads.lienHe.showTenLienLac = !vm.ads.lienHe.showTenLienLac;
-			console.log("------------toggleShowTenLL: " + vm.ads.lienHe.showTenLienLac);
 
 		}
 
 		vm.toggleShowPhone = function () {
 			vm.ads.lienHe.showPhone = !vm.ads.lienHe.showPhone;
-			console.log("------------toggleShowPhone: " + vm.ads.lienHe.showPhone);
 
 		}
 
 		vm.toggleShowEmail = function () {
 			vm.ads.lienHe.showEmail = !vm.ads.lienHe.showEmail;
-			console.log("------------toggleShowEmail: " + vm.ads.lienHe.showEmail);
 
 		}
 
@@ -936,7 +892,6 @@
 			if (files && files.length) {
 
 				async.forEach(files,function(myFile){
-					console.log("----async.forEach--------------: ");
 					var fileName = myFile.name;
 					console.log(fileName);
 					fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);

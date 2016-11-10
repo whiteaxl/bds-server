@@ -12,73 +12,17 @@
         <div class="tab-content uln">
             <div role="tabpanel" class="tab-pane active" id="managerSaved">
                 <ul class="reland-list full">
-                    <li ng-repeat="ads in mamc.adsLikes track by $index">
-                        <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
-                        <a href="detail-qly.html">
+                    <li ng-repeat="ads in mamc.adsLikes track by $index" ng-click="mamc.goDetail(ads)">
+                        <a class="heart"><i class="icon-heart active" ng-click="mamc.unlikeAds(ads)"></i></a>
+                        <a >
                             <span class="img" style="background-image:url({{ads.image.cover}})"></span>
 								<span class="des bgOpa">
-									<span class="price">10,5 Ty</span>
-									<span class="name">KDT Xa La</span>
+									<span class="price">{{ads.giaFmt}}</span>
+									<span class="name">{{ ads.diaChi | limitTo: 25 }}</span>
 									<span class="split text-center">.</span>
-									<span>5pn</span>
-									<span class="split"></span>
-									<span>4pt</span>
-								</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
-                        <a href="detail-qly.html">
-                            <span class="img" style="background-image:url(images/big.jpg)"></span>
-								<span class="des bgOpa">
-									<span class="price">10,5 Ty</span>
-									<span class="name">KDT Xa La</span>
-									<span class="split text-center">.</span>
-									<span>5pn</span>
-									<span class="split"></span>
-									<span>4pt</span>
-								</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
-                        <a href="detail-qly.html">
-                            <span class="img" style="background-image:url(images/big.jpg)"></span>
-								<span class="des bgOpa">
-									<span class="price">10,5 Ty</span>
-									<span class="name">KDT Xa La</span>
-									<span class="split text-center">.</span>
-									<span>5pn</span>
-									<span class="split"></span>
-									<span>4pt</span>
-								</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
-                        <a href="detail-qly.html">
-                            <span class="img" style="background-image:url(images/big.jpg)"></span>
-								<span class="des bgOpa">
-									<span class="price">10,5 Ty</span>
-									<span class="name">KDT Xa La</span>
-									<span class="split text-center">.</span>
-									<span>5pn</span>
-									<span class="split"></span>
-									<span>4pt</span>
-								</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="detail-qly.html" class="heart"><i class="icon-heart active"></i></a>
-                        <a href="detail-qly.html">
-                            <span class="img" style="background-image:url(images/big.jpg)"></span>
-								<span class="des bgOpa">
-									<span class="price">10,5 Ty</span>
-									<span class="name">KDT Xa La</span>
-									<span class="split text-center">.</span>
-									<span>5pn</span>
-									<span class="split"></span>
-									<span>4pt</span>
+									<span>{{ads.soPhongNguFmt}}</span>
+									<span class="{{ads.soTangFmt? 'split':''}}"></span>
+									<span>{{ads.soTangFmt? ads.soTangFmt:''}}</span>
 								</span>
                         </a>
                     </li>
