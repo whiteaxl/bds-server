@@ -110,7 +110,7 @@ var parseEmail = function(encEmail) {
 		}
 	}
 
-	return '';
+	return '';	
 };
 
 

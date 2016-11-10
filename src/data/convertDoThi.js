@@ -5,6 +5,8 @@ var commonService = new CommonService;
 
 var logUtil = require("../lib/logUtil");
 
+var geoHandlers = require("./geoHandlers");
+
 var DBCache = require("../lib/DBCache");
 var _ = require("lodash");
 
@@ -100,6 +102,15 @@ function convertBds(bds) {
   ads.maSo = "02_" + bds.maSo; //01 => from bds.com
   ads.id = "Ads_" + ads.maSo;
 
+  ads.url = bds.url;
+
+  //check geo vs place
+  let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
+  ads.GEOvsDC = checkGeo.inVP;
+  ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
+  ads.DC_radius = checkGeo.DC_radius;
+  ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
+
   return ads;
 }
 
@@ -113,7 +124,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null " + condition;
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null  " + condition;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);

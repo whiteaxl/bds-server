@@ -224,6 +224,7 @@ function _saveData(adsDto) {
     phone: adsDto.cust_phone || adsDto.cust_mobile
   };
   adsObj.ngayDangTin = adsDto.ngayDangTin;
+	adsObj.ngayHetHan = adsDto.ngayHetHan;
   adsObj.gia = adsDto.gia;
   adsObj.price_raw = adsDto.price_raw;
   adsObj.dienTich = adsDto.dienTich;
@@ -402,6 +403,7 @@ class RealEstateExtractor {
 				}
 
         ads.ngayDangTin = ads.ngayDangTin && util.convertFormatDate(ads.ngayDangTin);
+				ads.ngayHetHan = ads.ngayHetHan && util.convertFormatDate(ads.ngayHetHan);
 
 				_saveData(ads);
 			})

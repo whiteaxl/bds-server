@@ -105,6 +105,7 @@ function convertBds(bds) {
   ads.GEOvsDC = checkGeo.inVP;
   ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
   ads.DC_radius = checkGeo.DC_radius;
+  ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
 
   return ads;
 }
