@@ -310,10 +310,10 @@ var cache = {
         return -1 * sign;
       }
 
-      if (a.timeModified > b.timeModified) {
+      if (a.timeExtracted > b.timeExtracted) {
         return sign;
       }
-      if (a.timeModified < b.timeModified) {
+      if (a.timeExtracted < b.timeExtracted) {
         return -1 * sign;
       }
 
