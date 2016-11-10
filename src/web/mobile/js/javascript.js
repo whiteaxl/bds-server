@@ -601,7 +601,7 @@ $(function(){
     function drawDoughnutText(animationDecimal, segmentTotal) {
       $summaryNumber
         .css({opacity: animationDecimal})
-        .text((segmentTotal * animationDecimal).toFixed(0)+"k");
+        .text((segmentTotal * animationDecimal).toFixed(2)+"triệu");
     }
     function animateFrame(cnt, drawData) {
       var easeAdjustedAnimationPercent =(settings.animation)? CapValue(easingFunction(cnt), null, 0) : 1;

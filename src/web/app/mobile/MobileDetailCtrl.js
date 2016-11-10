@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileDetailCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, RewayCommonUtil, NewsService, NgMap, $window,$timeout,$location){
 		var vm = this;
 		vm.adsID = $state.params.adsID;
 		vm.marker = {
@@ -282,9 +282,17 @@
         	});
 
         	$timeout(function() {
+        		let price = vm.ads.gia; /* don vi trieu*/
+			    let percentOfPrice = 0.7; / duoc vay 70% /
+			    let numOfMonth = 12*15; / vay 15 nam /
+			    let interestRatePerYear = 0.12; / lai suat nam /
+			    vm.patc = RewayCommonUtil.getPaymentPerMonth(price*percentOfPrice, numOfMonth, interestRatePerYear);
+			    vm.patc.payment = Math.round(vm.patc.payment*100)/100;
+			    vm.patc.interest = Math.round(vm.patc.interest*100)/100;
+
 				$("#phgantaichinh").drawDoughnutChart([
-					{ title: "Gốc", value : 400,  color: "#20c063"},
-					{ title: "Lãi", value:  100,   color: "#f0a401"}
+					{ title: "Gốc", value : vm.patc.payment,  color: "#20c063"},
+					{ title: "Lãi", value:  vm.patc.interest,   color: "#f0a401"}
 			  	]);
 			  	$('.fancybox').fancybox({
                     openEffect  : 'none',

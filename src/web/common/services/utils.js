@@ -166,6 +166,17 @@
                 .appendTo( ul );
         };
     },
+    getPaymentPerMonth: function(totalPrincipal, numOfMonth, interestRatePerYear){
+      let pricipalPerMonth = totalPrincipal/numOfMonth;
+      let totalInterest = interestRatePerYear * totalPrincipal;
+      let interestPerMonth = totalInterest/12;
+
+      return {
+        payment: pricipalPerMonth,
+        interest: interestPerMonth,
+        sumOfPayment: pricipalPerMonth + interestPerMonth
+      }
+    }
 
   };
 });

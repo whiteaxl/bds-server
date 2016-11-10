@@ -522,6 +522,7 @@ class UserModel {
     if (data.email) {
       sql = `${sql} AND email='${data.email}'`
     }
+
     var query = N1qlQuery.fromString(sql);
 
     bucket.query(query, function (err, res) {
@@ -535,7 +536,7 @@ class UserModel {
     });
   }
 
-  createUserForWeb(reply, data, callback){
+  createUserForWeb(reply, data, callback){    
     this.isUserExist(data, function(isExist){
       if(isExist==true){
         reply({
@@ -545,6 +546,7 @@ class UserModel {
       }else{
         bucket.counter(constant.DB_SEQ.User, 1, {initial: 0}, (err, res)=> {
           if (err) {
+            console.log("ccc" + err);
             callback(err, res);
           } else {
             console.log(res);

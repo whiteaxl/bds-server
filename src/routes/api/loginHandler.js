@@ -100,10 +100,12 @@ internals.signup = function(req, reply){
         type: 'Device'
     }
 
+
     req.payload.deviceID = undefined;
     req.payload.deviceModel = undefined;
 
 	userService.createUserForWeb(reply, req.payload, function(err, user){
+        
 		if(err!=null){
 			reply(err);
 		}else{
@@ -120,7 +122,7 @@ internals.signup = function(req, reply){
                     }
                  });
             }
-            
+            console.log("bbbbbb");
 			var token = JWT.sign({
 				uid: user.userID,
 	          	exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
@@ -128,6 +130,7 @@ internals.signup = function(req, reply){
 	          	userID: user.userID
         	}, JWT_SECRET);
         	//console.log("token" + token);
+            console.log("ccccc");
         	var result = {};
         	result.login = true;
         	result.token = token;
@@ -135,7 +138,9 @@ internals.signup = function(req, reply){
         	result.userID = user.id;
             result.email = user.email;
             //result.phone = user.phone;
+            console.log("dddddd");
             chatHandler.addUser(user);
+            console.log("eeeee");
         	reply(result);
 		}
 	})
