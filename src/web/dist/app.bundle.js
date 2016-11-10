@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4c41126716225e0997e5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ff668bf95511eb181f01"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28674,22 +28674,22 @@
 					if (vm.loaiGia.value == 0) {
 						vm.ads.gia = -1;
 						vm.ads.giaM2 = -1;
-					} else if (loaiGia.value == 1) {
+					} else if (vm.loaiGia.value == 1) {
 						vm.ads.gia = vm.gia;
 						var giaM2 = vm.ads.gia / vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-					} else if (loaiGia.value == 2) {
+					} else if (vm.loaiGia.value == 2) {
 						vm.ads.gia = vm.gia * 1000;
 						var giaM2 = vm.ads.gia / vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-					} else if (loaiGia.value == 3) {
+					} else if (vm.loaiGia.value == 3) {
 						vm.ads.giaM2 = vm.gia / 10;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia = parseFloat(gia);
 						vm.ads.gia = Math.round(gia * 100) / 100;
-					} else if (loaiGia.value == 4) {
+					} else if (vm.loaiGia.value == 4) {
 						vm.ads.giaM2 = vm.gia;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia = parseFloat(gia);
@@ -28712,11 +28712,17 @@
 			vm.selectLoaiTin = function (loaiTin) {
 				console.log("--------------selectLoaiTin----------------");
 				$scope.loaiTin = loaiTin;
-				vm.ads.loaiTin = loaiTin;
-				if (vm.ads.loaiTin == 0) {
+				if (loaiTin == 0) {
 					vm.loaiNhaDat = vm.loaiNhaDatBan;
 				} else {
 					vm.loaiNhaDat = vm.loaiNhaDatThue;
+				}
+
+				if (vm.ads.loaiTin != loaiTin) {
+					vm.ads.loaiTin = loaiTin;
+					vm.ads.loaiNhaDat = 0;
+					$scope.loaiNhaDat = null;
+					$("#loaiNhaLbl").text("Bất kỳ");
 				}
 			};
 
@@ -28757,22 +28763,22 @@
 					$("#giaTienPost").prop("readonly", false);
 					if (vm.gia && vm.gia > 0) {
 						$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
-						if (loaiGia.value == 1) {
+						if (vm.loaiGia.value == 1) {
 							vm.ads.gia = vm.gia;
 							var giaM2 = vm.ads.gia / vm.ads.dienTich;
 							giaM2 = parseFloat(giaM2);
 							vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-						} else if (loaiGia.value == 2) {
+						} else if (vm.loaiGia.value == 2) {
 							vm.ads.gia = vm.gia * 1000;
 							var giaM2 = vm.ads.gia / vm.ads.dienTich;
 							giaM2 = parseFloat(giaM2);
 							vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-						} else if (loaiGia.value == 3) {
+						} else if (vm.loaiGia.value == 3) {
 							vm.ads.giaM2 = vm.gia / 10;
 							var gia = vm.ads.giaM2 * vm.ads.dienTich;
 							gia = parseFloat(gia);
 							vm.ads.gia = Math.round(gia * 100) / 100;
-						} else if (loaiGia.value == 4) {
+						} else if (vm.loaiGia.value == 4) {
 							vm.ads.giaM2 = vm.gia;
 							var gia = vm.ads.giaM2 * vm.ads.dienTich;
 							gia = parseFloat(gia);
@@ -28789,22 +28795,22 @@
 					$("#lblGiaPost").text(vm.loaiGia.lable);
 				} else {
 					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
-					if (loaiGia.value == 1) {
+					if (vm.loaiGia.value == 1) {
 						vm.ads.gia = vm.gia;
 						var giaM2 = vm.ads.gia / vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-					} else if (loaiGia.value == 2) {
+					} else if (vm.loaiGia.value == 2) {
 						vm.ads.gia = vm.gia * 1000;
 						var giaM2 = vm.ads.gia / vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100) / 100;
-					} else if (loaiGia.value == 3) {
+					} else if (vm.loaiGia.value == 3) {
 						vm.ads.giaM2 = vm.gia / 10;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia = parseFloat(gia);
 						vm.ads.gia = Math.round(gia * 100) / 100;
-					} else if (loaiGia.value == 4) {
+					} else if (vm.loaiGia.value == 4) {
 						vm.ads.giaM2 = vm.gia;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia = parseFloat(gia);
@@ -29025,6 +29031,17 @@
 				}
 			};
 
+			vm.scrollElement = function () {
+				console.log("-------------scrollElement--121-----");
+				$('#banId').click(function (e) {
+					$('html, body').animate({
+						scrollTop: $('#managerBuy').offset().top - 1
+					}, 'slow');
+				});
+
+				console.log("-------------scrollElement--1-----");
+			};
+
 			vm.unlikeAds = function (ads) {
 				console.log("------------unlikeAds---------------");
 				if ($rootScope.user && $rootScope.user.userID) {
@@ -29045,6 +29062,25 @@
 
 			$timeout(function () {
 				vm.init();
+				console.log("-------------scrollElement-------");
+				$('#managerBuy').scrollTop(0);
+				//$('html,body').animate({scrollTop: $('#tabContentUln').offset().top}, 0);
+				$('html,body').animate({ scrollTop: $('#managerBuy').offset().top }, 0);
+				$('html,body').animate({ scrollTop: $('#managerSale').offset().top }, 0);
+				$('html,body').animate({ scrollTop: $('#managerSaved').offset().top }, 0);
+
+				$('#managerBuy').on('click', function () {
+					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
+				});
+				$('#managerSale').on('click', function () {
+					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
+				});
+				$('#managerSaved').on('click', function () {
+					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
+				});
+
+				window.scrollTo(50, 0);
+				console.log("-------------scrollElement--1-----");
 			}, 300);
 		});
 	})();

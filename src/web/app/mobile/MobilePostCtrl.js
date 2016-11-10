@@ -671,22 +671,22 @@
 				if(vm.loaiGia.value==0){
 					vm.ads.gia = -1;
 					vm.ads.giaM2 = -1;
-				} else if(loaiGia.value == 1){
+				} else if(vm.loaiGia.value == 1){
 					vm.ads.gia = vm.gia;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
 					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-				} else if(loaiGia.value == 2){
+				} else if(vm.loaiGia.value == 2){
 					vm.ads.gia = vm.gia * 1000;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
 					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-				} else if(loaiGia.value == 3){
+				} else if(vm.loaiGia.value == 3){
 					vm.ads.giaM2 = vm.gia/10;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
 					vm.ads.gia = Math.round(gia * 100)/100;
-				} else if(loaiGia.value == 4){
+				} else if(vm.loaiGia.value == 4){
 					vm.ads.giaM2 = vm.gia;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
@@ -710,11 +710,17 @@
 		vm.selectLoaiTin = function(loaiTin){
 			console.log("--------------selectLoaiTin----------------");
 			$scope.loaiTin = loaiTin;
-			vm.ads.loaiTin = loaiTin;
-			if(vm.ads.loaiTin==0){
+			if(loaiTin==0){
 				vm.loaiNhaDat = vm.loaiNhaDatBan;
 			}else{
 				vm.loaiNhaDat = vm.loaiNhaDatThue;
+			}
+
+			if(vm.ads.loaiTin != loaiTin){
+				vm.ads.loaiTin = loaiTin;
+				vm.ads.loaiNhaDat = 0;
+				$scope.loaiNhaDat = null;
+				$("#loaiNhaLbl").text("Bất kỳ");
 			}
 		}
 
@@ -756,22 +762,22 @@
 				$("#giaTienPost").prop("readonly", false);
 				if(vm.gia && vm.gia > 0){
 					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
-					if(loaiGia.value == 1){
+					if(vm.loaiGia.value == 1){
 						vm.ads.gia = vm.gia;
 						var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-					} else if(loaiGia.value == 2){
+					} else if(vm.loaiGia.value == 2){
 						vm.ads.gia = vm.gia * 1000;
 						var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
 						vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-					} else if(loaiGia.value == 3){
+					} else if(vm.loaiGia.value == 3){
 						vm.ads.giaM2 = vm.gia/10;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia =  parseFloat(gia);
 						vm.ads.gia = Math.round(gia * 100)/100;
-					} else if(loaiGia.value == 4){
+					} else if(vm.loaiGia.value == 4){
 						vm.ads.giaM2 = vm.gia;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia =  parseFloat(gia);
@@ -788,22 +794,22 @@
 				$("#lblGiaPost").text(vm.loaiGia.lable);
 			} else {
 				$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
-				if(loaiGia.value == 1){
+				if(vm.loaiGia.value == 1){
 					vm.ads.gia = vm.gia;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
 					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-				} else if(loaiGia.value == 2){
+				} else if(vm.loaiGia.value == 2){
 					vm.ads.gia = vm.gia * 1000;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
 					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
-				} else if(loaiGia.value == 3){
+				} else if(vm.loaiGia.value == 3){
 					vm.ads.giaM2 = vm.gia/10;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
 					vm.ads.gia = Math.round(gia * 100)/100;
-				} else if(loaiGia.value == 4){
+				} else if(vm.loaiGia.value == 4){
 					vm.ads.giaM2 = vm.gia;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
