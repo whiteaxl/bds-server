@@ -117,7 +117,11 @@
       },
       getAdsLikes: function(data){
         return $http.post("/api/user/getAdsLikes",data);
+      },
+      getMyAds: function(data){
+        return $http.post("/api/user/getMyAds",data);
       }
+
     };
   });
 })();

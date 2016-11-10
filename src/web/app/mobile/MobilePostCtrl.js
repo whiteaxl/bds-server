@@ -6,6 +6,7 @@
 		var vm = this;
 
 		vm.ads = {};
+		vm.ads.loaiTin = 0;
 		vm.marker = {
 			id: 1,
 			coords: {
@@ -538,11 +539,8 @@
 			});
 
 			vm.initMapData();
+			vm.selectLoaiTin($scope.loaiTin);
 			vm.getLocation();
-
-
-			vm.loaiNhaDatBan = vm.loaiNhaDatBan.splice(0,1);
-			vm.loaiNhaDatThue = vm.loaiNhaDatThue.splice(0,1);
 
 			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
@@ -575,7 +573,7 @@
 			vm.ads.image = {};
 			vm.ads.image.cover = '';
 			vm.ads.image.images = [];
-			vm.ads.loaiTin = 0;
+
 			vm.ads.place={
 				diaChi: '',
 				diaChinh: {
@@ -710,6 +708,7 @@
 		}
 
 		vm.selectLoaiTin = function(loaiTin){
+			console.log("--------------selectLoaiTin----------------");
 			$scope.loaiTin = loaiTin;
 			vm.ads.loaiTin = loaiTin;
 			if(vm.ads.loaiTin==0){
@@ -717,14 +716,29 @@
 			}else{
 				vm.loaiNhaDat = vm.loaiNhaDatThue;
 			}
-			$("#loaiNhaLbl").text("");
 		}
-		vm.selectLoaiTin($scope.loaiTin);
 
 		vm.selectLoaiNhaDat = function(lnd){
 			vm.ads.loaiNhaDat = [lnd.value];
-			$("#loaiNhaLbl").text(lnd.lable);
+			if(vm.ads.loaiTin==0){
+				if(vm.ads.loaiNhaDat == 0){
+					$scope.loaiNhaDat = null;
+				} else{
+					$scope.loaiNhaDat = vm.ads.loaiNhaDat;
+				}
+				$("#loaiNhaLbl").text(lnd.lable);
+			} else{
+				if(vm.ads.loaiNhaDat == 0){
+					$scope.loaiNhaDat = null;
+				} else{
+					$scope.loaiNhaDat = vm.ads.loaiNhaDat;
+				}
+				$("#loaiNhaLbl").text(lnd.lable);
+			}
+
 		}
+
+		vm.selectLoaiNhaDat(vm.loaiNhaDatBan[0]);
 
 		vm.selectHuongNha = function(hn){
 			vm.ads.huongNha = [hn.value];

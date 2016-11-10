@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d8b6aee18ce0775ceae1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4c41126716225e0997e5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20551,7 +20551,11 @@
 	      },
 	      getAdsLikes: function getAdsLikes(data) {
 	        return $http.post("/api/user/getAdsLikes", data);
+	      },
+	      getMyAds: function getMyAds(data) {
+	        return $http.post("/api/user/getMyAds", data);
 	      }
+
 	    };
 	  });
 	})();
@@ -28069,6 +28073,7 @@
 			var vm = this;
 
 			vm.ads = {};
+			vm.ads.loaiTin = 0;
 			vm.marker = {
 				id: 1,
 				coords: {
@@ -28546,10 +28551,8 @@
 				});
 
 				vm.initMapData();
+				vm.selectLoaiTin($scope.loaiTin);
 				vm.getLocation();
-
-				vm.loaiNhaDatBan = vm.loaiNhaDatBan.splice(0, 1);
-				vm.loaiNhaDatThue = vm.loaiNhaDatThue.splice(0, 1);
 
 				RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchAddPost");
 				$(".btn-more .collapse-title").click(function () {
@@ -28580,7 +28583,7 @@
 				vm.ads.image = {};
 				vm.ads.image.cover = '';
 				vm.ads.image.images = [];
-				vm.ads.loaiTin = 0;
+
 				vm.ads.place = {
 					diaChi: '',
 					diaChinh: {
@@ -28707,6 +28710,7 @@
 			};
 
 			vm.selectLoaiTin = function (loaiTin) {
+				console.log("--------------selectLoaiTin----------------");
 				$scope.loaiTin = loaiTin;
 				vm.ads.loaiTin = loaiTin;
 				if (vm.ads.loaiTin == 0) {
@@ -28714,14 +28718,28 @@
 				} else {
 					vm.loaiNhaDat = vm.loaiNhaDatThue;
 				}
-				$("#loaiNhaLbl").text("");
 			};
-			vm.selectLoaiTin($scope.loaiTin);
 
 			vm.selectLoaiNhaDat = function (lnd) {
 				vm.ads.loaiNhaDat = [lnd.value];
-				$("#loaiNhaLbl").text(lnd.lable);
+				if (vm.ads.loaiTin == 0) {
+					if (vm.ads.loaiNhaDat == 0) {
+						$scope.loaiNhaDat = null;
+					} else {
+						$scope.loaiNhaDat = vm.ads.loaiNhaDat;
+					}
+					$("#loaiNhaLbl").text(lnd.lable);
+				} else {
+					if (vm.ads.loaiNhaDat == 0) {
+						$scope.loaiNhaDat = null;
+					} else {
+						$scope.loaiNhaDat = vm.ads.loaiNhaDat;
+					}
+					$("#loaiNhaLbl").text(lnd.lable);
+				}
 			};
+
+			vm.selectLoaiNhaDat(vm.loaiNhaDatBan[0]);
 
 			vm.selectHuongNha = function (hn) {
 				vm.ads.huongNha = [hn.value];
@@ -28964,6 +28982,8 @@
 			var vm = this;
 
 			vm.adsLikes = [];
+			vm.adsSales = [];
+			vm.adsRents = [];
 
 			vm.goDetail = function (ads) {
 				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
@@ -28985,18 +29005,30 @@
 				}
 			};
 
-			vm.unlikeAds = function (ads) {
-				console.log("------------unlikeAds---------------");
-				$timeout(function () {
-					vm.abc(ads);
-				}, 300);
+			vm.initAdsSaleRents = function () {
+				if ($rootScope.user && $rootScope.user.userID) {
+					HouseService.getMyAds({ userID: $rootScope.user.userID }).then(function (res) {
+						console.log("------------initAdsSaleRent---------------");
+						console.log(res);
+						if (res.status == 200) {
+							if (res.data.data) {
+								for (var i = 0; i < res.data.data.length; i++) {
+									if (res.data.data[i].loaiTin == 0) {
+										vm.adsSales.push(res.data.data[i]);
+									} else if (res.data.data[i].loaiTin == 1) {
+										vm.adsRents.push(res.data.data[i]);
+									}
+								}
+							}
+						}
+					});
+				}
 			};
 
-			vm.abc = function (ads) {
+			vm.unlikeAds = function (ads) {
+				console.log("------------unlikeAds---------------");
 				if ($rootScope.user && $rootScope.user.userID) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: ads.adsID }).then(function (res) {
-						console.log("------------abc---------------");
-						console.log(res);
 						if (res.status == 200) {
 							var index = vm.adsLikes.indexOf(ads);
 							vm.adsLikes.splice(index, 1);
@@ -29008,6 +29040,7 @@
 
 			vm.init = function () {
 				vm.initAdsLikesData();
+				vm.initAdsSaleRents();
 			};
 
 			$timeout(function () {

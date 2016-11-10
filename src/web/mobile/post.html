@@ -27,8 +27,8 @@
                 <div role="tabpanel" class="tab-pane active" id="postbuy">
                     <div class="title">Đặc điểm</div>
                     <div class="type-box collapse-box">
-                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBoxPost">Loại nhà <span><label id="loaiNhaLbl"></label> <i class="iconRightOpen"></i></span></a>
-                        <input type="hidden" ng-model="mpc.ads.loaiNhaDat" name="loaiNha" required>
+                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBoxPost">Loại nhà<span><label id="loaiNhaLbl"></label> <i class="iconRightOpen"></i></span></a>
+                        <input type="hidden" ng-model="loaiNhaDat" name="loaiNha" required>
                         <div ng-show="postForm.$submitted">
                             <span style="color:red" ng-show="postForm.loaiNha.$error.required">(Chưa chọn loại nhà)</span>
                         </div>
