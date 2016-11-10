@@ -49,7 +49,7 @@
 				})
 			}
 		}
-
+/*
 		vm.scrollElement = function(){
 			console.log("-------------scrollElement--121-----");
 			$('#banId').click(function (e) {
@@ -61,7 +61,7 @@
 			console.log("-------------scrollElement--1-----");
 
 		}
-
+*/
 		vm.unlikeAds = function(ads){
 			console.log("------------unlikeAds---------------");
 			if($rootScope.user && $rootScope.user.userID){
@@ -82,26 +82,6 @@
 
 		$timeout(function() {
 			vm.init();
-			console.log("-------------scrollElement-------");
-			$('#managerBuy').scrollTop(0);
-			//$('html,body').animate({scrollTop: $('#tabContentUln').offset().top}, 0);
-			$('html,body').animate({scrollTop: $('#managerBuy').offset().top}, 0);
-			$('html,body').animate({scrollTop: $('#managerSale').offset().top}, 0);
-			$('html,body').animate({scrollTop: $('#managerSaved').offset().top}, 0);
-
-
-			$('#managerBuy').on('click', function(){
-				$('html,body').animate({scrollTop: $(this).offset().top}, 800);
-			});
-			$('#managerSale').on('click', function(){
-				$('html,body').animate({scrollTop: $(this).offset().top}, 800);
-			});
-			$('#managerSaved').on('click', function(){
-				$('html,body').animate({scrollTop: $(this).offset().top}, 800);
-			});
-
-			window.scrollTo(50, 0);
-			console.log("-------------scrollElement--1-----");
 		},300);
 	});
 })();

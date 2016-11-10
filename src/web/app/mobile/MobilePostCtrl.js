@@ -668,6 +668,15 @@
 					}
 				}
 
+				vm.ads.duongTruocNha = parseFloat(vm.ads.duongTruocNha);
+				vm.ads.matTien = parseFloat(vm.ads.matTien);
+				vm.ads.huongNha = parseFloat(vm.ads.huongNha);
+
+				if(vm.gia)
+					vm.gia = parseFloat(vm.gia);
+				if(vm.ads.dienTich)
+					vm.ads.dienTich = parseFloat(vm.ads.dienTich);
+
 				if(vm.loaiGia.value==0){
 					vm.ads.gia = -1;
 					vm.ads.giaM2 = -1;
@@ -693,7 +702,12 @@
 					vm.ads.gia = Math.round(gia * 100)/100;
 				}
 
-				var adsDto = JSON.stringify(vm.ads)
+				var adsDto = JSON.stringify(vm.ads);
+				console.log("------------------------dangtin----------1------");
+
+				console.log(vm.ads);
+				console.log("------------------------dangtin----------2------");
+				console.log(vm.ads);
 
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
@@ -725,7 +739,7 @@
 		}
 
 		vm.selectLoaiNhaDat = function(lnd){
-			vm.ads.loaiNhaDat = [lnd.value];
+			vm.ads.loaiNhaDat = parseFloat(lnd.value);
 			if(vm.ads.loaiTin==0){
 				if(vm.ads.loaiNhaDat == 0){
 					$scope.loaiNhaDat = null;
@@ -747,7 +761,7 @@
 		vm.selectLoaiNhaDat(vm.loaiNhaDatBan[0]);
 
 		vm.selectHuongNha = function(hn){
-			vm.ads.huongNha = [hn.value];
+			vm.ads.huongNha = hn.value;
 			$("#huongNhaLbl").text(hn.lable);
 		}
 
@@ -761,6 +775,7 @@
 			}else{
 				$("#giaTienPost").prop("readonly", false);
 				if(vm.gia && vm.gia > 0){
+					vm.gia = parseFloat(vm.gia);
 					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
 					if(vm.loaiGia.value == 1){
 						vm.ads.gia = vm.gia;
@@ -794,6 +809,7 @@
 				$("#lblGiaPost").text(vm.loaiGia.lable);
 			} else {
 				$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+				vm.gia = parseFloat(vm.gia);
 				if(vm.loaiGia.value == 1){
 					vm.ads.gia = vm.gia;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
