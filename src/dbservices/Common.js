@@ -1,6 +1,9 @@
 'use strict';
 
 var bucket = require("../database/mydb");
+
+bucket.n1qlTimeout = 10 * 60 * 1000;
+
 var N1qlQuery = require('couchbase').N1qlQuery;
 var logUtil = require("../lib/logUtil");
 
