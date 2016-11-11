@@ -43,29 +43,8 @@
                     <div class="room-box collapse-box collapse-cus group-cus ovh">
                         <a class="collapse-title">Số phòng ngủ</a>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn active" ng-click="mpc.setSoPhongNgu(0)">
-                                <input type="radio" name="options" id="room0" autocomplete="off" checked>0
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(1)">
-                                <input type="radio" name="options" id="room1" autocomplete="off">1
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(2)">
-                                <input type="radio" name="options" id="room2" autocomplete="off">2
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(3)">
-                                <input type="radio" name="options" id="room3" autocomplete="off">3
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(4)">
-                                <input type="radio" name="options" id="room4" autocomplete="off">4
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(5)">
-                                <input type="radio" name="options" id="room5" autocomplete="off">5
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(6)">
-                                <input type="radio" name="options" id="room6" autocomplete="off">6
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongNgu(7)">
-                                <input type="radio" name="options" id="room7" autocomplete="off">7
+                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soPhongNgu==i? 'btn active':'btn'}}" ng-click="mpc.setSoPhongNgu(i)">
+                                <input type="radio" name="options" id="{{'room' + i}}" autocomplete="off" checked>{{i}}
                             </label>
                             <label class="btn other">
                                 <input type="radio" name="options" id="room8" autocomplete="off"><input ng-model="soPhongNgu" type="text" ng-change="mpc.setSoPhongNgu(soPhongNgu)" pattern="\d*" placeholder="Khác" />
@@ -75,29 +54,8 @@
                     <div class="bathroom-box collapse-box collapse-cus group-cus ovh">
                         <a class="collapse-title">Số phòng tắm</a>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn active" ng-click="mpc.setSoPhongTam(0)">
-                                <input type="radio" name="options" id="bathroom0" autocomplete="off" checked>0
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(1)">
-                                <input type="radio" name="options" id="bathroom1" autocomplete="off">1
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(2)">
-                                <input type="radio" name="options" id="bathroom2" autocomplete="off">2
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(3)">
-                                <input type="radio" name="options" id="bathroom3" autocomplete="off">3
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(4)">
-                                <input type="radio" name="options" id="bathroom4" autocomplete="off">4
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(5)">
-                                <input type="radio" name="options" id="bathroom5" autocomplete="off">5
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(6)">
-                                <input type="radio" name="options" id="bathroom6" autocomplete="off">6
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoPhongTam(7)">
-                                <input type="radio" name="options" id="bathroom7" autocomplete="off">7
+                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soPhongTam==i? 'btn active':'btn'}}"  ng-click="mpc.setSoPhongTam(0)">
+                                <input type="radio" name="options" id="{{'bathroom' + i}}" autocomplete="off" checked>{{i}}
                             </label>
                             <label class="btn" >
                                 <input type="radio" name="options" id="bathroom8" autocomplete="off"><input type="text" ng-model="soPhongTam" ng-change="mpc.setSoPhongTam(soPhongTam)" pattern="\d*" placeholder="Khác" />
@@ -107,29 +65,8 @@
                     <div class="step-box collapse-box collapse-cus group-cus ovh border-none">
                         <a class="collapse-title">Số tầng</a>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn active" ng-click="mpc.setSoTang(0)">
-                                <input type="radio" name="options" id="step0" autocomplete="off" checked>0
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(1)">
-                                <input type="radio" name="options" id="step1" autocomplete="off">1
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(2)">
-                                <input type="radio" name="options" id="step2" autocomplete="off">2
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(3)">
-                                <input type="radio" name="options" id="step3" autocomplete="off">3
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(4)">
-                                <input type="radio" name="options" id="step4" autocomplete="off">4
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(5)">
-                                <input type="radio" name="options" id="step5" autocomplete="off">5
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(6)">
-                                <input type="radio" name="options" id="step6" autocomplete="off">6
-                            </label>
-                            <label class="btn" ng-click="mpc.setSoTang(7)">
-                                <input type="radio" name="options" id="step7" autocomplete="off">7
+                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soTang==i? 'btn active':'btn'}}"  ng-click="mpc.setSoTang(0)">
+                                <input type="radio" name="options" id="{{'step' + i}}" autocomplete="off" checked>{{i}}
                             </label>
                             <label class="btn">
                                 <input type="radio" name="options" id="step8" autocomplete="off"><input type="text" ng-model="soTang" ng-change="mpc.setSoTang(soTang)" pattern="\d*" placeholder="Khác" />

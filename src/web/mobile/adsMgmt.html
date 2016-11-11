@@ -30,8 +30,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="managerSale">
                 <ul class="reland-list full">
-                    <li ng-repeat="ads in mamc.adsSales track by $index" ng-click="mamc.goDetail(ads)">
-                        <a><span class="img" style="background-image:url({{ads.image.cover}})"></span></a>
+                    <li ng-repeat="ads in mamc.adsSales track by $index">
+                        <a href="#"  ng-click="mamc.goDetail(ads)" ><span class="img" style="background-image:url({{ads.image.cover}})"></span></a>
                         <span class="des bgOpa">
                             <span class="price">{{ads.giaFmt}}</span>
                             <span class="name">{{ ads.diaChi | limitTo: 25 }}{{ads.diaChi > 25 ? '...' : ''}}</span>
@@ -40,9 +40,10 @@
                             <span>{{ads.soTangFmt? ads.soTangFmt:''}}</span>
                         </span>
                         <span class="action">
-                            <span class="status danger">Tin hết hạn</span>
-                            <a href="nang-cap-tin.html" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
-                            <span class="lined"><small>Vị trí cao cấp:</small> 7 ngày</span>
+                            <span class="status danger">Tin đã duyệt</span>
+                            <a href="#" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
+                            <span class="lined"><a href="#" ng-click="mamc.updateAds(ads)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Sửa tin</a></span>
+                            <span class="lined"><a href="#" ng-click="mamc.deleteAds(ads,0)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Xóa tin</a></span>
                         </span>
                     </li>
                 </ul>
@@ -59,9 +60,10 @@
                             <span>{{ads.soTangFmt? ads.soTangFmt:''}}</span>
                         </span>
                         <span class="action">
-                            <span class="status danger">Tin hết hạn</span>
+                            <span class="status danger">Tin đã duyệt</span>
                             <a href="nang-cap-tin.html" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
-                            <span class="lined"><small>Vị trí cao cấp:</small> 7 ngày</span>
+                            <span class="lined"><a href="#" ng-click="mamc.updateAds(ads)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Sửa tin</a></span>
+                            <span class="lined"><a href="#" ng-click="mamc.deleteAds(ads,0)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Xóa tin</a></span>
                         </span>
                     </li>
                 </ul>

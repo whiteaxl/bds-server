@@ -10,7 +10,29 @@
 		vm.adsRents = [];
 
 		vm.goDetail = function(ads){
-			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
+			$state.go('mdetail', { "adsID" : ads.adsID});
+		}
+
+		vm.updateAds = function(ads){
+			console.log("------------------updateAds-------------");
+			$state.go('mpost', { "adsID" : ads.adsID});
+		}
+
+		vm.deleteAds = function(ads, loaiTin){
+			console.log("------------------deleteAds-------------");
+			HouseService.deleteAds({adsID: ads.adsID}).then(function(res){
+				console.log("------------------callService-------------");
+				console.log(res);
+				if(res.status==200){
+					if(loaiTin == 0){
+						var index = vm.adsSales.indexOf(ads);
+						vm.adsSales.splice(index, 1);
+					} else{
+						var index = vm.adsRents.indexOf(ads);
+						vm.adsRents.splice(index, 1);
+					}
+				}
+			});
 		}
 
 		vm.initAdsLikesData = function(){
