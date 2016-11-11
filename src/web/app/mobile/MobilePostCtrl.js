@@ -498,7 +498,7 @@
 				$timeout(function() {
 					if(!vm.fullMapPost){
 						vm.fullMapPost = NgMap.initMap('fullMapPost');
-						var infoWnd = new google.maps.InfoWindow({
+						/*var infoWnd = new google.maps.InfoWindow({
 							content :  "<font color='#FF0000'>Vị trí lựa chọn</font>",
 							position : vm.fullMapPost.getCenter(),
 							backgroundColor: 'rgb(57,57,57)',
@@ -507,7 +507,7 @@
 							disableAutoPan: true
 						});
 						infoWnd.open(vm.fullMapPost);
-
+						*/
 						google.maps.event.addListener(vm.fullMapPost, "click", function(event) {
 							vm.location.lat = event.latLng.lat();
 							vm.location.lon = event.latLng.lng();
@@ -516,9 +516,9 @@
 						});
 
 						google.maps.event.addListener(vm.fullMapPost, "center_changed", function() {
-							infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
-							infoWnd.setPosition(vm.fullMapPost.getCenter());
-							infoWnd.open(vm.fullMapPost);
+							// infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
+							// infoWnd.setPosition(vm.fullMapPost.getCenter());
+							// infoWnd.open(vm.fullMapPost);
 							vm.location.lat = vm.fullMapPost.getCenter().lat();
 							vm.location.lon = vm.fullMapPost.getCenter().lng();
 							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
