@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3cbcefe61602d01bd0a6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6a867885a427943204b0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1006,24 +1006,34 @@
 
 	  var _ = __webpack_require__(5);
 
-	  var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll']).run(['$rootScope', '$cookieStore', '$http', '$compile', function ($rootScope, $cookieStore, $http, $compile, $sce) {
+	  var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll']).run(['jwtHelper', '$rootScope', '$localStorage', '$cookieStore', '$http', '$compile', 'HouseService', function (jwtHelper, $rootScope, $localStorage, $cookieStore, $http, $compile, HouseService) {
 	    $rootScope.globals = $cookieStore.get('globals') || {};
 	    //$rootScope.center = "Hanoi Vietnam";
 	    $rootScope.center = {
 	      lat: 16.0439,
 	      lng: 108.199
 	    };
+	    //alert($localStorage.relandToken);
 
+	    var decodedToken = {};
 	    $rootScope.loginbox = {};
 	    $rootScope.chatBoxes = [];
 	    $rootScope.menuitems = window.RewayListValue.menu;
 	    $rootScope.user = {
-	      userID: null,
+	      userID: undefined,
 	      adsLikes: [],
 	      lastSearch: null,
 	      autoSearch: false
 	    };
 	    $rootScope.pageSize = 25;
+
+	    if ($localStorage.relandToken) {
+	      decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
+	      HouseService.profile({ userID: decodedToken.userID }).then(function (res) {
+	        //$rootScope.user.userID = decodedToken.userID;
+	        if (res.data.success == true) $rootScope.user = res.data.user;
+	      });
+	    }
 
 	    // $rootScope.searchData = {
 	    //   giaBETWEEN: [0,9999999999999],
@@ -1157,6 +1167,7 @@
 	    $rootScope.showDangNhapForLike = function () {};
 
 	    $rootScope.isLoggedIn = function () {
+
 	      if ($rootScope.user.userID) return true;
 	      return false;
 	    };
@@ -29507,6 +29518,15 @@
 				"orderBy": { name: "ngayDangTin", type: "DESC" },
 				"pageNo": 1
 			};
+
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function (position) {
+					$rootScope.currentLocation.lat = position.coords.latitude;
+					$rootScope.currentLocation.lon = position.coords.longitude;
+				}, function (error) {
+					console.log(error);
+				});
+			} else {}
 			HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
 				//console.log("res.data " + res.data.ads);
 				$rootScope.user.lastViewAds = vm.adsID;
@@ -30427,6 +30447,13 @@
 						}
 					}
 
+					vm.ads.duongTruocNha = parseFloat(vm.ads.duongTruocNha);
+					vm.ads.matTien = parseFloat(vm.ads.matTien);
+					vm.ads.huongNha = parseFloat(vm.ads.huongNha);
+
+					if (vm.gia) vm.gia = parseFloat(vm.gia);
+					if (vm.ads.dienTich) vm.ads.dienTich = parseFloat(vm.ads.dienTich);
+
 					if (vm.loaiGia.value == 0) {
 						vm.ads.gia = -1;
 						vm.ads.giaM2 = -1;
@@ -30453,6 +30480,11 @@
 					}
 
 					var adsDto = JSON.stringify(vm.ads);
+					console.log("------------------------dangtin----------1------");
+
+					console.log(vm.ads);
+					console.log("------------------------dangtin----------2------");
+					console.log(vm.ads);
 
 					HouseService.postAds(adsDto).then(function (res) {
 						console.log("------------HouseService.postAds-------------");
@@ -30483,7 +30515,7 @@
 			};
 
 			vm.selectLoaiNhaDat = function (lnd) {
-				vm.ads.loaiNhaDat = [lnd.value];
+				vm.ads.loaiNhaDat = parseFloat(lnd.value);
 				if (vm.ads.loaiTin == 0) {
 					if (vm.ads.loaiNhaDat == 0) {
 						$scope.loaiNhaDat = null;
@@ -30504,7 +30536,7 @@
 			vm.selectLoaiNhaDat(vm.loaiNhaDatBan[0]);
 
 			vm.selectHuongNha = function (hn) {
-				vm.ads.huongNha = [hn.value];
+				vm.ads.huongNha = hn.value;
 				$("#huongNhaLbl").text(hn.lable);
 			};
 
@@ -30518,6 +30550,7 @@
 				} else {
 					$("#giaTienPost").prop("readonly", false);
 					if (vm.gia && vm.gia > 0) {
+						vm.gia = parseFloat(vm.gia);
 						$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
 						if (vm.loaiGia.value == 1) {
 							vm.ads.gia = vm.gia;
@@ -30551,6 +30584,7 @@
 					$("#lblGiaPost").text(vm.loaiGia.lable);
 				} else {
 					$("#lblGiaPost").text(vm.gia + " " + vm.loaiGia.lable);
+					vm.gia = parseFloat(vm.gia);
 					if (vm.loaiGia.value == 1) {
 						vm.ads.gia = vm.gia;
 						var giaM2 = vm.ads.gia / vm.ads.dienTich;
@@ -30786,18 +30820,19 @@
 					});
 				}
 			};
-
-			vm.scrollElement = function () {
-				console.log("-------------scrollElement--121-----");
-				$('#banId').click(function (e) {
-					$('html, body').animate({
-						scrollTop: $('#managerBuy').offset().top - 1
-					}, 'slow');
-				});
-
-				console.log("-------------scrollElement--1-----");
-			};
-
+			/*
+	  		vm.scrollElement = function(){
+	  			console.log("-------------scrollElement--121-----");
+	  			$('#banId').click(function (e) {
+	  				$('html, body').animate({
+	  					scrollTop: $('#managerBuy').offset().top - 1
+	  				}, 'slow');
+	  			});
+	  
+	  			console.log("-------------scrollElement--1-----");
+	  
+	  		}
+	  */
 			vm.unlikeAds = function (ads) {
 				console.log("------------unlikeAds---------------");
 				if ($rootScope.user && $rootScope.user.userID) {
@@ -30818,25 +30853,6 @@
 
 			$timeout(function () {
 				vm.init();
-				console.log("-------------scrollElement-------");
-				$('#managerBuy').scrollTop(0);
-				//$('html,body').animate({scrollTop: $('#tabContentUln').offset().top}, 0);
-				$('html,body').animate({ scrollTop: $('#managerBuy').offset().top }, 0);
-				$('html,body').animate({ scrollTop: $('#managerSale').offset().top }, 0);
-				$('html,body').animate({ scrollTop: $('#managerSaved').offset().top }, 0);
-
-				$('#managerBuy').on('click', function () {
-					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
-				});
-				$('#managerSale').on('click', function () {
-					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
-				});
-				$('#managerSaved').on('click', function () {
-					$('html,body').animate({ scrollTop: $(this).offset().top }, 800);
-				});
-
-				window.scrollTo(50, 0);
-				console.log("-------------scrollElement--1-----");
 			}, 300);
 		});
 	})();
@@ -30921,7 +30937,13 @@
 	            };
 	            vm.signout = function () {
 	                $localStorage.relandToken = undefined;
-	                $rootScope.user.userName = undefined;
+	                // $rootScope.user.userName = undefined;
+	                $rootScope.user = {
+	                    userID: undefined,
+	                    adsLikes: [],
+	                    lastSearch: null,
+	                    autoSearch: false
+	                };
 	                $scope.$bus.publish({
 	                    channel: 'login',
 	                    topic: 'logged out',
@@ -30930,6 +30952,7 @@
 	                socket.emit('user leave', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                    console.log("disconect socket user " + $rootScope.user.userName);
 	                });
+	                $(".overlay").click();
 	            };
 	        }],
 	        controllerAs: "mmn"

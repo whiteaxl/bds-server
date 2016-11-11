@@ -45,6 +45,16 @@
 		  	"orderBy": {name: "ngayDangTin", type: "DESC"},
 		  	"pageNo": 1
 		};
+
+		if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(function(position){
+	        	$rootScope.currentLocation.lat = position.coords.latitude;
+	        	$rootScope.currentLocation.lon = position.coords.longitude;	        	
+	        }, function(error){
+	        	console.log(error);		        	
+	        });
+	    } else {
+	    }
 		HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
 			//console.log("res.data " + res.data.ads);
 			$rootScope.user.lastViewAds = vm.adsID;

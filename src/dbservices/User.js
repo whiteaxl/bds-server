@@ -223,6 +223,8 @@ class UserModel {
               userDto.userID = userID;
               userDto._id = userID;
               userDto.id = userID;
+              if(!user.likeAds)
+                user.likeAds=[];
 
               this.createLoginOnSyncGateway(userDto, (err, res) => {
                 //log.info("Callback createLoginOnSyncGateway:", err, res);
@@ -558,6 +560,7 @@ class UserModel {
             data._id = userID;
             data.name = data.email || data.phone;
             data.userID = data.id;
+            user.likeAds=[];
             console.log("before upsert " + data.id);
 
             bucket.upsert(data.id, data, function (err, res) {

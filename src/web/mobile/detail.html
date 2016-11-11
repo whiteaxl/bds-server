@@ -128,7 +128,7 @@
                             <directions
                               draggable="true"                              
                               travel-mode="DRIVING"
-                              origin="Hanoi"
+                              origin="{{$root.currentLocation.lat}},{{$root.currentLocation.lon}}"
                               destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
                             </directions>                                                  
                     </div>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            <div class="agency-box collapse-box uln">
+            <div class="agency-box collapse-box uln" ng-if="mdt.ads.loaiTin==0">
                 <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Phương án tài chính <span><i class="iconUpOpen"></i></span><span class="txt">Tính trên cơ sở vay 70% giá trị nhà trig vòng 15 năm với lãi suất cố định 12%/năm theo số tiền vay </span></a>
                 <div class="agencyBox spinner">
                     <div class="card-chart">
@@ -302,10 +302,11 @@
                             Vị trí của bạn
                           </div>
                         </custom-marker>
+                        
                         <directions
                           draggable="false"                              
                           travel-mode="DRIVING"
-                          origin="Hanoi"
+                          origin="{{$root.currentLocation.lat}},{{$root.currentLocation.lon}}"
                           destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
                         </directions> 
                         <street-view-panorama>

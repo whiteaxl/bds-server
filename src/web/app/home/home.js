@@ -11,24 +11,37 @@
   var _ = require('lodash');
 
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
-  .run(['$rootScope', '$cookieStore','$http','$compile', function($rootScope, $cookieStore, $http,$compile,$sce){
+  .run(['jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
       lat: 16.0439,
       lng: 108.199
     }
+    //alert($localStorage.relandToken);
 
+    let decodedToken = {};
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
     $rootScope.menuitems = window.RewayListValue.menu;
     $rootScope.user = {
-      userID: null,
+      userID: undefined,
       adsLikes: [],
       lastSearch: null,
       autoSearch: false
     }    
     $rootScope.pageSize = 25;
+
+    if($localStorage.relandToken){
+      decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
+      HouseService.profile({userID: decodedToken.userID}).then(function(res){
+        //$rootScope.user.userID = decodedToken.userID;
+        if(res.data.success == true)
+          $rootScope.user = res.data.user;
+      });
+    }
+
+    
 
     // $rootScope.searchData = {
     //   giaBETWEEN: [0,9999999999999],
@@ -170,6 +183,7 @@
     }
 
     $rootScope.isLoggedIn = function(){
+
       if($rootScope.user.userID)
         return true;
       return false;
