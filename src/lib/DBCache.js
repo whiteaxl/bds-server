@@ -15,6 +15,9 @@ var ADS_BATCH_SIZE = 800000; //each loading batch
 var ADS_NUMBER_OF_BATCH = 1;
 var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
 
+var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
+  , "place", "loaiNhaDat", "huongNha", "ngayDangTin", "chiTiet", "dangBoi"];
+
 var db = new loki('rw.json');
 var adsCol = db.addCollection('ads', {
   unique : ['id'],
@@ -52,9 +55,11 @@ function loadDoc(type, callback) {
 
 function loadAds(limit, offset, isFull, callback) {
   let type = 'Ads';
-  let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin ";
+  let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin,timeExtracted ";
 
-  projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
+  //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
+
+  projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
   //let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
 
@@ -239,16 +244,6 @@ var cache = {
       let c2 = _.clone(ads);
       c2 = JSON.parse(JSON.stringify(c2));
 
-      c1.$loki = null;
-      c2.$loki = null;
-      c1.meta = null;
-      c2.meta = null;
-
-      c1.timeExtracted = null;
-      c2.timeExtracted = null;
-      c1.timeModified = null;
-      c2.timeModified = null;
-
       if (c1.image.images && c1.image.images.length == 0) {
         c1.image.images = null;
       }
@@ -256,11 +251,17 @@ var cache = {
         c2.image.images = null;
       }
 
-      //c1 = JSON.stringify(c1);
-      //c2 = JSON.stringify(c2);
+      let needUpdate = false;
+      let f;
+      for (let i = 0; i < COMPARE_FIELDS.length; i++) {
+        f = COMPARE_FIELDS[i];
+        if (!_.isEqual(c1[f], c2[f])) {
+          needUpdate = true;
+          break;
+        }
+      }
 
-      if (!_.isEqual(c1, c2)) { //update
-      //if (c1 !== c2) { //update
+      if (needUpdate) { //update
         commonService.upsert(ads, (err, res) => {
           callback(err, 2);
         });
@@ -314,6 +315,14 @@ var cache = {
         return sign;
       }
       if (a.timeExtracted < b.timeExtracted) {
+        return -1 * sign;
+      }
+
+      if (a.id > b.id) {
+        return sign;
+      }
+
+      if (a.id < b.id) {
         return -1 * sign;
       }
 

@@ -547,7 +547,7 @@
         controller: "MobileChatCtrl",
         controllerAs: 'mcc'
       }).state('mpost', {
-          url: "/mobile/post",
+          url: "/mobile/post/:adsID",
           templateUrl: "/web/mobile/post.html",
           controller: "MobilePostCtrl",
           controllerAs: 'mpc'

@@ -183,7 +183,7 @@ internals.endpoints = [
 	
 ,{
 	method: 'GET',
-	path: '/web/mobile/post',
+	path: '/web/mobile/post/{p*}',
 	handler: function(requet,reply){
 		var md = new MobileDetect(requet.headers['user-agent']);
 		if(md.mobile()){

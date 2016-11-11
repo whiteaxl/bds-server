@@ -120,6 +120,12 @@
       },
       getMyAds: function(data){
         return $http.post("/api/user/getMyAds",data);
+      },
+      deleteAds: function(data){
+        return $http.post("/api/user/deleteAds",data);
+      },
+      getUpdateAds: function(data){
+        return $http.post("/api/user/getUpdateAds",data);
       }
 
     };

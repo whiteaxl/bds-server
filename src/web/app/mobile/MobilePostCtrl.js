@@ -7,6 +7,7 @@
 
 		vm.ads = {};
 		vm.ads.loaiTin = 0;
+		vm.adsID = $state.params.adsID;
 		vm.marker = {
 			id: 1,
 			coords: {
@@ -34,6 +35,11 @@
 		vm.dacTinhNha = window.RewayListValue.DacTinhNha;
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
 		$scope.currentYear = new Date().getFullYear();
+
+		$scope.rangeNumber = [];
+		for(var i=0;i<8;i++) {
+			$scope.rangeNumber.push(i);
+		}
 
 		vm.loaiGias = [
 				{ value: 1, lable: "Triệu"},
@@ -319,7 +325,7 @@
 				return vm.ads.chinhChuDangTin;
 			}
 		}
-		vm.getLocation = function() {
+		vm.getCurrentLocation = function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position){
 					console.log(position);
@@ -410,7 +416,7 @@
 
 		//get place in danh muc dia chinh
 		//dung voi fetch
-		vm.getDiaChinhInDb = function(lat, lon){
+		vm.getDiaChinhInDb = function(lat, lon, isInit){
 			vm.getGeoCode(lat, lon, function(res){
 				if(res.results){
 					var places = res.results;
@@ -458,6 +464,8 @@
 							vm.ads.place.geo.lon = vm.location.lon;
 
 							vm.autoCompleteText = vm.diaChinh.fullName;
+							if(!isInit)
+								$("#duAnLbl").text("");
 							console.log(vm.diaChinh);
 							console.log(vm.duAn);
 						}
@@ -513,7 +521,7 @@
 							infoWnd.open(vm.fullMapPost);
 							vm.location.lat = vm.fullMapPost.getCenter().lat();
 							vm.location.lon = vm.fullMapPost.getCenter().lng();
-							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon);
+							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
 
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
@@ -532,15 +540,12 @@
 
 		vm.initPost = function() {
 			//vm.getDanhMucNamXd();
-			console.log($rootScope.user);
-			initDataPost();
 			$("#projectBoxPost .type-list li a").click(function(){
 				$(".project-box .collapse-title span label").html($(this).html());
 			});
-
 			vm.initMapData();
-			vm.selectLoaiTin($scope.loaiTin);
-			vm.getLocation();
+			initDataPost();
+			
 
 			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchAddPost");
 			$(".btn-more .collapse-title").click(function() {
@@ -570,44 +575,155 @@
 			});
 		}
 		function initDataPost(){
-			vm.ads.image = {};
-			vm.ads.image.cover = '';
-			vm.ads.image.images = [];
+			if(vm.adsID){
+				HouseService.getUpdateAds({adsID: vm.adsID}).then(function(res){
+					console.log("-------------------------initData with adsId--------");
+					vm.ads = res.data.data;
+					console.log(vm.ads);
+					if (navigator.geolocation) {
+						navigator.geolocation.getCurrentPosition(function(position){
+							console.log(position);
+							$rootScope.currentLocation.lat = position.coords.latitude;
+							$rootScope.currentLocation.lon = position.coords.longitude;
+							$scope.currentLocation = $rootScope.currentLocation;
 
-			vm.ads.place={
-				diaChi: '',
-				diaChinh: {
-					codeTinh: '',
-					codeHuyen: '',
-					codeXa: '',
-					codeDuAn: '',
-					tinh: '',
-					huyen :'',
-					xa: '',
-					duAn: ''
-				},
-				geo: {lat: '', lon: ''}
-			}
-			vm.ads.lienHe={
-				showTenLienLac: true,
-				showPhone: true,
-				showEmail: true,
-			};
+						}, function(error){
+							console.log(error);
+						});
+					} else {
+						console.log("------------not navigator.geolocation----------------");
+					}
+					if(vm.ads.place.geo){
+						vm.location.lat = vm.ads.place.geo.lat;
+						vm.location.lon = vm.ads.place.geo.lon;
+						$scope.location.lat = vm.ads.place.geo.lat;
+						$scope.location.lon = vm.ads.place.geo.lon;
+						vm.getDiaChinhInDb(vm.location.lat,vm.location.lon, true);
 
-			vm.ads.chiTiet = '';
-			vm.ads.nhaMoiXay = false;
-			vm.ads.nhaLoGoc = false;
-			vm.ads.otoDoCua = false;
-			vm.ads.nhaKinhDoanhDuoc = false;
-			vm.ads.noiThatDayDu = false;
-			vm.ads.chinhChuDangTin = false;
-			if($rootScope.user){
-				if($rootScope.user.userName)
-					vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
-				if($rootScope.user.phone)
-					vm.ads.lienHe.phone = $rootScope.user.phone;
-				if($rootScope.user.userEmail)
-					vm.ads.lienHe.email = $rootScope.user.userEmail;
+					}
+					if(vm.ads.place.diaChinh.duAn){
+						$("#duAnLbl").text(vm.ads.place.diaChinh.duAn.length > 30? vm.ads.place.diaChinh.duAn.substring(0,30) + "..." : vm.ads.place.diaChinh.duAn);
+					}
+
+					if(vm.ads.loaiTin==0){
+						vm.loaiNhaDat = vm.loaiNhaDatBan;
+					}else{
+						vm.loaiNhaDat = vm.loaiNhaDatThue;
+					}
+
+					if(vm.ads.loaiNhaDat){
+						$scope.loaiNhaDat = vm.ads.loaiNhaDat;
+					}
+
+					if(vm.ads.loaiNhaDat){
+						if(vm.ads.loaiTin == 0){
+							for(var i=0; i<vm.loaiNhaDatBan.length; i++){
+								if(parseInt(vm.loaiNhaDatBan[i].value) == vm.ads.loaiNhaDat){
+									$("#loaiNhaLbl").text(vm.loaiNhaDatBan[i].lable > 30? vm.loaiNhaDatBan[i].lable.substring(0,30) + "..." : vm.loaiNhaDatBan[i].lable);
+									break;
+								}
+							}
+						}else {
+							for(var i=0; i<vm.loaiNhaDatThue.length; i++){
+								if(parseInt(vm.loaiNhaDatThue[i].value) == vm.ads.loaiNhaDat){
+									$("#loaiNhaLbl").text(vm.loaiNhaDatThue[i].lable > 30? vm.loaiNhaDatThue[i].lable.substring(0,30) + "..." : vm.loaiNhaDatThue[i].lable);
+									break;
+								}
+							}
+						}
+					}
+
+					if(vm.ads.huongNha){
+						for(var i=0; i<vm.huongNhaList.length; i++){
+							if(parseInt(vm.huongNhaList[i].value) == parseInt(vm.ads.huongNha)){
+								$("#huongNhaLbl").text(vm.huongNhaList[i].lable > 30? vm.huongNhaList[i].lable.substring(0,30) + "..." : vm.huongNhaList[i].lable);
+								break;
+							}
+						}
+					}
+
+
+
+					if(vm.ads.gia >= 1000){
+						vm.gia = vm.ads.gia/1000;
+						vm.gia = Math.round(vm.gia * 1000)/1000;
+						vm.loaiGia = vm.loaiGias[1];
+						$("#lblGiaPost").text(vm.gia + " Tỷ");
+					} else if(vm.ads.gia < 1000 && vm.ads.gia >-1){
+						vm.gia = vm.ads.gia;
+						vm.loaiGia = vm.loaiGias[0];
+						$("#lblGiaPost").text(vm.gia + " Triệu");
+					} else{
+						vm.gia = null;
+						vm.loaiGia = vm.loaiGias[4];
+						$("#lblGiaPost").text("Thỏa thuận");
+					}
+
+					var lienHeTxt = null;
+					if(vm.ads.lienHe.tenLienLac && vm.ads.lienHe.tenLienLac.trim().length > 0){
+						lienHeTxt = vm.ads.lienHe.tenLienLac;
+					}
+					if(vm.ads.lienHe.phone && vm.ads.lienHe.phone.trim().length > 0){
+						if(lienHeTxt.trim().length > 0){
+							lienHeTxt = lienHeTxt + '-' + vm.ads.lienHe.phone;
+						} else{
+							lienHeTxt = vm.ads.lienHe.phone;
+						}
+					}
+					$("#lienHeLbl").text(lienHeTxt);
+
+					for(var i=0; i <$scope.namXayDungList.length; i++){
+						if($scope.namXayDungList[i].value == parseInt(vm.ads.namXayDung)){
+							$("select#yearBuild").drum('setIndex', i);
+							$("#yearBuild_value").text(vm.ads.namXayDung);
+							break;
+						}
+
+					}
+
+				});
+			} else{
+				vm.ads.image = {};
+				vm.ads.image.cover = '';
+				vm.ads.image.images = [];
+
+				vm.ads.place={
+					diaChi: '',
+					diaChinh: {
+						codeTinh: '',
+						codeHuyen: '',
+						codeXa: '',
+						codeDuAn: '',
+						tinh: '',
+						huyen :'',
+						xa: '',
+						duAn: ''
+					},
+					geo: {lat: '', lon: ''}
+				}
+				vm.ads.lienHe={
+					showTenLienLac: true,
+					showPhone: true,
+					showEmail: true,
+				};
+
+				vm.ads.chiTiet = '';
+				vm.ads.nhaMoiXay = false;
+				vm.ads.nhaLoGoc = false;
+				vm.ads.otoDoCua = false;
+				vm.ads.nhaKinhDoanhDuoc = false;
+				vm.ads.noiThatDayDu = false;
+				vm.ads.chinhChuDangTin = false;
+				if($rootScope.user){
+					if($rootScope.user.userName)
+						vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
+					if($rootScope.user.phone)
+						vm.ads.lienHe.phone = $rootScope.user.phone;
+					if($rootScope.user.userEmail)
+						vm.ads.lienHe.email = $rootScope.user.userEmail;
+				}
+				vm.selectLoaiTin($scope.loaiTin);
+				vm.getCurrentLocation();
 			}
 		}
 		/*
@@ -684,34 +800,33 @@
 					vm.ads.gia = vm.gia;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
-					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+					vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 				} else if(vm.loaiGia.value == 2){
 					vm.ads.gia = vm.gia * 1000;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
-					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+					vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 				} else if(vm.loaiGia.value == 3){
 					vm.ads.giaM2 = vm.gia/10;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
-					vm.ads.gia = Math.round(gia * 100)/100;
+					vm.ads.gia = Math.round(gia * 1000)/1000;
 				} else if(vm.loaiGia.value == 4){
 					vm.ads.giaM2 = vm.gia;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
-					vm.ads.gia = Math.round(gia * 100)/100;
+					vm.ads.gia = Math.round(gia * 1000)/1000;
 				}
 
-				var adsDto = JSON.stringify(vm.ads);
-				console.log("------------------------dangtin----------1------");
+				console.log("------------danTin-------------1-------------");
+				console.log(vm.ads);
 
-				console.log(vm.ads);
-				console.log("------------------------dangtin----------2------");
-				console.log(vm.ads);
+				var adsDto = JSON.stringify(vm.ads);
 
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
 					console.log(res);
+					$state.go('madsMgmt');
 				})
 			} else {
 				console.log("--------------invalid----------------");
@@ -781,22 +896,22 @@
 						vm.ads.gia = vm.gia;
 						var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
-						vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+						vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 					} else if(vm.loaiGia.value == 2){
 						vm.ads.gia = vm.gia * 1000;
 						var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 						giaM2 = parseFloat(giaM2);
-						vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+						vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 					} else if(vm.loaiGia.value == 3){
 						vm.ads.giaM2 = vm.gia/10;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia =  parseFloat(gia);
-						vm.ads.gia = Math.round(gia * 100)/100;
+						vm.ads.gia = Math.round(gia * 1000)/1000;
 					} else if(vm.loaiGia.value == 4){
 						vm.ads.giaM2 = vm.gia;
 						var gia = vm.ads.giaM2 * vm.ads.dienTich;
 						gia =  parseFloat(gia);
-						vm.ads.gia = Math.round(gia * 100)/100;
+						vm.ads.gia = Math.round(gia * 1000)/1000;
 					}
 				}
 			}
@@ -814,22 +929,22 @@
 					vm.ads.gia = vm.gia;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
-					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+					vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 				} else if(vm.loaiGia.value == 2){
 					vm.ads.gia = vm.gia * 1000;
 					var giaM2 =  vm.ads.gia/vm.ads.dienTich;
 					giaM2 = parseFloat(giaM2);
-					vm.ads.giaM2 = Math.round(giaM2 * 100)/100;
+					vm.ads.giaM2 = Math.round(giaM2 * 1000)/1000;
 				} else if(vm.loaiGia.value == 3){
 					vm.ads.giaM2 = vm.gia/10;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
-					vm.ads.gia = Math.round(gia * 100)/100;
+					vm.ads.gia = Math.round(gia * 1000)/1000;
 				} else if(vm.loaiGia.value == 4){
 					vm.ads.giaM2 = vm.gia;
 					var gia = vm.ads.giaM2 * vm.ads.dienTich;
 					gia =  parseFloat(gia);
-					vm.ads.gia = Math.round(gia * 100)/100;
+					vm.ads.gia = Math.round(gia * 1000)/1000;
 				}
 			}
 		}

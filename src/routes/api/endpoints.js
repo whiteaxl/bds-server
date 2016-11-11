@@ -945,8 +945,28 @@ internals.endpoints = [
         })
       }
     }
-  },  
+  },
 
+  {
+    method: 'POST',
+    path: '/api/v2/getProductPricing',
+    handler: findHandlerV2.getProductPricing,
+    config: {
+      description: 'Tra ve dia chinh/du an by dia chinh khong dau',
+      tags: ['api'],
+      validate: {
+        payload: {
+          loaiTin: Joi.number().integer().min(0).max(1).required()
+              .description('0=BAN, 1 = THUE'),
+          loaiNhaDat: Joi.array().items(Joi.number())
+              .description('1,2,... (tham khao trong https://github.com/reway/bds/blob/master/src/assets/DanhMuc.js)'),
+          codeDuAn : Joi.string(),
+          position: PointModel,
+          gia: Joi.number()
+        }
+      }
+    }
+  },
 
   {
     method: 'POST',
