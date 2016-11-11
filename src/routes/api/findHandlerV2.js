@@ -157,7 +157,6 @@ function _updateLastSearch(q) {
     if (err || res.length == 0)
       console.log(err);
     else {
-      console.log(JSON.stringify(res));
       var user = res[0];
       if(!user.lastSearch){
         user.lastSearch = [];
@@ -170,7 +169,6 @@ function _updateLastSearch(q) {
         query: q        
         }        
       );
-      console.log("tim log " + JSON.stringify(user.lastSearch));
       userService.upsert(user);
     }
   });
@@ -415,6 +413,48 @@ internals.find = function (req, reply) {
       logUtil.info("Will response to client:" + res.length + " out of " + res.totalCount + ", res.errMsg=" +  res.errMsg );
       reply(res);
     })
+
+};
+
+internals.getProductPricing = function (req, reply) {
+  console.log("Get Product Pricing:", req.payload);
+  let q = req.payload;
+
+  let box = geoUtil.getBoxOfCircle({lat:q.position.lat, lon:q.position.lon} , geoUtil.meter2degree(0.5));
+
+  _mergeViewportWithBox(q, box);
+
+  q.giaBETWEEN = [1.1, 9999999];
+  q.dbLimit = 500;
+  q.dbPageNo =  1;
+  q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+  dbCache.query(q, (err, listAds, count) => {
+    if (err) {
+      console.log("Error when query ADS:", err);
+      reply({success: false, msg: err});
+      return;
+    }
+    let giaM2 = 0;
+    let giaM2TrungBinh = 0;
+    let adsNgangGia = []
+
+    if (listAds && listAds.length>0){
+     for( var i=0; i< listAds.length; i++){
+        giaM2 = giaM2 + listAds[i].giaM2;
+     }
+     giaM2TrungBinh = giaM2 / listAds.length;
+
+      for( var i=0; i< listAds.length; i++){
+        if (listAds[i].giaM2 >= giaM2TrungBinh*0.7 && listAds[i].giaM2 <= giaM2TrungBinh*1.3 ){
+          adsNgangGia.push(listAds[i]);
+        }
+      }
+    }
+
+    reply({success: true, giaM2TrungBinh: giaM2TrungBinh, bdsNgangGia: _transform(adsNgangGia)});
+  });
+
 
 };
 
