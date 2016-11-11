@@ -50,8 +50,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="managerRent">
                 <ul class="reland-list full">
-                    <li ng-repeat="ads in mamc.adsRents track by $index" ng-click="mamc.goDetail(ads)">
-                        <a><span class="img" style="background-image:url({{ads.image.cover}})"></span></a>
+                    <li ng-repeat="ads in mamc.adsRents track by $index">
+                        <a ng-click="mamc.goDetail(ads)"><span class="img" style="background-image:url({{ads.image.cover}})"></span></a>
                         <span class="des bgOpa">
                             <span class="price">{{ads.giaFmt}}</small></span>
                             <span class="name">{{ ads.diaChi | limitTo: 25 }}{{ads.diaChi > 25 ? '...' : ''}}</span>

@@ -416,7 +416,7 @@
 
 		//get place in danh muc dia chinh
 		//dung voi fetch
-		vm.getDiaChinhInDb = function(lat, lon){
+		vm.getDiaChinhInDb = function(lat, lon, isInit){
 			vm.getGeoCode(lat, lon, function(res){
 				if(res.results){
 					var places = res.results;
@@ -464,7 +464,8 @@
 							vm.ads.place.geo.lon = vm.location.lon;
 
 							vm.autoCompleteText = vm.diaChinh.fullName;
-							$("#duAnLbl").text("");
+							if(!isInit)
+								$("#duAnLbl").text("");
 							console.log(vm.diaChinh);
 							console.log(vm.duAn);
 						}
@@ -520,7 +521,7 @@
 							infoWnd.open(vm.fullMapPost);
 							vm.location.lat = vm.fullMapPost.getCenter().lat();
 							vm.location.lon = vm.fullMapPost.getCenter().lng();
-							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon);
+							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
 
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
@@ -575,9 +576,9 @@
 		}
 		function initDataPost(){
 			if(vm.adsID){
-				HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res){
+				HouseService.getUpdateAds({adsID: vm.adsID}).then(function(res){
 					console.log("-------------------------initData with adsId--------");
-					vm.ads = res.data.ads;
+					vm.ads = res.data.data;
 					console.log(vm.ads);
 					if (navigator.geolocation) {
 						navigator.geolocation.getCurrentPosition(function(position){
@@ -597,7 +598,7 @@
 						vm.location.lon = vm.ads.place.geo.lon;
 						$scope.location.lat = vm.ads.place.geo.lat;
 						$scope.location.lon = vm.ads.place.geo.lon;
-						vm.getDiaChinhInDb(vm.location.lat,vm.location.lon);
+						vm.getDiaChinhInDb(vm.location.lat,vm.location.lon, true);
 
 					}
 					if(vm.ads.place.diaChinh.duAn){
@@ -608,6 +609,10 @@
 						vm.loaiNhaDat = vm.loaiNhaDatBan;
 					}else{
 						vm.loaiNhaDat = vm.loaiNhaDatThue;
+					}
+
+					if(vm.ads.loaiNhaDat){
+						$scope.loaiNhaDat = vm.ads.loaiNhaDat;
 					}
 
 					if(vm.ads.loaiNhaDat){
@@ -821,6 +826,7 @@
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
 					console.log(res);
+					$state.go('madsMgmt');
 				})
 			} else {
 				console.log("--------------invalid----------------");

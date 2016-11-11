@@ -54,7 +54,7 @@
                     <div class="bathroom-box collapse-box collapse-cus group-cus ovh">
                         <a class="collapse-title">Số phòng tắm</a>
                         <div class="btn-group" data-toggle="buttons">
-                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soPhongTam==i? 'btn active':'btn'}}"  ng-click="mpc.setSoPhongTam(0)">
+                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soPhongTam==i? 'btn active':'btn'}}"  ng-click="mpc.setSoPhongTam(i)">
                                 <input type="radio" name="options" id="{{'bathroom' + i}}" autocomplete="off" checked>{{i}}
                             </label>
                             <label class="btn" >
@@ -65,7 +65,7 @@
                     <div class="step-box collapse-box collapse-cus group-cus ovh border-none">
                         <a class="collapse-title">Số tầng</a>
                         <div class="btn-group" data-toggle="buttons">
-                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soTang==i? 'btn active':'btn'}}"  ng-click="mpc.setSoTang(0)">
+                            <label ng-repeat="i in rangeNumber track by $index" class="{{mpc.ads.soTang==i? 'btn active':'btn'}}"  ng-click="mpc.setSoTang(i)">
                                 <input type="radio" name="options" id="{{'step' + i}}" autocomplete="off" checked>{{i}}
                             </label>
                             <label class="btn">
@@ -177,7 +177,7 @@
                         <h4 class="modal-title">Giá tiền</h4>
                     </div>
                     <div class="title">Nhập giá tiền</div>
-                    <div class="pd15"><input id="giaTienPost" type="text" class="form-control" pattern="\d*" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
+                    <div class="pd15"><input id="giaTienPost" type="number" step="0.001" class="form-control" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
                     <div class="title"></div>
                     <div class="title border">Đơn vị</div>
                     <div class="modal-body uln">
