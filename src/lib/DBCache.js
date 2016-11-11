@@ -317,6 +317,14 @@ var cache = {
         return -1 * sign;
       }
 
+      if (a.id > b.id) {
+        return sign;
+      }
+
+      if (a.id < b.id) {
+        return -1 * sign;
+      }
+
       return 0;
     });
     let endTime = new Date().getTime();
