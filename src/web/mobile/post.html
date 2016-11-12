@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="dt-box collapse-box fr">
-                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="text" pattern="\d*" required="" ></span></a>
+                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="number" step="0.001" required="" ></span></a>
                         <div ng-show="postForm.$submitted">
                             <span style="color:red" ng-show="postForm.dienTich.$error.required">(Chưa nhập diện tích)</span>
                         </div>

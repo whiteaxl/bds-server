@@ -1076,37 +1076,6 @@
 					if(err){throw err;}
 					console.log("processing all elements completed");
 				});
-				/*
-				angular.forEach(files, function (myFile) {
-					var fileName = myFile.name;
-					fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);
-					fileName = "Ads_" + $rootScope.user.userID + "_" + new Date().getTime() + fileName;
-
-					Upload.upload({
-						url: '/api/upload',
-						data: {files: myFile, filename : fileName}
-					}).then(function (resp) {
-						console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
-
-						$timeout(function() {
-							var fileUrl = location.protocol;
-							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
-
-							console.log("----fileUrl: " + fileUrl);
-							if(vm.ads.image.cover.trim().length == 0){
-								vm.ads.image.cover = fileUrl;
-							} else{
-								vm.ads.image.images.push(fileUrl);
-							}
-						},100);
-
-					}, function (resp) {
-						console.log('Error status: ' + resp.status);
-					}, function (evt) {
-						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-						console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
-					});
-				});*/
 			}
 		};
 	});
