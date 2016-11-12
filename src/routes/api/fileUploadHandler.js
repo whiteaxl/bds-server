@@ -72,5 +72,54 @@ internals.uploadFiles = function(req,reply){
 	});
 
 }
+internals.deleteFile = function (req, reply) {
+	console.log("--------------------Call deleteFile:-----------------------");
+	console.log(req.payload);
+
+	if(req.payload.fileUrl){
+		var fileUrl = req.payload.fileUrl;
+		fileUrl = fileUrl.substring(fileUrl.indexOf("web/"), fileUrl.length);
+		fileUrl = __dirname + "/../../" + fileUrl;
+		console.log("--------------------fileUrl:-----------------------");
+		console.log(fileUrl);
+		fs.stat(fileUrl, function (err, stats) {
+			console.log(stats);//here we got all information of file in stats variable
+
+			if (err) {
+				console.log('-----------error---1-----------');
+				console.log(err);
+				reply({
+					status : 99,
+					msg : err
+				});
+			} else{
+				fs.unlink(fileUrl,function(err){
+					if (err) {
+						console.log('-----------error--2------------');
+						console.log(err);
+						reply({
+							status : 99,
+							msg : 'file deleted successfully'
+						});
+					} else{
+						reply({
+							msg : 'file deleted successfully',
+							status : 0,
+						});
+						console.log('file deleted successfully');
+					}
+
+				});
+			}
+
+
+		});
+	} else{
+		reply({
+			status : 99,
+			msg : 'Not has url of File'
+		});
+	}
+};
 
 module.exports = internals;

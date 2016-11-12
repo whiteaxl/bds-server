@@ -326,6 +326,27 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/deleteFile',
+    handler: fileUploadHandler.deleteFile,
+    config: {
+      description: 'delete file',
+      tags: ['api'],
+      validate: {
+        payload: {
+          fileUrl: Joi.string().required()
+        }
+      },
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          success: Joi.boolean(),
+          msg: Joi.string(),
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/likeAds',
     handler: Handlers.likeAds,
     config: {

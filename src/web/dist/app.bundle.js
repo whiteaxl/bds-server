@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a9d496958591ad2e699e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5171a0f4e69ca00b210f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20571,6 +20571,9 @@
 	      },
 	      getUpdateAds: function getUpdateAds(data) {
 	        return $http.post("/api/user/getUpdateAds", data);
+	      },
+	      deleteFile: function deleteFile(data) {
+	        return $http.post("/api/deleteFile", data);
 	      }
 
 	    };
@@ -28197,16 +28200,25 @@
 			//current only remove urlAdr, must delete real file on server
 			vm.removeAvatarImg = function () {
 				if (vm.ads.image.cover) {
-
+					HouseService.deleteFile({ fileUrl: vm.ads.image.cover.trim() }).then(function (res) {
+						console.log(res);
+					});
 					vm.ads.image.cover = '';
 				}
 			};
 
 			vm.removeNormalImg = function (img) {
 				if (vm.ads.image.images) {
-					var removeIndex = vm.ads.image.images.indexOf(img);
-					if (removeIndex > -1) {
-						vm.ads.image.images.splice(removeIndex, 1);
+					if (img) {
+						//var urlToDelete = img.substring(img.indexOf("web/"), img.length);
+						HouseService.deleteFile({ fileUrl: img.trim() }).then(function (res) {
+							console.log(res);
+						});
+						vm.ads.image.cover = '';
+						var removeIndex = vm.ads.image.images.indexOf(img);
+						if (removeIndex > -1) {
+							vm.ads.image.images.splice(removeIndex, 1);
+						}
 					}
 				}
 			};
@@ -29108,33 +29120,6 @@
 						}
 						console.log("processing all elements completed");
 					});
-					/*
-	    angular.forEach(files, function (myFile) {
-	    	var fileName = myFile.name;
-	    	fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);
-	    	fileName = "Ads_" + $rootScope.user.userID + "_" + new Date().getTime() + fileName;
-	    			Upload.upload({
-	    		url: '/api/upload',
-	    		data: {files: myFile, filename : fileName}
-	    	}).then(function (resp) {
-	    		console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
-	    				$timeout(function() {
-	    			var fileUrl = location.protocol;
-	    			fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
-	    					console.log("----fileUrl: " + fileUrl);
-	    			if(vm.ads.image.cover.trim().length == 0){
-	    				vm.ads.image.cover = fileUrl;
-	    			} else{
-	    				vm.ads.image.images.push(fileUrl);
-	    			}
-	    		},100);
-	    			}, function (resp) {
-	    		console.log('Error status: ' + resp.status);
-	    	}, function (evt) {
-	    		var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	    		console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
-	    	});
-	    });*/
 				}
 			};
 		});

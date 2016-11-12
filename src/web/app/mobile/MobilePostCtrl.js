@@ -125,16 +125,25 @@
 		//current only remove urlAdr, must delete real file on server
 		vm.removeAvatarImg = function(){
 			if(vm.ads.image.cover){
-
+				HouseService.deleteFile({fileUrl: vm.ads.image.cover.trim()}).then(function(res){
+					console.log(res);
+				})
 				vm.ads.image.cover = '';
 			}
 		}
 
 		vm.removeNormalImg = function(img){
 			if(vm.ads.image.images){
-				let removeIndex = vm.ads.image.images.indexOf(img);
-				if (removeIndex > -1) {
-					vm.ads.image.images.splice(removeIndex, 1);
+				if(img){
+					//var urlToDelete = img.substring(img.indexOf("web/"), img.length);
+					HouseService.deleteFile({fileUrl: img.trim()}).then(function(res){
+						console.log(res);
+					})
+					vm.ads.image.cover = '';
+					var removeIndex = vm.ads.image.images.indexOf(img);
+					if (removeIndex > -1) {
+						vm.ads.image.images.splice(removeIndex, 1);
+					}
 				}
 			}
 		}

@@ -126,6 +126,9 @@
       },
       getUpdateAds: function(data){
         return $http.post("/api/user/getUpdateAds",data);
+      },
+      deleteFile: function(data){
+        return $http.post("/api/deleteFile",data);
       }
 
     };
