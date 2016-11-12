@@ -20,6 +20,8 @@
 
 		vm.deleteAds = function(ads, loaiTin){
 			console.log("------------------deleteAds-------------");
+			var avatarImage = ads.image.cover;
+			var imgList = ads.image.images;
 			HouseService.deleteAds({adsID: ads.adsID}).then(function(res){
 				console.log("------------------callService-------------");
 				console.log(res);
@@ -30,6 +32,18 @@
 					} else{
 						var index = vm.adsRents.indexOf(ads);
 						vm.adsRents.splice(index, 1);
+					}
+					if(avatarImage){
+						HouseService.deleteFile({fileUrl: avatarImage.trim()}).then(function(res){
+							console.log(res);
+						})
+					}
+					if(imgList){
+						for(var i=0; i< imgList.length; i++){
+							HouseService.deleteFile({fileUrl: imgList[i].trim()}).then(function(res){
+								console.log(res);
+							})
+						}
 					}
 				}
 			});

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5171a0f4e69ca00b210f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a31b5e8020391c00f95b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28202,8 +28202,8 @@
 				if (vm.ads.image.cover) {
 					HouseService.deleteFile({ fileUrl: vm.ads.image.cover.trim() }).then(function (res) {
 						console.log(res);
+						vm.ads.image.cover = '';
 					});
-					vm.ads.image.cover = '';
 				}
 			};
 
@@ -28213,12 +28213,13 @@
 						//var urlToDelete = img.substring(img.indexOf("web/"), img.length);
 						HouseService.deleteFile({ fileUrl: img.trim() }).then(function (res) {
 							console.log(res);
+							if (res.status == 200 && res.data.status == 0) {
+								var removeIndex = vm.ads.image.images.indexOf(img);
+								if (removeIndex > -1) {
+									vm.ads.image.images.splice(removeIndex, 1);
+								}
+							}
 						});
-						vm.ads.image.cover = '';
-						var removeIndex = vm.ads.image.images.indexOf(img);
-						if (removeIndex > -1) {
-							vm.ads.image.images.splice(removeIndex, 1);
-						}
 					}
 				}
 			};
@@ -29153,6 +29154,8 @@
 
 			vm.deleteAds = function (ads, loaiTin) {
 				console.log("------------------deleteAds-------------");
+				var avatarImage = ads.image.cover;
+				var imgList = ads.image.images;
 				HouseService.deleteAds({ adsID: ads.adsID }).then(function (res) {
 					console.log("------------------callService-------------");
 					console.log(res);
@@ -29163,6 +29166,18 @@
 						} else {
 							var index = vm.adsRents.indexOf(ads);
 							vm.adsRents.splice(index, 1);
+						}
+						if (avatarImage) {
+							HouseService.deleteFile({ fileUrl: avatarImage.trim() }).then(function (res) {
+								console.log(res);
+							});
+						}
+						if (imgList) {
+							for (var i = 0; i < imgList.length; i++) {
+								HouseService.deleteFile({ fileUrl: imgList[i].trim() }).then(function (res) {
+									console.log(res);
+								});
+							}
 						}
 					}
 				});

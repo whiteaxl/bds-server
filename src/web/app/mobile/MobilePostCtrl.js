@@ -127,8 +127,8 @@
 			if(vm.ads.image.cover){
 				HouseService.deleteFile({fileUrl: vm.ads.image.cover.trim()}).then(function(res){
 					console.log(res);
+					vm.ads.image.cover = '';
 				})
-				vm.ads.image.cover = '';
 			}
 		}
 
@@ -138,12 +138,13 @@
 					//var urlToDelete = img.substring(img.indexOf("web/"), img.length);
 					HouseService.deleteFile({fileUrl: img.trim()}).then(function(res){
 						console.log(res);
+						if((res.status == 200) && (res.data.status == 0)){
+							var removeIndex = vm.ads.image.images.indexOf(img);
+							if (removeIndex > -1) {
+								vm.ads.image.images.splice(removeIndex, 1);
+							}
+						}
 					})
-					vm.ads.image.cover = '';
-					var removeIndex = vm.ads.image.images.indexOf(img);
-					if (removeIndex > -1) {
-						vm.ads.image.images.splice(removeIndex, 1);
-					}
 				}
 			}
 		}

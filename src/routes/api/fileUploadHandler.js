@@ -99,12 +99,12 @@ internals.deleteFile = function (req, reply) {
 						console.log(err);
 						reply({
 							status : 99,
-							msg : 'file deleted successfully'
+							msg : err
 						});
 					} else{
 						reply({
 							msg : 'file deleted successfully',
-							status : 0,
+							status : 0
 						});
 						console.log('file deleted successfully');
 					}
