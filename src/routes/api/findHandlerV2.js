@@ -13,6 +13,7 @@ var dbCache = require("../../lib/DBCache");
 var constant = require("../../lib/constant");
 var moment = require("moment");
 var geoUtil = require("../../lib/geoUtil");
+var danhMuc = require("../../lib/DanhMuc");
 
 var UserService = require('../../dbservices/User');
 var userService = new UserService();
@@ -367,7 +368,11 @@ function _doDBQueryAndCount(q, reply) {
   });
 }
 
-internals.findAds = function (q, reply) { 
+internals.findAds = function (q, reply) {
+  if (q.userID && q.updateLastSearch) {
+    //console.log(JSON.stringify(q));
+    _updateLastSearch(q);
+  }
   _mergeViewportWithPolygonBox(q);
   _mergeViewportWithCircleBox(q);
 
@@ -420,7 +425,7 @@ internals.getProductPricing = function (req, reply) {
   console.log("Get Product Pricing:", req.payload);
   let q = req.payload;
 
-  let box = geoUtil.getBoxOfCircle({lat:q.position.lat, lon:q.position.lon} , geoUtil.meter2degree(0.5));
+  let box = geoUtil.getBoxOfCircle({lat:q.position.lat, lon:q.position.lon} , geoUtil.meter2degree(10));
 
   _mergeViewportWithBox(q, box);
 
@@ -428,6 +433,33 @@ internals.getProductPricing = function (req, reply) {
   q.dbLimit = 500;
   q.dbPageNo =  1;
   q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+  let inputLoaiNhaDat = q.loaiNhaDat[0];
+
+  let loaiNhaDat = [q.loaiNhaDat];
+  let giaTrungBinh = []
+
+  if (q.loaiTin == 0) {
+    q.loaiNhaDat = [1, 2, 3, 4];
+    giaTrungBinh = [
+      {loaiNhaDat: 1, loaiNhaDatVal: "Bán căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 2, loaiNhaDatVal: "Bán nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 3, loaiNhaDatVal: "Bán biệt thự, liền kề", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 4, loaiNhaDatVal: "Bán nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0}
+    ]
+
+  }
+  else {
+    q.loaiNhaDat = [1, 2, 3, 4, 5, 6];
+    giaTrungBinh = [
+      {loaiNhaDat: 1, loaiNhaDatVal: "Cho Thuê căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 2, loaiNhaDatVal: "Cho Thuê nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 3, loaiNhaDatVal: "Cho Thuê nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 4, loaiNhaDatVal: "Cho Thuê nhà trọ, phòng trọ", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 5, loaiNhaDatVal: "Cho Thuê văn phòng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+      {loaiNhaDat: 6, loaiNhaDatVal: "Cho Thuê cửa hàng, ki-ốt", giaM2:0, giaM2TrungBinh: 0, count: 0}
+    ]
+  }
 
   dbCache.query(q, (err, listAds, count) => {
     if (err) {
@@ -437,22 +469,52 @@ internals.getProductPricing = function (req, reply) {
     }
     let giaM2 = 0;
     let giaM2TrungBinh = 0;
-    let adsNgangGia = []
+    let adsNgangGia = [];
+    let giaTrungBinhKhac = [];
+    let pricing = {}
 
     if (listAds && listAds.length>0){
-     for( var i=0; i< listAds.length; i++){
-        giaM2 = giaM2 + listAds[i].giaM2;
-     }
-     giaM2TrungBinh = giaM2 / listAds.length;
-
       for( var i=0; i< listAds.length; i++){
-        if (listAds[i].giaM2 >= giaM2TrungBinh*0.7 && listAds[i].giaM2 <= giaM2TrungBinh*1.3 ){
-          adsNgangGia.push(listAds[i]);
+        giaTrungBinh[listAds[i].loaiNhaDat-1].giaM2 += listAds[i].giaM2;
+        giaTrungBinh[listAds[i].loaiNhaDat-1].count += 1;
+      }
+
+      for (var h=0; h< giaTrungBinh.length; h++){
+        if (giaTrungBinh[h].count>=3){
+          giaTrungBinh[h].giaM2TrungBinh = giaTrungBinh[h].giaM2/giaTrungBinh[h].count;
+          giaTrungBinh[h].giaM2 = undefined; // remove giaM2
+          if (giaTrungBinh[h].loaiNhaDat == inputLoaiNhaDat){
+            pricing = giaTrungBinh[h];
+          } else {
+            giaTrungBinhKhac.push(giaTrungBinh[h]);
+          }
+        }
+      }
+
+      if (pricing != {}){
+        let numOfReturnAds = 1;
+        for( var i=0; i< listAds.length; i++){
+          if (listAds[i].loaiNhaDat == inputLoaiNhaDat){
+            adsNgangGia.push(listAds[i]);
+            if (numOfReturnAds >= 5)
+              break;
+            numOfReturnAds = numOfReturnAds + 1;
+          }
         }
       }
     }
 
-    reply({success: true, giaM2TrungBinh: giaM2TrungBinh, bdsNgangGia: _transform(adsNgangGia)});
+    let res = {
+      success: true,
+      data: {
+        radius: 500,
+        giaTrungBinh: pricing.count && pricing.count>=3 ? pricing : undefined,
+        giaTrungBinhKhac: giaTrungBinhKhac,
+        bdsNgangGia: pricing != {} ? _transform(adsNgangGia) : undefined
+      }
+    }
+
+    reply(res);
   });
 
 

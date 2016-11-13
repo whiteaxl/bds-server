@@ -389,7 +389,7 @@ var cache = {
       return false;
     }
 
-    if (q.giaBETWEEN && (q.giaBETWEEN[0] > 1 || q.giaBETWEEN[1] < 9999999)) {
+    if (q.giaBETWEEN && (q.giaBETWEEN[0] > 0 || q.giaBETWEEN[1] < 9999999)) {
       if (ads.gia < q.giaBETWEEN[0] || ads.gia > q.giaBETWEEN[1]) {
         return false;
       }
@@ -416,7 +416,7 @@ var cache = {
       }
     }
 
-    if ((q.dienTichBETWEEN) && (q.dienTichBETWEEN[0] > 1 || q.dienTichBETWEEN[1] < 9999999)) {
+    if ((q.dienTichBETWEEN) && (q.dienTichBETWEEN[0] > 0 || q.dienTichBETWEEN[1] < 9999999)) {
       if (ads.dienTich < q.dienTichBETWEEN[0] || ads.dienTich > q.dienTichBETWEEN[1]) {
         return false;
       }
