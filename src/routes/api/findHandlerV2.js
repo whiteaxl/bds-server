@@ -425,7 +425,7 @@ internals.getProductPricing = function (req, reply) {
   console.log("Get Product Pricing:", req.payload);
   let q = req.payload;
 
-  let box = geoUtil.getBoxOfCircle({lat:q.position.lat, lon:q.position.lon} , geoUtil.meter2degree(10));
+  let box = geoUtil.getBoxOfCircle({lat:q.position.lat, lon:q.position.lon} , geoUtil.meter2degree(0.5));
 
   _mergeViewportWithBox(q, box);
 
