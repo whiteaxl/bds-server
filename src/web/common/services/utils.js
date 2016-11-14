@@ -177,6 +177,7 @@
         sumOfPayment: pricipalPerMonth + interestPerMonth
       }
     }
+    
 
   };
 });
