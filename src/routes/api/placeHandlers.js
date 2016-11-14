@@ -159,6 +159,51 @@ function _getDuAnFromCache(diaChinhQuan) {
   return ret;
 }
 
+internals._getDiaChinhFromCache = function(codeDiaChinh) {
+  let placeCache = DBCache.placeAsArray();
+
+  if (!placeCache){
+    return undefined;
+  }
+  let placeType = 'T';
+  if (codeDiaChinh.huyen && codeDiaChinh.huyen.length>0)
+      placeType = 'H'
+  if (codeDiaChinh.xa && codeDiaChinh.xa.length>0)
+    placeType = 'X'
+
+  let ret = [];
+  for (var i=0; i < placeCache.length; i++) {
+    let e = placeCache[i];
+    if (placeType == 'T' && e.codeTinh == codeDiaChinh.tinh && e.placeType == placeType){
+      ret.push(e);
+    }
+
+    if (placeType == 'H'
+        && e.codeTinh == codeDiaChinh.tinh
+        && e.codeHuyen==codeDiaChinh.huyen
+        && e.placeType == placeType){
+      ret.push(e);
+    }
+
+    if (placeType == 'X'
+        && e.codeTinh == codeDiaChinh.tinh
+        && e.codeHuyen==codeDiaChinh.huyen
+        && e.codeXa==codeDiaChinh.xa
+        && e.placeType == placeType){
+      ret.push(e);
+    }
+
+  }
+
+  if (ret.length == 0) {
+    console.log("Not match!!!");
+    return undefined;
+  }
+
+  return ret;
+}
+
+
 
 internals.getPlaceByID = function(req,reply){
   var payload = req.payload;
@@ -238,6 +283,31 @@ internals.getPlaceByDiaChinhKhongDau = function(req,reply){
     }
 
 });
+};
+
+internals.getDuAnByDiaChinh = function(req,reply){
+  var payload = req.payload;
+  log.info("getPlaceByDiaChinhKhongDau, payload=", payload);
+
+  if (!payload.codeTinh) {
+    reply({
+      duAn: undefined,
+      success: false
+    });
+
+    return;
+  }
+  var diaChinh = {
+    tinh: req.payload.codeTinh,
+    huyen: req.payload.codeHuyen,
+  };
+  var duAn = _getDuAnFromCache(diaChinh);
+
+  duAn = (duAn && duAn.length>0) ? _convertFromPlaceRawList(duAn) : undefined;
+  reply({
+    duAn: duAn,
+    success: false
+  });
 };
 
 internals.autocomplete = function(req, reply) {
