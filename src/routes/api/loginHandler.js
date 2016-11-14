@@ -23,6 +23,8 @@ var chatHandler = require("../../lib/ChatHandler");
 
 var RewayMailer = require("../../lib/RewayMailer");
 
+var placeHandlers = require('./placeHandlers');
+
 
 /**
     Ham nay kiem tra xem user co ton tai trong he thong theo tat ca nhung dieu kien truyen vao
@@ -72,13 +74,30 @@ internals.login = function(req, reply){
 	          			userName: res[0].name,
 	          			userID: res[0].userID
         			}, JWT_SECRET);
+
+                    var lastSearch = res[0].lastSearch;
+                    if (lastSearch && lastSearch.length>0) {
+                        lastSearch.sort((a, b) => b.timeModified - a.timeModified);
+                        if (!lastSearch[0].query.viewport){
+                            let diaChinh = {
+                                tinh: lastSearch[0].query.diaChinh.tinhKhongDau || undefined,
+                                huyen: lastSearch[0].query.diaChinh.huyenKhongDau || undefined,
+                                xa: lastSearch[0].query.diaChinh.xaKhongDau || undefined
+                            }
+                            let diaChinhResult = placeHandlers._getDiaChinhFromCache(diaChinh);
+                            if (diaChinhResult && diaChinhResult.length>0 && diaChinhResult[0].geometry){
+                                lastSearch[0].query.viewport = diaChinhResult[0].geometry.viewport;
+                            }
+                        }
+                    }
+
         			result.login = true;
         			result.token = token;
         			result.userName = res[0].name;
         			result.userID = res[0].id;
                     result.email = res[0].email;
                     result.avatar = res[0].avatar;
-                    result.lastSearch = res[0].lastSearch;
+                    result.lastSearch = lastSearch;
                     result.lastViewAds = res[0].lastViewAds;
                     result.adsLikes = res[0].adsLikes;
                     result.phone = res[0].phone;
