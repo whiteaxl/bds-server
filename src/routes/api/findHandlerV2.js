@@ -430,6 +430,9 @@ internals.getProductPricing = function (req, reply) {
 
   q.giaBETWEEN = [1.1, 9999999];
   q.duAnKhongDau = q.codeDuAn;
+  if (q.codeDuAn){
+    q.diaChinh= {duAnKhongDau: q.codeDuAn};
+  }
   q.dbLimit = 500;
   q.dbPageNo =  1;
   q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
