@@ -93,8 +93,10 @@
 		        //console.log(res);
 		        if(res.data.success == true || res.data.status==1){
 		        	$rootScope.user.adsLikes.push(adsID);
+		        	showNotify('Tin đã được lưu', '.detailnotify');
 		        }
 		      });
+
 		    };
 
 		

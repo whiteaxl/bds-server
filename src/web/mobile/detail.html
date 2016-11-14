@@ -257,7 +257,7 @@
         <ul class="navmain nav-3 button">
         	<li><a role="button" class="btn btn-organe" href="tel:{{::mdt.ads.dangBoi.phone}}"><i class="iconPhone"></i> Gọi điện</a></li>
             <li><a role="button" class="btn btn-warning" href="chats.html"><i class="iconChat"></i> Chat</a></li>
-            <li><a role="button" class="btn btn-primary" href="javascript:void(0)" onclick="showNotify('Hiện tin đã được lưu', '.detailnotify');"><i class="iconHeart"></i> Lưu tin</a></li>
+            <li><a role="button" class="btn btn-primary" href="javascript:void(0)" ng-click="mdt.likeAds($event,mdt.ads.adsID);"><i class="iconHeart"></i> Lưu tin</a></li>
         </ul>
     </footer>
     <div class="overlay"></div>
