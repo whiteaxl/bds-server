@@ -95,15 +95,24 @@
 	        });
 
 	        return;
-	      }
-	      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
-	        //alert(res.data.msg);
-	        //console.log(res);
-	        if(res.data.success == true || res.data.status==1){
-	        	$rootScope.user.adsLikes.push(adsID);
-	        	//vm.likeAdsClass ="fa-heart";
-	        }
-	      });
+	      }	      
+	      let ind = $rootScope.user.adsLikes.indexOf(adsID);
+          if(ind >=0){
+            HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
+                if(res.status == 200){
+                    var index = $rootScope.user.adsLikes.indexOf(adsID);
+                    $rootScope.user.adsLikes.splice(index,1);                    
+                }                
+            });
+          } else{
+            HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+                //alert(res.data.msg);
+                //console.log(res);
+                if(res.data.success == true || res.data.status==1){
+                    $rootScope.user.adsLikes.push(adsID);
+                }
+            });  
+          }
 	    };
 		vm.showMore = function(index){
 			var query =  {};

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "17f5d7c460f056dec861"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "dc8f1c6262da21c8281a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21586,14 +21586,23 @@
 
 					return;
 				}
-				HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
-					//alert(res.data.msg);
-					//console.log(res);
-					if (res.data.success == true || res.data.status == 1) {
-						$rootScope.user.adsLikes.push(adsID);
-						//vm.likeAdsClass ="fa-heart";
-					}
-				});
+				var ind = $rootScope.user.adsLikes.indexOf(adsID);
+				if (ind >= 0) {
+					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
+						if (res.status == 200) {
+							var index = $rootScope.user.adsLikes.indexOf(adsID);
+							$rootScope.user.adsLikes.splice(index, 1);
+						}
+					});
+				} else {
+					HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
+						//alert(res.data.msg);
+						//console.log(res);
+						if (res.data.success == true || res.data.status == 1) {
+							$rootScope.user.adsLikes.push(adsID);
+						}
+					});
+				}
 			};
 			vm.showMore = function (index) {
 				var query = {};
@@ -29590,6 +29599,7 @@
 						//console.log(res);
 						if (res.data.success == true || res.data.status == 1) {
 							$rootScope.user.adsLikes.push(adsID);
+							showNotify('Tin đã được lưu', '.detailnotify');
 						}
 					});
 				};
