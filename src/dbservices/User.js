@@ -560,7 +560,8 @@ class UserModel {
             data._id = userID;
             data.name = data.email || data.phone;
             data.userID = data.id;
-            user.likeAds=[];
+            //user.likeAds=[];
+            data.likeAds=[];
             console.log("before upsert " + data.id);
 
             bucket.upsert(data.id, data, function (err, res) {
