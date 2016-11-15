@@ -287,7 +287,7 @@ internals.getPlaceByDiaChinhKhongDau = function(req,reply){
 
 internals.getDuAnByDiaChinh = function(req,reply){
   var payload = req.payload;
-  log.info("getPlaceByDiaChinhKhongDau, payload=", payload);
+  log.info("getDuAnByDiaChinh, payload=", payload);
 
   if (!payload.codeTinh) {
     reply({

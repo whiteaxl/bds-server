@@ -94,6 +94,7 @@ internals.login = function(req, reply){
         			result.login = true;
         			result.token = token;
         			result.userName = res[0].name;
+        			result.fullName = res[0].fullName;
         			result.userID = res[0].id;
                     result.email = res[0].email;
                     result.avatar = res[0].avatar;

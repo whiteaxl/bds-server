@@ -111,6 +111,8 @@
                         vm.viewport = res.data.place.geometry.viewport;
                     }
                     $scope.center = "[" +res.data.place.geometry.location.lat + "," + res.data.place.geometry.location.lon+"]";
+                    if(!$rootScope.searchData.diaChinh)
+                        $rootScope.searchData.diaChinh = {};
                     $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.codeTinh;
                     $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.codeHuyen;
                     $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.codeXa;
@@ -174,14 +176,24 @@
 	        });
 	        return;
 	      }
-	      HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
-	        //alert(res.data.msg);
-	        //console.log(res);
-	        if(res.data.success == true || res.data.status==1){
-	        	$rootScope.user.adsLikes.push(adsID);
-	        }
-	      });
-	    };
+          let ind = $rootScope.user.adsLikes.indexOf(adsID);
+          if(ind >=0){
+            HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
+                if(res.status == 200){
+                    var index = $rootScope.user.adsLikes.indexOf(adsID);
+                    $rootScope.user.adsLikes.splice(index,1);                    
+                }                
+            });
+          } else{
+            HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+                //alert(res.data.msg);
+                //console.log(res);
+                if(res.data.success == true || res.data.status==1){
+                    $rootScope.user.adsLikes.push(adsID);
+                }
+            });  
+          }	      
+	    };       
 
         vm.disableIdleHandler = function(){
             if(vm.zoomChangeHanlder)
@@ -434,11 +446,12 @@
                 vm.drawMove = undefined;    
             }            
         }
-        vm.drawMode = function(e){
-            if(vm.drawText == "Draw"){
+        vm.freeHand = false;
+        vm.toggleDrawMode = function(e){
+            if(vm.freeHand == false){
                 e.preventDefault();
                 console.log("enable draws");  
-                vm.drawText = "Exit";                 
+                vm.freeHand = true;                 
                 
                 vm.disable()
                 google.maps.event.addDomListener(vm.map.getDiv(),'mousedown',function(e){
@@ -453,7 +466,7 @@
                 // google.maps.event.clearListeners(vm.map.getDiv(), 'mousemove');                   
                 google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
                 vm.enable();
-                vm.drawText = "Draw";         
+                vm.freeHand = false;         
                 $rootScope.searchData.polygon = undefined;       
             }            
         }
@@ -726,6 +739,10 @@
             }else{
                 //vm.searchPage(vm.currentPage);
                 // vm.searchPage(1);
+                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
+                vm.enable();
+                vm.freeHand = false;         
+                $rootScope.searchData.polygon = undefined;   
                 vm.search();
             }            
         }

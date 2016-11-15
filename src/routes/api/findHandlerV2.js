@@ -370,7 +370,6 @@ function _doDBQueryAndCount(q, reply) {
 
 internals.findAds = function (q, reply) {
   if (q.userID && q.updateLastSearch) {
-    //console.log(JSON.stringify(q));
     _updateLastSearch(q);
   }
   _mergeViewportWithPolygonBox(q);
@@ -430,6 +429,10 @@ internals.getProductPricing = function (req, reply) {
   _mergeViewportWithBox(q, box);
 
   q.giaBETWEEN = [1.1, 9999999];
+  q.duAnKhongDau = q.codeDuAn;
+  if (q.codeDuAn){
+    q.diaChinh= {duAnKhongDau: q.codeDuAn};
+  }
   q.dbLimit = 500;
   q.dbPageNo =  1;
   q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
