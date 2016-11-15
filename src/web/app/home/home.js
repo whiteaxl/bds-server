@@ -10,7 +10,7 @@
 
   var _ = require('lodash');
 
-  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll'])
+  var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll','ngDialog'])
   .run(['jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
@@ -556,6 +556,11 @@
           templateUrl: "/web/mobile/adsMgmt.html",
           controller: "MobileAdsMgmtCtrl",
           controllerAs: 'mamc'
+      }).state('mchatDetail', {
+          url: "/mobile/chatDetail/:adsID",
+          templateUrl: "/web/mobile/chatDetail.html",
+          controller: "MobileChatDetailCtrl",
+          controllerAs: 'mcdc'
       })
     });
   bds.factory('socket', function (socketFactory) {

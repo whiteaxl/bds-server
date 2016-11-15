@@ -44,6 +44,7 @@ require("./src/web/app/mobile/MobileHomeCtrl.js");
 require("./src/web/app/mobile/MobileSearchCtrl.js");
 require("./src/web/app/mobile/MobileDetailCtrl.js");
 require("./src/web/app/mobile/MobileChatCtrl.js");
+ require("./src/web/app/mobile/MobileChatDetailCtrl.js");
 require("./src/web/app/mobile/MobilePostCtrl.js");
 require("./src/web/app/mobile/MobileAdsMgmtCtrl.js");
 
@@ -53,7 +54,6 @@ require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileFilterDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileHeaderDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileLoginDirective.js");
-
 
 
 //Libs
