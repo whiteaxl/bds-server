@@ -285,6 +285,52 @@ internals.getPlaceByDiaChinhKhongDau = function(req,reply){
 });
 };
 
+internals.getDiaChinhByTenKhongDau = function(diaChinh){
+  let placeCache = DBCache.placeAsArray();
+
+  if (!placeCache){
+    return undefined;
+  }
+  let placeType = 'T';
+  if (diaChinh.huyenKhongDau && diaChinh.huyenKhongDau.length>0)
+    placeType = 'H'
+  if (diaChinh.xaKhongDau && diaChinh.xaKhongDau.length>0)
+    placeType = 'X'
+
+  let ret = [];
+  for (var i=0; i < placeCache.length; i++) {
+    let e = placeCache[i];
+    if (placeType == 'T'
+        && e.tinhKhongDau == diaChinh.tinhKhongDau
+        && e.placeType == placeType){
+      ret.push(e);
+    }
+
+    if (placeType == 'H'
+        && e.tinhKhongDau == diaChinh.tinhKhongDau
+        && e.huyenKhongDau == diaChinh.huyenKhongDau
+        && e.placeType == placeType){
+      ret.push(e);
+    }
+
+    if (placeType == 'X'
+        && e.tinhKhongDau == diaChinh.tinhKhongDau
+        && e.huyenKhongDau==diaChinh.huyenKhongDau
+        && e.xaKhongDau==diaChinh.xaKhongDau
+        && e.placeType == placeType){
+      ret.push(e);
+    }
+
+  }
+
+  if (ret.length == 0) {
+    console.log("Not match!!!");
+    return undefined;
+  }
+
+  return ret;
+};
+
 internals.getDuAnByDiaChinh = function(req,reply){
   var payload = req.payload;
   log.info("getDuAnByDiaChinh, payload=", payload);
