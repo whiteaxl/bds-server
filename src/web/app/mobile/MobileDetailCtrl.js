@@ -46,6 +46,37 @@
 		  	"pageNo": 1
 		};
 
+		$scope.showAlert = function(ev) {
+			// Appending dialog to document.body to cover sidenav in docs app
+			// Modal dialogs should fully cover application
+			// to prevent interaction outside of dialog
+			console.log("--------------showAlert----------");
+			$mdDialog.show(
+				$mdDialog.alert()
+					.parent(angular.element(document.querySelector('#popupContainer')))
+					.clickOutsideToClose(true)
+					.title('This is an alert title')
+					.textContent('You can specify some description text in here.')
+					.ariaLabel('Alert Dialog Demo')
+					.ok('Got it!')
+					.targetEvent(ev)
+			);
+		};
+
+		vm.openChat = function(event){
+			var userExist = true;
+			if(userExist){
+				//ngDialog.open({ template: 'templateId' });
+				$state.go('mchatDetail', { "adsID" : vm.adsID});
+				$(".overlay").click();
+			} else{
+				console.log("--------------mailTo----1---------------");
+				var href = $('#mailTo').attr('href');
+				window.location.href = href;
+				console.log("--------------mailTo--------1-2----------");
+			}
+		}
+
 		if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition(function(position){
 	        	$rootScope.currentLocation.lat = position.coords.latitude;
@@ -93,10 +124,8 @@
 		        //console.log(res);
 		        if(res.data.success == true || res.data.status==1){
 		        	$rootScope.user.adsLikes.push(adsID);
-		        	showNotify('Tin đã được lưu', '.detailnotify');
 		        }
 		      });
-
 		    };
 
 		

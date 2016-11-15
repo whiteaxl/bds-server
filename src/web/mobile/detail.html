@@ -139,7 +139,7 @@
                 	<a href="fb:" class="p-icon i-fb"></a>                    
                     <a href="sms:" class="p-icon i-sms"></a>
                     <a href="zalo:" class="p-icon i-zalo"></a>
-                    <a href="mailto:" class="p-icon i-email"></a>
+                    <a href="mailto:" id="mailTo" class="p-icon i-email"></a>
                 </div>
                 <div class="pull-right">
                 	<a href="#" class="p-icon i-share"></a>
@@ -256,7 +256,7 @@
     <footer class="main border uln">
         <ul class="navmain nav-3 button">
         	<li><a role="button" class="btn btn-organe" href="tel:{{::mdt.ads.dangBoi.phone}}"><i class="iconPhone"></i> Gọi điện</a></li>
-            <li><a role="button" class="btn btn-warning" href="chats.html"><i class="iconChat"></i> Chat</a></li>
+            <li><a role="button" class="btn btn-warning" href="#" ng-click="mdt.openChat(event)"><i class="iconChat"></i> Chat</a></li>
             <li><a role="button" class="btn btn-primary" href="javascript:void(0)" ng-click="mdt.likeAds($event,mdt.ads.adsID);"><i class="iconHeart"></i> Lưu tin</a></li>
         </ul>
     </footer>
