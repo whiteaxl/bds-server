@@ -21,7 +21,12 @@ function getDiaChinh(bds) {
   };
 
   diaChinh.tinh = DBCache.placeById("Place_T_" + diaChinh.codeTinh).placeName;
-  diaChinh.huyen =DBCache.placeById("Place_H_" + diaChinh.codeHuyen).placeName;
+  if (!DBCache.placeById("Place_H_" + diaChinh.codeHuyen)) {
+    logUtil.error("NO Huyen:", diaChinh.codeHuyen);
+    return diaChinh;
+  }
+
+  diaChinh.huyen = DBCache.placeById("Place_H_" + diaChinh.codeHuyen).placeName;
   if (diaChinh.codeXa) {
     let tmp = DBCache.placeById("Place_X_" + diaChinh.codeXa);
     if (!tmp) {
