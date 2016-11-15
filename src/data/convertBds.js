@@ -107,7 +107,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN'  order by timeModified limit 10"
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' "
     + condition;
     //+ " limit 5000";
     //+ " and id = 'Ads_raw_bds_10473652' ";

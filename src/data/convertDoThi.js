@@ -114,7 +114,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' limit 1000" + condition;
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' " + condition;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
