@@ -20,6 +20,20 @@ module.exports = {
     //rootUrl : `http://${process.env.OPENSHIFT_NODEJS_IP || '192.168.0.109'}:5000`,
     rootUrl : "http://192.168.0.109:5000",
   },
-  noCoverUrl : "http://203.162.13.177:5000/web/asset/img/reland_house_large.jpg"
+  noCoverUrl : "http://203.162.13.177:5000/web/asset/img/reland_house_large.jpg",
+  esms : {
+    APIKEY:"80FFA052B5321FE40A7633AA0F01F6",
+    SECRETKEY: "6697FF3D7420874690FFC6CAC9C7CE",
 
+    SendMultipleMessageURL : "http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V2/",
+    RETURN_CODE : {
+      SUCCESS: 100,
+      100: "Request thành công",
+      99: "Lỗi không xác định , thử lại sau",
+      101: "Đăng nhập thất bại (api key hoặc secrect key không đúng )",
+      102: "Tài khoản đã bị khóa",
+      103: "Số dư tài khoản không đủ dể gửi tin",
+      104: "Mã Brandname không đúng"
+    }
+  }
 };

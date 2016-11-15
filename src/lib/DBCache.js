@@ -10,10 +10,7 @@ var placeUtil = require('./placeUtil');
 
 var loki = require("lokijs");
 
-var REFRESH_INTERVAL = 180;//seconds
-var ADS_BATCH_SIZE = 800000; //each loading batch
-var ADS_NUMBER_OF_BATCH = 1;
-var ADS_BATCH_WAIT = 20; //seconds, waiting after each loading batch
+var constants = require("./constant");
 
 var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
   , "place", "loaiNhaDat", "huongNha", "ngayDangTin", "chiTiet", "dangBoi"];
@@ -28,6 +25,7 @@ var adsCol = db.addCollection('ads', {
 global.rwcache = {};
 
 global.lastSyncTime = 0;
+
 
 function loadDoc(type, callback) {
   let sql = `select t.* from default t where type='${type}' `;
@@ -53,15 +51,11 @@ function loadDoc(type, callback) {
 }
 
 
-function loadAds(limit, offset, isFull, callback) {
+function loadAds(isFull, callback) {
   let type = 'Ads';
   let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin,timeExtracted ";
-
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
-
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
-
-  //let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime} limit ${limit} offset ${offset} `   ;
 
   let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime}`   ;
   commonService.query(sql, (err, list) => {
@@ -87,7 +81,7 @@ function loadAds(limit, offset, isFull, callback) {
       }
     });
 
-    logUtil.info("Done load all " + type, list.length + " records" + ", offset="+offset);
+    logUtil.info("Done load all " + type, list.length + " records");
 
     callback(list.length);
   });
@@ -167,7 +161,7 @@ var cache = {
           that.reloadAds(() => {
             this.updateLastSyncTime(lastSyncTime);
           }, isFull);
-        }, REFRESH_INTERVAL*1000);
+        }, constants.DBCACHE.REFRESH_INTERVAL*1000);
 
         done && done();
       }
@@ -189,24 +183,14 @@ var cache = {
     this._loadingAds = true;
     let that = this;
 
-    let limit = ADS_BATCH_SIZE;
     let total = 0;
-    let cnt = 0;
-    let n = ADS_NUMBER_OF_BATCH;
 
-    for (let i = 0; i < n; i++) {
-      setTimeout(()=> {
-        loadAds(limit, limit * i, isFull, (length)=> {
-          total += length;
-          cnt ++;
-          if (cnt == n) {
-            logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
-            that._loadingAds = false;
-            done && done();
-          }
-        });
-      }, ADS_BATCH_WAIT*1000*i);
-    }
+    loadAds(isFull, (length)=> {
+      total += length;
+      logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
+      that._loadingAds = false;
+      done && done();
+    });
   },
 
   reloadPlaces(done) {
@@ -229,16 +213,14 @@ var cache = {
     return adsCol.by('id', id);
   },
 
- updateCache(ads){
-   updateCache(ads);
- },
+  updateCache(ads){
+    updateCache(ads);
+  },
 
   upsertAdsIfChanged(ads, callback) {
     let fromDB = this.adsById(ads.id);
     if (!fromDB) { //insert
-      commonService.upsert(ads, (err, res) => {
-        callback(err, 1);
-      });
+      callback(1);
     } else {
       let c1 = _.clone(fromDB);
       let c2 = _.clone(ads);
@@ -250,6 +232,9 @@ var cache = {
       if (c2.image.images && c2.image.images.length == 0) {
         c2.image.images = null;
       }
+      //no need compare geo, just need compare originalGeo
+      c1.place.geo = null;
+      c2.place.geo = null;
 
       let needUpdate = false;
       let f;
@@ -262,11 +247,9 @@ var cache = {
       }
 
       if (needUpdate) { //update
-        commonService.upsert(ads, (err, res) => {
-          callback(err, 2);
-        });
+        callback(2);
       } else { //same, no need any action
-        callback(null, 0);
+        callback(0);
       }
     }
   },

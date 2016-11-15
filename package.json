@@ -71,6 +71,7 @@
     "vision": "^4.0.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
+    "xml2js": "^0.4.17",
     "xoauth2": "^1.1.0"
   },
   "devDependencies": {

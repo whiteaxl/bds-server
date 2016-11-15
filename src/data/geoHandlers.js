@@ -5,27 +5,13 @@ var commonService = new CommonService;
 
 var logUtil = require("../lib/logUtil");
 var geoUtil = require("../lib/geoUtil");
+var services = require("../lib/services");
 
 var DBCache = require("../lib/DBCache");
 
+var constants = require("../lib/constant");
 
-function loadPlaces(callback) {
-  let sql = "select t.* from default t where type='Place' ";
-  commonService.query(sql, (err, list) => {
-    if (err) {
-      logUtil.error(err);
-      return;
-    }
-    list.forEach(e => {
-      g_cachePlaces[e.id] = e;
-    });
-
-    logUtil.info("Done load Places", list.length);
-
-    callback();
-  });
-}
-
+var _ = require("lodash");
 
 let geoHanders = {
   notMatchDiaChinhAndGeo : function(myPlace) {
@@ -177,18 +163,68 @@ let geoHanders = {
   useParentViewportXa(done) {
     let sql = `select t.* from default t where type='Place' and placeType='X' and ggMatched=false and codeTinh='HCM'`;
     this.useParentViewportBySql(sql, done);
+  },
+
+  _assignGeoFromDiaChinh(ads) {
+    //will assign center of Place.diaChinh to ads.geo
+    let dc = ads.place.diaChinh;
+    let id;
+    if (dc.codeXa) {
+      id = "Place_X_" + dc.codeXa;
+    } else if (dc.codeDuAn) {
+      id = "Place_A_" + dc.codeDuAn;
+    } else {
+      id = "Place_H_" + dc.codeHuyen;
+    }
+
+    let placeFromDB = DBCache.placeById(id);
+    if (placeFromDB) {
+      ads.place.geo = placeFromDB.geometry && placeFromDB.geometry.location;
+      ads.getGeoBy = "diaChinh";
+    }
+  },
+
+  getGeocodingByAddress(ads, callback) {
+    let that = this;
+    services.getGeocodingByAddress(ads.place.diaChi, (places) => {
+      if (!places || places.length==0) {
+        //console.error("Can not get geo by google!");
+        that._assignGeoFromDiaChinh(ads);
+        callback(ads);
+        return null
+      }
+
+      let geo = ads.place.geo;
+
+      for (let i = 0; i < places.length; i++) {
+        let p = places[i];
+        //console.log("found place by google:" , p);
+        geo.lat = p.geometry.location.lat;
+        geo.lon = p.geometry.location.lng;
+
+        let checkGeo = that.notMatchDiaChinhAndGeo(ads.place);
+        if (checkGeo.inVP == 0
+          || checkGeo.GEOvsDC_distance - checkGeo.DC_radius < constants.CONVERT.GEO_TOLERANCE) {
+
+          geo.ggPlaceID = p.place_id;
+          geo.ggFormatted_address = p.formatted_address;
+          ads.getGeoBy = "google";
+
+          callback(ads);
+
+          return;
+        }
+      }
+
+      //reset and get from diaChinh
+      geo.lat = null; geo.lon = null;
+      that._assignGeoFromDiaChinh(ads);
+
+      callback(ads);
+    });
   }
+
 };
 
 //----------------------------------------------------------------------
-/*
-loadPlaces(() => {
-  geoHanders.getDiaChinhNotMatchGeo(() => {
-    logUtil.info("DONE ALL");
-    process.exit(0);
-  })
-});
-
-*/
-
 module.exports = geoHanders;

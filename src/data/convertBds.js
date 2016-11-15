@@ -10,34 +10,14 @@ var geoUtil = require("../lib/geoUtil");
 
 var DBCache = require("../lib/DBCache");
 var _ = require("lodash");
-
-function getBdsImage(bds) {
-  let image = {
-    cover : bds.image.cover,
-    images : bds.image.images
-  };
-
-  if (image.cover.indexOf("no-photo") > -1) {
-    image.cover = undefined;
-  }
-
-  return image;
-}
-
-function toRewayCode(code) {
-  if (!code || code == "0" || code == "-1") {
-    return undefined;
-  }
-
-  return code;
-}
+var helper = require("./convertHelper");
 
 function getDiaChinh(bds) {
   let diaChinh = {
-    codeTinh : toRewayCode(bds.emailRegister_cityCode),
-    codeHuyen : toRewayCode(bds.emailRegister_distId),
-    codeXa : toRewayCode(bds.emailRegister_wardId),
-    codeDuAn : toRewayCode(bds.emailRegister_projId)
+    codeTinh : helper.toRewayCode(bds.emailRegister_cityCode),
+    codeHuyen : helper.toRewayCode(bds.emailRegister_distId),
+    codeXa : helper.toRewayCode(bds.emailRegister_wardId),
+    codeDuAn : helper.toRewayCode(bds.emailRegister_projId)
   };
 
   diaChinh.tinh = DBCache.placeById("Place_T_" + diaChinh.codeTinh).placeName;
@@ -75,14 +55,15 @@ function convertBds(bds) {
     ads.giaM2 = -1;
   }
 
-  ads.image = getBdsImage(bds);
+  ads.image = helper.getBdsImage(bds);
   ads.loaiNhaDat = bds.loaiNhaDat;
   ads.loaiTin = bds.loaiTin;
   ads.ngayDangTin = bds.ngayDangTin;
   ads.place = {
     diaChi : bds.place.diaChi,
     diaChinh : getDiaChinh(bds),
-    geo : bds.place.geo
+    geo : bds.place.geo,
+    originalGeo : _.cloneDeep(bds.place.geo)
   };
   ads.soPhongNgu = bds.soPhongNgu;
   ads.soPhongTam = bds.soPhongTam;
@@ -100,12 +81,18 @@ function convertBds(bds) {
 
   ads.url = bds.url;
 
+  ads.getGeoBy = "source";
+
   //check geo vs place
-  let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
-  ads.GEOvsDC = checkGeo.inVP;
-  ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
-  ads.DC_radius = checkGeo.DC_radius;
-  ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
+  if (ads.place.geo.lat) {
+    let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
+    ads.GEOvsDC = checkGeo.inVP;
+    ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
+    ads.DC_radius = checkGeo.DC_radius;
+    ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
+  } else {
+    ads.GEOvsDC = 4; //no geo data
+  }
 
   return ads;
 }
@@ -120,7 +107,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN' and place.geo.lat is not null "
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'BATDONGSAN.COM.VN'  order by timeModified limit 10"
     + condition;
     //+ " limit 5000";
     //+ " and id = 'Ads_raw_bds_10473652' ";
@@ -135,7 +122,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     let cnt = 0, cntChanged = 0, cntNew = 0;
     list.forEach(e => {
       ads = convertBds(e);
-      DBCache.upsertAdsIfChanged(ads, (err, res) => {
+      helper.upsertAdsIfChanged(ads, (res) => {
         if (res == 0) { //same, no need any action
           cnt++;
         }
@@ -163,23 +150,5 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
 
   });
 }
-
-function loadPlaces(callback) {
-  let sql = "select t.* from default t where type='Place' ";
-  commonService.query(sql, (err, list) => {
-    if (err) {
-      logUtil.error(err);
-      return;
-    }
-    list.forEach(e => {
-      g_cachePlaces[e.id] = e;
-    });
-
-    logUtil.info("Done load Places", list.length);
-
-    callback();
-  });
-}
-
 //-----------------------------------------------------------
-module.exports = {loadPlaces, convertAllBds};
+module.exports = {convertAllBds};

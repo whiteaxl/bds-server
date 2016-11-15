@@ -80,6 +80,22 @@ internals.PAYMENT = {
   MANUAL_BANK_TRANSFER : "manualBankTransfer"
 };
 
+//Convert
+internals.CONVERT = {
+  GEO_TOLERANCE : 2500 //cho phep sai so xxx met
+};
+
+internals.DBCACHE = {
+  REFRESH_INTERVAL : 180 //seconds
+};
+
+internals.ADS_STATUS = {
+  OK: 0, 
+  KHONG_CO_DANH_MUC_DIA_CHINH_TUONG_UNG : 1,
+};
+
+
+
 if (typeof(window) !== 'undefined')
    window.RewayConst = internals;
 module.exports  = internals;

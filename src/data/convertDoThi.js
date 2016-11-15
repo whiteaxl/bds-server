@@ -7,36 +7,19 @@ var logUtil = require("../lib/logUtil");
 
 var geoHandlers = require("./geoHandlers");
 
+var constants = require("../lib/constant");
+
 var DBCache = require("../lib/DBCache");
 var _ = require("lodash");
 
-function getBdsImage(bds) {
-  let image = {
-    cover : bds.image.cover,
-    images : bds.image.images
-  };
-
-  if (!image.cover) {
-    image.cover = undefined;
-  }
-
-  return image;
-}
-
-function toRewayCode(code) {
-  if (!code || code == "0" || code == "-1") {
-    return undefined;
-  }
-
-  return code;
-}
+var helper = require("./convertHelper");
 
 function getDiaChinh(bds) {
   let diaChinh = {
-    codeTinh : toRewayCode(bds.extMaCity),
-    codeHuyen : toRewayCode(bds.extMaDist),
-    codeXa : toRewayCode(bds.extMaWard),
-    codeDuAn : toRewayCode(bds.extMaProject)
+    codeTinh : helper.toRewayCode(bds.extMaCity),
+    codeHuyen : helper.toRewayCode(bds.extMaDist),
+    codeXa : helper.toRewayCode(bds.extMaWard),
+    codeDuAn : helper.toRewayCode(bds.extMaProject)
   };
 
   if (!DBCache.placeById("Place_T_" + diaChinh.codeTinh)) {
@@ -58,7 +41,7 @@ function getDiaChinh(bds) {
   if (diaChinh.codeDuAn) {
     let tmp = DBCache.placeById("Place_A_" + diaChinh.codeDuAn);
     if (!tmp) {
-      logUtil.error("NO DuAn:", diaChinh.codeDuAn);
+      logUtil.error("NO DuAn:", diaChinh.codeDuAn + " for id:" + bds.id);
     } else {
       diaChinh.duAn = tmp.placeName;
     }
@@ -80,14 +63,15 @@ function convertBds(bds) {
     ads.giaM2 = -1;
   }
 
-  ads.image = getBdsImage(bds);
+  ads.image = helper.getBdsImage(bds);
   ads.loaiNhaDat = bds.loaiNhaDat;
   ads.loaiTin = bds.loaiTin;
   ads.ngayDangTin = bds.ngayDangTin;
   ads.place = {
     diaChi : bds.place.diaChi,
     diaChinh : getDiaChinh(bds),
-    geo : bds.place.geo
+    geo : bds.place.geo,
+    originalGeo : _.cloneDeep(bds.place.geo)
   };
   ads.soPhongNgu = bds.soPhongNgu;
   ads.soPhongTam = bds.soPhongTam;
@@ -104,12 +88,18 @@ function convertBds(bds) {
 
   ads.url = bds.url;
 
+  ads.getGeoBy = "source";
+
   //check geo vs place
-  let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
-  ads.GEOvsDC = checkGeo.inVP;
-  ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
-  ads.DC_radius = checkGeo.DC_radius;
-  ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
+  if (ads.place.geo.lat) {
+    let checkGeo = geoHandlers.notMatchDiaChinhAndGeo(ads.place);
+    ads.GEOvsDC = checkGeo.inVP;
+    ads.GEOvsDC_distance = checkGeo.GEOvsDC_distance;
+    ads.DC_radius = checkGeo.DC_radius;
+    ads.GEOvsDC_diff = checkGeo.GEOvsDC_distance - checkGeo.DC_radius;
+  } else {
+    ads.GEOvsDC = 4; //no geo data
+  }
 
   return ads;
 }
@@ -124,7 +114,7 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     condition = `${condition} and ngayDangTin <= '${ngayDangTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' and place.geo.lat is not null  " + condition;
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'DOTHI.NET' limit 1000" + condition;
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
@@ -132,12 +122,13 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
     }
 
     let ads = null;
-    let cnt = 0, cntChanged = 0, cntNew = 0;
+    let cnt = 0, cntChanged = 0, cntNew = 0, cntWrongData=0;
     list.forEach(e => {
       ads = convertBds(e);
-      DBCache.upsertAdsIfChanged(ads, (err, res) => {
+      helper.upsertAdsIfChanged(ads, (res) => {
         if (res == 0) { //same, no need any action
           cnt++;
+          return;
         }
         if (res == 1) { //insert
           cnt++;
@@ -163,23 +154,5 @@ function convertAllBds(callback, ngayDangFrom, ngayDangTo) {
   });
 }
 
-function loadPlaces(callback) {
-  let sql = "select t.* from default t where type='Place' ";
-  commonService.query(sql, (err, list) => {
-    if (err) {
-      logUtil.error(err);
-      return;
-    }
-
-    list.forEach(e => {
-      g_cachePlaces[e.id] = e;
-    });
-
-    logUtil.info("Done load Places:", list.length);
-
-    callback();
-  });
-}
-
 //-----------------------------------------------------------
-module.exports = {loadPlaces, convertAllBds};
+module.exports = {convertAllBds};
