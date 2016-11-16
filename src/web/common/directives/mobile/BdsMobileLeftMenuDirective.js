@@ -30,6 +30,22 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     $("body").removeClass("bodyNavShow").removeAttr("style");
                     $("nav.main").removeAttr("style");
                 }
+
+                vm.gotoChatPage = function(){
+                    console.log("-------vao mchats");
+                    vm.hideMenuLeft();
+                    if($rootScope.isLoggedIn()==false){
+                        $scope.$bus.publish({
+                            channel: 'login',
+                            topic: 'show login',
+                            data: {label: "Đăng nhập để đăng tin"}
+                        });
+                        return true;
+                    }
+                    $state.go('mchats');
+                    $(".overlay").click();
+                }
+                
                 vm.gotoDangTinPage = function(event){
                     console.log("-------vao mpost");
                     vm.hideMenuLeft();

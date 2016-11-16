@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "93200d2761343527b72e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "eb871ccda4513ad77cf6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1505,11 +1505,6 @@
 	      templateUrl: "/web/mobile/detail.html",
 	      controller: "MobileDetailCtrl",
 	      controllerAs: 'mdt'
-	    }).state('mchats', {
-	      url: "/mobile/chats/:adsID",
-	      templateUrl: "/web/mobile/chats.html",
-	      controller: "MobileChatCtrl",
-	      controllerAs: 'mcc'
 	    }).state('mpost', {
 	      url: "/mobile/post/:adsID",
 	      templateUrl: "/web/mobile/post.html",
@@ -1520,6 +1515,11 @@
 	      templateUrl: "/web/mobile/adsMgmt.html",
 	      controller: "MobileAdsMgmtCtrl",
 	      controllerAs: 'mamc'
+	    }).state('mchats', {
+	      url: "/mobile/chats",
+	      templateUrl: "/web/mobile/chats.html",
+	      controller: "MobileChatCtrl",
+	      controllerAs: 'mcc'
 	    }).state('mchatDetail', {
 	      url: "/mobile/chatDetail/:adsID",
 	      templateUrl: "/web/mobile/chatDetail.html",
@@ -20583,6 +20583,12 @@
 	      },
 	      getUserInfo: function getUserInfo(data) {
 	        return $http.post("/api/user/getUserInfo", data);
+	      },
+	      getInboxMsg: function getInboxMsg(data) {
+	        return $http.post("/api/getInboxMsg", data);
+	      },
+	      getAllChatMsg: function getAllChatMsg(data) {
+	        return $http.post("/api/getAllChatMsg", data);
 	      }
 
 	    };
@@ -28150,7 +28156,7 @@
 
 /***/ },
 /* 35 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -28158,8 +28164,142 @@
 		'use strict';
 
 		var controllerId = 'MobileChatCtrl';
-		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location) {
+		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, socket, $compile, NewsService, NgMap, $window, $timeout, $location) {
 			var vm = this;
+			vm.allInbox = [];
+			vm.allSaleInbox = [];
+			vm.allRentInbox = [];
+
+			vm.getChatTime = function (date) {
+				var mm = date.getMonth() + 1; // getMonth() is zero-based
+				mm = mm >= 10 ? mm : '0' + mm;
+				var dd = date.getDate();
+				dd = dd >= 10 ? dd : '0' + dd;
+				var hour = date.getHours();
+				hour = hour >= 10 ? hour : '0' + hour;
+				var minute = date.getMinutes();
+				minute = minute >= 10 ? minute : '0' + minute;
+
+				return dd + ' tháng ' + mm + ' ' + hour + ':' + minute;
+			};
+			HouseService.getInboxMsg({ userID: $rootScope.user.userID }).then(function (res) {
+				console.log("---------------getInboxMsg-----------------");
+				if (res.status == 200 && res.data.status == 0) {
+					vm.allInbox = res.data.data;
+					if (vm.allInbox.length > 0) {
+						var async = __webpack_require__(30);
+						async.forEach(vm.allInbox, function (inbox) {
+							HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: inbox.partner.userID, adsID: inbox.relatedToAds.adsID }).then(function (res) {
+								console.log("-----------getAllChatMsg-----------");
+								if (res.status == 200 && res.data.status == 0) {
+									if (res.data.data.length > 0) {
+										inbox.lastMsg = res.data.data[0].default.content;
+										inbox.lastDate = vm.getChatTime(new Date(res.data.data[0].default.date));
+									}
+								}
+							});
+						}, function (err) {
+							if (err) {
+								throw err;
+							}
+							console.log("processing all elements completed");
+						});
+
+						console.log(vm.allInbox);
+
+						var inbox;
+						//check co nen dua doan tach nay vao each tren do ko
+
+						for (var i = 0; i < vm.allInbox.length; i++) {
+							inbox = vm.allInbox[i];
+
+							if (inbox.relatedToAds.loaiTin == 0) {
+								vm.allSaleInbox.push(inbox);
+							} else {
+								vm.allRentInbox.push(inbox);
+							}
+						}
+					}
+					socket.emit('get-unread-message', { userID: $rootScope.user.userID }, function (data) {
+						console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+						console.log(data);
+					});
+				}
+			});
+
+			vm.openChatDetail = function (event) {
+				$state.go('mchatDetail', { "adsID": vm.adsID });
+				$(".overlay").click();
+			};
+
+			socket.on("new message", function (data) {
+				console.log("------------------------newMessage---------------");
+				console.log(data);
+				//vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
+				//data.date = new Date(data.date);
+				//window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+				//$scope.$apply();
+				// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
+			});
+
+			socket.on("unread-messages", function (data) {
+				console.log("-------------------unreadMessage-----------------");
+				console.log(data);
+				if (data.length > 0) {
+					var inbox;
+					var count = 0;
+					if (vm.allInbox.length > 0) {
+						for (var i = 0; i < vm.allInbox.length; i++) {
+							inbox = vm.allInbox[i];
+							count = 0;
+							for (var i = 0; i < data.length; i++) {
+								var msg = data[i].default;
+								msg.date = new Date(msg.date);
+								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
+									count++;
+								}
+							}
+							if (count > 0) {
+								inbox.unreadCount = count;
+							}
+						}
+					}
+					if (vm.allSaleInbox.length > 0) {
+						for (var i = 0; i < vm.allSaleInbox.length; i++) {
+							inbox = vm.allSaleInbox[i];
+							count = 0;
+							for (var i = 0; i < data.length; i++) {
+								var msg = data[i].default;
+								msg.date = new Date(msg.date);
+								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
+									count++;
+								}
+							}
+							if (count > 0) {
+								inbox.unreadCount = count;
+							}
+						}
+					}
+					if (vm.allRentInbox.length > 0) {
+						for (var i = 0; i < vm.allRentInbox.length; i++) {
+							inbox = vm.allRentInbox[i];
+							count = 0;
+							for (var i = 0; i < data.length; i++) {
+								var msg = data[i].default;
+								msg.date = new Date(msg.date);
+								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
+									count++;
+								}
+							}
+							if (count > 0) {
+								inbox.unreadCount = count;
+							}
+						}
+					}
+				}
+				console.log("-------------------unreadMessage--------1---------");
+				console.log(vm.allInbox);
+			});
 		});
 	})();
 
@@ -28177,7 +28317,6 @@
 			// Chat Page Controller
 			// Varialbles Initialization.
 			var vm = this;
-			vm.adsID = $state.params.adsID;
 			vm.adsID = $state.params.adsID;
 			vm.ads = null;
 			vm.user = null;
@@ -28324,11 +28463,11 @@
 
 			$scope.getMessage = function () {
 				return {
-					fromUserID: $rootScope.user.userID,
-					fromUserAvatar: $rootScope.user.userAvatar,
-					toUserID: $scope.chatBox.user.userID,
+					fromUserID: vm.user.userID.trim(),
+					fromUserAvatar: vm.user.avatar,
+					toUserID: $scope.chatBox.user.userID.trim(),
 					toFullName: $scope.chatBox.user.name,
-					fromFullName: $rootScope.user.userName,
+					fromFullName: vm.user.fullName,
 					relatedToAds: $scope.chatBox.ads,
 					content: vm.chatMsg,
 					msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT,
@@ -28412,7 +28551,7 @@
 			// ====================================== Messege Sending Code ============================
 			// sending text message function
 			vm.sendMsg = function () {
-				console.log("---------------sendMsg---------------");
+				console.log("---------------sendMsg------1---------");
 				if (vm.chatMsg) {
 					vm.isFileSelected = false;
 					vm.isMsg = true;
@@ -28430,6 +28569,7 @@
 							vm.setFocus = true;
 							msg.timeStamp = dateString;
 							// $scope.chatBox.messages.push(msg);
+							console.log(msg);
 							window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 							$scope.$apply();
 							//$('#' + $scope.chatBox.position + '_chat-history').scrollTop($('#' + $scope.chatBox.position + '_chat-history')[0].scrollHeight);
@@ -29670,6 +29810,22 @@
 	                $("body").removeClass("bodyNavShow").removeAttr("style");
 	                $("nav.main").removeAttr("style");
 	            };
+
+	            vm.gotoChatPage = function () {
+	                console.log("-------vao mchats");
+	                vm.hideMenuLeft();
+	                if ($rootScope.isLoggedIn() == false) {
+	                    $scope.$bus.publish({
+	                        channel: 'login',
+	                        topic: 'show login',
+	                        data: { label: "Đăng nhập để đăng tin" }
+	                    });
+	                    return true;
+	                }
+	                $state.go('mchats');
+	                $(".overlay").click();
+	            };
+
 	            vm.gotoDangTinPage = function (event) {
 	                console.log("-------vao mpost");
 	                vm.hideMenuLeft();
@@ -30736,6 +30892,7 @@
 	                  vm.state = vm.LOGGED_IN;
 	                  vm.userExist = false;
 	                  vm.password = "";
+	                  console.log("----------------------login----------1----------" + $rootScope.user.userID);
 	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                    console.log("register socket user " + $rootScope.user.userName);
 	                  });
@@ -30792,6 +30949,7 @@
 	                vm.state = vm.LOGGED_IN;
 	                vm.userExist = false;
 	                vm.password = "";
+	                console.log("----------------------login----------2----------" + $rootScope.user.userID);
 	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                  console.log("register socket user " + $rootScope.user.userName);
 	                });
@@ -30820,6 +30978,7 @@
 	              //end nhannc
 	              vm.class = "has-sub";
 	              vm.state = vm.LOGGED_IN;
+	              console.log("----------------------login----------3----------" + $rootScope.user.userID);
 	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                console.log("register socket user " + $rootScope.user.userName);
 	              });

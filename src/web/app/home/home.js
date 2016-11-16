@@ -541,11 +541,6 @@
         templateUrl: "/web/mobile/detail.html",
         controller: "MobileDetailCtrl",
         controllerAs: 'mdt'
-      }).state('mchats', {
-        url: "/mobile/chats/:adsID",
-        templateUrl: "/web/mobile/chats.html",
-        controller: "MobileChatCtrl",
-        controllerAs: 'mcc'
       }).state('mpost', {
           url: "/mobile/post/:adsID",
           templateUrl: "/web/mobile/post.html",
@@ -556,6 +551,11 @@
           templateUrl: "/web/mobile/adsMgmt.html",
           controller: "MobileAdsMgmtCtrl",
           controllerAs: 'mamc'
+      }).state('mchats', {
+          url: "/mobile/chats",
+          templateUrl: "/web/mobile/chats.html",
+          controller: "MobileChatCtrl",
+          controllerAs: 'mcc'
       }).state('mchatDetail', {
           url: "/mobile/chatDetail/:adsID",
           templateUrl: "/web/mobile/chatDetail.html",

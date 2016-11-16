@@ -5,7 +5,6 @@
 		// Varialbles Initialization.
 		var vm = this;
 		vm.adsID = $state.params.adsID;
-		vm.adsID = $state.params.adsID;
 		vm.ads = null;
 		vm.user = null;
 		vm.toUser = null;
@@ -159,11 +158,11 @@
 
 		$scope.getMessage = function(){
 			return {
-				fromUserID: $rootScope.user.userID
-				, fromUserAvatar: $rootScope.user.userAvatar
-				, toUserID: $scope.chatBox.user.userID
+				fromUserID: vm.user.userID.trim()
+				, fromUserAvatar: vm.user.avatar
+				, toUserID: $scope.chatBox.user.userID.trim()
 				, toFullName: $scope.chatBox.user.name
-				, fromFullName: $rootScope.user.userName
+				, fromFullName: vm.user.fullName
 				, relatedToAds: $scope.chatBox.ads
 				, content : vm.chatMsg
 				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
@@ -253,7 +252,7 @@
 		// ====================================== Messege Sending Code ============================
 		// sending text message function
 		vm.sendMsg = function(){
-			console.log("---------------sendMsg---------------");
+			console.log("---------------sendMsg------1---------");
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
 				vm.isMsg = true;
@@ -271,6 +270,7 @@
 						vm.setFocus = true;
 						msg.timeStamp = dateString;
 						// $scope.chatBox.messages.push(msg);
+						console.log(msg);
 						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						$scope.$apply();
 						//$('#' + $scope.chatBox.position + '_chat-history').scrollTop($('#' + $scope.chatBox.position + '_chat-history')[0].scrollHeight);

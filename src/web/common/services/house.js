@@ -132,6 +132,12 @@
       },
       getUserInfo: function(data){
         return $http.post("/api/user/getUserInfo",data);
+      },
+      getInboxMsg: function(data){
+        return $http.post("/api/getInboxMsg",data);
+      },
+      getAllChatMsg: function(data){
+        return $http.post("/api/getAllChatMsg",data);
       }
 
     };

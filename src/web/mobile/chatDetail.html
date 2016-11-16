@@ -20,17 +20,17 @@
         </div>
         <div class="chat-list uln">
             <ul>
-                <li ng-repeat="msg in chatBox.messages track by $index" class={{mcdc.isMe(msg.user.userID)?"me":"other"}}>
-                    <img ng-if="!mcdc.isMe(msg.user.userID)" src={{msg.user.avatar?msg.user.avatar:"/web/mobile/img/avatar.png"}} class="img-circle avatar pull-left">
+                <li ng-repeat="msg in chatBox.messages track by $index" class={{mcdc.isMe(msg.fromUserID)?"me":"other"}}>
+                    <img ng-if="!mcdc.isMe(msg.fromUserID)" src={{msg.user.avatar?msg.user.avatar:"/web/mobile/img/avatar.png"}} class="img-circle avatar pull-left">
                     <div class="ovh">
                         <span class="datetime">{{msg.timeStamp}}</span>
                         <div class="cmm" ng-if="msg.msgType==1">{{msg.content}}</div>
                     </div>
                     <div class="item" ng-show="msg.msgType==2 || msg.msgType==3">
                         <div>
-                            <div ng-class="{'attachment-icon-right' : mcdc.isMe(msg.user.userID), 'attachment-icon-left' : !mcdc.isMe(msg.user.userID)}">
+                            <div ng-class="{'attachment-icon-right' : mcdc.isMe(msg.fromUserID), 'attachment-icon-left' : !mcdc.isMe(msg.fromUserID)}">
                                 <a ng-href="{{msg.content}}">
-                                    <img  ng-if="msg.msgType==2" ng-class="{'multiple-borders-white' : mcdc.isMe(msg.user.userID),'multiple-borders-black' : !mcdc.isMe(msg.user.userID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
+                                    <img  ng-if="msg.msgType==2" ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
                                     <span ng-if="msg.msgType==3">Document</span>
                                 </a>
                             </div>
