@@ -146,7 +146,7 @@ internals.signup = function(req, reply){
 			var token = JWT.sign({
 				uid: user.userID,
 	          	exp: Math.floor(new Date().getTime()/1000) + 7*24*60*60,
-	          	userName: user.name,
+	          	userName: user.fullName,
 	          	userID: user.userID
         	}, JWT_SECRET);
         	//console.log("token" + token);
@@ -154,7 +154,7 @@ internals.signup = function(req, reply){
         	var result = {};
         	result.login = true;
         	result.token = token;
-        	result.userName = user.name;
+        	result.userName = user.fullName;
         	result.userID = user.id;
             result.email = user.email;
             //result.phone = user.phone;

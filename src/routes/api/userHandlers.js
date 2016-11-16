@@ -85,6 +85,40 @@ internals.registerUser = function (req, reply) {
   });
 };
 
+internals.getUserInfo = function (req, reply) {
+  log.info("-----------------------Call getUserInfo:", req.payload);
+
+  userService.getUserByID(req.payload.userID, (err, res) => {
+    if (!err && res.length > 0) { //exists
+      log.info("----------------result-------Call getUserInfo:", res);
+      let userFromDb = res[0];
+      let user = _transformUserInfor(userFromDb);
+      reply({
+        status : 0,
+        msg : "get user success",
+        userInfo : user
+      });
+    } else {
+      console.log("Callback getUser error", err, res);
+      let msg = err ? "Error:" + err.msg : "User does not exist!";
+      reply({
+        status : 99,
+        msg : msg
+      });
+    }
+  });
+};
+
+function _transformUserInfor(userFromDb) {
+  let userTrans = {};
+  userTrans.email = userFromDb.email;
+  userTrans.name = userFromDb.name;
+  userTrans.userID = userFromDb.userID;
+  userTrans.fullName = userFromDb.fullName;
+  userTrans.phone = userFromDb.phone;
+  userTrans.avatar = userFromDb.avatar;
+  return userTrans;
+}
 internals.updateDevice = function (req, reply) {
   log.info("Call updateDevice:", req.payload);
   let dto = req.payload;

@@ -1,14 +1,15 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileChatDetailCtrl';
-	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, NgMap, $window){		// Chat Page Controller
+	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, NgMap, $window,$timeout){		// Chat Page Controller
 		// Varialbles Initialization.
 		var vm = this;
+		vm.adsID = $state.params.adsID;
 		vm.adsID = $state.params.adsID;
 		vm.ads = null;
 		vm.user = null;
 		vm.toUser = null;
-		
+
 		vm.isMsgBoxEmpty = false;
 		vm.isFileSelected = false;
 		vm.isMsg = false;
@@ -23,11 +24,58 @@
 		console.log("chat visible is " + $scope.visible);
 		vm.typing = false;
 
+		if($rootScope.user && $rootScope.user.userID){
+			$scope.userID = $rootScope.user.userID;
+		}
 		//ChatPanel
-		vm.chatBox = {};
+		$scope.chatBox = {};
+		$scope.chatBox.user = {};
+		$scope.chatBox.user.userID = $rootScope.user.userID;
+
+		vm.initData = function(){
+			$scope.chatBox.user = {};
+			$scope.chatBox.user.userID = $rootScope.user.userID;
+		}
+
+		vm.isMe = function(userID){
+			if($scope.userID.trim() == userID.trim())
+				return true;
+			else 
+				return false;
+		}
+
+		HouseService.getUserInfo({userID: $rootScope.user.userID}).then(function(res) {
+			console.log("---------------find from user-----------------");
+			console.log(res);
+			if (res.status == 200 && res.data.status == 0) {
+				vm.user = res.data.userInfo;
+			}
+		});
+
 
 		vm.isSameDate
 
+		HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
+			console.log("---------------find Ads-----------------");
+			console.log(res);
+			if(res.status == 200 && res.data.status==0){
+				vm.ads = res.data.ads;
+				if(!vm.ads.dangBoi.userID){
+					return;
+				} else{
+					HouseService.getUserInfo({userID: vm.ads.dangBoi.userID}).then(function(res) {
+						console.log("---------------find to user-----------------");
+						console.log(res);
+						if(res.status == 200 && res.data.status==0){
+							vm.toUser = res.data.userInfo;
+							vm.initChatBox({userID: vm.toUser.userID,name: vm.toUser.fullName,avatar: vm.toUser.avatar});
+						}
+					});
+				}
+			} else {
+				return;
+			}
+		});
 
 		/**
 		 Handle in comming message
@@ -35,18 +83,18 @@
 		socket.on("new message", function(data){
 			vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
 			data.date = new Date(data.date);
-			window.RewayClientUtils.addChatMessage(vm.chatBox,data);
+			window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 			$scope.$apply();
-			// $('#' + vm.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + vm.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
+			// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 		});
 
 		socket.on("user-start-typing",function(data){
-			vm.chatBox[data.fromUserID].status = vm.chatBox[data.fromUserID].user.name + " is typing...";
+			$scope.chatBox.status = $scope.chatBox.user.name + " is typing...";
 			$scope.$apply();
 		});
 
 		socket.on("user-stop-typing",function(data){
-			vm.chatBox[data.fromUserID].status = "";
+			$scope.chatBox.status = "";
 			$scope.$apply();
 		});
 
@@ -56,10 +104,10 @@
 				var msg = data[i].default;
 				msg.date = new Date(msg.date);
 				if((vm.adsID.trim()==msg.relatedToAds.adsID.trim()) && ($rootScope.user.userID.trim() == msg.toUserID.trim())){
-					if(!vm.chatBox.user){
+					if(!$scope.chatBox.user){
 						vm.initChatBox({userID:msg.fromUserID, name:msg.fromFullName,avatar: msg.fromUserAvatar});
 					}
-					window.RewayClientUtils.addChatMessage(vm.chatBox,msg);
+					window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 					readedData.push(data[i]);
 				}
 				console.log("msg["+i+"] "  + msg);
@@ -70,27 +118,41 @@
 		});
 
 		vm.initChatBox = function(user){
-			vm.chatBox.user = user;
-			vm.chatBox.onlineClass = "online";
-			vm.chatBox.hidden = false;
-			vm.chatBox.ads = vm.ads;
-			vm.chatBox.status = "";
-			vm.chatBox.messages = [];
+			$scope.chatBox.user = user;
+			$scope.chatBox.onlineClass = "online";
+			$scope.chatBox.hidden = false;
+			$scope.chatBox.ads = {
+				adsID : vm.ads.adsID,
+				cover : vm.ads.image.cover,
+				diaChinhFullName: vm.ads.place.diaChinhFullName,
+				dienTichFmt: vm.ads.dienTichFmt,
+				giaFmt: vm.ads.giaFmt,
+				loaiNhaDat: vm.ads.loaiNhaDat,
+				loaiNhaDatFmt: vm.ads.loaiNhaDatFmt,
+				loaiTin: vm.ads.loaiTin
+			};
+			$scope.chatBox.status = "";
+			$scope.chatBox.messages = [];
 		}
 
 		//End ChatPanel
 
 		$scope.chatKeypress = function(event){
-			var keyCode  = event.keyCode;
-			if(vm.typing == false){
-				socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){
-					console.log("emit start typing to " + $scope.chatbox.user.userID);
-				});
+			var keyCode = event.which || event.keyCode;
+			if (keyCode === 13) {
+				vm.sendMsg();
+			} else{
+				if(vm.typing == false){
+					socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID : $scope.chatBox.user.userID},function (data){
+						console.log("emit start typing to " + $scope.chatBox.user.userID);
+					});
+				}
 			}
+
 		}
 		$scope.chatBlur = function(event){
-			socket.emit('user-stop-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatbox.user.userID},function (data){
-				console.log("emit stop typing to " + $scope.chatbox.user.userID);
+			socket.emit('user-stop-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatBox.user.userID},function (data){
+				console.log("emit stop typing to " + $scope.chatBox.user.userID);
 			});
 		}
 
@@ -99,16 +161,15 @@
 			return {
 				fromUserID: $rootScope.user.userID
 				, fromUserAvatar: $rootScope.user.userAvatar
-				, toUserID: $scope.chatbox.user.userID
-				, toFullName: $scope.chatbox.user.name
+				, toUserID: $scope.chatBox.user.userID
+				, toFullName: $scope.chatBox.user.name
 				, fromFullName: $rootScope.user.userName
-				, relatedToAds: $scope.chatbox.ads
+				, relatedToAds: $scope.chatBox.ads
 				, content : vm.chatMsg
 				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
 				, timeStamp : formatAMPM(new Date())
 				, date: new Date()
 				, type: "Chat"
-				, file: undefined
 			};
 		}
 
@@ -192,6 +253,7 @@
 		// ====================================== Messege Sending Code ============================
 		// sending text message function
 		vm.sendMsg = function(){
+			console.log("---------------sendMsg---------------");
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
 				vm.isMsg = true;
@@ -201,19 +263,18 @@
 					//delivery report code goes here
 					if (data.success == true) {
 						if(data.offline==true){
-							$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
-							$scope.chatbox.onlineClass = "offline";
+							$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
+							$scope.chatBox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
 						vm.chatMsg = "";
 						vm.setFocus = true;
 						msg.timeStamp = dateString;
-						// $scope.chatbox.messages.push(msg);
-						window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
+						// $scope.chatBox.messages.push(msg);
+						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						$scope.$apply();
-						$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
+						//$('#' + $scope.chatBox.position + '_chat-history').scrollTop($('#' + $scope.chatBox.position + '_chat-history')[0].scrollHeight);
 					}
-
 				});
 			}else{
 				vm.isMsgBoxEmpty = true;
@@ -223,14 +284,14 @@
 		vm.toggleChat = function(event){
 			angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
 			angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
-			//$scope.chatbox.hidden = !$scope.chatbox.hidden;
+			//$scope.chatBox.hidden = !$scope.chatBox.hidden;
 		}
 		vm.closeChat = function(event){
 			$(event.target).parent().parent().parent().remove();
 			$scope.$bus.publish({
 				channel: 'chat',
 				topic: 'close chat',
-				data: $scope.chatbox.user.userID
+				data: $scope.chatBox.user.userID
 			});
 		}
 

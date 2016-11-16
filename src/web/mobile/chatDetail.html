@@ -2,7 +2,7 @@
     <a href="chats.html" class="header-icon"><i class="iconLeftOpen"></i></a>
     <span class="name">Tran Anh <br><small>Trực tuyến 30 phút trước</small></span>
     <div class="btn-group pull-right" role="group">
-        <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><img src="img/dots-three-horizontal.svg" width="26" /></a>
+        <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><img src="/web/mobile/img/dots-three-horizontal.svg" width="26" /></a>
         <ul class="dropdown-menu">
             <li><a role="button" data-toggle="modal" data-target="#blockuserBox">Chặn người dùng này</a></li>
             <li><a role="button" data-toggle="modal" data-target="#deluserBox">Xóa hội thoại</a></li>
@@ -12,93 +12,55 @@
 <div class="wapper">
     <div class="chat-detail">
         <div class="chat-header ovh">
-            <a href="#"><img src="images/big.jpg" alt="" title="" class="pull-left" /></a>
+            <a href="#"><img src="{{mcdc.ads.image.cover}}" alt="" title="" class="pull-left" /></a>
             <div class="ovh">
-                <h5><a href="#">Biệt thự AXT12, Xa La, Hà Đông</a></h5>
-                <span class="price">10,5 tỷ</span>
+                <h5><a href="#">{{mcdc.ads.place.diaChinhFullName}}</a></h5>
+                <span class="price">{{mcdc.ads.giaFmt}}</span>
             </div>
         </div>
         <div class="chat-list uln">
             <ul>
-                <li class="me">
+                <li ng-repeat="msg in chatBox.messages track by $index" class={{mcdc.isMe(msg.user.userID)?"me":"other"}}>
+                    <img ng-if="!mcdc.isMe(msg.user.userID)" src={{msg.user.avatar?msg.user.avatar:"/web/mobile/img/avatar.png"}} class="img-circle avatar pull-left">
                     <div class="ovh">
-                        <span class="datetime">6 tháng 6 5:30</span>
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                        <span class="datetime">{{msg.timeStamp}}</span>
+                        <div class="cmm" ng-if="msg.msgType==1">{{msg.content}}</div>
                     </div>
-                </li>
-                <li class="other">
-                    <img src="images/avarta.jpg" class="img-circle avatar pull-left">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 6 5:32</span>
-                        <div class="cmm">Nhà có nội thất chưa ạ?</div>
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 6 5:33</span>
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="ovh">
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="ovh">
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
-                    </div>
-                </li>
-                <li class="lined"></li>
-                <li class="other">
-                    <img src="images/avarta.jpg" class="img-circle avatar pull-left">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 7 5:32</span>
-                        <div class="cmm">Nhà có nội thất chưa ạ?</div>
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 7 5:33</span>
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
-                    </div>
-                </li>
-                <li class="lined"></li>
-                <li class="other">
-                    <img src="images/avarta.jpg" class="img-circle avatar pull-left">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 8 5:32</span>
-                        <div class="cmm">Nhà có nội thất chưa ạ?</div>
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="ovh">
-                        <span class="datetime">6 tháng 8 5:33</span>
-                        <div class="cmm">Bạn muốn biết thêm thông tin gì?</div>
+                    <div class="item" ng-show="msg.msgType==2 || msg.msgType==3">
+                        <div>
+                            <div ng-class="{'attachment-icon-right' : mcdc.isMe(msg.user.userID), 'attachment-icon-left' : !mcdc.isMe(msg.user.userID)}">
+                                <a ng-href="{{msg.content}}">
+                                    <img  ng-if="msg.msgType==2" ng-class="{'multiple-borders-white' : mcdc.isMe(msg.user.userID),'multiple-borders-black' : !mcdc.isMe(msg.user.userID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
+                                    <span ng-if="msg.msgType==3">Document</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>
         </div>
         <div class="chat-footer">
-            <textarea placeholder="Nhập tin nhắn"></textarea>
-            <div class="action">
-                <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
-                <a href="javascript:void(0)"><i class="iconCamera"></i></a>
-                <a href="javascript:void(0)"><i class="fa fa-picture-o"></i></a>
-                <a href="javascript:void(0)"><i class="iconLocation"></i></a>
-                <div class="list-sort popovers top uln">
-                    <ul>
-                        <li><a href="javascript:void(0)">Xin chào bạn!</a></li>
-                        <li><a href="javascript:void(0)">Nhà đã bán chưa bạn?</a></li>
-                        <li><a href="javascript:void(0)">Gửi cho mình thêm ảnh</a></li>
-                        <li><a href="javascript:void(0)">Gửi cho mình vị trí chính xác của nhà</a></li>
-                        <li><a href="javascript:void(0)">Giá cuối cùng bạn bán là bao nhiêu?</a></li>
-                        <li><a href="javascript:void(0)">Giá có thương lượng được không bạn?</a></li>
-                        <li><a href="javascript:void(0)">Cảm ơn bạn!</a></li>
-                        <li><a href="javascript:void(0)">Giảm giá thêm đi bạn.</a></li>
-                    </ul>
+            <form method="post" ng-submit="mcdc.sendMsg();">
+                <textarea ng-model="mcdc.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Nhập tin nhắn"></textarea>
+                <div class="action">
+                    <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
+                    <a href="javascript:void(0)"><i class="iconCamera"></i></a>
+                    <a href="javascript:void(0)"><i class="fa fa-picture-o"></i></a>
+                    <a href="javascript:void(0)"><i class="iconLocation"></i></a>
+                    <div class="list-sort popovers top uln">
+                        <ul>
+                            <li><a href="javascript:void(0)">Xin chào bạn!</a></li>
+                            <li><a href="javascript:void(0)">Nhà đã bán chưa bạn?</a></li>
+                            <li><a href="javascript:void(0)">Gửi cho mình thêm ảnh</a></li>
+                            <li><a href="javascript:void(0)">Gửi cho mình vị trí chính xác của nhà</a></li>
+                            <li><a href="javascript:void(0)">Giá cuối cùng bạn bán là bao nhiêu?</a></li>
+                            <li><a href="javascript:void(0)">Giá có thương lượng được không bạn?</a></li>
+                            <li><a href="javascript:void(0)">Cảm ơn bạn!</a></li>
+                            <li><a href="javascript:void(0)">Giảm giá thêm đi bạn.</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

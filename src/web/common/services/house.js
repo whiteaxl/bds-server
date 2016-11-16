@@ -129,6 +129,9 @@
       },
       deleteFile: function(data){
         return $http.post("/api/deleteFile",data);
+      },
+      getUserInfo: function(data){
+        return $http.post("/api/user/getUserInfo",data);
       }
 
     };

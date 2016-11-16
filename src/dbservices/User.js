@@ -558,7 +558,7 @@ class UserModel {
             data.type = "User";
             data.id = userID;
             data._id = userID;
-            data.name = data.email || data.phone;
+            data.fullName = data.email || data.phone;
             data.userID = data.id;
             //user.likeAds=[];
             data.likeAds=[];

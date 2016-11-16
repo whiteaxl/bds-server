@@ -486,6 +486,27 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/user/getUserInfo',
+    handler: userHandlers.getUserInfo,
+    config: {
+      description: 'Lay mot vai thong tin user',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required(),
+        }
+      },
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          userInfo: Joi.object(),
+          msg: Joi.string()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/requestInfo',
     handler: Handlers.requestInfo,
     config: {

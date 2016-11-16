@@ -769,6 +769,15 @@
 		 }
 		 */
 
+		Date.prototype.yyyymmdd = function() {
+			var mm = this.getMonth() + 1; // getMonth() is zero-based
+			mm = (mm >= 10)? mm:('0'+mm);
+			var dd = this.getDate();
+			dd = (dd >= 10)? dd:('0'+dd);
+
+			return [this.getFullYear(), mm, dd].join(''); // padding
+		};
+
 		vm.dangTin = function(isValid){
 
 			if (isValid) {
@@ -797,6 +806,9 @@
 				vm.ads.duongTruocNha = parseFloat(vm.ads.duongTruocNha);
 				vm.ads.matTien = parseFloat(vm.ads.matTien);
 				vm.ads.huongNha = parseFloat(vm.ads.huongNha);
+
+				var date = new Date();
+				vm.ads.ngayDangTin = date.yyyymmdd();
 
 				if(vm.gia)
 					vm.gia = parseFloat(vm.gia);
