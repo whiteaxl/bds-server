@@ -7,22 +7,23 @@
 		vm.adsID = $state.params.adsID;
 		// from general chat if exist $state.params.toUserID
 		vm.toUserID = $state.params.toUserID;
-		vm.fromGeneral = false;
 
 		vm.ads = null;
 		vm.user = null;
 		vm.toUser = null;
-
-		vm.isMsgBoxEmpty = false;
-		vm.isFileSelected = false;
-		vm.isMsg = false;
-		vm.setFocus = true;
 		vm.chatMsg = "";
-		vm.users = [];
-		vm.messeges = [];
-		vm.menu = {
 
-		}
+		$scope.sampleSentences = [
+			{ value: 0, lable: "Xin chào bạn!"},
+			{ value: 1, lable: "Nhà đã bán chưa bạn?"},
+			{ value: 2, lable: "Gửi cho mình thêm ảnh" },
+			{ value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" },
+			{ value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" },
+			{ value: 5, lable: "Giá có thương lượng được không bạn?" },
+			{ value: 6, lable: "Giảm giá chút đi bạn" },
+			{ value: 7, lable: "Cảm ơn bạn!" },
+		];
+		$scope.chatBox = {};
 
 		vm.init = function(){
 			console.log("------------------------init--------------------------")
@@ -34,9 +35,60 @@
 				console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
 				console.log(data);
 			});
+
+			HouseService.getUserInfo({userID: $rootScope.user.userID}).then(function(res) {
+				if (res.status == 200 && res.data.status == 0) {
+					vm.user = res.data.userInfo;
+				}
+			});
+
+			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
+				if(res.status == 200 && res.data.status==0){
+					vm.ads = res.data.ads;
+					if(!vm.toUserID){
+						if(vm.ads.dangBoi.userID){
+							vm.toUserID = vm.ads.dangBoi.userID;
+						}
+					}
+					if(vm.toUserID){
+						HouseService.getUserInfo({userID: vm.toUserID}).then(function(res) {
+							if(res.status == 200 && res.data.status==0){
+								vm.toUser = res.data.userInfo;
+								vm.initChatBox({userID: vm.toUser.userID,name: vm.toUser.fullName,avatar: vm.toUser.avatar});
+								HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
+									if (res.status == 200 && res.data.status == 0) {
+										if(res.data.data.length > 0){
+											var msgList = [];
+											for(var i=res.data.data.length -1; i >=0; i--){
+												msgList.push(res.data.data[i].default);
+											}
+
+											var async = require("async");
+											async.forEach(msgList,function(msg){
+												$timeout(function() {
+													window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+												},100);
+												$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+												var objDiv = document.getElementById("chatDetailId");
+												objDiv.scrollTop = objDiv.scrollHeight;
+											}, function(err){
+												if(err){throw err;}
+												console.log("processing all elements completed");
+											});
+										}
+									}
+								});
+							}
+						});
+					}
+				} else {
+					return;
+				}
+			});
 		}
 
 		vm.goBack = function(){
+			vm.closeChat();
 			$window.history.back();
 		}
 
@@ -44,14 +96,9 @@
 			vm.init();
 		},100);
 
-		console.log("chat visible is " + $scope.visible);
-		vm.typing = false;
-
 		if($rootScope.user && $rootScope.user.userID){
 			$scope.userID = $rootScope.user.userID;
 		}
-		//ChatPanel
-		$scope.chatBox = {};
 
 		vm.isMe = function(userID){
 			if($scope.userID.trim() == userID.trim())
@@ -59,59 +106,6 @@
 			else 
 				return false;
 		}
-
-		HouseService.getUserInfo({userID: $rootScope.user.userID}).then(function(res) {
-			if (res.status == 200 && res.data.status == 0) {
-				vm.user = res.data.userInfo;
-			}
-		});
-
-
-		vm.isSameDate
-
-		HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
-			if(res.status == 200 && res.data.status==0){
-				vm.ads = res.data.ads;
-				if(!vm.toUserID){
-					if(vm.ads.dangBoi.userID){
-						vm.toUserID = vm.ads.dangBoi.userID;
-					}
-				}
-				if(vm.toUserID){
-					HouseService.getUserInfo({userID: vm.toUserID}).then(function(res) {
-						if(res.status == 200 && res.data.status==0){
-							vm.toUser = res.data.userInfo;
-							vm.initChatBox({userID: vm.toUser.userID,name: vm.toUser.fullName,avatar: vm.toUser.avatar});
-							HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
-								if (res.status == 200 && res.data.status == 0) {
-									if(res.data.data.length > 0){
-										var msgList = [];
-										for(var i=res.data.data.length -1; i >=0; i--){
-											msgList.push(res.data.data[i].default);
-										}
-
-										var async = require("async");
-										async.forEach(msgList,function(msg){
-											$timeout(function() {
-												window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
-											},100);
-											$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-											var objDiv = document.getElementById("chatDetailId");
-											objDiv.scrollTop = objDiv.scrollHeight;
-										}, function(err){
-											if(err){throw err;}
-											console.log("processing all elements completed");
-										});
-									}
-								}
-							});
-						}
-					});
-				}
-			} else {
-				return;
-			}
-		});
 
 		/**
 		 Handle in comming message
@@ -186,20 +180,16 @@
 			if (keyCode === 13) {
 				vm.sendMsg();
 			} else{
-				if(vm.typing == false){
-					socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID : $scope.chatBox.user.userID},function (data){
-						console.log("emit start typing to " + $scope.chatBox.user.userID);
-					});
-				}
+				socket.emit('user-start-typing',{fromUserID: $rootScope.user.userID,toUserID : $scope.chatBox.user.userID},function (data){
+					console.log("emit start typing to " + $scope.chatBox.user.userID);
+				});
 			}
-
 		}
 		$scope.chatBlur = function(event){
 			socket.emit('user-stop-typing',{fromUserID: $rootScope.user.userID,toUserID:$scope.chatBox.user.userID},function (data){
 				console.log("emit stop typing to " + $scope.chatBox.user.userID);
 			});
 		}
-
 
 		$scope.getMessage = function(){
 			return {
@@ -217,63 +207,60 @@
 			};
 		}
 
-		vm.sendFile = function(file, isImageFile){
-			vm.isFileSelected = true;
-			// var file = files[0];
-			var dateString = formatAMPM(new Date());
-			var DWid = $rootScope.user.userName + "dwid" + Date.now();
-
-			var msg = $scope.getMessage();
-			if(isImageFile==true)
-				msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
-			else
-				msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
-			msg.content = undefined;
-			msg.file = file;
-			socket.emit('send-message',msg,function (data){
-				console.log("sent image to " + $scope.chatbox.user.userID);
-				if (data.success == true) {
-					if(data.offline==true){
-						$scope.chatbox.status = window.RewayConst.MSG.USER_OFFLINE;
-						$scope.chatbox.onlineClass = "offline";
-						//console.log("TODO: this person is offline he will receive the message next time he online");
-					}
-					vm.chatMsg = "";
-					vm.setFocus = true;
-
-					msg.timeStamp = dateString;
-					// $scope.chatbox.messages.push(msg);
-					$timeout(function() {
-						window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
-					},100);
-					$scope.$apply();
-					$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-					var objDiv = document.getElementById("chatDetailId");
-					objDiv.scrollTop = objDiv.scrollHeight;
-				}
-
-			});
+		vm.chonMauCau = function(mauCau){
+			vm.chatMsg = mauCau;
+			$('.list-sort').toggle();
+			$("#msgTxtId").focus();
 		}
 
 		$scope.uploadFiles = function (files) {
 			$scope.files = files;
 			var msg = $scope.getMessage();
 			if (files && files.length) {
-				for (var i = 0; i < files.length; i++){
-
-					var ft = vm.catchFile(files[i]);
+				var async = require("async");
+				async.forEach(files,function(myFile){
+					var ft = vm.catchFile(myFile);
 					var isImageFile = (ft == "image");
+					var fileName = myFile.name;
+					console.log(fileName);
+					fileName = fileName.substring(fileName.lastIndexOf("."), fileName.length);
+					fileName = "Chat_" + $rootScope.user.userID + "_" + new Date().getTime() + fileName;
 
 					Upload.upload({
 						url: '/api/upload',
-						data: {files: files[i]}
+						data: {files: myFile, filename : fileName}
 					}).then(function (resp) {
 						console.log('Success ' + resp.config.data.files.name + 'uploaded. Response: ' + resp.data);
-						//here we need to emit message
-						// if(ft == "image")
-						// 	vm.sendImage(resp.data.image_file);
-						// else
-						vm.sendFile(resp.data.file,isImageFile);
+
+						$timeout(function() {
+							var fileUrl = location.protocol;
+							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+
+							console.log("----fileUrl: " + fileUrl);
+							var msg = $scope.getMessage();
+							if(isImageFile==true)
+								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
+							else
+								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+							msg.content = fileUrl;
+							socket.emit('send-message',msg,function (data){
+								console.log("sent image to " + $scope.chatBox.user.userID);
+								if (data.success == true) {
+									if(data.offline==true){
+										$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
+										$scope.chatBox.onlineClass = "offline";
+										//console.log("TODO: this person is offline he will receive the message next time he online");
+									}
+									vm.chatMsg = "";
+									msg.timeStamp = dateString;
+									window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+									$scope.$apply();
+									$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+									var objDiv = document.getElementById("chatDetailId");
+									objDiv.scrollTop = objDiv.scrollHeight;
+								}
+							});
+						},100);
 
 					}, function (resp) {
 						console.log('Error status: ' + resp.status);
@@ -281,8 +268,10 @@
 						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 						console.log('progress: ' + progressPercentage + '% ' + evt.config.data.files.name);
 					});
-
-				}
+				}, function(err){
+					if(err){throw err;}
+					console.log("processing all elements completed");
+				});
 			}
 		};
 
@@ -304,7 +293,6 @@
 			console.log("---------------sendMsg------1---------");
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
-				vm.isMsg = true;
 				var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
 				socket.emit("send-message",msg, function(data){
@@ -316,7 +304,6 @@
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
 						vm.chatMsg = "";
-						vm.setFocus = true;
 						msg.timeStamp = dateString;
 						// $scope.chatBox.messages.push(msg);
 						console.log(msg);
@@ -334,18 +321,14 @@
 			}
 		}
 
-		vm.toggleChat = function(event){
-			angular.element(event.target).closest("div").find('.chat').slideToggle(300, 'swing');
-			angular.element(event.target).closest("div").find('.chat-message-counter').slideToggle(300, 'swing');
-			//$scope.chatBox.hidden = !$scope.chatBox.hidden;
-		}
-		vm.closeChat = function(event){
-			$(event.target).parent().parent().parent().remove();
-			$scope.$bus.publish({
-				channel: 'chat',
-				topic: 'close chat',
-				data: $scope.chatBox.user.userID
-			});
+		vm.closeChat = function(){
+			if($scope.chatBox.user.userID){
+				$scope.$bus.publish({
+					channel: 'chat',
+					topic: 'close chat',
+					data: $scope.chatBox.user.userID
+				});
+			}
 		}
 
 		// function for checking file type

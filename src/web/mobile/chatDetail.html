@@ -36,27 +36,26 @@
                             </div>
                         </div>
                     </div>
+                    <div ng-class="{'attachment-msg-right' : mcdc.isMe(msg.fromUserID), 'attachment-msg-left' : !mcdc.isMe(msg.fromUserID)}" ng-if="msg.msgType==2 || msg.msgType==3">
+                        <span class="decs-text">
+                            <a class="decs-text" ng-show="!mcdc.isMe(msg.fromUserID)" download target="_self" href="{{msg.content}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
+                            <a class="decs-text hidden-link" href="{{ msg.content }}"  download="{{msg.content }}"></a>
+                        </span>
+                    </div>
                 </li>
             </ul>
         </div>
         <div class="chat-footer">
             <form method="post" ng-submit="mcdc.sendMsg();">
-                <textarea ng-model="mcdc.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Nhập tin nhắn"></textarea>
+                <textarea id="msgTxtId" ng-model="mcdc.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Nhập tin nhắn"></textarea>
                 <div class="action">
                     <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
-                    <a href="javascript:void(0)"><i class="iconCamera"></i></a>
-                    <a href="javascript:void(0)"><i class="fa fa-picture-o"></i></a>
-                    <a href="javascript:void(0)"><i class="iconLocation"></i></a>
+                    <a href="javascript:void(0)" ><i class="iconCamera"></i></a>
+                    <a ngf-select="uploadFiles($files)" multiple accept="image/*" class="active"><i class="fa fa-picture-o"></i></a>
+                    <a href="javascript:void(0)" class="active"><i class="iconLocation"></i></a>
                     <div class="list-sort popovers top uln">
                         <ul>
-                            <li><a href="javascript:void(0)">Xin chào bạn!</a></li>
-                            <li><a href="javascript:void(0)">Nhà đã bán chưa bạn?</a></li>
-                            <li><a href="javascript:void(0)">Gửi cho mình thêm ảnh</a></li>
-                            <li><a href="javascript:void(0)">Gửi cho mình vị trí chính xác của nhà</a></li>
-                            <li><a href="javascript:void(0)">Giá cuối cùng bạn bán là bao nhiêu?</a></li>
-                            <li><a href="javascript:void(0)">Giá có thương lượng được không bạn?</a></li>
-                            <li><a href="javascript:void(0)">Cảm ơn bạn!</a></li>
-                            <li><a href="javascript:void(0)">Giảm giá thêm đi bạn.</a></li>
+                            <li ng-repeat="sts in sampleSentences track by $index"><a href="#" ng-click="mcdc.chonMauCau(sts.lable)">{{sts.lable}}</a></li>
                         </ul>
                     </div>
                 </div>
