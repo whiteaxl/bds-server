@@ -557,7 +557,7 @@
           controller: "MobileChatCtrl",
           controllerAs: 'mcc'
       }).state('mchatDetail', {
-          url: "/mobile/chatDetail/:adsID",
+          url: "/mobile/chatDetail/:adsID/:toUserID",
           templateUrl: "/web/mobile/chatDetail.html",
           controller: "MobileChatDetailCtrl",
           controllerAs: 'mcdc'

@@ -66,6 +66,14 @@
 		vm.openChat = function(event){
 			var userExist = true;
 			if(userExist){
+				if($rootScope.isLoggedIn()==false){
+					$scope.$bus.publish({
+						channel: 'login',
+						topic: 'show login',
+						data: {label: "Đăng nhập để trao đổi"}
+					});
+					return true;
+				}
 				//ngDialog.open({ template: 'templateId' });
 				$state.go('mchatDetail', { "adsID" : vm.adsID});
 				$(".overlay").click();

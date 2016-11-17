@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "eb871ccda4513ad77cf6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ea093cd76ddb66b71cdd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -911,7 +911,8 @@
 				var messages = chatbox.messages;
 				if (messages.length > 0) {
 					var lastDate = messages[messages.length - 1].date;
-					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate, msg.date);
+					msg.date = new Date(msg.date);
+					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate, new Date(msg.date));
 				} else {
 					msg.showDate = true;
 					msg.date = new Date(msg.date);
@@ -1521,7 +1522,7 @@
 	      controller: "MobileChatCtrl",
 	      controllerAs: 'mcc'
 	    }).state('mchatDetail', {
-	      url: "/mobile/chatDetail/:adsID",
+	      url: "/mobile/chatDetail/:adsID/:toUserID",
 	      templateUrl: "/web/mobile/chatDetail.html",
 	      controller: "MobileChatDetailCtrl",
 	      controllerAs: 'mcdc'
@@ -27843,6 +27844,14 @@
 			vm.openChat = function (event) {
 				var userExist = true;
 				if (userExist) {
+					if ($rootScope.isLoggedIn() == false) {
+						$scope.$bus.publish({
+							channel: 'login',
+							topic: 'show login',
+							data: { label: "Đăng nhập để trao đổi" }
+						});
+						return true;
+					}
 					//ngDialog.open({ template: 'templateId' });
 					$state.go('mchatDetail', { "adsID": vm.adsID });
 					$(".overlay").click();
@@ -28170,6 +28179,16 @@
 			vm.allSaleInbox = [];
 			vm.allRentInbox = [];
 
+			vm.init = function () {
+				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
+					console.log("register socket user " + $rootScope.user.userName);
+				});
+			};
+
+			$timeout(function () {
+				vm.init();
+			}, 100);
+
 			vm.getChatTime = function (date) {
 				var mm = date.getMonth() + 1; // getMonth() is zero-based
 				mm = mm >= 10 ? mm : '0' + mm;
@@ -28183,14 +28202,12 @@
 				return dd + ' tháng ' + mm + ' ' + hour + ':' + minute;
 			};
 			HouseService.getInboxMsg({ userID: $rootScope.user.userID }).then(function (res) {
-				console.log("---------------getInboxMsg-----------------");
 				if (res.status == 200 && res.data.status == 0) {
 					vm.allInbox = res.data.data;
 					if (vm.allInbox.length > 0) {
 						var async = __webpack_require__(30);
 						async.forEach(vm.allInbox, function (inbox) {
 							HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: inbox.partner.userID, adsID: inbox.relatedToAds.adsID }).then(function (res) {
-								console.log("-----------getAllChatMsg-----------");
 								if (res.status == 200 && res.data.status == 0) {
 									if (res.data.data.length > 0) {
 										inbox.lastMsg = res.data.data[0].default.content;
@@ -28204,8 +28221,6 @@
 							}
 							console.log("processing all elements completed");
 						});
-
-						console.log(vm.allInbox);
 
 						var inbox;
 						//check co nen dua doan tach nay vao each tren do ko
@@ -28227,23 +28242,52 @@
 				}
 			});
 
-			vm.openChatDetail = function (event) {
-				$state.go('mchatDetail', { "adsID": vm.adsID });
+			vm.openChatDetail = function (inbox) {
+				$state.go('mchatDetail', { "adsID": inbox.relatedToAds.adsID, "toUserID": inbox.partner.userID });
 				$(".overlay").click();
 			};
 
 			socket.on("new message", function (data) {
-				console.log("------------------------newMessage---------------");
+				console.log("-------------chat------new message---------------");
 				console.log(data);
-				//vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
-				//data.date = new Date(data.date);
-				//window.RewayClientUtils.addChatMessage($scope.chatBox,data);
-				//$scope.$apply();
-				// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
+				data.date = new Date(data.date);
+
+				if (vm.allInbox.length > 0) {
+					var async = __webpack_require__(30);
+					async.forEach(vm.allInbox, function (inbox) {
+						var count = 0;
+						if (inbox.unreadCount) {
+							count = inbox.unreadCount;
+						}
+						if ($rootScope.user.userID.trim() == data.toUserID && inbox.partner.userID.trim() == data.fromUserID.trim() && inbox.relatedToAds.adsID.trim() == data.relatedToAds.adsID.trim()) {
+							count++;
+							inbox.unreadCount = count;
+							inbox.lastMsg = data.content;
+							inbox.lastDate = vm.getChatTime(new Date(data.date));
+						}
+					}, function (err) {
+						if (err) {
+							throw err;
+						}
+						console.log("processing all elements completed");
+					});
+				} else {
+					var inbox = {};
+					inbox.partner = {};
+					inbox.partner.userID = data.fromUserID.trim();
+					inbox.partner.fullName = data.fullName;
+					inbox.partner.avatar = data.avatar;
+					inbox.relatedToAds = data.relatedToAds;
+					inbox.unreadCount = 1;
+					inbox.lastMsg = data.content;
+					inbox.lastDate = vm.getChatTime(new Date(data.date));
+					vm.allInbox.push(inbox);
+				}
+				$scope.$apply();
 			});
 
 			socket.on("unread-messages", function (data) {
-				console.log("-------------------unreadMessage-----------------");
+				console.log("------------------chat-unreadMessage-----------------");
 				console.log(data);
 				if (data.length > 0) {
 					var inbox;
@@ -28305,7 +28349,7 @@
 
 /***/ },
 /* 36 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -28318,6 +28362,10 @@
 			// Varialbles Initialization.
 			var vm = this;
 			vm.adsID = $state.params.adsID;
+			// from general chat if exist $state.params.toUserID
+			vm.toUserID = $state.params.toUserID;
+			vm.fromGeneral = false;
+
 			vm.ads = null;
 			vm.user = null;
 			vm.toUser = null;
@@ -28331,6 +28379,22 @@
 			vm.messeges = [];
 			vm.menu = {};
 
+			vm.init = function () {
+				console.log("------------------------init--------------------------");
+				console.log($rootScope.user);
+				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
+					console.log("register socket user " + $rootScope.user.userName);
+				});
+				socket.emit('get-unread-message', { userID: $rootScope.user.userID }, function (data) {
+					console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+					console.log(data);
+				});
+			};
+
+			$timeout(function () {
+				vm.init();
+			}, 100);
+
 			console.log("chat visible is " + $scope.visible);
 			vm.typing = false;
 
@@ -28339,21 +28403,12 @@
 			}
 			//ChatPanel
 			$scope.chatBox = {};
-			$scope.chatBox.user = {};
-			$scope.chatBox.user.userID = $rootScope.user.userID;
-
-			vm.initData = function () {
-				$scope.chatBox.user = {};
-				$scope.chatBox.user.userID = $rootScope.user.userID;
-			};
 
 			vm.isMe = function (userID) {
 				if ($scope.userID.trim() == userID.trim()) return true;else return false;
 			};
 
 			HouseService.getUserInfo({ userID: $rootScope.user.userID }).then(function (res) {
-				console.log("---------------find from user-----------------");
-				console.log(res);
 				if (res.status == 200 && res.data.status == 0) {
 					vm.user = res.data.userInfo;
 				}
@@ -28362,19 +28417,38 @@
 			vm.isSameDate;
 
 			HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
-				console.log("---------------find Ads-----------------");
-				console.log(res);
 				if (res.status == 200 && res.data.status == 0) {
 					vm.ads = res.data.ads;
-					if (!vm.ads.dangBoi.userID) {
-						return;
-					} else {
-						HouseService.getUserInfo({ userID: vm.ads.dangBoi.userID }).then(function (res) {
-							console.log("---------------find to user-----------------");
-							console.log(res);
+					if (!vm.toUserID) {
+						if (vm.ads.dangBoi.userID) {
+							vm.toUserID = vm.ads.dangBoi.userID;
+						}
+					}
+					if (vm.toUserID) {
+						HouseService.getUserInfo({ userID: vm.toUserID }).then(function (res) {
 							if (res.status == 200 && res.data.status == 0) {
 								vm.toUser = res.data.userInfo;
 								vm.initChatBox({ userID: vm.toUser.userID, name: vm.toUser.fullName, avatar: vm.toUser.avatar });
+								HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
+									if (res.status == 200 && res.data.status == 0) {
+										if (res.data.data.length > 0) {
+											var msgList = [];
+											for (var i = res.data.data.length - 1; i >= 0; i--) {
+												msgList.push(res.data.data[i].default);
+											}
+
+											var async = __webpack_require__(30);
+											async.forEach(msgList, function (msg) {
+												window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+											}, function (err) {
+												if (err) {
+													throw err;
+												}
+												console.log("processing all elements completed");
+											});
+										}
+									}
+								});
 							}
 						});
 					}
@@ -28387,8 +28461,13 @@
 	   Handle in comming message
 	   */
 			socket.on("new message", function (data) {
-				vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+				if (!$scope.chatBox.user) {
+					vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+				}
 				data.date = new Date(data.date);
+				socket.emit("read-messages", data, function (res) {
+					console.log("mark messages as read " + res);
+				});
 				window.RewayClientUtils.addChatMessage($scope.chatBox, data);
 				$scope.$apply();
 				// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
@@ -28405,15 +28484,13 @@
 			});
 
 			socket.on("unread-messages", function (data) {
+				console.log("------------------chat-unreadMessage-----------------");
+				console.log(data);
 				var readedData = [];
 				for (var i = 0, len = data.length; i < len; i++) {
 					var msg = data[i].default;
 					msg.date = new Date(msg.date);
-					if (vm.adsID.trim() == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim()) {
-						if (!$scope.chatBox.user) {
-							vm.initChatBox({ userID: msg.fromUserID, name: msg.fromFullName, avatar: msg.fromUserAvatar });
-						}
-						window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+					if (vm.adsID.trim() == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && vm.toUserID.trim() == msg.fromUserID.trim()) {
 						readedData.push(data[i]);
 					}
 					console.log("msg[" + i + "] " + msg);
@@ -30892,7 +30969,6 @@
 	                  vm.state = vm.LOGGED_IN;
 	                  vm.userExist = false;
 	                  vm.password = "";
-	                  console.log("----------------------login----------1----------" + $rootScope.user.userID);
 	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                    console.log("register socket user " + $rootScope.user.userName);
 	                  });
@@ -30949,7 +31025,6 @@
 	                vm.state = vm.LOGGED_IN;
 	                vm.userExist = false;
 	                vm.password = "";
-	                console.log("----------------------login----------2----------" + $rootScope.user.userID);
 	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                  console.log("register socket user " + $rootScope.user.userName);
 	                });
@@ -30978,7 +31053,6 @@
 	              //end nhannc
 	              vm.class = "has-sub";
 	              vm.state = vm.LOGGED_IN;
-	              console.log("----------------------login----------3----------" + $rootScope.user.userID);
 	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                console.log("register socket user " + $rootScope.user.userName);
 	              });

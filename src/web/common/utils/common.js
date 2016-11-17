@@ -88,6 +88,7 @@ window.RewayClientUtils = (function($) {
 			var messages = chatbox.messages;
 			if(messages.length>0){
 				var lastDate = messages[messages.length-1].date;
+				msg.date = new Date(msg.date);
 				msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate,msg.date);
 			}else{
 				msg.showDate = true;
