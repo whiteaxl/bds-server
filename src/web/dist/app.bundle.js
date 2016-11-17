@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3774145bd5e1f71cc2c6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "647db5a8194e24c1e110"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28472,11 +28472,14 @@
 				$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
 				var objDiv = document.getElementById("chatDetailId");
 				objDiv.scrollTop = objDiv.scrollHeight;
-				// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 			});
 
 			socket.on("user-start-typing", function (data) {
-				$scope.chatBox.status = $scope.chatBox.user.name + " is typing...";
+				var toUserName = $scope.chatBox.user.name;
+				if (toUserName.indexOf('@') >= 0) {
+					toUserName = toUserName.substring(0, toUserName.indexOf('@'));
+				}
+				$scope.chatBox.status = toUserName + " is typing...";
 				$scope.$apply();
 			});
 
