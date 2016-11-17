@@ -27,7 +27,7 @@
                     </li>
                     <li ng-repeat="inbox in mcc.allInbox track by $index">
                         <a href="#" ng-click="mcc.openChatDetail(inbox)" class="avatar pull-left"><img src={{inbox.partner.avatar?inbox.partner.avatar:"/web/mobile/img/avatar.png"}} class="img-circle" alt="" title="" /><span ng-if="inbox.unreadCount" class="badge warning">{{inbox.unreadCount}}</span></a>
-                        <div class="ovh">
+                        <div class="ovh" ng-click="mcc.openChatDetail(inbox)">
                             <div class="ovh">
                                 <span class="name">{{inbox.partner.fullName}}</span>
                                 <span class="date pull-right">{{inbox.lastDate}}</span>
@@ -48,7 +48,7 @@
                 <ul>
                     <li ng-repeat="inbox in mcc.allSaleInbox track by $index">
                         <a href="#" ng-click="mcc.openChatDetail(inbox)" class="avatar pull-left"><img src={{inbox.partner.avatar?inbox.partner.avatar:"/web/mobile/img/avatar.png"}} class="img-circle" alt="" title="" /><span ng-if="inbox.unreadCount" class="badge warning">{{inbox.unreadCount}}</span></a>
-                        <div class="ovh">
+                        <div class="ovh" ng-click="mcc.openChatDetail(inbox)">
                             <div class="ovh">
                                 <span class="name">{{inbox.partner.fullName}}</span>
                                 <span class="date pull-right">{{inbox.lastDate}}</span>
@@ -56,7 +56,7 @@
                             <div class="ovh">
                                 <a href="#"><img src="{{inbox.relatedToAds.cover}}" alt="" title="" class="pull-right reland-img" /></a>
                                 <div class="ovh">
-                                    <h5><a href="chat-detail.html">{{inbox.relatedToAds.dienTichFmt + '-' + inbox.relatedToAds.loaiNhaDatFmt}}</a></h5>
+                                    <h5><a href="#">{{inbox.relatedToAds.dienTichFmt + '-' + inbox.relatedToAds.loaiNhaDatFmt}}</a></h5>
                                     <span class="cmm">{{inbox.lastMsg}}</span>
                                 </div>
                             </div>

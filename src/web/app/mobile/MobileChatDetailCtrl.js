@@ -36,6 +36,10 @@
 			});
 		}
 
+		vm.goBack = function(){
+			$window.history.back();
+		}
+
 		$timeout(function() {
 			vm.init();
 		},100);
@@ -88,7 +92,12 @@
 
 										var async = require("async");
 										async.forEach(msgList,function(msg){
-											window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+											$timeout(function() {
+												window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+											},100);
+											$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+											var objDiv = document.getElementById("chatDetailId");
+											objDiv.scrollTop = objDiv.scrollHeight;
 										}, function(err){
 											if(err){throw err;}
 											console.log("processing all elements completed");
@@ -115,8 +124,13 @@
 			socket.emit("read-messages",data, function(res){
 				console.log("mark messages as read " + res);
 			});
-			window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+			$timeout(function() {
+				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+			},100);
 			$scope.$apply();
+			$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+			var objDiv = document.getElementById("chatDetailId");
+			objDiv.scrollTop = objDiv.scrollHeight;
 			// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 		});
 
@@ -229,9 +243,13 @@
 
 					msg.timeStamp = dateString;
 					// $scope.chatbox.messages.push(msg);
-					window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
+					$timeout(function() {
+						window.RewayClientUtils.addChatMessage($scope.chatbox,msg);
+					},100);
 					$scope.$apply();
-					$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
+					$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+					var objDiv = document.getElementById("chatDetailId");
+					objDiv.scrollTop = objDiv.scrollHeight;
 				}
 
 			});
@@ -302,9 +320,13 @@
 						msg.timeStamp = dateString;
 						// $scope.chatBox.messages.push(msg);
 						console.log(msg);
-						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+						$timeout(function() {
+							window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+						},100);
 						$scope.$apply();
-						//$('#' + $scope.chatBox.position + '_chat-history').scrollTop($('#' + $scope.chatBox.position + '_chat-history')[0].scrollHeight);
+						$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+						var objDiv = document.getElementById("chatDetailId");
+						objDiv.scrollTop = objDiv.scrollHeight;
 					}
 				});
 			}else{

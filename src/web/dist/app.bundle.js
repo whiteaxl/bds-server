@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ea093cd76ddb66b71cdd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "54418e4eb981fb75925c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -912,7 +912,7 @@
 				if (messages.length > 0) {
 					var lastDate = messages[messages.length - 1].date;
 					msg.date = new Date(msg.date);
-					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate, new Date(msg.date));
+					msg.showDate = lastDate && msg.date && !this.isSameDate(lastDate, msg.date);
 				} else {
 					msg.showDate = true;
 					msg.date = new Date(msg.date);
@@ -28391,6 +28391,10 @@
 				});
 			};
 
+			vm.goBack = function () {
+				$window.history.back();
+			};
+
 			$timeout(function () {
 				vm.init();
 			}, 100);
@@ -28439,7 +28443,12 @@
 
 											var async = __webpack_require__(30);
 											async.forEach(msgList, function (msg) {
-												window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+												$timeout(function () {
+													window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+												}, 100);
+												$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+												var objDiv = document.getElementById("chatDetailId");
+												objDiv.scrollTop = objDiv.scrollHeight;
 											}, function (err) {
 												if (err) {
 													throw err;
@@ -28468,8 +28477,13 @@
 				socket.emit("read-messages", data, function (res) {
 					console.log("mark messages as read " + res);
 				});
-				window.RewayClientUtils.addChatMessage($scope.chatBox, data);
+				$timeout(function () {
+					window.RewayClientUtils.addChatMessage($scope.chatBox, data);
+				}, 100);
 				$scope.$apply();
+				$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+				var objDiv = document.getElementById("chatDetailId");
+				objDiv.scrollTop = objDiv.scrollHeight;
 				// $('#' + $scope.chatBox[data.fromUserID].position + '_chat-history').scrollTop($('#' + $scope.chatBox[data.fromUserID].position + '_chat-history')[0].scrollHeight);
 			});
 
@@ -28577,9 +28591,13 @@
 
 						msg.timeStamp = dateString;
 						// $scope.chatbox.messages.push(msg);
-						window.RewayClientUtils.addChatMessage($scope.chatbox, msg);
+						$timeout(function () {
+							window.RewayClientUtils.addChatMessage($scope.chatbox, msg);
+						}, 100);
 						$scope.$apply();
-						$('#' + $scope.chatbox.position + '_chat-history').scrollTop($('#' + $scope.chatbox.position + '_chat-history')[0].scrollHeight);
+						$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+						var objDiv = document.getElementById("chatDetailId");
+						objDiv.scrollTop = objDiv.scrollHeight;
 					}
 				});
 			};
@@ -28647,14 +28665,18 @@
 							msg.timeStamp = dateString;
 							// $scope.chatBox.messages.push(msg);
 							console.log(msg);
-							window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+							$timeout(function () {
+								window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+							}, 100);
 							$scope.$apply();
-							//$('#' + $scope.chatBox.position + '_chat-history').scrollTop($('#' + $scope.chatBox.position + '_chat-history')[0].scrollHeight);
+							$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+							var objDiv = document.getElementById("chatDetailId");
+							objDiv.scrollTop = objDiv.scrollHeight;
 						}
 					});
 				} else {
-						vm.isMsgBoxEmpty = true;
-					}
+					vm.isMsgBoxEmpty = true;
+				}
 			};
 
 			vm.toggleChat = function (event) {

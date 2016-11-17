@@ -1,5 +1,5 @@
 <header class="main blue">
-    <a href="chats.html" class="header-icon"><i class="iconLeftOpen"></i></a>
+    <a href="#" ng-click="mcdc.goBack()" class="header-icon"><i class="iconLeftOpen"></i></a>
     <span class="name">Tran Anh <br><small>Trực tuyến 30 phút trước</small></span>
     <div class="btn-group pull-right" role="group">
         <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><img src="/web/mobile/img/dots-three-horizontal.svg" width="26" /></a>
@@ -9,8 +9,8 @@
         </ul>
     </div>
 </header>
-<div class="wapper">
-    <div class="chat-detail">
+<div class="wapper"  >
+    <div class="chat-detail" >
         <div class="chat-header ovh">
             <a href="#"><img src="{{mcdc.ads.image.cover}}" alt="" title="" class="pull-left" /></a>
             <div class="ovh">
@@ -18,7 +18,7 @@
                 <span class="price">{{mcdc.ads.giaFmt}}</span>
             </div>
         </div>
-        <div class="chat-list uln">
+        <div class="chat-list uln" id="chatDetailId">
             <ul>
                 <li ng-repeat="msg in chatBox.messages track by $index" class={{mcdc.isMe(msg.fromUserID)?"me":"other"}}>
                     <img ng-if="!mcdc.isMe(msg.fromUserID)" src={{msg.user.avatar?msg.user.avatar:"/web/mobile/img/avatar.png"}} class="img-circle avatar pull-left">
