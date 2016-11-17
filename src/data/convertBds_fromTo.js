@@ -18,6 +18,6 @@ DBCache.init(() => {
     logUtil.info("DONE ALL");
     process.exit(0);
   }, ngayDangFrom, ngayDangTo);
-}, true);
+}, true, " source = 'bds'");
 
 

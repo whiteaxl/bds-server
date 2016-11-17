@@ -15,4 +15,4 @@ DBCache.init(() => {
     logUtil.info("DONE ALL");
     process.exit();
   }, ngayDangFrom, null);
-}, true);
+}, true, " source = 'dothi'");

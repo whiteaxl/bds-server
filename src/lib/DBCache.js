@@ -51,13 +51,17 @@ function loadDoc(type, callback) {
 }
 
 
-function loadAds(isFull, callback) {
+function loadAds(isFull, moreCondition, callback) {
   let type = 'Ads';
   let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin,timeExtracted ";
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
-  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime}`   ;
+  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime}  ` ;
+  if (moreCondition) {
+    sql = sql + " and " + moreCondition;
+  }
+
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
@@ -145,7 +149,7 @@ var cache = {
     //var result = this.placeFuse.search("");
   },
 
-  init(done, isFull) {
+  init(done, isFull, moreCondition) {
     let lastSyncTime = new Date().getTime();
     let cnt = 0;
     let that = this;
@@ -160,14 +164,14 @@ var cache = {
           let lastSyncTime = new Date().getTime();
           that.reloadAds(() => {
             this.updateLastSyncTime(lastSyncTime);
-          }, isFull);
+          }, isFull, moreCondition);
         }, constants.DBCACHE.REFRESH_INTERVAL*1000);
 
         done && done();
       }
     };
 
-    this.reloadAds(checkDone, isFull);
+    this.reloadAds(checkDone, isFull, moreCondition);
     this.reloadPlaces(() => {
       that.initPlaceAutoComplete();
       checkDone();
@@ -175,7 +179,7 @@ var cache = {
   },
   _loadingAds : false,
 
-  reloadAds(done, isFull) {
+  reloadAds(done, isFull, moreCondition) {
     if (this._loadingAds) {
       logUtil.warn("Can't perform reloadAds, there is readAds running!");
       return;
@@ -185,7 +189,7 @@ var cache = {
 
     let total = 0;
 
-    loadAds(isFull, (length)=> {
+    loadAds(isFull, moreCondition, (length)=> {
       total += length;
       logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
       that._loadingAds = false;
