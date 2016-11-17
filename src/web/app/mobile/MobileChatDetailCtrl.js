@@ -235,8 +235,7 @@
 						$timeout(function() {
 							var fileUrl = location.protocol;
 							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
-
-							console.log("----fileUrl: " + fileUrl);
+							var dateString = formatAMPM(new Date());
 							var msg = $scope.getMessage();
 							if(isImageFile==true)
 								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;

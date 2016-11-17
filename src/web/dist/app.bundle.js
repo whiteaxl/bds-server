@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ef8369a5a877b6542bd7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3774145bd5e1f71cc2c6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28582,8 +28582,7 @@
 							$timeout(function () {
 								var fileUrl = location.protocol;
 								fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
-
-								console.log("----fileUrl: " + fileUrl);
+								var dateString = formatAMPM(new Date());
 								var msg = $scope.getMessage();
 								if (isImageFile == true) msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;else msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
 								msg.content = fileUrl;
