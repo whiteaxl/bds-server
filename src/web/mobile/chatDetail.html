@@ -31,12 +31,12 @@
                             <div ng-class="{'attachment-icon-right' : mcdc.isMe(msg.fromUserID), 'attachment-icon-left' : !mcdc.isMe(msg.fromUserID)}">
                                 <a ng-href="{{msg.content}}">
                                     <img  ng-if="msg.msgType==2" ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
-                                    <span ng-if="msg.msgType==3">Document</span>
+                                    <img  ng-if="msg.msgType==3" ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="/web/mobile/img/google-map.png" alt="Image File"> <!-- Image -->
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div ng-class="{'attachment-msg-right' : mcdc.isMe(msg.fromUserID), 'attachment-msg-left' : !mcdc.isMe(msg.fromUserID)}" ng-if="msg.msgType==2 || msg.msgType==3">
+                    <div ng-class="{'attachment-msg-right' : mcdc.isMe(msg.fromUserID), 'attachment-msg-left' : !mcdc.isMe(msg.fromUserID)}" ng-if="msg.msgType==2">
                         <span class="decs-text">
                             <a class="decs-text" ng-show="!mcdc.isMe(msg.fromUserID)" download target="_self" href="{{msg.content}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
                             <a class="decs-text hidden-link" href="{{ msg.content }}"  download="{{msg.content }}"></a>
@@ -54,7 +54,7 @@
                     <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
                     <a href="javascript:void(0)" ><i class="iconCamera"></i></a>
                     <a ngf-select="uploadFiles($files)" multiple accept="image/*" class="active"><i class="fa fa-picture-o"></i></a>
-                    <a href="javascript:void(0)" class="active"><i class="iconLocation"></i></a>
+                    <a href="#" ng-click="mcdc.sendUrlMapLocation()" class="active"><i class="iconLocation"></i></a>
                     <div class="list-sort popovers top uln">
                         <ul>
                             <li ng-repeat="sts in sampleSentences track by $index"><a href="#" ng-click="mcdc.chonMauCau(sts.lable)">{{sts.lable}}</a></li>

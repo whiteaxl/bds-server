@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "647db5a8194e24c1e110"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "32bb961416db07594010"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28369,13 +28369,57 @@
 			vm.user = null;
 			vm.toUser = null;
 			vm.chatMsg = "";
+			vm.currentLocation = null;
 
 			$scope.sampleSentences = [{ value: 0, lable: "Xin chào bạn!" }, { value: 1, lable: "Nhà đã bán chưa bạn?" }, { value: 2, lable: "Gửi cho mình thêm ảnh" }, { value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" }, { value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" }, { value: 5, lable: "Giá có thương lượng được không bạn?" }, { value: 6, lable: "Giảm giá chút đi bạn" }, { value: 7, lable: "Cảm ơn bạn!" }];
 			$scope.chatBox = {};
 
+			vm.getCurrentLocation = function () {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function (position) {
+						console.log(position);
+						vm.currentLocation = position;
+					}, function (error) {
+						console.log(error);
+					});
+				} else {}
+			};
+
+			vm.sendUrlMapLocation = function () {
+				if (vm.currentLocation) {
+					vm.isFileSelected = false;
+					var dateString = formatAMPM(new Date());
+					var msg = $scope.getMessage();
+					msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.coords.latitude + "," + vm.currentLocation.coords.longitude;
+					msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
+					socket.emit("send-message", msg, function (data) {
+						//delivery report code goes here
+						if (data.success == true) {
+							if (data.offline == true) {
+								$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
+								$scope.chatBox.onlineClass = "offline";
+								//console.log("TODO: this person is offline he will receive the message next time he online");
+							}
+							msg.timeStamp = dateString;
+							console.log(msg);
+							$timeout(function () {
+								window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+							}, 100);
+							$scope.$apply();
+							$("body").animate({ scrollTop: $(document).height() }, "slow");
+							var objDiv = document.getElementById("chatDetailId");
+							objDiv.scrollTop = objDiv.scrollHeight;
+						}
+					});
+				} else {
+					vm.isMsgBoxEmpty = true;
+				}
+			};
+
 			vm.init = function () {
 				console.log("------------------------init--------------------------");
 				console.log($rootScope.user);
+				vm.getCurrentLocation();
 				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
 					console.log("register socket user " + $rootScope.user.userName);
 				});
@@ -28416,7 +28460,7 @@
 													$timeout(function () {
 														window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 													}, 100);
-													$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+													$("body").animate({ scrollTop: $(document).height() }, "fast");
 													var objDiv = document.getElementById("chatDetailId");
 													objDiv.scrollTop = objDiv.scrollHeight;
 												}, function (err) {
@@ -28469,9 +28513,7 @@
 					window.RewayClientUtils.addChatMessage($scope.chatBox, data);
 				}, 100);
 				$scope.$apply();
-				$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-				var objDiv = document.getElementById("chatDetailId");
-				objDiv.scrollTop = objDiv.scrollHeight;
+				$("body").animate({ scrollTop: $(document).height() }, "slow");
 			});
 
 			socket.on("user-start-typing", function (data) {
@@ -28587,7 +28629,7 @@
 								fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
 								var dateString = formatAMPM(new Date());
 								var msg = $scope.getMessage();
-								if (isImageFile == true) msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;else msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
 								msg.content = fileUrl;
 								socket.emit('send-message', msg, function (data) {
 									console.log("sent image to " + $scope.chatBox.user.userID);
@@ -28601,7 +28643,8 @@
 										msg.timeStamp = dateString;
 										window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 										$scope.$apply();
-										$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+										$("body").animate({ scrollTop: $(document).height() }, "slow");
+
 										var objDiv = document.getElementById("chatDetailId");
 										objDiv.scrollTop = objDiv.scrollHeight;
 									}
@@ -28658,7 +28701,7 @@
 								window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 							}, 100);
 							$scope.$apply();
-							$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+							$("body").animate({ scrollTop: $(document).height() }, "slow");
 							var objDiv = document.getElementById("chatDetailId");
 							objDiv.scrollTop = objDiv.scrollHeight;
 						}
@@ -28707,7 +28750,7 @@
 		'use strict';
 
 		var controllerId = 'MobilePostCtrl';
-		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window, $timeout, $location, $localStorage) {
+		angular.module('bds').controller(controllerId, function (jwtHelper, $rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window, $timeout, $location, $localStorage) {
 			var vm = this;
 
 			vm.ads = {};
@@ -28739,7 +28782,6 @@
 			vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 			vm.dacTinhNha = window.RewayListValue.DacTinhNha;
 			vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-			$scope.currentYear = new Date().getFullYear();
 
 			$scope.rangeNumber = [];
 			for (var i = 0; i < 8; i++) {
@@ -28748,10 +28790,34 @@
 
 			vm.loaiGias = [{ value: 1, lable: "Triệu" }, { value: 2, lable: "Tỷ" }, { value: 3, lable: "Trăm nghìn/m2" }, { value: 4, lable: "Triệu/m2" }, { value: 0, lable: "Thỏa thuận" }];
 			vm.loaiGia = { value: 1, lable: "Triệu" };
-			$scope.namXayDungList = [{ value: $scope.currentYear, lable: $scope.currentYear }, { value: $scope.currentYear - 1, lable: $scope.currentYear - 1 }, { value: $scope.currentYear - 2, lable: $scope.currentYear - 2 }, { value: $scope.currentYear - 3, lable: $scope.currentYear - 3 }, { value: $scope.currentYear - 4, lable: $scope.currentYear - 4 }, { value: $scope.currentYear - 5, lable: $scope.currentYear - 5 }, { value: $scope.currentYear - 6, lable: $scope.currentYear - 6 }, { value: $scope.currentYear - 7, lable: $scope.currentYear - 7 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 8 }, { value: $scope.currentYear - 9, lable: $scope.currentYear - 9 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 10 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 11 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 12 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 13 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 14 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 15 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 16 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 17 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 18 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 19 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 20 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 21 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 23 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 24 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 25 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 26 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 27 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 28 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 29 }, { value: $scope.currentYear - 8, lable: $scope.currentYear - 30 }];
+
+			vm.makeListNamXayDung = function () {
+				console.log("----------------------makeListNamXayDung-----1-----");
+				console.log($rootScope.user);
+				var currentYear = new Date().getFullYear();
+				var result = [];
+				result.push({ value: 0, lable: "" });
+				for (var i = 0; i < 100; i++) {
+					result.push({ value: currentYear - i, lable: currentYear - i });
+				}
+				return result;
+			};
+
+			$scope.namXayDungList = vm.makeListNamXayDung();
 
 			$(".btn-more .collapse-title").click(function () {
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
+			});
+
+			$(".btn-reset .collapse-title").click(function () {
+				$(this).parent().parent().find(".btn-more").removeAttr("style");
+				$(this).parent().parent().find(".title-more").removeAttr("style");
+				$(this).parent().parent().find(".more-box").addClass("more-box-hide");
+				$(this).parent().parent().find(".spinner").addClass("spinner-hide");
+				$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+				$(this).parent().parent().find(".btn-group .btn").removeClass("active");
+				$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
+				$(this).parent().parent().find(".search").val('');
 			});
 
 			/*
@@ -29227,10 +29293,16 @@
 						if (selected.id == "yearBuild") {
 							vm.ads.namXayDung = selected.value;
 						}
+						if (selected.selectedIndex == 0) {
+							vm.ads.namXayDung = null;
+							$("#yearBuild_value").text("Bất kỳ");
+						}
 					}
 				});
 			};
 			function initDataPost() {
+				console.log("---------------initDataPost---------------");
+				console.log($rootScope.user);
 				if (vm.adsID) {
 					HouseService.getUpdateAds({ adsID: vm.adsID }).then(function (res) {
 						console.log("-------------------------initData with adsId--------");
@@ -29324,11 +29396,13 @@
 						}
 						$("#lienHeLbl").text(lienHeTxt);
 
-						for (var i = 0; i < $scope.namXayDungList.length; i++) {
-							if ($scope.namXayDungList[i].value == parseInt(vm.ads.namXayDung)) {
-								$("select#yearBuild").drum('setIndex', i);
-								$("#yearBuild_value").text(vm.ads.namXayDung);
-								break;
+						if (vm.ads.namXayDung) {
+							for (var i = 0; i < $scope.namXayDungList.length; i++) {
+								if ($scope.namXayDungList[i].value == parseInt(vm.ads.namXayDung)) {
+									$("select#yearBuild").drum('setIndex', i);
+									$("#yearBuild_value").text(vm.ads.namXayDung);
+									break;
+								}
 							}
 						}
 					});
@@ -29351,11 +29425,6 @@
 						},
 						geo: { lat: '', lon: '' }
 					};
-					vm.ads.lienHe = {
-						showTenLienLac: true,
-						showPhone: true,
-						showEmail: true
-					};
 
 					vm.ads.chiTiet = '';
 					vm.ads.nhaMoiXay = false;
@@ -29364,11 +29433,52 @@
 					vm.ads.nhaKinhDoanhDuoc = false;
 					vm.ads.noiThatDayDu = false;
 					vm.ads.chinhChuDangTin = false;
-					if ($rootScope.user) {
-						if ($rootScope.user.userName) vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
-						if ($rootScope.user.phone) vm.ads.lienHe.phone = $rootScope.user.phone;
-						if ($rootScope.user.userEmail) vm.ads.lienHe.email = $rootScope.user.userEmail;
+
+					if (!$rootScope.user.userID) {
+						if ($localStorage.relandToken) {
+							var decodedToken = {};
+							decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
+							HouseService.profile({ userID: decodedToken.userID }).then(function (res) {
+								if (res.data.success == true) $rootScope.user = res.data.user;
+								vm.ads.lienHe = {
+									showTenLienLac: false,
+									showPhone: false,
+									showEmail: false
+								};
+								if ($rootScope.user.fullName) {
+									vm.ads.lienHe.tenLienLac = $rootScope.user.fullName;
+									vm.ads.lienHe.showTenLienLac = true;
+								}
+								if ($rootScope.user.phone) {
+									vm.ads.lienHe.phone = $rootScope.user.phone;
+									vm.ads.lienHe.showPhone = true;
+								}
+								if ($rootScope.user.email) {
+									vm.ads.lienHe.email = $rootScope.user.email;
+									vm.ads.lienHe.showEmail = true;
+								}
+							});
+						}
+					} else {
+						vm.ads.lienHe = {
+							showTenLienLac: false,
+							showPhone: false,
+							showEmail: false
+						};
+						if ($rootScope.user.fullName) {
+							vm.ads.lienHe.tenLienLac = $rootScope.user.fullName;
+							vm.ads.lienHe.showTenLienLac = true;
+						}
+						if ($rootScope.user.phone) {
+							vm.ads.lienHe.phone = $rootScope.user.phone;
+							vm.ads.lienHe.showPhone = true;
+						}
+						if ($rootScope.user.email) {
+							vm.ads.lienHe.email = $rootScope.user.email;
+							vm.ads.lienHe.showEmail = true;
+						}
 					}
+
 					vm.selectLoaiTin($scope.loaiTin);
 					vm.getCurrentLocation();
 				}
@@ -29608,7 +29718,6 @@
 			};
 
 			vm.setSoPhongNgu = function (value) {
-				console.log(vm.ads.namXayDung);
 				vm.ads.soPhongNgu = value;
 				console.log(vm.ads.soPhongNgu);
 				if (vm.ads.soPhongNgu && vm.ads.soPhongNgu != $scope.soPhongNgu) {
@@ -47245,9 +47354,11 @@
 
 	internals.CHAT_MESSAGE_TYPE = {
 	  TEXT: 1,
-	  IMAGE: 2,
-	  FILE: 3,
-	  SYSTEM: 4
+	  //IMAGE:2,
+	  //FILE: 3,
+	  //SYSTEM: 4
+	  FILE: 2,
+	  LOCATION: 3
 	};
 
 	internals.MSG = {

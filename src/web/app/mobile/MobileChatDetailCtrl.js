@@ -12,6 +12,7 @@
 		vm.user = null;
 		vm.toUser = null;
 		vm.chatMsg = "";
+		vm.currentLocation = null;
 
 		$scope.sampleSentences = [
 			{ value: 0, lable: "Xin chào bạn!"},
@@ -25,9 +26,53 @@
 		];
 		$scope.chatBox = {};
 
+		vm.getCurrentLocation = function() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position){
+					console.log(position);
+					vm.currentLocation = position;
+				}, function(error){
+					console.log(error);
+				});
+			} else {
+			}
+		}
+
+		vm.sendUrlMapLocation = function(){
+			if (vm.currentLocation) {
+				vm.isFileSelected = false;
+				var dateString = formatAMPM(new Date());
+				var msg = $scope.getMessage();
+				msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.coords.latitude + "," + vm.currentLocation.coords.longitude;
+				msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
+				socket.emit("send-message",msg, function(data){
+					//delivery report code goes here
+					if (data.success == true) {
+						if(data.offline==true){
+							$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
+							$scope.chatBox.onlineClass = "offline";
+							//console.log("TODO: this person is offline he will receive the message next time he online");
+						}
+						msg.timeStamp = dateString;
+						console.log(msg);
+						$timeout(function() {
+							window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+						},100);
+						$scope.$apply();
+						$("body").animate({ scrollTop: $(document).height() }, "slow");
+						var objDiv = document.getElementById("chatDetailId");
+						objDiv.scrollTop = objDiv.scrollHeight;
+					}
+				});
+			}else{
+				vm.isMsgBoxEmpty = true;
+			}
+		}
+
 		vm.init = function(){
 			console.log("------------------------init--------------------------")
 			console.log($rootScope.user);
+			vm.getCurrentLocation();
 			socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName},function(data){
 				console.log("register socket user " + $rootScope.user.userName);
 			});
@@ -68,9 +113,10 @@
 												$timeout(function() {
 													window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 												},100);
-												$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-												var objDiv = document.getElementById("chatDetailId");
-												objDiv.scrollTop = objDiv.scrollHeight;
+												$("body").animate({ scrollTop: $(document).height() }, "fast");
+												//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+												//var objDiv = document.getElementById("chatDetailId");
+												//objDiv.scrollTop = objDiv.scrollHeight;
 											}, function(err){
 												if(err){throw err;}
 												console.log("processing all elements completed");
@@ -122,9 +168,7 @@
 				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 			},100);
 			$scope.$apply();
-			$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-			var objDiv = document.getElementById("chatDetailId");
-			objDiv.scrollTop = objDiv.scrollHeight;
+			$("body").animate({ scrollTop: $(document).height() }, "slow");
 		});
 
 		socket.on("user-start-typing",function(data){
@@ -240,10 +284,7 @@
 							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
 							var dateString = formatAMPM(new Date());
 							var msg = $scope.getMessage();
-							if(isImageFile==true)
-								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.IMAGE;
-							else
-								msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
+							msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
 							msg.content = fileUrl;
 							socket.emit('send-message',msg,function (data){
 								console.log("sent image to " + $scope.chatBox.user.userID);
@@ -257,7 +298,8 @@
 									msg.timeStamp = dateString;
 									window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 									$scope.$apply();
-									$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+									$("body").animate({ scrollTop: $(document).height() }, "slow");
+
 									var objDiv = document.getElementById("chatDetailId");
 									objDiv.scrollTop = objDiv.scrollHeight;
 								}
@@ -313,7 +355,7 @@
 							window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						},100);
 						$scope.$apply();
-						$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+						$("body").animate({ scrollTop: $(document).height() }, "slow");
 						var objDiv = document.getElementById("chatDetailId");
 						objDiv.scrollTop = objDiv.scrollHeight;
 					}

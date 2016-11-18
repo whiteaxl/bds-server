@@ -2,7 +2,7 @@
 	'use strict';
 
 	var controllerId = 'MobilePostCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window,$timeout,$location,$localStorage){
+	angular.module('bds').controller(controllerId,function (jwtHelper, $rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 
 		vm.ads = {};
@@ -34,7 +34,7 @@
 		vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 		vm.dacTinhNha = window.RewayListValue.DacTinhNha;
 		vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-		$scope.currentYear = new Date().getFullYear();
+
 
 		$scope.rangeNumber = [];
 		for(var i=0;i<8;i++) {
@@ -49,42 +49,35 @@
 				{ value: 0, lable: "Thỏa thuận" }
 		];
 		vm.loaiGia = { value: 1, lable: "Triệu"};
-		$scope.namXayDungList = [
-			{ value: $scope.currentYear, lable: $scope.currentYear },
-			{ value: $scope.currentYear-1, lable: ($scope.currentYear -1) },
-			{ value: $scope.currentYear-2, lable: ($scope.currentYear -2) },
-			{ value: $scope.currentYear-3, lable: ($scope.currentYear -3) },
-			{ value: $scope.currentYear-4, lable: ($scope.currentYear -4) },
-			{ value: $scope.currentYear-5, lable: ($scope.currentYear -5) },
-			{ value: $scope.currentYear-6, lable: ($scope.currentYear -6) },
-			{ value: $scope.currentYear-7, lable: ($scope.currentYear -7) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -8) },
-			{ value: $scope.currentYear-9, lable: ($scope.currentYear -9) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -10) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -11) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -12) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -13) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -14) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -15) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -16) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -17) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -18) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -19) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -20) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -21) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -23) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -24) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -25) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -26) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -27) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -28) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -29) },
-			{ value: $scope.currentYear-8, lable: ($scope.currentYear -30) }
-		];
+
+		vm.makeListNamXayDung = function(){
+			console.log("----------------------makeListNamXayDung-----1-----");
+			console.log($rootScope.user);
+			var currentYear = new Date().getFullYear();
+			var result = [];
+			result.push({ value: 0, lable: "" });
+			for(var i= 0; i<100; i++){
+				result.push({ value: (currentYear - i), lable: (currentYear - i) });
+			}
+			return result;
+		}
+
+		$scope.namXayDungList = vm.makeListNamXayDung();
 
 		$(".btn-more .collapse-title").click(function() {
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
+
+		$(".btn-reset .collapse-title").click(function(){
+			$(this).parent().parent().find(".btn-more").removeAttr("style");
+			$(this).parent().parent().find(".title-more").removeAttr("style");
+			$(this).parent().parent().find(".more-box").addClass("more-box-hide");
+			$(this).parent().parent().find(".spinner").addClass("spinner-hide");
+			$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+			$(this).parent().parent().find(".btn-group .btn").removeClass("active");
+			$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
+			$(this).parent().parent().find(".search").val('');
+		});
 
 		/*
 		vm.getDanhMucNamXd = function(){
@@ -581,10 +574,16 @@
 					if(selected.id=="yearBuild"){
 						vm.ads.namXayDung = selected.value;
 					}
+					if(selected.selectedIndex == 0){
+						vm.ads.namXayDung = null;
+						$("#yearBuild_value").text("Bất kỳ");
+					}
 				}
 			});
 		}
 		function initDataPost(){
+			console.log("---------------initDataPost---------------");
+			console.log($rootScope.user);
 			if(vm.adsID){
 				HouseService.getUpdateAds({adsID: vm.adsID}).then(function(res){
 					console.log("-------------------------initData with adsId--------");
@@ -682,15 +681,15 @@
 					}
 					$("#lienHeLbl").text(lienHeTxt);
 
-					for(var i=0; i <$scope.namXayDungList.length; i++){
-						if($scope.namXayDungList[i].value == parseInt(vm.ads.namXayDung)){
-							$("select#yearBuild").drum('setIndex', i);
-							$("#yearBuild_value").text(vm.ads.namXayDung);
-							break;
+					if(vm.ads.namXayDung){
+						for(var i=0; i <$scope.namXayDungList.length; i++){
+							if($scope.namXayDungList[i].value == parseInt(vm.ads.namXayDung)){
+								$("select#yearBuild").drum('setIndex', i);
+								$("#yearBuild_value").text(vm.ads.namXayDung);
+								break;
+							}
 						}
-
 					}
-
 				});
 			} else{
 				vm.ads.image = {};
@@ -711,11 +710,7 @@
 					},
 					geo: {lat: '', lon: ''}
 				}
-				vm.ads.lienHe={
-					showTenLienLac: true,
-					showPhone: true,
-					showEmail: true,
-				};
+
 
 				vm.ads.chiTiet = '';
 				vm.ads.nhaMoiXay = false;
@@ -724,14 +719,53 @@
 				vm.ads.nhaKinhDoanhDuoc = false;
 				vm.ads.noiThatDayDu = false;
 				vm.ads.chinhChuDangTin = false;
-				if($rootScope.user){
-					if($rootScope.user.userName)
-						vm.ads.lienHe.tenLienLac = $rootScope.user.userName;
-					if($rootScope.user.phone)
+
+				if(!$rootScope.user.userID){
+					if($localStorage.relandToken){
+						var decodedToken = {};
+						decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
+						HouseService.profile({userID: decodedToken.userID}).then(function(res){
+							if(res.data.success == true)
+								$rootScope.user = res.data.user;
+							vm.ads.lienHe={
+								showTenLienLac: false,
+								showPhone : false,
+								showEmail: false
+							};
+							if($rootScope.user.fullName){
+								vm.ads.lienHe.tenLienLac = $rootScope.user.fullName;
+								vm.ads.lienHe.showTenLienLac = true;
+							}
+							if($rootScope.user.phone){
+								vm.ads.lienHe.phone = $rootScope.user.phone;
+								vm.ads.lienHe.showPhone = true;
+							}
+							if($rootScope.user.email){
+								vm.ads.lienHe.email = $rootScope.user.email;
+								vm.ads.lienHe.showEmail = true;
+							}
+						});
+					}
+				} else{
+					vm.ads.lienHe={
+						showTenLienLac: false,
+						showPhone : false,
+						showEmail: false
+					};
+					if($rootScope.user.fullName){
+						vm.ads.lienHe.tenLienLac = $rootScope.user.fullName;
+						vm.ads.lienHe.showTenLienLac = true;
+					}
+					if($rootScope.user.phone){
 						vm.ads.lienHe.phone = $rootScope.user.phone;
-					if($rootScope.user.userEmail)
-						vm.ads.lienHe.email = $rootScope.user.userEmail;
+						vm.ads.lienHe.showPhone = true;
+					}
+					if($rootScope.user.email){
+						vm.ads.lienHe.email = $rootScope.user.email;
+						vm.ads.lienHe.showEmail = true;
+					}
 				}
+
 				vm.selectLoaiTin($scope.loaiTin);
 				vm.getCurrentLocation();
 			}
@@ -979,7 +1013,6 @@
 		}
 
 		vm.setSoPhongNgu = function (value) {
-			console.log(vm.ads.namXayDung);
 			vm.ads.soPhongNgu = value;
 			console.log(vm.ads.soPhongNgu);
 			if(vm.ads.soPhongNgu && (vm.ads.soPhongNgu != $scope.soPhongNgu)){
