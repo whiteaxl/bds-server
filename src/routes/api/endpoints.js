@@ -11,6 +11,7 @@ var newsHandlers = require('./newsHandlers');
 var homeDataHandlers = require('./homeDataHandlers');
 var homeDataHandlersV2 = require('./homeDataHandlersV2');
 var placeHandlers = require('./placeHandlers');
+var pricingHandlers = require('./pricingHandlers');
 
 var onepay = require("./onepayHandlers");
 var onepaySim = require("./onepaySimHandlers");
@@ -992,7 +993,7 @@ internals.endpoints = [
   {
     method: 'POST',
     path: '/api/v2/getProductPricing',
-    handler: findHandlerV2.getProductPricing,
+    handler: pricingHandlers.getProductPricing,
     config: {
       description: 'Tra ve dia chinh/du an by dia chinh khong dau',
       tags: ['api'],
