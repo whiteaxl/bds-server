@@ -207,7 +207,7 @@ internals.getProductPricing = function (req, reply) {
                     if (tmp.length <=5 ){
                         adsNgangGia = tmp;
                     } else{
-                        tmp.sort((a,b) => Math.abs(b.giaM2-pricing.giaM2) - Math.abs(a.giaM2-pricing.giaM2));
+                        tmp.sort((a,b) => Math.abs(a.giaM2-pricing.giaM2) - Math.abs(b.giaM2-pricing.giaM2));
                         adsNgangGia = tmp.slice(0,5);
                     }
                     break;
