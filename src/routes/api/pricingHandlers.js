@@ -79,7 +79,7 @@ internals.getProductPricing = function (req, reply) {
     let q = req.payload;
 
     if (!q.codeDuAn || q.codeDuAn.length < 0) {
-        let box = geoUtil.getBoxOfCircle({lat: q.position.lat, lon: q.position.lon}, geoUtil.meter2degree(10));
+        let box = geoUtil.getBoxOfCircle({lat: q.position.lat, lon: q.position.lon}, geoUtil.meter2degree(0.5));
         _mergeViewportWithBox(q, box);
     }
 
@@ -161,7 +161,7 @@ internals.getProductPricing = function (req, reply) {
             }
         } else {
             for (var u = 1; u <= 5; u++) {
-                radius = 1 * u;
+                radius = 0.1 * u;
                 let boxfilter = geoUtil.getBoxOfCircle({
                     lat: q.position.lat,
                     lon: q.position.lon
