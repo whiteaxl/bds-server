@@ -84,10 +84,15 @@ internals.getProductPricing = function (req, reply) {
     }
 
     q.giaBETWEEN = [0.1, 9999999];
-    q.duAnKhongDau = q.codeDuAn;
+
     if (q.codeDuAn && q.codeDuAn.length>0){
         q.diaChinh= {duAnKhongDau: q.codeDuAn};
     }
+
+    if (q.dienTich){
+        q.dienTichBETWEEN= [q.dienTich*0.7, q.dienTich*1.3];
+    }
+
     q.dbLimit = 5000;
     q.dbPageNo =  1;
     q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
@@ -202,7 +207,9 @@ internals.getProductPricing = function (req, reply) {
             if (pricing != {}) {
                 let numOfReturnAds = 1;
                 for (var i = 0; i < listAds.length; i++) {
-                    if (listAds[i].loaiNhaDat == inputLoaiNhaDat) {
+                    if (listAds[i].loaiNhaDat == inputLoaiNhaDat
+                        && listAds[i].giaM2 >= pricing.giaM2*0.7
+                        && listAds[i].giaM2 <= pricing.giaM2*1.3) {
                         adsNgangGia.push(listAds[i]);
                         if (numOfReturnAds >= 5)
                             break;
