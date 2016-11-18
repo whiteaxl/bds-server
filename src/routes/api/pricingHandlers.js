@@ -173,6 +173,7 @@ internals.getProductPricing = function (req, reply) {
                 }, geoUtil.meter2degree(radius));
 
                 // filter pricing in circle
+                let filterList = [];
                 for (var i = 0; i < listAds.length; i++){
                     if (listAds[i].place && listAds[i].place.geo
                         && listAds[i].place.geo.lat && listAds[i].place.geo.lon
@@ -181,6 +182,7 @@ internals.getProductPricing = function (req, reply) {
                     ){
                         giaTrungBinh[listAds[i].loaiNhaDat - 1].giaM2 += listAds[i].giaM2;
                         giaTrungBinh[listAds[i].loaiNhaDat - 1].count += 1;
+                        filterList.push(listAds[i]);
                     }
                 }
 
@@ -197,6 +199,17 @@ internals.getProductPricing = function (req, reply) {
                 }
 
                 if (pricing != {}) {
+                    let tmp = [];
+                    filterList.map( (e) => {if (e.loaiNhaDat == inputLoaiNhaDat)
+                                                tmp.push(e);
+                                         });
+
+                    if (tmp.length <=5 ){
+                        adsNgangGia = tmp;
+                    } else{
+                        tmp.sort((a,b) => Math.abs(b.giaM2-pricing.giaM2) - Math.abs(a.giaM2-pricing.giaM2));
+                        adsNgangGia = tmp.slice(0,5);
+                    }
                     break;
                 } else {
                     giaTrungBinh = [];
@@ -204,19 +217,6 @@ internals.getProductPricing = function (req, reply) {
                 }
             }
 
-            if (pricing != {}) {
-                let numOfReturnAds = 1;
-                for (var i = 0; i < listAds.length; i++) {
-                    if (listAds[i].loaiNhaDat == inputLoaiNhaDat
-                        && listAds[i].giaM2 >= pricing.giaM2*0.7
-                        && listAds[i].giaM2 <= pricing.giaM2*1.3) {
-                        adsNgangGia.push(listAds[i]);
-                        if (numOfReturnAds >= 5)
-                            break;
-                        numOfReturnAds = numOfReturnAds + 1;
-                    }
-                }
-            }
         }
     }
 
