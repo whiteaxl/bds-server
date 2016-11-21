@@ -12,10 +12,15 @@ require("./src/web/app/home/homeCtrl.js");
 require("./src/web/app/home/newsCtrl.js");
 require("./src/web/app/home/newsDetailCtrl.js");
 
+
 require("./src/web/app/home/detailCtrl.js");
 require("./src/web/app/home/ChatPanelCtrl.js");
 require("./src/web/app/home/ProfileCtrl.js");
 require("./src/web/app/home/DangTinCtrl.js");
+
+
+
+
 
 
 //services
@@ -47,7 +52,7 @@ require("./src/web/app/mobile/MobileChatCtrl.js");
  require("./src/web/app/mobile/MobileChatDetailCtrl.js");
 require("./src/web/app/mobile/MobilePostCtrl.js");
 require("./src/web/app/mobile/MobileAdsMgmtCtrl.js");
-
+require("./src/web/app/mobile/MobileListAdsCtrl.js");
 
 
 require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");

@@ -126,6 +126,7 @@
                 });
             }else {
                 vm.viewport = $rootScope.searchData.viewport;
+                $rootScope.searchData.viewport = undefined;
                 $rootScope.searchData.diaChinh = undefined;
                 $scope.center = "[14.058324,108.277199]";
                 vm.search(function(){
@@ -197,6 +198,10 @@
 
         vm.searchWithoutViewport =function(){
             $rootScope.searchData.viewport = undefined;
+            $rootScope.searchData.polygon = undefined;
+            if(vm.poly){
+                vm.poly.setMap(null);
+            }
             vm.search();
         }
 

@@ -97,6 +97,33 @@ internals.endpoints = [
 }
 ,{ 
 	method: 'GET',
+	path: '/web/more', 
+	handler: function(requet,reply){
+		var md = new MobileDetect(requet.headers['user-agent']);
+		if(md.mobile()){			
+			//reply.view('mobile/index.html');
+			reply.redirect(convertMobilePath(requet));
+		}else{
+			reply.view('index.html');
+		}
+	}
+}
+,{ 
+	method: 'GET',
+	path: '/web/mobile/more', 
+	handler: function(requet,reply){
+		var md = new MobileDetect(requet.headers['user-agent']);
+		if(md.mobile()){			
+			reply.view('mobile/index.html');
+			
+		}else{
+			// reply.view('index.html');
+			reply.redirect(convertDesktopPath(requet));
+		}
+	}
+}
+,{ 
+	method: 'GET',
 	path: '/web/searchdc/{p*}', 
 	handler: function(requet,reply){
 		var md = new MobileDetect(requet.headers['user-agent']);

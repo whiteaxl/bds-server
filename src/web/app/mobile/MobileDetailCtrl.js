@@ -167,7 +167,8 @@
 				// }else{
 				// 	$state.go($rootScope.lastState, $rootScope.lastStateParams);
 				// }
-				$window.history.back();
+				//$window.history.back();
+				$state.go($rootScope.lastState, $rootScope.lastStateParams);
 				
 			}
 

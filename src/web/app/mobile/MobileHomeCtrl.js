@@ -124,7 +124,11 @@
 			query.limit = 20;
 			query.duAnID = vm.boSuuTap[index].query.duAnID;
 			let pid = query.place?(query.place.placeId || query.place.place_id):undefined;
-			$state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+			// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+
+			$state.go('mlistMore',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+			
+
 			//$state.go('msearch', { "place" : $scope.placeSearchId, "loaiTin" : $scope.loaiTin, "loaiNhaDat" : $scope.loaiNhaDat, "viewMode": vm.viewMode}, {location: true});
 			//alert('showmore');
 		}

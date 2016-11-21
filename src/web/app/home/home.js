@@ -561,6 +561,12 @@
           templateUrl: "/web/mobile/chatDetail.html",
           controller: "MobileChatDetailCtrl",
           controllerAs: 'mcdc'
+      }).state('mlistMore', {
+          url: "/mobile/more",
+          templateUrl: "/web/mobile/listMoreAds.html",
+          controller: "MobileListAdsCtrl",
+          controllerAs: 'mlm',
+          params:{query: null},
       })
     });
   bds.factory('socket', function (socketFactory) {

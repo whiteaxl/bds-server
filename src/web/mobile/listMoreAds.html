@@ -1,0 +1,45 @@
+<bds-mobile-left-menu></bds-mobile-left-menu>
+<bds-mobile-filter search-data="$root.searchData"></bds-mobile-filter>
+<bds-mobile-header ></bds-mobile-header>
+<div class="wapper">
+    <div class="loadingBox text-center" ng-show="mlm.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
+	<div class="uln clb">
+		<ul class="reland-list full">
+			<li ng-repeat="ads in mlm.adsList track by $index">
+			<a href="#" ng-click="mlm.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
+            <a href="#" ng-click="mlm.goDetail($event,$index)">
+                <span class="img" style="background-image:url({{ads.image.cover}})"></span>
+                <span class="des bgOpa">
+                    <!-- <span class="btn btn-primary">Cần bán gấp</span>
+                    <span class="btn btn-warning">Nhà mới xây</span>
+                     --><span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
+                    <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
+                    <span class="split text-center">.</span>
+                    <span>{{ads.soPhongNguFmt}}</span>
+                    <span class="split"></span>
+                    <span>{{ads.soTangFmt}}</span>
+                </span>
+            </a>
+			</li>				
+		</ul>
+	</div>
+	<div class="clb ovh">&nbsp;</div>
+</div>
+    <div class="bottom clb ovh uln">
+    	<div class="app">
+        	<h5>Reland App (IOS/Android)</h5>
+            <ul>
+                <li><a href="/"><i class="iconHome gray"></i> Reland App</a></li>
+            </ul>
+        </div>
+    	<div class="copyright">
+        	<p>
+            	<a href="#">Phiên bản Desktop</a> | 
+                <a href="#">Câu hỏi thường gặp</a> | 
+                <a href="#">Điểu khoản sử dụng</a>
+            </p>
+            <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
+        </div>
+    </div>
+    <div class="overlay"></div>
+</div>
