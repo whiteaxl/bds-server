@@ -211,7 +211,8 @@
 					//Object.assign( query,vm.boSuuTap[index].query);
 					_.assign(query,searchData);
 					query.limit = 20;				
-					$state.go('msearch',{place: place.place_id, loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})							
+					//$state.go('msearch',{place: place.place_id, loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})							
+					$state.go('mlistMore',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
 			    });
 			}
 			vm.showMoreTuongTu = function(){
