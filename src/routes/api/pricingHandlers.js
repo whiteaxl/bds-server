@@ -74,6 +74,22 @@ function _transform(allAds, q) {
     return transformeds;
 }
 
+const giaTrungBinhBanTmp = [
+        {loaiNhaDat: 1, loaiNhaDatVal: "Bán căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
+        {loaiNhaDat: 2, loaiNhaDatVal: "Bán nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+        {loaiNhaDat: 3, loaiNhaDatVal: "Bán biệt thự, liền kề", giaM2:0, giaM2TrungBinh: 0, count: 0},
+        {loaiNhaDat: 4, loaiNhaDatVal: "Bán nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0}
+        ];
+
+const giaTrungBinhThueTmp = [
+    {loaiNhaDat: 1, loaiNhaDatVal: "Cho Thuê căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
+    {loaiNhaDat: 2, loaiNhaDatVal: "Cho Thuê nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+    {loaiNhaDat: 3, loaiNhaDatVal: "Cho Thuê nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0},
+    {loaiNhaDat: 4, loaiNhaDatVal: "Cho Thuê nhà trọ, phòng trọ", giaM2:0, giaM2TrungBinh: 0, count: 0},
+    {loaiNhaDat: 5, loaiNhaDatVal: "Cho Thuê văn phòng", giaM2:0, giaM2TrungBinh: 0, count: 0},
+    {loaiNhaDat: 6, loaiNhaDatVal: "Cho Thuê cửa hàng, ki-ốt", giaM2:0, giaM2TrungBinh: 0, count: 0}
+]
+
 internals.getProductPricing = function (req, reply) {
     console.log("Get Product Pricing:", req.payload);
     let q = req.payload;
@@ -98,29 +114,18 @@ internals.getProductPricing = function (req, reply) {
     q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
 
     let inputLoaiNhaDat = q.loaiNhaDat[0];
+    let inputLoaiTin = q.loaiTin;
 
-    let giaTrungBinh = []
+    let giaTrungBinh = [];
 
     if (q.loaiTin == 0) {
         q.loaiNhaDat = [1, 2, 3, 4];
-        giaTrungBinh = [
-            {loaiNhaDat: 1, loaiNhaDatVal: "Bán căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 2, loaiNhaDatVal: "Bán nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 3, loaiNhaDatVal: "Bán biệt thự, liền kề", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 4, loaiNhaDatVal: "Bán nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0}
-        ]
+        giaTrungBinh = JSON.parse(JSON.stringify(giaTrungBinhBanTmp));
 
     }
     else {
         q.loaiNhaDat = [1, 2, 3, 4, 5, 6];
-        giaTrungBinh = [
-            {loaiNhaDat: 1, loaiNhaDatVal: "Cho Thuê căn hộ chung cư", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 2, loaiNhaDatVal: "Cho Thuê nhà riêng", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 3, loaiNhaDatVal: "Cho Thuê nhà mặt phố", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 4, loaiNhaDatVal: "Cho Thuê nhà trọ, phòng trọ", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 5, loaiNhaDatVal: "Cho Thuê văn phòng", giaM2:0, giaM2TrungBinh: 0, count: 0},
-            {loaiNhaDat: 6, loaiNhaDatVal: "Cho Thuê cửa hàng, ki-ốt", giaM2:0, giaM2TrungBinh: 0, count: 0}
-        ]
+        giaTrungBinh = JSON.parse(JSON.stringify(giaTrungBinhThueTmp));
     }
 
     dbCache.query(q, (err, listAds, count) => {
@@ -133,8 +138,9 @@ internals.getProductPricing = function (req, reply) {
     let adsNgangGia = [];
     let giaTrungBinhKhac = [];
     let pricing = {};
-    let radius = 0;
+    let radius = 0.5;
     if (listAds && listAds.length > 0) {
+        console.log("======================== print listAds, count=" + listAds.length);
         if (q.codeDuAn && q.codeDuAn.length > 0) {
             for (var i = 0; i < listAds.length; i++) {
                 giaTrungBinh[listAds[i].loaiNhaDat - 1].giaM2 += listAds[i].giaM2;
@@ -167,6 +173,7 @@ internals.getProductPricing = function (req, reply) {
         } else {
             for (var u = 1; u <= 5; u++) {
                 radius = 0.1 * u;
+
                 let boxfilter = geoUtil.getBoxOfCircle({
                     lat: q.position.lat,
                     lon: q.position.lon
@@ -198,32 +205,32 @@ internals.getProductPricing = function (req, reply) {
                     }
                 }
 
-                if (pricing != {}) {
+                if (JSON.stringify(pricing) != JSON.stringify({})) {
                     let tmp = [];
                     filterList.map( (e) => {if (e.loaiNhaDat == inputLoaiNhaDat)
                                                 tmp.push(e);
                                          });
 
+                    tmp.sort((a,b) => { return (Math.abs(a.giaM2TrungBinh-pricing.giaM2TrungBinh) - Math.abs(b.giaM2TrungBinh-pricing.giaM2TrungBinh))});
+
                     if (tmp.length <=5 ){
                         adsNgangGia = tmp;
                     } else{
-                        tmp.sort((a,b) => Math.abs(a.giaM2-pricing.giaM2) - Math.abs(b.giaM2-pricing.giaM2));
                         adsNgangGia = tmp.slice(0,5);
                     }
                     break;
                 } else {
-                    giaTrungBinh = [];
-                    giaTrungBinhKhac = []
+                    giaTrungBinh = (inputLoaiTin == 0) ? JSON.parse(JSON.stringify(giaTrungBinhBanTmp)) : JSON.parse(JSON.stringify(giaTrungBinhThueTmp));
+                    giaTrungBinhKhac = [];
                 }
             }
-
         }
     }
 
     let res = {
         success: true,
         data: {
-            radius: radius*1000,
+            radius: parseInt(radius*1000),
             giaTrungBinh: pricing.count && pricing.count>=3 ? pricing : undefined,
             giaTrungBinhKhac: giaTrungBinhKhac && giaTrungBinhKhac.length>0 ? giaTrungBinhKhac : undefined,
             bdsNgangGia: pricing.count && pricing.count>=3 ? _transform(adsNgangGia) : undefined
