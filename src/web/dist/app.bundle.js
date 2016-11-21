@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "548c1cbe23ce4683cc99"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d507418c4bafa8a252ec"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28453,7 +28453,7 @@
 						vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 						vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
 						console.log("-----------------------selectautoComplete---------------");
-						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 						console.log(vm.location.lat);
 						console.log(vm.location.lon);
 					});
@@ -28591,7 +28591,7 @@
 								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
 								$timeout(function () {
-									vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+									vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 								}, 300);
 								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
 								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
