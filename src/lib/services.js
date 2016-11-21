@@ -113,7 +113,12 @@ services.getGeocodingByAddress = function(address, callback) {
       if (body.results && body.results[0])
         callback(body.results);
       else {
+        if (body.results) {
+          console.error("Can not get GEO by google! No Results:", body, myurl);
+        } else {
           console.error("Can not get GEO by google!", myurl);
+        }
+
           callback(null);
       }
     } else {

@@ -65,7 +65,11 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< HEAD
 /******/ 	var hotCurrentHash = "e317f511fc49c9a2f297"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "d507418c4bafa8a252ec"; // eslint-disable-line no-unused-vars
+>>>>>>> b53391e6cbcf87dcf2ccd24a01a9f0ff0d00365a
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -901,8 +905,6 @@
 			getBoundsAtLatLngWithZoom: function getBoundsAtLatLngWithZoom(maps, map, center, zoom) {},
 			isSameDate: function isSameDate(date1, date2) {
 				if (date1 && date2) {
-					console.log(date1.getYear() + "/" + date1.getMonth() + "/" + date1.getDate());
-					console.log(date2.getYear() + "/" + date2.getMonth() + "/" + date2.getDate());
 					return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate();
 				}
 				return false;
@@ -21602,6 +21604,9 @@
 
 					return;
 				}
+				if (!$rootScope.user.adsLikes) {
+					$rootScope.user.adsLikes = [];
+				}
 				var ind = $rootScope.user.adsLikes.indexOf(adsID);
 				if (ind >= 0) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
@@ -30102,7 +30107,7 @@
 		'use strict';
 
 		var controllerId = 'MobileChatDetailCtrl';
-		angular.module('bds').controller(controllerId, function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, NgMap, $window, $timeout) {
+		angular.module('bds').controller(controllerId, function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, RewayCommonUtil, NgMap, $window, $timeout) {
 			// Chat Page Controller
 			// Varialbles Initialization.
 			var vm = this;
@@ -30114,28 +30119,168 @@
 			vm.user = null;
 			vm.toUser = null;
 			vm.chatMsg = "";
-			vm.currentLocation = null;
+			vm.currentLocation = {};
+			vm.sendLocation = {};
 
 			$scope.sampleSentences = [{ value: 0, lable: "Xin chào bạn!" }, { value: 1, lable: "Nhà đã bán chưa bạn?" }, { value: 2, lable: "Gửi cho mình thêm ảnh" }, { value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" }, { value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" }, { value: 5, lable: "Giá có thương lượng được không bạn?" }, { value: 6, lable: "Giảm giá chút đi bạn" }, { value: 7, lable: "Cảm ơn bạn!" }];
 			$scope.chatBox = {};
+
+			/*
+	  //use to show location on new window
+	  // with msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+	  vm.openMap = function(mapUrl){
+	  	$window.open(mapUrl, '_blank');
+	  };
+	  */
+			// autocomplete
+			vm.favoriteSearchSource = [{
+				description: "Vị trí hiện tại",
+				location: true,
+				class: "ui-autocomplete-category"
+			}];
+
+			vm.autoCompleteChange = function (event) {
+				if (vm.autoCompleteText == '') {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+				}
+				vm.toggleQuickClearAutoComplete();
+			};
+
+			vm.showFavorite = function (event) {
+				if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+				}
+			};
+			vm.keyPress = function (event) {
+				vm.showFrequentSearch = false;
+				$("#searchSendLocation").autocomplete("option", "source", vm.autocompleteGoogleSource);
+				var $ww = $(window).width();
+			};
+
+			vm.autocompleteGoogleSource = function (request, response) {
+				console.log(request);
+				var options = {
+					input: request.term,
+					//types: ['(cities)'],
+					//region: 'US',
+					componentRestrictions: { country: "vn" }
+				};
+				function callback(predictions, status) {
+					var results = [];
+					if (predictions) {
+						console.log(predictions);
+						for (var i = 0, prediction; prediction = predictions[i]; i++) {
+							results.push({
+								description: prediction.description,
+								types: prediction.types,
+								place_id: prediction.place_id,
+								class: "iconLocation gray"
+							});
+						}
+					}
+					response(results);
+				}
+				var service = new google.maps.places.AutocompleteService();
+				service.getPlacePredictions(options, callback);
+			};
+
+			vm.selectPlaceCallback = function (item) {
+				console.log(item);
+				if (item.lastSearchSeparator == true) {
+					return;
+				}
+				vm.item = item;
+				if (vm.item.place_id) {
+					var request = {
+						placeId: vm.item.place_id
+					};
+					var service = new google.maps.places.PlacesService(vm.fullMapSendLocation);
+					service.getDetails(request, function (place, status) {
+						vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
+						vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+						vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+						console.log("-----------------------selectautoComplete---------------");
+						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+						console.log(vm.location.lat);
+						console.log(vm.location.lon);
+					});
+				}
+			};
+
+			vm.toggleQuickClearAutoComplete = function () {
+				if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+					$(".close-search").removeAttr("style");
+					$(".input-fr").removeAttr("style");
+				} else {
+					$(".close-search").show();
+					$(".input-fr").css("width", $ww - 78);
+				}
+			};
+
+			//end autoComplete
+
+			//getPlace
+			vm.getDiaChinhGoogle = function (lat, lon) {
+				vm.getGeoCode(lat, lon, function (res) {
+					if (res.results) {
+						vm.googlePlaces = res.results;
+						var place = vm.googlePlaces[0];
+						vm.autoCompleteText = place.formatted_address;
+					}
+				});
+			};
+
+			vm.getGeoCode = function (lat, lon, callback) {
+				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" + "&latlng=" + lat + ',' + lon;
+				console.log(url);
+
+				return fetch(url).then(function (response) {
+					return response.json();
+				}).then(function (data) {
+					console.log("-------------------getGeoCode---------------");
+					console.log(data);
+					callback(data);
+				}).catch(function (e) {
+					return e;
+				});
+			};
+			//end getPlace
 
 			vm.getCurrentLocation = function () {
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function (position) {
 						console.log(position);
-						vm.currentLocation = position;
+						vm.currentLocation.lat = position.coords.latitude;
+						vm.currentLocation.lon = position.coords.longitude;
+						vm.sendLocation.lat = vm.currentLocation.lat;
+						vm.sendLocation.lon = vm.currentLocation.lon;
+						console.log("-----------------------getCurrentLocation---------------");
+						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 					}, function (error) {
 						console.log(error);
 					});
 				} else {}
 			};
 
+			vm.showFullMap = function (isViewLocation) {
+				vm.isViewLocation = isViewLocation;
+				$('#mapsBoxSendLocation').modal("show");
+			};
+
 			vm.sendUrlMapLocation = function () {
-				if (vm.currentLocation) {
+				if (vm.sendLocation.lat && vm.sendLocation.lon) {
 					vm.isFileSelected = false;
 					var dateString = formatAMPM(new Date());
 					var msg = $scope.getMessage();
-					msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.coords.latitude + "," + vm.currentLocation.coords.longitude;
+					//msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+					msg.location = {
+						lat: vm.sendLocation.lat,
+						lon: vm.sendLocation.lon
+					};
 					msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
 					socket.emit("send-message", msg, function (data) {
 						//delivery report code goes here
@@ -30152,13 +30297,13 @@
 							}, 100);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
-							var objDiv = document.getElementById("chatDetailId");
-							objDiv.scrollTop = objDiv.scrollHeight;
+							// var objDiv = document.getElementById("chatDetailId");
+							// objDiv.scrollTop = objDiv.scrollHeight;
 						}
 					});
 				} else {
-					vm.isMsgBoxEmpty = true;
-				}
+						vm.isMsgBoxEmpty = true;
+					}
 			};
 
 			vm.init = function () {
@@ -30179,6 +30324,31 @@
 					}
 				});
 
+				RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
+
+				$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
+					$timeout(function () {
+						if (!vm.fullMapSendLocation) {
+							vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+							google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+								vm.sendLocation.lat = event.latLng.lat();
+								vm.sendLocation.lon = event.latLng.lng();
+								console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+							});
+							google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+								$timeout(function () {
+									vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+								}, 300);
+								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+							});
+						}
+					}, 300);
+				});
+
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
 					if (res.status == 200 && res.data.status == 0) {
 						vm.ads = res.data.ads;
@@ -30192,18 +30362,19 @@
 								if (res.status == 200 && res.data.status == 0) {
 									vm.toUser = res.data.userInfo;
 									vm.initChatBox({ userID: vm.toUser.userID, name: vm.toUser.fullName, avatar: vm.toUser.avatar });
-									HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
-										if (res.status == 200 && res.data.status == 0) {
-											if (res.data.data.length > 0) {
-												var msgList = [];
-												for (var i = res.data.data.length - 1; i >= 0; i--) {
-													msgList.push(res.data.data[i].default);
-												}
+									$timeout(function () {
+										HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
+											if (res.status == 200 && res.data.status == 0) {
+												if (res.data.data.length > 0) {
+													var msgList = [];
+													for (var i = res.data.data.length - 1; i >= 0; i--) {
+														msgList.push(res.data.data[i].default);
+													}
 
-												var async = __webpack_require__(30);
-												async.forEach(msgList, function (msg) {
-													$timeout(function () {
+													var async = __webpack_require__(30);
+													async.forEach(msgList, function (msg) {
 														window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+<<<<<<< HEAD
 													}, 100);
 													$("body").animate({ scrollTop: $(document).height() }, "fast");
 													//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
@@ -30215,9 +30386,23 @@
 													}
 													console.log("processing all elements completed");
 												});
+=======
+
+														//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+														//var objDiv = document.getElementById("chatDetailId");
+														//objDiv.scrollTop = objDiv.scrollHeight;
+													}, function (err) {
+														if (err) {
+															throw err;
+														}
+														console.log("processing all elements completed");
+													});
+													$("body").animate({ scrollTop: $(document).height() }, "slow");
+												}
+>>>>>>> b53391e6cbcf87dcf2ccd24a01a9f0ff0d00365a
 											}
-										}
-									});
+										});
+									}, 300);
 								}
 							});
 						}
@@ -30391,8 +30576,8 @@
 										$scope.$apply();
 										$("body").animate({ scrollTop: $(document).height() }, "slow");
 
-										var objDiv = document.getElementById("chatDetailId");
-										objDiv.scrollTop = objDiv.scrollHeight;
+										// var objDiv = document.getElementById("chatDetailId");
+										// objDiv.scrollTop = objDiv.scrollHeight;
 									}
 								});
 							}, 100);
@@ -30448,13 +30633,13 @@
 							}, 100);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
-							var objDiv = document.getElementById("chatDetailId");
-							objDiv.scrollTop = objDiv.scrollHeight;
+							// var objDiv = document.getElementById("chatDetailId");
+							// objDiv.scrollTop = objDiv.scrollHeight;
 						}
 					});
 				} else {
-					vm.isMsgBoxEmpty = true;
-				}
+						vm.isMsgBoxEmpty = true;
+					}
 			};
 
 			vm.closeChat = function () {
@@ -30816,7 +31001,7 @@
 						vm.location.lon = $rootScope.currentLocation.lon;
 						$scope.location.lat = $rootScope.currentLocation.lat;
 						$scope.location.lon = $rootScope.currentLocation.lon;
-						vm.getDiaChinhInDb(vm.location.lat, vm.location.lon);
+						vm.getDiaChinhGoogle(vm.location.lat, vm.location.lon);
 						vm.marker.coords.lat = vm.location.lat;
 						vm.marker.coords.lon = vm.location.lon;
 					}, function (error) {
@@ -30891,21 +31076,35 @@
 
 			//get place in danh muc dia chinh
 			//dung voi fetch
-			vm.getDiaChinhInDb = function (lat, lon, isInit) {
+			vm.getDiaChinhGoogle = function (lat, lon) {
 				vm.getGeoCode(lat, lon, function (res) {
 					if (res.results) {
-						var places = res.results;
-						var newPlace = places[0];
-						for (var i = 0; i < places.length; i++) {
-							var xa = window.RewayPlaceUtil.getXa(places[i]);
+						vm.googlePlaces = res.results;
+						var place = vm.googlePlaces[0];
+						vm.autoCompleteText = place.formatted_address;
+					}
+				});
+			};
+
+			vm.getDiaChinhInDb = function (lat, lon, isInit) {
+				if (!vm.googlePlaces || vm.googlePlaces && vm.googlePlaces.length == 0) {
+					vm.getGeoCode(lat, lon, function (res) {
+						if (res.results) {
+							vm.googlePlaces = res.results;
+							var place = vm.googlePlaces[0];
+							vm.autoCompleteText = place.formatted_address;
+						}
+						var place = vm.googlePlaces[0];
+						for (var i = 0; i < vm.googlePlaces.length; i++) {
+							var xa = window.RewayPlaceUtil.getXa(vm.googlePlaces[i]);
 							if (xa != '') {
-								newPlace = places[i];
+								place = vm.googlePlaces[i];
 								break;
 							}
 						}
-						var tinh = window.RewayPlaceUtil.getTinh(newPlace);
-						var huyen = window.RewayPlaceUtil.getHuyen(newPlace);
-						var xa = window.RewayPlaceUtil.getXa(newPlace);
+						var tinh = window.RewayPlaceUtil.getTinh(place);
+						var huyen = window.RewayPlaceUtil.getHuyen(place);
+						var xa = window.RewayPlaceUtil.getXa(place);
 						var diaChinh = {};
 						vm.location.tinh = tinh;
 						vm.location.huyen = huyen;
@@ -30936,18 +31135,126 @@
 								vm.ads.place.geo.lat = vm.location.lat;
 								vm.ads.place.geo.lon = vm.location.lon;
 
-								vm.autoCompleteText = vm.diaChinh.fullName;
 								if (!isInit) $("#duAnLbl").text("");
 								console.log(vm.diaChinh);
 								console.log(vm.duAn);
 							}
 						});
+					});
+				} else {
+					var place = vm.googlePlaces[0];
+					vm.autoCompleteText = place.formatted_address;
+					for (var i = 0; i < vm.googlePlaces.length; i++) {
+						var xa = window.RewayPlaceUtil.getXa(vm.googlePlaces[i]);
+						if (xa != '') {
+							place = vm.googlePlaces[i];
+							break;
+						}
 					}
-				});
+					var tinh = window.RewayPlaceUtil.getTinh(place);
+					var huyen = window.RewayPlaceUtil.getHuyen(place);
+					var xa = window.RewayPlaceUtil.getXa(place);
+					var diaChinh = {};
+					vm.location.tinh = tinh;
+					vm.location.huyen = huyen;
+					vm.location.xa = xa;
+					diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+					diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+					diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+					var placeType = 'T';
+					if (diaChinh.huyenKhongDau) placeType = 'H';
+					if (diaChinh.xaKhongDau) placeType = 'X';
+					var diaChinhDto = {
+						tinhKhongDau: diaChinh.tinhKhongDau,
+						huyenKhongDau: diaChinh.huyenKhongDau,
+						xaKhongDau: diaChinh.xaKhongDau,
+						placeType: placeType
+					};
+					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function (res) {
+						if (res) {
+							vm.diaChinh = res.data.diaChinh;
+							vm.duAn = res.data.duAn;
+							vm.ads.place.diaChi = vm.diaChinh.fullName;
+							vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+							vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+							vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+							vm.ads.place.diaChinh.tinh = vm.location.tinh;
+							vm.ads.place.diaChinh.huyen = vm.location.huyen;
+							vm.ads.place.diaChinh.xa = vm.location.xa;
+							vm.ads.place.geo.lat = vm.location.lat;
+							vm.ads.place.geo.lon = vm.location.lon;
+
+							if (!isInit) $("#duAnLbl").text("");
+							console.log(vm.diaChinh);
+							console.log(vm.duAn);
+						}
+					});
+				}
 			};
+
+			/*
+	  // lay luon dia chinh theo danh muc chuan hoa
+	  vm.getDiaChinhInDb = function(lat, lon, isInit){
+	  	vm.getGeoCode(lat, lon, function(res){
+	  		if(res.results){
+	  			var places = res.results;
+	  			var newPlace = places[0];
+	  			for (var i=0; i<places.length; i++) {
+	  				var xa = window.RewayPlaceUtil.getXa(places[i]);
+	  				if (xa != '') {
+	  					newPlace = places[i];
+	  					break;
+	  				}
+	  			}
+	  			var tinh = window.RewayPlaceUtil.getTinh(newPlace);
+	  			var huyen = window.RewayPlaceUtil.getHuyen(newPlace);
+	  			var xa = window.RewayPlaceUtil.getXa(newPlace);
+	  			var diaChinh = {};
+	  			vm.location.tinh = tinh;
+	  			vm.location.huyen = huyen;
+	  			vm.location.xa = xa;
+	  			diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+	  			diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+	  			diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+	  			var placeType = 'T';
+	  			if (diaChinh.huyenKhongDau)
+	  				placeType = 'H';
+	  			if (diaChinh.xaKhongDau)
+	  				placeType = 'X';
+	  			var diaChinhDto = {
+	  				tinhKhongDau: diaChinh.tinhKhongDau,
+	  				huyenKhongDau: diaChinh.huyenKhongDau,
+	  				xaKhongDau: diaChinh.xaKhongDau,
+	  				placeType: placeType
+	  			}
+	  			HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+	  				if(res){
+	  					vm.diaChinh = res.data.diaChinh;
+	  					vm.duAn = res.data.duAn;
+	  					vm.ads.place.diaChi = vm.diaChinh.fullName;
+	  					vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+	  					vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+	  					vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+	  					vm.ads.place.diaChinh.tinh = vm.location.tinh;
+	  					vm.ads.place.diaChinh.huyen = vm.location.huyen;
+	  					vm.ads.place.diaChinh.xa = vm.location.xa;
+	  					vm.ads.place.geo.lat = vm.location.lat;
+	  					vm.ads.place.geo.lon = vm.location.lon;
+	  							vm.autoCompleteText = vm.diaChinh.fullName;
+	  					if(!isInit)
+	  						$("#duAnLbl").text("");
+	  					console.log(vm.diaChinh);
+	  					console.log(vm.duAn);
+	  				}
+	  			});
+	  		}
+	  	})
+	  }*/
 
 			vm.getGeoCode = function (lat, lon, callback) {
 				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" + "&latlng=" + lat + ',' + lon;
+
+				console.log(url);
 
 				return fetch(url).then(function (response) {
 					return response.json();
@@ -30992,10 +31299,13 @@
 								// infoWnd.open(vm.fullMapPost);
 								vm.location.lat = vm.fullMapPost.getCenter().lat();
 								vm.location.lon = vm.fullMapPost.getCenter().lng();
-								vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
 
-								console.log("------------lat: " + vm.location.lat);
-								console.log("------------lon: " + vm.location.lon);
+								$timeout(function () {
+									vm.getDiaChinhGoogle(vm.location.lat, vm.location.lon);
+								}, 300);
+
+								console.log("----------movecusor--lat: " + vm.location.lat);
+								console.log("---------movecusor---lon: " + vm.location.lon);
 							});
 						}
 						/*
@@ -31069,8 +31379,8 @@
 						if (vm.ads.place.geo) {
 							vm.location.lat = vm.ads.place.geo.lat;
 							vm.location.lon = vm.ads.place.geo.lon;
-							$scope.location.lat = vm.ads.place.geo.lat;
-							$scope.location.lon = vm.ads.place.geo.lon;
+							$scope.location.lat = vm.location.lat;
+							$scope.location.lon = vm.location.lon;
 							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
 						}
 						if (vm.ads.place.diaChinh.duAn) {
@@ -31688,8 +31998,10 @@
 	  
 	  		}
 	  */
-			vm.unlikeAds = function (ads) {
+			vm.unlikeAds = function (event, ads) {
 				console.log("------------unlikeAds---------------");
+				$(event.target).attr('class', 'icon-heart refresh');
+				$(event.target).unbind();
 				if ($rootScope.user && $rootScope.user.userID) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: ads.adsID }).then(function (res) {
 						if (res.status == 200) {

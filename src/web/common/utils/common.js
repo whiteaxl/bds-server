@@ -77,10 +77,7 @@ window.RewayClientUtils = (function($) {
 		},
 		isSameDate: function(date1,date2){
 			if(date1 && date2){
-				console.log(date1.getYear() + "/" + date1.getMonth() + "/" + date1.getDate());
-				console.log(date2.getYear() + "/" + date2.getMonth() + "/" + date2.getDate());
-				return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth()
-					&& date1.getDate() == date2.getDate();
+				return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate();
 			}
 			return false;
 		},

@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileChatDetailCtrl';
-	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, NgMap, $window,$timeout){		// Chat Page Controller
+	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, RewayCommonUtil, NgMap, $window,$timeout){		// Chat Page Controller
 		// Varialbles Initialization.
 		var vm = this;
 		vm.adsID = $state.params.adsID;
@@ -12,7 +12,8 @@
 		vm.user = null;
 		vm.toUser = null;
 		vm.chatMsg = "";
-		vm.currentLocation = null;
+		vm.currentLocation = {};
+		vm.sendLocation ={}
 
 		$scope.sampleSentences = [
 			{ value: 0, lable: "Xin chào bạn!"},
@@ -26,11 +27,149 @@
 		];
 		$scope.chatBox = {};
 
+		/*
+		//use to show location on new window
+		// with msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+		vm.openMap = function(mapUrl){
+			$window.open(mapUrl, '_blank');
+		};
+		*/
+		// autocomplete
+		vm.favoriteSearchSource = [
+			{
+				description: "Vị trí hiện tại",
+				location: true,
+				class: "ui-autocomplete-category"
+			}
+		];
+
+		vm.autoCompleteChange = function(event){
+			if(vm.autoCompleteText == ''){
+				$( "#searchSendLocation").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchSendLocation").autocomplete( "search", "" );
+			}
+			vm.toggleQuickClearAutoComplete();
+		}
+
+		vm.showFavorite = function(event){
+			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+				$( "#searchSendLocation").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchSendLocation").autocomplete( "search", "" );
+			}
+
+		}
+		vm.keyPress = function(event){
+			vm.showFrequentSearch = false;
+			$( "#searchSendLocation").autocomplete( "option", "source",vm.autocompleteGoogleSource);
+			var $ww = $(window).width();
+
+
+		}
+
+		vm.autocompleteGoogleSource = function (request, response) {
+			console.log(request);
+			var options = {
+				input: request.term,
+				//types: ['(cities)'],
+				//region: 'US',
+				componentRestrictions: { country: "vn" }
+			};
+			function callback(predictions, status) {
+				var results = [];
+				if(predictions){
+					console.log(predictions);
+					for (var i = 0, prediction; prediction = predictions[i]; i++) {
+						results.push(
+							{
+								description: prediction.description,
+								types:  	prediction.types,
+								place_id: 	prediction.place_id,
+								class: "iconLocation gray"
+							}
+						);
+					}
+				}
+				response(results);
+			}
+			var service = new google.maps.places.AutocompleteService();
+			service.getPlacePredictions(options, callback);
+		}
+
+		vm.selectPlaceCallback = function(item){
+			console.log(item);
+			if(item.lastSearchSeparator==true){
+				return;
+			}
+			vm.item = item;
+			if(vm.item.place_id){
+				var request = {
+					placeId: vm.item.place_id
+				};
+				var service = new google.maps.places.PlacesService(vm.fullMapSendLocation);
+				service.getDetails(request, function(place, status) {
+					vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
+					vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+					vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+					console.log("-----------------------selectautoComplete---------------");
+					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+					console.log(vm.location.lat);
+					console.log(vm.location.lon);
+				});
+			}
+		}
+
+		vm.toggleQuickClearAutoComplete = function(){
+			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+				$( "#searchSendLocation").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchSendLocation").autocomplete( "search", "" );
+				$(".close-search").removeAttr("style");
+				$(".input-fr").removeAttr("style");
+			}else{
+				$(".close-search").show();
+				$(".input-fr").css("width", $ww-78);
+			}
+		}
+
+		//end autoComplete
+
+		//getPlace
+		vm.getDiaChinhGoogle = function(lat, lon){
+			vm.getGeoCode(lat, lon, function(res){
+				if(res.results){
+					vm.googlePlaces = res.results;
+					var place = vm.googlePlaces[0];
+					vm.autoCompleteText = place.formatted_address;
+				}
+			})
+		}
+
+		vm.getGeoCode = function(lat,lon,callback){
+			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
+				"&latlng=" + lat + ',' + lon;
+			console.log(url);
+
+			return fetch(url)
+				.then(response => response.json())
+				.then(function (data) {
+					console.log("-------------------getGeoCode---------------");
+					console.log(data );
+					callback(data);
+				})
+				.catch(e => e);
+		}
+		//end getPlace
+
 		vm.getCurrentLocation = function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position){
 					console.log(position);
-					vm.currentLocation = position;
+					vm.currentLocation.lat = position.coords.latitude;
+					vm.currentLocation.lon = position.coords.longitude;
+					vm.sendLocation.lat = vm.currentLocation.lat;
+					vm.sendLocation.lon = vm.currentLocation.lon;
+					console.log("-----------------------getCurrentLocation---------------");
+					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 				}, function(error){
 					console.log(error);
 				});
@@ -38,12 +177,21 @@
 			}
 		}
 
+		vm.showFullMap =function(isViewLocation){
+			vm.isViewLocation = isViewLocation;
+			$('#mapsBoxSendLocation').modal("show");
+		}
+
 		vm.sendUrlMapLocation = function(){
-			if (vm.currentLocation) {
+			if (vm.sendLocation.lat && vm.sendLocation.lon) {
 				vm.isFileSelected = false;
 				var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
-				msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.coords.latitude + "," + vm.currentLocation.coords.longitude;
+				//msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+				msg.location = {
+					lat : vm.sendLocation.lat,
+					lon : vm.sendLocation.lon
+				}
 				msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
 				socket.emit("send-message",msg, function(data){
 					//delivery report code goes here
@@ -60,8 +208,8 @@
 						},100);
 						$scope.$apply();
 						$("body").animate({ scrollTop: $(document).height() }, "slow");
-						var objDiv = document.getElementById("chatDetailId");
-						objDiv.scrollTop = objDiv.scrollHeight;
+						// var objDiv = document.getElementById("chatDetailId");
+						// objDiv.scrollTop = objDiv.scrollHeight;
 					}
 				});
 			}else{
@@ -87,6 +235,31 @@
 				}
 			});
 
+			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
+
+			$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
+				$timeout(function () {
+					if (!vm.fullMapSendLocation) {
+						vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+						google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+							vm.sendLocation.lat = event.latLng.lat();
+							vm.sendLocation.lon = event.latLng.lng();
+							console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+						});
+						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+							$timeout(function () {
+								vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+							}, 300);
+							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+						});
+					}
+				}, 300);
+			});
+
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
 				if(res.status == 200 && res.data.status==0){
 					vm.ads = res.data.ads;
@@ -100,30 +273,31 @@
 							if(res.status == 200 && res.data.status==0){
 								vm.toUser = res.data.userInfo;
 								vm.initChatBox({userID: vm.toUser.userID,name: vm.toUser.fullName,avatar: vm.toUser.avatar});
-								HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
-									if (res.status == 200 && res.data.status == 0) {
-										if(res.data.data.length > 0){
-											var msgList = [];
-											for(var i=res.data.data.length -1; i >=0; i--){
-												msgList.push(res.data.data[i].default);
-											}
+								$timeout(function() {
+									HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
+										if (res.status == 200 && res.data.status == 0) {
+											if(res.data.data.length > 0){
+												var msgList = [];
+												for(var i=res.data.data.length -1; i >=0; i--){
+													msgList.push(res.data.data[i].default);
+												}
 
-											var async = require("async");
-											async.forEach(msgList,function(msg){
-												$timeout(function() {
+												var async = require("async");
+												async.forEach(msgList,function(msg){
 													window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
-												},100);
-												$("body").animate({ scrollTop: $(document).height() }, "fast");
-												//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-												//var objDiv = document.getElementById("chatDetailId");
-												//objDiv.scrollTop = objDiv.scrollHeight;
-											}, function(err){
-												if(err){throw err;}
-												console.log("processing all elements completed");
-											});
+
+													//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+													//var objDiv = document.getElementById("chatDetailId");
+													//objDiv.scrollTop = objDiv.scrollHeight;
+												}, function(err){
+													if(err){throw err;}
+													console.log("processing all elements completed");
+												});
+												$("body").animate({ scrollTop: $(document).height() }, "slow");
+											}
 										}
-									}
-								});
+									});
+								},300);
 							}
 						});
 					}
@@ -300,8 +474,8 @@
 									$scope.$apply();
 									$("body").animate({ scrollTop: $(document).height() }, "slow");
 
-									var objDiv = document.getElementById("chatDetailId");
-									objDiv.scrollTop = objDiv.scrollHeight;
+									// var objDiv = document.getElementById("chatDetailId");
+									// objDiv.scrollTop = objDiv.scrollHeight;
 								}
 							});
 						},100);
@@ -356,8 +530,8 @@
 						},100);
 						$scope.$apply();
 						$("body").animate({ scrollTop: $(document).height() }, "slow");
-						var objDiv = document.getElementById("chatDetailId");
-						objDiv.scrollTop = objDiv.scrollHeight;
+						// var objDiv = document.getElementById("chatDetailId");
+						// objDiv.scrollTop = objDiv.scrollHeight;
 					}
 				});
 			}else{
