@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a7b58709c29474e64a1c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "de9cfaf75f3e47ad1352"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28452,6 +28452,18 @@
 						console.log(vm.location.lat);
 						console.log(vm.location.lon);
 					});
+				}
+			};
+
+			vm.toggleQuickClearAutoComplete = function () {
+				if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+					$(".close-search").removeAttr("style");
+					$(".input-fr").removeAttr("style");
+				} else {
+					$(".close-search").show();
+					$(".input-fr").css("width", $ww - 78);
 				}
 			};
 

@@ -113,6 +113,18 @@
 			}
 		}
 
+		vm.toggleQuickClearAutoComplete = function(){
+			if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+				$( "#searchSendLocation").autocomplete( "option", "source",vm.favoriteSearchSource);
+				$( "#searchSendLocation").autocomplete( "search", "" );
+				$(".close-search").removeAttr("style");
+				$(".input-fr").removeAttr("style");
+			}else{
+				$(".close-search").show();
+				$(".input-fr").css("width", $ww-78);
+			}
+		}
+
 		//end autoComplete
 
 		vm.getCurrentLocation = function() {
