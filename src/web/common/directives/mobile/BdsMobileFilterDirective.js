@@ -265,6 +265,20 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $('#box-login').fadeIn(500);
                     //window.loca
                 }
+                vm.hideFilter = function(){
+                    $(".search").removeAttr("style");
+                    $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
+                    $("body").removeClass("bodyNavShow");
+                    $(".search-footer").removeClass("fixed");
+                    $(".search-btn").css("display","none");
+                    $(".overlay").click();
+                    $(".spinner").addClass("spinner-hide");
+                    $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+                    $(".btn-group .btn").removeClass("active");
+                    $(".btn-group .btn:first-child").addClass("active");
+                    $(".search input").val('');
+                    $(".search_mobile").removeClass("active");
+                }
 
                 vm.spinner = function(event, box, item){
                     var me = event.target;

@@ -195,6 +195,11 @@
           }	      
 	    };       
 
+        vm.searchWithoutViewport =function(){
+            $rootScope.searchData.viewport = undefined;
+            vm.search();
+        }
+
         vm.disableIdleHandler = function(){
             if(vm.zoomChangeHanlder)
                 google.maps.event.removeListener(vm.zoomChangeHanlder);
@@ -575,7 +580,10 @@
                 var result = res.data.list;
                 //vm.totalResultCounts = res.data.list.length;
                 if(!result || result.length ==0){
-                    $rootScope.showNotify("Không thấy bất động sản thỏa mãn điều kiện tìm kiếm", ".heartNotify");
+                    //$rootScope.showNotify("Không thấy bất động sản thỏa mãn điều kiện tìm kiếm", ".heartNotify");
+                    vm.noResult = true;
+                }else{
+                    vm.noResult = false;
                 }
                 
                 for (var i = 0; i < result.length; i++) { 
@@ -804,7 +812,8 @@
                     vm.startPageNo = 0;
                 }
                 $timeout(function() {
-                    $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                    if(vm.totalResultCounts>0)
+                        $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
                 },100);
                 
                 if(callback)

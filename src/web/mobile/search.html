@@ -52,6 +52,11 @@
     </div>
 </div>
 <div class="notifyBox mapsnotify">Hiện có 24 thông báo mới</div>
+<div class="search-nodata" ng-if="msc.noResult==true">
+    <strong>Không tìm thấy kết quả nào phù hợp</strong>
+    <p>Hãy Zoom nhỏ lại, thay đổi điều kiện Lọc hoặc nhấn vào nút bên dưới để chuyển sang xem tất cả các khu vực</p>
+    <a class="btn btn-primary" ng-click="msc.searchWithoutViewport();">Xem tất cả các khu vực</a>
+</div>
 <div  class="wapper" style="top: 42px;">
     <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
     <div  class="maps"  ng-show ="msc.viewMode!='list'">

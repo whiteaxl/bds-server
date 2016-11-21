@@ -51,8 +51,8 @@ function relandPopClose(box,footer){
 
 //reset search
 function searchreset(){
-	//$(".btn-more").removeAttr("style");
-	//$(".more-box").addClass("more-box-hide");
+	$(".btn-more").removeAttr("style");
+	$(".more-box").addClass("more-box-hide");
 	$(".spinner").addClass("spinner-hide");
 	$(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	$(".btn-group .btn").removeClass("active");
@@ -240,9 +240,9 @@ $(function(){
 	});
 	// click button reset in search
 	$(".btn-reset .collapse-title").click(function(){
-		//$(this).parent().parent().find(".btn-more").removeAttr("style");
-		//$(this).parent().parent().find(".title-more").removeAttr("style");
-		//$(this).parent().parent().find(".more-box").addClass("more-box-hide");
+		$(this).parent().parent().find(".btn-more").removeAttr("style");
+		$(this).parent().parent().find(".title-more").removeAttr("style");
+		$(this).parent().parent().find(".more-box").addClass("more-box-hide");
 		$(this).parent().parent().find(".spinner").addClass("spinner-hide");
 		$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 		$(this).parent().parent().find(".btn-group .btn").removeClass("active");
@@ -601,7 +601,7 @@ $(function(){
     function drawDoughnutText(animationDecimal, segmentTotal) {
       $summaryNumber
         .css({opacity: animationDecimal})
-        .text((segmentTotal * animationDecimal).toFixed(2)+"triệu");
+        .text((segmentTotal * animationDecimal).toFixed(0)+"k");
     }
     function animateFrame(cnt, drawData) {
       var easeAdjustedAnimationPercent =(settings.animation)? CapValue(easingFunction(cnt), null, 0) : 1;
