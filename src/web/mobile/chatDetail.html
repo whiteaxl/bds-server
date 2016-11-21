@@ -1,6 +1,6 @@
 <header class="main blue">
     <a href="#" ng-click="mcdc.goBack()" class="header-icon"><i class="iconLeftOpen"></i></a>
-    <span class="name">Tran Anh <br><small>Trực tuyến 30 phút trước</small></span>
+    <span class="name">{{(mcdc.toUser.fullName.indexOf('@') >=0)? mcdc.toUser.fullName.substring(0,mcdc.toUser.fullName.indexOf('@')):mcdc.toUser.fullName | limitTo: 30 }}<br><small>{{mcdc.toUserOnline}}</small></span>
     <div class="btn-group pull-right" role="group">
         <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><img src="/web/mobile/img/dots-three-horizontal.svg" width="26" /></a>
         <ul class="dropdown-menu">
@@ -73,7 +73,7 @@
                             <h4 class="modal-title" id="mapsBoxLableSendLocation">Bản đồ</h4>
                         </div>
                         <div class="modal-body uln">
-                            <div class="pdall15">
+                            <div class="pdall15" ng-show="!mcdc.isViewLocation">
                                 <input type="text" class="form-control" id="searchSendLocation" ng-change="mcdc.autoCompleteChange();" ng-model="mcdc.autoCompleteText" ng-click="mcdc.showFavorite($event)" ng-keypress="mcdc.keyPress($event)" >
                             </div>
                             <ng-map center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">

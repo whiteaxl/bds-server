@@ -197,6 +197,7 @@
 					//delivery report code goes here
 					if (data.success == true) {
 						if(data.offline==true){
+							vm.toUserOnline = false;
 							$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
 							$scope.chatBox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");
@@ -221,13 +222,8 @@
 			console.log("------------------------init--------------------------")
 			console.log($rootScope.user);
 			vm.getCurrentLocation();
-			socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName},function(data){
-				console.log("register socket user " + $rootScope.user.userName);
-			});
-			socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
-				console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
-				console.log(data);
-			});
+
+
 
 			HouseService.getUserInfo({userID: $rootScope.user.userID}).then(function(res) {
 				if (res.status == 200 && res.data.status == 0) {
@@ -269,6 +265,16 @@
 						}
 					}
 					if(vm.toUserID){
+						socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUsername : $rootScope.user.userName, toUserID : vm.toUserID},function(data){
+							console.log("alert user online " + $rootScope.user.userName);
+						});
+						socket.emit('check user online',{fromUserID: $rootScope.user.userID,toUserID : vm.toUserID},function(data){
+							console.log("register socket user " + vm.toUserID);
+						});
+						socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
+							console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+							console.log(data);
+						});
 						HouseService.getUserInfo({userID: vm.toUserID}).then(function(res) {
 							if(res.status == 200 && res.data.status==0){
 								vm.toUser = res.data.userInfo;
@@ -343,6 +349,30 @@
 			},100);
 			$scope.$apply();
 			$("body").animate({ scrollTop: $(document).height() }, "slow");
+		});
+		
+		socket.on("check user online",function(data){
+			console.log("-----------------check user----------------");
+			console.log(data);
+			if(vm.toUserID && data){
+				vm.toUserOnline = data.toUserIsOnline;
+			}
+		});
+
+		socket.on("alert user online",function(data){
+			console.log("-----------------alert user online----------------");
+			console.log(data);
+			if(vm.toUserID.trim() == data.fromUserID){
+				vm.toUserOnline = true;
+			}
+		});
+
+		socket.on("alert user offline",function(data){
+			console.log("-----------------alert user offline----------------");
+			console.log(data);
+			if(vm.toUserID.trim() == data.fromUserID){
+				vm.toUserOnline = false;
+			}
 		});
 
 		socket.on("user-start-typing",function(data){
@@ -464,6 +494,7 @@
 								console.log("sent image to " + $scope.chatBox.user.userID);
 								if (data.success == true) {
 									if(data.offline==true){
+										vm.toUserOnline = false;
 										$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
 										$scope.chatBox.onlineClass = "offline";
 										//console.log("TODO: this person is offline he will receive the message next time he online");
@@ -517,6 +548,7 @@
 					//delivery report code goes here
 					if (data.success == true) {
 						if(data.offline==true){
+							vm.toUserOnline = false;
 							$scope.chatBox.status = window.RewayConst.MSG.USER_OFFLINE;
 							$scope.chatBox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");

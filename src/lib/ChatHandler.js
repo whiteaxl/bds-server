@@ -80,6 +80,43 @@ ChatHandler.init = function(server){
         });
   		}
   	});
+
+    socket.on('alert user online', function(data){
+        console.log("-----------------------alert user online by user " + data.fromUserID);
+        if(!online_users[data.fromUserID])
+        {
+            socket.username = data.fromUsername;
+            socket.userID = data.fromUserID;
+            socket.userAvatar = data.userAvatar;
+            online_users[data.userID] = socket;
+        }
+
+        if(online_users[data.toUserID]){
+            online_users[data.toUserID].emit('alert user online', data);
+        }
+    });
+/*
+    socket.on('alert user offline', function(data){
+        console.log("-----------------------alert user offline by user " + data.fromUserID);
+        if(online_users[data.fromUserID])
+        {
+            delete online_users[data.fromUserID];
+        }
+        console.log("alert user offline by user " + data.fromUserID);
+        if(online_users.length > 0){
+            let fromUserId = data.fromUserID.trim();
+            let toUserId;
+            for( let i=0; i<online_users.length; i++){
+                toUserId = online_users[i].userID.trim();
+                if(online_users[toUserId]){
+                    console.log("alert user offline to user " + toUserId);
+                    data.toUserId = toUserId;
+                    online_users[toUserId].emit('alert user offline', data);
+                }
+            }
+        }
+    });
+*/
     socket.on('read-messages', function(data, callback){
       for (var i = 0, len = data.length; i < len; i++) {
         var msg = data[i].default;
@@ -161,6 +198,15 @@ ChatHandler.init = function(server){
     });
   });
 
+//emit user start typing
+  socket.on('check user online', function(data){
+      if(online_users[data.toUserID]){
+          data.toUserIsOnline = true;
+      } else{
+          data.toUserIsOnline = false;
+      }
+      online_users[data.fromUserID].emit('check user online',data);
+  });        
   //emit user start typing
   socket.on('user-start-typing', function(data){
     if(online_users[data.toUserID]){
