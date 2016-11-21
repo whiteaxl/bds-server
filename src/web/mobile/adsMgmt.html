@@ -13,17 +13,17 @@
             <div role="tabpanel" class="tab-pane active" id="managerSaved">
                 <ul class="reland-list full">
                     <li ng-repeat="ads in mamc.adsLikes track by $index" ng-click="mamc.goDetail(ads)">
-                        <a class="heart"><i class="icon-heart active" ng-click="mamc.unlikeAds(ads)"></i></a>
+                        <a class="heart"><i class="icon-heart active" ng-click="mamc.unlikeAds($event, ads)"></i></a>
                         <a >
                             <span class="img" style="background-image:url({{ads.image.cover}})"></span>
-								<span class="des bgOpa">
-									<span class="price">{{ads.giaFmt}}</span>
-									<span class="name">{{ ads.diaChi | limitTo: 25 }}</span>
-									<span class="split text-center">.</span>
-									<span>{{ads.soPhongNguFmt}}</span>
-									<span class="{{ads.soTangFmt? 'split':''}}"></span>
-									<span>{{ads.soTangFmt? ads.soTangFmt:''}}</span>
-								</span>
+                            <span class="des bgOpa">
+                                <span class="price">{{ads.giaFmt}}</span>
+                                <span class="name">{{ ads.diaChi | limitTo: 25 }}</span>
+                                <span class="split text-center">.</span>
+                                <span>{{ads.soPhongNguFmt}}</span>
+                                <span class="{{ads.soTangFmt? 'split':''}}"></span>
+                                <span>{{ads.soTangFmt? ads.soTangFmt:''}}</span>
+                            </span>
                         </a>
                     </li>
                 </ul>
@@ -44,6 +44,10 @@
                             <a href="#" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
                             <span class="lined"><a href="#" ng-click="mamc.updateAds(ads)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Sửa tin</a></span>
                             <span class="lined"><a href="#" ng-click="mamc.deleteAds(ads,0)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Xóa tin</a></span>
+                        </span>
+                        <span class="btngroup">
+                            <a href="" class="edit">Sửa</a>
+                            <a href="" class="del">Xóa</a>
                         </span>
                     </li>
                 </ul>

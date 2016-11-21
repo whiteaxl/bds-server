@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "32bb961416db07594010"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a7b58709c29474e64a1c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -901,8 +901,6 @@
 			getBoundsAtLatLngWithZoom: function getBoundsAtLatLngWithZoom(maps, map, center, zoom) {},
 			isSameDate: function isSameDate(date1, date2) {
 				if (date1 && date2) {
-					console.log(date1.getYear() + "/" + date1.getMonth() + "/" + date1.getDate());
-					console.log(date2.getYear() + "/" + date2.getMonth() + "/" + date2.getDate());
 					return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate();
 				}
 				return false;
@@ -21600,6 +21598,9 @@
 
 					return;
 				}
+				if (!$rootScope.user.adsLikes) {
+					$rootScope.user.adsLikes = [];
+				}
 				var ind = $rootScope.user.adsLikes.indexOf(adsID);
 				if (ind >= 0) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
@@ -28357,7 +28358,7 @@
 		'use strict';
 
 		var controllerId = 'MobileChatDetailCtrl';
-		angular.module('bds').controller(controllerId, function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, NgMap, $window, $timeout) {
+		angular.module('bds').controller(controllerId, function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, RewayCommonUtil, NgMap, $window, $timeout) {
 			// Chat Page Controller
 			// Varialbles Initialization.
 			var vm = this;
@@ -28369,28 +28370,118 @@
 			vm.user = null;
 			vm.toUser = null;
 			vm.chatMsg = "";
-			vm.currentLocation = null;
+			vm.currentLocation = {};
+			vm.sendLocation = {};
 
 			$scope.sampleSentences = [{ value: 0, lable: "Xin chào bạn!" }, { value: 1, lable: "Nhà đã bán chưa bạn?" }, { value: 2, lable: "Gửi cho mình thêm ảnh" }, { value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" }, { value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" }, { value: 5, lable: "Giá có thương lượng được không bạn?" }, { value: 6, lable: "Giảm giá chút đi bạn" }, { value: 7, lable: "Cảm ơn bạn!" }];
 			$scope.chatBox = {};
+
+			vm.openMap = function (mapUrl) {
+				$window.open(mapUrl, '_blank');
+			};
+
+			// autocomplete
+			vm.favoriteSearchSource = [{
+				description: "Vị trí hiện tại",
+				location: true,
+				class: "ui-autocomplete-category"
+			}];
+
+			vm.autoCompleteChange = function (event) {
+				if (vm.autoCompleteText == '') {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+				}
+				vm.toggleQuickClearAutoComplete();
+			};
+
+			vm.showFavorite = function (event) {
+				if (vm.autoCompleteText == '' || !vm.autoCompleteText) {
+					$("#searchSendLocation").autocomplete("option", "source", vm.favoriteSearchSource);
+					$("#searchSendLocation").autocomplete("search", "");
+				}
+			};
+			vm.keyPress = function (event) {
+				vm.showFrequentSearch = false;
+				$("#searchSendLocation").autocomplete("option", "source", vm.autocompleteGoogleSource);
+				var $ww = $(window).width();
+			};
+
+			vm.autocompleteGoogleSource = function (request, response) {
+				console.log(request);
+				var options = {
+					input: request.term,
+					//types: ['(cities)'],
+					//region: 'US',
+					componentRestrictions: { country: "vn" }
+				};
+				function callback(predictions, status) {
+					var results = [];
+					if (predictions) {
+						console.log(predictions);
+						for (var i = 0, prediction; prediction = predictions[i]; i++) {
+							results.push({
+								description: prediction.description,
+								types: prediction.types,
+								place_id: prediction.place_id,
+								class: "iconLocation gray"
+							});
+						}
+					}
+					response(results);
+				}
+				var service = new google.maps.places.AutocompleteService();
+				service.getPlacePredictions(options, callback);
+			};
+
+			vm.selectPlaceCallback = function (item) {
+				console.log(item);
+				if (item.lastSearchSeparator == true) {
+					return;
+				}
+				vm.item = item;
+				if (vm.item.place_id) {
+					var request = {
+						placeId: vm.item.place_id
+					};
+					var service = new google.maps.places.PlacesService(vm.fullMapSendLocation);
+					service.getDetails(request, function (place, status) {
+						vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
+						vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+						vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+						console.log(vm.location.lat);
+						console.log(vm.location.lon);
+					});
+				}
+			};
+
+			//end autoComplete
 
 			vm.getCurrentLocation = function () {
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function (position) {
 						console.log(position);
-						vm.currentLocation = position;
+						vm.currentLocation.lat = position.coords.latitude;
+						vm.currentLocation.lon = position.coords.longitude;
+						vm.sendLocation.lat = vm.currentLocation.lat;
+						vm.sendLocation.lon = vm.currentLocation.lon;
 					}, function (error) {
 						console.log(error);
 					});
 				} else {}
 			};
 
+			vm.showFullMap = function () {
+				vm.showStreetView = false;
+				$('#mapsBoxSendLocation').modal("show");
+			};
+
 			vm.sendUrlMapLocation = function () {
-				if (vm.currentLocation) {
+				if (vm.currentLocation.lat && vm.currentLocation.lon) {
 					vm.isFileSelected = false;
 					var dateString = formatAMPM(new Date());
 					var msg = $scope.getMessage();
-					msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.coords.latitude + "," + vm.currentLocation.coords.longitude;
+					msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
 					msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
 					socket.emit("send-message", msg, function (data) {
 						//delivery report code goes here
@@ -28407,13 +28498,13 @@
 							}, 100);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
-							var objDiv = document.getElementById("chatDetailId");
-							objDiv.scrollTop = objDiv.scrollHeight;
+							// var objDiv = document.getElementById("chatDetailId");
+							// objDiv.scrollTop = objDiv.scrollHeight;
 						}
 					});
 				} else {
-					vm.isMsgBoxEmpty = true;
-				}
+						vm.isMsgBoxEmpty = true;
+					}
 			};
 
 			vm.init = function () {
@@ -28434,6 +28525,28 @@
 					}
 				});
 
+				RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
+
+				$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
+					$timeout(function () {
+						if (!vm.fullMapSendLocation) {
+							vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+							google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+								vm.sendLocation.lat = event.latLng.lat();
+								vm.sendLocation.lon = event.latLng.lng();
+								console.log("------------lat: " + vm.sendLocation.lat);
+								console.log("------------lon: " + vm.sendLocation.lon);
+							});
+							google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+								console.log("------------lat: " + vm.sendLocation.lat);
+								console.log("------------lon: " + vm.sendLocation.lon);
+							});
+						}
+					}, 300);
+				});
+
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
 					if (res.status == 200 && res.data.status == 0) {
 						vm.ads = res.data.ads;
@@ -28447,31 +28560,33 @@
 								if (res.status == 200 && res.data.status == 0) {
 									vm.toUser = res.data.userInfo;
 									vm.initChatBox({ userID: vm.toUser.userID, name: vm.toUser.fullName, avatar: vm.toUser.avatar });
-									HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
-										if (res.status == 200 && res.data.status == 0) {
-											if (res.data.data.length > 0) {
-												var msgList = [];
-												for (var i = res.data.data.length - 1; i >= 0; i--) {
-													msgList.push(res.data.data[i].default);
-												}
-
-												var async = __webpack_require__(30);
-												async.forEach(msgList, function (msg) {
-													$timeout(function () {
-														window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
-													}, 100);
-													$("body").animate({ scrollTop: $(document).height() }, "fast");
-													var objDiv = document.getElementById("chatDetailId");
-													objDiv.scrollTop = objDiv.scrollHeight;
-												}, function (err) {
-													if (err) {
-														throw err;
+									$timeout(function () {
+										HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
+											if (res.status == 200 && res.data.status == 0) {
+												if (res.data.data.length > 0) {
+													var msgList = [];
+													for (var i = res.data.data.length - 1; i >= 0; i--) {
+														msgList.push(res.data.data[i].default);
 													}
-													console.log("processing all elements completed");
-												});
+
+													var async = __webpack_require__(30);
+													async.forEach(msgList, function (msg) {
+														window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+
+														//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+														//var objDiv = document.getElementById("chatDetailId");
+														//objDiv.scrollTop = objDiv.scrollHeight;
+													}, function (err) {
+														if (err) {
+															throw err;
+														}
+														console.log("processing all elements completed");
+													});
+													$("body").animate({ scrollTop: $(document).height() }, "slow");
+												}
 											}
-										}
-									});
+										});
+									}, 300);
 								}
 							});
 						}
@@ -28645,8 +28760,8 @@
 										$scope.$apply();
 										$("body").animate({ scrollTop: $(document).height() }, "slow");
 
-										var objDiv = document.getElementById("chatDetailId");
-										objDiv.scrollTop = objDiv.scrollHeight;
+										// var objDiv = document.getElementById("chatDetailId");
+										// objDiv.scrollTop = objDiv.scrollHeight;
 									}
 								});
 							}, 100);
@@ -28702,13 +28817,13 @@
 							}, 100);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
-							var objDiv = document.getElementById("chatDetailId");
-							objDiv.scrollTop = objDiv.scrollHeight;
+							// var objDiv = document.getElementById("chatDetailId");
+							// objDiv.scrollTop = objDiv.scrollHeight;
 						}
 					});
 				} else {
-					vm.isMsgBoxEmpty = true;
-				}
+						vm.isMsgBoxEmpty = true;
+					}
 			};
 
 			vm.closeChat = function () {
@@ -29942,8 +30057,10 @@
 	  
 	  		}
 	  */
-			vm.unlikeAds = function (ads) {
+			vm.unlikeAds = function (event, ads) {
 				console.log("------------unlikeAds---------------");
+				$(event.target).attr('class', 'icon-heart refresh');
+				$(event.target).unbind();
 				if ($rootScope.user && $rootScope.user.userID) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: ads.adsID }).then(function (res) {
 						if (res.status == 200) {

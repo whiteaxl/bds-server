@@ -98,8 +98,10 @@
 
 		}
 */
-		vm.unlikeAds = function(ads){
+		vm.unlikeAds = function(event, ads){
 			console.log("------------unlikeAds---------------");
+			$(event.target).attr('class', 'icon-heart refresh');
+			$(event.target).unbind();
 			if($rootScope.user && $rootScope.user.userID){
 				HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: ads.adsID}).then(function(res){
 					if(res.status == 200){
