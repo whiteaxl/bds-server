@@ -32,7 +32,7 @@
                                 <a ng-if="msg.msgType==2" ng-href="{{msg.content}}">
                                     <img  ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
                                 </a>
-                                <a ng-if="msg.msgType==3" ng-click="mcdc.openMap(msg.content)">
+                                <a ng-if="msg.msgType==3" ng-click="mcdc.showFullMap(true)">
                                     <img  ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="/web/mobile/img/google-map.png" alt="Image File"> <!-- Image -->
                                 </a>
                             </div>
@@ -56,7 +56,7 @@
                     <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
                     <a href="javascript:void(0)" ><i class="iconCamera"></i></a>
                     <a ngf-select="uploadFiles($files)" multiple accept="image/*" class="active"><i class="fa fa-picture-o"></i></a>
-                    <a href="#" ng-click="mcdc.showFullMap()" class="active"><i class="iconLocation"></i></a>
+                    <a href="#" ng-click="mcdc.showFullMap(false)" class="active"><i class="iconLocation"></i></a>
                     <div class="list-sort popovers top uln">
                         <ul>
                             <li ng-repeat="sts in sampleSentences track by $index"><a href="#" ng-click="mcdc.chonMauCau(sts.lable)">{{sts.lable}}</a></li>
@@ -79,10 +79,10 @@
                             <ng-map center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">
                                 <marker position="{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}" title="Hello World!"></marker>
                             </ng-map>
-                            <footer class="main border blue uln">
+                            <footer class="main border blue uln" ng-show="!mcdc.isViewLocation">
                                 <ul class="navmain nav-2 nav-text">
                                     <li><a role="button" data-dismiss="modal" >Thoát</a></li>
-                                    <li><a role="button" ng-click="mcdc.getDiaChinhInDb(mcdc.sendLocation.lat,mcdc.sendLocation.lon)" data-dismiss="modal">Chọn</a></li>
+                                    <li><a role="button" ng-click="mcdc.sendUrlMapLocation()" data-dismiss="modal">Chọn</a></li>
                                 </ul>
                             </footer>
                         </div>

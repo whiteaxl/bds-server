@@ -27,10 +27,13 @@
 		];
 		$scope.chatBox = {};
 
+		/*
+		//use to show location on new window
+		// with msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
 		vm.openMap = function(mapUrl){
 			$window.open(mapUrl, '_blank');
 		};
-
+		*/
 		// autocomplete
 		vm.favoriteSearchSource = [
 			{
@@ -107,6 +110,7 @@
 					vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
 					vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 					vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
 					console.log(vm.location.lat);
 					console.log(vm.location.lon);
 				});
@@ -127,6 +131,32 @@
 
 		//end autoComplete
 
+		//getPlace
+		vm.getDiaChinhGoogle = function(lat, lon){
+			vm.getGeoCode(lat, lon, function(res){
+				if(res.results){
+					vm.googlePlaces = res.results;
+					var place = vm.googlePlaces[0];
+					vm.autoCompleteText = place.formatted_address;
+				}
+			})
+		}
+
+		vm.getGeoCode = function(lat,lon,callback){
+			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
+				"&latlng=" + lat + ',' + lon;
+
+			return fetch(url)
+				.then(response => response.json())
+				.then(function (data) {
+					console.log(data );
+					callback(data);
+				})
+				.catch(e => e);
+		}
+		//end getPlace
+
 		vm.getCurrentLocation = function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position){
@@ -135,6 +165,7 @@
 					vm.currentLocation.lon = position.coords.longitude;
 					vm.sendLocation.lat = vm.currentLocation.lat;
 					vm.sendLocation.lon = vm.currentLocation.lon;
+					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
 				}, function(error){
 					console.log(error);
 				});
@@ -142,17 +173,21 @@
 			}
 		}
 
-		vm.showFullMap =function(){
-			vm.showStreetView = false;
+		vm.showFullMap =function(isViewLocation){
+			vm.isViewLocation = isViewLocation;
 			$('#mapsBoxSendLocation').modal("show");
 		}
 
 		vm.sendUrlMapLocation = function(){
-			if (vm.currentLocation.lat && vm.currentLocation.lon) {
+			if (vm.sendLocation.lat && vm.sendLocation.lon) {
 				vm.isFileSelected = false;
 				var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
-				msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+				//msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
+				msg.location = {
+					lat : vm.sendLocation.lat,
+					lon : vm.sendLocation.lon
+				}
 				msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.LOCATION;
 				socket.emit("send-message",msg, function(data){
 					//delivery report code goes here
@@ -211,6 +246,7 @@
 						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
 							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+							vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
 							console.log("------------lat: " + vm.sendLocation.lat);
 							console.log("------------lon: " + vm.sendLocation.lon);
 						});

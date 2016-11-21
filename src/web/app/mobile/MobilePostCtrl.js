@@ -339,7 +339,7 @@
 					vm.location.lon = $rootScope.currentLocation.lon;
 					$scope.location.lat = $rootScope.currentLocation.lat;
 					$scope.location.lon = $rootScope.currentLocation.lon;
-					vm.getDiaChinhInDb(vm.location.lat,vm.location.lon);
+					vm.getDiaChinhGoogle(vm.location.lat,vm.location.lon);
 					vm.marker.coords.lat = vm.location.lat;
 					vm.marker.coords.lon = vm.location.lon;
 				}, function(error){
@@ -419,6 +419,130 @@
 
 		//get place in danh muc dia chinh
 		//dung voi fetch
+		vm.getDiaChinhGoogle = function(lat, lon){
+			vm.getGeoCode(lat, lon, function(res){
+				if(res.results){
+					vm.googlePlaces = res.results;
+					var place = vm.googlePlaces[0];
+					vm.autoCompleteText = place.formatted_address;
+				}
+			})
+		}
+
+		vm.getDiaChinhInDb = function(lat, lon, isInit){
+			if(!vm.googlePlaces || (vm.googlePlaces && vm.googlePlaces.length == 0)) {
+				vm.getGeoCode(lat, lon, function (res) {
+					if (res.results) {
+						vm.googlePlaces = res.results;
+						var place = vm.googlePlaces[0];
+						vm.autoCompleteText = place.formatted_address;
+					}
+					var place = vm.googlePlaces[0];
+					for (var i=0; i<vm.googlePlaces.length; i++) {
+						var xa = window.RewayPlaceUtil.getXa(vm.googlePlaces[i]);
+						if (xa != '') {
+							place = vm.googlePlaces[i];
+							break;
+						}
+					}
+					var tinh = window.RewayPlaceUtil.getTinh(place);
+					var huyen = window.RewayPlaceUtil.getHuyen(place);
+					var xa = window.RewayPlaceUtil.getXa(place);
+					var diaChinh = {};
+					vm.location.tinh = tinh;
+					vm.location.huyen = huyen;
+					vm.location.xa = xa;
+					diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+					diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+					diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+					var placeType = 'T';
+					if (diaChinh.huyenKhongDau)
+						placeType = 'H';
+					if (diaChinh.xaKhongDau)
+						placeType = 'X';
+					var diaChinhDto = {
+						tinhKhongDau: diaChinh.tinhKhongDau,
+						huyenKhongDau: diaChinh.huyenKhongDau,
+						xaKhongDau: diaChinh.xaKhongDau,
+						placeType: placeType
+					}
+					HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+						if(res){
+							vm.diaChinh = res.data.diaChinh;
+							vm.duAn = res.data.duAn;
+							vm.ads.place.diaChi = vm.diaChinh.fullName;
+							vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+							vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+							vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+							vm.ads.place.diaChinh.tinh = vm.location.tinh;
+							vm.ads.place.diaChinh.huyen = vm.location.huyen;
+							vm.ads.place.diaChinh.xa = vm.location.xa;
+							vm.ads.place.geo.lat = vm.location.lat;
+							vm.ads.place.geo.lon = vm.location.lon;
+
+							if(!isInit)
+								$("#duAnLbl").text("");
+							console.log(vm.diaChinh);
+							console.log(vm.duAn);
+						}
+					});
+				})
+			} else{
+				var place = vm.googlePlaces[0];
+				vm.autoCompleteText = place.formatted_address;
+				for (var i=0; i<vm.googlePlaces.length; i++) {
+					var xa = window.RewayPlaceUtil.getXa(vm.googlePlaces[i]);
+					if (xa != '') {
+						place = vm.googlePlaces[i];
+						break;
+					}
+				}
+				var tinh = window.RewayPlaceUtil.getTinh(place);
+				var huyen = window.RewayPlaceUtil.getHuyen(place);
+				var xa = window.RewayPlaceUtil.getXa(place);
+				var diaChinh = {};
+				vm.location.tinh = tinh;
+				vm.location.huyen = huyen;
+				vm.location.xa = xa;
+				diaChinh.tinhKhongDau = window.RewayUtil.locDau(tinh);
+				diaChinh.huyenKhongDau = window.RewayUtil.locDau(huyen);
+				diaChinh.xaKhongDau = window.RewayUtil.locDau(xa);
+				var placeType = 'T';
+				if (diaChinh.huyenKhongDau)
+					placeType = 'H';
+				if (diaChinh.xaKhongDau)
+					placeType = 'X';
+				var diaChinhDto = {
+					tinhKhongDau: diaChinh.tinhKhongDau,
+					huyenKhongDau: diaChinh.huyenKhongDau,
+					xaKhongDau: diaChinh.xaKhongDau,
+					placeType: placeType
+				}
+				HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
+					if(res){
+						vm.diaChinh = res.data.diaChinh;
+						vm.duAn = res.data.duAn;
+						vm.ads.place.diaChi = vm.diaChinh.fullName;
+						vm.ads.place.diaChinh.codeTinh = vm.diaChinh.tinh;
+						vm.ads.place.diaChinh.codeHuyen = vm.diaChinh.huyen;
+						vm.ads.place.diaChinh.codeXa = vm.diaChinh.xa;
+						vm.ads.place.diaChinh.tinh = vm.location.tinh;
+						vm.ads.place.diaChinh.huyen = vm.location.huyen;
+						vm.ads.place.diaChinh.xa = vm.location.xa;
+						vm.ads.place.geo.lat = vm.location.lat;
+						vm.ads.place.geo.lon = vm.location.lon;
+
+						if(!isInit)
+							$("#duAnLbl").text("");
+						console.log(vm.diaChinh);
+						console.log(vm.duAn);
+					}
+				});
+			}
+		}
+
+		/*
+		// lay luon dia chinh theo danh muc chuan hoa
 		vm.getDiaChinhInDb = function(lat, lon, isInit){
 			vm.getGeoCode(lat, lon, function(res){
 				if(res.results){
@@ -475,7 +599,7 @@
 					});
 				}
 			})
-		}
+		}*/
 
 		vm.getGeoCode = function(lat,lon,callback){
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
@@ -524,7 +648,10 @@
 							// infoWnd.open(vm.fullMapPost);
 							vm.location.lat = vm.fullMapPost.getCenter().lat();
 							vm.location.lon = vm.fullMapPost.getCenter().lng();
-							vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
+
+							$timeout(function () {
+								vm.getDiaChinhGoogle(vm.location.lat, vm.location.lon);
+							}, 300);
 
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
@@ -605,10 +732,9 @@
 					if(vm.ads.place.geo){
 						vm.location.lat = vm.ads.place.geo.lat;
 						vm.location.lon = vm.ads.place.geo.lon;
-						$scope.location.lat = vm.ads.place.geo.lat;
-						$scope.location.lon = vm.ads.place.geo.lon;
-						vm.getDiaChinhInDb(vm.location.lat,vm.location.lon, true);
-
+						$scope.location.lat = vm.location.lat;
+						$scope.location.lon = vm.location.lon;
+						vm.getDiaChinhInDb(vm.location.lat, vm.location.lon, true);
 					}
 					if(vm.ads.place.diaChinh.duAn){
 						$("#duAnLbl").text(vm.ads.place.diaChinh.duAn.length > 30? vm.ads.place.diaChinh.duAn.substring(0,30) + "..." : vm.ads.place.diaChinh.duAn);
