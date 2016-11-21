@@ -409,16 +409,17 @@
                 vm.poly=new google.maps.Polygon({map:vm.map,path:path});
                 
                 //search here
-                $rootScope.searchData.polygon = [];
-                let polyData = vm.poly.latLngs.b[0].b;
-                for (var i = polyData.length - 1; i >= 0; i--) {
-                    $rootScope.searchData.polygon.push({
-                        lat: polyData[i].lat(),
-                        lon: polyData[i].lng()
-                    });
+                if(vm.poly){
+                    $rootScope.searchData.polygon = [];
+                    let polyData = vm.poly.latLngs.b[0].b;
+                    for (var i = polyData.length - 1; i >= 0; i--) {
+                        $rootScope.searchData.polygon.push({
+                            lat: polyData[i].lat(),
+                            lon: polyData[i].lng()
+                        });
+                    }    
                 }
                 
-
                 vm.search(function(){
                     if(vm.viewMode=="list"){
                         vm.initMap = false;
@@ -467,7 +468,9 @@
                 });
                 
             }else{  
-                     
+                if(vm.poly){
+                    vm.poly.setMap(null);
+                }  
                 // google.maps.event.clearListeners(vm.map.getDiv(), 'mousemove');                   
                 google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
                 vm.enable();

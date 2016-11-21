@@ -27,7 +27,7 @@
     	homeDataSearch.query.updateLastSearch = false;
 
         vm.getLocation = function() {
-        	function fetchHomeData(){
+        	/*function fetchHomeData(){
         		var async = require("async");
 			  	vm.boSuuTap = [];
 			  	var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
@@ -66,19 +66,19 @@
 				// vm.showAskCurrentLocation  = true;
 				fetchHomeData();
 		    }
-		  	
+		  	*/
 
 
-		 //  	homeDataSearch.currentLocation = $rootScope.currentLocation;
-			// HouseService.homeDataForAppV2(homeDataSearch).then(function(res){
-			// 	//alert(JSON.stringify(res));
-			// 	vm.boSuuTap = [];
-			// 	res.data.data.forEach(function(item,index){
-			// 		if(item.data.length>0)
-			// 			vm.boSuuTap.push(item);
-			// 	});
-			// 	vm.doneSearch = true;
-			// });
+		  	homeDataSearch.currentLocation = $rootScope.currentLocation;
+			HouseService.homeDataForApp(homeDataSearch).then(function(res){
+				//alert(JSON.stringify(res));
+				vm.boSuuTap = [];
+				res.data.data.forEach(function(item,index){
+					if(item.data.length>0)
+						vm.boSuuTap.push(item);
+				});
+				vm.doneSearch = true;
+			});
 
 
 		}
