@@ -606,6 +606,8 @@
 				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
 				"&latlng=" + lat + ',' + lon;
 
+			console.log(url);
+
 			return fetch(url)
 				.then(response => response.json())
 				.then(function (data) {
@@ -653,8 +655,8 @@
 								vm.getDiaChinhGoogle(vm.location.lat, vm.location.lon);
 							}, 300);
 
-							console.log("------------lat: " + vm.location.lat);
-							console.log("------------lon: " + vm.location.lon);
+							console.log("----------movecusor--lat: " + vm.location.lat);
+							console.log("---------movecusor---lon: " + vm.location.lon);
 						});
 					}
 					/*

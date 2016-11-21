@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dd44ba61979380da6aab"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "548c1cbe23ce4683cc99"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28452,6 +28452,7 @@
 						vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
 						vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 						vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+						console.log("-----------------------selectautoComplete---------------");
 						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
 						console.log(vm.location.lat);
 						console.log(vm.location.lon);
@@ -28486,10 +28487,12 @@
 
 			vm.getGeoCode = function (lat, lon, callback) {
 				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" + "&latlng=" + lat + ',' + lon;
+				console.log(url);
 
 				return fetch(url).then(function (response) {
 					return response.json();
 				}).then(function (data) {
+					console.log("-------------------getGeoCode---------------");
 					console.log(data);
 					callback(data);
 				}).catch(function (e) {
@@ -28506,7 +28509,8 @@
 						vm.currentLocation.lon = position.coords.longitude;
 						vm.sendLocation.lat = vm.currentLocation.lat;
 						vm.sendLocation.lon = vm.currentLocation.lon;
-						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+						console.log("-----------------------getCurrentLocation---------------");
+						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 					}, function (error) {
 						console.log(error);
 					});
@@ -28580,15 +28584,17 @@
 							google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
 								vm.sendLocation.lat = event.latLng.lat();
 								vm.sendLocation.lon = event.latLng.lng();
-								console.log("------------lat: " + vm.sendLocation.lat);
-								console.log("------------lon: " + vm.sendLocation.lon);
+								console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 							});
 							google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
 								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-								vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
-								console.log("------------lat: " + vm.sendLocation.lat);
-								console.log("------------lon: " + vm.sendLocation.lon);
+								$timeout(function () {
+									vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+								}, 300);
+								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 							});
 						}
 					}, 300);
@@ -29485,6 +29491,8 @@
 			vm.getGeoCode = function (lat, lon, callback) {
 				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" + "&latlng=" + lat + ',' + lon;
 
+				console.log(url);
+
 				return fetch(url).then(function (response) {
 					return response.json();
 				}).then(function (data) {
@@ -29533,8 +29541,8 @@
 									vm.getDiaChinhGoogle(vm.location.lat, vm.location.lon);
 								}, 300);
 
-								console.log("------------lat: " + vm.location.lat);
-								console.log("------------lon: " + vm.location.lon);
+								console.log("----------movecusor--lat: " + vm.location.lat);
+								console.log("---------movecusor---lon: " + vm.location.lon);
 							});
 						}
 						/*

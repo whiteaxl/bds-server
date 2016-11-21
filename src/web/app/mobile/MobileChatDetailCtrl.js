@@ -110,6 +110,7 @@
 					vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
 					vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 					vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+					console.log("-----------------------selectautoComplete---------------");
 					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
 					console.log(vm.location.lat);
 					console.log(vm.location.lon);
@@ -146,10 +147,12 @@
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
 				"&latlng=" + lat + ',' + lon;
+			console.log(url);
 
 			return fetch(url)
 				.then(response => response.json())
 				.then(function (data) {
+					console.log("-------------------getGeoCode---------------");
 					console.log(data );
 					callback(data);
 				})
@@ -165,7 +168,8 @@
 					vm.currentLocation.lon = position.coords.longitude;
 					vm.sendLocation.lat = vm.currentLocation.lat;
 					vm.sendLocation.lon = vm.currentLocation.lon;
-					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+					console.log("-----------------------getCurrentLocation---------------");
+					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 				}, function(error){
 					console.log(error);
 				});
@@ -240,15 +244,17 @@
 						google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
 							vm.sendLocation.lat = event.latLng.lat();
 							vm.sendLocation.lon = event.latLng.lng();
-							console.log("------------lat: " + vm.sendLocation.lat);
-							console.log("------------lon: " + vm.sendLocation.lon);
+							console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 						});
 						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
 							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-							vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
-							console.log("------------lat: " + vm.sendLocation.lat);
-							console.log("------------lon: " + vm.sendLocation.lon);
+							$timeout(function () {
+								vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lat);
+							}, 300);
+							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 						});
 					}
 				}, 300);
