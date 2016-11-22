@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "393105a046552f561917"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "919f60c1f30a0bb0fe99"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28645,7 +28645,7 @@
 							}
 						}
 						if (vm.toUserID) {
-							socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUsername: $rootScope.user.userName, toUserID: vm.toUserID }, function (data) {
+							socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUserName: $rootScope.user.userName, toUserID: vm.toUserID }, function (data) {
 								console.log("alert user online " + $rootScope.user.userID);
 							});
 							socket.emit('check user online', { fromUserID: $rootScope.user.userID, toUserID: vm.toUserID }, function (data) {

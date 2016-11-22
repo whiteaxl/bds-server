@@ -70,9 +70,13 @@ ChatHandler.init = function(server){
   		}else{
   			callback({success:true});
   			console.log("socket.io got one new user " + data.userID);
-  			socket.username = data.username;
+            if(data.username){
+                socket.username = data.username;
+            }
+            if(data.username){
+                socket.userAvatar = data.userAvatar;
+            }
   			socket.userID = data.userID;
-  			socket.userAvatar = data.userAvatar;
   			online_users[data.userID] = socket;
         chatModel.getUnreadMessages(data,function(err,res){
           if(!err)
@@ -85,9 +89,14 @@ ChatHandler.init = function(server){
         console.log("-----------------------alert user online by user " + data.fromUserID);
         if(!online_users[data.fromUserID])
         {
-            socket.username = data.fromUsername;
+            if(data.fromUsername){
+                socket.username = data.fromUserName;
+            }
+            if(data.username){
+                socket.userAvatar = data.userAvatar;
+            }
             socket.userID = data.fromUserID;
-            socket.userAvatar = data.userAvatar;
+
             online_users[data.userID] = socket;
         }
 
