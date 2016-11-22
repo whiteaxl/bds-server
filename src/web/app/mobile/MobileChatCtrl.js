@@ -9,7 +9,7 @@
 
 		vm.init = function(){
 			socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName},function(data){
-				console.log("register socket user " + $rootScope.user.userName);
+				console.log("register socket user " + $rootScope.user.userID);
 			});
 		}
 

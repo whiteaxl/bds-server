@@ -263,10 +263,12 @@
 			}
 
 			vm.userLoggedIn = function(){
-				vm.name = $rootScope.user.userName;
-	                if($rootScope.user.phone)
-						vm.phone = parseInt($rootScope.user.phone);
-					vm.email = $rootScope.user.userEmail;
+				if($rootScope.user.userName){
+					vm.name = $rootScope.user.userName;
+				}
+				if($rootScope.user.phone)
+					vm.phone = parseInt($rootScope.user.phone);
+				vm.email = $rootScope.user.userEmail;
 				if(vm.ads.dangBoi.userID == $rootScope.user.userID)
 					vm.showLuotXem = true;
 				if(vm.ads.dangBoi.email == $rootScope.user.userEmail)

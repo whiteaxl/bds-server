@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2e8088a702548e95e741"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "393105a046552f561917"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22760,7 +22760,9 @@
 				};
 
 				vm.userLoggedIn = function () {
-					vm.name = $rootScope.user.userName;
+					if ($rootScope.user.userName) {
+						vm.name = $rootScope.user.userName;
+					}
 					if ($rootScope.user.phone) vm.phone = parseInt($rootScope.user.phone);
 					vm.email = $rootScope.user.userEmail;
 					if (vm.ads.dangBoi.userID == $rootScope.user.userID) vm.showLuotXem = true;
@@ -22923,7 +22925,7 @@
 
 			vm.init = function () {
 				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
-					console.log("register socket user " + $rootScope.user.userName);
+					console.log("register socket user " + $rootScope.user.userID);
 				});
 			};
 
@@ -28644,7 +28646,7 @@
 						}
 						if (vm.toUserID) {
 							socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUsername: $rootScope.user.userName, toUserID: vm.toUserID }, function (data) {
-								console.log("alert user online " + $rootScope.user.userName);
+								console.log("alert user online " + $rootScope.user.userID);
 							});
 							socket.emit('check user online', { fromUserID: $rootScope.user.userID, toUserID: vm.toUserID }, function (data) {
 								console.log("register socket user " + vm.toUserID);

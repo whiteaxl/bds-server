@@ -260,7 +260,7 @@
 					}
 					if(vm.toUserID){
 						socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUsername : $rootScope.user.userName, toUserID : vm.toUserID},function(data){
-							console.log("alert user online " + $rootScope.user.userName);
+							console.log("alert user online " + $rootScope.user.userID);
 						});
 						socket.emit('check user online',{fromUserID: $rootScope.user.userID,toUserID : vm.toUserID},function(data){
 							console.log("register socket user " + vm.toUserID);
