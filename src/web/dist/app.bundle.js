@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9df418aa5d04ecacb57b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2e8088a702548e95e741"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21844,6 +21844,9 @@
 	                });
 	                return;
 	            }
+	            if (!$rootScope.user.adsLikes) {
+	                $rootScope.user.adsLikes = [];
+	            }
 	            var ind = $rootScope.user.adsLikes.indexOf(adsID);
 	            if (ind >= 0) {
 	                HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
@@ -28587,9 +28590,7 @@
 							}
 							msg.timeStamp = dateString;
 							console.log(msg);
-							$timeout(function () {
-								window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
-							}, 100);
+							window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
 							// var objDiv = document.getElementById("chatDetailId");
@@ -28615,26 +28616,22 @@
 				RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
 
 				$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
-					$timeout(function () {
-						if (!vm.fullMapSendLocation) {
-							vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
-							google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
-								vm.sendLocation.lat = event.latLng.lat();
-								vm.sendLocation.lon = event.latLng.lng();
-								console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
-								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-							});
-							google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
-								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
-								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-								$timeout(function () {
-									vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
-								}, 300);
-								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
-								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-							});
-						}
-					}, 300);
+					if (!vm.fullMapSendLocation) {
+						vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+						google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+							vm.sendLocation.lat = event.latLng.lat();
+							vm.sendLocation.lon = event.latLng.lng();
+							console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+						});
+						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+							vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+						});
+					}
 				});
 
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
@@ -28660,33 +28657,31 @@
 								if (res.status == 200 && res.data.status == 0) {
 									vm.toUser = res.data.userInfo;
 									vm.initChatBox({ userID: vm.toUser.userID, name: vm.toUser.fullName, avatar: vm.toUser.avatar });
-									$timeout(function () {
-										HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
-											if (res.status == 200 && res.data.status == 0) {
-												if (res.data.data.length > 0) {
-													var msgList = [];
-													for (var i = res.data.data.length - 1; i >= 0; i--) {
-														msgList.push(res.data.data[i].default);
-													}
-
-													var async = __webpack_require__(33);
-													async.forEach(msgList, function (msg) {
-														window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
-
-														//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-														//var objDiv = document.getElementById("chatDetailId");
-														//objDiv.scrollTop = objDiv.scrollHeight;
-													}, function (err) {
-														if (err) {
-															throw err;
-														}
-														console.log("processing all elements completed");
-													});
-													$("body").animate({ scrollTop: $(document).height() }, "slow");
+									HouseService.getAllChatMsg({ userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID }).then(function (res) {
+										if (res.status == 200 && res.data.status == 0) {
+											if (res.data.data.length > 0) {
+												var msgList = [];
+												for (var i = res.data.data.length - 1; i >= 0; i--) {
+													msgList.push(res.data.data[i].default);
 												}
+
+												var async = __webpack_require__(33);
+												async.forEach(msgList, function (msg) {
+													window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
+
+													//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+													//var objDiv = document.getElementById("chatDetailId");
+													//objDiv.scrollTop = objDiv.scrollHeight;
+												}, function (err) {
+													if (err) {
+														throw err;
+													}
+													console.log("processing all elements completed");
+												});
+												$("body").animate({ scrollTop: $(document).height() }, "slow");
 											}
-										});
-									}, 300);
+										}
+									});
 								}
 							});
 						}
@@ -28703,7 +28698,7 @@
 
 			$timeout(function () {
 				vm.init();
-			}, 100);
+			}, 300);
 
 			if ($rootScope.user && $rootScope.user.userID) {
 				$scope.userID = $rootScope.user.userID;
@@ -28724,9 +28719,7 @@
 				socket.emit("read-messages", data, function (res) {
 					console.log("mark messages as read " + res);
 				});
-				$timeout(function () {
-					window.RewayClientUtils.addChatMessage($scope.chatBox, data);
-				}, 100);
+				window.RewayClientUtils.addChatMessage($scope.chatBox, data);
 				$scope.$apply();
 				$("body").animate({ scrollTop: $(document).height() }, "slow");
 			});
@@ -28938,9 +28931,7 @@
 							msg.timeStamp = dateString;
 							// $scope.chatBox.messages.push(msg);
 							console.log(msg);
-							$timeout(function () {
-								window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
-							}, 100);
+							window.RewayClientUtils.addChatMessage($scope.chatBox, msg);
 							$scope.$apply();
 							$("body").animate({ scrollTop: $(document).height() }, "slow");
 							// var objDiv = document.getElementById("chatDetailId");
@@ -30355,6 +30346,9 @@
 	                    data: { label: "Đăng nhập để lưu BĐS" }
 	                });
 	                return;
+	            }
+	            if (!$rootScope.user.adsLikes) {
+	                $rootScope.user.adsLikes = [];
 	            }
 	            var ind = $rootScope.user.adsLikes.indexOf(adsID);
 	            if (ind >= 0) {

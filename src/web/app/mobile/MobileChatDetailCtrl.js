@@ -204,9 +204,7 @@
 						}
 						msg.timeStamp = dateString;
 						console.log(msg);
-						$timeout(function() {
-							window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
-						},100);
+						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						$scope.$apply();
 						$("body").animate({ scrollTop: $(document).height() }, "slow");
 						// var objDiv = document.getElementById("chatDetailId");
@@ -234,26 +232,22 @@
 			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
 
 			$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
-				$timeout(function () {
-					if (!vm.fullMapSendLocation) {
-						vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
-						google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
-							vm.sendLocation.lat = event.latLng.lat();
-							vm.sendLocation.lon = event.latLng.lng();
-							console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
-							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-						});
-						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
-							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
-							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-							$timeout(function () {
-								vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
-							}, 300);
-							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
-							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-						});
-					}
-				}, 300);
+				if (!vm.fullMapSendLocation) {
+					vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+					google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+						vm.sendLocation.lat = event.latLng.lat();
+						vm.sendLocation.lon = event.latLng.lng();
+						console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+						console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+					});
+					google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+						vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+						vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+						vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+						console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+						console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+					});
+				}
 			});
 
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
@@ -318,7 +312,7 @@
 
 		$timeout(function() {
 			vm.init();
-		},100);
+		},300);
 
 		if($rootScope.user && $rootScope.user.userID){
 			$scope.userID = $rootScope.user.userID;
@@ -342,9 +336,7 @@
 			socket.emit("read-messages",data, function(res){
 				console.log("mark messages as read " + res);
 			});
-			$timeout(function() {
-				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
-			},100);
+			window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 			$scope.$apply();
 			$("body").animate({ scrollTop: $(document).height() }, "slow");
 		});
@@ -555,9 +547,7 @@
 						msg.timeStamp = dateString;
 						// $scope.chatBox.messages.push(msg);
 						console.log(msg);
-						$timeout(function() {
-							window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
-						},100);
+						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						$scope.$apply();
 						$("body").animate({ scrollTop: $(document).height() }, "slow");
 						// var objDiv = document.getElementById("chatDetailId");
