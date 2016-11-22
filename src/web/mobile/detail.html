@@ -141,7 +141,7 @@
                 	<a href="fb:" class="p-icon i-fb"></a>                    
                     <a href="sms:" class="p-icon i-sms"></a>
                     <a href="zalo:" class="p-icon i-zalo"></a>
-                    <a href="mailto:" id="mailTo" class="p-icon i-email"></a>
+                    <a href="mailto:" class="p-icon i-email"></a>
                 </div>
                 <div class="pull-right">
                 	<a href="#" class="p-icon i-share"></a>
@@ -156,12 +156,12 @@
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Điện thoại</span>
-                        <label> <a href="tel:{{::mdt.ads.dangBoi.phone}}"> {{::mdt.ads.dangBoi.phone}}</a></label>
+                        <label> <a id="tellTo" href="tel:{{::mdt.ads.dangBoi.phone}}"> {{::mdt.ads.dangBoi.phone}}</a></label>
                     </div>
                     <div class="lined">
                     	<span class="titlelbl">Email</span>
                         <!-- <label>{{::mdt.ads.dangBoi.email}}</label> -->
-                        <label><a href="mailto:{{::mdt.ads.dangBoi.email}}?Subject=Hello%20again" target="_top">{{::mdt.ads.dangBoi.email}}</a></label>
+                        <label><a id="mailTo" href="mailto:{{::mdt.ads.dangBoi.email}}?Subject=Hello%20again" target="_top">{{::mdt.ads.dangBoi.email}}</a></label>
 
                     </div>
 					<div class="lined" style="display: none;">

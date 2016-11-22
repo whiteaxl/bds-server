@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bb45c82fe692df8b83b7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1a3a5058a2babea57c88"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22587,8 +22587,52 @@
 			};
 
 			vm.openChat = function (event) {
-				var userExist = true;
-				if (userExist) {
+				vm.userPostAdsExist = false;
+				if (!vm.userPostAdsExist) {
+					if (vm.ads && vm.ads.dangBoi.userID) {
+						HouseService.getUserInfo({ userID: vm.ads.dangBoi.userID }).then(function (res) {
+							if (res.status == 200 && res.data.status == 0) {
+								vm.userPostAdsExist = true;
+							}
+							if (vm.userPostAdsExist) {
+								if ($rootScope.isLoggedIn() == false) {
+									$scope.$bus.publish({
+										channel: 'login',
+										topic: 'show login',
+										data: { label: "Đăng nhập để trao đổi" }
+									});
+									return true;
+								}
+								$state.go('mchatDetail', { "adsID": vm.adsID });
+								$(".overlay").click();
+							} else {
+								if (vm.ads.dangBoi.phone) {
+									console.log("--------------tellTo----1---------------");
+									var href = $('#tellTo').attr('href');
+									window.location.href = href;
+									console.log("--------------tellTo--------1-2----------");
+								} else if (vm.ads.dangBoi.email) {
+									console.log("--------------mailTo----1---------------");
+									var href = $('#mailTo').attr('href');
+									window.location.href = href;
+									console.log("--------------mailTo--------1-2----------");
+								}
+							}
+						});
+					} else {
+						if (vm.ads.dangBoi.phone) {
+							console.log("--------------tellTo----1---------------");
+							var href = $('#tellTo').attr('href');
+							window.location.href = href;
+							console.log("--------------tellTo--------1-2----------");
+						} else if (vm.ads.dangBoi.email) {
+							console.log("--------------mailTo----1---------------");
+							var href = $('#mailTo').attr('href');
+							window.location.href = href;
+							console.log("--------------mailTo--------1-2----------");
+						}
+					}
+				} else {
 					if ($rootScope.isLoggedIn() == false) {
 						$scope.$bus.publish({
 							channel: 'login',
@@ -22600,11 +22644,6 @@
 					//ngDialog.open({ template: 'templateId' });
 					$state.go('mchatDetail', { "adsID": vm.adsID });
 					$(".overlay").click();
-				} else {
-					console.log("--------------mailTo----1---------------");
-					var href = $('#mailTo').attr('href');
-					window.location.href = href;
-					console.log("--------------mailTo--------1-2----------");
 				}
 			};
 
