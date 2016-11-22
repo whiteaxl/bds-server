@@ -279,31 +279,29 @@
 							if(res.status == 200 && res.data.status==0){
 								vm.toUser = res.data.userInfo;
 								vm.initChatBox({userID: vm.toUser.userID,name: vm.toUser.fullName,avatar: vm.toUser.avatar});
-								$timeout(function() {
-									HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
-										if (res.status == 200 && res.data.status == 0) {
-											if(res.data.data.length > 0){
-												var msgList = [];
-												for(var i=res.data.data.length -1; i >=0; i--){
-													msgList.push(res.data.data[i].default);
-												}
-
-												var async = require("async");
-												async.forEach(msgList,function(msg){
-													window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
-
-													//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
-													//var objDiv = document.getElementById("chatDetailId");
-													//objDiv.scrollTop = objDiv.scrollHeight;
-												}, function(err){
-													if(err){throw err;}
-													console.log("processing all elements completed");
-												});
-												$("body").animate({ scrollTop: $(document).height() }, "slow");
+								HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: vm.toUser.userID, adsID: vm.adsID}).then(function(res) {
+									if (res.status == 200 && res.data.status == 0) {
+										if(res.data.data.length > 0){
+											var msgList = [];
+											for(var i=res.data.data.length -1; i >=0; i--){
+												msgList.push(res.data.data[i].default);
 											}
+
+											var async = require("async");
+											async.forEach(msgList,function(msg){
+												window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
+
+												//$('#chatDetailId').scrollTop($('#chatDetailId')[0].scrollHeight);
+												//var objDiv = document.getElementById("chatDetailId");
+												//objDiv.scrollTop = objDiv.scrollHeight;
+											}, function(err){
+												if(err){throw err;}
+												console.log("processing all elements completed");
+											});
+											$("body").animate({ scrollTop: $(document).height() }, "slow");
 										}
-									});
-								},300);
+									}
+								});
 							}
 						});
 					}

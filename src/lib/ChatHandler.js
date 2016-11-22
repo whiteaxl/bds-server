@@ -174,7 +174,7 @@ ChatHandler.init = function(server){
   
   // disconnect user handling 
   socket.on('disconnect', function (data, callback) { 
-  	console.log('tim log this to prove disconnect called');
+  	console.log('-------tim log this to prove disconnect called: ' + socket.userID + '  --------name: ' + socket.username);
     delete online_users[socket.userID];
     console.log(data);
     console.log(callback);
@@ -183,7 +183,7 @@ ChatHandler.init = function(server){
 
   // disconnect user handling 
   socket.on('user leave', function (data, callback) { 
-  	console.log('tim log this to prove user leave called');
+  	console.log('--------------tim log this to prove user leave called '  + socket.userID + '  --------name: ' + socket.username);
     delete online_users[socket.userID];
     console.log(data);
     console.log(callback);
