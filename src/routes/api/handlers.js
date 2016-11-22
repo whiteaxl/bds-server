@@ -258,11 +258,11 @@ internals.detail = function(req, reply) {
                 if(err || res.length ==0)
                     console.log(err);
                 else { 
-                    console.log(JSON.stringify(res));
+                    //console.log(JSON.stringify(res));
                     var user = res[0];
                     user.lastViewAds = adsID;
-                    console.log("user with last view");
-                    console.log(JSON.stringify(user));
+                    //console.log("user with last view");
+                    //console.log(JSON.stringify(user));
                     userService.upsert(user);
                 }
             });

@@ -103,6 +103,8 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                       topic: 'logged out',
                       data: {}
                     });
+
+
                     socket.emit('user leave',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, userAvatar : undefined},function(data){
                         console.log("disconect socket user " + $rootScope.user.userName);
                     });

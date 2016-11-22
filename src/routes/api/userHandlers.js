@@ -86,11 +86,8 @@ internals.registerUser = function (req, reply) {
 };
 
 internals.getUserInfo = function (req, reply) {
-  log.info("-----------------------Call getUserInfo:", req.payload);
-
   userService.getUserByID(req.payload.userID, (err, res) => {
     if (!err && res.length > 0) { //exists
-      log.info("----------------result-------Call getUserInfo:", res);
       let userFromDb = res[0];
       let user = _transformUserInfor(userFromDb);
       reply({
@@ -99,7 +96,6 @@ internals.getUserInfo = function (req, reply) {
         userInfo : user
       });
     } else {
-      console.log("Callback getUser error", err, res);
       let msg = err ? "Error:" + err.msg : "User does not exist!";
       reply({
         status : 99,

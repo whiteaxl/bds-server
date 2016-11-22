@@ -8,8 +8,8 @@
 		vm.allRentInbox = [];
 
 		vm.init = function(){
-			socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName},function(data){
-				console.log("register socket user " + $rootScope.user.userID);
+			socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
+				console.log("alert user online " + $rootScope.user.userID);
 			});
 		}
 

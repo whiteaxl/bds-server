@@ -78,10 +78,22 @@ ChatHandler.init = function(server){
             }
   			socket.userID = data.userID;
   			online_users[data.userID] = socket;
-        chatModel.getUnreadMessages(data,function(err,res){
-          if(!err)
-            online_users[data.userID].emit('unread-messages', res);
-        });
+            chatModel.getUnreadMessages(data,function(err,res){
+                if(!err)
+                    online_users[data.userID].emit('unread-messages', res);
+            });
+            let fromUserId = data.userID.trim();
+            data.fromUserID = fromUserId;
+            let toUserId;
+            for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                toUserId = online_users[keys[i]].userID.trim();
+                console.log("----------------------------------1--- user " + toUserId);
+                if(fromUserId != toUserId){
+                    console.log("----------------------------------online to user " + toUserId);
+                    data.toUserId = toUserId;
+                    online_users[toUserId].emit('alert user online', data);
+                }
+            }
   		}
   	});
 
@@ -97,21 +109,36 @@ ChatHandler.init = function(server){
             }
             socket.userID = data.fromUserID;
 
-            online_users[data.userID] = socket;
-        }
-
-        if(online_users[data.toUserID]){
-            online_users[data.toUserID].emit('alert user online', data);
+            online_users[data.fromUserID] = socket;
+            let fromUserId = data.fromUserID.trim();
+            let toUserId;
+            for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                toUserId = online_users[keys[i]].userID.trim();
+                if(fromUserId != toUserId){
+                    console.log("----------------------------------on to user " + toUserId);
+                    data.toUserId = toUserId;
+                    online_users[toUserId].emit('alert user online', data);
+                }
+            }
         }
     });
-/*
+
     socket.on('alert user offline', function(data){
-        console.log("-----------------------alert user offline by user " + data.fromUserID);
         if(online_users[data.fromUserID])
         {
             delete online_users[data.fromUserID];
         }
-        console.log("alert user offline by user " + data.fromUserID);
+        console.log("--------------------------alert user offline by user " + data.fromUserID);
+        let fromUserId = data.fromUserID.trim();
+        let toUserId;
+        for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+            toUserId = online_users[keys[i]].userID.trim();
+            console.log("-------------------------off--- to user " + toUserId);
+            data.toUserId = toUserId;
+            online_users[toUserId].emit('alert user offline', data);
+        }
+        /*
+
         if(online_users.length > 0){
             let fromUserId = data.fromUserID.trim();
             let toUserId;
@@ -123,9 +150,9 @@ ChatHandler.init = function(server){
                     online_users[toUserId].emit('alert user offline', data);
                 }
             }
-        }
+        }*/
     });
-*/
+
     socket.on('read-messages', function(data, callback){
       for (var i = 0, len = data.length; i < len; i++) {
         var msg = data[i].default;
@@ -193,8 +220,17 @@ ChatHandler.init = function(server){
   // disconnect user handling 
   socket.on('user leave', function (data, callback) { 
   	console.log('--------------tim log this to prove user leave called '  + socket.userID + '  --------name: ' + socket.username);
+      let fromUserId = socket.userID.trim();
     delete online_users[socket.userID];
-    console.log(data);
+      data.fromUserID = fromUserId;
+      let toUserId;
+      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+          toUserId = online_users[keys[i]].userID.trim();
+          console.log("---------------------------- to user " + toUserId);
+          data.toUserId = toUserId;
+          online_users[toUserId].emit('alert user offline', data);
+      }
+      console.log(data);
     console.log(callback);
     callback({success: true});
   });
