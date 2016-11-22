@@ -107,7 +107,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".search input").val('');
                     $(".search_mobile").removeClass("active");
                 }         
-                vm.toggleFilter = function(){
+                vm.toggleFilter = function(event){
                     //nhannc
                     if($(".search_mobile").find("i").hasClass("iconSearch")) {
                         if ($(".post").css("right") == "0px") {
@@ -122,6 +122,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     }
                     //end nhannc
                     if(!$('.search_mobile').hasClass("active")){
+                        $(event.target).text("Hủy");
                         $(".search").animate({
                             right: 0
                         }, 120);
@@ -131,7 +132,10 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $(".search-footer").addClass("fixed");
                         $(".search-btn").css("display","block");
                         $(".search_mobile").addClass("active");
+
                     }else{
+                        
+                        $(event.target).text("Lọc");
                         vm.searchfr();
                     }
                 }
