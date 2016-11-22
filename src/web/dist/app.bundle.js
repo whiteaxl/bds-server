@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ef28002fbc024d4fe95d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bb45c82fe692df8b83b7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28633,22 +28633,24 @@
 				RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
 
 				$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
-					if (!vm.fullMapSendLocation) {
-						vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
-						google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
-							vm.sendLocation.lat = event.latLng.lat();
-							vm.sendLocation.lon = event.latLng.lng();
-							console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
-							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-						});
-						google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
-							vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
-							vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-							vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
-							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
-							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
-						});
-					}
+					$timeout(function () {
+						if (!vm.fullMapSendLocation) {
+							vm.fullMapSendLocation = NgMap.initMap('fullMapSendLocation');
+							google.maps.event.addListener(vm.fullMapSendLocation, "click", function (event) {
+								vm.sendLocation.lat = event.latLng.lat();
+								vm.sendLocation.lon = event.latLng.lng();
+								console.log("-------movecursor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+							});
+							google.maps.event.addListener(vm.fullMapSendLocation, "center_changed", function () {
+								vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
+								vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
+								vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
+								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
+								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
+							});
+						}
+					}, 300);
 				});
 
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
