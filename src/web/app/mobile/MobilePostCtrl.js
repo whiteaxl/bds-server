@@ -869,7 +869,7 @@
 								vm.ads.lienHe.showPhone = true;
 							}
 							if($rootScope.user.email){
-								vm.ads.lienHe.email = $rootScope.user.email;
+								vm.ads.lienHe.email = $rootScope.user.userEmail;
 								vm.ads.lienHe.showEmail = true;
 							}
 						});
@@ -889,7 +889,7 @@
 						vm.ads.lienHe.showPhone = true;
 					}
 					if($rootScope.user.email){
-						vm.ads.lienHe.email = $rootScope.user.email;
+						vm.ads.lienHe.email = $rootScope.user.userEmail;
 						vm.ads.lienHe.showEmail = true;
 					}
 				}

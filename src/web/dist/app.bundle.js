@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "77ff7c4568dc20e58e68"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ef28002fbc024d4fe95d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1045,6 +1045,7 @@
 	        if ($localStorage.lastSearch) {
 	          $rootScope.user.lastSearch = $localStorage.lastSearch;
 	        }
+	        if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
 	        $rootScope.user.lastViewAds = res.data.user.lastViewAds;
 	        $rootScope.user.saveSearch = res.data.user.saveSearch;
 	      });
@@ -22938,7 +22939,7 @@
 			vm.allRentInbox = [];
 
 			vm.init = function () {
-				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.fullName }, function (data) {
+				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
 					console.log("register socket user " + $rootScope.user.userID);
 				});
 			};
@@ -29827,7 +29828,7 @@
 									vm.ads.lienHe.showPhone = true;
 								}
 								if ($rootScope.user.email) {
-									vm.ads.lienHe.email = $rootScope.user.email;
+									vm.ads.lienHe.email = $rootScope.user.userEmail;
 									vm.ads.lienHe.showEmail = true;
 								}
 							});
@@ -29847,7 +29848,7 @@
 							vm.ads.lienHe.showPhone = true;
 						}
 						if ($rootScope.user.email) {
-							vm.ads.lienHe.email = $rootScope.user.email;
+							vm.ads.lienHe.email = $rootScope.user.userEmail;
 							vm.ads.lienHe.showEmail = true;
 						}
 					}
@@ -31522,6 +31523,7 @@
 	                  $localStorage.lastSearch = res.data.lastSearch;
 
 	                  $rootScope.user.userName = res.data.userName;
+	                  if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
 	                  $rootScope.user.userID = res.data.userID;
 	                  $rootScope.user.userAvatar = res.data.avatar;
 	                  //hung dummy here to set userID to email so we can test chat
@@ -31579,6 +31581,7 @@
 	                $localStorage.lastSearch = res.data.lastSearch;
 
 	                $rootScope.user.userName = res.data.userName;
+	                if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
 	                $rootScope.user.userID = res.data.userID;
 	                $rootScope.user.userAvatar = res.data.avatar;
 	                //hung dummy here to set userID to email so we can test chat
@@ -31615,6 +31618,7 @@
 	              $localStorage.relandToken = res.data.token;
 	              $rootScope.user.userName = res.data.userName;
 	              //nhannc
+	              if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
 	              $rootScope.user.userID = res.data.userID;
 	              $rootScope.user.email = res.data.email;
 	              $rootScope.user.phone = res.data.phone;

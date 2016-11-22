@@ -49,6 +49,8 @@
           if($localStorage.lastSearch){
               $rootScope.user.lastSearch = $localStorage.lastSearch;
           }
+          if(res.data.user.fullName)
+              $rootScope.user.fullName = res.data.user.fullName;
           $rootScope.user.lastViewAds = res.data.user.lastViewAds;
           $rootScope.user.saveSearch = res.data.user.saveSearch;
       });

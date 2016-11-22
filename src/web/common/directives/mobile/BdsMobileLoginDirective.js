@@ -122,6 +122,8 @@ angular.module('bds')
                           $localStorage.lastSearch = res.data.lastSearch;
                           
                           $rootScope.user.userName = res.data.userName;
+                          if(res.data.fullName)
+                            $rootScope.user.fullName = res.data.fullName;
                           $rootScope.user.userID = res.data.userID;
                           $rootScope.user.userAvatar = res.data.avatar;
                           //hung dummy here to set userID to email so we can test chat
@@ -181,6 +183,8 @@ angular.module('bds')
                         $localStorage.lastSearch = res.data.lastSearch;
                         
                         $rootScope.user.userName = res.data.userName;
+                        if(res.data.fullName)
+                          $rootScope.user.fullName = res.data.fullName;
                         $rootScope.user.userID = res.data.userID;
                         $rootScope.user.userAvatar = res.data.avatar;
                         //hung dummy here to set userID to email so we can test chat
@@ -216,6 +220,8 @@ angular.module('bds')
                       $localStorage.relandToken = res.data.token;
                       $rootScope.user.userName = res.data.userName;
                       //nhannc
+                      if(res.data.fullName)
+                        $rootScope.user.fullName = res.data.fullName;
                       $rootScope.user.userID = res.data.userID;
                       $rootScope.user.email = res.data.email;
                       $rootScope.user.phone = res.data.phone;
