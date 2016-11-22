@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "919f60c1f30a0bb0fe99"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "77ff7c4568dc20e58e68"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1032,7 +1032,21 @@
 	      decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
 	      HouseService.profile({ userID: decodedToken.userID }).then(function (res) {
 	        //$rootScope.user.userID = decodedToken.userID;
-	        if (res.data.success == true) $rootScope.user = res.data.user;
+	        if (res.data.success == true)
+	          //Nhannc edit, Hung check lai
+	          //$rootScope.user = res.data.user;
+	          $rootScope.user.userName = res.data.user.name;
+	        $rootScope.user.userID = res.data.user.id;
+	        $rootScope.user.userAvatar = res.data.user.avatar;
+	        $rootScope.user.adsLikes = res.data.user.adsLikes;
+	        $rootScope.user.userEmail = res.data.user.email;
+	        $rootScope.user.phone = res.data.user.phone;
+	        //LastSearch may use in storega
+	        if ($localStorage.lastSearch) {
+	          $rootScope.user.lastSearch = $localStorage.lastSearch;
+	        }
+	        $rootScope.user.lastViewAds = res.data.user.lastViewAds;
+	        $rootScope.user.saveSearch = res.data.user.saveSearch;
 	      });
 	    }
 
@@ -22924,7 +22938,7 @@
 			vm.allRentInbox = [];
 
 			vm.init = function () {
-				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName }, function (data) {
+				socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.fullName }, function (data) {
 					console.log("register socket user " + $rootScope.user.userID);
 				});
 			};

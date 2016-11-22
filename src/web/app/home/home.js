@@ -37,7 +37,20 @@
       HouseService.profile({userID: decodedToken.userID}).then(function(res){
         //$rootScope.user.userID = decodedToken.userID;
         if(res.data.success == true)
-          $rootScope.user = res.data.user;
+          //Nhannc edit, Hung check lai
+          //$rootScope.user = res.data.user;
+          $rootScope.user.userName = res.data.user.name;
+          $rootScope.user.userID = res.data.user.id;
+          $rootScope.user.userAvatar = res.data.user.avatar;
+          $rootScope.user.adsLikes = res.data.user.adsLikes;
+          $rootScope.user.userEmail = res.data.user.email;
+          $rootScope.user.phone = res.data.user.phone;
+          //LastSearch may use in storega
+          if($localStorage.lastSearch){
+              $rootScope.user.lastSearch = $localStorage.lastSearch;
+          }
+          $rootScope.user.lastViewAds = res.data.user.lastViewAds;
+          $rootScope.user.saveSearch = res.data.user.saveSearch;
       });
     }
 
