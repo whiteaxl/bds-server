@@ -177,6 +177,9 @@
 	        });
 	        return;
 	      }
+          if(!$rootScope.user.adsLikes){
+            $rootScope.user.adsLikes = [];
+          }
           let ind = $rootScope.user.adsLikes.indexOf(adsID);
           if(ind >=0){
             HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
