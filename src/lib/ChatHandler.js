@@ -215,7 +215,10 @@ ChatHandler.init = function(server){
 
   // sending new message
   socket.on('send-message', function(data, callback){
-  	console.log("receive message "+ JSON.stringify(data));   
+      console.log("--------------------------send-message----------------------");
+      console.log(socket);
+      console.log("--------------------------send-message-------1---------------");
+      console.log("receive message "+ JSON.stringify(data));
     var async = require("async");
     var updateUserID = function(data,callback){
       if(data.toUserID.indexOf("@")==-1){
@@ -248,6 +251,11 @@ ChatHandler.init = function(server){
         callback({success: true, offline: result.read});  
       });
     })
+      if(socket.allParner && data.toUserID){
+          if(socket.allParner.indexOf(data.toUserID.trim()) <= 0){
+              socket.allParner.push(data.toUserID.trim());
+          }
+      }
 
     //var sendMsgResult = processSendMsg(data);
     
