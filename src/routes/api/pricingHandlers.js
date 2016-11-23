@@ -159,15 +159,19 @@ internals.getProductPricing = function (req, reply) {
                 }
             }
 
-            if (pricing != {}) {
-                let numOfReturnAds = 1;
-                for (var i = 0; i < listAds.length; i++) {
-                    if (listAds[i].loaiNhaDat == inputLoaiNhaDat) {
-                        adsNgangGia.push(listAds[i]);
-                        if (numOfReturnAds >= 5)
-                            break;
-                        numOfReturnAds = numOfReturnAds + 1;
-                    }
+            if (JSON.stringify(pricing) != JSON.stringify({})) {
+                let tmp = [];
+                listAds.map( (e) => {if (e.loaiNhaDat == inputLoaiNhaDat)
+                                        tmp.push(e);
+                                    });
+
+                tmp.sort((a,b) => {
+                    return (Math.abs(a.giaM2-pricing.giaM2TrungBinh) - Math.abs(b.giaM2-pricing.giaM2TrungBinh))});
+
+                if (tmp.length <=5 ){
+                    adsNgangGia = tmp;
+                } else{
+                    adsNgangGia = tmp.slice(0,5);
                 }
             }
         } else {
