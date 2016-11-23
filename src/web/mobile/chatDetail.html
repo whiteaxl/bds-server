@@ -23,7 +23,7 @@
                 <li ng-repeat="msg in chatBox.messages track by $index" class={{mcdc.isMe(msg.fromUserID)?"me":"other"}}>
                     <img ng-if="!mcdc.isMe(msg.fromUserID)" src={{msg.user.avatar?msg.user.avatar:"/web/mobile/img/avatar.png"}} class="img-circle avatar pull-left">
                     <div class="ovh">
-                        <span class="datetime">{{msg.timeStamp}}</span>
+                        <span class="datetime">{{formatAMPM(msg.timeStamp)}}</span>
                         <div class="cmm" ng-if="msg.msgType==1">{{msg.content}}</div>
                     </div>
                     <div class="item" ng-show="msg.msgType==2 || msg.msgType==3">

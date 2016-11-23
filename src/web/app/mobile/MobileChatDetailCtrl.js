@@ -186,7 +186,7 @@
 		vm.sendUrlMapLocation = function(){
 			if (vm.sendLocation.lat && vm.sendLocation.lon) {
 				vm.isFileSelected = false;
-				var dateString = formatAMPM(new Date());
+				//var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
 				//msg.content = "https://www.google.com/maps?q=" + vm.currentLocation.lat + "," + vm.currentLocation.lon;
 				msg.location = {
@@ -203,7 +203,7 @@
 							$scope.chatBox.onlineClass = "offline";
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
-						msg.timeStamp = dateString;
+						msg.timeStamp = (new Date()).getTime();
 						console.log(msg);
 						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 						$scope.$apply();
@@ -256,6 +256,14 @@
 							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
 							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 						});
+						google.maps.event.addListener('touchmove', function(event) {
+							event.preventDefault();
+							var touch = e.touches[0];
+							if(e.touches.length == 2){
+								//This means there are two finger move gesture on screen
+								googleMapsReference.setOptions({draggable:true});
+							}
+						}, false);
 					}
 				},700);
 			});
@@ -458,7 +466,7 @@
 				, relatedToAds: $scope.chatBox.ads
 				, content : vm.chatMsg
 				, msgType: window.RewayConst.CHAT_MESSAGE_TYPE.TEXT
-				, timeStamp : formatAMPM(new Date())
+				, timeStamp : (new Date()).getTime()
 				, date: new Date()
 				, type: "Chat"
 			};
@@ -492,7 +500,7 @@
 						$timeout(function() {
 							var fileUrl = location.protocol;
 							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
-							var dateString = formatAMPM(new Date());
+							//var dateString = formatAMPM(new Date());
 							var msg = $scope.getMessage();
 							msg.msgType = window.RewayConst.CHAT_MESSAGE_TYPE.FILE;
 							msg.content = fileUrl;
@@ -506,7 +514,7 @@
 										//console.log("TODO: this person is offline he will receive the message next time he online");
 									}
 									vm.chatMsg = "";
-									msg.timeStamp = dateString;
+									msg.timeStamp = (new Date()).getTime();
 									window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
 									$scope.$apply();
 									$("body").animate({ scrollTop: $(document).height() }, "slow");
@@ -541,13 +549,25 @@
 			return strTime;
 		}
 
+		$scope.formatAMPM = function(milliseconds) {
+			var date = new Date(milliseconds);
+			var hours = date.getHours();
+			var minutes = date.getMinutes();
+			var ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0'+minutes : minutes;
+			var strTime = hours + ':' + minutes + ' ' + ampm;
+			return strTime;
+		}
+
 		// ====================================== Messege Sending Code ============================
 		// sending text message function
 		vm.sendMsg = function(){
 			console.log("---------------sendMsg------1---------");
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
-				var dateString = formatAMPM(new Date());
+				//var dateString = formatAMPM(new Date());
 				var msg = $scope.getMessage();
 				socket.emit("send-message",msg, function(data){
 					//delivery report code goes here
@@ -559,7 +579,7 @@
 							//console.log("TODO: this person is offline he will receive the message next time he online");
 						}
 						vm.chatMsg = "";
-						msg.timeStamp = dateString;
+						msg.timeStamp = (new Date()).getTime();
 						// $scope.chatBox.messages.push(msg);
 						console.log(msg);
 						window.RewayClientUtils.addChatMessage($scope.chatBox,msg);
