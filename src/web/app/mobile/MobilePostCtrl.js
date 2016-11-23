@@ -1209,7 +1209,7 @@
 
 		$timeout(function() {
 			vm.initPost();
-		},300);
+		},500);
 
 		$scope.uploadFiles = function (files) {
 			var async = require("async");

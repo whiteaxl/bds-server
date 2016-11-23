@@ -265,7 +265,7 @@
 							}
 						}, false);
 					}
-				},700);
+				},300);
 			});
 
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
@@ -324,7 +324,7 @@
 
 		$timeout(function() {
 			vm.init();
-		},300);
+		},500);
 
 		if($rootScope.user && $rootScope.user.userID){
 			$scope.userID = $rootScope.user.userID;

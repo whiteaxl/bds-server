@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c56e2055e968d4f8d8f5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "45040d6c0c08719ac049"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28708,7 +28708,7 @@
 								}
 							}, false);
 						}
-					}, 700);
+					}, 300);
 				});
 
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {
@@ -28769,7 +28769,7 @@
 
 			$timeout(function () {
 				vm.init();
-			}, 300);
+			}, 500);
 
 			if ($rootScope.user && $rootScope.user.userID) {
 				$scope.userID = $rootScope.user.userID;
@@ -30232,7 +30232,7 @@
 
 			$timeout(function () {
 				vm.initPost();
-			}, 300);
+			}, 500);
 
 			$scope.uploadFiles = function (files) {
 				var async = __webpack_require__(33);
