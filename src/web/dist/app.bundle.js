@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f481fc38d0a8fb956b85"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d776439e7e055673e33f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28474,6 +28474,7 @@
 			vm.chatMsg = "";
 			vm.currentLocation = {};
 			vm.sendLocation = {};
+			vm.toUserOnline;
 
 			$scope.sampleSentences = [{ value: 0, lable: "Xin chào bạn!" }, { value: 1, lable: "Nhà đã bán chưa bạn?" }, { value: 2, lable: "Gửi cho mình thêm ảnh" }, { value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" }, { value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" }, { value: 5, lable: "Giá có thương lượng được không bạn?" }, { value: 6, lable: "Giảm giá chút đi bạn" }, { value: 7, lable: "Cảm ơn bạn!" }];
 			$scope.chatBox = {};
@@ -28788,25 +28789,31 @@
 			socket.on("check user online", function (data) {
 				console.log("-----------------check user----------------");
 				console.log(data);
-				if (vm.toUserID && data) {
-					vm.toUserOnline = data.toUserIsOnline;
-				}
+				$timeout(function () {
+					if (vm.toUserID && data) {
+						vm.toUserOnline = data.toUserIsOnline;
+					}
+				}, 100);
 			});
 
 			socket.on("alert user online", function (data) {
 				console.log("-----------------alert user online----------------");
 				console.log(data);
-				if (vm.toUserID.trim() == data.fromUserID) {
-					vm.toUserOnline = true;
-				}
+				$timeout(function () {
+					if (vm.toUserID.trim() == data.fromUserID) {
+						vm.toUserOnline = true;
+					}
+				}, 100);
 			});
 
 			socket.on("alert user offline", function (data) {
 				console.log("-----------------alert user offline----------------");
 				console.log(data);
-				if (vm.toUserID.trim() == data.fromUserID) {
-					vm.toUserOnline = false;
-				}
+				$timeout(function () {
+					if (vm.toUserID.trim() == data.fromUserID) {
+						vm.toUserOnline = false;
+					}
+				}, 100);
 			});
 
 			socket.on("user-start-typing", function (data) {
