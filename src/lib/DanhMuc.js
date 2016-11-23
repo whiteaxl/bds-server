@@ -644,8 +644,6 @@ danhMuc.getDanhMucKeys = function (hashDanhMuc) {
 }
 
 danhMuc.getNameValueArray = function(hashDanhMuc){
-    console.log("getNameValueArray");
-    console.log(hashDanhMuc);
     var result = [];
     //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
     for (var k in hashDanhMuc) {
@@ -656,7 +654,6 @@ danhMuc.getNameValueArray = function(hashDanhMuc){
             }
         )
     }
-    console.log(result);
     return result;
 }
 
