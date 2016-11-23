@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "45040d6c0c08719ac049"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a899c5652a75bd50f117"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28829,17 +28829,21 @@
 			});
 
 			socket.on("user-start-typing", function (data) {
-				var toUserName = $scope.chatBox.user.name;
-				if (toUserName.indexOf('@') >= 0) {
-					toUserName = toUserName.substring(0, toUserName.indexOf('@'));
+				if ($scope.chatBox.user.userID.trim() == data.fromUserID.trim()) {
+					var toUserName = $scope.chatBox.user.name;
+					if (toUserName.indexOf('@') >= 0) {
+						toUserName = toUserName.substring(0, toUserName.indexOf('@'));
+					}
+					$scope.chatBox.status = toUserName + " is typing...";
+					$scope.$apply();
 				}
-				$scope.chatBox.status = toUserName + " is typing...";
-				$scope.$apply();
 			});
 
 			socket.on("user-stop-typing", function (data) {
-				$scope.chatBox.status = "";
-				$scope.$apply();
+				if ($scope.chatBox.user.userID.trim() == data.fromUserID.trim()) {
+					$scope.chatBox.status = "";
+					$scope.$apply();
+				}
 			});
 
 			socket.on("unread-messages", function (data) {
