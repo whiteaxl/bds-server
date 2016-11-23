@@ -82,9 +82,40 @@ ChatHandler.init = function(server){
                 if(!err)
                     online_users[data.userID].emit('unread-messages', res);
             });
+
             let fromUserId = data.userID.trim();
             data.fromUserID = fromUserId;
             let toUserId;
+            chatModel.getInboxMsg( {userID: data.userID}, function(err, res){
+                if (err != null){
+                    console.log("Error when get Chat inbox for userID: " + data.userID);
+                } else {
+                    if(res && res.length > 0){
+                        let allParner = [];
+                        var async = require("async");
+                        async.forEach(res,function(inbox){
+                            if(inbox.partner.userID) {
+                                toUserId = inbox.partner.userID.trim();
+                                allParner.push(toUserId);
+                                data.toUserId = toUserId;
+                                console.log("-------------------------inbox: " + toUserId);
+                                if(online_users[toUserId])
+                                    online_users[toUserId].emit('alert user online', data);
+                            }
+                        }, function(err){
+                            if(err)
+                                console.log(err)
+                            else{
+                                console.log("processing all elements completed");
+
+                            }
+                        });
+                        socket.allParner = allParner;
+                    }
+                }
+            });
+
+            /*
             for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
                 toUserId = online_users[keys[i]].userID.trim();
                 console.log("----------------------------------1--- user " + toUserId);
@@ -93,7 +124,7 @@ ChatHandler.init = function(server){
                     data.toUserId = toUserId;
                     online_users[toUserId].emit('alert user online', data);
                 }
-            }
+            }*/
   		}
   	});
 
@@ -110,16 +141,36 @@ ChatHandler.init = function(server){
             socket.userID = data.fromUserID;
 
             online_users[data.fromUserID] = socket;
-            let fromUserId = data.fromUserID.trim();
             let toUserId;
-            for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
-                toUserId = online_users[keys[i]].userID.trim();
-                if(fromUserId != toUserId){
-                    console.log("----------------------------------on to user " + toUserId);
-                    data.toUserId = toUserId;
-                    online_users[toUserId].emit('alert user online', data);
+
+            chatModel.getInboxMsg( {userID: data.fromUserID}, function(err, res){
+                if (err != null){
+                    console.log("Error when get Chat inbox for userID: " + data.userID);
+                } else {
+                    if(res && res.length > 0){
+                        let allParner = [];
+                        var async = require("async");
+                        async.forEach(res,function(inbox){
+                            if(inbox.partner.userID) {
+                                toUserId = inbox.partner.userID.trim();
+                                allParner.push(toUserId);
+                                data.toUserId = toUserId;
+                                console.log("-------------------------inbox: " + toUserId);
+                                if(online_users[toUserId])
+                                    online_users[toUserId].emit('alert user online', data);
+                            }
+                        }, function(err){
+                            if(err)
+                                console.log(err)
+                            else{
+                                console.log("processing all elements completed");
+
+                            }
+                        });
+                        socket.allParner = allParner;
+                    }
                 }
-            }
+            });
         }
     });
 
@@ -129,28 +180,22 @@ ChatHandler.init = function(server){
             delete online_users[data.fromUserID];
         }
         console.log("--------------------------alert user offline by user " + data.fromUserID);
-        let fromUserId = data.fromUserID.trim();
-        let toUserId;
-        for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
-            toUserId = online_users[keys[i]].userID.trim();
-            console.log("-------------------------off--- to user " + toUserId);
-            data.toUserId = toUserId;
-            online_users[toUserId].emit('alert user offline', data);
-        }
-        /*
+        if(socket.allParner){
+            var async = require("async");
+            async.forEach(socket.allParner,function(parner){
+                data.toUserId = parner;
+                console.log("-------------------------to user: " + data.toUserId);
+                if(online_users[data.toUserId])
+                    online_users[data.toUserId].emit('alert user offline', data);
+            }, function(err){
+                if(err)
+                    console.log(err)
+                else{
+                    console.log("processing all elements completed");
 
-        if(online_users.length > 0){
-            let fromUserId = data.fromUserID.trim();
-            let toUserId;
-            for( let i=0; i<online_users.length; i++){
-                toUserId = online_users[i].userID.trim();
-                if(online_users[toUserId]){
-                    console.log("alert user offline to user " + toUserId);
-                    data.toUserId = toUserId;
-                    online_users[toUserId].emit('alert user offline', data);
                 }
-            }
-        }*/
+            });
+        }
     });
 
     socket.on('read-messages', function(data, callback){
@@ -220,19 +265,31 @@ ChatHandler.init = function(server){
   // disconnect user handling 
   socket.on('user leave', function (data, callback) { 
   	console.log('--------------tim log this to prove user leave called '  + socket.userID + '  --------name: ' + socket.username);
-      let fromUserId = socket.userID.trim();
-    delete online_users[socket.userID];
-      data.fromUserID = fromUserId;
-      let toUserId;
-      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
-          toUserId = online_users[keys[i]].userID.trim();
-          console.log("---------------------------- to user " + toUserId);
-          data.toUserId = toUserId;
-          online_users[toUserId].emit('alert user offline', data);
+      if(socket.userID){
+          let fromUserId = socket.userID.trim();
+          data.fromUserID = fromUserId;
+          delete online_users[socket.userID];
+          if(socket.allParner){
+              var async = require("async");
+              async.forEach(socket.allParner,function(parner){
+                  data.toUserId = parner;
+                  console.log("-------------------------to user: " + data.toUserId);
+                  if(online_users[data.toUserId])
+                      online_users[data.toUserId].emit('alert user offline', data);
+              }, function(err){
+                  if(err)
+                      console.log(err)
+                  else{
+                      console.log("processing all elements completed");
+
+                  }
+              });
+          }
+
+          console.log(data);
+          console.log(callback);
+          callback({success: true});
       }
-      console.log(data);
-    console.log(callback);
-    callback({success: true});
   });
 
   //get unread message for an user

@@ -14,6 +14,7 @@
 		vm.chatMsg = "";
 		vm.currentLocation = {};
 		vm.sendLocation ={}
+		vm.toUserOnline;
 
 		$scope.sampleSentences = [
 			{ value: 0, lable: "Xin chào bạn!"},
@@ -347,25 +348,31 @@
 		socket.on("check user online",function(data){
 			console.log("-----------------check user----------------");
 			console.log(data);
-			if(vm.toUserID && data){
-				vm.toUserOnline = data.toUserIsOnline;
-			}
+			$timeout(function() {
+				if(vm.toUserID && data){
+					vm.toUserOnline = data.toUserIsOnline;
+				}
+			},100);
 		});
 
 		socket.on("alert user online",function(data){
 			console.log("-----------------alert user online----------------");
 			console.log(data);
-			if(vm.toUserID.trim() == data.fromUserID){
-				vm.toUserOnline = true;
-			}
+			$timeout(function() {
+				if(vm.toUserID.trim() == data.fromUserID){
+					vm.toUserOnline = true;
+				}
+			},100);
 		});
 
 		socket.on("alert user offline",function(data){
 			console.log("-----------------alert user offline----------------");
 			console.log(data);
-			if(vm.toUserID.trim() == data.fromUserID){
-				vm.toUserOnline = false;
-			}
+			$timeout(function() {
+				if(vm.toUserID.trim() == data.fromUserID){
+					vm.toUserOnline = false;
+				}
+			},100);
 		});
 
 		socket.on("user-start-typing",function(data){

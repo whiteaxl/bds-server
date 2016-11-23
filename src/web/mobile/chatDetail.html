@@ -1,6 +1,6 @@
 <header class="main blue">
     <a href="#" ng-click="mcdc.goBack()" class="header-icon"><i class="iconLeftOpen"></i></a>
-    <span class="name">{{(mcdc.toUser.fullName.indexOf('@') >=0)? mcdc.toUser.fullName.substring(0,mcdc.toUser.fullName.indexOf('@')):mcdc.toUser.fullName | limitTo: 30 }}<br><small>{{mcdc.toUserOnline? "Online":"Offline" }}</small></span>
+    <span class="name">{{(mcdc.toUser.fullName.indexOf('@') >=0)? mcdc.toUser.fullName.substring(0,mcdc.toUser.fullName.indexOf('@')):mcdc.toUser.fullName | limitTo: 30 }}<br><small>{{mcdc.toUserOnline?"Online":"Offline"}}</small></span>
     <div class="btn-group pull-right" role="group">
         <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="header-icon"><img src="/web/mobile/img/dots-three-horizontal.svg" width="26" /></a>
         <ul class="dropdown-menu">
