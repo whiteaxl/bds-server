@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0f206a1f8307fa044b19"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "74582eb1a845e20e8727"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28700,7 +28700,7 @@
 								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 							});
 						}
-					}, 300);
+					}, 700);
 				});
 
 				HouseService.detailAds({ adsID: vm.adsID, userID: $rootScope.user.userID }).then(function (res) {

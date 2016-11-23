@@ -257,7 +257,7 @@
 							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 						});
 					}
-				},300);
+				},700);
 			});
 
 			HouseService.detailAds({adsID: vm.adsID, userID: $rootScope.user.userID}).then(function(res) {
