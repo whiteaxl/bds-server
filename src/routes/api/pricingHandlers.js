@@ -211,7 +211,8 @@ internals.getProductPricing = function (req, reply) {
                                                 tmp.push(e);
                                          });
 
-                    tmp.sort((a,b) => { return (Math.abs(a.giaM2TrungBinh-pricing.giaM2TrungBinh) - Math.abs(b.giaM2TrungBinh-pricing.giaM2TrungBinh))});
+                    tmp.sort((a,b) => {
+                        return (Math.abs(a.giaM2-pricing.giaM2TrungBinh) - Math.abs(b.giaM2-pricing.giaM2TrungBinh))});
 
                     if (tmp.length <=5 ){
                         adsNgangGia = tmp;
