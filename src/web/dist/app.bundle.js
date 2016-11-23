@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "21759fc2f9d396a60be5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c56e2055e968d4f8d8f5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -23095,8 +23095,8 @@
 						for (var i = 0; i < vm.allInbox.length; i++) {
 							inbox = vm.allInbox[i];
 							count = 0;
-							for (var i = 0; i < data.length; i++) {
-								var msg = data[i].default;
+							for (var j = 0; j < data.length; j++) {
+								var msg = data[j].default;
 								msg.date = new Date(msg.date);
 								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
 									count++;
@@ -23111,8 +23111,8 @@
 						for (var i = 0; i < vm.allSaleInbox.length; i++) {
 							inbox = vm.allSaleInbox[i];
 							count = 0;
-							for (var i = 0; i < data.length; i++) {
-								var msg = data[i].default;
+							for (var j = 0; j < data.length; j++) {
+								var msg = data[j].default;
 								msg.date = new Date(msg.date);
 								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
 									count++;
@@ -23127,8 +23127,8 @@
 						for (var i = 0; i < vm.allRentInbox.length; i++) {
 							inbox = vm.allRentInbox[i];
 							count = 0;
-							for (var i = 0; i < data.length; i++) {
-								var msg = data[i].default;
+							for (var j = 0; j < data.length; j++) {
+								var msg = data[j].default;
 								msg.date = new Date(msg.date);
 								if (inbox.relatedToAds.adsID == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && inbox.partner.userID.trim() == msg.fromUserID.trim()) {
 									count++;
