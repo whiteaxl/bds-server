@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d776439e7e055673e33f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0f206a1f8307fa044b19"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -23063,6 +23063,7 @@
 							inbox.lastMsg = data.content;
 							inbox.lastDate = vm.getChatTime(new Date(data.date));
 						}
+						console.log(inbox.unreadCount);
 					}, function (err) {
 						if (err) {
 							throw err;
@@ -28774,16 +28775,19 @@
 	   Handle in comming message
 	   */
 			socket.on("new message", function (data) {
-				if (!$scope.chatBox.user) {
-					vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+				console.log("----------------------on new msg-detail-------------------");
+				if (data.fromUserID && vm.toUserID && data.fromUserID.trim() == vm.toUserID.trim()) {
+					if (!$scope.chatBox.user) {
+						vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+					}
+					data.date = new Date(data.date);
+					socket.emit("read-messages", data, function (res) {
+						console.log("mark messages as read " + res);
+					});
+					window.RewayClientUtils.addChatMessage($scope.chatBox, data);
+					$scope.$apply();
+					$("body").animate({ scrollTop: $(document).height() }, "slow");
 				}
-				data.date = new Date(data.date);
-				socket.emit("read-messages", data, function (res) {
-					console.log("mark messages as read " + res);
-				});
-				window.RewayClientUtils.addChatMessage($scope.chatBox, data);
-				$scope.$apply();
-				$("body").animate({ scrollTop: $(document).height() }, "slow");
 			});
 
 			socket.on("check user online", function (data) {

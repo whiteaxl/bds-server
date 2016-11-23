@@ -91,6 +91,7 @@
 						inbox.lastMsg = data.content;
 						inbox.lastDate = vm.getChatTime(new Date(data.date));
 					}
+					console.log(inbox.unreadCount);
 				}, function(err){
 					if(err){throw err;}
 					console.log("processing all elements completed");

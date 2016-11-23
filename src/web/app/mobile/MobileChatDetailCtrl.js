@@ -333,16 +333,19 @@
 		 Handle in comming message
 		 */
 		socket.on("new message", function(data){
-			if(!$scope.chatBox.user){
-				vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
+			console.log("----------------------on new msg-detail-------------------");
+			if(data.fromUserID && vm.toUserID && (data.fromUserID.trim()==vm.toUserID.trim())){
+				if(!$scope.chatBox.user){
+					vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
+				}
+				data.date = new Date(data.date);
+				socket.emit("read-messages",data, function(res){
+					console.log("mark messages as read " + res);
+				});
+				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+				$scope.$apply();
+				$("body").animate({ scrollTop: $(document).height() }, "slow");
 			}
-			data.date = new Date(data.date);
-			socket.emit("read-messages",data, function(res){
-				console.log("mark messages as read " + res);
-			});
-			window.RewayClientUtils.addChatMessage($scope.chatBox,data);
-			$scope.$apply();
-			$("body").animate({ scrollTop: $(document).height() }, "slow");
 		});
 		
 		socket.on("check user online",function(data){
