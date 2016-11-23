@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3706ecd2055b11ecd334"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "21759fc2f9d396a60be5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32251,8 +32251,6 @@
 	};
 
 	danhMuc.getNameValueArray = function (hashDanhMuc) {
-	    console.log("getNameValueArray");
-	    console.log(hashDanhMuc);
 	    var result = [];
 	    //var keys = danhMuc.getDanhMucKeys(hashDanhMuc);
 	    for (var k in hashDanhMuc) {
@@ -32261,7 +32259,6 @@
 	            lable: hashDanhMuc[k]
 	        });
 	    }
-	    console.log(result);
 	    return result;
 	};
 
