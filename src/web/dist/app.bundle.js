@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "419e08e7260d8b624609"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6a6a07c1b329cd7626c1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28480,6 +28480,7 @@
 			vm.currentLocation = {};
 			vm.sendLocation = {};
 			vm.toUserOnline;
+			vm.sentLocationView = {};
 
 			$scope.sampleSentences = [{ value: 0, lable: "Xin chào bạn!" }, { value: 1, lable: "Nhà đã bán chưa bạn?" }, { value: 2, lable: "Gửi cho mình thêm ảnh" }, { value: 3, lable: "Gửi cho mình vị trí chính xác của nhà" }, { value: 4, lable: "Giá cuối cùng bạn bán là bao nhiêu?" }, { value: 5, lable: "Giá có thương lượng được không bạn?" }, { value: 6, lable: "Giảm giá chút đi bạn" }, { value: 7, lable: "Cảm ơn bạn!" }];
 			$scope.chatBox = {};
@@ -28625,9 +28626,25 @@
 				} else {}
 			};
 
-			vm.showFullMap = function (isViewLocation) {
-				vm.isViewLocation = isViewLocation;
-				$('#mapsBoxSendLocation').modal("show");
+			vm.updateStreetview = function (lat, lon) {
+				var latLng = new google.maps.LatLng(lat, lon);
+				var streetViewService = new google.maps.StreetViewService();
+				streetViewService.getPanoramaByLocation(latLng, 500, function (streetViewPanoramaData, status, res) {
+					if (status === google.maps.StreetViewStatus.OK) {
+						vm.streetviewLatLng = streetViewPanoramaData.location.latLng;
+					}
+				});
+			};
+
+			vm.showFullMap = function (isViewLocation, msg) {
+				if (!isViewLocation) $('#mapsBoxSendLocation').modal("show");else {
+					vm.sentLocationView.lat = msg.location.lat;
+					vm.sentLocationView.lon = msg.location.lon;
+					var async = __webpack_require__(33);
+					async.series(vm.updateStreetview(vm.sentLocationView.lat, vm.sentLocationView.lon));
+
+					$('#mapsBoxViewLocation').modal("show");
+				}
 			};
 
 			vm.sendUrlMapLocation = function () {
@@ -28715,6 +28732,18 @@
 								console.log("------------lat: " + vm.location.lat);
 								console.log("------------lon: " + vm.location.lon);
 							});
+						}
+					}, 300);
+				});
+
+				$('#mapsBoxViewLocation').on('show.bs.modal', function (e) {
+					$timeout(function () {
+						if (!vm.fullMapViewLocation) {
+							vm.fullMapViewLocation = NgMap.initMap('fullMapViewLocation');
+						}
+						if (vm.fullMapViewLocation) {
+							//vm.fullMapViewLocation.getStreetView().setVisible(false);
+							//vm.fullMapViewLocation.getStreetView().setPosition(vm.streetviewLatLng);
 						}
 					}, 300);
 				});

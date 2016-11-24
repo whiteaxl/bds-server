@@ -15,6 +15,7 @@
 		vm.currentLocation = {};
 		vm.sendLocation ={}
 		vm.toUserOnline;
+		vm.sentLocationView = {};
 
 		$scope.sampleSentences = [
 			{ value: 0, lable: "Xin chào bạn!"},
@@ -178,9 +179,30 @@
 			}
 		}
 
-		vm.showFullMap =function(isViewLocation){
-			vm.isViewLocation = isViewLocation;
-			$('#mapsBoxSendLocation').modal("show");
+		vm.updateStreetview = function(lat, lon){
+			var latLng = new google.maps.LatLng(lat, lon);
+			var streetViewService = new google.maps.StreetViewService();
+			streetViewService.getPanoramaByLocation(latLng, 500, function(streetViewPanoramaData, status,res) {
+				if (status === google.maps.StreetViewStatus.OK) {
+					vm.streetviewLatLng = streetViewPanoramaData.location.latLng;
+				}
+			});
+
+		}
+
+		vm.showFullMap =function(isViewLocation, msg){
+			if(!isViewLocation)
+				$('#mapsBoxSendLocation').modal("show");
+			else {
+				vm.sentLocationView.lat = msg.location.lat;
+				vm.sentLocationView.lon = msg.location.lon;
+				var async = require("async");
+				async.series(
+					vm.updateStreetview(vm.sentLocationView.lat, vm.sentLocationView.lon)
+				);
+
+				$('#mapsBoxViewLocation').modal("show");
+			}
 		}
 
 		vm.sendUrlMapLocation = function(){
@@ -238,7 +260,7 @@
 			});
 
 			RewayCommonUtil.placeAutoCompletePost(vm.selectPlaceCallback, "searchSendLocation");
-
+			
 			$('#mapsBoxSendLocation').on('show.bs.modal', function (e) {
 				$timeout(function() {
 					if (!vm.fullMapSendLocation) {
@@ -268,6 +290,18 @@
 							console.log("------------lat: " + vm.location.lat);
 							console.log("------------lon: " + vm.location.lon);
 						});
+					}
+				},300);
+			});
+
+			$('#mapsBoxViewLocation').on('show.bs.modal', function (e) {
+				$timeout(function() {
+					if (!vm.fullMapViewLocation) {
+						vm.fullMapViewLocation = NgMap.initMap('fullMapViewLocation');
+					}
+					if(vm.fullMapViewLocation){
+						//vm.fullMapViewLocation.getStreetView().setVisible(false);
+						//vm.fullMapViewLocation.getStreetView().setPosition(vm.streetviewLatLng);
 					}
 				},300);
 			});
