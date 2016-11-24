@@ -256,14 +256,18 @@
 							console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
 							console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 						});
-						google.maps.event.addListener('touchmove', function(event) {
+						google.maps.event.addListener(vm.fullMapSendLocation, "touchmove", function () {
 							event.preventDefault();
 							var touch = e.touches[0];
-							if(e.touches.length == 2){
+							if(e.touches.length == 1){
 								//This means there are two finger move gesture on screen
-								googleMapsReference.setOptions({draggable:true});
+								vm.fullMapSendLocation.setOptions({draggable:true});
 							}
 						}, false);
+						google.maps.event.addListener(vm.fullMapSendLocation, "drag", function(event) {
+							console.log("------------lat: " + vm.location.lat);
+							console.log("------------lon: " + vm.location.lon);
+						});
 					}
 				},300);
 			});

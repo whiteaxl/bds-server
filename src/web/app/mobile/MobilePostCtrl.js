@@ -644,6 +644,13 @@
 							console.log("------------lon: " + vm.location.lon);
 						});
 
+						google.maps.event.addListener(vm.fullMapPost, "drag", function(event) {
+							console.log("------------lat: " + vm.location.lat);
+							console.log("------------lon: " + vm.location.lon);
+						});
+
+
+
 						google.maps.event.addListener(vm.fullMapPost, "center_changed", function() {
 							// infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
 							// infoWnd.setPosition(vm.fullMapPost.getCenter());
@@ -939,6 +946,12 @@
 
 			return [this.getFullYear(), mm, dd].join(''); // padding
 		};
+
+		vm.changeDiaChiDisplay = function(){
+			if(vm.ads.place.diaChiChiTiet){
+				$scope.diaChiDisplay = vm.ads.place.diaChiChiTiet;
+			}
+		}
 
 		vm.dangTin = function(isValid){
 

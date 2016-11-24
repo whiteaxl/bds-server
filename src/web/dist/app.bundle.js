@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a899c5652a75bd50f117"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "419e08e7260d8b624609"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20492,7 +20492,9 @@
 	        // var url = "/api/findAds";
 	        // var url = "/api/search";
 	        var url = "/api/v2/find";
-	        var sendData = {};Object.assign(sendData, data);
+	        //nhannc modify to advoid error when Object.assign is not supported
+	        //Object.assign(sendData, data);
+	        var sendData = JSON.parse(JSON.stringify(data));
 	        sendData.placeId = undefined;
 	        return $http.post(url, sendData);
 	      },
@@ -21664,7 +21666,9 @@
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
-						Object.assign(queryNearBy, vm.query);
+						//nhannc modify to advoid error when Object.assign is not supported
+						//Object.assign(queryNearBy, vm.query);
+						queryNearBy = JSON.parse(JSON.stringify(vm.query));
 						// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
 						// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
 						// 				alert(diaChinh);
@@ -28699,14 +28703,18 @@
 								console.log("-------movecusor-----lat: " + vm.sendLocation.lat);
 								console.log("---------movecusor---lon: " + vm.sendLocation.lon);
 							});
-							google.maps.event.addListener('touchmove', function (event) {
+							google.maps.event.addListener(vm.fullMapSendLocation, "touchmove", function () {
 								event.preventDefault();
 								var touch = e.touches[0];
-								if (e.touches.length == 2) {
+								if (e.touches.length == 1) {
 									//This means there are two finger move gesture on screen
-									googleMapsReference.setOptions({ draggable: true });
+									vm.fullMapSendLocation.setOptions({ draggable: true });
 								}
 							}, false);
+							google.maps.event.addListener(vm.fullMapSendLocation, "drag", function (event) {
+								console.log("------------lat: " + vm.location.lat);
+								console.log("------------lon: " + vm.location.lon);
+							});
 						}
 					}, 300);
 				});
@@ -29692,6 +29700,11 @@
 								console.log("------------lon: " + vm.location.lon);
 							});
 
+							google.maps.event.addListener(vm.fullMapPost, "drag", function (event) {
+								console.log("------------lat: " + vm.location.lat);
+								console.log("------------lon: " + vm.location.lon);
+							});
+
 							google.maps.event.addListener(vm.fullMapPost, "center_changed", function () {
 								// infoWnd.setContent("<font color='#FF0000'>Vị trí lựa chọn</font>");
 								// infoWnd.setPosition(vm.fullMapPost.getCenter());
@@ -29974,6 +29987,12 @@
 				dd = dd >= 10 ? dd : '0' + dd;
 
 				return [this.getFullYear(), mm, dd].join(''); // padding
+			};
+
+			vm.changeDiaChiDisplay = function () {
+				if (vm.ads.place.diaChiChiTiet) {
+					$scope.diaChiDisplay = vm.ads.place.diaChiChiTiet;
+				}
 			};
 
 			vm.dangTin = function (isValid) {

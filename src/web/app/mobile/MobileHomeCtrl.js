@@ -138,8 +138,10 @@
 			vm.getLocation();
 			if($rootScope.currentLocation){
 				if($rootScope.lastSearch){
-					var queryNearBy = {}; 
-					Object.assign(queryNearBy, vm.query);
+					var queryNearBy = {};
+					//nhannc modify to advoid error when Object.assign is not supported 
+					//Object.assign(queryNearBy, vm.query);
+					queryNearBy = JSON.parse(JSON.stringify(vm.query));
 					// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
 					// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
     	// 				alert(diaChinh);
