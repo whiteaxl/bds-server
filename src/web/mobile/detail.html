@@ -17,13 +17,7 @@
     <div class="notifyBox detailnotify">Đã lưu tin thành công</div>
     <div class="wapper" style="position: absolute;top: 0px;">
     	<div class="detail-page">
-            
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    
-                });
-            </script>
-        	<div class="img" style="background-image:url({{mdt.ads.image.images[0]}})"><a href="{{mdt.ads.image.images[1]}}" class="fancybox" data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
+        	<div class="img" ng-click="mdt.showFullImage();" style="background-image:url({{mdt.ads.image.images[0]}})"><a href="#"  data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
             <a href="{{img}}" ng-repeat="img in mdt.ads.image.images track by $index" class="fancybox" data-fancybox-group="gallery" title=""></a>
                 <div class="desSort">
             	<div class="price">{{mdt.ads.giaFmt}}</div>
@@ -133,6 +127,7 @@
                               origin="{{$root.currentLocation.lat}},{{$root.currentLocation.lon}}"
                               destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
                             </directions>                                                  
+                        </ng-map>
                     </div>
                 </div>
 
@@ -194,41 +189,14 @@
                 </div>
             </div>
             <div class="other-box collapse-box uln border-none">
-                <div class="otherBox spinner" ng-if="mdt.nhaXungQuanh">
-                    <div class="reland-box uln">
-                        <div class="reland-title">
-                            <h4>Bộ sưu tập</h4>
-                            <h3>Những nhà đang bán gần nhà này</h3>
-                            <h5>{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h5>
-                        </div>
-						<ul class="reland-list full-3">
-                            <li  ng-repeat="ads in mdt.nhaXungQuanh track by $index">
-                                <a href="#" ng-click="mdt.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
-                                <a href="#" ng-click="mdt.goDetail(ads.adsID)">
-                                    <span class="img" style="background-image:url({{ads.image.cover}})"></span>
-                                    <span class="des bgOpa">
-                                        <span class="price">{{ads.giaFmt}}</span>
-                                        <span class="name">{{mdt.ads.place.diaChi}}</span>
-                                        <span>{{mdt.ads.soPhongNguFmt}}</span>
-                                        <span class="split"></span>
-                                        <span>{{mdt.ads.soPhongTamFmt}}</span>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-					</div>
-                </div>
-                <div class="clb ovh mb10"></div>
-                <div class="btn-box"><a rol="button" ng-if="mdt.nhaXungQuanh" href="#" ng-click="mdt.showMoreXungQuanh()"  class="btn btn-primary btn-block">Xem thêm</a></div>
-                <div class="clb ovh" style="display: none;"></div>
-                <div class="reland-box home-page reland-box_1 uln" style="display: none;" reland-item="reland-box_1">
+                <div class="reland-box home-page reland-box_1 uln" ng-if="mdt.nhaXungQuanh" reland-item="reland-box_1">
                     <div class="reland-title">
                         <h4>Bộ sưu tập</h4>
-                        <h3>Nhà tương tự</h3>
+                        <h3>Những nhà đang bán gần nhà này</h3>
                         <h5>{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h5>
                     </div>
                     <ul class="reland-list full-3">
-                        <li  ng-repeat="ads in mdt.nhaTuongTu track by $index">
+                        <li  ng-repeat="ads in mdt.nhaXungQuanh track by $index">
                             <a href="#" ng-click="mdt.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
                             <a href="#" ng-click="mdt.goDetail(ads.adsID)">
                                 <span class="img" style="background-image:url({{ads.image.cover}})"></span>
@@ -241,10 +209,9 @@
                                 </span>
                             </a>
                         </li>
-                        
                     </ul>
                     <div class="clb ovh"></div>
-                    <div class="btn-box"><a rol="button" href="#" ng-click="mdt.showMoreTuongTu()" class="btn btn-primary btn-block">Xem thêm</a></div>
+                    <div class="btn-box"><a rol="button" href="#" ng-if="mdt.nhaXungQuanh" ng-click="mdt.showMoreXungQuanh()" class="btn btn-primary btn-block">Xem thêm</a></div>
                 </div>
                 <!--END-->
                 
@@ -255,7 +222,7 @@
         
 		<div class="clb ovh"></div>
     </div>
-    <footer class="main border uln">
+    <footer class="main border uln" style="{{mdt.viewImage==true?'background: transparent;':';'}}">
         <ul class="navmain nav-3 button">
         	<li><a role="button" class="btn btn-organe" href="tel:{{::mdt.ads.dangBoi.phone}}"><i class="iconPhone"></i> Gọi điện</a></li>
             <li><a role="button" class="btn btn-warning" href="#" ng-click="mdt.openChat(event)"><i class="iconChat"></i> Chat</a></li>
@@ -292,8 +259,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
                     <h4 class="modal-title" id="mapsBoxLabel">{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h4>
                 </div>
-                <div class="modal-body uln"">
-                    <ng-map center="{{mdt.center}}" id="fullMap" lazy-init="true" class="ngmap">
+                <div class="modal-body uln"" ontouchstart="return false">
+                    <ng-map center="{{mdt.center}}" id="fullMap"   zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
                         <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
                           <div class = "marker">
                             {{mdt.marker.content}} 

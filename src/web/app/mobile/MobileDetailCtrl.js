@@ -13,6 +13,7 @@
 			content: undefined,
 			data: 'test'
 		}
+		vm.viewImage = false;
 		var _ = require('lodash');
 		vm.center= [21.0363818591319,105.80105538518103];
 		vm.reportCode = 1;
@@ -63,6 +64,45 @@
 					.targetEvent(ev)
 			);
 		};
+
+
+		vm.showFullImage = function(){
+			if(vm.ads && vm.ads.image.images){
+				vm.viewImage = true;
+				var fancyImgs = [];
+				for (var i=0; i< vm.ads.image.images.length - 1; i++) {
+                    fancyImgs.push(
+                    	{
+                    		href: vm.ads.image.images[i],
+                    	}
+                    );
+                }    
+				$.fancybox.open(fancyImgs, {
+			        padding : 0,
+			        openEffect  : 'none',
+	                closeEffect : 'none',
+
+	                prevEffect : 'none',
+	                nextEffect : 'none',
+
+	                helpers : {
+	                    title : {
+	                        type : 'inside'
+	                    },
+	                    buttons : {}
+	                },
+	                afterLoad : function() {
+	                    this.title = (this.index + 1) + '/' + this.group.length;
+	                },
+	                afterClose : function() {
+				        vm.viewImage = false;
+				        $scope.$apply();
+				        return;
+				    }
+			    });				
+			}
+			
+		}
 
 		vm.openChat = function(event){
 			vm.userPostAdsExist = false;
@@ -378,6 +418,8 @@
         		vm.map = map; 
         	});
 
+
+
         	$timeout(function() {
         		let price = vm.ads.gia; /* don vi trieu*/
 			    let percentOfPrice = 0.7; / duoc vay 70% /
@@ -390,25 +432,7 @@
 				$("#phgantaichinh").drawDoughnutChart([
 					{ title: "Gốc", value : vm.patc.payment,  color: "#20c063"},
 					{ title: "Lãi", value:  vm.patc.interest,   color: "#f0a401"}
-			  	]);
-			  	$('.fancybox').fancybox({
-                    openEffect  : 'none',
-                    closeEffect : 'none',
-
-                    prevEffect : 'none',
-                    nextEffect : 'none',
-
-                    helpers : {
-                        title : {
-                            type : 'inside'
-                        },
-                        buttons : {}
-                    },
-
-                    afterLoad : function() {
-                        this.title = (this.index + 1) + '/' + this.group.length;
-                    }
-                });
+			  	]);			  	
                 $('body').scrollTop(0);
 			}, 0);
 
