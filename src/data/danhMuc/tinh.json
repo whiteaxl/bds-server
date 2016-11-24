@@ -20,7 +20,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "An Giang Province",
       "gg_formatted_address": "An Giang Province, Vietnam",
       "id": "Place_T_AG",
       "nameKhongDau": "an-giang",
@@ -52,7 +54,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Binh Duong",
       "gg_formatted_address": "Binh Duong, Vietnam",
       "id": "Place_T_BD",
       "nameKhongDau": "binh-duong",
@@ -84,7 +88,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Binh Dinh Province",
       "gg_formatted_address": "Binh Dinh Province, Vietnam",
       "id": "Place_T_BDD",
       "nameKhongDau": "binh-dinh",
@@ -116,7 +122,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Bac Giang",
       "gg_formatted_address": "Bac Giang, Vietnam",
       "id": "Place_T_BG",
       "nameKhongDau": "bac-giang",
@@ -148,7 +156,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Bắc Kạn Province",
       "gg_formatted_address": "Bắc Kạn Province, Vietnam",
       "id": "Place_T_BK",
       "nameKhongDau": "bac-kan",
@@ -180,7 +190,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Bac Lieu",
       "gg_formatted_address": "Bac Lieu, Vietnam",
       "id": "Place_T_BL",
       "nameKhongDau": "bac-lieu",
@@ -212,7 +224,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Bac Ninh Province",
       "gg_formatted_address": "Bac Ninh Province, Vietnam",
       "id": "Place_T_BN",
       "nameKhongDau": "bac-ninh",
@@ -244,7 +258,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Cầu Bình Phước",
       "gg_formatted_address": "Binh Phuoc 77000, Vietnam",
       "id": "Place_T_BP",
       "nameKhongDau": "binh-phuoc",
@@ -276,7 +292,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Phan Thiet",
       "gg_formatted_address": "Binh Thuan, Vietnam",
       "id": "Place_T_BTH",
       "nameKhongDau": "binh-thuan",
@@ -308,7 +326,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ben Tre",
       "gg_formatted_address": "Ben Tre, Vietnam",
       "id": "Place_T_BTR",
       "nameKhongDau": "ben-tre",
@@ -340,7 +360,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Cao Bang",
       "gg_formatted_address": "Cao Bang, Vietnam",
       "id": "Place_T_CB",
       "nameKhongDau": "cao-bang",
@@ -372,7 +394,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ca Mau",
       "gg_formatted_address": "Ca Mau, Vietnam",
       "id": "Place_T_CM",
       "nameKhongDau": "ca-mau",
@@ -404,7 +428,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Can Tho",
       "gg_formatted_address": "Can Tho, Vietnam",
       "id": "Place_T_CT",
       "nameKhongDau": "can-tho",
@@ -436,7 +462,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Dien Bien",
       "gg_formatted_address": "Dien Bien, Vietnam",
       "id": "Place_T_DDB",
       "nameKhongDau": "dien-bien",
@@ -468,7 +496,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Đắk Lắk Province",
       "gg_formatted_address": "Đắk Lắk Province, Vietnam",
       "id": "Place_T_DDL",
       "nameKhongDau": "dak-lak",
@@ -500,7 +530,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Da Nang",
       "gg_formatted_address": "Da Nang, Vietnam",
       "id": "Place_T_DDN",
       "nameKhongDau": "da-nang",
@@ -532,7 +564,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Đồng Tháp Province",
       "gg_formatted_address": "Đồng Tháp Province, Vietnam",
       "id": "Place_T_DDT",
       "nameKhongDau": "dong-thap",
@@ -564,7 +598,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Dong Nai",
       "gg_formatted_address": "Dong Nai, Vietnam",
       "id": "Place_T_DNA",
       "nameKhongDau": "dong-nai",
@@ -596,7 +632,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Dak Nong",
       "gg_formatted_address": "Dak Nong, Vietnam",
       "id": "Place_T_DNO",
       "nameKhongDau": "dak-nong",
@@ -628,7 +666,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Gia Lai Province",
       "gg_formatted_address": "Gia Lai Province, Vietnam",
       "id": "Place_T_GL",
       "nameKhongDau": "gia-lai",
@@ -660,7 +700,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hoa Binh",
       "gg_formatted_address": "Hoa Binh, Vietnam",
       "id": "Place_T_HB",
       "nameKhongDau": "hoa-binh",
@@ -692,7 +734,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hai Duong",
       "gg_formatted_address": "Hai Duong, Vietnam",
       "id": "Place_T_HD",
       "nameKhongDau": "hai-duong",
@@ -724,7 +768,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ha Giang",
       "gg_formatted_address": "Ha Giang, Vietnam",
       "id": "Place_T_HG",
       "nameKhongDau": "ha-giang",
@@ -756,7 +802,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hau Giang",
       "gg_formatted_address": "Hau Giang, Vietnam",
       "id": "Place_T_HGI",
       "nameKhongDau": "hau-giang",
@@ -788,7 +836,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hanoi",
       "gg_formatted_address": "Hanoi, Vietnam",
       "id": "Place_T_HN",
       "nameKhongDau": "ha-noi",
@@ -820,7 +870,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hà Nam Province",
       "gg_formatted_address": "Hà Nam Province, Vietnam",
       "id": "Place_T_HNA",
       "nameKhongDau": "ha-nam",
@@ -852,7 +904,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hai Phong",
       "gg_formatted_address": "Haiphong, Vietnam",
       "id": "Place_T_HP",
       "nameKhongDau": "hai-phong",
@@ -884,7 +938,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ha Tinh Province",
       "gg_formatted_address": "Ha Tinh Province, Vietnam",
       "id": "Place_T_HT",
       "nameKhongDau": "ha-tinh",
@@ -916,7 +972,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Hung Yen Province",
       "gg_formatted_address": "Hung Yen Province, Vietnam",
       "id": "Place_T_HY",
       "nameKhongDau": "hung-yen",
@@ -948,7 +1006,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Kien Giang",
       "gg_formatted_address": "Kien Giang, Vietnam",
       "id": "Place_T_KG",
       "nameKhongDau": "kien-giang",
@@ -980,7 +1040,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Khanh Hoa Province",
       "gg_formatted_address": "Khanh Hoa Province, Vietnam",
       "id": "Place_T_KH",
       "nameKhongDau": "khanh-hoa",
@@ -1012,7 +1074,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Kon Tum Province",
       "gg_formatted_address": "Kon Tum Province, Vietnam",
       "id": "Place_T_KT",
       "nameKhongDau": "kon-tum",
@@ -1044,7 +1108,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Long An Province",
       "gg_formatted_address": "Long An Province, Vietnam",
       "id": "Place_T_LA",
       "nameKhongDau": "long-an",
@@ -1076,7 +1142,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Lao Cai",
       "gg_formatted_address": "Lao Cai, Vietnam",
       "id": "Place_T_LCA",
       "nameKhongDau": "lao-cai",
@@ -1108,7 +1176,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Lai Chau",
       "gg_formatted_address": "Lai Chau, Vietnam",
       "id": "Place_T_LCH",
       "nameKhongDau": "lai-chau",
@@ -1140,7 +1210,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Dalat",
       "gg_formatted_address": "Lâm Đồng, Vietnam",
       "id": "Place_T_LDD",
       "nameKhongDau": "lam-dong",
@@ -1172,7 +1244,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Lang Son Province",
       "gg_formatted_address": "Lang Son Province, Vietnam",
       "id": "Place_T_LS",
       "nameKhongDau": "lang-son",
@@ -1204,7 +1278,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Nghe An",
       "gg_formatted_address": "Nghe An, Vietnam",
       "id": "Place_T_NA",
       "nameKhongDau": "nghe-an",
@@ -1236,7 +1312,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ninh Bình Province",
       "gg_formatted_address": "Ninh Bình Province, Vietnam",
       "id": "Place_T_NB",
       "nameKhongDau": "ninh-binh",
@@ -1268,7 +1346,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Cầu Nam Định",
       "gg_formatted_address": "Nam Dinh 084, Vietnam",
       "id": "Place_T_NDD",
       "nameKhongDau": "nam-dinh",
@@ -1300,7 +1380,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ninh Thuan Province",
       "gg_formatted_address": "Ninh Thuan Province, Vietnam",
       "id": "Place_T_NT",
       "nameKhongDau": "ninh-thuan",
@@ -1332,7 +1414,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Phu Tho Province",
       "gg_formatted_address": "Phu Tho Province, Vietnam",
       "id": "Place_T_PT",
       "nameKhongDau": "phu-tho",
@@ -1364,7 +1448,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Phú Yên Province",
       "gg_formatted_address": "Phú Yên Province, Vietnam",
       "id": "Place_T_PY",
       "nameKhongDau": "phu-yen",
@@ -1396,7 +1482,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Quang Binh Province",
       "gg_formatted_address": "Quang Binh Province, Vietnam",
       "id": "Place_T_QB",
       "nameKhongDau": "quang-binh",
@@ -1428,7 +1516,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Quang Nam Province",
       "gg_formatted_address": "Quang Nam Province, Vietnam",
       "id": "Place_T_QNA",
       "nameKhongDau": "quang-nam",
@@ -1460,7 +1550,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Quảng Ngãi",
       "gg_formatted_address": "Quang Ngai, Vietnam",
       "id": "Place_T_QNG",
       "nameKhongDau": "quang-ngai",
@@ -1492,7 +1584,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Quảng Ninh Province",
       "gg_formatted_address": "Quảng Ninh Province, Vietnam",
       "id": "Place_T_QNI",
       "nameKhongDau": "quang-ninh",
@@ -1524,7 +1618,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Quảng Trị Province",
       "gg_formatted_address": "Quảng Trị Province, Vietnam",
       "id": "Place_T_QT",
       "nameKhongDau": "quang-tri",
@@ -1556,7 +1652,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ho Chi Minh City",
       "gg_formatted_address": "Ho Chi Minh, Vietnam",
       "id": "Place_T_SG",
       "nameKhongDau": "ho-chi-minh",
@@ -1588,7 +1686,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Son La",
       "gg_formatted_address": "Son La, Vietnam",
       "id": "Place_T_SL",
       "nameKhongDau": "son-la",
@@ -1620,7 +1720,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Soc Trang",
       "gg_formatted_address": "Soc Trang, Vietnam",
       "id": "Place_T_ST",
       "nameKhongDau": "soc-trang",
@@ -1652,7 +1754,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Thái Bình",
       "gg_formatted_address": "Thai Binh, Vietnam",
       "id": "Place_T_TB",
       "nameKhongDau": "thai-binh",
@@ -1684,7 +1788,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Tien Giang",
       "gg_formatted_address": "Tien Giang, Vietnam",
       "id": "Place_T_TG",
       "nameKhongDau": "tien-giang",
@@ -1716,7 +1822,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Thanh Hoa",
       "gg_formatted_address": "Thanh Hoa, Vietnam",
       "id": "Place_T_TH",
       "nameKhongDau": "thanh-hoa",
@@ -1748,7 +1856,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Thai Nguyen",
       "gg_formatted_address": "Thai Nguyen, Vietnam",
       "id": "Place_T_TN",
       "nameKhongDau": "thai-nguyen",
@@ -1780,7 +1890,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Tây Ninh Province",
       "gg_formatted_address": "Tây Ninh Province, Vietnam",
       "id": "Place_T_TNI",
       "nameKhongDau": "tay-ninh",
@@ -1812,7 +1924,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Tuyên Quang Province",
       "gg_formatted_address": "Tuyên Quang Province, Vietnam",
       "id": "Place_T_TQ",
       "nameKhongDau": "tuyen-quang",
@@ -1844,7 +1958,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Thua Thien Hue",
       "gg_formatted_address": "Thua Thien Hue, Vietnam",
       "id": "Place_T_TTH",
       "nameKhongDau": "thua-thien-hue",
@@ -1876,7 +1992,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Tra Vinh",
       "gg_formatted_address": "Tra Vinh, Vietnam",
       "id": "Place_T_TV",
       "nameKhongDau": "tra-vinh",
@@ -1908,7 +2026,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Vinh Long",
       "gg_formatted_address": "Vinh Long, Vietnam",
       "id": "Place_T_VL",
       "nameKhongDau": "vinh-long",
@@ -1940,7 +2060,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Vinh Phuc Province",
       "gg_formatted_address": "Vinh Phuc Province, Vietnam",
       "id": "Place_T_VP",
       "nameKhongDau": "vinh-phuc",
@@ -1972,7 +2094,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Ba Ria - Vung Tau",
       "gg_formatted_address": "Ba Ria - Vung Tau, Vietnam",
       "id": "Place_T_VT",
       "nameKhongDau": "ba-ria-vung-tau",
@@ -2004,7 +2128,9 @@
           }
         }
       },
+      "ggMappedName": true,
       "ggMatched": true,
+      "ggName": "Yen Bai Province",
       "gg_formatted_address": "Yen Bai Province, Vietnam",
       "id": "Place_T_YB",
       "nameKhongDau": "yen-bai",
