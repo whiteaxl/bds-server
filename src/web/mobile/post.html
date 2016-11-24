@@ -83,6 +83,7 @@
                     </div>
                     <div class="address-box collapse-box">
                         <a role="button" class="collapse-title" data-toggle="modal" data-target="#addressBox">Địa chỉ <span><label>{{ mpc.ads.place.diaChiChiTiet | limitTo: 30 }}{{mpc.ads.place.diaChiChiTiet.length > 30 ? '...' : ''}}</label> <i class="iconRightOpen"></i></span></a>
+                        <input name="diaChiChiTiet" type="hidden" ng-model="diaChiDisplay" required/>
                         <div ng-show="postForm.$submitted">
                             <span style="color:red" ng-show="postForm.diaChiChiTiet.$error.required">(Chưa nhập địa chỉ)</span>
                         </div>
@@ -154,169 +155,170 @@
                 <!--END tabs-->
             </div>
         </div>
-        <div class="modal fade modal-choose modal-none modal-bg" id="addressBox" tabindex="-1" role="dialog" aria-labelledby="addressBoxLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                        <h4 class="modal-title" id="addressBoxLabel">Địa chỉ</h4>
-                    </div>
-                    <div class="modal-body uln">
-                        <div class="title">Số nhà, ngõ, đường</div>
-                        <div class="pd15"><input type="text" class="form-control mb10" name="diaChiChiTiet" ng-model="mpc.ads.place.diaChiChiTiet" required></div>
-                        <div class="note-fr pd15">Ví dụ: Số 15, ngõ 68 Hai Bà Trưng</div>
-                        <div class="clb">&nbsp;</div>
-                        <div class="title">Phường, quận, thành phố</div>
-                        <div class="pd15"><input type="text" class="form-control mb10" value="{{mpc.ads.place.diaChi}}" readonly></div>
-                        <div class="note-fr pd15">Thông tin này được lấy từ vị trí bạn chọn trên bản đồ. Nếu chưa thấy đúng bạn quay lại bản đồ chọn lại vị trí nhà.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade modal-choose" id="priceBox" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                        <h4 class="modal-title">Giá tiền</h4>
-                    </div>
-                    <div class="title">Nhập giá tiền</div>
-                    <div class="pd15"><input id="giaTienPost" type="text" pattern="[0-9]*\.?[0-9]*" class="form-control" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
-                    <div class="title"></div>
-                    <div class="title border">Đơn vị</div>
-                    <div class="modal-body uln">
-                        <ul class="list-option">
-                            <li ng-repeat="lg in mpc.loaiGias track by $index"><a href="#" ng-click="mpc.selectLoaiGia(lg)" class="{{mpc.loaiGia.value==lg.value?'active':''}}">{{lg.lable}} <i class="iconCheck"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </form>
-    <div class="modal fade modal-choose" id="typeBoxPost" tabindex="-1" role="dialog" aria-labelledby="typeBoxPostLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="typeBoxPostLabel">Loại nhà đất</h4>
-                </div>
-                <div class="modal-body uln">
-                    <ul class="type-list">
-                        <li ng-repeat="lnd in mpc.loaiNhaDat track by $index"><a ng-click="mpc.selectLoaiNhaDat(lnd)" href="#" data-dismiss="modal" aria-label="Close" class="{{mpc.ads.loaiNhaDat==lnd.value?'active':''}}">{{lnd.lable}}</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-choose" id="trendBoxPost" tabindex="-1" role="dialog" aria-labelledby="trendBoxPostLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="trendBoxPostLabel">Hướng nhà</h4>
-                </div>
-                <div class="modal-body uln">
-                    <ul class="type-list">
-                        <li ng-repeat="hn in mpc.huongNhaList track by $index"><a href="#" ng-click="mpc.selectHuongNha(hn)" class="{{mpc.ads.huongNha==hn.value?'active':''}}" data-dismiss="modal" aria-label="Close">{{hn.lable}}</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade modal-choose" id="projectBoxPost" tabindex="-1" role="dialog" aria-labelledby="projectBoxPostLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="projectBoxPostLabel">Thuộc dự án</h4>
-                </div>
-                <div class="modal-body uln">
-                    <ul class="type-list">
-                        <li ng-repeat="da in mpc.duAn track by $index"><a href="#" ng-click="mpc.selectDuAn(da)" class="{{mpc.ads.place.diaChinh.codeDuAn==da.duAn?'active':''}}" data-dismiss="modal" aria-label="Close">{{da.placeName}}</a></li>
-                    </ul>
-                </div>
+</div>
+<div class="modal fade modal-choose modal-none modal-bg" id="addressBox" tabindex="-1" role="dialog" aria-labelledby="addressBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="addressBoxLabel">Địa chỉ</h4>
+            </div>
+            <div class="modal-body uln">
+                <div class="title">Số nhà, ngõ, đường</div>
+                <div class="pd15"><input type="text" class="form-control mb10" ng-change="mpc.changeDiaChiDisplay()" ng-model="mpc.ads.place.diaChiChiTiet" required></div>
+                <div class="note-fr pd15">Ví dụ: Số 15, ngõ 68 Hai Bà Trưng</div>
+                <div class="clb">&nbsp;</div>
+                <div class="title">Phường, quận, thành phố</div>
+                <div class="pd15"><input type="text" class="form-control mb10" value="{{mpc.ads.place.diaChi}}" readonly></div>
+                <div class="note-fr pd15">Thông tin này được lấy từ vị trí bạn chọn trên bản đồ. Nếu chưa thấy đúng bạn quay lại bản đồ chọn lại vị trí nhà.</div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade modal-choose" id="contactBox" tabindex="-1" role="dialog" aria-labelledby="contactBoxLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" ng-click="mpc.changeLienHeLbl()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="contactBoxLabel">Liên hệ</h4>
-                </div>
-                <div class="title border">Thông tin liên hệ <a  class="pull-right" onClick="showhide('#contactBox .contact-list');">Ẩn/Hiện</a></div>
-                <div class="modal-body uln">
-                    <ul class="contact-list">
-                        <li><a href="#" ng-click="mpc.toggleShowTenLL()" class="{{mpc.ads.lienHe.showTenLienLac?'active':''}}">Tên liên lạc <span class="pull-right datetime"><input type="text" ng-model="mpc.ads.lienHe.tenLienLac" /></span></a></li>
-                        <li><a href="#" ng-click="mpc.toggleShowPhone()" class="{{mpc.ads.lienHe.showPhone?'active':''}}">Điện thoại <span class="pull-right datetime"><input type="text" ng-model="mpc.ads.lienHe.phone" /></span></a></li>
-                        <li><a href="#" ng-click="mpc.toggleShowEmail()" class="{{mpc.ads.lienHe.showEmail?'active':''}}">Email <span class="pull-right datetime"><input name="pstMail" type="email" ng-model="mpc.ads.lienHe.email" /></span></a>
-                            <span style="color:red" ng-show="postForm.pstMail.$dirty && postForm.email.$invalid">
-                                <span ng-show="postForm.pstMail.$error.email">Invalid email address.</span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
+</div>
+<div class="modal fade modal-choose" id="priceBox" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title">Giá tiền</h4>
+            </div>
+            <div class="title">Nhập giá tiền</div>
+            <div class="pd15"><input id="giaTienPost" type="text" pattern="[0-9]*\.?[0-9]*" class="form-control" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
+            <div class="title"></div>
+            <div class="title border">Đơn vị</div>
+            <div class="modal-body uln">
+                <ul class="list-option">
+                    <li ng-repeat="lg in mpc.loaiGias track by $index"><a href="#" ng-click="mpc.selectLoaiGia(lg)" class="{{mpc.loaiGia.value==lg.value?'active':''}}">{{lg.lable}} <i class="iconCheck"></i></a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="modal fade modal-choose" id="detailBox" tabindex="-1" role="dialog" aria-labelledby="detailBoxLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="detailBoxLabel">Chi tiết</h4>
-                </div>
-                <div class="modal-body uln">
-                    <textarea ng-model="mpc.ads.chiTiet" ng-change="changeDetailInfo()" placeholder="Mô tả những gì bạn muốn bán (cho thuê). Ví dụ: Địa chỉ, diện tích, giá, hướng nhà..."></textarea>
-                </div>
+</div>
+<div class="modal fade modal-choose" id="typeBoxPost" tabindex="-1" role="dialog" aria-labelledby="typeBoxPostLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="typeBoxPostLabel">Loại nhà đất</h4>
+            </div>
+            <div class="modal-body uln">
+                <ul class="type-list">
+                    <li ng-repeat="lnd in mpc.loaiNhaDat track by $index"><a ng-click="mpc.selectLoaiNhaDat(lnd)" href="#" data-dismiss="modal" aria-label="Close" class="{{mpc.ads.loaiNhaDat==lnd.value?'active':''}}">{{lnd.lable}}</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="modal fade modal-choose modal-none" id="mapsBoxPost" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabelPost">
-        <!--div class="search-fr">
-            <i class="iconSearch"></i>
-            <input type="text" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" class="input-fr" id="searchAddPost" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />
-            <!-- <ul ng-if="mf.showFrequentSearch==true" >
-                <li>1</li>
-                <li>2</li>
-            </ul> -->
-        <!--a href="#" ng-click="mpc.autoCompleteText='';mpc.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
-    </div>
-    <div class="btn-box collapse-box btn-reset border-none">
-        <button type="button" ng-click="chonDiaChinh()">chon dia chinh</button>
-        <button type="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)">accept</button>
-    </div-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                    <h4 class="modal-title" id="mapsBoxLabelPost">Bản đồ</h4>
-                </div>
-                <div class="modal-body uln">
-                    <div class="pdall15">
-                        <input type="text" class="form-control" id="searchAddPost" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" >
-                    </div>
-                    <ng-map center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" class="maps">
-                        <!--custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
-                            <div class = "marker">
-                                Vị trí của bạn: {{mpc.location.lat}},{{mpc.location.lon}}
-                            </div>
-                        </custom-marker-->
-                        <marker position="{{mpc.location.lat}},{{mpc.location.lon}}" title="Hello World!"></marker>
-                    </ng-map>
-                    <footer class="main border blue uln">
-                        <ul class="navmain nav-2 nav-text">
-                            <li><a role="button" ng-click="mpc.resetLocation()" data-dismiss="modal" >Thoát</a></li>
-                            <li><a role="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)" data-dismiss="modal">Chọn</a></li>
-                        </ul>
-                    </footer>
-                </div>
+</div>
+<div class="modal fade modal-choose" id="trendBoxPost" tabindex="-1" role="dialog" aria-labelledby="trendBoxPostLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="trendBoxPostLabel">Hướng nhà</h4>
+            </div>
+            <div class="modal-body uln">
+                <ul class="type-list">
+                    <li ng-repeat="hn in mpc.huongNhaList track by $index"><a href="#" ng-click="mpc.selectHuongNha(hn)" class="{{mpc.ads.huongNha==hn.value?'active':''}}" data-dismiss="modal" aria-label="Close">{{hn.lable}}</a></li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade modal-choose" id="projectBoxPost" tabindex="-1" role="dialog" aria-labelledby="projectBoxPostLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="projectBoxPostLabel">Thuộc dự án</h4>
+            </div>
+            <div class="modal-body uln">
+                <ul class="type-list">
+                    <li ng-repeat="da in mpc.duAn track by $index"><a href="#" ng-click="mpc.selectDuAn(da)" class="{{mpc.ads.place.diaChinh.codeDuAn==da.duAn?'active':''}}" data-dismiss="modal" aria-label="Close">{{da.placeName}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-choose" id="contactBox" tabindex="-1" role="dialog" aria-labelledby="contactBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" ng-click="mpc.changeLienHeLbl()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="contactBoxLabel">Liên hệ</h4>
+            </div>
+            <div class="title border">Thông tin liên hệ <a  class="pull-right" onClick="showhide('#contactBox .contact-list');">Ẩn/Hiện</a></div>
+            <div class="modal-body uln">
+                <ul class="contact-list">
+                    <li><a href="#" ng-click="mpc.toggleShowTenLL()" class="{{mpc.ads.lienHe.showTenLienLac?'active':''}}">Tên liên lạc <span class="pull-right datetime"><input type="text" ng-model="mpc.ads.lienHe.tenLienLac" /></span></a></li>
+                    <li><a href="#" ng-click="mpc.toggleShowPhone()" class="{{mpc.ads.lienHe.showPhone?'active':''}}">Điện thoại <span class="pull-right datetime"><input type="text" ng-model="mpc.ads.lienHe.phone" /></span></a></li>
+                    <li><a href="#" ng-click="mpc.toggleShowEmail()" class="{{mpc.ads.lienHe.showEmail?'active':''}}">Email <span class="pull-right datetime"><input name="pstMail" type="email" ng-model="mpc.ads.lienHe.email" /></span></a>
+                            <span style="color:red" ng-show="postForm.pstMail.$dirty && postForm.email.$invalid">
+                                <span ng-show="postForm.pstMail.$error.email">Invalid email address.</span>
+                            </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-choose" id="detailBox" tabindex="-1" role="dialog" aria-labelledby="detailBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="detailBoxLabel">Chi tiết</h4>
+            </div>
+            <div class="modal-body uln">
+                <textarea ng-model="mpc.ads.chiTiet" ng-change="changeDetailInfo()" placeholder="Mô tả những gì bạn muốn bán (cho thuê). Ví dụ: Địa chỉ, diện tích, giá, hướng nhà..."></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-choose modal-none" id="mapsBoxPost" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabelPost">
+    <!--div class="search-fr">
+        <i class="iconSearch"></i>
+        <input type="text" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" class="input-fr" id="searchAddPost" placeholder="Nhập khu vực hoặc địa điểm cần tìm kiếm" />
+        <!-- <ul ng-if="mf.showFrequentSearch==true" >
+            <li>1</li>
+            <li>2</li>
+        </ul> -->
+    <!--a href="#" ng-click="mpc.autoCompleteText='';mpc.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
+</div>
+<div class="btn-box collapse-box btn-reset border-none">
+    <button type="button" ng-click="chonDiaChinh()">chon dia chinh</button>
+    <button type="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)">accept</button>
+</div-->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                <h4 class="modal-title" id="mapsBoxLabelPost">Bản đồ</h4>
+            </div>
+            <div class="modal-body uln">
+                <div class="pdall15">
+                    <input type="text" class="form-control" id="searchAddPost" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" >
+                </div>
+                <ng-map center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" class="maps">
+                    <!--custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
+                        <div class = "marker">
+                            Vị trí của bạn: {{mpc.location.lat}},{{mpc.location.lon}}
+                        </div>
+                    </custom-marker-->
+                    <marker position="{{mpc.location.lat}},{{mpc.location.lon}}" title="Hello World!"></marker>
+                </ng-map>
+                <footer class="main border blue uln">
+                    <ul class="navmain nav-2 nav-text">
+                        <li><a role="button" ng-click="mpc.resetLocation()" data-dismiss="modal" >Thoát</a></li>
+                        <li><a role="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)" data-dismiss="modal">Chọn</a></li>
+                    </ul>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/web/mobile/js/javascript.min.js"></script>
