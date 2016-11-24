@@ -23,12 +23,12 @@ internals.postAds = function(req, reply){
         } else {
             logUtil.info("Upload Ads sucessfully, id: ", res.id);
 
-            DBCache.updateCache(res);
-
             reply({
                 status: constant.STS.SUCCESS,
                 adsId: res.id
             });
+
+            DBCache.updateCache(res);
         }
     });
 }
