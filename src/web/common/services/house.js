@@ -20,7 +20,9 @@
         // var url = "/api/findAds";
         // var url = "/api/search";
         var url = "/api/v2/find";
-        let sendData = {}; Object.assign(sendData, data);
+        //nhannc modify to advoid error when Object.assign is not supported
+        //Object.assign(sendData, data);
+        var sendData = JSON.parse(JSON.stringify(data));
         sendData.placeId = undefined;
         return $http.post(url,sendData);
       },

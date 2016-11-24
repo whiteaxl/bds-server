@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "20615a19c6124ac1843f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "419e08e7260d8b624609"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20492,7 +20492,9 @@
 	        // var url = "/api/findAds";
 	        // var url = "/api/search";
 	        var url = "/api/v2/find";
-	        var sendData = {};Object.assign(sendData, data);
+	        //nhannc modify to advoid error when Object.assign is not supported
+	        //Object.assign(sendData, data);
+	        var sendData = JSON.parse(JSON.stringify(data));
 	        sendData.placeId = undefined;
 	        return $http.post(url, sendData);
 	      },
@@ -21664,7 +21666,9 @@
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
-						Object.assign(queryNearBy, vm.query);
+						//nhannc modify to advoid error when Object.assign is not supported
+						//Object.assign(queryNearBy, vm.query);
+						queryNearBy = JSON.parse(JSON.stringify(vm.query));
 						// window.RewayServiceUtil.getDiaChinhKhongDauByGeocode($rootScope.currentLocation.lat
 						// 	, $rootScope.currentLocation.lon).then(function(diaChinh){
 						// 				alert(diaChinh);
