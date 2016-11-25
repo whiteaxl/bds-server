@@ -5,9 +5,9 @@
 <div class="wapper">
     <div class="manager">
         <ul class="nav nav-tabs nav-tabs-3" role="tablist">
-            <li role="presentation" class="active"><a id="daLuu" href="#managerSaved" aria-controls="managerSaved" role="tab" data-toggle="tab">Đã lưu</a></li>
-            <li role="presentation"><a href="#managerSale" id="banId" aria-controls="managerSale" role="tab" data-toggle="tab">Bán</a></li>
-            <li role="presentation"><a href="#managerRent" id="muaId" aria-controls="managerRent" role="tab" data-toggle="tab">Cho thuê</a></li>
+            <li role="presentation" class="active"><a id="tabDaLuuId" href="#managerSaved" aria-controls="managerSaved" role="tab" data-toggle="tab">Đã lưu</a></li>
+            <li role="presentation" ><a href="#managerSale" id="tabSaleId" aria-controls="managerSale" role="tab" data-toggle="tab">Bán</a></li>
+            <li role="presentation"><a href="#managerRent" id="tabRentId" aria-controls="managerRent" role="tab" data-toggle="tab">Cho thuê</a></li>
         </ul>
         <div class="tab-content uln" id="tabContentUln">
             <div role="tabpanel" class="tab-pane active" id="managerSaved">
@@ -42,12 +42,10 @@
                         <span class="action">
                             <span class="status danger">Tin đã duyệt</span>
                             <a href="#" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
-                            <span class="lined"><a href="#" ng-click="mamc.updateAds(ads)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Sửa tin</a></span>
-                            <span class="lined"><a href="#" ng-click="mamc.deleteAds(ads,0)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Xóa tin</a></span>
                         </span>
                         <span class="btngroup">
-                            <a href="" class="edit">Sửa</a>
-                            <a href="" class="del">Xóa</a>
+                            <a href="#" ng-click="mamc.updateAds(ads)" class="edit">Sửa</a>
+                            <a href="#" ng-click="mamc.deleteAds(ads,0)" class="del">Xóa</a>
                         </span>
                     </li>
                 </ul>
@@ -66,8 +64,10 @@
                         <span class="action">
                             <span class="status danger">Tin đã duyệt</span>
                             <a href="nang-cap-tin.html" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Nâng cấp tin</a>
-                            <span class="lined"><a href="#" ng-click="mamc.updateAds(ads)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Sửa tin</a></span>
-                            <span class="lined"><a href="#" ng-click="mamc.deleteAds(ads,0)" class="btn btn-danger"><i class="fa fa-arrow-circle-up"></i> Xóa tin</a></span>
+                        </span>
+                        <span class="btngroup">
+                            <a href="#" ng-click="mamc.updateAds(ads)" class="edit">Sửa</a>
+                            <a href="#" ng-click="mamc.deleteAds(ads,1)" class="del">Xóa</a>
                         </span>
                     </li>
                 </ul>

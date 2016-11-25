@@ -4,10 +4,38 @@
 	var controllerId = 'MobileAdsMgmtCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, Upload, $state, HouseService, NewsService, RewayCommonUtil, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
+		if($state.params.loaiTin)
+			vm.loaiTin = $state.params.loaiTin;
 
 		vm.adsLikes = [];
 		vm.adsSales = [];
 		vm.adsRents = [];
+		
+		vm.resetInactiveClass = function(){
+			console.log("--------------reset---------------");
+			$(".nav-tabs-3").find("li").removeClass("active");
+			$("#managerSaved").removeClass("active");
+			$("#managerSale").removeClass("active");
+			$("#managerRent").removeClass("active");
+		}
+		
+		vm.setActivePanel =  function(){
+			if(!vm.loaiTin){
+				console.log("--------------tab---da luu---------------");
+				$( "#tabDaLuuId" ).parent().addClass("active");
+				$("#managerSaved").addClass("active");
+			} else {
+				if(vm.loaiTin==0){
+					console.log("--------------tab---ban---------------");
+					$( "#tabSaleId" ).parent().addClass("active");
+					$("#managerSale").addClass("active");
+				} else if(vm.loaiTin==1){
+					console.log("--------------tab---thue---------------");
+					$( "#tabRentId" ).parent().addClass("active");
+					$("#managerRent").addClass("active");
+				}
+			}
+		}
 
 		vm.goDetail = function(ads){
 			$state.go('mdetail', { "adsID" : ads.adsID});
@@ -116,6 +144,11 @@
 		vm.init = function(){
 			vm.initAdsLikesData();
 			vm.initAdsSaleRents();
+			var async = require("async");
+			async.series(
+				vm.resetInactiveClass(),
+				vm.setActivePanel()
+			);
 		}
 
 		$timeout(function() {

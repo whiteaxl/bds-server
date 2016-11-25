@@ -8,6 +8,7 @@
 		vm.ads = {};
 		vm.ads.loaiTin = 0;
 		vm.adsID = $state.params.adsID;
+
 		vm.marker = {
 			id: 1,
 			coords: {
@@ -23,6 +24,7 @@
 		$scope.soPhongTam;
 		$scope.soTang;
 		$scope.addressDetail = '';
+		vm.beginPost = false;
 		vm.showStreetView = false;
 
 		vm.duAn =[];
@@ -717,10 +719,16 @@
 				}
 			});
 		}
+
+		vm.goBack = function(){
+			$rootScope.lastStateParams.loaiTin = vm.ads.loaiTin;
+			$state.go($rootScope.lastState, $rootScope.lastStateParams);
+		}
 		function initDataPost(){
 			console.log("---------------initDataPost---------------");
 			console.log($rootScope.user);
 			if(vm.adsID){
+				vm.isModifyAds = true;
 				HouseService.getUpdateAds({adsID: vm.adsID}).then(function(res){
 					console.log("-------------------------initData with adsId--------");
 					vm.ads = res.data.data;
@@ -747,6 +755,10 @@
 					}
 					if(vm.ads.place.diaChinh.duAn){
 						$("#duAnLbl").text(vm.ads.place.diaChinh.duAn.length > 30? vm.ads.place.diaChinh.duAn.substring(0,30) + "..." : vm.ads.place.diaChinh.duAn);
+					}
+
+					if(vm.ads.place.diaChiChiTiet){
+						$scope.diaChiDisplay = vm.ads.place.diaChiChiTiet;
 					}
 
 					if(vm.ads.loaiTin==0){
@@ -827,6 +839,8 @@
 					}
 				});
 			} else{
+				vm.isModifyAds = false;
+
 				vm.ads.image = {};
 				vm.ads.image.cover = '';
 				vm.ads.image.images = [];
@@ -956,8 +970,13 @@
 		vm.dangTin = function(isValid){
 
 			if (isValid) {
+				vm.beginPost = true;
+				$('#imgPostDiv').addClass("disabledCls");
+				$('#inputPostDiv').addClass("disabledCls");
+
 				console.log("--------------dangTin----------------");
-				if(vm.ads.place.diaChi){
+				if(vm.diaChinh.fullName){
+					vm.ads.place.diaChi = vm.diaChinh.fullName;
 					if(vm.ads.place.diaChiChiTiet){
 						vm.ads.place.diaChi = vm.ads.place.diaChiChiTiet + ", " + vm.ads.place.diaChi;
 					}
@@ -1022,8 +1041,9 @@
 
 				HouseService.postAds(adsDto).then(function(res){
 					console.log("------------HouseService.postAds-------------");
+					console.log(vm.ads.loaiTin);
 					console.log(res);
-					$state.go('madsMgmt');
+					$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
 				})
 			} else {
 				console.log("--------------invalid----------------");
