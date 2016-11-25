@@ -48,7 +48,6 @@
                 <textarea id="msgTxtId" ng-model="mcdc.chatMsg"  ng-keydown="chatKeypress($event)" ng-blur="chatBlur($event)" placeholder="Nhập tin nhắn"></textarea>
                 <div class="action">
                     <a href="javascript:void(0)" class="active"  onClick="showhide('.list-sort');"><i class="fa fa-commenting-o"></i></a>
-                    <a href="javascript:void(0)" ><i class="iconCamera"></i></a>
                     <a ngf-select="uploadFiles($files)" ngf-capture="'camera'" multiple accept="image/*" class="active"><i class="iconCamera"></i></a>
                     <a ngf-select="uploadFiles($files)" multiple accept="image/*" class="active"><i class="fa fa-picture-o"></i></a>
                     <a href="#" ng-click="mcdc.showFullMap(false)" class="active"><i class="iconLocation"></i></a>
