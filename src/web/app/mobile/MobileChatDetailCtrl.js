@@ -357,7 +357,7 @@
 
 		vm.goBack = function(){
 			vm.closeChat();
-			$window.history.back();
+			$state.go($rootScope.lastState, $rootScope.lastStateParams);
 		}
 
 		$timeout(function() {

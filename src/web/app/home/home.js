@@ -562,7 +562,7 @@
           controller: "MobilePostCtrl",
           controllerAs: 'mpc'
       }).state('madsMgmt', {
-          url: "/mobile/adsMgmt",
+          url: "/mobile/adsMgmt/:loaiTin",
           templateUrl: "/web/mobile/adsMgmt.html",
           controller: "MobileAdsMgmtCtrl",
           controllerAs: 'mamc'
