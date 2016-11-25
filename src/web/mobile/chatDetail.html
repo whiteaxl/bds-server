@@ -32,7 +32,7 @@
                                 <a ng-if="msg.msgType==2" ng-href="{{msg.content}}">
                                     <img  ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
                                 </a>
-                                <a ng-if="msg.msgType==3" ng-click="mcdc.showFullMap(true)">
+                                <a ng-if="msg.msgType==3" ng-click="mcdc.showFullMap(true,msg)">
                                     <img  ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="/web/mobile/img/google-map.png" alt="Image File"> <!-- Image -->
                                 </a>
                             </div>
@@ -65,30 +65,57 @@
                 </div>
             </form>
         </div>
-            <div class="modal fade modal-choose modal-none" id="mapsBoxSendLocation" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLableSendLocation">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
-                            <h4 class="modal-title" id="mapsBoxLableSendLocation">Bản đồ</h4>
+        <div class="modal fade modal-choose modal-none" id="mapsBoxSendLocation" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLableSendLocation">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                        <h4 class="modal-title" id="mapsBoxLableSendLocation">Bản đồ</h4>
+                    </div>
+                    <div class="modal-body uln">
+                        <div class="pdall15">
+                            <input type="text" class="form-control" id="searchSendLocation" ng-change="mcdc.autoCompleteChange();" ng-model="mcdc.autoCompleteText" ng-click="mcdc.showFavorite($event)" ng-keypress="mcdc.keyPress($event)" >
                         </div>
-                        <div class="modal-body uln">
-                            <div class="pdall15" ng-show="!mcdc.isViewLocation">
-                                <input type="text" class="form-control" id="searchSendLocation" ng-change="mcdc.autoCompleteChange();" ng-model="mcdc.autoCompleteText" ng-click="mcdc.showFavorite($event)" ng-keypress="mcdc.keyPress($event)" >
-                            </div>
-                            <ng-map center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">
-                                <marker position="{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}" title="Hello World!"></marker>
-                            </ng-map>
-                            <footer class="main border blue uln" ng-show="!mcdc.isViewLocation">
-                                <ul class="navmain nav-2 nav-text">
-                                    <li><a role="button" data-dismiss="modal" >Thoát</a></li>
-                                    <li><a role="button" ng-click="mcdc.sendUrlMapLocation()" data-dismiss="modal">Chọn</a></li>
-                                </ul>
-                            </footer>
-                        </div>
+                        <ng-map center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">
+                            <marker position="{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}" title="Hello World!"></marker>
+                        </ng-map>
+                        <footer class="main border blue uln">
+                            <ul class="navmain nav-2 nav-text">
+                                <li><a role="button" data-dismiss="modal" >Thoát</a></li>
+                                <li><a role="button" ng-click="mcdc.sendUrlMapLocation()" data-dismiss="modal">Chọn</a></li>
+                            </ul>
+                        </footer>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="modal fade modal-choose modal-none" id="mapsBoxViewLocation" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLableViewLocation">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                        <h4 class="modal-title" id="mapsBoxLableViewLocation">Bản đồ</h4>
+                    </div>
+                    <div class="modal-body uln">
+                        <ng-map center="[{{mcdc.sentLocationView.lat}},{{mcdc.sentLocationView.lon}}]" lazy-init="true" id="fullMapViewLocation" class="maps">
+                            <custom-marker position="[{{mcdc.currentLocation.lat}},{{mcdc.currentLocation.lon}}]">
+                                <div class = "marker">
+                                    Vị trí của bạn
+                                </div>
+                            </custom-marker>
+                            <directions
+                                    draggable="false"
+                                    travel-mode="DRIVING"
+                                    origin="{{mcdc.currentLocation.lat}},{{mcdc.currentLocation.lon}}"
+                                    destination="{{mcdc.sentLocationView.lat}},{{mcdc.sentLocationView.lon}}">
+                            </directions>
+                            <street-view-panorama>
+                            </street-view-panorama>
+                        </ng-map>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
