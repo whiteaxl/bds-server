@@ -113,8 +113,10 @@ class AdsModel {
                 if (err) {
                     callback(err, res);
                 } else {
-                    let adsId = constant.ADS_ID_PREFIX.REWAY + "_" + res.value;
+                    let sequenceNumber = res.value;
+                    let adsId = constant.ADS_ID_PREFIX.REWAY + "_" + sequenceNumber;
                     adsDto.id = adsId;
+                    adsDto.maSo = "00_" + sequenceNumber;
 
                     bucket.upsert(adsDto.id, adsDto, function (err, res) {
                         if (err) {
