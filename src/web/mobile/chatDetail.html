@@ -29,7 +29,7 @@
                     <div class="item" ng-show="msg.msgType==2 || msg.msgType==3">
                         <div>
                             <div ng-class="{'attachment-icon-right' : mcdc.isMe(msg.fromUserID), 'attachment-icon-left' : !mcdc.isMe(msg.fromUserID)}">
-                                <a ng-if="msg.msgType==2" ng-href="{{msg.content}}">
+                                <a ng-if="msg.msgType==2" download target={{!mcdc.isMe(msg.fromUserID)?"_self":""}} ng-href="{{msg.content}}">
                                     <img  ng-class="{'multiple-borders-white' : mcdc.isMe(msg.fromUserID),'multiple-borders-black' : !mcdc.isMe(msg.fromUserID)}" width="90" height="70" ng-src="{{msg.content}}" alt="Image File"> <!-- Image -->
                                 </a>
                                 <a ng-if="msg.msgType==3" ng-click="mcdc.showFullMap(true,msg)">
@@ -37,12 +37,6 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div ng-class="{'attachment-msg-right' : mcdc.isMe(msg.fromUserID), 'attachment-msg-left' : !mcdc.isMe(msg.fromUserID)}" ng-if="msg.msgType==2">
-                        <span class="decs-text">
-                            <a class="decs-text" ng-show="!mcdc.isMe(msg.fromUserID)" download target="_self" href="{{msg.content}}" ><i>Tải về</i> <i class="fa fa-download dw-icon"></i></a>
-                            <a class="decs-text hidden-link" href="{{ msg.content }}"  download="{{msg.content }}"></a>
-                        </span>
                     </div>
                 </li>
             </ul>
