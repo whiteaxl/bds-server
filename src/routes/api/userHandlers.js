@@ -180,7 +180,8 @@ function convertAds(ads) {
     giaM2 : ads.giaM2,
     loaiNhaDat: ads.loaiNhaDat,
     loaiTin: ads.loaiTin,
-    huongNha: ads.huongNha
+    huongNha: ads.huongNha,
+    timeModified: ads.timeModified
   };
 
 
