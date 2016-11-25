@@ -32,6 +32,7 @@ class CommonModel {
 		logUtil.info("Call query:",sql);
 
 		var query = N1qlQuery.fromString(sql);
+		query.timeout = 3600;
 		bucket.query(query, callback);
 	}
 
