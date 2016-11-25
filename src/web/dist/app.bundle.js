@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "54d9cd28af9ea7b21ca2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b35ff5c854b0b1b5300c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -31285,12 +31285,14 @@
 	                $("body").addClass("bodySearchShow");
 	                $(".post").scrollTop(0);
 	                $(".post-footer").addClass("fixed");
+	                $(".search-btn-post").css("display", "block");
 	                overlay(".overlay");
 	            };
 	            vm.exitPost = function () {
 	                $(".post").removeAttr("style");
 	                $("body").removeClass("bodySearchShow");
 	                $(".post-footer").removeClass("fixed");
+	                $(".search-btn-post").css("display", "none");
 	            };
 	            //end nhannc
 	            vm.goToSearchPage = function () {

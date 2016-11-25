@@ -18,12 +18,14 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $("body").addClass("bodySearchShow");
                     $(".post").scrollTop(0);
                     $(".post-footer").addClass("fixed");
+                    $(".search-btn-post").css("display","block");
                     overlay(".overlay");
                 }
                 vm.exitPost = function(){
                     $(".post").removeAttr("style");
                     $("body").removeClass("bodySearchShow");
                     $(".post-footer").removeClass("fixed");
+                    $(".search-btn-post").css("display","none");
                 }
                 //end nhannc
                 vm.goToSearchPage = function(){
