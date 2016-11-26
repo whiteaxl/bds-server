@@ -4,6 +4,24 @@
         pointer-events: none;
         opacity: 0.8;
     }
+    .search-btn-post {
+        background: #fff;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 44px;
+        line-height: 44px;
+        z-index: 999;
+        position: fixed;
+        border-top: 1px solid #e4e4e4; }
+    .search-btn-post .btn-none {
+        width: 50%;
+        text-align: center;
+        display: inline-block; }
+    .search-btn-post.blue {
+        background: #00a8e6; }
+    .search-btn-post.blue .btn-none {
+        color: #fff; }
 </style>
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
@@ -154,13 +172,11 @@
                     <div class="btn-box collapse-box btn-reset border-none">
                         <button type="reset" class="collapse-title red">Thiết lập lại</button>
                     </div>
-                    <footer class="main border blue uln" ng-show="mpc.isModifyAds">
-                        <ul class="navmain nav-2 nav-text">
-                            <li><a role="button" ng-click="mpc.goBack()" data-dismiss="modal" >Thoát</a></li>
-                            <li><a role="button" ng-click="mpc.dangTin(postForm.$valid)" data-dismiss="modal">Sửa</a></li>
-                        </ul>
-                    </footer>
 
+                    <div class="search-btn-post blue" ng-show="mpc.isModifyAds">
+                        <a class="btn-none pull-left" ng-click='mpc.goBack()'>Hủy</a>
+                        <a class="btn-none pull-right" ng-click="mpc.dangTin(postForm.$valid)">Sửa</a>
+                    </div>
                     <div class="clb ovh mb10">&nbsp;</div>
                 </div>
                 <!--END tabs-->
