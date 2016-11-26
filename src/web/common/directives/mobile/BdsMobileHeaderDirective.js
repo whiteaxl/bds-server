@@ -129,14 +129,17 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $(".search_mobile").find("i").removeClass("iconSearch").addClass("iconCancel");
                         //$("body").addClass("bodyNavShow");
                         $(".search").scrollTop(0);
+                        $(".search").css("top","0");
                         $(".search-footer").addClass("fixed");
                         $(".search-btn").css("display","block");
                         $(".search_mobile").addClass("active");
+                        $("header").hide();
 
-                    }else{
-                        
+                    }else{                        
                         $(event.target).text("Lọc");
                         vm.searchfr();
+                        $(".search").css("top","42");
+                        $("header").show();
                     }
                 }
 

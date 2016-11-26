@@ -278,6 +278,9 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $(".btn-group .btn:first-child").addClass("active");
                     $(".search input").val('');
                     $(".search_mobile").removeClass("active");
+                    $(".search").css("top","42");
+                    $("header").show();
+                    $('.search-txt').text("Lọc");
                 }
 
                 vm.spinner = function(event, box, item){

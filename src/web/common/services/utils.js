@@ -87,6 +87,7 @@
           })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
           ul.addClass('relandAuto');
+          ul.css("height","80%");
           if(item.location == true || item.lastSearchSeparator == true){
             return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo( ul );
           }else {
@@ -160,7 +161,7 @@
             })
             .autocomplete( "instance" )._renderItem = function( ul, item ) {
             console.log("-------------placeAutoComplete------5----");
-            ul.addClass('relandAutoOne relandMaps');
+            ul.addClass('relandAutoOne relandMaps');            
             return $( "<li>")
                 .append("<p><i class='iconLocation gray'></i>" + item.description + "</span></p></li>")
                 .appendTo( ul );
