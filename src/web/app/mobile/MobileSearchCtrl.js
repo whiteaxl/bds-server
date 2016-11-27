@@ -790,8 +790,9 @@
                         //vm.poly.getPath().push(e.latLng);
                         var path=vm.poly.getPath();                    
                         vm.poly=new google.maps.Polygon({map:vm.map,path:path,fillColor: '#00a8e6', strokeColor: '#0096ce'});
+                        // $scope.$apply();
                     }
-                },0);
+                },100);
                 
                 // if($rootScope.isLoggedIn()){
                 //     $rootScope.user.lastSearch = $rootScope.searchData;

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8c198ce2628228b90000"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "71fa9016d4edcf532ded"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22457,8 +22457,9 @@
 	                        //vm.poly.getPath().push(e.latLng);
 	                        var path = vm.poly.getPath();
 	                        vm.poly = new google.maps.Polygon({ map: vm.map, path: path, fillColor: '#00a8e6', strokeColor: '#0096ce' });
+	                        // $scope.$apply();
 	                    }
-	                }, 0);
+	                }, 100);
 
 	                // if($rootScope.isLoggedIn()){
 	                //     $rootScope.user.lastSearch = $rootScope.searchData;
