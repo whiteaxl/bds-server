@@ -214,7 +214,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     
                 }
                 vm.toggleQuickClearAutoComplete = function(){
-                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                    if($rootScope.act == '' || !$rootScope.act){
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
                         $(".close-search").removeAttr("style");
@@ -235,17 +235,17 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     // }
                 }
                 vm.autoCompleteChange = function(event){
-                    if(vm.autoCompleteText == ''){
+                    if($rootScope.act == ''){
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
                     }
                     vm.toggleQuickClearAutoComplete();                    
                 }
                 vm.showFavorite = function(event){
-                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                    //if($rootScope.act == '' || !$rootScope.act){
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
-                    }
+                    //}
 
                 }
                 vm.userLoggedIn = function(){                   
@@ -273,6 +273,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         return;
                     }
                     vm.item = item;
+                    $rootScope.act = item.description;
                     if(vm.item.placeId)
                         $rootScope.searchData.placeId = vm.item.placeId;
                     vm.keepViewport = false;

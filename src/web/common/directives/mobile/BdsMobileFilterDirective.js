@@ -351,6 +351,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     if(item.lastSearchSeparator==true){
                         return;
                     }
+                    $rootScope.act = item.description;
                     vm.item = item;
                     if(vm.item.placeId)
                         $rootScope.searchData.placeId = vm.item.placeId;
@@ -459,7 +460,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     
                 }
                 vm.toggleQuickClearAutoComplete = function(){
-                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                    if($rootScope.act == '' || !$rootScope.act){
                         $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd").autocomplete( "search", "" );
                         $(".close-search").removeAttr("style");
@@ -480,17 +481,17 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     // }
                 }
                 vm.autoCompleteChange = function(event){
-                    if(vm.autoCompleteText == ''){
+                    if($rootScope.act == ''){
                         $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd").autocomplete( "search", "" );
                     }
                     vm.toggleQuickClearAutoComplete();                    
                 }
                 vm.showFavorite = function(event){
-                    if(vm.autoCompleteText == '' || !vm.autoCompleteText){
+                    //if($rootScope.act == '' || !$rootScope.act){
                         $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd").autocomplete( "search", "" );
-                    }
+                    //}
 
                 }
 

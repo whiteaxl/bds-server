@@ -124,4 +124,7 @@ internals.measure_old = function(lat1, lon1, lat2, lon2){  // generally used geo
     return d * 1000; // meters
 };
 
+if (typeof(window) !== 'undefined')
+    window.RewayGeoUtil = internals;
+
 module.exports  = internals;

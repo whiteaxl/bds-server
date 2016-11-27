@@ -28,9 +28,10 @@
       userID: undefined,
       adsLikes: [],
       lastSearch: null,
-      autoSearch: false
+      autoSearch: true
     }    
     $rootScope.pageSize = 25;
+    $rootScope.act = "";
 
     if($localStorage.relandToken){
       decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
