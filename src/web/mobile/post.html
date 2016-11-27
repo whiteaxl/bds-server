@@ -36,11 +36,19 @@
                     <img src="{{mpc.ads.image.cover}}" />
                     <span class="des">Ảnh bìa</span>
                 </li>
+                <li ngf-select="uploadFiles($files)" multiple accept="image/*" ng-if="mpc.ads.image.cover.trim().length ==0"><input type="file" multiple id="file" /><label for="file"><i class="iconPlus"></i></label><span class="des">Ảnh bìa</span></li>
                 <li ng-repeat="img in mpc.ads.image.images track by $index">
                     <a href="#" ng-click="mpc.removeNormalImg(img)" class="close"><i class="iconCancel"></i></a><img src="{{img}}" />
                 </li>
-                <li ngf-select="uploadFiles($files)" multiple accept="image/*"><input type="file" multiple id="file" /><label for="file"><i class="iconPlus"></i></label></li>
+                <li ngf-select="uploadFiles($files)" ng-if="mpc.ads.image.cover.trim().length > 0" multiple accept="image/*"><input type="file" multiple id="file" /><label for="file"><i class="iconPlus"></i></label></li>
             </ul>
+        </div>
+        <div>
+            </br>
+            <input type="hidden" ng-model="mpc.ads.image.cover" name="anhDaiDien" required>
+            <div ng-show="postForm.$submitted">
+                <span style="color:red" ng-show="postForm.anhDaiDien.$error.required">(Chưa đăng ảnh đại diện)</span>
+            </div>
         </div>
         <div class="clb ovh"></div>
         <div class="search-box post-box" id="inputPostDiv">
