@@ -286,9 +286,9 @@ class RealEstateExtractor {
 		osmosisRoot
 			.paginate(".background-pager-right-controls a:skip-last:last:contains('...')", 100)
 			.set({
-				'urls' : ['.search-productItem .p-title > a@href'],
-				'titles' : ['.search-productItem .p-title > a@title'],
-				'covers'  : ['.search-productItem .p-main > div > a > img@src'],
+				'urls' : ['.search-productItem .p-title a@href'],
+				'titles' : ['.search-productItem .p-title  a@title'],
+				'covers'  : ['.search-productItem .p-main  div a img@src'],
         //'nexts' : [".background-pager-right-controls a:skip-last:last@href"],
 				//'nexts3' : ".background-pager-right-controls a:skip-last:last:contains('...')@href",
 				//'nexts1' : [".background-pager-right-controls a:skip-last@href"],
@@ -310,7 +310,7 @@ class RealEstateExtractor {
 
         //console.log("AAAAAA", dto.nexts);
       })
-			.follow('.search-productItem .p-title > a@href')
+			.follow('.search-productItem .p-title a@href')
 			.set({
 				'title'			:'#product-detail .pm-title > h1',
 				'images'		:['#product-detail .list-img > ul > li > img@src'],
@@ -324,7 +324,7 @@ class RealEstateExtractor {
 				'chiTiet'	:'#product-detail .pm-content:source',
 				'hdLat'		:'.container-default input[id="hdLat"]@value',
 				'hdLong'	:'.container-default input[id="hdLong"]@value',
-				'duAnID'      :'#product-detail .inproject > a@href',
+				'duAnID'      :'#product-detail .inproject a@href',
 				'emailRegisterLink' : '#emailregister@href'
 			})
 			.data(function(listing) {
