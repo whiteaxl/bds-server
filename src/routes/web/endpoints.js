@@ -43,7 +43,8 @@ internals.endpoints = [
 			// reply.view('./mobile/index.html');
 			reply.redirect("/web/mobile/index.html");
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 		
 	}
@@ -56,7 +57,8 @@ internals.endpoints = [
 		if(md.mobile()){
 			reply.view('./mobile/index.html');
 		}else{
-			reply.redirect("/web/index.html");
+			// reply.redirect("/web/index.html");
+			reply.redirect("/web/desktop/index.html");
 		}
 		
 	}
@@ -77,7 +79,8 @@ internals.endpoints = [
 			//reply.view('mobile/index.html');
 			reply.redirect(convertMobilePath(requet));
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -91,7 +94,8 @@ internals.endpoints = [
 			
 		}else{
 			// reply.view('index.html');
-			reply.redirect(convertDesktopPath(requet));
+			// reply.redirect(convertDesktopPath(requet));
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -104,7 +108,8 @@ internals.endpoints = [
 			//reply.view('mobile/index.html');
 			reply.redirect(convertMobilePath(requet));
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -118,7 +123,8 @@ internals.endpoints = [
 			
 		}else{
 			// reply.view('index.html');
-			reply.redirect(convertDesktopPath(requet));
+			// reply.redirect(convertDesktopPath(requet));
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -131,7 +137,8 @@ internals.endpoints = [
 			reply.view('mobile/index.html');
 			//reply.redirect(convertMobilePath(requet));
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -147,7 +154,8 @@ internals.endpoints = [
 			reply.view('mobile/index.html');
 
 		}else{
-			reply.view('index.html', { page: 'list' });
+			// reply.view('index.html', { page: 'list' });
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -159,7 +167,8 @@ internals.endpoints = [
 		if(md.mobile()){			
 			reply.redirect(convertMobilePath(requet));
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
@@ -171,7 +180,8 @@ internals.endpoints = [
 		if(md.mobile()){			
 			reply.view('mobile/index.html');
 		}else{
-			reply.redirect(convertDesktopPath(requet));
+			// reply.redirect(convertDesktopPath(requet));
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 },
@@ -183,7 +193,8 @@ internals.endpoints = [
 		if(md.mobile()){			
 			reply.view('mobile/index.html');
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	},
 	config:{
@@ -199,7 +210,8 @@ internals.endpoints = [
 		if(md.mobile()){			
 			reply.view('mobile/index.html');
 		}else{
-			reply.view('index.html');
+			// reply.view('index.html');
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 	// ,
@@ -216,7 +228,8 @@ internals.endpoints = [
 		if(md.mobile()){
 			reply.view('mobile/index.html');
 		}else{
-			reply.redirect(convertDesktopPath(requet));
+			// reply.redirect(convertDesktopPath(requet));
+			reply.redirect("/web/desktop/index.html");
 		}
 	}
 }
