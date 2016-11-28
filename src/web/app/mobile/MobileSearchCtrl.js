@@ -462,14 +462,57 @@
                     let polygonCoords = $rootScope.searchData.polygon.map((e) => {
                         return {latitude: e.lat, longitude: e.lon}
                     });
-                    vm.viewport = window.RewayGeoUtil.getBoxOfPolygon(polygonCoords);
-                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
-                    var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
-                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                    // vm.viewport = window.RewayGeoUtil.getGeoBoxOfPolygon(polygonCoords);
+                    // var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
+                    // var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
+
+                    var getBoundOfPolygon = function(polygon){
+                        var bounds = new google.maps.LatLngBounds();
+                        var paths = polygon.getPaths();
+                        var path;        
+                        for (var i = 0; i < paths.getLength(); i++) {
+                            path = paths.getAt(i);
+                            for (var ii = 0; ii < path.getLength(); ii++) {
+                                bounds.extend(path.getAt(ii));
+                            }
+                        }
+                        return bounds;
+                    }
+                    var getZoomByBounds = function( map, bounds ){
+                      var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
+                      var MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0 ;
+
+                      var ne= map.getProjection().fromLatLngToPoint( bounds.getNorthEast() );
+                      var sw= map.getProjection().fromLatLngToPoint( bounds.getSouthWest() ); 
+
+                      var worldCoordWidth = Math.abs(ne.x-sw.x);
+                      var worldCoordHeight = Math.abs(ne.y-sw.y);
+
+                      //Fit padding in pixels 
+                      var FIT_PAD = 40;
+
+                      for( var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom ){ 
+                          if( worldCoordWidth*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).width() && 
+                              worldCoordHeight*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).height() )
+                              return zoom;
+                      }
+                      return 0;
+                    }
+
+                    var polyBounds = getBoundOfPolygon(vm.poly);
+
+                    // let vp = window.RewayGeoUtil.getGeoBoxOfPolygon(polygonCoords);
+                    // var southWest = new google.maps.LatLng(vp.geoBox[0], vp.geoBox[1]);
+                    // var northEast = new google.maps.LatLng(vp.geoBox[2], vp.geoBox[3]);
+                    // var bounds = new google.maps.LatLngBounds(southWest, northEast);
                     // if(vm.humanZoom != true && vm.viewport.northeast.lat && vm.viewport.southwest.lat && vm.map){
                     //     let zoom = vm.map.zoom;
                     //vm.map.setZoom(10);
-                    vm.map.fitBounds(bounds);
+                    // var zoom = vm.map.getBoundsZoomLevel(polyBounds);
+                    vm.map.setCenter(polyBounds.getCenter());
+                    vm.map.fitBounds(polyBounds);
+                    // vm.map.panToBounds(polyBounds);
+                    // vm.map.setZoom(zoom);
                     $rootScope.act = "Trong khu vực vẽ tay";
                     // }
                     if(vm.viewMode=="list"){
