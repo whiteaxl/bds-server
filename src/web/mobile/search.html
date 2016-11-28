@@ -1,7 +1,12 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
 <bds-mobile-header mode="msc.viewMode" act="$root.act"></bds-mobile-header>
-
+<style type="text/css">
+    .custom-marker{
+        background-color: transparent;
+        border-color: transparent;
+    }
+</style>
 <div ng-if="msc.viewMode=='list'" class="wapper" style="bottom: ">
     <div class="reland-box uln">
         <ul class="reland-list full" >
@@ -65,7 +70,7 @@
         <div ontouchstart="return false"  ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="false" clickable-icons="false" ng-show ="msc.viewMode!='list'" custom-zoom-to-include-markers="false" center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                <custom-marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
+                <custom-marker  class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
                     <div class="marker">
                         {{m.content}}
@@ -76,7 +81,7 @@
                         </span>
                     </div>
                 </custom-marker>
-                <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
+                <!-- <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker> -->
                 <!-- <street-view-panorama
                   click-to-go="false"
                   disable-default-u-i="false"

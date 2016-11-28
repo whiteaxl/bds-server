@@ -51,6 +51,23 @@ internals.endpoints = [
 }
 ,{ 
 	method: 'GET',
+	path: '/', 
+	handler: function(requet,reply){
+		console.log("ttttttttttttttttttt" + requet.url.protocol);
+		var md = new MobileDetect(requet.headers['user-agent']);
+		if(md.mobile()){
+			// reply.view('./mobile/index.html');
+			// reply.file("src/web/mobile/index.html");
+			reply.redirect("/web/mobile/index.html");
+		}else{
+			// reply.view('index.html');
+			reply.file("src/web/desktop/index.html");
+		}
+		
+	}
+}
+,{ 
+	method: 'GET',
 	path: '/web/mobile/index.html', 
 	handler: function(requet,reply){
 		var md = new MobileDetect(requet.headers['user-agent']);

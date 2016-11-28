@@ -31,7 +31,7 @@
       autoSearch: true
     }    
     $rootScope.pageSize = 25;
-    $rootScope.act = "";
+    $rootScope.act = "Quận Cầu Giấy, Hà Nội";
 
     if($localStorage.relandToken){
       decodedToken = jwtHelper.decodeToken($localStorage.relandToken);

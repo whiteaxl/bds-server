@@ -65,11 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-<<<<<<< HEAD
-/******/ 	var hotCurrentHash = "247f602fd609f9961f51"; // eslint-disable-line no-unused-vars
-=======
-/******/ 	var hotCurrentHash = "cc7accbe9e2a6746f290"; // eslint-disable-line no-unused-vars
->>>>>>> df8a640b0fa2effe76b74c5e739645f0a070e060
+/******/ 	var hotCurrentHash = "6b3f8a72987f032cb1a4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
