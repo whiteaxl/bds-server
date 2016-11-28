@@ -48,6 +48,12 @@
 						console.log("processing all elements completed");
 					});
 
+					async.series(
+						allInbox.sort(function(obj1, obj2) {
+							return obj2.lastDate - obj1.lastDate;
+						})
+					);
+
 					var inbox;
 //check co nen dua doan tach nay vao each tren do ko
 
@@ -78,8 +84,9 @@
 			console.log(data);
 			data.date = new Date(data.date);
 
+			var async = require("async");
 			if(vm.allInbox.length > 0){
-				var async = require("async");
+				var isContain = false;
 				async.forEach(vm.allInbox,function(inbox){
 					var count = 0;
 					if(inbox.unreadCount){
@@ -90,11 +97,24 @@
 						inbox.unreadCount = count;
 						inbox.lastMsg = data.content;
 						inbox.lastDate = vm.getChatTime(new Date(data.date));
+						isContain = true;
 					}
 					console.log(inbox.unreadCount);
 				}, function(err){
 					if(err){throw err;}
 					console.log("processing all elements completed");
+					if(!isContain){
+						var inbox ={};
+						inbox.partner = {};
+						inbox.partner.userID = data.fromUserID.trim();
+						inbox.partner.fullName = data.fullName;
+						inbox.partner.avatar = data.avatar;
+						inbox.relatedToAds = data.relatedToAds;
+						inbox.unreadCount = 1;
+						inbox.lastMsg = data.content;
+						inbox.lastDate = vm.getChatTime(new Date(data.date));
+						vm.allInbox.push(inbox);
+					}
 				});
 			} else{
 				var inbox ={};
@@ -108,6 +128,12 @@
 				inbox.lastDate = vm.getChatTime(new Date(data.date));
 				vm.allInbox.push(inbox);
 			}
+			async.series(
+				allInbox.sort(function(obj1, obj2) {
+					return obj2.lastDate - obj1.lastDate;
+				})
+			);
+
 			$scope.$apply();
 		});
 
