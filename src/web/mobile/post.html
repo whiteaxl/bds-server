@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="dt-box collapse-box fr">
-                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="text" pattern="[0-9]*\.?[0-9]*" required="" ></span></a>
+                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="number" pattern="[0-9]*\.?[0-9]*" required="" ></span></a>
                         <div style="color:red" ng-show="postForm.$submitted">
                             <span ng-show="postForm.dienTich.$error.required || postForm.dienTich.$invalid-pattern">{{postForm.dienTich.$error.required?"(Chưa nhập diện tích)":(postForm.dienTich.$invalid-pattern? "(Nhập sai định dạng số)" : "")}}</span>
                         </div>
