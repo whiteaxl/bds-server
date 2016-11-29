@@ -140,6 +140,9 @@
       },
       getAllChatMsg: function(data){
         return $http.post("/api/getAllChatMsg",data);
+      },
+      getUnreadMessages: function(data){
+        return $http.post("/api/getUnreadMessages",data);
       }
 
     };

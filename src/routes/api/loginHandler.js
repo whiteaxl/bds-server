@@ -79,14 +79,16 @@ internals.login = function(req, reply){
                     if (lastSearch && lastSearch.length>0) {
                         lastSearch.sort((a, b) => b.timeModified - a.timeModified);
                         if (!lastSearch[0].query.viewport){
-                            let diaChinh = {
-                                tinh: lastSearch[0].query.diaChinh.tinhKhongDau || undefined,
-                                huyen: lastSearch[0].query.diaChinh.huyenKhongDau || undefined,
-                                xa: lastSearch[0].query.diaChinh.xaKhongDau || undefined
-                            }
-                            let diaChinhResult = placeHandlers._getDiaChinhFromCache(diaChinh);
-                            if (diaChinhResult && diaChinhResult.length>0 && diaChinhResult[0].geometry){
-                                lastSearch[0].query.viewport = diaChinhResult[0].geometry.viewport;
+                            if(lastSearch[0].query.diaChinh){
+                                let diaChinh = {
+                                    tinh: lastSearch[0].query.diaChinh.tinhKhongDau || undefined,
+                                    huyen: lastSearch[0].query.diaChinh.huyenKhongDau || undefined,
+                                    xa: lastSearch[0].query.diaChinh.xaKhongDau || undefined
+                                }
+                                let diaChinhResult = placeHandlers._getDiaChinhFromCache(diaChinh);
+                                if (diaChinhResult && diaChinhResult.length>0 && diaChinhResult[0].geometry){
+                                    lastSearch[0].query.viewport = diaChinhResult[0].geometry.viewport;
+                                }
                             }
                         }
                     }

@@ -420,6 +420,27 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/getUnreadMessages',
+    handler: chatApiHandle.getUnreadMessages,
+    config: {
+      description: 'Get all unread chat message by User',
+      tags: ['api'],
+      validate: {
+        payload: {
+          userID: Joi.string().required()
+        }
+      },
+      response: {
+        schema: Joi.object({
+          status: Joi.number(),
+          error: Joi.object(),
+          data: Joi.array()
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/getInboxMsg',
     handler: chatApiHandle.getInboxMsg,
     config: {

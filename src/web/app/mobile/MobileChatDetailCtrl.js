@@ -1,9 +1,10 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileChatDetailCtrl';
-	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, socket, $location, $http, Upload, HouseService, RewayCommonUtil, NgMap, $window,$timeout){		// Chat Page Controller
+	angular.module('bds').controller(controllerId,function ($compile, $state, $scope, $rootScope, $localStorage, socket, $location, $http, Upload, HouseService, RewayCommonUtil, NgMap, $window,$timeout){		// Chat Page Controller
 		// Varialbles Initialization.
 		var vm = this;
+		$rootScope.isChatDetail = true;
 		vm.adsID = $state.params.adsID;
 		// from general chat if exist $state.params.toUserID
 		vm.toUserID = $state.params.toUserID;
@@ -69,7 +70,6 @@
 		}
 
 		vm.autocompleteGoogleSource = function (request, response) {
-			console.log(request);
 			var options = {
 				input: request.term,
 				//types: ['(cities)'],
@@ -79,7 +79,6 @@
 			function callback(predictions, status) {
 				var results = [];
 				if(predictions){
-					console.log(predictions);
 					for (var i = 0, prediction; prediction = predictions[i]; i++) {
 						results.push(
 							{
@@ -98,7 +97,6 @@
 		}
 
 		vm.selectPlaceCallback = function(item){
-			console.log(item);
 			if(item.lastSearchSeparator==true){
 				return;
 			}
@@ -112,10 +110,7 @@
 					vm.fullMapSendLocation.fitBounds(place.geometry.viewport);
 					vm.sendLocation.lat = vm.fullMapSendLocation.getCenter().lat();
 					vm.sendLocation.lon = vm.fullMapSendLocation.getCenter().lng();
-					console.log("-----------------------selectautoComplete---------------");
 					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
-					console.log(vm.location.lat);
-					console.log(vm.location.lon);
 				});
 			}
 		}
@@ -149,13 +144,10 @@
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
 				"&latlng=" + lat + ',' + lon;
-			console.log(url);
 
 			return fetch(url)
 				.then(response => response.json())
 				.then(function (data) {
-					console.log("-------------------getGeoCode---------------");
-					console.log(data );
 					callback(data);
 				})
 				.catch(e => e);
@@ -165,12 +157,10 @@
 		vm.getCurrentLocation = function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position){
-					console.log(position);
 					vm.currentLocation.lat = position.coords.latitude;
 					vm.currentLocation.lon = position.coords.longitude;
 					vm.sendLocation.lat = vm.currentLocation.lat;
 					vm.sendLocation.lon = vm.currentLocation.lon;
-					console.log("-----------------------getCurrentLocation---------------");
 					vm.getDiaChinhGoogle(vm.sendLocation.lat, vm.sendLocation.lon);
 				}, function(error){
 					console.log(error);
@@ -240,8 +230,6 @@
 		}
 
 		vm.init = function(){
-			console.log("------------------------init--------------------------")
-			console.log($rootScope.user);
 			vm.getCurrentLocation();
 
 			socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
@@ -355,8 +343,16 @@
 			});
 		}
 
+		$scope.$on('$destroy', function () {
+			console.log("-------------destroy--chat------new message---------------");
+			socket.removeAllListeners();
+
+		});
+
 		vm.goBack = function(){
-			vm.closeChat();
+			//vm.closeChat();
+			console.log("-------------------------goback-Chat----------------------");
+			$rootScope.isChatDetail = false;
 			$state.go($rootScope.lastState, $rootScope.lastStateParams);
 		}
 
@@ -374,29 +370,46 @@
 			else 
 				return false;
 		}
-
+		vm.testWatch = function () {
+			console.log("-----------testWatch:---- ");
+			console.log($rootScope.chatMsgData);
+		}
+		$rootScope.watchHitCount = 0;
+		$rootScope.$watch('chatMsgData', vm.testWatch,true);
 		/**
 		 Handle in comming message
 		 */
 		socket.on("new message", function(data){
 			console.log("----------------------on new msg-detail-------------------");
-			if(data.fromUserID && vm.toUserID && (data.fromUserID.trim()==vm.toUserID.trim())){
+			$rootScope.chatMsgData = data;
+			console.log($rootScope.watchHitCount);
+			if((data.fromUserID.trim()==vm.toUserID.trim()) && (data.relatedToAds.adsID.trim() == vm.adsID)){
 				if(!$scope.chatBox.user){
 					vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
 				}
 				data.date = new Date(data.date);
-				socket.emit("read-messages",data, function(res){
-					console.log("mark messages as read " + res);
-				});
+				console.log(data);
+				$timeout(function() {
+					socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
+						console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+						console.log(data);
+					});
+				},300);
+
+
 				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 				$scope.$apply();
 				$("body").animate({ scrollTop: $(document).height() }, "slow");
+			} else{
+				if(!$rootScope.unreadMsg)
+					$rootScope.unreadMsg = 1;
+				else
+					$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+				$rootScope.unreadMsg = $rootScope.unreadMsg;
 			}
 		});
 		
 		socket.on("check user online",function(data){
-			console.log("-----------------check user----------------");
-			console.log(data);
 			$timeout(function() {
 				if(vm.toUserID && data){
 					vm.toUserOnline = data.toUserIsOnline;
@@ -406,7 +419,6 @@
 
 		socket.on("alert user online",function(data){
 			console.log("-----------------alert user online----------------");
-			console.log(data);
 			$timeout(function() {
 				if(vm.toUserID.trim() == data.fromUserID){
 					vm.toUserOnline = true;
@@ -416,7 +428,6 @@
 
 		socket.on("alert user offline",function(data){
 			console.log("-----------------alert user offline----------------");
-			console.log(data);
 			$timeout(function() {
 				if(vm.toUserID.trim() == data.fromUserID){
 					vm.toUserOnline = false;
@@ -444,7 +455,7 @@
 
 		socket.on("unread-messages", function(data){
 			console.log("------------------chat-unreadMessage-----------------");
-			console.log(data);
+
 			var readedData = [];
 			for (var i = 0, len = data.length; i < len; i++) {
 				var msg = data[i].default;
@@ -452,8 +463,8 @@
 				if((vm.adsID.trim()==msg.relatedToAds.adsID.trim()) && ($rootScope.user.userID.trim() == msg.toUserID.trim()) &&(vm.toUserID.trim()==msg.fromUserID.trim())){
 					readedData.push(data[i]);
 				}
-				console.log("msg["+i+"] "  + msg);
 			}
+			console.log(readedData);
 			socket.emit("read-messages",readedData, function(res){
 				console.log("mark messages as read " + res);
 			});
@@ -606,7 +617,7 @@
 		// ====================================== Messege Sending Code ============================
 		// sending text message function
 		vm.sendMsg = function(){
-			console.log("---------------sendMsg------1---------");
+			console.log("---------------sendMsg---------------");
 			if (vm.chatMsg) {
 				vm.isFileSelected = false;
 				//var dateString = formatAMPM(new Date());

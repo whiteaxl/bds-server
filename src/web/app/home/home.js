@@ -585,14 +585,44 @@
           params:{query: null},
       })
     });
-  bds.factory('socket', function (socketFactory) {
-    // var socket = io.connect("http://localhost:5000");
-    var socket = io.connect();
-    //socket.forward('error');
-    // socket.connect();
-    return socket;
-  });
+    bds.factory('socket', function (socketFactory) {
+        // var socket = io.connect("http://localhost:5000");
+
+        var socket = io.connect();
+        //socket.forward('error');
+        // socket.connect();
+        return socket;
+    });
+        /*
+        bds.factory('socket', function ($rootScope) {
+      var socket = io.connect();
+      return {
+          on: function (eventName, callback) {
+              socket.on(eventName, function () {
+                  var args = arguments;
+                  $rootScope.$apply(function () {
+                      callback.apply(socket, args);
+                  });
+              });
+          },
+          emit: function (eventName, data, callback) {
+              socket.emit(eventName, data, function () {
+                  var args = arguments;
+                  $rootScope.$apply(function () {
+                      if (callback) {
+                          callback.apply(socket, args);
+                      }
+                  });
+              })
+          },
+          getSocket: function() {
+              return socket;
+          }
+      };
+  });*/
   })();
+
+
 
 
 

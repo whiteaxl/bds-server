@@ -1,11 +1,12 @@
 (function() {
 	'use strict';
 	var controllerId = 'MobileChatCtrl';
-	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, socket, $compile, NewsService, NgMap, $window,$timeout,$location){
+	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, socket, $compile, NewsService, NgMap, $window,$timeout,$location, $localStorage){
 		var vm = this;
 		vm.allInbox = [];
 		vm.allSaleInbox = [];
 		vm.allRentInbox = [];
+		vm.toUserIdDetail;
 
 		vm.init = function(){
 			socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
@@ -34,109 +35,157 @@
 				vm.allInbox = res.data.data;
 				if(vm.allInbox.length > 0){
 					var async = require("async");
-					async.forEach(vm.allInbox,function(inbox){
+					async.forEach(vm.allInbox,function(inbox, callback){
+						console.log("-------------inbox----:" + inbox.partner.userID);
 						HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: inbox.partner.userID, adsID: inbox.relatedToAds.adsID}).then(function(res) {
 							if (res.status == 200 && res.data.status == 0) {
+								console.log("-------------msg of inbox----:" + inbox.partner.userID);
 								if(res.data.data.length > 0){
 									inbox.lastMsg = res.data.data[0].default.content;
 									inbox.lastDate = vm.getChatTime(new Date(res.data.data[0].default.date));
+									inbox.lastTime = new Date(res.data.data[0].default.date).getTime();
+									var count = 0;
+									for(var i=0; i<res.data.data.length; i++){
+										if(!res.data.data[i].default.read){
+											if((inbox.partner.userID.trim()==res.data.data[i].default.fromUserID.trim()) && (inbox.relatedToAds.adsID.trim()==res.data.data[i].default.relatedToAds.adsID.trim()))
+												++count;
+										}
+									}
+									if(count>0)
+										inbox.unreadCount = count;
 								}
 							}
+							callback();
 						});
+
 					}, function(err){
 						if(err){throw err;}
 						console.log("processing all elements completed");
-					});
-
-					async.series(
-						allInbox.sort(function(obj1, obj2) {
-							return obj2.lastDate - obj1.lastDate;
-						})
-					);
-
-					var inbox;
-//check co nen dua doan tach nay vao each tren do ko
-
-					for(var i=0; i< vm.allInbox.length; i ++){
-						inbox = vm.allInbox[i];
-
-						if(inbox.relatedToAds.loaiTin == 0){
-							vm.allSaleInbox.push(inbox);
-						} else {
-							vm.allRentInbox.push(inbox);
+						vm.allInbox.sort(function(obj1, obj2) {
+							console.log("-------------sort----:");
+							console.log("--------" + obj2.lastTime + "--------------" + obj1.lastTime);
+							return obj2.lastTime - obj1.lastTime;
+						});
+						var inbox;
+						var unreadMsg = 0;
+						for(var i=0; i< vm.allInbox.length; i ++){
+							inbox = vm.allInbox[i];
+							if(inbox.unreadCount)
+								unreadMsg = unreadMsg + inbox.unreadCount;
+							if(inbox.relatedToAds.loaiTin == 0){
+								vm.allSaleInbox.push(inbox);
+							} else {
+								vm.allRentInbox.push(inbox);
+							}
 						}
-					}
+						$rootScope.unreadMsg = unreadMsg;
+						$localStorage.unreadMsg = $rootScope.unreadMsg;
+						console.log("---------------processing all elements completed--------------------");
+					});
 				}
+				/*
 				socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
 					console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
 					console.log(data);
-				});
+				});*/
 			}
 		});
 
 		vm.openChatDetail = function(inbox){
+			vm.toUserIdDetail=inbox.partner.userID;
+			vm.toAdsIDDetail=inbox.relatedToAds.adsID;
 			$state.go('mchatDetail', { "adsID" : inbox.relatedToAds.adsID, "toUserID" : inbox.partner.userID});
 			$(".overlay").click();
 		}
 
-		socket.on("new message", function(data){
-			console.log("-------------chat------new message---------------");
-			console.log(data);
-			data.date = new Date(data.date);
+		/*
+		$scope.$on('$destroy', function () {
+			console.log("-------------destroy--chat------------");
+			socket.removeListener("new message",function(data){
+				console.log("-------------destroy--chat------new message---------------");
+				console.log(data);
+			})
+		});*/
 
-			var async = require("async");
-			if(vm.allInbox.length > 0){
-				var isContain = false;
-				async.forEach(vm.allInbox,function(inbox){
-					var count = 0;
-					if(inbox.unreadCount){
-						count = inbox.unreadCount;
-					}
-					if($rootScope.user.userID.trim()==data.toUserID && inbox.partner.userID.trim()==data.fromUserID.trim() && inbox.relatedToAds.adsID.trim()==data.relatedToAds.adsID.trim()){
-						count++;
-						inbox.unreadCount = count;
-						inbox.lastMsg = data.content;
-						inbox.lastDate = vm.getChatTime(new Date(data.date));
-						isContain = true;
-					}
-					console.log(inbox.unreadCount);
-				}, function(err){
-					if(err){throw err;}
-					console.log("processing all elements completed");
-					if(!isContain){
-						var inbox ={};
-						inbox.partner = {};
-						inbox.partner.userID = data.fromUserID.trim();
-						inbox.partner.fullName = data.fullName;
-						inbox.partner.avatar = data.avatar;
-						inbox.relatedToAds = data.relatedToAds;
-						inbox.unreadCount = 1;
-						inbox.lastMsg = data.content;
-						inbox.lastDate = vm.getChatTime(new Date(data.date));
-						vm.allInbox.push(inbox);
-					}
-				});
-			} else{
-				var inbox ={};
-				inbox.partner = {};
-				inbox.partner.userID = data.fromUserID.trim();
-				inbox.partner.fullName = data.fullName;
-				inbox.partner.avatar = data.avatar;
-				inbox.relatedToAds = data.relatedToAds;
-				inbox.unreadCount = 1;
-				inbox.lastMsg = data.content;
-				inbox.lastDate = vm.getChatTime(new Date(data.date));
-				vm.allInbox.push(inbox);
-			}
-			async.series(
-				allInbox.sort(function(obj1, obj2) {
-					return obj2.lastDate - obj1.lastDate;
-				})
-			);
-
-			$scope.$apply();
+		$scope.$on('$destroy', function (event) {
+			console.log("-------------destroy--chat------------");
+			socket.removeAllListeners();
+			// or something like
+			// socket.removeListener(this);
 		});
 
+		socket.on("new message", function(data){
+			console.log("-------------chat------new message---------------");
+			if(!$rootScope.isChatDetail){
+				console.log("-------------chat------new message--------in-------");
+				console.log(vm.toUserIdDetail);
+				data.date = new Date(data.date);
+
+				if(vm.allInbox.length > 0){
+					var isContain = false;
+					var async = require("async");
+					async.forEach(vm.allInbox,function(inbox, callback){
+						var count = 0;
+						if(inbox.unreadCount){
+							count = inbox.unreadCount;
+						}
+						if($rootScope.user.userID.trim()==data.toUserID && inbox.partner.userID.trim()==data.fromUserID.trim() && inbox.relatedToAds.adsID.trim()==data.relatedToAds.adsID.trim()){
+							count++;
+							inbox.unreadCount = count;
+							inbox.lastMsg = data.content;
+							inbox.lastDate = vm.getChatTime(new Date(data.date));
+							inbox.lastTime = new Date(data.date).getTime();
+							isContain = true;
+							console.log("--------------------msg from : " + data.fromUserID.trim());
+							console.log(inbox.unreadCount);
+						}
+						callback();
+					}, function(err){
+						if(err){throw err;}
+						console.log("processing all elements completed");
+						if(!isContain){
+							var inbox ={};
+							inbox.partner = {};
+							inbox.partner.userID = data.fromUserID.trim();
+							inbox.partner.fullName = data.fullName;
+							inbox.partner.avatar = data.avatar;
+							inbox.relatedToAds = data.relatedToAds;
+							inbox.unreadCount = 1;
+							inbox.lastMsg = data.content;
+							inbox.lastDate = vm.getChatTime(new Date(data.date));
+							inbox.lastTime = new Date(data.date).getTime();
+							vm.allInbox.push(inbox);
+						}
+						if(!$rootScope.unreadMsg)
+							$rootScope.unreadMsg = 1;
+						else
+							$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+					});
+				} else{
+					var inbox ={};
+					inbox.partner = {};
+					inbox.partner.userID = data.fromUserID.trim();
+					inbox.partner.fullName = data.fullName;
+					inbox.partner.avatar = data.avatar;
+					inbox.relatedToAds = data.relatedToAds;
+					inbox.unreadCount = 1;
+					inbox.lastMsg = data.content;
+					inbox.lastDate = vm.getChatTime(new Date(data.date));
+					vm.allInbox.push(inbox);
+					if(!$rootScope.unreadMsg)
+						$rootScope.unreadMsg = 1;
+					else
+						$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+				}
+
+				vm.allInbox.sort(function(obj1, obj2) {
+					return obj2.lastTime - obj1.lastTime;
+				})
+				$scope.$apply();
+			}
+		});
+
+		/*
 		socket.on("unread-messages", function(data){
 			console.log("------------------chat-unreadMessage-----------------");
 			console.log(data);
@@ -194,6 +243,6 @@
 			}
 			console.log("-------------------unreadMessage--------1---------");
 			console.log(vm.allInbox);
-		});
+		});*/
 	});
 })();

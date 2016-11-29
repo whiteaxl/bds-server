@@ -95,8 +95,17 @@ angular.module('bds')
 
           }
 
-          
-
+          vm.getUnreadMsgCount = function(userID){
+            HouseService.getUnreadMessages({userID: userID}).then(function(res) {
+              if (res.status == 200 && res.data.status == 0) {
+                if (res.data.data.length > 0) {
+                  $rootScope.unreadMsg = res.data.data.length;
+                }
+              }
+              if(!$rootScope.unreadMsg)
+                $rootScope.unreadMsg = null;
+            });
+          }
 
           vm.signin = function(){
 
@@ -135,6 +144,8 @@ angular.module('bds')
                           $rootScope.user.lastSearch = res.data.lastSearch;
                           $rootScope.user.lastViewAds = res.data.lastViewAds;
                           $rootScope.user.saveSearch = res.data.saveSearch;
+
+                          vm.getUnreadMsgCount($rootScope.user.userID);
 
                           vm.class = "has-sub";
                           vm.state = vm.LOGGED_IN;
@@ -196,6 +207,7 @@ angular.module('bds')
                         $rootScope.user.lastSearch = res.data.lastSearch;
                         $rootScope.user.lastViewAds = res.data.lastViewAds;
                         $rootScope.user.saveSearch = res.data.saveSearch;
+                        vm.getUnreadMsgCount($rootScope.user.userID);
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;
@@ -225,6 +237,7 @@ angular.module('bds')
                       $rootScope.user.userID = res.data.userID;
                       $rootScope.user.email = res.data.email;
                       $rootScope.user.phone = res.data.phone;
+                      vm.getUnreadMsgCount($rootScope.user.userID);
                       console.log($rootScope.user.userID);
                       //end nhannc
                       vm.class = "has-sub";
