@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b8eeab14440532735bcf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "de18d65f6d42bcf914e4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -995,599 +995,632 @@
 	'use strict';
 
 	(function () {
-	  'use strict';
+	    'use strict';
 
-	  window.initData = {};
+	    window.initData = {};
 
-	  var postal = __webpack_require__(4);
+	    var postal = __webpack_require__(4);
 
-	  var tap = postal.addWireTap(function (d, e) {
-	    console.log(JSON.stringify(e));
-	  });
-
-	  var _ = __webpack_require__(5);
-
-	  var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll', 'ngDialog']).run(['jwtHelper', '$rootScope', '$localStorage', '$cookieStore', '$http', '$compile', 'HouseService', function (jwtHelper, $rootScope, $localStorage, $cookieStore, $http, $compile, HouseService) {
-	    $rootScope.globals = $cookieStore.get('globals') || {};
-	    //$rootScope.center = "Hanoi Vietnam";
-	    $rootScope.center = {
-	      lat: 16.0439,
-	      lng: 108.199
-	    };
-	    //alert($localStorage.relandToken);
-
-	    var decodedToken = {};
-	    $rootScope.loginbox = {};
-	    $rootScope.chatBoxes = [];
-	    $rootScope.menuitems = window.RewayListValue.menu;
-	    $rootScope.user = {
-	      userID: undefined,
-	      adsLikes: [],
-	      lastSearch: null,
-	      autoSearch: true
-	    };
-	    $rootScope.pageSize = 25;
-	    $rootScope.act = "Quận Cầu Giấy, Hà Nội";
-
-	    if ($localStorage.relandToken) {
-	      decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
-	      HouseService.profile({ userID: decodedToken.userID }).then(function (res) {
-	        //$rootScope.user.userID = decodedToken.userID;
-	        if (res.data.success == true)
-	          //Nhannc edit, Hung check lai
-	          //$rootScope.user = res.data.user;
-	          $rootScope.user.userName = res.data.user.name;
-	        $rootScope.user.userID = res.data.user.id;
-	        $rootScope.user.userAvatar = res.data.user.avatar;
-	        $rootScope.user.adsLikes = res.data.user.adsLikes;
-	        $rootScope.user.userEmail = res.data.user.email;
-	        $rootScope.user.phone = res.data.user.phone;
-	        //LastSearch may use in storega
-	        if ($localStorage.lastSearch) {
-	          $rootScope.user.lastSearch = $localStorage.lastSearch;
-	        }
-	        if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
-	        $rootScope.user.lastViewAds = res.data.user.lastViewAds;
-	        $rootScope.user.saveSearch = res.data.user.saveSearch;
-	      });
-	    }
-
-	    // $rootScope.searchData = {
-	    //   giaBETWEEN: [0,9999999999999],
-	    //   "loaiTin": 0,
-	    //   "loaiNhaDat": 0,
-	    //   "loaiNhaDats": [],
-	    //   "soPhongNguGREATER": 0,
-	    //   "soPhongTamGREATER": 0,
-	    //   "soTangGREATER": 0,
-	    //   "dienTichBETWEEN": [0,99999999999999],
-	    //   "huongNha": 0,
-	    //   "huongNhas": [],
-	    //   "radiusInKm": 2,
-	    //   "ngayDaDang": undefined,
-	    //   "userID": $rootScope.user.userID,
-	    //   //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
-	    //   "limit": $rootScope.pageSize,
-	    //   "orderBy": 0,
-	    //   "pageNo": 1
-	    // }
-
-	    $rootScope.searchData = {
-	      "placeId": undefined,
-	      "loaiTin": 0,
-	      "giaBETWEEN": [0, 999999999],
-	      "dienTichBETWEEN": [0, 99999999999],
-	      "ngayDangTinGREATER": "19810101",
-	      "viewport": {
-	        "northeast": {
-	          "lat": 23.393395,
-	          "lon": 109.4689483
-	        },
-	        "southwest": {
-	          "lat": 8.412729499999999,
-	          "lon": 102.14441
-	        }
-	      },
-	      // "viewport" : {
-	      //   "northeast" : {
-	      //     "lat" : 21.385027,
-	      //     "lon" : 106.0198859
-	      //   },
-	      //   "southwest" : {
-	      //     "lat" : 20.562323,
-	      //     "lon" : 105.2854659
-	      //   }
-	      // },
-	      "diaChinh": {
-	        "tinhKhongDau": "ha-noi",
-	        "huyenKhongDau": "cau-giay"
-	      },
-	      // circle : {
-	      //   center : PointModel,
-	      //   radius : Joi.number()
-	      // },
-	      "orderBy": { "name": "ngayDangTin", "type": "ASC" },
-	      "limit": 25,
-	      "pageNo": 1,
-	      "isIncludeCountInResponse": false,
-	      "updateLastSearch": true
-	    };
-	    //mobile login box controll
-
-	    $rootScope.ENTER_EMAIL = 1;
-	    $rootScope.ENTER_PASSWORD = 2;
-	    $rootScope.LOGGED_IN = 3;
-	    $rootScope.FORGOT_PASSWORD = 4;
-	    $rootScope.SENT_PASSWORD = 5;
-	    $rootScope.RESET_PASSWORD = 6;
-
-	    $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
-
-	    $rootScope.currentLocation = {
-	      lat: undefined,
-	      lon: undefined
-	    };
-	    $rootScope.lastSearch = undefined;
-
-	    $rootScope.getLastSearch = function (localStorage) {
-	      if (localStorage && localStorage.lastSearch && localStorage.lastSearch.length > 0) {
-	        var clone = _.cloneDeep(localStorage.lastSearch[localStorage.lastSearch.length - 1]);
-	        return clone;
-	      }
-	      return undefined;
-	    };
-	    $rootScope.getAllLastSearch = function (localStorage) {
-	      if (localStorage) {
-	        return localStorage.lastSearch;
-	      }
-	    };
-
-	    $rootScope.addLastSearch = function (localStorage, oLastSearch) {
-	      var lastSearch = _.cloneDeep(oLastSearch);
-	      if (localStorage) {
-	        if (!localStorage.lastSearch || localStorage.lastSearch.length == 0) {
-	          localStorage.lastSearch = [];
-	        } else if (localStorage.lastSearch.length == 2) {
-	          localStorage.lastSearch = _(localStorage.lastSearch).slice(1, localStorage.lastSearch.length).value();
-	        }
-	        localStorage.lastSearch.push({
-	          time: new Date().toString('yyyyMMdd HH:mm:ss'),
-	          query: lastSearch
-	        });
-
-	        $rootScope.$bus.publish({
-	          channel: 'search',
-	          topic: 'search',
-	          data: $rootScope.getLastSearch(localStorage)
-	        });
-	      }
-	    };
-
-	    $rootScope.signin = function () {};
-	    //end mobild login box controll
-
-	    $rootScope.alreadyLike = function (adsID) {
-	      return _.indexOf($rootScope.user.adsLikes, adsID) >= 0;
-	    };
-
-	    // show notify
-	    $rootScope.showNotify = function (text, box, item, itemtext) {
-	      if (item !== null || item != "") $(item).html(itemtext);
-	      if (text !== null || text != "") $(".notifyBox").html(text);
-	      if (box !== null || box != "") {
-	        $(box).fadeIn(100).delay(1800).slideUp(150);
-	      } else {
-	        $(".notifyBox").fadeIn(100).delay(900).slideUp(150);
-	      }
-	    };
-
-	    $rootScope.showDangNhapForLike = function () {};
-
-	    $rootScope.isLoggedIn = function () {
-
-	      if ($rootScope.user.userID) return true;
-	      return false;
-	    };
-
-	    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-	      $rootScope.lastState = from;
-	      $rootScope.lastStateParams = fromParams;
+	    var tap = postal.addWireTap(function (d, e) {
+	        console.log(JSON.stringify(e));
 	    });
 
-	    $rootScope.chat_visible = true;
-	    $rootScope.showChat = function (user, scope) {
-	      if ($rootScope.chatBoxes.hasOwnProperty(user.email)) {} else {
-	        $rootScope.chatBoxes[user.email] = user;
-	        var divElement = angular.element(document.querySelector('#chat-container'));
-	        var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
-	        divElement.append(appendHtml);
-	      }
+	    var _ = __webpack_require__(5);
 
-	      /*if(true || $rootScope.user.userName){
-	        $rootScope.chat_visible = true;
-	        $rootScope.chat_user = user;
-	        }
-	      else{
-	        alert(window.RewayConst.MSG.LOGIN_REQUIRED);
-	      }*/
-	    };
-	    $rootScope.closeChat = function () {
-	      $rootScope.chat_visible = false;
-	    };
+	    var bds = angular.module('bds', ['ngCookies', 'ui.router', 'nemLogging', 'ngMap', 'ngMessages', 'ngStorage', 'ngFileUpload', 'btford.socket-io', 'angular-jwt', 'infinite-scroll', 'ngDialog']).factory('socket', function (socketFactory) {
+	        // var socket = io.connect("http://localhost:5000");
 
-	    $rootScope.postPageRendered = function () {
-	      // alert('aaa');
-	      //window.DesignCommon.adjustPage();
-	    };
+	        var socket = io.connect();
+	        //socket.forward('error');
+	        // socket.connect();
+	        return socket;
+	    }).config(function ($provide, $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider) {
+	        // For any unmatched url, send to /route1
+	        $locationProvider.html5Mode(true);
 
-	    $rootScope.suggestedSearch = [{
-	      description: "Vị trí hiện tại",
-	      types: "1",
-	      place_id: "111",
-	      class: "iconLocation gray"
-	    }];
+	        $provide.decorator('$rootScope', ['$delegate', '$window', function ($delegate, $window) {
+	            Object.defineProperty($delegate.constructor.prototype, '$bus', {
+	                value: postal,
+	                enumerable: false
+	            });
+	            return $delegate;
+	        }]);
 
-	    $rootScope.signout = function () {
-	      $rootScope.loginbox.resetLoginBox();
-	    };
-	    $rootScope.bodyClass = "page-home";
+	        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+	            return {
+	                'request': function request(config) {
+	                    config.headers = config.headers || {};
+	                    if ($localStorage.relandToken) {
+	                        config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
+	                    }
+	                    return config;
+	                },
+	                'responseError': function responseError(response) {
+	                    if (response.status === 401 || response.status === 403) {
+	                        //$location.path('/signin');
+	                        alert("Đăng nhập hệ thống để sử dụng tính năng này");
+	                    }
+	                    return $q.reject(response);
+	                }
+	            };
+	        }]);
 
-	    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-	      //alert(toState.name);
-	      // if (toState.name === 'msearch') {
-	      //   if(toParams.viewMode == "list"){
-	      //     toState.templateUrl = '/web/mobile/list.html'; 
-	      //   }else{
-	      //     toState.templateUrl = '/web/mobile/maps.html';
-	      //   }
-	      // }
-	      //else{
-	      //   if(!toState.templateUrl)ss
-	      //     toState.templateUrl = '/web/'+toState.name+'.html';
-	      //   //toState.templateUrl = '/web/marker.html';
-	      // }
-	      if (!toState.templateUrl) toState.templateUrl = '/web/' + toState.name + '.html';
-	      //if (toState.name === 'list') {
-	      //  alert(toState);
+	        //$urlRouterProvider.otherwise("/web/list.html")
+	        //alert('sss');
+	        // $interpolateProvider.startSymbol('{[{');
+	        // $interpolateProvider.endSymbol('}]}');
 
-	      //}
-	    });
-	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-	      console.log("changed to state " + toState);
-	    });
-
-	    $rootScope.getGoogleLocation = function (val) {
-	      return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
-	        params: {
-	          address: val,
-	          //language: 'en',
-	          key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-	          //types: 'gecodes,cities,places',
-	          components: 'country:vn',
-	          sensor: false
-	        }
-	      }).then(function (response) {
-	        /*return response.data.results.map(function(item){
-	          return item;
-	        });*/
-	        return response.data.results;
-	      });
-	      // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
-	      //   params: {
-	      //     input: val,
-	      //     language: 'en',
-	      //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
-	      //     //types: 'gecodes,cities',
-	      //     components: 'country:vn',
-	      //     sensor: false
-	      //   }
-	      // }).then(function(response){
-	      //   /*return response.data.results.map(function(item){
-	      //     return item;
-	      //   });*/
-	      //   return response.data.results;
-	      // });
-	    };
-	    $rootScope.getGoogleLocationById = function (val) {
-	      return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
-	        params: {
-	          placeid: val,
-	          // language: 'en',
-	          key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
-	          //types: 'gecodes,cities',
-	          // components: 'country:vn',
-	          // sensor: false
-	        }
-	      }).then(function (response) {
-	        /*return response.data.results.map(function(item){
-	          return item;
-	        });*/
-	        return response.data.result;
-	      });
-	    };
-	  }]);
-	  bds.config(function ($provide, $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider) {
-	    // For any unmatched url, send to /route1
-	    $locationProvider.html5Mode(true);
-
-	    $provide.decorator('$rootScope', ['$delegate', '$window', function ($delegate, $window) {
-	      Object.defineProperty($delegate.constructor.prototype, '$bus', {
-	        value: postal,
-	        enumerable: false
-	      });
-	      return $delegate;
-	    }]);
-
-	    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-	      return {
-	        'request': function request(config) {
-	          config.headers = config.headers || {};
-	          if ($localStorage.relandToken) {
-	            config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
-	          }
-	          return config;
-	        },
-	        'responseError': function responseError(response) {
-	          if (response.status === 401 || response.status === 403) {
-	            //$location.path('/signin');
-	            alert("Đăng nhập hệ thống để sử dụng tính năng này");
-	          }
-	          return $q.reject(response);
-	        }
-	      };
-	    }]);
-
-	    //$urlRouterProvider.otherwise("/web/list.html")
-	    //alert('sss');
-	    // $interpolateProvider.startSymbol('{[{');
-	    // $interpolateProvider.endSymbol('}]}');
-
-	    /*uiGmapGoogleMapApiProvider.configure({
+	        /*uiGmapGoogleMapApiProvider.configure({
 	         //    key: 'your api key',
 	         v: '3.20', //defaults to latest 3.X anyhow
 	         libraries: 'places,geometry,visualization' // Required for SearchBox.
-	     });*/
-	    $stateProvider.state('package', {
-	      url: "/hotlist/:packageID/:viewMode",
-	      templateUrl: "/web/search.html",
-	      controller: "SearchCtrl",
-	      controllerAs: 'mc',
-	      resolve: {
-	        title: function title(HouseService, $stateParams, $rootScope) {
-	          var result = HouseService.getAllAds();
-	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	          //alert($state.params.place);
-	          //var result = HouseService.findAdsSpatial($stateParams.place);
-	          result.then(function (data) {
-	            window.initData = data.data;
-	          });
-	          return result;
-	        }
-	      },
-	      data: {}
-	      //bodyClass: "page-search",
-	      //abc: title
-
-	      // ,
-	      // controller: function($scope,sellingHouses){
-	      //   $scope.sellingHouses = sellingHouses;
-	      //   //alert(sellingHouses.length);
-	      // }
-	    }).state('searchdc', {
-	      url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
-	      templateUrl: "/web/search.html",
-	      controller: "SearchCtrl",
-	      controllerAs: 'mc',
-	      resolve: {
-	        title: function title(HouseService, $stateParams, $rootScope) {
-	          var result = HouseService.getAllAds();
-	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	          //alert($state.params.place);
-	          //var result = HouseService.findAdsSpatial($stateParams.place);
-	          result.then(function (data) {
-	            window.initData = data.data;
-	          });
-	          return result;
-	        }
-	      },
-	      data: {}
-	      //bodyClass: "page-search",
-	      //abc: title
-
-	      // ,
-	      // controller: function($scope,sellingHouses){
-	      //   $scope.sellingHouses = sellingHouses;
-	      //   //alert(sellingHouses.length);
-	      // }
-	    }).state('search', {
-	      url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-	      // templateUrl: "/web/search.tpl.html",
-	      controller: "SearchCtrl",
-	      controllerAs: 'mc',
-	      resolve: {
-	        title: function title(HouseService, $stateParams, $rootScope) {
-	          var result = HouseService.getAllAds();
-	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	          //alert($state.params.place);
-	          //var result = HouseService.findAdsSpatial($stateParams.place);
-	          result.then(function (data) {
-	            window.initData = data.data;
-	          });
-	          return result;
-	        }
-	      },
-	      data: {}
-	      //bodyClass: "page-search",
-	      //abc: title
-
-	      // ,
-	      // controller: function($scope,sellingHouses){
-	      //   $scope.sellingHouses = sellingHouses;
-	      //   //alert(sellingHouses.length);
-	      // }
-	    }).state('home', {
-	      url: "/index.html",
-	      templateUrl: "/web/index_content.html",
-	      controller: "MainCtrl",
-	      controllerAs: 'mc',
-	      resolve: {
-	        title: function title(HouseService) {
-	          //alert(HouseService);
-	          //return HouseService.getAllAds();
-	          /*.then(function(data){
-	            return data.data;
-	          });*/
-	          //return $http.get("http://www.dantri.com");
-	          window.initData = [{ a: 'a' }, { b: 'b' }];
-	        }
-	      },
-	      data: {
-	        bodyClass: "page-home",
-	        xyz: [{ a: 'b' }]
-	      }
-	    }).state('detail', {
-	      url: "/detail/:adsID",
-	      //templateUrl: "/web/index_content.html",
-	      controller: "DetailCtrl",
-	      controllerAs: 'dt',
-	      data: {
-	        bodyClass: "page-detail"
-	      }
-	    }).state('news', {
-	      url: "/news/:rootCatId",
-	      controller: "NewsCtrl",
-	      controllerAs: 'nc',
-	      data: {}
-	    }).state('newsDetail', {
-	      url: "/newsDetail/:rootCatId/:articleId",
-	      controller: "NewsDetailCtrl",
-	      controllerAs: 'ndc',
-	      data: {}
-	    }).state('resetPassword', {
-	      url: "/resetPassword",
-	      templateUrl: "/web/index_content.html",
-	      controller: "MainCtrl",
-	      controllerAs: 'mc',
-	      data: {
-	        bodyClass: "page-detail"
-	      }
-	    }).state('profile', {
-	      url: "/profile/:userID",
-	      templateUrl: "/web/profile.tpl.html",
-	      controller: "ProfileCtrl",
-	      controllerAs: 'pc',
-	      data: {
-	        bodyClass: "page-detail"
-	      }
-	    }).state('dangtin', {
-	      url: "/dangtin",
-	      templateUrl: "/web/dang-tin.html",
-	      controller: "DangTinCtrl",
-	      controllerAs: 'dt',
-	      data: {
-	        bodyClass: "page-detail"
-	      }
-	    }).state('topview', {
-	      url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
-	      templateUrl: "/web/search.html",
-	      controller: "SearchCtrl",
-	      controllerAs: 'mc',
-	      resolve: {
-	        title: function title(HouseService, $stateParams, $rootScope) {
-	          var result = HouseService.getAllAds();
-	          //var result = $rootScope.getGoogleLocationById($stateParams.place);
-	          //alert($state.params.place);
-	          //var result = HouseService.findAdsSpatial($stateParams.place);
-	          result.then(function (data) {
-	            window.initData = data.data;
-	          });
-	          return result;
-	        }
-	      }
-	    }).state('mhome', {
-	      url: "/mobile/index.html",
-	      templateUrl: "/web/mobile/index_content.html",
-	      controller: "MobileHomeCtrl",
-	      controllerAs: 'mhc'
-	    }).state('msearch', {
-	      // url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-	      url: "/mobile/search/:placeId/:loaiTin/:loaiNhaDat/:viewMode",
-	      templateUrl: "/web/mobile/search.html",
-	      controller: "MobileSearchCtrl",
-	      params: { query: null },
-	      controllerAs: 'msc'
-	    }).state('mdetail', {
-	      url: "/mobile/detail/:adsID",
-	      templateUrl: "/web/mobile/detail.html",
-	      controller: "MobileDetailCtrl",
-	      controllerAs: 'mdt'
-	    }).state('mpost', {
-	      url: "/mobile/post/:adsID",
-	      templateUrl: "/web/mobile/post.html",
-	      controller: "MobilePostCtrl",
-	      controllerAs: 'mpc'
-	    }).state('madsMgmt', {
-	      url: "/mobile/adsMgmt/:loaiTin",
-	      templateUrl: "/web/mobile/adsMgmt.html",
-	      controller: "MobileAdsMgmtCtrl",
-	      controllerAs: 'mamc'
-	    }).state('mchats', {
-	      url: "/mobile/chats",
-	      templateUrl: "/web/mobile/chats.html",
-	      controller: "MobileChatCtrl",
-	      controllerAs: 'mcc'
-	    }).state('mchatDetail', {
-	      url: "/mobile/chatDetail/:adsID/:toUserID",
-	      templateUrl: "/web/mobile/chatDetail.html",
-	      controller: "MobileChatDetailCtrl",
-	      controllerAs: 'mcdc'
-	    }).state('mlistMore', {
-	      url: "/mobile/more",
-	      templateUrl: "/web/mobile/listMoreAds.html",
-	      controller: "MobileListAdsCtrl",
-	      controllerAs: 'mlm',
-	      params: { query: null }
-	    });
-	  });
-	  bds.factory('socket', function (socketFactory) {
-	    // var socket = io.connect("http://localhost:5000");
-
-	    var socket = io.connect();
-	    //socket.forward('error');
-	    // socket.connect();
-	    return socket;
-	  });
-	  /*
-	  bds.factory('socket', function ($rootScope) {
-	  var socket = io.connect();
-	  return {
-	    on: function (eventName, callback) {
-	        socket.on(eventName, function () {
-	            var args = arguments;
-	            $rootScope.$apply(function () {
-	                callback.apply(socket, args);
-	            });
-	        });
-	    },
-	    emit: function (eventName, data, callback) {
-	        socket.emit(eventName, data, function () {
-	            var args = arguments;
-	            $rootScope.$apply(function () {
-	                if (callback) {
-	                    callback.apply(socket, args);
+	         });*/
+	        $stateProvider.state('package', {
+	            url: "/hotlist/:packageID/:viewMode",
+	            templateUrl: "/web/search.html",
+	            controller: "SearchCtrl",
+	            controllerAs: 'mc',
+	            resolve: {
+	                title: function title(HouseService, $stateParams, $rootScope) {
+	                    var result = HouseService.getAllAds();
+	                    //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	                    //alert($state.params.place);
+	                    //var result = HouseService.findAdsSpatial($stateParams.place);
+	                    result.then(function (data) {
+	                        window.initData = data.data;
+	                    });
+	                    return result;
 	                }
+	            },
+	            data: {}
+	            //bodyClass: "page-search",
+	            //abc: title
+
+	            // ,
+	            // controller: function($scope,sellingHouses){
+	            //   $scope.sellingHouses = sellingHouses;
+	            //   //alert(sellingHouses.length);
+	            // }
+	        }).state('searchdc', {
+	            url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
+	            templateUrl: "/web/search.html",
+	            controller: "SearchCtrl",
+	            controllerAs: 'mc',
+	            resolve: {
+	                title: function title(HouseService, $stateParams, $rootScope) {
+	                    var result = HouseService.getAllAds();
+	                    //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	                    //alert($state.params.place);
+	                    //var result = HouseService.findAdsSpatial($stateParams.place);
+	                    result.then(function (data) {
+	                        window.initData = data.data;
+	                    });
+	                    return result;
+	                }
+	            },
+	            data: {}
+	            //bodyClass: "page-search",
+	            //abc: title
+
+	            // ,
+	            // controller: function($scope,sellingHouses){
+	            //   $scope.sellingHouses = sellingHouses;
+	            //   //alert(sellingHouses.length);
+	            // }
+	        }).state('search', {
+	            url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+	            // templateUrl: "/web/search.tpl.html",
+	            controller: "SearchCtrl",
+	            controllerAs: 'mc',
+	            resolve: {
+	                title: function title(HouseService, $stateParams, $rootScope) {
+	                    var result = HouseService.getAllAds();
+	                    //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	                    //alert($state.params.place);
+	                    //var result = HouseService.findAdsSpatial($stateParams.place);
+	                    result.then(function (data) {
+	                        window.initData = data.data;
+	                    });
+	                    return result;
+	                }
+	            },
+	            data: {}
+	            //bodyClass: "page-search",
+	            //abc: title
+
+	            // ,
+	            // controller: function($scope,sellingHouses){
+	            //   $scope.sellingHouses = sellingHouses;
+	            //   //alert(sellingHouses.length);
+	            // }
+	        }).state('home', {
+	            url: "/index.html",
+	            templateUrl: "/web/index_content.html",
+	            controller: "MainCtrl",
+	            controllerAs: 'mc',
+	            resolve: {
+	                title: function title(HouseService) {
+	                    //alert(HouseService);
+	                    //return HouseService.getAllAds();
+	                    /*.then(function(data){
+	                     return data.data;
+	                     });*/
+	                    //return $http.get("http://www.dantri.com");
+	                    window.initData = [{ a: 'a' }, { b: 'b' }];
+	                }
+	            },
+	            data: {
+	                bodyClass: "page-home",
+	                xyz: [{ a: 'b' }]
+	            }
+	        }).state('detail', {
+	            url: "/detail/:adsID",
+	            //templateUrl: "/web/index_content.html",
+	            controller: "DetailCtrl",
+	            controllerAs: 'dt',
+	            data: {
+	                bodyClass: "page-detail"
+	            }
+	        }).state('news', {
+	            url: "/news/:rootCatId",
+	            controller: "NewsCtrl",
+	            controllerAs: 'nc',
+	            data: {}
+	        }).state('newsDetail', {
+	            url: "/newsDetail/:rootCatId/:articleId",
+	            controller: "NewsDetailCtrl",
+	            controllerAs: 'ndc',
+	            data: {}
+	        }).state('resetPassword', {
+	            url: "/resetPassword",
+	            templateUrl: "/web/index_content.html",
+	            controller: "MainCtrl",
+	            controllerAs: 'mc',
+	            data: {
+	                bodyClass: "page-detail"
+	            }
+	        }).state('profile', {
+	            url: "/profile/:userID",
+	            templateUrl: "/web/profile.tpl.html",
+	            controller: "ProfileCtrl",
+	            controllerAs: 'pc',
+	            data: {
+	                bodyClass: "page-detail"
+	            }
+	        }).state('dangtin', {
+	            url: "/dangtin",
+	            templateUrl: "/web/dang-tin.html",
+	            controller: "DangTinCtrl",
+	            controllerAs: 'dt',
+	            data: {
+	                bodyClass: "page-detail"
+	            }
+	        }).state('topview', {
+	            url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
+	            templateUrl: "/web/search.html",
+	            controller: "SearchCtrl",
+	            controllerAs: 'mc',
+	            resolve: {
+	                title: function title(HouseService, $stateParams, $rootScope) {
+	                    var result = HouseService.getAllAds();
+	                    //var result = $rootScope.getGoogleLocationById($stateParams.place);
+	                    //alert($state.params.place);
+	                    //var result = HouseService.findAdsSpatial($stateParams.place);
+	                    result.then(function (data) {
+	                        window.initData = data.data;
+	                    });
+	                    return result;
+	                }
+	            }
+	        }).state('mhome', {
+	            url: "/mobile/index.html",
+	            templateUrl: "/web/mobile/index_content.html",
+	            controller: "MobileHomeCtrl",
+	            controllerAs: 'mhc'
+	        }).state('msearch', {
+	            // url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+	            url: "/mobile/search/:placeId/:loaiTin/:loaiNhaDat/:viewMode",
+	            templateUrl: "/web/mobile/search.html",
+	            controller: "MobileSearchCtrl",
+	            params: { query: null },
+	            controllerAs: 'msc'
+	        }).state('mdetail', {
+	            url: "/mobile/detail/:adsID",
+	            templateUrl: "/web/mobile/detail.html",
+	            controller: "MobileDetailCtrl",
+	            controllerAs: 'mdt'
+	        }).state('mpost', {
+	            url: "/mobile/post/:adsID",
+	            templateUrl: "/web/mobile/post.html",
+	            controller: "MobilePostCtrl",
+	            controllerAs: 'mpc'
+	        }).state('madsMgmt', {
+	            url: "/mobile/adsMgmt/:loaiTin",
+	            templateUrl: "/web/mobile/adsMgmt.html",
+	            controller: "MobileAdsMgmtCtrl",
+	            controllerAs: 'mamc'
+	        }).state('mchats', {
+	            url: "/mobile/chats",
+	            templateUrl: "/web/mobile/chats.html",
+	            controller: "MobileChatCtrl",
+	            controllerAs: 'mcc'
+	        }).state('mchatDetail', {
+	            url: "/mobile/chatDetail/:adsID/:toUserID",
+	            templateUrl: "/web/mobile/chatDetail.html",
+	            controller: "MobileChatDetailCtrl",
+	            controllerAs: 'mcdc'
+	        }).state('mlistMore', {
+	            url: "/mobile/more",
+	            templateUrl: "/web/mobile/listMoreAds.html",
+	            controller: "MobileListAdsCtrl",
+	            controllerAs: 'mlm',
+	            params: { query: null }
+	        });
+	    }).run(['socket', '$timeout', 'jwtHelper', '$rootScope', '$localStorage', '$cookieStore', '$http', '$compile', 'HouseService', function (socket, $timeout, jwtHelper, $rootScope, $localStorage, $cookieStore, $http, $compile, HouseService) {
+	        $rootScope.globals = $cookieStore.get('globals') || {};
+	        //$rootScope.center = "Hanoi Vietnam";
+	        $rootScope.center = {
+	            lat: 16.0439,
+	            lng: 108.199
+	        };
+	        //alert($localStorage.relandToken);
+
+	        var decodedToken = {};
+	        $rootScope.loginbox = {};
+	        $rootScope.chatBoxes = [];
+	        $rootScope.menuitems = window.RewayListValue.menu;
+	        $rootScope.user = {
+	            userID: undefined,
+	            adsLikes: [],
+	            lastSearch: null,
+	            autoSearch: true
+	        };
+	        $rootScope.pageSize = 25;
+	        $rootScope.act = "Quận Cầu Giấy, Hà Nội";
+
+	        if ($localStorage.relandToken) {
+	            decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
+	            HouseService.profile({ userID: decodedToken.userID }).then(function (res) {
+	                //$rootScope.user.userID = decodedToken.userID;
+	                if (res.data.success == true)
+	                    //Nhannc edit, Hung check lai
+	                    //$rootScope.user = res.data.user;
+	                    $rootScope.user.userName = res.data.user.name;
+	                $rootScope.user.userID = res.data.user.id;
+	                $rootScope.user.userAvatar = res.data.user.avatar;
+	                $rootScope.user.adsLikes = res.data.user.adsLikes;
+	                $rootScope.user.userEmail = res.data.user.email;
+	                $rootScope.user.phone = res.data.user.phone;
+	                //LastSearch may use in storega
+	                if ($localStorage.lastSearch) {
+	                    $rootScope.user.lastSearch = $localStorage.lastSearch;
+	                }
+	                if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
+	                $rootScope.user.lastViewAds = res.data.user.lastViewAds;
+	                $rootScope.user.saveSearch = res.data.user.saveSearch;
+	                $rootScope.getUnreadMsgCount($rootScope.user.userID);
+	                socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUserName: $rootScope.user.userName }, function (data) {
+	                    console.log("alert user online " + $rootScope.user.userID);
+	                });
 	            });
-	        })
-	    },
-	    getSocket: function() {
-	        return socket;
-	    }
-	  };
-	  });*/
+	        }
+
+	        // $rootScope.searchData = {
+	        //   giaBETWEEN: [0,9999999999999],
+	        //   "loaiTin": 0,
+	        //   "loaiNhaDat": 0,
+	        //   "loaiNhaDats": [],
+	        //   "soPhongNguGREATER": 0,
+	        //   "soPhongTamGREATER": 0,
+	        //   "soTangGREATER": 0,
+	        //   "dienTichBETWEEN": [0,99999999999999],
+	        //   "huongNha": 0,
+	        //   "huongNhas": [],
+	        //   "radiusInKm": 2,
+	        //   "ngayDaDang": undefined,
+	        //   "userID": $rootScope.user.userID,
+	        //   //"geoBox": [  vm.map.getBounds().H.j,  vm.map.getBounds().j.j ,vm.map.getBounds().H.H, vm.map.getBounds().j.H],
+	        //   "limit": $rootScope.pageSize,
+	        //   "orderBy": 0,
+	        //   "pageNo": 1
+	        // }
+
+	        $rootScope.searchData = {
+	            "placeId": undefined,
+	            "loaiTin": 0,
+	            "giaBETWEEN": [0, 999999999],
+	            "dienTichBETWEEN": [0, 99999999999],
+	            "ngayDangTinGREATER": "19810101",
+	            "viewport": {
+	                "northeast": {
+	                    "lat": 23.393395,
+	                    "lon": 109.4689483
+	                },
+	                "southwest": {
+	                    "lat": 8.412729499999999,
+	                    "lon": 102.14441
+	                }
+	            },
+	            // "viewport" : {
+	            //   "northeast" : {
+	            //     "lat" : 21.385027,
+	            //     "lon" : 106.0198859
+	            //   },
+	            //   "southwest" : {
+	            //     "lat" : 20.562323,
+	            //     "lon" : 105.2854659
+	            //   }
+	            // },
+	            "diaChinh": {
+	                "tinhKhongDau": "ha-noi",
+	                "huyenKhongDau": "cau-giay"
+	            },
+	            // circle : {
+	            //   center : PointModel,
+	            //   radius : Joi.number()
+	            // },
+	            "orderBy": { "name": "ngayDangTin", "type": "ASC" },
+	            "limit": 25,
+	            "pageNo": 1,
+	            "isIncludeCountInResponse": false,
+	            "updateLastSearch": true
+	        };
+	        //mobile login box controll
+
+	        $rootScope.ENTER_EMAIL = 1;
+	        $rootScope.ENTER_PASSWORD = 2;
+	        $rootScope.LOGGED_IN = 3;
+	        $rootScope.FORGOT_PASSWORD = 4;
+	        $rootScope.SENT_PASSWORD = 5;
+	        $rootScope.RESET_PASSWORD = 6;
+
+	        $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
+
+	        $rootScope.currentLocation = {
+	            lat: undefined,
+	            lon: undefined
+	        };
+	        $rootScope.lastSearch = undefined;
+
+	        $rootScope.getUnreadMsgCount = function (userID) {
+	            HouseService.getUnreadMessages({ userID: userID }).then(function (res) {
+	                if (res.status == 200 && res.data.status == 0) {
+	                    if (res.data.data.length > 0) {
+	                        $rootScope.unreadMsg = res.data.data.length;
+	                    }
+	                }
+	                if (!$rootScope.unreadMsg) $rootScope.unreadMsg = null;
+	            });
+	        };
+	        $rootScope.getLastSearch = function (localStorage) {
+	            if (localStorage && localStorage.lastSearch && localStorage.lastSearch.length > 0) {
+	                var clone = _.cloneDeep(localStorage.lastSearch[localStorage.lastSearch.length - 1]);
+	                return clone;
+	            }
+	            return undefined;
+	        };
+	        $rootScope.getAllLastSearch = function (localStorage) {
+	            if (localStorage) {
+	                return localStorage.lastSearch;
+	            }
+	        };
+
+	        $rootScope.addLastSearch = function (localStorage, oLastSearch) {
+	            var lastSearch = _.cloneDeep(oLastSearch);
+	            if (localStorage) {
+	                if (!localStorage.lastSearch || localStorage.lastSearch.length == 0) {
+	                    localStorage.lastSearch = [];
+	                } else if (localStorage.lastSearch.length == 2) {
+	                    localStorage.lastSearch = _(localStorage.lastSearch).slice(1, localStorage.lastSearch.length).value();
+	                }
+	                localStorage.lastSearch.push({
+	                    time: new Date().toString('yyyyMMdd HH:mm:ss'),
+	                    query: lastSearch
+	                });
+
+	                $rootScope.$bus.publish({
+	                    channel: 'search',
+	                    topic: 'search',
+	                    data: $rootScope.getLastSearch(localStorage)
+	                });
+	            }
+	        };
+
+	        $rootScope.signin = function () {};
+	        //end mobild login box controll
+
+	        $rootScope.alreadyLike = function (adsID) {
+	            return _.indexOf($rootScope.user.adsLikes, adsID) >= 0;
+	        };
+
+	        // show notify
+	        $rootScope.showNotify = function (text, box, item, itemtext) {
+	            if (item !== null || item != "") $(item).html(itemtext);
+	            if (text !== null || text != "") $(".notifyBox").html(text);
+	            if (box !== null || box != "") {
+	                $(box).fadeIn(100).delay(1800).slideUp(150);
+	            } else {
+	                $(".notifyBox").fadeIn(100).delay(900).slideUp(150);
+	            }
+	        };
+
+	        $rootScope.showDangNhapForLike = function () {};
+
+	        $rootScope.isLoggedIn = function () {
+
+	            if ($rootScope.user.userID) return true;
+	            return false;
+	        };
+
+	        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+	            $rootScope.lastState = from;
+	            $rootScope.lastStateParams = fromParams;
+	        });
+
+	        $rootScope.chat_visible = true;
+	        $rootScope.showChat = function (user, scope) {
+	            if ($rootScope.chatBoxes.hasOwnProperty(user.email)) {} else {
+	                $rootScope.chatBoxes[user.email] = user;
+	                var divElement = angular.element(document.querySelector('#chat-container'));
+	                var appendHtml = $compile('<bds-chat visible="$root.chat_visible" useremail="email"></bds-chat>')(scope);
+	                divElement.append(appendHtml);
+	            }
+
+	            /*if(true || $rootScope.user.userName){
+	              $rootScope.chat_visible = true;
+	              $rootScope.chat_user = user;
+	              }
+	            else{
+	              alert(window.RewayConst.MSG.LOGIN_REQUIRED);
+	            }*/
+	        };
+	        $rootScope.closeChat = function () {
+	            $rootScope.chat_visible = false;
+	        };
+
+	        $rootScope.postPageRendered = function () {
+	            // alert('aaa');
+	            //window.DesignCommon.adjustPage();
+	        };
+
+	        $rootScope.suggestedSearch = [{
+	            description: "Vị trí hiện tại",
+	            types: "1",
+	            place_id: "111",
+	            class: "iconLocation gray"
+	        }];
+
+	        $rootScope.signout = function () {
+	            $rootScope.loginbox.resetLoginBox();
+	        };
+	        $rootScope.bodyClass = "page-home";
+
+	        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+	            //alert(toState.name);
+	            // if (toState.name === 'msearch') {
+	            //   if(toParams.viewMode == "list"){
+	            //     toState.templateUrl = '/web/mobile/list.html'; 
+	            //   }else{
+	            //     toState.templateUrl = '/web/mobile/maps.html';
+	            //   }
+	            // }
+	            //else{
+	            //   if(!toState.templateUrl)ss
+	            //     toState.templateUrl = '/web/'+toState.name+'.html';
+	            //   //toState.templateUrl = '/web/marker.html';
+	            // }
+	            if (!toState.templateUrl) toState.templateUrl = '/web/' + toState.name + '.html';
+	            //if (toState.name === 'list') {
+	            //  alert(toState);
+
+	            //}
+	        });
+	        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+	            console.log("changed to state " + toState);
+	        });
+
+	        $rootScope.getGoogleLocation = function (val) {
+	            return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+	                params: {
+	                    address: val,
+	                    //language: 'en',
+	                    key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	                    //types: 'gecodes,cities,places',
+	                    components: 'country:vn',
+	                    sensor: false
+	                }
+	            }).then(function (response) {
+	                /*return response.data.results.map(function(item){
+	                  return item;
+	                });*/
+	                return response.data.results;
+	            });
+	            // return $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
+	            //   params: {
+	            //     input: val,
+	            //     language: 'en',
+	            //     key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU',
+	            //     //types: 'gecodes,cities',
+	            //     components: 'country:vn',
+	            //     sensor: false
+	            //   }
+	            // }).then(function(response){
+	            //   /*return response.data.results.map(function(item){
+	            //     return item;
+	            //   });*/
+	            //   return response.data.results;
+	            // });
+	        };
+	        $rootScope.getGoogleLocationById = function (val) {
+	            return $http.get('https://maps.googleapis.com/maps/api/place/details/json', {
+	                params: {
+	                    placeid: val,
+	                    // language: 'en',
+	                    key: 'AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU'
+	                    //types: 'gecodes,cities',
+	                    // components: 'country:vn',
+	                    // sensor: false
+	                }
+	            }).then(function (response) {
+	                /*return response.data.results.map(function(item){
+	                  return item;
+	                });*/
+	                return response.data.result;
+	            });
+	        };
+
+	        socket.on("new message", function (data) {
+	            console.log("----------------on new message-------------------");
+	            $rootScope.chatMsgData = data;
+	            $timeout(function () {
+	                if ($rootScope.isLoggedIn()) {
+	                    if (!$rootScope.unreadMsg) $rootScope.unreadMsg = 1;else $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+	                }
+	            }, 100);
+	            $rootScope.$broadcast("newMessageChat");
+	        });
+
+	        socket.on("alert user online", function (data) {
+	            console.log("-----------------alert user online----------------");
+	            $timeout(function () {
+	                if (!$rootScope.allOlineUser) $rootScope.allOlineUser = [];
+	                var index = $rootScope.allOlineUser.indexOf(data.fromUserID.trim());
+	                if (index < 0) {
+	                    $rootScope.allOlineUser.push(data.fromUserID.trim());
+	                }
+	                $rootScope.$broadcast("userOnOffline");
+	            }, 100);
+	        });
+
+	        socket.on("alert user offline", function (data) {
+	            console.log("-----------------alert user offline----------------");
+	            $timeout(function () {
+	                if ($rootScope.allOlineUser) {
+	                    var index = $rootScope.allOlineUser.indexOf(data.fromUserID.trim());
+	                    if (index != -1) {
+	                        $rootScope.allOlineUser.splice(index, 1);
+	                    }
+	                    $rootScope.$broadcast("userOnOffline");
+	                }
+	            }, 100);
+	        });
+
+	        socket.on("unread-messages", function (data) {
+	            console.log("------------------chat-unreadMessage-----------------");
+	            $timeout(function () {
+	                $rootScope.unreadMsgs = [];
+	                for (var i = 0, len = data.length; i < len; i++) {
+	                    var msg = data[i].default;
+	                    $rootScope.unreadMsgs.push(data[i]);
+	                }
+	                $rootScope.$broadcast("unreadMsgs");
+	            }, 100);
+	        });
+	    }]);
 	})();
 
 	var hello = function hello() {
-	  alert('hello buddy! how are you today?');
+	    alert('hello buddy! how are you today?');
 	};
 
 /***/ },
@@ -22855,9 +22888,11 @@
 				//console.log("res.data " + res.data.ads);
 				$rootScope.user.lastViewAds = vm.adsID;
 				vm.ads = res.data.ads;
-				vm.ads.chiTietThuGon = vm.ads.chiTiet;
-				if (vm.ads.chiTiet.length > 30) {
-					vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0, 300);
+				if (vm.ads.chiTiet) {
+					vm.ads.chiTietThuGon = vm.ads.chiTiet;
+					if (vm.ads.chiTiet.length > 30) {
+						vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0, 300);
+					}
 				}
 				vm.ads.place.diaChinh.tinhKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
 				vm.ads.place.diaChinh.huyenKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
@@ -23224,8 +23259,8 @@
 									vm.allRentInbox.push(inbox);
 								}
 							}
-							$rootScope.unreadMsg = unreadMsg;
-							$localStorage.unreadMsg = $rootScope.unreadMsg;
+							// $rootScope.unreadMsg = unreadMsg;
+							// $localStorage.unreadMsg = $rootScope.unreadMsg;
 							console.log("---------------processing all elements completed--------------------");
 						});
 					}
@@ -23251,18 +23286,18 @@
 	  		console.log("-------------destroy--chat------new message---------------");
 	  		console.log(data);
 	  	})
-	  });*/
-
-			$scope.$on('$destroy', function (event) {
-				console.log("-------------destroy--chat------------");
-				socket.removeAllListeners();
-				// or something like
-				// socket.removeListener(this);
-			});
-
-			socket.on("new message", function (data) {
+	  });
+	  		$scope.$on('$destroy', function (event) {
+	  	console.log("-------------destroy--chat------------");
+	  	socket.removeAllListeners();
+	  });
+	  		//$rootScope.$watch('chatMsgData', vm.testWatch,true);
+	  */
+			$scope.$on("newMessageChat", function (event, data) {
 				console.log("-------------chat------new message---------------");
-				if (!$rootScope.isChatDetail) {
+
+				if ($rootScope.chatMsgData) {
+					var data = $rootScope.chatMsgData;
 					console.log("-------------chat------new message--------in-------");
 					console.log(vm.toUserIdDetail);
 					data.date = new Date(data.date);
@@ -23304,7 +23339,6 @@
 								inbox.lastTime = new Date(data.date).getTime();
 								vm.allInbox.push(inbox);
 							}
-							if (!$rootScope.unreadMsg) $rootScope.unreadMsg = 1;else $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
 						});
 					} else {
 						var inbox = {};
@@ -23317,7 +23351,6 @@
 						inbox.lastMsg = data.content;
 						inbox.lastDate = vm.getChatTime(new Date(data.date));
 						vm.allInbox.push(inbox);
-						if (!$rootScope.unreadMsg) $rootScope.unreadMsg = 1;else $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
 					}
 
 					vm.allInbox.sort(function (obj1, obj2) {
@@ -23326,6 +23359,76 @@
 					$scope.$apply();
 				}
 			});
+
+			/*
+	  socket.on("new message", function(data){
+	  	console.log("-------------chat------new message---------------");
+	  	if(!$rootScope.isChatDetail){
+	  		console.log("-------------chat------new message--------in-------");
+	  		console.log(vm.toUserIdDetail);
+	  		data.date = new Date(data.date);
+	  				if(vm.allInbox.length > 0){
+	  			var isContain = false;
+	  			var async = require("async");
+	  			async.forEach(vm.allInbox,function(inbox, callback){
+	  				var count = 0;
+	  				if(inbox.unreadCount){
+	  					count = inbox.unreadCount;
+	  				}
+	  				if($rootScope.user.userID.trim()==data.toUserID && inbox.partner.userID.trim()==data.fromUserID.trim() && inbox.relatedToAds.adsID.trim()==data.relatedToAds.adsID.trim()){
+	  					count++;
+	  					inbox.unreadCount = count;
+	  					inbox.lastMsg = data.content;
+	  					inbox.lastDate = vm.getChatTime(new Date(data.date));
+	  					inbox.lastTime = new Date(data.date).getTime();
+	  					isContain = true;
+	  					console.log("--------------------msg from : " + data.fromUserID.trim());
+	  					console.log(inbox.unreadCount);
+	  				}
+	  				callback();
+	  			}, function(err){
+	  				if(err){throw err;}
+	  				console.log("processing all elements completed");
+	  				if(!isContain){
+	  					var inbox ={};
+	  					inbox.partner = {};
+	  					inbox.partner.userID = data.fromUserID.trim();
+	  					inbox.partner.fullName = data.fullName;
+	  					inbox.partner.avatar = data.avatar;
+	  					inbox.relatedToAds = data.relatedToAds;
+	  					inbox.unreadCount = 1;
+	  					inbox.lastMsg = data.content;
+	  					inbox.lastDate = vm.getChatTime(new Date(data.date));
+	  					inbox.lastTime = new Date(data.date).getTime();
+	  					vm.allInbox.push(inbox);
+	  				}
+	  				if(!$rootScope.unreadMsg)
+	  					$rootScope.unreadMsg = 1;
+	  				else
+	  					$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+	  			});
+	  		} else{
+	  			var inbox ={};
+	  			inbox.partner = {};
+	  			inbox.partner.userID = data.fromUserID.trim();
+	  			inbox.partner.fullName = data.fullName;
+	  			inbox.partner.avatar = data.avatar;
+	  			inbox.relatedToAds = data.relatedToAds;
+	  			inbox.unreadCount = 1;
+	  			inbox.lastMsg = data.content;
+	  			inbox.lastDate = vm.getChatTime(new Date(data.date));
+	  			vm.allInbox.push(inbox);
+	  			if(!$rootScope.unreadMsg)
+	  				$rootScope.unreadMsg = 1;
+	  			else
+	  				$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+	  		}
+	  				vm.allInbox.sort(function(obj1, obj2) {
+	  			return obj2.lastTime - obj1.lastTime;
+	  		})
+	  		$scope.$apply();
+	  	}
+	  });*/
 
 			/*
 	  socket.on("unread-messages", function(data){
@@ -29028,7 +29131,10 @@
 
 			$scope.$on('$destroy', function () {
 				console.log("-------------destroy--chat------new message---------------");
-				socket.removeAllListeners();
+				//socket.removeAllListeners();
+				socket.removeListener('check user online');
+				socket.removeListener('user-start-typing');
+				socket.removeListener('user-stop-typing');
 			});
 
 			vm.goBack = function () {
@@ -29049,38 +29155,35 @@
 			vm.isMe = function (userID) {
 				if ($scope.userID.trim() == userID.trim()) return true;else return false;
 			};
-			vm.testWatch = function () {
-				console.log("-----------testWatch:---- ");
-				console.log($rootScope.chatMsgData);
-			};
-			$rootScope.watchHitCount = 0;
-			$rootScope.$watch('chatMsgData', vm.testWatch, true);
+
 			/**
 	   Handle in comming message
 	   */
-			socket.on("new message", function (data) {
+			$scope.$on("newMessageChat", function () {
 				console.log("----------------------on new msg-detail-------------------");
-				$rootScope.chatMsgData = data;
-				console.log($rootScope.watchHitCount);
-				if (data.fromUserID.trim() == vm.toUserID.trim() && data.relatedToAds.adsID.trim() == vm.adsID) {
-					if (!$scope.chatBox.user) {
-						vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
-					}
-					data.date = new Date(data.date);
-					console.log(data);
-					$timeout(function () {
-						socket.emit('get-unread-message', { userID: $rootScope.user.userID }, function (data) {
-							console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
-							console.log(data);
-						});
-					}, 300);
+				if ($rootScope.chatMsgData) {
+					var data = $rootScope.chatMsgData;
+					console.log($rootScope.watchHitCount);
+					if (data.fromUserID.trim() == vm.toUserID.trim() && data.relatedToAds.adsID.trim() == vm.adsID) {
+						if (!$scope.chatBox.user) {
+							vm.initChatBox({ userID: data.fromUserID, name: data.fromFullName, avatar: data.fromUserAvatar });
+						}
+						data.date = new Date(data.date);
+						console.log(data);
+						$timeout(function () {
+							socket.emit('get-unread-message', { userID: $rootScope.user.userID }, function (data) {
+								console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+								console.log(data);
+							});
+						}, 300);
 
-					window.RewayClientUtils.addChatMessage($scope.chatBox, data);
-					$scope.$apply();
-					$("body").animate({ scrollTop: $(document).height() }, "slow");
-				} else {
-					if (!$rootScope.unreadMsg) $rootScope.unreadMsg = 1;else $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
-					$rootScope.unreadMsg = $rootScope.unreadMsg;
+						window.RewayClientUtils.addChatMessage($scope.chatBox, data);
+						$scope.$apply();
+						$("body").animate({ scrollTop: $(document).height() }, "slow");
+					} else {
+						if (!$rootScope.unreadMsg) $rootScope.unreadMsg = 1;else $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+						$rootScope.unreadMsg = $rootScope.unreadMsg;
+					}
 				}
 			});
 
@@ -29092,22 +29195,16 @@
 				}, 100);
 			});
 
-			socket.on("alert user online", function (data) {
-				console.log("-----------------alert user online----------------");
-				$timeout(function () {
-					if (vm.toUserID.trim() == data.fromUserID) {
+			$scope.$on("userOnOffline", function () {
+				console.log("------------------------listener user on-off--------------------");
+				if ($rootScope.allOlineUser) {
+					var index = $rootScope.allOlineUser.indexOf(vm.toUserID.trim());
+					if (index != -1) {
 						vm.toUserOnline = true;
-					}
-				}, 100);
-			});
-
-			socket.on("alert user offline", function (data) {
-				console.log("-----------------alert user offline----------------");
-				$timeout(function () {
-					if (vm.toUserID.trim() == data.fromUserID) {
+					} else {
 						vm.toUserOnline = false;
 					}
-				}, 100);
+				}
 			});
 
 			socket.on("user-start-typing", function (data) {
@@ -29128,21 +29225,25 @@
 				}
 			});
 
-			socket.on("unread-messages", function (data) {
-				console.log("------------------chat-unreadMessage-----------------");
-
-				var readedData = [];
-				for (var i = 0, len = data.length; i < len; i++) {
-					var msg = data[i].default;
-					msg.date = new Date(msg.date);
-					if (vm.adsID.trim() == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && vm.toUserID.trim() == msg.fromUserID.trim()) {
-						readedData.push(data[i]);
+			$scope.$on("unreadMsgs", function () {
+				console.log("------------------------listener unreadMsgs--------------------");
+				if ($rootScope.unreadMsgs) {
+					console.log($rootScope.unreadMsgs);
+					var readedData = [];
+					for (var i = 0, len = $rootScope.unreadMsgs.length; i < len; i++) {
+						var msg = $rootScope.unreadMsgs[i].default;
+						if (vm.adsID.trim() == msg.relatedToAds.adsID.trim() && $rootScope.user.userID.trim() == msg.toUserID.trim() && vm.toUserID.trim() == msg.fromUserID.trim()) {
+							readedData.push($rootScope.unreadMsgs[i]);
+							$rootScope.unreadMsg = $rootScope.unreadMsg - 1;
+						}
 					}
+					$timeout(function () {
+						socket.emit("read-messages", readedData, function (res) {
+							console.log("mark messages as read " + res);
+						});
+					}, 100);
+					$rootScope.unreadMsgs = null;
 				}
-				console.log(readedData);
-				socket.emit("read-messages", readedData, function (res) {
-					console.log("mark messages as read " + res);
-				});
 			});
 
 			vm.initChatBox = function (user) {

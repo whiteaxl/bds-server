@@ -178,9 +178,11 @@
 			//console.log("res.data " + res.data.ads);
 			$rootScope.user.lastViewAds = vm.adsID;
 			vm.ads = res.data.ads;
-			vm.ads.chiTietThuGon = vm.ads.chiTiet;
-			if(vm.ads.chiTiet.length > 30){
-				vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0,300);				
+			if(vm.ads.chiTiet){
+				vm.ads.chiTietThuGon = vm.ads.chiTiet;
+				if(vm.ads.chiTiet.length > 30){
+					vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0,300);
+				}
 			}
 			vm.ads.place.diaChinh.tinhKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
 			vm.ads.place.diaChinh.huyenKhongDau =  window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);

@@ -11,7 +11,269 @@
   var _ = require('lodash');
 
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll','ngDialog'])
-  .run(['jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
+      .factory('socket', function (socketFactory) {
+          // var socket = io.connect("http://localhost:5000");
+
+          var socket = io.connect();
+          //socket.forward('error');
+          // socket.connect();
+          return socket;
+      })
+      .config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
+          // For any unmatched url, send to /route1
+          $locationProvider.html5Mode(true);
+
+          $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
+              Object.defineProperty($delegate.constructor.prototype,
+                  '$bus', {
+                      value: postal,
+                      enumerable: false
+                  });
+              return $delegate;
+          }]);
+
+
+
+
+          $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+              return {
+                  'request': function (config) {
+                      config.headers = config.headers || {};
+                      if ($localStorage.relandToken) {
+                          config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
+                      }
+                      return config;
+                  },
+                  'responseError': function (response) {
+                      if (response.status === 401 || response.status === 403) {
+                          //$location.path('/signin');
+                          alert("Đăng nhập hệ thống để sử dụng tính năng này");
+                      }
+                      return $q.reject(response);
+                  }
+              };
+          }]);
+
+          //$urlRouterProvider.otherwise("/web/list.html")
+          //alert('sss');
+          // $interpolateProvider.startSymbol('{[{');
+          // $interpolateProvider.endSymbol('}]}');
+
+          /*uiGmapGoogleMapApiProvider.configure({
+           //    key: 'your api key',
+           v: '3.20', //defaults to latest 3.X anyhow
+           libraries: 'places,geometry,visualization' // Required for SearchBox.
+           });*/
+          $stateProvider
+              .state('package', {
+                  url: "/hotlist/:packageID/:viewMode",
+                  templateUrl: "/web/search.html",
+                  controller: "SearchCtrl",
+                  controllerAs: 'mc',
+                  resolve: {
+                      title: function(HouseService,$stateParams,$rootScope) {
+                          var result = HouseService.getAllAds();
+                          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+                          //alert($state.params.place);
+                          //var result = HouseService.findAdsSpatial($stateParams.place);
+                          result.then(function(data){
+                              window.initData = data.data;
+                          });
+                          return result;
+                      }
+                  },
+                  data: {
+                      //bodyClass: "page-search",
+                      //abc: title
+                  }
+                  // ,
+                  // controller: function($scope,sellingHouses){
+                  //   $scope.sellingHouses = sellingHouses;
+                  //   //alert(sellingHouses.length);
+                  // }
+              })
+              .state('searchdc', {
+                  url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
+                  templateUrl: "/web/search.html",
+                  controller: "SearchCtrl",
+                  controllerAs: 'mc',
+                  resolve: {
+                      title: function(HouseService,$stateParams,$rootScope) {
+                          var result = HouseService.getAllAds();
+                          //var result = $rootScope.getGoogleLocationById($stateParams.place);
+                          //alert($state.params.place);
+                          //var result = HouseService.findAdsSpatial($stateParams.place);
+                          result.then(function(data){
+                              window.initData = data.data;
+                          });
+                          return result;
+                      }
+                  },
+                  data: {
+                      //bodyClass: "page-search",
+                      //abc: title
+                  }
+                  // ,
+                  // controller: function($scope,sellingHouses){
+                  //   $scope.sellingHouses = sellingHouses;
+                  //   //alert(sellingHouses.length);
+                  // }
+              }).state('search', {
+              url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+              // templateUrl: "/web/search.tpl.html",
+              controller: "SearchCtrl",
+              controllerAs: 'mc',
+              resolve: {
+                  title: function(HouseService,$stateParams,$rootScope) {
+                      var result = HouseService.getAllAds();
+                      //var result = $rootScope.getGoogleLocationById($stateParams.place);
+                      //alert($state.params.place);
+                      //var result = HouseService.findAdsSpatial($stateParams.place);
+                      result.then(function(data){
+                          window.initData = data.data;
+                      });
+                      return result;
+                  }
+              },
+              data: {
+                  //bodyClass: "page-search",
+                  //abc: title
+              }
+              // ,
+              // controller: function($scope,sellingHouses){
+              //   $scope.sellingHouses = sellingHouses;
+              //   //alert(sellingHouses.length);
+              // }
+          }).state('home', {
+              url: "/index.html",
+              templateUrl: "/web/index_content.html",
+              controller: "MainCtrl",
+              controllerAs: 'mc',
+              resolve: {
+                  title: function(HouseService) {
+                      //alert(HouseService);
+                      //return HouseService.getAllAds();
+                      /*.then(function(data){
+                       return data.data;
+                       });*/
+                      //return $http.get("http://www.dantri.com");
+                      window.initData = [{a:'a'},{b:'b'}];
+                  }
+              },
+              data: {
+                  bodyClass: "page-home",
+                  xyz: [{a:'b'}],
+              }
+          }).state('detail', {
+              url: "/detail/:adsID",
+              //templateUrl: "/web/index_content.html",
+              controller: "DetailCtrl",
+              controllerAs: 'dt',
+              data: {
+                  bodyClass: "page-detail"
+              }
+          }).state('news', {
+              url: "/news/:rootCatId",
+              controller: "NewsCtrl",
+              controllerAs: 'nc',
+              data: {
+
+              }
+          }).state('newsDetail', {
+              url: "/newsDetail/:rootCatId/:articleId",
+              controller: "NewsDetailCtrl",
+              controllerAs: 'ndc',
+              data: {
+
+              }
+          }).state('resetPassword', {
+              url: "/resetPassword",
+              templateUrl: "/web/index_content.html",
+              controller: "MainCtrl",
+              controllerAs: 'mc',
+              data: {
+                  bodyClass: "page-detail"
+              }
+          }).state('profile', {
+              url: "/profile/:userID",
+              templateUrl: "/web/profile.tpl.html",
+              controller: "ProfileCtrl",
+              controllerAs: 'pc',
+              data: {
+                  bodyClass: "page-detail"
+              }
+          }).state('dangtin', {
+              url: "/dangtin",
+              templateUrl: "/web/dang-tin.html",
+              controller: "DangTinCtrl",
+              controllerAs: 'dt',
+              data: {
+                  bodyClass: "page-detail"
+              }
+          }).state('topview', {
+              url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
+              templateUrl: "/web/search.html",
+              controller: "SearchCtrl",
+              controllerAs: 'mc',
+              resolve: {
+                  title: function(HouseService,$stateParams,$rootScope) {
+                      var result = HouseService.getAllAds();
+                      //var result = $rootScope.getGoogleLocationById($stateParams.place);
+                      //alert($state.params.place);
+                      //var result = HouseService.findAdsSpatial($stateParams.place);
+                      result.then(function(data){
+                          window.initData = data.data;
+                      });
+                      return result;
+                  }
+              }
+          }).state('mhome', {
+                  url: "/mobile/index.html",
+                  templateUrl: "/web/mobile/index_content.html",
+                  controller: "MobileHomeCtrl",
+                  controllerAs: 'mhc',
+              })
+              .state('msearch', {
+                  // url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
+                  url: "/mobile/search/:placeId/:loaiTin/:loaiNhaDat/:viewMode",
+                  templateUrl: "/web/mobile/search.html",
+                  controller: "MobileSearchCtrl",
+                  params:{query: null},
+                  controllerAs: 'msc',
+              }).state('mdetail', {
+              url: "/mobile/detail/:adsID",
+              templateUrl: "/web/mobile/detail.html",
+              controller: "MobileDetailCtrl",
+              controllerAs: 'mdt'
+          }).state('mpost', {
+              url: "/mobile/post/:adsID",
+              templateUrl: "/web/mobile/post.html",
+              controller: "MobilePostCtrl",
+              controllerAs: 'mpc'
+          }).state('madsMgmt', {
+              url: "/mobile/adsMgmt/:loaiTin",
+              templateUrl: "/web/mobile/adsMgmt.html",
+              controller: "MobileAdsMgmtCtrl",
+              controllerAs: 'mamc'
+          }).state('mchats', {
+              url: "/mobile/chats",
+              templateUrl: "/web/mobile/chats.html",
+              controller: "MobileChatCtrl",
+              controllerAs: 'mcc'
+          }).state('mchatDetail', {
+              url: "/mobile/chatDetail/:adsID/:toUserID",
+              templateUrl: "/web/mobile/chatDetail.html",
+              controller: "MobileChatDetailCtrl",
+              controllerAs: 'mcdc'
+          }).state('mlistMore', {
+              url: "/mobile/more",
+              templateUrl: "/web/mobile/listMoreAds.html",
+              controller: "MobileListAdsCtrl",
+              controllerAs: 'mlm',
+              params:{query: null},
+          })
+      })
+  .run(['socket', '$timeout', 'jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(socket, $timeout, jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
     $rootScope.center  = {
@@ -54,6 +316,10 @@
               $rootScope.user.fullName = res.data.user.fullName;
           $rootScope.user.lastViewAds = res.data.user.lastViewAds;
           $rootScope.user.saveSearch = res.data.user.saveSearch;
+          $rootScope.getUnreadMsgCount($rootScope.user.userID);
+          socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
+              console.log("alert user online " + $rootScope.user.userID);
+          });
       });
     }
 
@@ -136,6 +402,17 @@
     } 
     $rootScope.lastSearch = undefined;
 
+    $rootScope.getUnreadMsgCount = function(userID){
+      HouseService.getUnreadMessages({userID: userID}).then(function(res) {
+          if (res.status == 200 && res.data.status == 0) {
+              if (res.data.data.length > 0) {
+                  $rootScope.unreadMsg = res.data.data.length;
+              }
+          }
+          if(!$rootScope.unreadMsg)
+              $rootScope.unreadMsg = null;
+      });
+    }
     $rootScope.getLastSearch = function(localStorage){
       if(localStorage && localStorage.lastSearch && localStorage.lastSearch.length>0){
         var clone = _.cloneDeep(localStorage.lastSearch[localStorage.lastSearch.length-1]);
@@ -330,301 +607,61 @@
         });
       };
 
+      socket.on("new message", function(data) {
+          console.log("----------------on new message-------------------");
+          $rootScope.chatMsgData = data;
+          $timeout(function() {
+              if($rootScope.isLoggedIn()){
+                  if(!$rootScope.unreadMsg)
+                      $rootScope.unreadMsg = 1;
+                  else
+                      $rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+              }
+          },100);
+          $rootScope.$broadcast("newMessageChat");
+      });
+
+      socket.on("alert user online",function(data){
+          console.log("-----------------alert user online----------------");
+          $timeout(function() {
+              if(!$rootScope.allOlineUser)
+                  $rootScope.allOlineUser = [];
+              var index = $rootScope.allOlineUser.indexOf(data.fromUserID.trim());
+              if(index < 0){
+                  $rootScope.allOlineUser.push(data.fromUserID.trim());
+              }
+              $rootScope.$broadcast("userOnOffline");
+          },100);
+
+      });
+
+      socket.on("alert user offline",function(data){
+          console.log("-----------------alert user offline----------------");
+          $timeout(function() {
+              if($rootScope.allOlineUser){
+                  var index = $rootScope.allOlineUser.indexOf(data.fromUserID.trim());
+                  if(index != -1){
+                      $rootScope.allOlineUser.splice(index, 1);
+                  }
+                  $rootScope.$broadcast("userOnOffline");
+              }
+          },100);
+
+      });
+
+      socket.on("unread-messages", function(data){
+          console.log("------------------chat-unreadMessage-----------------");
+          $timeout(function() {
+              $rootScope.unreadMsgs = [];
+              for (var i = 0, len = data.length; i < len; i++) {
+                  var msg = data[i].default;
+                  $rootScope.unreadMsgs.push(data[i]);
+              }
+              $rootScope.$broadcast("unreadMsgs");
+          },100)
+      });
   }]);
-  bds.config(function($provide,$stateProvider, $urlRouterProvider,$locationProvider,$interpolateProvider,$httpProvider){
-      // For any unmatched url, send to /route1
-      $locationProvider.html5Mode(true);      
-
-      $provide.decorator('$rootScope', ['$delegate','$window', function ($delegate,$window) {
-       Object.defineProperty($delegate.constructor.prototype, 
-            '$bus', {
-                value: postal,
-                enumerable: false
-            });
-        return $delegate;
-    }]);
-
-
-
-
-      $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-       return {
-           'request': function (config) {
-               config.headers = config.headers || {};
-               if ($localStorage.relandToken) {
-                   config.headers.Authorization = 'Bearer ' + $localStorage.relandToken;
-               }
-               return config;
-           },
-           'responseError': function (response) {
-               if (response.status === 401 || response.status === 403) {
-                   //$location.path('/signin');
-                   alert("Đăng nhập hệ thống để sử dụng tính năng này");
-               }
-               return $q.reject(response);
-           }
-       };
-      }]);
-
-      //$urlRouterProvider.otherwise("/web/list.html")
-      //alert('sss');
-      // $interpolateProvider.startSymbol('{[{');
-      // $interpolateProvider.endSymbol('}]}');
-
-     /*uiGmapGoogleMapApiProvider.configure({
-          //    key: 'your api key',
-          v: '3.20', //defaults to latest 3.X anyhow
-          libraries: 'places,geometry,visualization' // Required for SearchBox.
-      });*/
-      $stateProvider
-      .state('package', {
-        url: "/hotlist/:packageID/:viewMode",
-        templateUrl: "/web/search.html",
-        controller: "SearchCtrl",
-        controllerAs: 'mc',
-        resolve: {
-          title: function(HouseService,$stateParams,$rootScope) {
-            var result = HouseService.getAllAds();
-            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-            //alert($state.params.place);
-            //var result = HouseService.findAdsSpatial($stateParams.place);
-            result.then(function(data){
-              window.initData = data.data;
-            }); 
-            return result;
-          }
-        },
-        data: {
-            //bodyClass: "page-search",
-            //abc: title
-        } 
-        // ,
-        // controller: function($scope,sellingHouses){
-        //   $scope.sellingHouses = sellingHouses;
-        //   //alert(sellingHouses.length);
-        // }
-      })
-      .state('searchdc', {
-        url: "/searchdc/:tinh/:huyen/:xa/:loaiTin/:loaiNhaDat/:viewMode",
-        templateUrl: "/web/search.html",
-        controller: "SearchCtrl",
-        controllerAs: 'mc',
-        resolve: {
-          title: function(HouseService,$stateParams,$rootScope) {
-            var result = HouseService.getAllAds();
-            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-            //alert($state.params.place);
-            //var result = HouseService.findAdsSpatial($stateParams.place);
-            result.then(function(data){
-              window.initData = data.data;
-            }); 
-            return result;
-          }
-        },
-        data: {
-            //bodyClass: "page-search",
-            //abc: title
-        } 
-        // ,
-        // controller: function($scope,sellingHouses){
-        //   $scope.sellingHouses = sellingHouses;
-        //   //alert(sellingHouses.length);
-        // }
-      }).state('search', {
-          url: "/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-        // templateUrl: "/web/search.tpl.html",
-        controller: "SearchCtrl",
-        controllerAs: 'mc',
-        resolve: {
-          title: function(HouseService,$stateParams,$rootScope) {
-            var result = HouseService.getAllAds();
-            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-            //alert($state.params.place);
-            //var result = HouseService.findAdsSpatial($stateParams.place);
-            result.then(function(data){
-              window.initData = data.data;
-            }); 
-            return result;
-          }
-        },
-        data: {
-            //bodyClass: "page-search",
-            //abc: title
-        } 
-        // ,
-        // controller: function($scope,sellingHouses){
-        //   $scope.sellingHouses = sellingHouses;
-        //   //alert(sellingHouses.length);
-        // }
-      }).state('home', {
-        url: "/index.html",
-        templateUrl: "/web/index_content.html",
-        controller: "MainCtrl",
-        controllerAs: 'mc',
-        resolve: {
-          title: function(HouseService) {
-            //alert(HouseService);
-            //return HouseService.getAllAds();
-            /*.then(function(data){
-              return data.data;
-            });*/
-            //return $http.get("http://www.dantri.com");
-            window.initData = [{a:'a'},{b:'b'}];
-          }
-        },
-        data: {
-            bodyClass: "page-home",
-            xyz: [{a:'b'}],
-        }
-      }).state('detail', {
-        url: "/detail/:adsID",
-        //templateUrl: "/web/index_content.html",
-        controller: "DetailCtrl",
-        controllerAs: 'dt',
-        data: {
-            bodyClass: "page-detail"
-        }
-      }).state('news', {
-          url: "/news/:rootCatId",
-          controller: "NewsCtrl",
-          controllerAs: 'nc',
-          data: {
-
-          }
-      }).state('newsDetail', {
-          url: "/newsDetail/:rootCatId/:articleId",
-          controller: "NewsDetailCtrl",
-          controllerAs: 'ndc',
-          data: {
-
-          }
-      }).state('resetPassword', {
-        url: "/resetPassword",
-        templateUrl: "/web/index_content.html",
-        controller: "MainCtrl",
-        controllerAs: 'mc',
-        data: {
-            bodyClass: "page-detail"
-        }
-      }).state('profile', {
-        url: "/profile/:userID",
-        templateUrl: "/web/profile.tpl.html",
-        controller: "ProfileCtrl",
-        controllerAs: 'pc',
-        data: {
-            bodyClass: "page-detail"
-        }
-      }).state('dangtin', {
-        url: "/dangtin",
-        templateUrl: "/web/dang-tin.html",
-        controller: "DangTinCtrl",
-        controllerAs: 'dt',
-        data: {
-            bodyClass: "page-detail"
-        }
-      }).state('topview', {
-        url: "/topview/:tinhKhongDau/:huyenKhongDau/:ngayDaDang",
-        templateUrl: "/web/search.html",
-        controller: "SearchCtrl",
-        controllerAs: 'mc',
-        resolve: {
-          title: function(HouseService,$stateParams,$rootScope) {
-            var result = HouseService.getAllAds();
-            //var result = $rootScope.getGoogleLocationById($stateParams.place);
-            //alert($state.params.place);
-            //var result = HouseService.findAdsSpatial($stateParams.place);
-            result.then(function(data){
-              window.initData = data.data;
-            }); 
-            return result;
-          }
-        }
-      }).state('mhome', {
-        url: "/mobile/index.html",
-        templateUrl: "/web/mobile/index_content.html",
-        controller: "MobileHomeCtrl",
-        controllerAs: 'mhc',
-      })
-      .state('msearch', {
-        // url: "/mobile/search/:place/:loaiTin/:loaiNhaDat/:viewMode",
-        url: "/mobile/search/:placeId/:loaiTin/:loaiNhaDat/:viewMode",
-        templateUrl: "/web/mobile/search.html",
-        controller: "MobileSearchCtrl",
-        params:{query: null},
-        controllerAs: 'msc',
-      }).state('mdetail', {
-        url: "/mobile/detail/:adsID",
-        templateUrl: "/web/mobile/detail.html",
-        controller: "MobileDetailCtrl",
-        controllerAs: 'mdt'
-      }).state('mpost', {
-          url: "/mobile/post/:adsID",
-          templateUrl: "/web/mobile/post.html",
-          controller: "MobilePostCtrl",
-          controllerAs: 'mpc'
-      }).state('madsMgmt', {
-          url: "/mobile/adsMgmt/:loaiTin",
-          templateUrl: "/web/mobile/adsMgmt.html",
-          controller: "MobileAdsMgmtCtrl",
-          controllerAs: 'mamc'
-      }).state('mchats', {
-          url: "/mobile/chats",
-          templateUrl: "/web/mobile/chats.html",
-          controller: "MobileChatCtrl",
-          controllerAs: 'mcc'
-      }).state('mchatDetail', {
-          url: "/mobile/chatDetail/:adsID/:toUserID",
-          templateUrl: "/web/mobile/chatDetail.html",
-          controller: "MobileChatDetailCtrl",
-          controllerAs: 'mcdc'
-      }).state('mlistMore', {
-          url: "/mobile/more",
-          templateUrl: "/web/mobile/listMoreAds.html",
-          controller: "MobileListAdsCtrl",
-          controllerAs: 'mlm',
-          params:{query: null},
-      })
-    });
-    bds.factory('socket', function (socketFactory) {
-        // var socket = io.connect("http://localhost:5000");
-
-        var socket = io.connect();
-        //socket.forward('error');
-        // socket.connect();
-        return socket;
-    });
-        /*
-        bds.factory('socket', function ($rootScope) {
-      var socket = io.connect();
-      return {
-          on: function (eventName, callback) {
-              socket.on(eventName, function () {
-                  var args = arguments;
-                  $rootScope.$apply(function () {
-                      callback.apply(socket, args);
-                  });
-              });
-          },
-          emit: function (eventName, data, callback) {
-              socket.emit(eventName, data, function () {
-                  var args = arguments;
-                  $rootScope.$apply(function () {
-                      if (callback) {
-                          callback.apply(socket, args);
-                      }
-                  });
-              })
-          },
-          getSocket: function() {
-              return socket;
-          }
-      };
-  });*/
   })();
-
-
-
-
 
   var hello = function (){
     alert('hello buddy! how are you today?');

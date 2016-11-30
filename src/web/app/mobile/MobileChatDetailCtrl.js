@@ -343,10 +343,13 @@
 			});
 		}
 
+
 		$scope.$on('$destroy', function () {
 			console.log("-------------destroy--chat------new message---------------");
-			socket.removeAllListeners();
-
+			//socket.removeAllListeners();
+			socket.removeListener('check user online');
+			socket.removeListener('user-start-typing');
+			socket.removeListener('user-stop-typing');
 		});
 
 		vm.goBack = function(){
@@ -370,45 +373,42 @@
 			else 
 				return false;
 		}
-		vm.testWatch = function () {
-			console.log("-----------testWatch:---- ");
-			console.log($rootScope.chatMsgData);
-		}
-		$rootScope.watchHitCount = 0;
-		$rootScope.$watch('chatMsgData', vm.testWatch,true);
+
 		/**
 		 Handle in comming message
 		 */
-		socket.on("new message", function(data){
+		$scope.$on("newMessageChat", function () {
 			console.log("----------------------on new msg-detail-------------------");
-			$rootScope.chatMsgData = data;
-			console.log($rootScope.watchHitCount);
-			if((data.fromUserID.trim()==vm.toUserID.trim()) && (data.relatedToAds.adsID.trim() == vm.adsID)){
-				if(!$scope.chatBox.user){
-					vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
+			if($rootScope.chatMsgData){
+				var data = $rootScope.chatMsgData;
+				console.log($rootScope.watchHitCount);
+				if((data.fromUserID.trim()==vm.toUserID.trim()) && (data.relatedToAds.adsID.trim() == vm.adsID)){
+					if(!$scope.chatBox.user){
+						vm.initChatBox({userID: data.fromUserID,name: data.fromFullName,avatar: data.fromUserAvatar});
+					}
+					data.date = new Date(data.date);
+					console.log(data);
+					$timeout(function() {
+						socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
+							console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
+							console.log(data);
+						});
+					},300);
+
+
+					window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+					$scope.$apply();
+					$("body").animate({ scrollTop: $(document).height() }, "slow");
+				} else{
+					if(!$rootScope.unreadMsg)
+						$rootScope.unreadMsg = 1;
+					else
+						$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
+					$rootScope.unreadMsg = $rootScope.unreadMsg;
 				}
-				data.date = new Date(data.date);
-				console.log(data);
-				$timeout(function() {
-					socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
-						console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
-						console.log(data);
-					});
-				},300);
-
-
-				window.RewayClientUtils.addChatMessage($scope.chatBox,data);
-				$scope.$apply();
-				$("body").animate({ scrollTop: $(document).height() }, "slow");
-			} else{
-				if(!$rootScope.unreadMsg)
-					$rootScope.unreadMsg = 1;
-				else
-					$rootScope.unreadMsg = $rootScope.unreadMsg + 1;
-				$rootScope.unreadMsg = $rootScope.unreadMsg;
 			}
 		});
-		
+
 		socket.on("check user online",function(data){
 			$timeout(function() {
 				if(vm.toUserID && data){
@@ -417,22 +417,16 @@
 			},100);
 		});
 
-		socket.on("alert user online",function(data){
-			console.log("-----------------alert user online----------------");
-			$timeout(function() {
-				if(vm.toUserID.trim() == data.fromUserID){
+		$scope.$on("userOnOffline", function () {
+			console.log("------------------------listener user on-off--------------------");
+			if($rootScope.allOlineUser){
+				var index = $rootScope.allOlineUser.indexOf(vm.toUserID.trim());
+				if(index != -1){
 					vm.toUserOnline = true;
-				}
-			},100);
-		});
-
-		socket.on("alert user offline",function(data){
-			console.log("-----------------alert user offline----------------");
-			$timeout(function() {
-				if(vm.toUserID.trim() == data.fromUserID){
+				} else{
 					vm.toUserOnline = false;
 				}
-			},100);
+			}
 		});
 
 		socket.on("user-start-typing",function(data){
@@ -453,22 +447,28 @@
 			}
 		});
 
-		socket.on("unread-messages", function(data){
-			console.log("------------------chat-unreadMessage-----------------");
-
-			var readedData = [];
-			for (var i = 0, len = data.length; i < len; i++) {
-				var msg = data[i].default;
-				msg.date = new Date(msg.date);
-				if((vm.adsID.trim()==msg.relatedToAds.adsID.trim()) && ($rootScope.user.userID.trim() == msg.toUserID.trim()) &&(vm.toUserID.trim()==msg.fromUserID.trim())){
-					readedData.push(data[i]);
+		$scope.$on("unreadMsgs", function () {
+			console.log("------------------------listener unreadMsgs--------------------");
+			if($rootScope.unreadMsgs){
+				console.log($rootScope.unreadMsgs);
+				var readedData = [];
+				for (var i = 0, len = $rootScope.unreadMsgs.length; i < len; i++) {
+					var msg = $rootScope.unreadMsgs[i].default;
+					if((vm.adsID.trim()==msg.relatedToAds.adsID.trim()) && ($rootScope.user.userID.trim() == msg.toUserID.trim()) &&(vm.toUserID.trim()==msg.fromUserID.trim())){
+						readedData.push($rootScope.unreadMsgs[i]);
+						$rootScope.unreadMsg = $rootScope.unreadMsg - 1;
+					}
 				}
+				$timeout(function() {
+					socket.emit("read-messages", readedData, function (res) {
+						console.log("mark messages as read " + res);
+					})
+				},100);
+				$rootScope.unreadMsgs = null;
 			}
-			console.log(readedData);
-			socket.emit("read-messages",readedData, function(res){
-				console.log("mark messages as read " + res);
-			});
 		});
+
+
 
 		vm.initChatBox = function(user){
 			$scope.chatBox.user = user;
