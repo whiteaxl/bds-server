@@ -6,6 +6,16 @@
         background-color: transparent;
         border-color: transparent;
     }
+    .nextEnable{       
+        background-position-x: -177px !important; 
+    }
+    .prevEnable{
+        background-position-x: -177px !important;   
+    }
+    .mapdrawing{
+        background-position-x: -177px !important;
+    }
+
 </style>
 <div ng-if="msc.viewMode=='list'" class="wapper" style="bottom: ">
     <div class="reland-box uln">
@@ -68,17 +78,15 @@
     <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
     <div  class="maps"  ng-show ="msc.viewMode!='list'">
         <div ontouchstart="return false"  ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
-            <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="false" clickable-icons="false" ng-show ="msc.viewMode!='list'" custom-zoom-to-include-markers="false" center="{{center}}" lazy-init="true"   class="ngmap">
+            <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" street-view-control-options="{style:'LARGE', position:'LEFT_TOP'}"    
+            clickable-icons="false" ng-show ="msc.viewMode!='list'" custom-zoom-to-include-markers="false" center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
                 <custom-marker  class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
-                    <div class="marker">
+                    <div class="{{m.count>1?'marker marker-include':'marker'}}">
                         {{m.content}}
-                        <i ng-if="m.negotiatePrice==true" class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        <span ng-if="m.count > 1" class="fa-stack fa-lg" style="font-size:1em;">
-                            <i class="fa fa-circle-thin fa-stack-2x"></i>
-                            <i class="fa-stack-1x">{{m.count}}</i>
-                        </span>
+                        <i ng-if="m.negotiatePrice==false" class="icon iconUp"></i>
+                        <span ng-if="m.count > 1" >{{m.count}}</span>
                     </div>
                 </custom-marker>
                 <!-- <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker> -->
@@ -104,12 +112,12 @@
         </div>
 
         <div class="mapsBtn"  style="bottom: 55px;">
-            <a href="#" style="margin: 8px 2px;" ng-click="msc.prev($event)"><i class="p-icon i-mapprev"></i></i></a>
+            <a href="#" style="margin: 8px 2px;" ng-click="msc.prev($event)"><i ng-class="msc.prevButtonClass"></i></i></a>
             <a href="#" style="margin: 8px 2px;visibility: {{$root.user.autoSearch==false?'visible':'hidden';}}" ng-click="msc.refreshPage($event)"><i class="p-icon i-maprefresh"></i></i></a>
-            <a href="#" style="margin: 8px 2px;" ng-click="msc.next($event)"><i class="p-icon i-mapnext"></i></i></a>
+            <a href="#" style="margin: 8px 2px;" ng-click="msc.next($event)"><i ng-class="msc.nextButtonClass"></i></i></a>
         </div>
         <div class="actions" style="bottom: 55px;">
-            <a href="#" ng-click="msc.toggleDrawMode($event)"><i class="p-icon i-mapdraw" ></i></i></a>
+            <a href="#" ng-click="msc.toggleDrawMode($event)"><i ng-class="msc.drawButtonClass" ></i></i></a>
             <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
         </div>
     </div>
@@ -218,7 +226,7 @@
 </div>
 
 <div class="modal fade modal-msg" id="previewAds" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
-    <div style="position: absolute;bottom: 0px; height: 180px;overflow-y: auto;width: 100%;">
+    <div style="position: absolute;bottom: 0px; height: {{msc.adsPreviewList.length<=2?msc.adsPreviewList.length*180:405;}}px;overflow-y: auto;width: 100%;">
         <ul class="reland-list full" style="padding-left: 0px;" >            
             <li ng-repeat="ads in msc.adsPreviewList track by $index" >
                 <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>

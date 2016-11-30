@@ -15,7 +15,10 @@
 		// vm.dien_tich_min = 0;
 		// vm.dien_tich_max = window.RewayListValue.filter_max_value.value;
 		// vm.zoomMode = "auto";
-        vm.pageSize = 25;
+        vm.pageSize = 25;        
+        vm.drawButtonClass ="p-icon i-mapdraw";
+        
+
         vm.resetResultList = function(){
             vm.currentPage = 0;
             vm.lastPageNo = 0;
@@ -514,6 +517,7 @@
                     // vm.map.panToBounds(polyBounds);
                     // vm.map.setZoom(zoom);
                     $rootScope.act = "Trong khu vực vẽ tay";
+                    vm.drawButtonClass ="p-icon i-close";
                     // }
                     if(vm.viewMode=="list"){
                         vm.initMap = false;
@@ -568,7 +572,9 @@
                     // }
                     vm.drawmapMode()
                 });
-                $rootScope.act = "Vẽ khu vực muốn tìm";                
+                $rootScope.act = "Vẽ khu vực muốn tìm";         
+                vm.drawButtonClass ="p-icon i-mapdraw mapdrawing";
+
             }else {  
                 // if(vm.poly){
                 //     vm.poly.setMap(null);
@@ -578,7 +584,8 @@
                 if(vm.poly){
                     vm.poly.setMap(null);
                 }
-                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
+                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
+                vm.drawButtonClass ="p-icon i-mapdraw";
                 vm.enable();              
                 // if(vm.place){
                 //     $rootScope.act = vm.place.fullName;
@@ -774,7 +781,7 @@
                         for(var j=0;j<$scope.markers.length;j++){
                             var marker = $scope.markers[j];
                             if(marker.coords.latitude==res.data.list[i].map.marker.latitude 
-                                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+                               && marker.coords.longitude == res.data.list[i].map.marker.longitude){
                                 marker.adsList.push(ads);
                                 marker.count = marker.count + 1;
                                 dup = true;
@@ -807,6 +814,7 @@
                 vm.currentPageStart = vm.pageSize*($rootScope.searchData.pageNo-1) + 1
                 vm.currentPageEnd = vm.currentPageStart + res.data.list.length -1;
                 vm.currentPage = $rootScope.searchData.pageNo;
+                vm.setNextPrevButtonClass();
 
                 vm.mapInitialized();       
                 // if(vm.map){
@@ -863,16 +871,31 @@
             });
         }
 
+        vm.setNextPrevButtonClass = function(){
+            if(vm.currentPage == vm.lastPageNo || vm.totalResultCounts ==0){
+                vm.nextButtonClass ="p-icon i-mapnext";
+            }else{
+                vm.nextButtonClass ="p-icon i-mapnext nextEnable";                
+            }
+            if(vm.currentPage >1){
+                vm.prevButtonClass ="p-icon i-mapprev prevEnable";
+            }else{
+                vm.prevButtonClass ="p-icon i-mapprev";
+            }
+        }
+
         vm.prev = function(){
             if(vm.currentPage>=2){
                 vm.currentPage = vm.currentPage-1;
                 vm.searchPage(vm.currentPage);
+                vm.setNextPrevButtonClass();
             }
         }
         vm.next = function(){
             if(vm.totalResultCounts>0 && vm.totalResultCounts > (vm.currentPage)*vm.pageSize){
                 vm.currentPage = vm.currentPage+1;
                 vm.searchPage(vm.currentPage);
+                vm.setNextPrevButtonClass();
             }
 
         }

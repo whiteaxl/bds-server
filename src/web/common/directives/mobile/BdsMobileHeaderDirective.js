@@ -30,6 +30,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 //end nhannc
                 vm.goToSearchPage = function(){
                     if($rootScope.searchData.placeId){
+                        $rootScope.searchData.polygon = undefined;
                         $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                     }else{
                         if (navigator.geolocation) {
@@ -67,7 +68,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                                         }
                                         HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
                                             console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
-                                            if(res){                                                                                                
+                                            if(res){             
+                                                $rootScope.searchData.polygon = undefined;                                                                                   
                                                 $state.go("msearch", { "placeId": res.data.diaChinh.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                                             }
                                         });
@@ -285,6 +287,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $rootScope.searchData.circle = undefined;
                     }    
                     // $scope.$apply();   
+                    $rootScope.searchData.polygon = undefined;
                     $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": $scope.mode?$scope.mode:"list"},{reload: true});
                     $(".overlay").click();            
                 }

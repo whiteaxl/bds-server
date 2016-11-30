@@ -317,6 +317,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.giaKhacFrom = undefined;
                         $scope.searchData.giaKhacTo = undefined;                      
                     }
+                    $scope.searchData.polygon = undefined;
                     if(vm.item){
                         if(vm.item.query){
                             $scope.searchData = vm.item.query;                             
