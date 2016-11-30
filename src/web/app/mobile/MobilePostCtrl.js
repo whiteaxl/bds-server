@@ -729,6 +729,8 @@
 			console.log($rootScope.user);
 			if(vm.adsID){
 				vm.isModifyAds = true;
+
+
 				HouseService.getUpdateAds({adsID: vm.adsID}).then(function(res){
 					console.log("-------------------------initData with adsId--------");
 					vm.ads = res.data.data;
@@ -917,6 +919,11 @@
 
 				vm.selectLoaiTin($scope.loaiTin);
 				vm.getCurrentLocation();
+			}
+			if(vm.isModifyAds){
+				$(".post-btn").css("display","block");
+			} else{
+				$(".post-btn").css("display","none");
 			}
 		}
 		/*

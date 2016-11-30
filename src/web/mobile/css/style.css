@@ -982,17 +982,17 @@
   .iconShareContent svg {
     height: 24px; }
 
-a:hover .p-icon.i-mapdraw, a:hover .p-icon.i-maplocation, a:hover .p-icon.i-mapprev, a:hover .p-icon.i-maprefresh, a:hover .p-icon.i-mapnext, a:hover .p-icon.i-close, a.active .p-icon.i-mapdraw, a.active .p-icon.i-maplocation, a.active .p-icon.i-mapprev, a.active .p-icon.i-maprefresh, a.active .p-icon.i-mapnext, a.active .p-icon.i-close {
+a.active .p-icon.i-mapdraw, a.active .p-icon.i-maplocation, a.active .p-icon.i-mapprev, a.active .p-icon.i-maprefresh, a.active .p-icon.i-mapnext, a.active .p-icon.i-close {
   background-position: -176px 0; }
-a:hover .p-icon.i-maplocation, a.active .p-icon.i-maplocation {
+a.active .p-icon.i-maplocation {
   background-position: -176px -46px; }
-a:hover .p-icon.i-mapprev, a.active .p-icon.i-mapprev {
+a.active .p-icon.i-mapprev {
   background-position: -176px -138px; }
-a:hover .p-icon.i-maprefresh, a.active .p-icon.i-maprefresh {
+a.active .p-icon.i-maprefresh {
   background-position: -176px -92px; }
-a:hover .p-icon.i-mapnext, a.active .p-icon.i-mapnext {
+a.active .p-icon.i-mapnext {
   background-position: -176px -184px; }
-a:hover .p-icon.i-close, a.active .p-icon.i-close {
+a.active .p-icon.i-close {
   background-position: -176px -230px; }
 
 * {
@@ -1003,7 +1003,9 @@ a:hover .p-icon.i-close, a.active .p-icon.i-close {
   -webkit-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
-  outline: none; }
+  outline: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-backface-visibility: hidden; }
 
 html, body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -1509,7 +1511,7 @@ nav.main {
   right: -3000px;
   width: 100%;
   bottom: 0;
-  top: 42px;
+  top: 0;
   overflow-y: auto;
   z-index: 9990; }
 
@@ -1531,7 +1533,24 @@ nav.main {
       background-image: url(../img/icon-heart-fallback-active.png); }
     .heart i.refresh {
       background-image: url(../img/icon-heart-refresh.png); }
+    .heart i.animation {
+      animation-name: heart_animation;
+      -webkit-animation-name: heart_animation;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite; }
 
+@keyframes heart_animation {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
+@-webkit-keyframes heart_animation {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
 .btn {
   border: none; }
   .btn.btn-primary {
@@ -2640,7 +2659,8 @@ div.disabled > .toggle-slide {
   position: fixed;
   border-top: 1px solid #e4e4e4; }
   .search-btn .btn-none {
-    width: 50%;
+    width: 30%;
+    white-space: nowrap;
     text-align: center;
     display: inline-block; }
   .search-btn.blue {
@@ -2986,60 +3006,62 @@ div.disabled > .toggle-slide {
       line-height: 24px;
       padding: 0 8px; }
 
-.post .postimg ul {
-  margin: 10px; }
-  .post .postimg ul li {
-    position: relative;
+.post {
+  top: 42px; }
+  .post .postimg ul {
+    margin: 10px; }
+    .post .postimg ul li {
+      position: relative;
+      overflow: hidden;
+      width: 88px;
+      height: 86px;
+      float: left;
+      margin: 5px 5px 7px; }
+      .post .postimg ul li img {
+        width: 100%;
+        height: 100%; }
+      .post .postimg ul li .des {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        line-height: 18px;
+        text-align: center;
+        color: #fff;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.3); }
+      .post .postimg ul li .close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background: #fff;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        font-size: 14px;
+        text-align: center;
+        opacity: 1;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -khtml-border-radius: 2px;
+        border-radius: 2px; }
+  .post .postimg input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
     overflow: hidden;
-    width: 88px;
-    height: 86px;
-    float: left;
-    margin: 5px 5px 7px; }
-    .post .postimg ul li img {
-      width: 100%;
-      height: 100%; }
-    .post .postimg ul li .des {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      line-height: 18px;
+    position: absolute;
+    z-index: -1; }
+    .post .postimg input[type="file"] + label {
+      cursor: pointer;
+      position: relative;
+      display: block;
+      height: 86px;
+      border: 1px dashed #00a8e6;
+      font-size: 26px;
       text-align: center;
-      color: #fff;
-      font-size: 12px;
-      background: rgba(0, 0, 0, 0.3); }
-    .post .postimg ul li .close {
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      background: #fff;
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
-      font-size: 14px;
-      text-align: center;
-      opacity: 1;
-      -moz-border-radius: 2px;
-      -webkit-border-radius: 2px;
-      -khtml-border-radius: 2px;
-      border-radius: 2px; }
-.post .postimg input[type="file"] {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1; }
-  .post .postimg input[type="file"] + label {
-    cursor: pointer;
-    position: relative;
-    display: block;
-    height: 86px;
-    border: 1px dashed #00a8e6;
-    font-size: 26px;
-    text-align: center;
-    line-height: 84px;
-    color: #00a8e6; }
+      line-height: 84px;
+      color: #00a8e6; }
 
 .post-box {
   padding-bottom: 94px; }
@@ -3052,7 +3074,7 @@ div.disabled > .toggle-slide {
       margin: 0;
       line-height: 30px;
       font-weight: 600; }
-  .post-box .fr input[type="text"] {
+  .post-box .fr input[type="text"], .post-box .fr input[type="number"] {
     width: 65px;
     text-align: center;
     margin: 0; }
@@ -3462,6 +3484,9 @@ div.disabled > .toggle-slide {
     color: #00a8e6; }
     .modal-msg .modal-footer a + a {
       border-left: 1px solid #e5e5e5; }
+  .modal-msg .modal-footer.footer-full a {
+    float: none !important;
+    width: auto !important; }
 
 .verify p {
   padding: 0 40px 15px; }
@@ -3623,7 +3648,7 @@ div.disabled > .toggle-slide {
   border-width: 1px;
   border-style: solid;
   text-align: center;
-  line-height: 16px;
+  line-height: 18px;
   color: #fff;
   font-size: 11px;
   background: #00a8e6;
@@ -3639,7 +3664,7 @@ div.disabled > .toggle-slide {
     width: 4px;
     height: 4px;
     position: absolute;
-    top: 14px;
+    bottom: -3px;
     left: 50%;
     margin-left: -2px;
     border-width: 0 1px 1px 0;
@@ -3655,6 +3680,47 @@ div.disabled > .toggle-slide {
     .marker.active:before {
       background: #a7a7a7;
       border-color: #999; }
+  .marker.marker-include {
+    padding-right: 20px;
+    -moz-border-radius: 4px 10px 10px 4px;
+    -webkit-border-radius: 4px 10px 10px 4px;
+    -khtml-border-radius: 4px 10px 10px 4px;
+    border-radius: 4px 10px 10px 4px; }
+  .marker span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 11px;
+    border: 1px solid #fff;
+    color: #fff;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -khtml-border-radius: 100%;
+    border-radius: 100%; }
+
+.maps-pop {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999999; }
+  .maps-pop .reland-list {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+    .maps-pop .reland-list li .des .name {
+      display: inline-block; }
+    .maps-pop .reland-list li:nth-child(3) {
+      margin-bottom: -125px; }
 
 .sms-item {
   display: -ms-flexbox;
@@ -3744,11 +3810,11 @@ div.disabled > .toggle-slide {
   margin-left: 20px; }
 
 .loading {
-  width: 60px;
+  width: 40px;
   position: fixed;
   top: 45%;
   left: 50%;
-  margin-left: -30px;
+  margin-left: -20px;
   z-index: 9999999;
   display: none; }
 

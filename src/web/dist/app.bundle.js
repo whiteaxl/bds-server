@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "de18d65f6d42bcf914e4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2db7aa1b758018a4ef87"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30155,6 +30155,7 @@
 				console.log($rootScope.user);
 				if (vm.adsID) {
 					vm.isModifyAds = true;
+
 					HouseService.getUpdateAds({ adsID: vm.adsID }).then(function (res) {
 						console.log("-------------------------initData with adsId--------");
 						vm.ads = res.data.data;
@@ -30338,6 +30339,11 @@
 
 					vm.selectLoaiTin($scope.loaiTin);
 					vm.getCurrentLocation();
+				}
+				if (vm.isModifyAds) {
+					$(".post-btn").css("display", "block");
+				} else {
+					$(".post-btn").css("display", "none");
 				}
 			}
 			/*
@@ -31617,14 +31623,14 @@
 	                $("body").addClass("bodySearchShow");
 	                $(".post").scrollTop(0);
 	                $(".post-footer").addClass("fixed");
-	                $(".search-btn-post").css("display", "block");
+	                $(".post-btn").css("display", "block");
 	                overlay(".overlay");
 	            };
 	            vm.exitPost = function () {
 	                $(".post").removeAttr("style");
 	                $("body").removeClass("bodySearchShow");
 	                $(".post-footer").removeClass("fixed");
-	                $(".search-btn-post").css("display", "none");
+	                $(".post-btn").css("display", "none");
 	            };
 	            //end nhannc
 	            vm.goToSearchPage = function () {
