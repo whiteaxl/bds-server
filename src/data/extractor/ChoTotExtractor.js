@@ -45,7 +45,7 @@ class ChoTotExtractor {
 						handleDone();
 					}
 				});
-			}, (i % 100)*30000 + i*10);
+			}, (i % 100)*10000 + i*10);
 
 		}
 
@@ -58,7 +58,7 @@ class ChoTotExtractor {
 					+ ", Updated:" + result.cnt_update + ", noChange:" + result.cnt_noChange +", Total:" + result.total);
 				handleDone();
 			}
-		}, 20*1000);
+		}, 30*1000);
 	}
 
 //depth: diaChinh level, 0 mean no dive into into any level, 3 mean dive into XA
