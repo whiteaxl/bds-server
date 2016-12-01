@@ -37,12 +37,16 @@ class ChoTotExtractor {
 
 	extractFromTo(url, from, to, handleDone) {
 		let cnt = from;
+		let that = this;
 		for (var i=from; i <= to; i++) {
-			this.extractOnePage(url + "?o=" + i, () => {
-				if (cnt++ == to) {
-					handleDone();
-				}
-			});
+			setTimeout(() => {
+				this.extractOnePage(url + "?o=" + i, () => {
+					if (cnt++ == to) {
+						handleDone();
+					}
+				});
+			}, (i % 100)*60000 + i*100);
+
 		}
 
 		let itv  = setInterval(() => {
