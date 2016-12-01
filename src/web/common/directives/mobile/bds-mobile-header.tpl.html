@@ -1,7 +1,4 @@
 <header class="main blue" style="z-index=10;">
-
- 	  
-
     <div ng-if="mhdr.stateName=='msearch'">
     	<a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i><span style="display: none;">{{$root.unreadMsg}}</span></a>
 		<i class="iconSearch search-head"></i>
@@ -9,7 +6,12 @@
 		<!-- <input type="search" placeholder="Tìm tất cả theo khung nhìn" /> -->
 		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model = "mdhr.act" ng-click="mhdr.showFavorite($event)" ng-keypress="mhdr.keyPress($event)" id="searchadd1" placeholder="{{$root.act}}" />
     </div>
-    <div ng-if="mhdr.stateName!='msearch'">
+    <div ng-if="mhdr.stateName=='mlistMore'">    	
+        <a href="#" ng-click="mhdr.goToHomePage();" class="header-icon pull-left"><i class="iconLeftOpen"></i></a>
+		<a href="#" ng-click="mhdr.toggleFilter($event);" class="search_mobile header-icon"><i class="iconSearch"></i></a>
+		<span class="name">{{headerInfo.listMoreFirstTitle}}<br> {{headerInfo.listMoreSecondTitle}}</span>        
+    </div>
+    <div ng-if="mhdr.stateName!='msearch' && mhdr.stateName!='mlistMore'">
     	<!-- <a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i></a>
 		<a href="javascript:void(0)" class="pull-left"><img src="/web/mobile/img/logo.png" /></a>
 		<span ng-if="mhdr.page=='list'">Quận Hà Đông - Hà Nội</span>

@@ -1,14 +1,14 @@
 angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
     var def = {
         restrict: 'E',
-        scope: {mode: '=mode'},
+        scope: {mode: '=mode',headerInfo: '=headerInfo'},
         terminal: true,
         templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil) {
                 var vm = this; 
-                vm.stateName = $state.current.name;
+                vm.stateName = $state.current.name;                
                 //nhannc
                 $scope.isPostPage = false;
                 vm.openPost = function(){
@@ -290,6 +290,9 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $rootScope.searchData.polygon = undefined;
                     $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": $scope.mode?$scope.mode:"list"},{reload: true});
                     $(".overlay").click();            
+                }
+                vm.goToHomePage = function(){
+                    $state.go('mhome', { }, {location: true});
                 }
                 vm.init = function(){
                     RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1,"searchadd1",[

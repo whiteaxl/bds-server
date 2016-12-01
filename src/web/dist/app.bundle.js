@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9df668c33d382ec43905"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "517e6a70744db7ed94da"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1324,6 +1324,12 @@
 	        //   "orderBy": 0,
 	        //   "pageNo": 1
 	        // }
+
+	        $rootScope.headerInfo = {
+	            act: "Quận Cầu Giấy, Hà Nội",
+	            listMoreFirstTitle: 'Hung',
+	            listMoreSecondTitle: 'Tim'
+	        };
 
 	        $rootScope.searchData = {
 	            "placeId": undefined,
@@ -21721,6 +21727,8 @@
 				query.duAnID = vm.boSuuTap[index].query.duAnID;
 				var pid = query.place ? query.place.placeId || query.place.place_id : undefined;
 				// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
+				$rootScope.headerInfo.listMoreFirstTitle = vm.boSuuTap[index].title1;
+				$rootScope.headerInfo.listMoreSecondTitle = vm.boSuuTap[index].title2;
 
 				$state.go('mlistMore', { place: pid, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
 
@@ -33427,7 +33435,7 @@
 	angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: { mode: '=mode' },
+	        scope: { mode: '=mode', headerInfo: '=headerInfo' },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
 	        replace: 'true',
@@ -33697,6 +33705,9 @@
 	                $rootScope.searchData.polygon = undefined;
 	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
 	                $(".overlay").click();
+	            };
+	            vm.goToHomePage = function () {
+	                $state.go('mhome', {}, { location: true });
 	            };
 	            vm.init = function () {
 	                RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1, "searchadd1", [{
