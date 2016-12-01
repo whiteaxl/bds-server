@@ -19,7 +19,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".post").scrollTop(0);
                     $(".post-footer").addClass("fixed");
                     $(".post-btn").css("display","block");
-                    overlay(".overlay");
+                    $(".overlay").click();
                 }
                 vm.exitPost = function(){
                     $(".post").removeAttr("style");

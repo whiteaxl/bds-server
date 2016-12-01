@@ -83,7 +83,7 @@
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
                 <custom-marker  class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
-                    <div class="{{m.count>1?'marker marker-include':'marker'}}">
+                    <div class="{{m.count>1?'reland-marker marker-include':'reland-marker'}}">
                         {{m.content}}
                         <i ng-if="m.negotiatePrice==false" class="icon iconUp"></i>
                         <span ng-if="m.count > 1" >{{m.count}}</span>

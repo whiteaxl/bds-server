@@ -112,12 +112,12 @@
                 <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
                         <ng-map center="{{mdt.center}}" draggable="false" zoom="15" class="ngmap" default-style="true">
                             <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
-                              <div class = "marker">
+                              <div class = "reland-marker">
                                 {{mdt.marker.content}} 
                               </div>
                             </custom-marker>
                             <custom-marker position="Hanoi">
-                              <div class = "marker">
+                              <div class = "reland-marker">
                                 Vị trí của bạn
                               </div>
                             </custom-marker>
@@ -262,12 +262,12 @@
                 <div class="modal-body uln"" ontouchstart="return false">
                     <ng-map center="{{mdt.center}}" id="fullMap"   zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
                         <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
-                          <div class = "marker">
+                          <div class = "reland-marker">
                             {{mdt.marker.content}} 
                           </div>
                         </custom-marker>
                         <custom-marker position="Hanoi">
-                          <div class = "marker">
+                          <div class = "reland-marker">
                             Vị trí của bạn
                           </div>
                         </custom-marker>

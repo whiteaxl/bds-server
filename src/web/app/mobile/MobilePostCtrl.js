@@ -703,7 +703,7 @@
 			$("body").addClass("bodySearchShow");
 			$(".post").scrollTop(0);
 			$(".post-footer").addClass("fixed");
-			overlay(".overlay");
+			$(".overlay").click();
 
 			Hammer.plugins.fakeMultitouch();
 			$("select#yearBuild").drum({
@@ -1051,14 +1051,16 @@
 					console.log("------------HouseService.postAds-------------");
 					console.log(vm.ads.loaiTin);
 					console.log(res);
-					if(res.status == 0){
+					if(res.data.status == 0){
 						vm.postMsg = "Bạn đã thực hiện đăng tin thành công"
 						vm.postStatus = 0;
-					} else{
+					} else if(res.data.status == 1){
 						vm.postMsg = res.err.length<40?res.err:(res.err.substring(0,40) + "...");
 						vm.postStatus = 1;
 					}
-
+					$("#loadingDiv").css("display","none");
+					$('#messageBox').modal({backdrop: 'static', keyboard: false})
+					$('#messageBox').modal("show");
 				})
 			} else {
 				console.log("--------------invalid----------------");
@@ -1069,13 +1071,27 @@
 		}
 
 		vm.lastProcess = function () {
-			$('#imgPostDiv').removeClass("disabledCls");
-			$('#inputPostDiv').removeClass("disabledCls");
-			$("#loadingDiv").css("display","none");
-			if(vm.postStatus==0){
-				$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
-			} else if(vm.postStatus==0)
-				return;
+			var async = require("async");
+			async.series(
+				[function (callback) {
+					$('#messageBox').modal("hide");
+					$('#imgPostDiv').removeClass("disabledCls");
+					$('#inputPostDiv').removeClass("disabledCls");
+					callback(null, 'one');
+				},
+				function (callback) {
+					if(vm.postStatus==0){
+						$timeout(function () {
+							$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
+						},300)
+					} else if(vm.postStatus==0)
+						return;
+					callback(null, 'two');
+				}]
+				,function(err, results){
+					console.log("--------------lastProcess----finish------------");
+				}
+			)
 		}
 
 		vm.selectLoaiTin = function(loaiTin){

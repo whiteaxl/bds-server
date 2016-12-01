@@ -3641,7 +3641,7 @@ div.disabled > .toggle-slide {
 #paycartBox .title {
   background: #fff; }
 
-.marker {
+.reland-marker {
   min-width: 42px;
   white-space: nowrap;
   padding: 0 5px;
@@ -3658,7 +3658,7 @@ div.disabled > .toggle-slide {
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
   border-radius: 4px; }
-  .marker:before {
+  .reland-marker:before {
     display: inline-block;
     margin: auto 0;
     content: " ";
@@ -3675,19 +3675,19 @@ div.disabled > .toggle-slide {
     -ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg); }
-  .marker.active {
+  .reland-marker.active {
     background: #a7a7a7;
     border-color: #999; }
-    .marker.active:before {
+    .reland-marker.active:before {
       background: #a7a7a7;
       border-color: #999; }
-  .marker.marker-include {
+  .reland-marker.marker-include {
     padding-right: 20px;
     -moz-border-radius: 4px 10px 10px 4px;
     -webkit-border-radius: 4px 10px 10px 4px;
     -khtml-border-radius: 4px 10px 10px 4px;
     border-radius: 4px 10px 10px 4px; }
-  .marker span {
+  .reland-marker span {
     position: absolute;
     top: 0;
     right: 0;

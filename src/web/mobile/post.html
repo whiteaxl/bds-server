@@ -68,7 +68,7 @@
 
                     </div>
                     <div class="dt-box collapse-box fr">
-                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="text" pattern="[0-9]*\.?[0-9]*" required="" ></span></a>
+                        <a class="collapse-title"><label>Diện tích (m2)</label> <span><input name="dienTich" ng-model="mpc.ads.dienTich" type="number" pattern="[0-9]*\.?[0-9]*" required="" ></span></a>
                         <div style="color:red" ng-show="postForm.$submitted">
                             <span ng-show="postForm.dienTich.$error.required || postForm.dienTich.$invalid-pattern">{{postForm.dienTich.$error.required?"(Chưa nhập diện tích)":(postForm.dienTich.$invalid-pattern? "(Nhập sai định dạng số)" : "")}}</span>
                         </div>
@@ -146,13 +146,13 @@
                     <div class="more-box more-box-hide">
                         <div class="title border">Thông tin khác</div>
                         <div class="dt-box collapse-box fr">
-                            <a class="collapse-title"><label>Mặt tiền</label> <span><input name="matTien" type="text" pattern="[0-9]*\.?[0-9]*" ng-model="mpc.ads.matTien"></span></a>
+                            <a class="collapse-title"><label>Mặt tiền</label> <span><input name="matTien" type="number" pattern="[0-9]*\.?[0-9]*" ng-model="mpc.ads.matTien"></span></a>
                             <div style="color:red" ng-show="postForm.$submitted">
                                 <span ng-show="postForm.matTien.$invalid-pattern">(Nhập sai định dạng số)</span>
                             </div>
                         </div>
                         <div class="dt-box collapse-box  border-none fr">
-                            <a class="collapse-title"><label>Đường trước nhà (m)</label> <span><input name="duongTruocNha" type="text" pattern="[0-9]*\.?[0-9]*" ng-model="mpc.ads.duongTruocNha"></span></a>
+                            <a class="collapse-title"><label>Đường trước nhà (m)</label> <span><input name="duongTruocNha" type="number" pattern="[0-9]*\.?[0-9]*" ng-model="mpc.ads.duongTruocNha"></span></a>
                             <div style="color:red" ng-show="postForm.$submitted">
                                 <span ng-show="postForm.duongTruocNha.$invalid-pattern">(Nhập sai định dạng số)</span>
                             </div>
@@ -231,7 +231,7 @@
                 <h4 class="modal-title">Giá tiền</h4>
             </div>
             <div class="title">Nhập giá tiền</div>
-            <div class="pd15"><input id="giaTienPost" type="text" pattern="[0-9]*\.?[0-9]*" class="form-control" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
+            <div class="pd15"><input id="giaTienPost" type="number" pattern="[0-9]*\.?[0-9]*" class="form-control" ng-model="mpc.gia" ng-change="mpc.changeGiaTien()"></div>
             <div class="title"></div>
             <div class="title border">Đơn vị</div>
             <div class="modal-body uln">
@@ -252,7 +252,7 @@
                 </div>
             </div>
             <div class="modal-footer footer-full">
-                <a type="button" data-dismiss="modal" aria-label="Close" ng-click="mpc.lastProcess()">OK</a>
+                <a href="#" ng-click="mpc.lastProcess()">OK</a>
             </div>
         </div>
     </div>
