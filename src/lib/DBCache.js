@@ -27,8 +27,13 @@ global.rwcache = {};
 global.lastSyncTime = 0;
 
 
-function loadDoc(type, callback) {
+function loadDoc(type, moreCondition, callback) {
   let sql = `select t.* from default t where type='${type}' `;
+
+  if (moreCondition) {
+    sql = sql + moreCondition;
+  }
+
   commonService.query(sql, (err, list) => {
     if (err) {
       logUtil.error(err);
@@ -90,6 +95,7 @@ function loadAds(isFull, moreCondition, callback) {
     callback(list.length);
   });
 }
+
 
 function updateCache(ads){
   let inCache = adsCol.by('id', ads.id);
@@ -197,8 +203,16 @@ var cache = {
     });
   },
 
+  loadDoc(type, moreCondition, callback) {
+    return loadDoc(type, moreCondition, callback);
+  },
+
   reloadPlaces(done) {
-    loadDoc("Place", done);
+    loadDoc("Place", null, done);
+  },
+
+  loadAdsRaw(moreCondition, done) {
+    loadDoc("Ads_Raw", moreCondition, done);
   },
 
   placeAsArray() {
@@ -207,6 +221,14 @@ var cache = {
 
   placeAsMap() {
     return global.rwcache.Place.asMap;
+  },
+
+  adsRawAsMap() {
+    return global.rwcache.Ads_Raw.asMap;
+  },
+
+  adsRawAsArray() {
+    return global.rwcache.Ads_Raw.asArray;
   },
 
   placeById(id) {

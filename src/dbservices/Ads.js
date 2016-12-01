@@ -68,12 +68,16 @@ class AdsModel {
         this.myBucket = myBucket;
     }
 
-    upsert(adsDto) {
+    upsert(adsDto, callback) {
         adsDto.id = adsDto.id || adsDto.adsID;
         adsDto.timeModified = new Date().getTime();
         bucket.upsert(adsDto.id, adsDto, function (err, res) {
             if (err) {
                 logUtil.error("ERROR:" + err);
+            }
+
+            if (callback) {
+                callback(err, res);
             }
         })
     }

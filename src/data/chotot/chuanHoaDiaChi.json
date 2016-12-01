@@ -1,0 +1,26 @@
+[
+  {
+    "from": "TP??HCM",
+    "to" : "Hồ Chí Minh",
+    "rex" : true
+  },
+  {
+    "from": "HCM",
+    "to" : "Hồ Chí Minh"
+  },
+  {
+    "from": "XVNTĩnh",
+    "to" : "Xô Viết Nghệ Tĩnh"
+  },
+  {
+    "from": "P\\.?(\\d+,)",
+    "to" : "Phường $1",
+    "rex" : true
+  },
+  {
+    "from": ", ?Q\\.?(\\d+)",
+    "to" : ", Quận $1",
+    "isRegEx" : true
+  }
+
+]
