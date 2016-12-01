@@ -980,6 +980,7 @@
 				vm.beginPost = true;
 				$('#imgPostDiv').addClass("disabledCls");
 				$('#inputPostDiv').addClass("disabledCls");
+				$("#loadingDiv").css("display","block");
 
 				console.log("--------------dangTin----------------");
 				if(vm.diaChinh.fullName){
@@ -1050,7 +1051,14 @@
 					console.log("------------HouseService.postAds-------------");
 					console.log(vm.ads.loaiTin);
 					console.log(res);
-					$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
+					if(res.status == 0){
+						vm.postMsg = "Bạn đã thực hiện đăng tin thành công"
+						vm.postStatus = 0;
+					} else{
+						vm.postMsg = res.err.length<40?res.err:(res.err.substring(0,40) + "...");
+						vm.postStatus = 1;
+					}
+
 				})
 			} else {
 				console.log("--------------invalid----------------");
@@ -1058,6 +1066,16 @@
 				angular.element('input.ng-invalid').first().focus();
 			}
 
+		}
+
+		vm.lastProcess = function () {
+			$('#imgPostDiv').removeClass("disabledCls");
+			$('#inputPostDiv').removeClass("disabledCls");
+			$("#loadingDiv").css("display","none");
+			if(vm.postStatus==0){
+				$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
+			} else if(vm.postStatus==0)
+				return;
 		}
 
 		vm.selectLoaiTin = function(loaiTin){

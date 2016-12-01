@@ -1014,9 +1014,9 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
+  background: #fff;
   overflow-x: hidden;
   -webkit-user-drag: none;
-  -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility; }
 
 ::-moz-selection, ::selection {
@@ -1923,6 +1923,7 @@ div.drum {
       text-align: center;
       font-size: 17px;
       font-weight: bold;
+      margin: 0 40px;
       color: #000; }
     .modal .modal-header .close {
       margin: 0;
@@ -2647,7 +2648,7 @@ div.disabled > .toggle-slide {
     .search-footer a i, .post .post-footer a i {
       font-size: 28px; }
 
-.search-btn {
+.search-btn, .post-btn {
   display: none;
   background: #fff;
   bottom: 0;
@@ -2658,14 +2659,14 @@ div.disabled > .toggle-slide {
   z-index: 999;
   position: fixed;
   border-top: 1px solid #e4e4e4; }
-  .search-btn .btn-none {
+  .search-btn .btn-none, .post-btn .btn-none {
     width: 30%;
     white-space: nowrap;
     text-align: center;
     display: inline-block; }
-  .search-btn.blue {
+  .search-btn.blue, .post-btn.blue {
     background: #00a8e6; }
-    .search-btn.blue .btn-none {
+    .search-btn.blue .btn-none, .post-btn.blue .btn-none {
       color: #fff; }
 
 .search-fr {

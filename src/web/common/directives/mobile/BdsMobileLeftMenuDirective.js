@@ -42,7 +42,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                         });
                         return true;
                     }
-                    $state.go('mchats');
+                    $state.go('mchats', { }, {location: true});
                     $(".overlay").click();
                 }
                 
@@ -57,7 +57,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                         });
                         return true;
                     }
-                    $state.go('mpost');
+                    $state.go('mpost', { }, {location: true});
                     $(".overlay").click();
                 }
                 vm.gotoQuanLyDangTin = function(event){
@@ -71,7 +71,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                         });
                         return true;
                     }
-                    $state.go('madsMgmt');
+                    $state.go('madsMgmt', { }, {location: true});
                     $(".overlay").click();
                 }
                 //nhannc end

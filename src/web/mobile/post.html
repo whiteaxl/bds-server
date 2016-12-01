@@ -2,7 +2,7 @@
     div.disabledCls
     {
         pointer-events: none;
-        opacity: 0.8;
+        opacity: 0.9;
     }
     .search-btn-post {
         background: #fff;
@@ -26,7 +26,7 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
 <bds-mobile-header ></bds-mobile-header>
-<div class="loading" style="display:none"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
+<div id="loadingDiv" class="loading" style="display:none"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
 <div class="post">
     <form name="postForm" novalidate>
         <div class="postimg uln" id="imgPostDiv">
@@ -203,6 +203,7 @@
     </form>
 
 </div>
+<div class="overlay"></div>
 <div class="modal fade modal-choose modal-none modal-bg" id="addressBox" tabindex="-1" role="dialog" aria-labelledby="addressBoxLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -241,6 +242,21 @@
         </div>
     </div>
 </div>
+<div class="modal fade modal-msg" id="messageBox" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body uln">
+                <div class="text-center">
+                    <h3>Thông báo</h3>
+                    <p>{{mpc.postMsg}}.</p>
+                </div>
+            </div>
+            <div class="modal-footer footer-full">
+                <a type="button" data-dismiss="modal" aria-label="Close" ng-click="mpc.lastProcess()">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade modal-choose" id="typeBoxPost" tabindex="-1" role="dialog" aria-labelledby="typeBoxPostLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -260,6 +276,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <a role="button" ng-click="mpc.getDiaChinhInDb(mpc.location.lat,mpc.location.lon)" data-dismiss="modal"></a>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
                 <h4 class="modal-title" id="trendBoxPostLabel">Hướng nhà</h4>
             </div>
@@ -365,4 +382,5 @@
         </div>
     </div>
 </div>
+
 <script src="/web/mobile/js/javascript.min.js"></script>
