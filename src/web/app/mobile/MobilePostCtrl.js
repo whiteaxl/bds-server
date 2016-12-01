@@ -1078,15 +1078,17 @@
 					$('#messageBox').modal("hide");
 					$('#imgPostDiv').removeClass("disabledCls");
 					$('#inputPostDiv').removeClass("disabledCls");
-					callback(null, 'one');
+					console.log("--------------lastProcess----1------------");
+					$timeout(function () {
+						callback(null, 'one');
+					},300)
 				},
 				function (callback) {
 					if(vm.postStatus==0){
-						$timeout(function () {
-							$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
-						},300)
-					} else if(vm.postStatus==0)
+						$state.go('madsMgmt',{"loaiTin" : vm.ads.loaiTin});
+					} else if(vm.postStatus==1)
 						return;
+					console.log("--------------lastProcess----2------------");
 					callback(null, 'two');
 				}]
 				,function(err, results){
