@@ -10,6 +10,9 @@
 		vm.adsLikes = [];
 		vm.adsSales = [];
 		vm.adsRents = [];
+
+		vm.adsToDel;
+		vm.loaiTinAdsDel;
 		
 		vm.resetInactiveClass = function(){
 			console.log("--------------reset---------------");
@@ -46,35 +49,64 @@
 			$state.go('mpost', { "adsID" : ads.adsID});
 		}
 
-		vm.deleteAds = function(ads, loaiTin){
+		vm.showDeleteBox = function (ads, loaiTin) {
 			console.log("------------------deleteAds-------------");
-			var avatarImage = ads.image.cover;
-			var imgList = ads.image.images;
-			HouseService.deleteAds({adsID: ads.adsID}).then(function(res){
-				console.log("------------------callService-------------");
-				console.log(res);
-				if(res.status==200){
-					if(loaiTin == 0){
-						var index = vm.adsSales.indexOf(ads);
-						vm.adsSales.splice(index, 1);
-					} else{
-						var index = vm.adsRents.indexOf(ads);
-						vm.adsRents.splice(index, 1);
-					}
-					if(avatarImage){
-						HouseService.deleteFile({fileUrl: avatarImage.trim()}).then(function(res){
-							console.log(res);
-						})
-					}
-					if(imgList){
-						for(var i=0; i< imgList.length; i++){
-							HouseService.deleteFile({fileUrl: imgList[i].trim()}).then(function(res){
+			vm.adsToDel = ads;
+			vm.loaiTinAdsDel = loaiTin;
+			$('#messageBox').modal({backdrop: 'static', keyboard: false})
+			$('#messageBox').modal("show");
+		}
+
+		vm.confirmDeleteAds = function (confirm) {
+			console.log("------------------confirmDeleteAds-------------");
+			$('#messageBox').modal("hide");
+			$timeout(function () {
+				if(confirm == 1){
+					$("#loadingDiv").css("display","block");
+					$('#managerDiv').addClass("disabledCls");
+					vm.deleteAds();
+				} else{
+					return;
+				}
+			},300)
+
+
+		}
+
+		vm.deleteAds = function(){
+			console.log("------------------deleteAds-------------");
+			if(vm.adsToDel){
+				var avatarImage = vm.adsToDel.image.cover;
+				var imgList = vm.adsToDel.image.images;
+				HouseService.deleteAds({adsID: vm.adsToDel.adsID}).then(function(res){
+					console.log("------------------callService-------------");
+					console.log(res);
+					if(res.status==200){
+						if(vm.loaiTinAdsDel == 0){
+							var index = vm.adsSales.indexOf(vm.adsToDel);
+							vm.adsSales.splice(index, 1);
+						} else{
+							var index = vm.adsRents.indexOf(vm.adsToDel);
+							vm.adsRents.splice(index, 1);
+						}
+						/*
+						if(avatarImage){
+							HouseService.deleteFile({fileUrl: avatarImage.trim()}).then(function(res){
 								console.log(res);
 							})
 						}
+						if(imgList){
+							for(var i=0; i< imgList.length; i++){
+								HouseService.deleteFile({fileUrl: imgList[i].trim()}).then(function(res){
+									console.log(res);
+								})
+							}
+						}*/
+						$("#loadingDiv").css("display","none");
+						$('#managerDiv').removeClass("disabledCls");
 					}
-				}
-			});
+				});
+			}
 		}
 
 		vm.initAdsLikesData = function(){

@@ -2,13 +2,13 @@
 <bds-mobile-filter search-data="$root.searchData"></bds-mobile-filter>
 <!-- <bds-mobile-header></bds-mobile-header> -->
 <bds-mobile-header act="$root.act"></bds-mobile-header>
-<div class="reland-title fixed"  ng-show="mhc.boSuuTap && mhc.boSuuTap.length>0" >
-	<h4></h4>
-    <h3></h3>
-    <h5></h5>
-</div>
 <div class="wapper" ng-if="$root.currentLocation">
 	<div class="reland-box reland-box_1 uln" ng-repeat="bst in mhc.boSuuTap track by $index" reland-item="reland-box_1">
+        <div class="reland-title">
+            <h4>Bộ sưu tập</h4>
+            <h3>{{bst.title1}}</h3>
+            <h5>{{bst.title2}}</h5>
+        </div>
         <ul class="reland-list full-3">
         	<li ng-repeat="ads in bst.data" ng-click="mhc.goDetail(ads)">
             	<a href="" class="heart" ng-click="mhc.likeAds($event,ads.adsID)"><i ng-class="$root.alreadyLike(ads.adsID) ==  true?'icon-heart active':'icon-heart'"></i></a>

@@ -1041,6 +1041,7 @@
 					gia =  parseFloat(gia);
 					vm.ads.gia = Math.round(gia * 1000)/1000;
 				}
+				vm.ads.deleted = false;
 
 				console.log("------------danTin-------------1-------------");
 				console.log(vm.ads);

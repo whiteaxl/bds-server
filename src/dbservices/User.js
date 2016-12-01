@@ -118,7 +118,7 @@ class UserModel {
   }
 
   getMyAds(userID,callback){
-    let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}'`;
+    let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}' and a.deleted=false`;
     console.log("getMyAds, sql:", sql);
     var query = N1qlQuery.fromString(sql);
     bucket.query(query, callback);
@@ -448,6 +448,7 @@ class UserModel {
       }else{
         if(res && res.length==1){
           var sql = `delete from default where type='Ads' and id='${adsID}'`;
+          var sql = `update  default a  set a.deleted=true where a.type='Ads' and a.id='${adsID}'`;
 
           console.log(sql);
           var query = N1qlQuery.fromString(sql);

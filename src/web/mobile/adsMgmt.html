@@ -1,9 +1,16 @@
+<style>
+    div.disabledCls
+    {
+        pointer-events: none;
+        opacity: 0.9;
+    }
+</style>
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
 <bds-mobile-header ></bds-mobile-header>
 
 <div class="wapper">
-    <div class="manager">
+    <div class="manager" id="managerDiv">
         <ul class="nav nav-tabs nav-tabs-3" role="tablist">
             <li role="presentation" class="active"><a id="tabDaLuuId" href="#managerSaved" aria-controls="managerSaved" role="tab" data-toggle="tab">Đã lưu</a></li>
             <li role="presentation" ><a href="#managerSale" id="tabSaleId" aria-controls="managerSale" role="tab" data-toggle="tab">Bán</a></li>
@@ -45,7 +52,7 @@
                         </span>
                         <span class="btngroup">
                             <a href="#" ng-click="mamc.updateAds(ads)" class="edit">Sửa</a>
-                            <a href="#" ng-click="mamc.deleteAds(ads,0)" class="del">Xóa</a>
+                            <a href="#" ng-click="mamc.showDeleteBox(ads,0)" class="del">Xóa</a>
                         </span>
                     </li>
                 </ul>
@@ -67,7 +74,7 @@
                         </span>
                         <span class="btngroup">
                             <a href="#" ng-click="mamc.updateAds(ads)" class="edit">Sửa</a>
-                            <a href="#" ng-click="mamc.deleteAds(ads,1)" class="del">Xóa</a>
+                            <a href="#" ng-click="mamc.showDeleteBox(ads,1)" class="del">Xóa</a>
                         </span>
                     </li>
                 </ul>
@@ -75,5 +82,22 @@
         </div>
     </div>
 </div>
+<div class="modal fade modal-msg" id="messageBox" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body uln">
+                <div class="text-center">
+                    <h3>Thông báo</h3>
+                    <p>Bạn có chắc chắn xóa bài đăng này?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" ng-click="mamc.confirmDeleteAds(0)">Thoát</a>
+                <a href="#" ng-click="mamc.confirmDeleteAds(1)">Thực hiện</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingDiv" class="loading" style="display:none"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
 <div class="overlay"></div>
 <script src="/web/mobile/js/javascript.min.js"></script>
