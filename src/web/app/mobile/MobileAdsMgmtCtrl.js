@@ -160,13 +160,15 @@
 */
 		vm.unlikeAds = function(event, ads){
 			console.log("------------unlikeAds---------------");
-			$(event.target).attr('class', 'icon-heart refresh');
+			$("#loadingDiv").css("display","block");
+			//$(event.target).attr('class', 'icon-heart refresh');
 			$(event.target).unbind();
 			if($rootScope.user && $rootScope.user.userID){
 				HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: ads.adsID}).then(function(res){
 					if(res.status == 200){
 						var index = vm.adsLikes.indexOf(ads);
 						vm.adsLikes.splice(index, 1);
+						$("#loadingDiv").css("display","none");
 					}
 					console.log(vm.adsLikes);
 				})

@@ -19,9 +19,9 @@
         <div class="tab-content uln" id="tabContentUln">
             <div role="tabpanel" class="tab-pane active" id="managerSaved">
                 <ul class="reland-list full">
-                    <li ng-repeat="ads in mamc.adsLikes track by $index" ng-click="mamc.goDetail(ads)">
+                    <li ng-repeat="ads in mamc.adsLikes track by $index">
                         <a class="heart"><i class="icon-heart active" ng-click="mamc.unlikeAds($event, ads)"></i></a>
-                        <a >
+                        <a  ng-click="mamc.goDetail(ads)">
                             <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                             <span class="des bgOpa">
                                 <span class="price">{{ads.giaFmt}}</span>

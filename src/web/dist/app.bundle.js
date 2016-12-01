@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8a624b3bf2fbe8bc8ef7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "802e8d177522b42fa809"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30927,13 +30927,15 @@
 	  */
 			vm.unlikeAds = function (event, ads) {
 				console.log("------------unlikeAds---------------");
-				$(event.target).attr('class', 'icon-heart refresh');
+				$("#loadingDiv").css("display", "block");
+				//$(event.target).attr('class', 'icon-heart refresh');
 				$(event.target).unbind();
 				if ($rootScope.user && $rootScope.user.userID) {
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: ads.adsID }).then(function (res) {
 						if (res.status == 200) {
 							var index = vm.adsLikes.indexOf(ads);
 							vm.adsLikes.splice(index, 1);
+							$("#loadingDiv").css("display", "none");
 						}
 						console.log(vm.adsLikes);
 					});
