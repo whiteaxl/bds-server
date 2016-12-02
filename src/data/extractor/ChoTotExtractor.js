@@ -39,13 +39,14 @@ class ChoTotExtractor {
 		let cnt = from;
 		let that = this;
 		for (var i=from; i <= to; i++) {
+			let tmp = i;
 			setTimeout(() => {
 				this.extractOnePage(url + "?o=" + i, () => {
 					if (cnt++ == to) {
 						handleDone();
 					}
 				});
-			}, i * 5000);
+			}, tmp * 5000);
 
 		}
 
