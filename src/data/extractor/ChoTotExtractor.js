@@ -127,6 +127,11 @@ class ChoTotExtractor {
 			})
 			.data((adsImages) => {
 				//console.log("IMGES:", adsImages);
+				if (!adsImages.header_title_2) {
+					result.cnt_wrongUrl++;
+					return this._doneOne();
+				}
+
 				let maSo = this._getMaSoFromTitle(adsImages.header_title_2);
 				if (!AdsCache[maSo]) {
 					console.error("No ADS for maso:", maSo, adsImages.header_title_2);
@@ -158,6 +163,8 @@ class ChoTotExtractor {
 	_getMaSoFromTitle(title) {
 		if (!title) {
 			console.error("Missing title!");
+
+			return null;
 		}
 		let idx = title.lastIndexOf("-");
 		return title.substr(idx+2);
