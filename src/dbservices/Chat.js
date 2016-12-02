@@ -72,6 +72,7 @@ class ChatModel {
       }
     });
   }
+
   getUnreadMessages(user,callback){
 	var sql = `select * from default where type='Chat' and read = false`;
 	sql = `${sql} AND toUserID='${user.userID}'`
@@ -116,20 +117,36 @@ class ChatModel {
      });
   }
 
-    getInboxMsg(payload,callback){
+  getInboxMsg(payload,callback){
       var userID = payload.userID;
 
-      var sql = `select distinct {"userID": toUserID, "fullName": toFullName, "avatar": toUserAvatar } as partner, relatedToAds from default where type='Chat'`;
+      /*var sql = `select distinct {"userID": toUserID} as partner, {"adsID" : relatedToAds.adsID} as relatedToAds from default where type='Chat'`;
       sql = `${sql} and fromUserID='${userID}'`;
       sql = `${sql} union`;
-      sql = `${sql} select distinct {"userID": fromUserID, "fullName": fromFullName, "avatar": fromUserAvatar } as partner, relatedToAds from default where type='Chat'`;
+      sql = `${sql} select distinct {"userID": fromUserID} as partner, {"adsID" : relatedToAds.adsID} as relatedToAds from default where type='Chat'`;
       sql = `${sql} and toUserID='${userID}'`;
+*/
+      var sql = `select {"userID": b.id, "fullName": b.fullName, "phone": b.phone, "email": b.email, "avatar": b.avatar} as partner,`;
+      sql = `${sql} {"adsID": c.id, "loaiTin": c.loaiTin, "loaiNhaDat": c.loaiNhaDat, "gia": c.gia, "place": c.place,"image": c.image,  "dienTich": c.dienTich} as relatedToAds`;
+      sql = `${sql} from (`;
+      sql = `${sql} select toUserID as userID, relatedToAds.adsID as adsID`;
+      sql = `${sql} from default`;
+      sql = `${sql} where type='Chat' and fromUserID='${userID}'`;
+      sql = `${sql} union`;
+      sql = `${sql} select fromUserID as userID, relatedToAds.adsID as adsID`;
+      sql = `${sql} from default`;
+      sql = `${sql} where type='Chat' and toUserID='${userID}')  a`;
+      sql = `${sql} inner join default b`;
+      sql = `${sql} on keys a.userID`;
+      sql = `${sql} inner join default c `;
+      sql = `${sql} on keys a.adsID`;
+
 
       console.log("sql: " + sql);
 
       var query = N1qlQuery.fromString(sql);
-      //TODO: remove from
-  bucket.query(query, function (err, all) {
+
+      bucket.query(query, function (err, all) {
           if (err) {
               console.log("ERROR:" + err);
               callback(err, null);
@@ -143,8 +160,7 @@ class ChatModel {
 
   confirmRead(chat,callback){
   	chat.read = true;
-  	console.log(chat);
-  	bucket.upsert(chat.chatID, chat, callback);
+    bucket.upsert(chat.chatID, chat, callback);
   }
 
 	

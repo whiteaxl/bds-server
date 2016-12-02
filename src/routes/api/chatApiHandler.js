@@ -1,9 +1,13 @@
 'use strict'
 
 var logUtil = require("../../lib/logUtil");
+var util = require("../../lib/utils");
 var constant = require("../../lib/constant");
 var ChatModel = require('../../dbservices/Chat');
 var chatModel = new ChatModel();
+
+var User = require("../../dbservices/User");
+var userService = new User();
 
 var internals = {};
 
@@ -79,9 +83,41 @@ internals.getInboxMsg = function(req, reply){
             });
         } else {
             logUtil.info("Get Chat content successfull, id: ", JSON.stringify(req.payload));
-            reply({
-                status: constant.STS.SUCCESS,
-                data: res
+            
+            let result = [];
+
+            var async = require("async");
+
+            async.forEach(res, function(e, callback){
+                e.relatedToAds.giaFmt =  util.getPriceDisplay(e.relatedToAds.gia, e.relatedToAds.loaiTin);
+                e.relatedToAds.dienTichFmt = util.getDienTichDisplay(e.relatedToAds.dienTich);
+                e.relatedToAds.diaChinhFullName = e.relatedToAds.place.diaChi;
+                e.relatedToAds.cover = e.relatedToAds.image ? e.relatedToAds.image.cover : undefined;
+                let payload = {userID: req.payload.userID, partnerUserID: e.partner.userID, adsID: e.relatedToAds.adsID}
+
+                chatModel.getAllChatMsg(payload, function(err, msgRes){
+                    if (err != null){
+                        logUtil.error("Error when get unread Chat content, userID: " + JSON.stringify(req.payload));
+                    } else {
+                        let numOfUnreadMessage = 0;
+                        msgRes.map( (msg) => {
+                            if (msg.default.toUserID == req.payload.userID && !msg.default.read){
+                                    numOfUnreadMessage = numOfUnreadMessage + 1;
+                                }
+                        });
+                        e.content = msgRes[0].default.content;
+                        e.date = new Date(msgRes[0].default.date);
+                        e.numOfUnreadMessage = numOfUnreadMessage;
+                        callback();
+                    }
+                });
+                result.push(e);
+
+            }, function(err){
+                reply({
+                    status: constant.STS.SUCCESS,
+                    data: result
+                });
             });
         }
     });
