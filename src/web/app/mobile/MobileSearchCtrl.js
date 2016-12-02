@@ -121,6 +121,9 @@
                     $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.codeTinh;
                     $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.codeHuyen;
                     $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.codeXa;
+                    //add diaChinh on bo suu tap
+                    $rootScope.searchData.diaChinh.fullName = res.data.place.fullName;
+                    //end
                     $rootScope.searchData.viewport = vm.viewport;
                     $rootScope.searchData.placeId = vm.placeId;
                     vm.search(function(){
@@ -852,8 +855,11 @@
                 
 
                 
-                if(vm.ads_list && vm.ads_list.length>0){       
-                    $rootScope.addLastSearch($localStorage,$rootScope.searchData);             
+                if(vm.ads_list && vm.ads_list.length>0){
+                    //if search polygon then don't push to lastSearch
+                    if(!$rootScope.searchData.polygon)
+                        $rootScope.addLastSearch($localStorage,$rootScope.searchData);
+                    //end
                     if(vm.diaChinh)
                         HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){
                             if(res.data.success==true)

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9c5451f7cd21c78fbf43"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "29c293b541b6295ecdf6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21609,27 +21609,30 @@
 		var controllerId = 'MobileHomeCtrl';
 		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location, $localStorage) {
 			var vm = this;
-			var query = {
-				loaiTin: 0,
-				//giaBETWEEN: [ 0, 9999999 ],
-				soPhongNguGREATER: '0',
-				soTangGREATER: '0',
-				soPhongTamGREATER: '0',
-				dienTichBETWEEN: [0, 9999999],
-				limit: 200
-				// polygon: []
-			};
+			/*
+	  var query = { 
+	  	loaiTin: 0,
+	     //giaBETWEEN: [ 0, 9999999 ],
+	     soPhongNguGREATER: '0',
+	     soTangGREATER: '0',
+	     soPhongTamGREATER: '0',
+	     dienTichBETWEEN: [ 0, 9999999 ],
+	     limit: 200
+	     // polygon: []
+	    	}*/
 			// vm.showAskCurrentLocation = false;
 			var homeDataSearch = {
 				timeModified: undefined,
-				query: query,
+				query: undefined,
 				currentLocation: undefined
 			};
-			if ($rootScope.getLastSearch($localStorage)) homeDataSearch.query = $rootScope.getLastSearch($localStorage).query;
+			if ($rootScope.getLastSearch($localStorage)) {
+				homeDataSearch.query = $rootScope.getLastSearch($localStorage).query;
+				homeDataSearch.query.updateLastSearch = false;
+			}
 			//    $rootScope.currentLocation.lat = 20.9898098;
 			// $rootScope.currentLocation.lon = 105.7098334;
 			homeDataSearch.currentLocation = $rootScope.currentLocation;
-			homeDataSearch.query.updateLastSearch = false;
 
 			vm.getLocation = function () {
 				/*function fetchHomeData(){
@@ -21646,46 +21649,41 @@
 	        vm.doneSearch = true;
 	      }
 	   );
-	   }
-	   if (navigator.geolocation) {
-	    navigator.geolocation.getCurrentPosition(function(position){
-	    	$rootScope.currentLocation.lat = position.coords.latitude;
-	    	$rootScope.currentLocation.lon = position.coords.longitude;
-	    	homeDataSearch.currentLocation = $rootScope.currentLocation;
-	   //      	HouseService.homeDataForApp(homeDataSearch).then(function(res){
-	   // 	//alert(JSON.stringify(res));
-	   // 	vm.boSuuTap = res.data.data; 
-	   // });
-	   fetchHomeData();
-	    }, function(error){
-	    	console.log(error);		        	
-	    	// vm.showAskCurrentLocation  = true;
-	    	fetchHomeData();
-	    });
-	   } else {
-	    //x.innerHTML = "Geolocation is not supported by this browser.";		        
-	   //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
-	   // 	//alert(JSON.stringify(res));
-	   // 	vm.boSuuTap = res.data.data; 
-	   // });
-	   // vm.showAskCurrentLocation  = true;
-	   fetchHomeData();
-	   }
-	   */
+	   }*/
 
-				homeDataSearch.currentLocation = $rootScope.currentLocation;
-				HouseService.homeDataForApp(homeDataSearch).then(function (res) {
-					//alert(JSON.stringify(res));
-					vm.boSuuTap = [];
-					res.data.data.forEach(function (item, index) {
-						if (item.data.length > 0) vm.boSuuTap.push(item);
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function (position) {
+						$rootScope.currentLocation.lat = position.coords.latitude;
+						$rootScope.currentLocation.lon = position.coords.longitude;
+						homeDataSearch.currentLocation = $rootScope.currentLocation;
+						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
+							//alert(JSON.stringify(res));
+							vm.boSuuTap = [];
+							res.data.data.forEach(function (item, index) {
+								if (item.data.length > 0) vm.boSuuTap.push(item);
+							});
+							vm.doneSearch = true;
+						});
+					}, function (error) {
+						console.log(error);
 					});
-					vm.doneSearch = true;
-				});
+				} else {
+					homeDataSearch.currentLocation = $rootScope.currentLocation;
+					HouseService.homeDataForApp(homeDataSearch).then(function (res) {
+						//alert(JSON.stringify(res));
+						vm.boSuuTap = [];
+						res.data.data.forEach(function (item, index) {
+							if (item.data.length > 0) vm.boSuuTap.push(item);
+						});
+						vm.doneSearch = true;
+					});
+				}
 			};
+
 			vm.goDetail = function (ads) {
 				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
 			};
+
 			vm.likeAds = function (event, adsID) {
 				event.stopPropagation();
 				if (!$rootScope.user.userID) {
@@ -21881,6 +21879,9 @@
 	                    $rootScope.searchData.diaChinh.tinhKhongDau = res.data.place.codeTinh;
 	                    $rootScope.searchData.diaChinh.huyenKhongDau = res.data.place.codeHuyen;
 	                    $rootScope.searchData.diaChinh.xaKhongDau = res.data.place.codeXa;
+	                    //add diaChinh on bo suu tap
+	                    $rootScope.searchData.diaChinh.fullName = res.data.place.fullName;
+	                    //end
 	                    $rootScope.searchData.viewport = vm.viewport;
 	                    $rootScope.searchData.placeId = vm.placeId;
 	                    vm.search(function () {
@@ -22582,7 +22583,9 @@
 	                // }
 
 	                if (vm.ads_list && vm.ads_list.length > 0) {
-	                    $rootScope.addLastSearch($localStorage, $rootScope.searchData);
+	                    //if search polygon then don't push to lastSearch
+	                    if (!$rootScope.searchData.polygon) $rootScope.addLastSearch($localStorage, $rootScope.searchData);
+	                    //end
 	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
 	                        if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
 	                    });

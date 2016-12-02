@@ -336,7 +336,7 @@ internals.homeData4App = function (req, reply) {
       fl = _.concat(fl,ngangGiaFl);
 
     } else {
-      console.log("tim log not have last query");
+      console.log("----------------------tim log not have last query");
       let queryMoiDang = {};
 
       if (diaChinh && diaChinh.tinh && diaChinh.tinh.length>0){
