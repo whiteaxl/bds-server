@@ -9,6 +9,7 @@ var logUtil = require("../../lib/logUtil");
 var util = require("../../lib/utils");
 var AdsModel = require("../../dbservices/Ads");
 var adsModel = new AdsModel();
+var async = require('async');
 
 var _ = require("lodash");
 var DBCache = require("../../lib/DBCache");
@@ -31,6 +32,8 @@ var result = {
 var g_nmbrOfAccessedAds = 0;
 var g_nmbrOfDoneAds = 0;
 
+
+
 class ChoTotExtractor {
 	constructor() {
 	}
@@ -38,28 +41,40 @@ class ChoTotExtractor {
 	extractFromTo(url, from, to, handleDone) {
 		let cnt = from;
 		let that = this;
+		let fl = [];
 		for (var i=from; i <= to; i++) {
-			let tmp = i;
-			setTimeout(() => {
-				this.extractOnePage(url + "?o=" + i, () => {
-					if (cnt++ == to) {
-						handleDone();
-					}
+			let tmp  = i;
+			fl.push((callback) => {
+				console.log("START page:"+tmp);
+				that.extractOnePage(url + "?o=" + tmp, () => {
+					console.log("DONE page done:"+tmp);
+					setTimeout(() => {
+						callback(null);
+					}, 2000);
 				});
-			}, tmp * 5000);
-
+			});
 		}
 
-		let itv  = setInterval(() => {
-			console.log("Done " + g_nmbrOfDoneAds + " out of " + g_nmbrOfAccessedAds);
-			if (g_nmbrOfAccessedAds == g_nmbrOfDoneAds && g_nmbrOfDoneAds) {
-				clearInterval(itv);
-
-				console.log("error:" + result.cnt_err + ", wrongUrl:" + result.cnt_wrongUrl + ", Inserted : " + result.cnt_insert
-					+ ", Updated:" + result.cnt_update + ", noChange:" + result.cnt_noChange +", Total:" + result.total);
+		async.series(fl, (err, results) => {
+			/*
+			if (cnt++ == to) {
 				handleDone();
 			}
-		}, 30*1000);
+			*/
+
+			let itv  = setInterval(() => {
+				console.log("Done " + g_nmbrOfDoneAds + " out of " + g_nmbrOfAccessedAds);
+				if (g_nmbrOfAccessedAds == g_nmbrOfDoneAds && g_nmbrOfDoneAds) {
+					clearInterval(itv);
+
+					console.log("error:" + result.cnt_err + ", wrongUrl:" + result.cnt_wrongUrl + ", Inserted : " + result.cnt_insert
+						+ ", Updated:" + result.cnt_update + ", noChange:" + result.cnt_noChange +", Total:" + result.total);
+					handleDone();
+				}
+			}, 60*1000);
+		});
+
+
 	}
 
 //depth: diaChinh level, 0 mean no dive into into any level, 3 mean dive into XA
@@ -132,6 +147,7 @@ class ChoTotExtractor {
 			.debug(console.log)
 			.done(() => {
 				logUtil.info("Done all!", new Date());
+				handleDone();
 			})
 	}
 	_doneOne() {
@@ -140,6 +156,9 @@ class ChoTotExtractor {
 	}
 
 	_getMaSoFromTitle(title) {
+		if (!title) {
+			console.error("Missing title!");
+		}
 		let idx = title.lastIndexOf("-");
 		return title.substr(idx+2);
 	}
