@@ -45,7 +45,7 @@ class ChoTotExtractor {
 						handleDone();
 					}
 				});
-			}, (i % 100)*10000 + i*10);
+			}, i * 5000);
 
 		}
 
