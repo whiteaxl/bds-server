@@ -14,7 +14,7 @@
         <div class="chat-header ovh">
             <a href="#"><img src="{{mcdc.ads.image.cover}}" alt="" title="" class="pull-left" /></a>
             <div class="ovh">
-                <h5><a href="#">{{mcdc.ads.place.diaChinhFullName}}</a></h5>
+                <h5><a href="#">{{ mcdc.ads.place.diaChi? mcdc.ads.place.diaChi: "Chọn vị trí"| limitTo: 30 }}{{mcdc.ads.place.diaChi.length > 30 ? '...' : ''}}</a></h5>
                 <span class="price">{{mcdc.ads.giaFmt}}</span>
             </div>
         </div>
