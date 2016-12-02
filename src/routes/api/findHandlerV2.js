@@ -390,12 +390,14 @@ internals.findAds = function (q, reply) {
   let needFilterInMemory = q.circle || q.polygon;
   //if no needFilterInMemory
   if (!needFilterInMemory) {
+    console.log("------------------------_doDBQueryAndCount---------------");
     q.dbLimit = q.limit;
     q.dbPageNo =  q.pageNo;
     q.dbOrderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
 
     _doDBQueryAndCount(q, reply);
   } else {
+    console.log("------------------------_doQueryAllIntoMemory---------------");
     //can't get count from db incase search by Circle or Polygon, so need get all from DB
     //search for homepage
     if (q.limit==5) {
