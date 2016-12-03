@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e01292cfdcbb0ea53a23"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e8a68f94ef57b2d56c32"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22890,25 +22890,21 @@
 	        window.location.href = href;
 	        console.log("--------------tellTo--------1-2----------");*/
 									var message_text = 'Some message goes here';
-
 									var href = '';
-
 									if (vm.checkMobileOS() == 'iOS') {
-
 										href = "sms:0986590642&body=" + encodeURI(message_text);
 									}
-
 									if (vm.checkMobileOS() == 'Android') {
-
 										href = "sms:0986590642?body=" + encodeURI(message_text);
 									}
-
-									document.getElementById("tellTo").setAttribute('href', href);
-								} else if (vm.ads.dangBoi.email) {
-									console.log("--------------mailTo----1---------------");
-									var href = $('#mailTo').attr('href');
 									window.location.href = href;
-									console.log("--------------mailTo--------1-2----------");
+								} else {
+									if (vm.ads.dangBoi.email) {
+										console.log("--------------mailTo----1---------------");
+										var href = $('#mailTo').attr('href');
+										window.location.href = href;
+										console.log("--------------mailTo--------1-2----------");
+									}
 								}
 							}
 						});
@@ -22920,25 +22916,21 @@
 	      window.location.href = href;
 	      console.log("--------------tellTo--------1-2----------");*/
 							var message_text = 'Some message goes here';
-
 							var href = '';
-
 							if (vm.checkMobileOS() == 'iOS') {
-
 								href = "sms:0986590642&body=" + encodeURI(message_text);
 							}
-
 							if (vm.checkMobileOS() == 'Android') {
-
 								href = "sms:0986590642?body=" + encodeURI(message_text);
 							}
-
-							document.getElementById("tellTo").setAttribute('href', href);
-						} else if (vm.ads.dangBoi.email) {
-							console.log("--------------mailTo----1---------------");
-							var href = $('#mailTo').attr('href');
 							window.location.href = href;
-							console.log("--------------mailTo--------1-2----------");
+						} else {
+							if (vm.ads.dangBoi.email) {
+								console.log("--------------mailTo----1---------------");
+								var href = $('#mailTo').attr('href');
+								window.location.href = href;
+								console.log("--------------mailTo--------1-2----------");
+							}
 						}
 					}
 				} else {
