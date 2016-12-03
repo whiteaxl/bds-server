@@ -11,7 +11,7 @@ var bdsEx = new Extractor();
 DBCache.loadAdsRaw( " and source = 'chotot'", () => {
   console.log("Load done!");
 
-  bdsEx.extractFromTo("https://m.chotot.com/ha-noi/thue-bat-dong-san", 100, 5000, () => {
+  bdsEx.extractFromTo("https://m.chotot.com/ha-noi/thue-bat-dong-san", 5000, 20000, () => {
     console.log("Completed!");
     process.exit(0);
   });

@@ -14,7 +14,7 @@ DBCache.loadAdsRaw( " and source = 'chotot'", () => {
   //https://m.chotot.com/ha-noi/mua-ban-bat-dong-san
   //https://m.chotot.com/tp-ho-chi-minh/mua-ban-bat-dong-san
 
-  bdsEx.extractFromTo("https://m.chotot.com/tp-ho-chi-minh/mua-ban-bat-dong-san", 100, 5000, () => {
+  bdsEx.extractFromTo("https://m.chotot.com/tp-ho-chi-minh/mua-ban-bat-dong-san", 5000, 20000, () => {
     console.log("Completed!");
     process.exit(0);
   });

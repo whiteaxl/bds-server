@@ -302,15 +302,10 @@ function _convertDiaChi(ads, bds, callback) {
       return callback(null);
     }
 
-    return callback({
-      notByDuAn : true
-    });
+    //return callback({ notByDuAn : true });
   }
 
-  return callback({
-    notByDuAn : true
-  });
-
+  //return callback({ notByDuAn : true });
 
   services.getGeocodingByAddress(diaChiChoTot, (results) => {
     console.log("Done search:" + diaChiChoTot);
@@ -454,7 +449,7 @@ function convertAllBds(callback, timeModifedFrom, timeModifiedTo) {
     condition = `${condition} and timeModified <= '${timeModifiedTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'chotot'"
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'chotot' and meta.converted = false"
     + condition;
 
   commonService.query(sql, (err, list) => {
