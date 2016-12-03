@@ -140,25 +140,39 @@ var utils = {
     let imagePath = imgUrl.substring(idx2+1, idx);
 
     let fullDir = dir + imagePath;
+    let filename = fullDir + "/" + imageName;
 
     mkdirp(fullDir, function (err) {
       if (err) {
         console.error(err);
         return;
       }
-
+/*
       request(imgUrl, (err, response, body) => {
         fs.writeFile(fullDir + "/" + imageName, body, 'binary', callback);
       });
+*/
+      request(imgUrl).pipe(
+        fs.createWriteStream(filename)
+          .on('error', function(err){
+            callback(err);
+          })
+        )
+        .on('close', function() {
+          callback(null);
+        });
+
     });
   },
+
+
   downloadAllAdsImage(baseDir) {
     let that = this;
     var targetSize = "745x510";
 
     commonService.query("select default.image.images, id from default where type='Ads' " +
       "and meta.downloadedImage is missing " +
-      "limit 1000"
+      "limit 10000"
       , (err, res) => {
         if (err) {
           return console.log("Err when load:" + err);
@@ -220,7 +234,7 @@ utils.checkDuplicate(()=> {
 
 //utils.addGoogleName();
 
-/*
+
 utils.downloadImage("/Users/supermac/Projects/tmp/images"
   , "http://file4.batdongsan.com.vn/resize/745x510/2016/12/03/20161203104340-d843.jpg"
   , (err) => {
@@ -230,6 +244,8 @@ utils.downloadImage("/Users/supermac/Projects/tmp/images"
       process.exit(0);
     }
   });
-*/
 
-utils.downloadAllAdsImage("/u01/images");
+
+
+
+//utils.downloadAllAdsImage("/u01/images");
