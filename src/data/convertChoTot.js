@@ -193,11 +193,12 @@ function _getDuAn(title, huyenTinh) {
   let titleLowerCase = title.toLowerCase();
   let listDuAn = global.duAnByCodeHuyen[huyenTinh.codeHuyen];
   if (listDuAn) {
-    listDuAn.forEach((a) => {
+    for (let i=0; i < listDuAn.length; i++) {
+      let a = listDuAn[i];
       if (titleLowerCase.indexOf(a.duAn.toLowerCase()) > -1) {
         return a;
       }
-    })
+    }
   }
 
   return null;
@@ -446,7 +447,7 @@ function convertAllBds(callback, timeModifedFrom, timeModifiedTo) {
     condition = `${condition} and timeModified <= '${timeModifiedTo}'`
   }
 
-  let sql = "select t.* from default t where type='Ads_Raw' and source = 'chotot' and meta.converted=false"
+  let sql = "select t.* from default t where type='Ads_Raw' and source = 'chotot' and meta.converted=false and id = 'Ads_Raw_ChoTot_29535419'"
     + condition;
 
   commonService.query(sql, (err, list) => {
