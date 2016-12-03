@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "29c293b541b6295ecdf6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e01292cfdcbb0ea53a23"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22847,6 +22847,22 @@
 				}
 			};
 
+			vm.checkMobileOS = function () {
+
+				var MobileUserAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+				if (MobileUserAgent.match(/iPad/i) || MobileUserAgent.match(/iPhone/i) || MobileUserAgent.match(/iPod/i)) {
+
+					return 'iOS';
+				} else if (MobileUserAgent.match(/Android/i)) {
+
+					return 'Android';
+				} else {
+
+					return 'unknown';
+				}
+			};
+
 			vm.openChat = function (event) {
 				vm.userPostAdsExist = false;
 				if (!vm.userPostAdsExist) {
@@ -22868,10 +22884,26 @@
 								$(".overlay").click();
 							} else {
 								if (vm.ads.dangBoi.phone) {
-									console.log("--------------tellTo----1---------------");
-									var href = $('#tellTo').attr('href');
-									window.location.href = href;
-									console.log("--------------tellTo--------1-2----------");
+									/*
+	        console.log("--------------tellTo----1---------------");
+	        var href = $('#tellTo').attr('href');
+	        window.location.href = href;
+	        console.log("--------------tellTo--------1-2----------");*/
+									var message_text = 'Some message goes here';
+
+									var href = '';
+
+									if (vm.checkMobileOS() == 'iOS') {
+
+										href = "sms:0986590642&body=" + encodeURI(message_text);
+									}
+
+									if (vm.checkMobileOS() == 'Android') {
+
+										href = "sms:0986590642?body=" + encodeURI(message_text);
+									}
+
+									document.getElementById("tellTo").setAttribute('href', href);
 								} else if (vm.ads.dangBoi.email) {
 									console.log("--------------mailTo----1---------------");
 									var href = $('#mailTo').attr('href');
@@ -22882,10 +22914,26 @@
 						});
 					} else {
 						if (vm.ads.dangBoi.phone) {
-							console.log("--------------tellTo----1---------------");
-							var href = $('#tellTo').attr('href');
-							window.location.href = href;
-							console.log("--------------tellTo--------1-2----------");
+							/*
+	      console.log("--------------tellTo----1---------------");
+	      var href = $('#tellTo').attr('href');
+	      window.location.href = href;
+	      console.log("--------------tellTo--------1-2----------");*/
+							var message_text = 'Some message goes here';
+
+							var href = '';
+
+							if (vm.checkMobileOS() == 'iOS') {
+
+								href = "sms:0986590642&body=" + encodeURI(message_text);
+							}
+
+							if (vm.checkMobileOS() == 'Android') {
+
+								href = "sms:0986590642?body=" + encodeURI(message_text);
+							}
+
+							document.getElementById("tellTo").setAttribute('href', href);
 						} else if (vm.ads.dangBoi.email) {
 							console.log("--------------mailTo----1---------------");
 							var href = $('#mailTo').attr('href');
