@@ -234,6 +234,7 @@ utils.checkDuplicate(()=> {
 
 //utils.addGoogleName();
 
+/*
 
 utils.downloadImage("/Users/supermac/Projects/tmp/images"
   , "http://file4.batdongsan.com.vn/resize/745x510/2016/12/03/20161203104340-d843.jpg"
@@ -245,7 +246,7 @@ utils.downloadImage("/Users/supermac/Projects/tmp/images"
     }
   });
 
+*/
 
 
-
-//utils.downloadAllAdsImage("/u01/images");
+utils.downloadAllAdsImage("/u01/images");
