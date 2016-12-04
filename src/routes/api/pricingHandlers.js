@@ -236,8 +236,8 @@ internals.getProductPricing = function (req, reply) {
 
     if (bdsNgangGia){
         for(var d=0; d<bdsNgangGia.length; d++){
-            var dist = geoUtil.measure(bdsNgangGia.place.geo.lat, bdsNgangGia.place.geo.lon, q.position.lat, q.position.lon);
-            bdsNgangGia.distance = dist;
+            var dist = geoUtil.measure(bdsNgangGia[d].place.geo.lat, bdsNgangGia[d].place.geo.lon, q.position.lat, q.position.lon);
+            bdsNgangGia[d].distance = dist;
         }
     }
 
