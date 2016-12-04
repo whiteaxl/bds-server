@@ -180,10 +180,13 @@ var utils = {
 
         if (res) { //list of ads images
 
-          async.eachOfLimit(res, 50, (ads, doneAds) => {
+          async.eachOfLimit(res, 50, (ads, key, doneAds) => {
             logUtil.info("Starting with " + ads.id + ", ads.images.length=" + ads.images.length);
 
             async.each(ads.images, (img, callback) => {
+                if (!img) {
+                  return callback(null);
+                }
                 let large = img.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
                 that.downloadImage(baseDir, large, callback);
             }, function(err) {
