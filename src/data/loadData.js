@@ -24,12 +24,14 @@ var loadFromFile = function(fn) {
 };
 
 //------------------------------------------------------------
-loadFromFile("./danhMuc/tinh.json");
-loadFromFile("./danhMuc/huyen.json");
+//loadFromFile("./danhMuc/tinh.json");
+//loadFromFile("./danhMuc/huyen.json");
 //loadFromFile("./danhMuc/xa_hn_hcm.json");
 loadFromFile("./danhMuc/xa1.json");
 loadFromFile("./danhMuc/xa2.json");
-loadFromFile("./danhMuc/duan.json");
+//loadFromFile("./danhMuc/duan.json");
+
+//loadFromFile("./danhMuc/tt.json");
 
 var times = 0;
 var timer = setInterval(
