@@ -172,7 +172,7 @@ var utils = {
 
     commonService.query("select default.image.images, id from default where type='Ads' " +
       "and meta.downloadedImage is missing " +
-      "limit 10000"
+      "limit 100000"
       , (err, res) => {
         if (err) {
           return console.log("Err when load:" + err);
@@ -180,7 +180,7 @@ var utils = {
 
         if (res) { //list of ads images
 
-          async.eachOfLimit(res, 50, (ads, key, doneAds) => {
+          async.eachOfLimit(res, 100, (ads, key, doneAds) => {
             logUtil.info("Starting with " + ads.id + ", ads.images.length=" + ads.images.length);
 
             async.each(ads.images, (img, callback) => {
