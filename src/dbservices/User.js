@@ -118,7 +118,7 @@ class UserModel {
   }
 
   getMyAds(userID,callback){
-    let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}' and a.deleted=false`;
+    let sql = `select a.* from default a where a.type='Ads' and a.dangBoi.userID = '${userID}' and (a.deleted=false or a.deleted is missing)`;
     console.log("getMyAds, sql:", sql);
     var query = N1qlQuery.fromString(sql);
     bucket.query(query, callback);
