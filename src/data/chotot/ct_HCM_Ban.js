@@ -11,10 +11,14 @@ var bdsEx = new Extractor();
 DBCache.loadAdsRaw( " and source = 'chotot'", () => {
   console.log("Load done!");
 
-  bdsEx.extractFromTo("https://m.chotot.com/tp-ho-chi-minh/thue-bat-dong-san", 5000, 20000, () => {
+  //https://m.chotot.com/ha-noi/mua-ban-bat-dong-san
+  //https://m.chotot.com/tp-ho-chi-minh/mua-ban-bat-dong-san
+
+  bdsEx.extractFromTo("https://m.chotot.com/tp-ho-chi-minh/mua-ban-bat-dong-san", 100, 2000, () => {
     console.log("Completed!");
     process.exit(0);
   });
+
 });
 
 
