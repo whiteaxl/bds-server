@@ -180,7 +180,7 @@ var utils = {
 
         if (res) { //list of ads images
 
-          async.eachSeries(res, (ads, doneAds) => {
+          async.eachOfLimit(res, 50, (ads, doneAds) => {
             logUtil.info("Starting with " + ads.id + ", ads.images.length=" + ads.images.length);
 
             async.each(ads.images, (img, callback) => {
