@@ -9,6 +9,7 @@
   });
 
   var _ = require('lodash');
+  var FastClick = require('fastclick');
 
   var bds= angular.module('bds', ['ngCookies','ui.router','nemLogging','ngMap','ngMessages','ngStorage','ngFileUpload','btford.socket-io','angular-jwt','infinite-scroll','ngDialog'])
       .factory('socket', function (socketFactory) {
@@ -276,6 +277,7 @@
   .run(['socket', '$timeout', 'jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(socket, $timeout, jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
+    FastClick.attach(document.body);
     $rootScope.center  = {
       lat: 16.0439,
       lng: 108.199

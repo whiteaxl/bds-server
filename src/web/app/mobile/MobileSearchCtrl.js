@@ -300,6 +300,22 @@
 
             if(!vm.map && vm.viewMode=='map'){
                 vm.map = NgMap.initMap('searchmap');  
+                var thePanorama = vm.map.getStreetView();
+                google.maps.event.addListener(thePanorama, 'visible_changed', function() {
+
+                    if (thePanorama.getVisible()) {
+                        vm.streetViewMode = true;                
+                    } else {
+                        vm.streetViewMode = false;
+                    }
+                    $scope.$apply();
+                });
+                vm.map.getStreetView().setOptions({
+                    zoomControl: false,
+                    fullscreenControl: false
+                });
+
+
                 vm.initialized = false;    
                 var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
                 var northEast = new google.maps.LatLng(vm.viewport.northeast.lat, vm.viewport.northeast.lon);
@@ -379,7 +395,11 @@
 		  	"pageNo": 1
 		}*/
 		vm.goDetail = function(event,i){
-        	$state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+            $('#previewAds').modal('hide');
+            $timeout(function() {
+                $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+            },200);
+        	
         }
 
         vm.previewAds = function(event,i){
@@ -549,8 +569,8 @@
         vm.enable = function(){
             vm.map.setOptions({
                 draggable: true, 
-                zoomControl: true, 
-                scrollwheel: true, 
+                zoomControl: false, 
+                scrollwheel: false, 
                 disableDoubleClickZoom: true
             });
             if(vm.drawMove){
@@ -787,6 +807,7 @@
                                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
                                 marker.adsList.push(ads);
                                 marker.count = marker.count + 1;
+                                marker.class = "reland-marker marker-include";
                                 dup = true;
                                 if(!ads.gia || ads.gia < 0){                                    
                                     break;
@@ -802,6 +823,7 @@
                             var m = res.data.list[i].map.marker;
                             m.adsList = [];
                             m.adsList.push(ads);
+                            res.data.list[i].map.marker.class = "reland-marker";
                             $scope.markers.push(res.data.list[i].map.marker);    
                         }
                         
