@@ -43,8 +43,8 @@
     </style>
     
 </head>
-<body class="hfixed header">
-	<div ui-view></div>
+<body ng-class="$root.bodyClass">
+	<div ui-view style="min-height: 1000px;"></div>
     
     <bds-mobile-login-form></bds-mobile-login-form>
     

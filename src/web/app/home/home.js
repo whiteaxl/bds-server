@@ -296,6 +296,7 @@
     }    
     $rootScope.pageSize = 25;
     $rootScope.act = "Quận Cầu Giấy, Hà Nội";
+    $rootScope.bodyClass = "hfixed header bodySearchShow";
 
     if($localStorage.relandToken){
       decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
@@ -490,10 +491,7 @@
       return false;
     }
 
-    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-      $rootScope.lastState = from;
-      $rootScope.lastStateParams = fromParams;
-    });
+    
     
       
     $rootScope.chat_visible = true;
@@ -537,7 +535,7 @@
     $rootScope.signout = function(){
         $rootScope.loginbox.resetLoginBox(); 
     }
-    $rootScope.bodyClass = "page-home";
+    
 
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
@@ -560,9 +558,17 @@
         //  alert(toState);
           
         //}
+
     });
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
       console.log("changed to state " + toState) ;
+      $rootScope.lastState = fromState;
+      $rootScope.lastStateParams = fromParams;
+      if(toState.name==='mdetail'){
+        $rootScope.bodyClass = "hfixed header";
+      }else{
+        $rootScope.bodyClass = "hfixed header bodySearchShow";
+      }
     });
 
     $rootScope.getGoogleLocation = function(val) {

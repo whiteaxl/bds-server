@@ -87,7 +87,7 @@
           })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
           ul.addClass('relandAuto');
-          ul.css("height","80%");
+          ul.css("max-height","200 px !important;");
           if(item.location == true || item.lastSearchSeparator == true){
             return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo( ul );
           }else {

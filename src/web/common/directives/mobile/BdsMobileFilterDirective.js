@@ -456,44 +456,32 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.keyPress = function(event){
                     vm.showFrequentSearch = false;
                     $( "#searchadd").autocomplete( "option", "source",vm.autocompleteSource);
-                    var $ww = $(window).width();                 
-
-                    
+                    $('.iconCancel').show();
                 }
-                vm.toggleQuickClearAutoComplete = function(){
-                    if($rootScope.act == '' || !$rootScope.act){
+                
+                vm.exitAutoComplete =function(event){
+                    vm.act = '';
+                    if($(event.target).hasClass('iconCancel')){                        
+                        // $(".input-fr").removeAttr("style");
+                        $('.iconCancel').hide();
+                        $('#searchadd').focus();
                         $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
-                        $( "#searchadd").autocomplete( "search", "" );
+                        $( "#searchadd").autocomplete( "search", "" );                        
+                    }else{
                         $(".close-search").removeAttr("style");
                         $(".input-fr").removeAttr("style");
-                    }else{
-                        $(".close-search").show();
-                        $(".input-fr").css("width", $ww-78);
                     }
-                    // if($(".search").find("input").hasClass("input-fr")){
-
-                    //     if($(".input-fr").val().length>0) {
-                    //         $(".close-search").show();
-                    //         $(".input-fr").css("width", $ww-78);
-                    //     }else{
-                    //         $(".close-search").removeAttr("style");
-                    //         $(".input-fr").removeAttr("style");
-                    //     }
-                    // }
-                }
-                vm.autoCompleteChange = function(event){
-                    if($rootScope.act == ''){
-                        $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
-                        $( "#searchadd").autocomplete( "search", "" );
-                    }
-                    vm.toggleQuickClearAutoComplete();                    
+                    event.preventDefault();
+                    
                 }
                 vm.showFavorite = function(event){
-                    //if($rootScope.act == '' || !$rootScope.act){
-                        $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
-                        $( "#searchadd").autocomplete( "search", "" );
-                    //}
-
+                    var $ww = $(window).width();
+                    $(".input-fr").css("width", $ww-78);
+                    $('.iconCancel').hide();
+                    $(".close-search").show();  
+                    $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
+                    $( "#searchadd").autocomplete( "search", "" );                            
+                    $( "#searchadd").focus();
                 }
 
 

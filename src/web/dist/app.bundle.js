@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "65a4560b7ea87071be8e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2728324b544bef4de0e6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1279,6 +1279,7 @@
 	        };
 	        $rootScope.pageSize = 25;
 	        $rootScope.act = "Quận Cầu Giấy, Hà Nội";
+	        $rootScope.bodyClass = "hfixed header bodySearchShow";
 
 	        if ($localStorage.relandToken) {
 	            decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
@@ -1460,11 +1461,6 @@
 	            return false;
 	        };
 
-	        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-	            $rootScope.lastState = from;
-	            $rootScope.lastStateParams = fromParams;
-	        });
-
 	        $rootScope.chat_visible = true;
 	        $rootScope.showChat = function (user, scope) {
 	            if ($rootScope.chatBoxes.hasOwnProperty(user.email)) {} else {
@@ -1501,7 +1497,6 @@
 	        $rootScope.signout = function () {
 	            $rootScope.loginbox.resetLoginBox();
 	        };
-	        $rootScope.bodyClass = "page-home";
 
 	        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
 	            //alert(toState.name);
@@ -1525,6 +1520,13 @@
 	        });
 	        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
 	            console.log("changed to state " + toState);
+	            $rootScope.lastState = fromState;
+	            $rootScope.lastStateParams = fromParams;
+	            if (toState.name === 'mdetail') {
+	                $rootScope.bodyClass = "hfixed header";
+	            } else {
+	                $rootScope.bodyClass = "hfixed header bodySearchShow";
+	            }
 	        });
 
 	        $rootScope.getGoogleLocation = function (val) {
@@ -21628,7 +21630,7 @@
 	          }
 	        }).autocomplete("instance")._renderItem = function (ul, item) {
 	          ul.addClass('relandAuto');
-	          ul.css("height", "80%");
+	          ul.css("max-height", "200 px !important;");
 	          if (item.location == true || item.lastSearchSeparator == true) {
 	            return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo(ul);
 	          } else {
@@ -34200,41 +34202,31 @@
 	            vm.keyPress = function (event) {
 	                vm.showFrequentSearch = false;
 	                $("#searchadd").autocomplete("option", "source", vm.autocompleteSource);
-	                var $ww = $(window).width();
+	                $('.iconCancel').show();
 	            };
-	            vm.toggleQuickClearAutoComplete = function () {
-	                if ($rootScope.act == '' || !$rootScope.act) {
+
+	            vm.exitAutoComplete = function (event) {
+	                vm.act = '';
+	                if ($(event.target).hasClass('iconCancel')) {
+	                    // $(".input-fr").removeAttr("style");
+	                    $('.iconCancel').hide();
+	                    $('#searchadd').focus();
 	                    $("#searchadd").autocomplete("option", "source", vm.favoriteSearchSource);
 	                    $("#searchadd").autocomplete("search", "");
+	                } else {
 	                    $(".close-search").removeAttr("style");
 	                    $(".input-fr").removeAttr("style");
-	                } else {
-	                    $(".close-search").show();
-	                    $(".input-fr").css("width", $ww - 78);
 	                }
-	                // if($(".search").find("input").hasClass("input-fr")){
-
-	                //     if($(".input-fr").val().length>0) {
-	                //         $(".close-search").show();
-	                //         $(".input-fr").css("width", $ww-78);
-	                //     }else{
-	                //         $(".close-search").removeAttr("style");
-	                //         $(".input-fr").removeAttr("style");
-	                //     }
-	                // }
-	            };
-	            vm.autoCompleteChange = function (event) {
-	                if ($rootScope.act == '') {
-	                    $("#searchadd").autocomplete("option", "source", vm.favoriteSearchSource);
-	                    $("#searchadd").autocomplete("search", "");
-	                }
-	                vm.toggleQuickClearAutoComplete();
+	                event.preventDefault();
 	            };
 	            vm.showFavorite = function (event) {
-	                //if($rootScope.act == '' || !$rootScope.act){
+	                var $ww = $(window).width();
+	                $(".input-fr").css("width", $ww - 78);
+	                $('.iconCancel').hide();
+	                $(".close-search").show();
 	                $("#searchadd").autocomplete("option", "source", vm.favoriteSearchSource);
 	                $("#searchadd").autocomplete("search", "");
-	                //}
+	                $("#searchadd").focus();
 	            };
 
 	            vm.userLoggedIn = function () {

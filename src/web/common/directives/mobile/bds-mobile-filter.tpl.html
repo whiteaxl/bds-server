@@ -8,12 +8,13 @@
 	<form>
 		<div class="search-fr">
 	    	<i class="iconSearch"></i>
-	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-change="mf.autoCompleteChange();" ng-model="mdhr.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="{{$root.act}}" />	
+	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="{{$root.act}}" />	
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>
-	    	</ul> -->    	
-	        <a href="#" ng-click="mf.autoCompleteText='';mf.toggleQuickClearAutoComplete();" class="close-search" ><i class="iconCancel"></i> Thoát</a>
+	    	</ul> -->    		    	
+	        <a href="#" ng-click="mf.exitAutoComplete($event)" class="close-search" >
+	        <i class="iconCancel" ng-click="mf.exitAutoComplete($event)"></i> Thoát</a>
 	    </div>
 	    <div class="search-box">
 	        <ul class="nav nav-tabs" role="tablist">
