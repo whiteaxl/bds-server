@@ -1003,8 +1003,7 @@ a.active .p-icon.i-close {
   -webkit-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
-  outline: none;
-  -webkit-overflow-scrolling: touch; }
+  outline: none; }
 
 html, body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
