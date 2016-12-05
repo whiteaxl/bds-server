@@ -1390,7 +1390,8 @@ nav.main {
   background: #222;
   color: #fff;
   max-height: 100%;
-  overflow-y: auto; }
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; }
   nav.main a {
     color: #fff;
     display: block; }
