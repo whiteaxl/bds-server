@@ -155,8 +155,8 @@
         }
 
 		vm.showList = function(){
-            if(vm.searching == true)
-                return;
+            // if(vm.searching == true)
+            //     return;
 			vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
 			vm.viewMode = "list";
             vm.disableIdleHandler();
@@ -164,8 +164,8 @@
             //vm.map = undefined;			
 		}
 		vm.showMap = function(){
-            if(vm.searching == true)
-                return;
+            // if(vm.searching == true)
+            //     return;
 			vm.viewMode = "map";
 			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
             $timeout(function() {

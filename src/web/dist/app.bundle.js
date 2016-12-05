@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8b933a61b7b2c19e0055"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "65a4560b7ea87071be8e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22763,7 +22763,8 @@
 	        };
 
 	        vm.showList = function () {
-	            if (vm.searching == true) return;
+	            // if(vm.searching == true)
+	            //     return;
 	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
 	            vm.viewMode = "list";
 	            vm.disableIdleHandler();
@@ -22771,7 +22772,8 @@
 	            //vm.map = undefined;			
 	        };
 	        vm.showMap = function () {
-	            if (vm.searching == true) return;
+	            // if(vm.searching == true)
+	            //     return;
 	            vm.viewMode = "map";
 	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
 	            $timeout(function () {
