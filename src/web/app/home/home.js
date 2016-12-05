@@ -277,7 +277,7 @@
   .run(['socket', '$timeout', 'jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(socket, $timeout, jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
-    FastClick.attach(document.body);
+    FastClick.attach(document.body);    
     $rootScope.center  = {
       lat: 16.0439,
       lng: 108.199

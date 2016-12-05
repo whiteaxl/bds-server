@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "73b39a404392d550f384"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8b933a61b7b2c19e0055"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22763,13 +22763,15 @@
 	        };
 
 	        vm.showList = function () {
+	            if (vm.searching == true) return;
 	            vm.viewTemplateUrl = "/web/mobile/list.tpl.html";
 	            vm.viewMode = "list";
-	            // vm.disableIdleHandler();
+	            vm.disableIdleHandler();
 	            vm.changeBrowserHistory();
 	            //vm.map = undefined;			
 	        };
 	        vm.showMap = function () {
+	            if (vm.searching == true) return;
 	            vm.viewMode = "map";
 	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
 	            $timeout(function () {
@@ -22837,18 +22839,19 @@
 	            $rootScope.act = "Khung nhìn hiện tại";
 	            vm.search();
 	        };
+	        vm.searching = false;
 
 	        vm.disableIdleHandler = function () {
 	            if (vm.zoomChangeHanlder) google.maps.event.removeListener(vm.zoomChangeHanlder);
 	        };
 	        vm.enableMapIdleHandler = function () {
-
 	            if (!vm.map) return;
 	            vm.disableIdleHandler();
 	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function () {
 	                if (vm.initialized == true) {
 	                    vm.initialized = false;
 	                    vm.humanZoom = true;
+	                    console.log("search due to zoom zoom_changed");
 	                    // $rootScope.searchData.viewport = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
 	                    $rootScope.searchData.viewport = {
 	                        southwest: {
@@ -22868,12 +22871,14 @@
 	                    //  coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
 	                    //  content: 'you are here'
 	                    // };
+	                    $rootScope.searchData.limit = 24;
 	                    vm.viewport = $rootScope.searchData.viewport;
 	                    if ($rootScope.user.autoSearch == false) {
 	                        vm.initialized = true;
 	                        vm.humanZoom = false;
 	                        return;
 	                    }
+
 	                    vm.search(function () {
 	                        $timeout(function () {
 	                            vm.initialized = true;
@@ -22943,8 +22948,9 @@
 	                    vm.enableMapIdleHandler();
 	                    vm.humanZoom = false;
 	                    vm.initialized = true;
-	                }, 500);
+	                }, 0);
 	            }
+	            vm.enableMapIdleHandler();
 
 	            // vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
 	            //          	//alert(vm.map.getBounds());
@@ -23300,6 +23306,7 @@
 
 	        vm.searchPage = function (i, callback) {
 	            $rootScope.searchData.pageNo = i;
+	            vm.searching = true;
 	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
 	            //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
 	            //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
@@ -23471,6 +23478,7 @@
 	                        $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
 	                    }, 100);
 	                }
+	                vm.searching = false;
 	                if (callback) callback(res);
 	            });
 	        };
