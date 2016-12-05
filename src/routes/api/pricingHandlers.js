@@ -140,7 +140,7 @@ internals.getProductPricing = function (req, reply) {
     let pricing = {};
     let radius = 0.5;
     if (listAds && listAds.length > 0) {
-        console.log("======================== print listAds, count=" + listAds.length);
+        
         if (q.codeDuAn && q.codeDuAn.length > 0) {
             for (var i = 0; i < listAds.length; i++) {
                 giaTrungBinh[listAds[i].loaiNhaDat - 1].giaM2 += listAds[i].giaM2;
@@ -232,13 +232,22 @@ internals.getProductPricing = function (req, reply) {
         }
     }
 
+    let bdsNgangGia = pricing.count && pricing.count>=3 ? _transform(adsNgangGia) : undefined;
+
+    if (bdsNgangGia){
+        for(var d=0; d<bdsNgangGia.length; d++){
+            var dist = geoUtil.measure(bdsNgangGia[d].place.geo.lat, bdsNgangGia[d].place.geo.lon, q.position.lat, q.position.lon);
+            bdsNgangGia[d].distance = dist;
+        }
+    }
+
     let res = {
         success: true,
         data: {
             radius: parseInt(radius*1000),
             giaTrungBinh: pricing.count && pricing.count>=3 ? pricing : undefined,
             giaTrungBinhKhac: giaTrungBinhKhac && giaTrungBinhKhac.length>0 ? giaTrungBinhKhac : undefined,
-            bdsNgangGia: pricing.count && pricing.count>=3 ? _transform(adsNgangGia) : undefined
+            bdsNgangGia: bdsNgangGia
         }
     }
 

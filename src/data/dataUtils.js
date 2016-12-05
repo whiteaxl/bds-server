@@ -12,6 +12,13 @@ var geoHandlers = require("./geoHandlers");
 
 var services = require("../lib/services");
 
+var request = require("request");
+var fs = require("fs");
+var mkdirp = require("mkdirp");
+var async = require("async");
+
+
+
 var utils = {
   checkWrongGeo(done) {
     let that = this;
@@ -121,6 +128,93 @@ var utils = {
         })
       }
     })
+  },
+
+  //downloadImage, callback(err)
+  downloadImage(dir, imgUrl, callback) {
+    logUtil.info("Downloading... " + imgUrl);
+
+    let idx = imgUrl.lastIndexOf("/");
+    let idx2 = imgUrl.lastIndexOf("//");
+    let imageName = imgUrl.substring(idx+1);
+    let imagePath = imgUrl.substring(idx2+1, idx);
+
+    let fullDir = dir + imagePath;
+    let filename = fullDir + "/" + imageName;
+
+    mkdirp(fullDir, function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+/*
+      request(imgUrl, (err, response, body) => {
+        fs.writeFile(fullDir + "/" + imageName, body, 'binary', callback);
+      });
+*/
+      request(imgUrl).pipe(
+        fs.createWriteStream(filename)
+          .on('error', function(err){
+            callback(err);
+          })
+        )
+        .on('close', function() {
+          callback(null);
+        });
+
+    });
+  },
+
+
+  downloadAllAdsImage(baseDir) {
+    let that = this;
+    var targetSize = "745x510";
+
+    commonService.query("select default.image.images, id from default where type='Ads' " +
+      "and meta.downloadedImage is missing " +
+      "limit 100000"
+      , (err, res) => {
+        if (err) {
+          return console.log("Err when load:" + err);
+        }
+
+        if (res) { //list of ads images
+
+          async.eachOfLimit(res, 100, (ads, key, doneAds) => {
+            logUtil.info("Starting with " + ads.id + ", ads.images.length=" + ads.images.length);
+
+            async.each(ads.images, (img, callback) => {
+                if (!img) {
+                  return callback(null);
+                }
+                let large = img.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
+                that.downloadImage(baseDir, large, callback);
+            }, function(err) {
+              if (err) {
+                console.error('A file failed to download!' + err + ", for " + ads.id);
+              }
+
+              //update flag
+              commonService.query(`update default set meta.downloadedImage = true where id = '${ads.id}'`
+                , (err, res) => {
+                  if (err) {
+                    logUtil.error("Can't mark ads as downloaded image!" + err);
+                  }
+
+                  doneAds();
+              });
+            });
+          }, (err) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log("All DONE successfully!");
+            }
+          });
+
+        }
+      }
+    );
   }
 };
 
@@ -141,4 +235,21 @@ utils.checkDuplicate(()=> {
 
 */
 
-utils.addGoogleName();
+//utils.addGoogleName();
+
+/*
+
+utils.downloadImage("/Users/supermac/Projects/tmp/images"
+  , "http://file4.batdongsan.com.vn/resize/745x510/2016/12/03/20161203104340-d843.jpg"
+  , (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      process.exit(0);
+    }
+  });
+
+*/
+
+
+utils.downloadAllAdsImage("/u01/images");

@@ -17,6 +17,8 @@
 		// vm.zoomMode = "auto";
         vm.pageSize = 25;        
         vm.drawButtonClass ="p-icon i-mapdraw";
+        $scope.relandMarkerGroupCss = "reland-marker marker-include";
+        $scope.relandMarkerCss = "reland-marker";
         
 
         vm.resetResultList = function(){

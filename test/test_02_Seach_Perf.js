@@ -4,8 +4,8 @@ var supertest = require("supertest");
 var should = require("should");
 var moment = require('moment');
 var constant = require('../src/lib/constant');
-var url  =`http://${process.env.IP || '203.162.13.170'  || 'localhost'  }:${process.env.PORT || 5000}`;
-var NmbrOfConcurrentRequest = 100;
+var url  =`http://${process.env.IP || 'localhost' || '203.162.13.170'   }:${process.env.PORT || 5000}`;
+var NmbrOfConcurrentRequest = 1;
 
 console.log("Server URL:", url, ", number of concurrent request: " + NmbrOfConcurrentRequest);
 
@@ -84,7 +84,11 @@ describe("01.Find API testsuite", function () {
         let endTime = new Date().getTime();
         console.log("Polygon search - Took time " + (endTime-startTime) , res.body.totalCount);
 
-        console.log(res.body);
+        //console.log(res.body);
+
+        res.body.list.forEach((e) => {
+          console.log(e.adsID, e.image);
+        });
 
         done();
       });

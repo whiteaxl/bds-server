@@ -17,3 +17,12 @@ http://file4.batdongsan.com.vn/crop/120x90/2016/03/17/20160317184433-6d1e.jpg
 
 
 http://file4.batdongsan.com.vn/crop/745x510/2016/03/17/20160317184433-6d1e.jpg
+
+node dothi/dt_huyen_HN_HCM.js > dt_huyen_HN_HCM.log &
+
+14 01 * * * node /u01/code/bds-server/src/data/dothi/dt_huyen_HN_HCM.js > /u01/script/log/dt_huyen_HN_HCM.log &
+19 17 * * * node /u01/code/bds-server/src/data/bds/bds_huyen_HN_HCM.js > /u01/script/log/bds_huyen_HN_HCM.log &
+
+/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/bin/cbbackup http://203.162.13.177 /tmp/backup_01 -u admin -p m1tkh\!u --single-node -b default
+
+/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/bin/cbrestore /tmp/backup_01 http://localhost -b default -u Administrator -p 123456 -x rehash=1

@@ -119,6 +119,17 @@ var hapiReact = require('hapi-react-views');
       },
       config: { auth: false }
     },
+    //Load files located in images
+    {
+      method: 'GET',
+      path: '/images/{param*}',
+      handler: {
+        directory: {
+          path: '/u01/images'
+        }
+      },
+      config: { auth: false }
+    },
     {
       method: 'GET',
       path: '/web/{param*}',
