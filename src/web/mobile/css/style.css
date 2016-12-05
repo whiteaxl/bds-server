@@ -1004,8 +1004,7 @@ a.active .p-icon.i-close {
   box-shadow: none;
   text-shadow: none;
   outline: none;
-  -webkit-overflow-scrolling: touch;
-  -webkit-backface-visibility: hidden; }
+  -webkit-overflow-scrolling: touch; }
 
 html, body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -1015,9 +1014,7 @@ html, body {
   padding: 0;
   min-height: 100%;
   background: #fff;
-  overflow-x: hidden;
-  -webkit-user-drag: none;
-  text-rendering: optimizeLegibility; }
+  overflow-x: hidden; }
 
 ::-moz-selection, ::selection {
   background: #fff;
