@@ -32,6 +32,8 @@ angular.module('bds')
                 vm.password = "";
                 $localStorage.relandToken = undefined;  
                 $rootScope.user.userID = undefined;
+                $rootScope.user.saveSearch = undefined;
+                $localStorage.searchHistory = undefined;
                 vm.changeState(vm.ENTER_EMAIL,vm.userExist);
             }
           });
@@ -128,8 +130,13 @@ angular.module('bds')
                           //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                           //$window.token = res.data.token;
                           $localStorage.relandToken = res.data.token;
-                          $localStorage.lastSearch = res.data.lastSearch;
-                          
+                          if(res.data.lastSearch && res.data.lastSearch.length>0){
+                            $rootScope.user.lastSearch = res.data.lastSearch;
+                            $localStorage.lastSearch = res.data.lastSearch;
+                            $localStorage.searchHistory = res.data.lastSearch;
+                          }else
+                            $localStorage.searchHistory = [];
+
                           $rootScope.user.userName = res.data.userName;
                           if(res.data.fullName)
                             $rootScope.user.fullName = res.data.fullName;
@@ -141,9 +148,10 @@ angular.module('bds')
                           $rootScope.user.adsLikes = res.data.adsLikes;
                           $rootScope.user.userEmail = res.data.email;
                           $rootScope.user.phone = res.data.phone;
-                          $rootScope.user.lastSearch = res.data.lastSearch;
                           $rootScope.user.lastViewAds = res.data.lastViewAds;
-                          $rootScope.user.saveSearch = res.data.saveSearch;
+                          if(res.data.saveSearch && res.data.saveSearch.length>0){
+                            $rootScope.user.saveSearch = res.data.saveSearch;
+                          }
 
                           vm.getUnreadMsgCount($rootScope.user.userID);
 
@@ -191,7 +199,11 @@ angular.module('bds')
                         //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token);  
                         //$window.token = res.data.token;
                         $localStorage.relandToken = res.data.token;
-                        $localStorage.lastSearch = res.data.lastSearch;
+                        if(res.data.lastSearch && res.data.lastSearch.length>0){
+                          $localStorage.lastSearch = res.data.lastSearch;
+                          $localStorage.searchHistory = res.data.lastSearch;
+                        } else
+                          $localStorage.searchHistory = [];
                         
                         $rootScope.user.userName = res.data.userName;
                         if(res.data.fullName)
@@ -206,7 +218,9 @@ angular.module('bds')
                         $rootScope.user.phone = res.data.phone;
                         $rootScope.user.lastsearch = res.data.lastSearch;
                         $rootScope.user.lastViewAds = res.data.lastViewAds;
-                        $rootScope.user.saveSearch = res.data.saveSearch;
+                        if(res.data.saveSearch && res.data.saveSearch.length>0){
+                          $rootScope.user.saveSearch = res.data.saveSearch;
+                        }
                         vm.getUnreadMsgCount($rootScope.user.userID);
                         vm.class = "has-sub";
                         vm.state = vm.LOGGED_IN;
@@ -231,6 +245,7 @@ angular.module('bds')
                     HouseService.signup(data).then(function(res){
                       $localStorage.relandToken = res.data.token;
                       $rootScope.user.userName = res.data.userName;
+                      $localStorage.searchHistory = [];
                       //nhannc
                       if(res.data.fullName)
                         $rootScope.user.fullName = res.data.fullName;
@@ -244,6 +259,11 @@ angular.module('bds')
                       vm.state = vm.LOGGED_IN;
                       socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.user.userName);
+                      });
+                      $scope.$bus.publish({
+                        channel: 'user',
+                        topic: 'logged-in',
+                        data: null
                       });
                       $('#loginBox').modal('hide');
                       $('#box-login').hide();

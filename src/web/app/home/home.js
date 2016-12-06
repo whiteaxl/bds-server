@@ -284,7 +284,7 @@
     }
     //alert($localStorage.relandToken);
 
-    let decodedToken = {};
+    var decodedToken = {};
     $rootScope.loginbox = {};
     $rootScope.chatBoxes = [];
     $rootScope.menuitems = window.RewayListValue.menu;
@@ -312,12 +312,13 @@
           $rootScope.user.userEmail = res.data.user.email;
           $rootScope.user.phone = res.data.user.phone;
           //LastSearch may use in storega
+          /*
           if($localStorage.lastSearch){
               $rootScope.user.lastSearch = $localStorage.lastSearch;
-          }
+          }*/
           //Sugest autocomplete use lastSearch info of user  if it exist
           if(res.data.user.lastSearch && res.data.user.lastSearch.length > 0){
-              $localStorage.lastSearch = res.data.user.lastSearch;
+              $localStorage.searchHistory = res.data.user.lastSearch;
               $rootScope.user.lastSearch = res.data.user.lastSearch;
           }
 
@@ -436,15 +437,15 @@
       return undefined
     }
 
-    $rootScope.getAllLastSearch = function(localStorage){
-      if(localStorage){
-        return localStorage.lastSearch;
+    $rootScope.getSearchHistory = function(){
+      if($localStorage && $localStorage.searchHistory){
+        return $localStorage.searchHistory;
       }      
     }
     
     $rootScope.addLastSearch = function(localStorage, oLastSearch){
         console.log("---------------home-addLastSearch-------------------");
-      let lastSearch = _.cloneDeep(oLastSearch);      
+      var lastSearch = _.cloneDeep(oLastSearch);
       if(localStorage){
         if(!localStorage.lastSearch || localStorage.lastSearch.length==0){
           localStorage.lastSearch = [];
@@ -461,13 +462,27 @@
           }
         );
 
+        if($rootScope.user && $rootScope.user.userID){
+          if(!localStorage.searchHistory || localStorage.searchHistory.length==0){
+              localStorage.searchHistory = [];
+          }
+          var searchHistory = _.cloneDeep(oLastSearch);
+
+          $localStorage.searchHistory.push(
+              {
+                  time: new Date().toString('yyyyMMdd HH:mm:ss'),
+                  query: searchHistory
+              }
+          );
+        }
+        
+
         $rootScope.$bus.publish({
             channel: 'search',
             topic: 'search',
             data: $rootScope.getLastSearch(localStorage)
         });
-
-      }      
+      }
     }
 
     $rootScope.signin = function(){

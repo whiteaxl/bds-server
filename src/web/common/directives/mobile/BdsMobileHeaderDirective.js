@@ -335,8 +335,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         }
                     });
 
-                    if($rootScope.getAllLastSearch($localStorage)){
-                        var lastSearches = $rootScope.getAllLastSearch($localStorage);
+                    if($rootScope.getSearchHistory()){
+                        var lastSearches = $rootScope.getSearchHistory();
                         if(lastSearches.length>0){
                             console.log("--------------------- init sugestSearch-header-------------------: " + lastSearches.length);
                             vm.favoriteSearchSource.push({

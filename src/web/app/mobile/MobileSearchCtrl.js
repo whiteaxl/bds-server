@@ -451,7 +451,12 @@
 					vm.saveSearchName = '';					
 					vm.nameSaveSearch = false;
 					$('#saveBox').modal("hide");
-                    $rootScope.user.saveSearch.push(data);
+                    if(!$rootScope.user.saveSearch)
+                        $rootScope.user.saveSearch = [];
+                    var saveSearch = {};
+                    saveSearch.name = data.saveSearchName;
+                    saveSearch.query = data.query;
+                    $rootScope.user.saveSearch.push(saveSearch);
 				}
 			})
         	

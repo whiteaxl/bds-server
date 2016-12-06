@@ -478,7 +478,37 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
 
 
-                vm.userLoggedIn = function(){                   
+                vm.userLoggedIn = function(){
+                    console.log("---------------------filter-userLoggedIn--------------------");
+                    if(vm.favoriteSearchSource && vm.favoriteSearchSource.length<2){
+                        if($rootScope.getSearchHistory()){
+
+                            var lastSearches = $rootScope.getSearchHistory();
+                            if(lastSearches.length>0){
+                                console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
+                                vm.favoriteSearchSource.push({
+                                    description: "Tìm kiếm gần đây",
+                                    lastSearchSeparator: true
+                                });
+                            }
+                            var count = 0;
+                            for (var i = lastSearches.length - 1; i >= 0; i--) {
+                                var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+                                if(des && des.length>20)
+                                    des = des.substring(0,20) + "...";
+                                vm.favoriteSearchSource.push({
+                                    description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
+                                    subDescription: des,
+                                    query: lastSearches[i].query,
+                                    class: "fa fa-history gray ui-menu-item-wrapper"
+                                });
+                                count++;
+                                if(count>10)
+                                    break;
+                            }
+                        }
+                    }
+
                     var saveSearches = $rootScope.user.saveSearch;
                     if(saveSearches ){
                         $scope.saveSearchCount = saveSearches.length;
@@ -563,9 +593,9 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     });
                     vm.updateDrums();
 
-                    if($rootScope.getAllLastSearch($localStorage)){
+                    if($rootScope.getSearchHistory()){
 
-                        var lastSearches = $rootScope.getAllLastSearch($localStorage);
+                        var lastSearches = $rootScope.getSearchHistory();
                         if(lastSearches.length>0){
                             console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
                             vm.favoriteSearchSource.push({

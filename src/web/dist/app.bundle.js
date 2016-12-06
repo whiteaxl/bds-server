@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1dd5a11fa6aa6273ab3c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b187f4c7dee690265a05"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1295,12 +1295,13 @@
 	                $rootScope.user.userEmail = res.data.user.email;
 	                $rootScope.user.phone = res.data.user.phone;
 	                //LastSearch may use in storega
-	                if ($localStorage.lastSearch) {
+	                /*
+	                if($localStorage.lastSearch){
 	                    $rootScope.user.lastSearch = $localStorage.lastSearch;
-	                }
+	                }*/
 	                //Sugest autocomplete use lastSearch info of user  if it exist
 	                if (res.data.user.lastSearch && res.data.user.lastSearch.length > 0) {
-	                    $localStorage.lastSearch = res.data.user.lastSearch;
+	                    $localStorage.searchHistory = res.data.user.lastSearch;
 	                    $rootScope.user.lastSearch = res.data.user.lastSearch;
 	                }
 
@@ -1415,9 +1416,9 @@
 	            return undefined;
 	        };
 
-	        $rootScope.getAllLastSearch = function (localStorage) {
-	            if (localStorage) {
-	                return localStorage.lastSearch;
+	        $rootScope.getSearchHistory = function () {
+	            if ($localStorage && $localStorage.searchHistory) {
+	                return $localStorage.searchHistory;
 	            }
 	        };
 
@@ -1437,6 +1438,18 @@
 	                    time: new Date().toString('yyyyMMdd HH:mm:ss'),
 	                    query: lastSearch
 	                });
+
+	                if ($rootScope.user && $rootScope.user.userID) {
+	                    if (!localStorage.searchHistory || localStorage.searchHistory.length == 0) {
+	                        localStorage.searchHistory = [];
+	                    }
+	                    var searchHistory = _.cloneDeep(oLastSearch);
+
+	                    $localStorage.searchHistory.push({
+	                        time: new Date().toString('yyyyMMdd HH:mm:ss'),
+	                        query: searchHistory
+	                    });
+	                }
 
 	                $rootScope.$bus.publish({
 	                    channel: 'search',
@@ -23064,7 +23077,11 @@
 	                    vm.saveSearchName = '';
 	                    vm.nameSaveSearch = false;
 	                    $('#saveBox').modal("hide");
-	                    $rootScope.user.saveSearch.push(data);
+	                    if (!$rootScope.user.saveSearch) $rootScope.user.saveSearch = [];
+	                    var saveSearch = {};
+	                    saveSearch.name = data.saveSearchName;
+	                    saveSearch.query = data.query;
+	                    $rootScope.user.saveSearch.push(saveSearch);
 	                }
 	            });
 	        };
@@ -32490,6 +32507,34 @@
 	            };
 
 	            vm.userLoggedIn = function () {
+	                console.log("---------------------filter-userLoggedIn--------------------");
+	                if (vm.favoriteSearchSource && vm.favoriteSearchSource.length < 2) {
+	                    if ($rootScope.getSearchHistory()) {
+
+	                        var lastSearches = $rootScope.getSearchHistory();
+	                        if (lastSearches.length > 0) {
+	                            console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
+	                            vm.favoriteSearchSource.push({
+	                                description: "Tìm kiếm gần đây",
+	                                lastSearchSeparator: true
+	                            });
+	                        }
+	                        var count = 0;
+	                        for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+	                            if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                            vm.favoriteSearchSource.push({
+	                                description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
+	                                subDescription: des,
+	                                query: lastSearches[i].query,
+	                                class: "fa fa-history gray ui-menu-item-wrapper"
+	                            });
+	                            count++;
+	                            if (count > 10) break;
+	                        }
+	                    }
+	                }
+
 	                var saveSearches = $rootScope.user.saveSearch;
 	                if (saveSearches) {
 	                    $scope.saveSearchCount = saveSearches.length;
@@ -32569,9 +32614,9 @@
 	                });
 	                vm.updateDrums();
 
-	                if ($rootScope.getAllLastSearch($localStorage)) {
+	                if ($rootScope.getSearchHistory()) {
 
-	                    var lastSearches = $rootScope.getAllLastSearch($localStorage);
+	                    var lastSearches = $rootScope.getSearchHistory();
 	                    if (lastSearches.length > 0) {
 	                        console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
 	                        vm.favoriteSearchSource.push({
@@ -32934,8 +32979,8 @@
 	                    }
 	                });
 
-	                if ($rootScope.getAllLastSearch($localStorage)) {
-	                    var lastSearches = $rootScope.getAllLastSearch($localStorage);
+	                if ($rootScope.getSearchHistory()) {
+	                    var lastSearches = $rootScope.getSearchHistory();
 	                    if (lastSearches.length > 0) {
 	                        console.log("--------------------- init sugestSearch-header-------------------: " + lastSearches.length);
 	                        vm.favoriteSearchSource.push({
@@ -33019,6 +33064,8 @@
 	          vm.password = "";
 	          $localStorage.relandToken = undefined;
 	          $rootScope.user.userID = undefined;
+	          $rootScope.user.saveSearch = undefined;
+	          $localStorage.searchHistory = undefined;
 	          vm.changeState(vm.ENTER_EMAIL, vm.userExist);
 	        }
 	      });
@@ -33109,7 +33156,11 @@
 	                  //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token); 
 	                  //$window.token = res.data.token;
 	                  $localStorage.relandToken = res.data.token;
-	                  $localStorage.lastSearch = res.data.lastSearch;
+	                  if (res.data.lastSearch && res.data.lastSearch.length > 0) {
+	                    $rootScope.user.lastSearch = res.data.lastSearch;
+	                    $localStorage.lastSearch = res.data.lastSearch;
+	                    $localStorage.searchHistory = res.data.lastSearch;
+	                  } else $localStorage.searchHistory = [];
 
 	                  $rootScope.user.userName = res.data.userName;
 	                  if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
@@ -33121,9 +33172,10 @@
 	                  $rootScope.user.adsLikes = res.data.adsLikes;
 	                  $rootScope.user.userEmail = res.data.email;
 	                  $rootScope.user.phone = res.data.phone;
-	                  $rootScope.user.lastSearch = res.data.lastSearch;
 	                  $rootScope.user.lastViewAds = res.data.lastViewAds;
-	                  $rootScope.user.saveSearch = res.data.saveSearch;
+	                  if (res.data.saveSearch && res.data.saveSearch.length > 0) {
+	                    $rootScope.user.saveSearch = res.data.saveSearch;
+	                  }
 
 	                  vm.getUnreadMsgCount($rootScope.user.userID);
 
@@ -33169,7 +33221,10 @@
 	                //alert("signin with email " + $scope.email + " password " + this.password + " and token: " + res.data.token); 
 	                //$window.token = res.data.token;
 	                $localStorage.relandToken = res.data.token;
-	                $localStorage.lastSearch = res.data.lastSearch;
+	                if (res.data.lastSearch && res.data.lastSearch.length > 0) {
+	                  $localStorage.lastSearch = res.data.lastSearch;
+	                  $localStorage.searchHistory = res.data.lastSearch;
+	                } else $localStorage.searchHistory = [];
 
 	                $rootScope.user.userName = res.data.userName;
 	                if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
@@ -33183,7 +33238,9 @@
 	                $rootScope.user.phone = res.data.phone;
 	                $rootScope.user.lastsearch = res.data.lastSearch;
 	                $rootScope.user.lastViewAds = res.data.lastViewAds;
-	                $rootScope.user.saveSearch = res.data.saveSearch;
+	                if (res.data.saveSearch && res.data.saveSearch.length > 0) {
+	                  $rootScope.user.saveSearch = res.data.saveSearch;
+	                }
 	                vm.getUnreadMsgCount($rootScope.user.userID);
 	                vm.class = "has-sub";
 	                vm.state = vm.LOGGED_IN;
@@ -33209,6 +33266,7 @@
 	            HouseService.signup(data).then(function (res) {
 	              $localStorage.relandToken = res.data.token;
 	              $rootScope.user.userName = res.data.userName;
+	              $localStorage.searchHistory = [];
 	              //nhannc
 	              if (res.data.fullName) $rootScope.user.fullName = res.data.fullName;
 	              $rootScope.user.userID = res.data.userID;
@@ -33221,6 +33279,11 @@
 	              vm.state = vm.LOGGED_IN;
 	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                console.log("register socket user " + $rootScope.user.userName);
+	              });
+	              $scope.$bus.publish({
+	                channel: 'user',
+	                topic: 'logged-in',
+	                data: null
 	              });
 	              $('#loginBox').modal('hide');
 	              $('#box-login').hide();
