@@ -260,7 +260,7 @@
                     <h4 class="modal-title" id="mapsBoxLabel">{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h4>
                 </div>
                 <div class="modal-body uln"" ontouchstart="return false">
-                    <ng-map center="{{mdt.center}}" id="fullMap"   zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
+                    <ng-map gesture-handling="greedy" center="{{mdt.center}}" id="fullMap"   zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
                         <custom-marker position="[{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}]">
                           <div class = "reland-marker">
                             {{mdt.marker.content}} 

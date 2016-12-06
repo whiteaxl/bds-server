@@ -259,6 +259,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.hideFilter = function(){
                     $(".search").removeAttr("style");
                     $(".search_mobile").find("i").removeClass("iconCancel").addClass("iconSearch");
+                    $(".iconSearch").show();
                     $("body").removeClass("bodyNavShow");
                     $(".search-footer").removeClass("fixed");
                     $(".search-btn").css("display","none");
