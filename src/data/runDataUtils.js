@@ -3,11 +3,11 @@
 let d = require("./dataUtils");
 let program = null;
 
-if (process.argv.length <= 1) {
+if (process.argv.length <= 2) {
   console.error("Usage: node runDataUtils.js [dup|img]")
 }
 
-program = process.argv[1];
+program = process.argv[2];
 
 if (program == "dup")  {
   d.checkDuplicate(() => {
