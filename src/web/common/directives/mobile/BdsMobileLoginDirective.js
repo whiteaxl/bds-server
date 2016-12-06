@@ -24,6 +24,16 @@ angular.module('bds')
           vm.state = vm.ENTER_EMAIL;
           vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
           vm.subHead = "";
+          $scope.$on("userLogout", function (event, data) {
+            vm.userExist = false;
+            vm.password = "";
+            $localStorage.relandToken = undefined;
+            $rootScope.user.userID = undefined;
+            $rootScope.user.saveSearch = undefined;
+            $localStorage.searchHistory = undefined;
+            vm.changeState(vm.ENTER_EMAIL,vm.userExist);
+          });
+          /*
           $scope.$bus.subscribe({
             channel: 'login',
             topic: 'logged out',
@@ -36,7 +46,7 @@ angular.module('bds')
                 $localStorage.searchHistory = undefined;
                 vm.changeState(vm.ENTER_EMAIL,vm.userExist);
             }
-          });
+          });*/
 
           $scope.$bus.subscribe({
             channel: 'login',

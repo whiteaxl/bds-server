@@ -308,6 +308,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.giaKhacFrom = undefined;
                         $scope.searchData.giaKhacTo = undefined;                      
                     }
+                    if($scope.searchData.ngayDangTinGREATER)
+                        $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
                     $scope.searchData.polygon = undefined;
                     if(vm.item){
                         if(vm.item.query){
@@ -396,7 +398,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 });
 
                 var setDrumValues = function(select, value){
-                    var options = select[0].options;                    
+                    var options = select[0].options;
                     if(value.indexOf("[0,9999999")>-1){
                          select.drum('setIndex', 0); 
                          $("#"+select.attr("id") + "_value").html(options[0].label);   
@@ -542,7 +544,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     var areaElm = $("select#area");
                     setDrumValues(areaElm,area);
 
-                    var datepost = $scope.searchData.ngayDangTinGREATER;
+                    var datepost = $scope.searchData.ngayDangTinGREATER + "";
                     var datepostElm = $("select#datepost");
                     setDrumValues(datepostElm,datepost);   
                 }
@@ -622,6 +624,20 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                     vm.userLoggedIn();
 
+                    $scope.$on("userLogin", function (event, data) {
+                        vm.userLoggedIn();
+                    });
+                    $scope.$on("userLogout", function (event, data) {
+                        vm.favoriteSearchSource = [
+                            {
+                                description: "Vị trí hiện tại",
+                                location: true,
+                                class: "ui-autocomplete-category"
+                            }
+                        ];
+                    });
+                    /*
+
                     $scope.$bus.subscribe({
                         channel: 'user',
                         topic: 'logged-in',
@@ -644,7 +660,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             ];
                         }
                     });
-                    
+                     */
 
                 }
                 $timeout(function() {
