@@ -4,6 +4,7 @@ var striptags = require('striptags');
 var moment = require('moment');
 var constant = require("../lib/constant");
 var DanhMuc = require("../lib/DanhMuc");
+var RangeUtils = require("../lib/RangeUtils");
 var cfg = require('../config');
 var _ = require('lodash');
 
@@ -242,7 +243,7 @@ util.upperFirstCharacter = function(str) {
 
     return str[0].toUpperCase() + str.slice(1);;
 };
-
+/*
 util.convertQuery2String = function(query) {
     let toStrRange = (range) => {
       if (range && range[0] == 0 && range[1] == DanhMuc.BIG) {
@@ -276,6 +277,49 @@ util.convertQuery2String = function(query) {
     };
 
     return JSON.stringify(tmp);
+};*/
+
+util.convertQuery2String = function(query) {
+    var toStrRange = (range) => {
+        if (range && range[0] == 0 && range[1] == DanhMuc.BIG) {
+            return undefined;
+        }
+        return range;
+    };
+
+    var loaiNhaDatVal = DanhMuc.LoaiTin[query.loaiTin];
+    if (query.loaiNhaDat) {
+        loaiNhaDatVal = query.loaiTin == 0 ? DanhMuc.LoaiNhaDatBan[query.loaiNhaDat] : DanhMuc.LoaiNhaDatThue[query.loaiNhaDat];
+    }
+
+    var strQuery = '';
+    strQuery = strQuery + loaiNhaDatVal;
+    if (query.giaBETWEEN && (query.giaBETWEEN[0] != -1 || query.giaBETWEEN[1] != DanhMuc.BIG)) {
+        var giaStepValues = query.loaiTin == 0 ? RangeUtils.sellPriceRange :RangeUtils.rentPriceRange;
+        var newGia = giaStepValues.rangeVal2Display(query.giaBETWEEN);
+        strQuery = strQuery + ', ' + RangeUtils.getFromToDisplay(newGia, giaStepValues.getUnitText());
+    }
+    if (query.dienTichBETWEEN && (query.dienTichBETWEEN[0] != -1 || query.dienTichBETWEEN[1] != DanhMuc.BIG)) {
+        var dienTichStepValues = RangeUtils.dienTichRange;
+        var newDienTich = dienTichStepValues.rangeVal2Display(query.dienTichBETWEEN);
+        strQuery = strQuery + ', ' + RangeUtils.getFromToDisplay(newDienTich, dienTichStepValues.getUnitText());
+    }
+    if (query.soPhongNguGREATER) {
+        strQuery = strQuery + ', ' + query.soPhongNguGREATER + ' p.ngủ';
+    }
+    if (query.soPhongTamGREATER) {
+        strQuery = strQuery + ', ' + query.soPhongTamGREATER + ' p.tắm';
+    }
+    if (query.huongNha && query.huongNha.length > 0 && query.huongNha[0]) {
+        strQuery = strQuery + ', ' + DanhMuc.HuongNha[query.huongNha[0]];
+    }
+    if (query.ngayDangTinGREATER) {
+        var now = moment();
+        var ngayDangTin = moment(query.ngayDangTinGREATER, 'YYYYMMDD');
+        var ngayDaDang = now.diff(ngayDangTin, 'days');
+        strQuery = strQuery + ', ' + ngayDaDang + ' ngày';
+    }
+    return strQuery;
 };
 
 const defaultItemInCollection = {

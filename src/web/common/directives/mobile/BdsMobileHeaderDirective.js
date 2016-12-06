@@ -245,6 +245,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 }
                 vm.showFavorite = function(event){
                     //if($rootScope.act == '' || !$rootScope.act){
+                    console.log("------------------showFavorite-Header------------------");
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
                     //}
@@ -253,6 +254,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 vm.userLoggedIn = function(){                   
                     let saveSearches = $rootScope.user.saveSearch;
                     if(saveSearches ){
+                        $scope.saveSearchCount = saveSearches.length;
                         for (var i = saveSearches.length - 1; i >= 0; i--) {                              
                             let des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
                             if(des && des.length>20)
@@ -314,12 +316,18 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         channel: 'search',
                         topic: 'search',
                         callback: function(data, envelope) {
-                            //console.log('add new chat box', data, envelope);
-                            let des = window.RewayUtil.convertQuery2String(data.query);
+                            console.log("--------------------- topic Search-header-------------------");
+                            var des = window.RewayUtil.convertQuery2String(data.query);
                             if(des && des.length>20)
                                 des = des.substring(0,20) + "...";
+                            var lastSearchLength = vm.favoriteSearchSource.length;
+                            if($scope.saveSearchCount)
+                                var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+                            if(lastSearchLength >= 10){
+                                vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
+                            }
                             vm.favoriteSearchSource.push({
-                                description: "Tìm kiếm lúc " + data.time,
+                                description: (data.query && data.query.diaChinh && data.query.diaChinh.fullName? data.query.diaChinh.fullName : ''),
                                 subDescription: des,
                                 query: data.query,
                                 class: "fa fa-history gray ui-menu-item-wrapper"                        
@@ -328,23 +336,28 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     });
 
                     if($rootScope.getAllLastSearch($localStorage)){
-                        let lastSearches = $rootScope.getAllLastSearch($localStorage);
+                        var lastSearches = $rootScope.getAllLastSearch($localStorage);
                         if(lastSearches.length>0){
+                            console.log("--------------------- init sugestSearch-header-------------------: " + lastSearches.length);
                             vm.favoriteSearchSource.push({
                                 description: "Tìm kiếm gần đây",
                                 lastSearchSeparator: true
                             });
                         }
+                        var count = 0;
                         for (var i = lastSearches.length - 1; i >= 0; i--) {
-                            let des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
                             if(des && des.length>20)
                                 des = des.substring(0,20) + "...";
                             vm.favoriteSearchSource.push({
-                                description: "Tìm kiếm lúc " + lastSearches[i].time,
+                                description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
                                 subDescription: des,
                                 query: lastSearches[i].query,
                                 class: "fa fa-history gray ui-menu-item-wrapper"                        
-                            }); 
+                            });
+                            count++;
+                            if(count>10)
+                                break;
                         }
                     }
 

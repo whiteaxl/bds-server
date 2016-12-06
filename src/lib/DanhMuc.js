@@ -1,7 +1,8 @@
 var danhMuc = {};
 
 var BAT_KY = "Bất kỳ";
-
+danhMuc.CHUA_XAC_DINH = "Chưa xác định";
+danhMuc.THOA_THUAN = "Thỏa thuận";
 danhMuc.BAT_KY = BAT_KY;
 danhMuc.BIG =9999999;
 

@@ -204,7 +204,7 @@ angular.module('bds')
                         $rootScope.user.adsLikes = res.data.adsLikes;
                         $rootScope.user.userEmail = res.data.email;
                         $rootScope.user.phone = res.data.phone;
-                        $rootScope.user.lastSearch = res.data.lastSearch;
+                        $rootScope.user.lastsearch = res.data.lastSearch;
                         $rootScope.user.lastViewAds = res.data.lastViewAds;
                         $rootScope.user.saveSearch = res.data.saveSearch;
                         vm.getUnreadMsgCount($rootScope.user.userID);
