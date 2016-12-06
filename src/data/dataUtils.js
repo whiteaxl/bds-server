@@ -203,7 +203,7 @@ var utils = {
 
     commonService.query("select default.image.images, default.image.cover, id from default where type='Ads' " +
       "and meta.downloadedImage is missing " +
-      "limit 100000"
+      "limit 200000"
       , (err, res) => {
         if (err) {
           return console.log("Err when load:" + err);
