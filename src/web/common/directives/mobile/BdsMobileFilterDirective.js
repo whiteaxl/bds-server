@@ -630,6 +630,20 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             vm.userLoggedIn();
                         }
                     });
+
+                    $scope.$bus.subscribe({
+                        channel: 'login',
+                        topic: 'logged out',
+                        callback: function(data, envelope) {
+                            vm.favoriteSearchSource = [
+                                {
+                                    description: "Vị trí hiện tại",
+                                    location: true,
+                                    class: "ui-autocomplete-category"
+                                }
+                            ];
+                        }
+                    });
                     
 
                 }

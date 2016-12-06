@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b187f4c7dee690265a05"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b97608fd06070a6a00c5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32647,6 +32647,18 @@
 	                    callback: function callback(data, envelope) {
 	                        //console.log('add new chat box', data, envelope);
 	                        vm.userLoggedIn();
+	                    }
+	                });
+
+	                $scope.$bus.subscribe({
+	                    channel: 'login',
+	                    topic: 'logged out',
+	                    callback: function callback(data, envelope) {
+	                        vm.favoriteSearchSource = [{
+	                            description: "Vị trí hiện tại",
+	                            location: true,
+	                            class: "ui-autocomplete-category"
+	                        }];
 	                    }
 	                });
 	            };
