@@ -38,27 +38,11 @@
 					var async = require("async");
 					async.forEach(vm.allInbox,function(inbox, callback){
 						console.log("-------------inbox----:" + inbox.partner.userID);
-						HouseService.getAllChatMsg({userID: $rootScope.user.userID, partnerUserID: inbox.partner.userID, adsID: inbox.relatedToAds.adsID}).then(function(res) {
-							if (res.status == 200 && res.data.status == 0) {
-								console.log("-------------msg of inbox----:" + inbox.partner.userID);
-								if(res.data.data.length > 0){
-									inbox.lastMsg = res.data.data[0].default.content;
-									inbox.lastDate = vm.getChatTime(new Date(res.data.data[0].default.date));
-									inbox.lastTime = new Date(res.data.data[0].default.date).getTime();
-									var count = 0;
-									for(var i=0; i<res.data.data.length; i++){
-										if(!res.data.data[i].default.read){
-											if((inbox.partner.userID.trim()==res.data.data[i].default.fromUserID.trim()) && (inbox.relatedToAds.adsID.trim()==res.data.data[i].default.relatedToAds.adsID.trim()))
-												++count;
-										}
-									}
-									if(count>0)
-										inbox.unreadCount = count;
-								}
-							}
-							callback();
-						});
-
+						inbox.lastMsg = inbox.content;
+						inbox.lastDate = vm.getChatTime(new Date(inbox.date));
+						inbox.lastTime = new Date(inbox.date).getTime();
+						inbox.unreadCount = inbox.numOfUnreadMessage;
+						callback();
 					}, function(err){
 						if(err){throw err;}
 						console.log("processing all elements completed");
@@ -68,19 +52,14 @@
 							return obj2.lastTime - obj1.lastTime;
 						});
 						var inbox;
-						var unreadMsg = 0;
 						for(var i=0; i< vm.allInbox.length; i ++){
 							inbox = vm.allInbox[i];
-							if(inbox.unreadCount)
-								unreadMsg = unreadMsg + inbox.unreadCount;
 							if(inbox.relatedToAds.loaiTin == 0){
 								vm.allSaleInbox.push(inbox);
 							} else {
 								vm.allRentInbox.push(inbox);
 							}
 						}
-						// $rootScope.unreadMsg = unreadMsg;
-						// $localStorage.unreadMsg = $rootScope.unreadMsg;
 						console.log("---------------processing all elements completed--------------------");
 					});
 				}

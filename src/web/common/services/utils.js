@@ -86,13 +86,14 @@
             }
           })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            console.log("-----------------------------utils.autoComplete-------------------");
           ul.addClass('relandAuto');
           ul.css("max-height","200 px !important;");
           if(item.location == true || item.lastSearchSeparator == true){
             return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo( ul );
           }else {
             return $( "<li class='ui-menu-item'>")
-            .append('<i class="' + item.class + '"></i>' + item.description + '<span class="ui-menu-item-wrapper">' + item.subDescription + '</span></li>')
+            .append('<i class="' + item.class + '"></i>' + item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
             .appendTo(ul);
           }
         };

@@ -315,6 +315,12 @@
           if($localStorage.lastSearch){
               $rootScope.user.lastSearch = $localStorage.lastSearch;
           }
+          //Sugest autocomplete use lastSearch info of user  if it exist
+          if(res.data.user.lastSearch && res.data.user.lastSearch.length > 0){
+              $localStorage.lastSearch = res.data.user.lastSearch;
+              $rootScope.user.lastSearch = res.data.user.lastSearch;
+          }
+
           if(res.data.user.fullName)
               $rootScope.user.fullName = res.data.user.fullName;
           $rootScope.user.lastViewAds = res.data.user.lastViewAds;
@@ -429,6 +435,7 @@
       }
       return undefined
     }
+
     $rootScope.getAllLastSearch = function(localStorage){
       if(localStorage){
         return localStorage.lastSearch;
@@ -436,13 +443,17 @@
     }
     
     $rootScope.addLastSearch = function(localStorage, oLastSearch){
+        console.log("---------------home-addLastSearch-------------------");
       let lastSearch = _.cloneDeep(oLastSearch);      
       if(localStorage){
         if(!localStorage.lastSearch || localStorage.lastSearch.length==0){
           localStorage.lastSearch = [];
-        } else if (localStorage.lastSearch.length==2){
-            localStorage.lastSearch =  _(localStorage.lastSearch).slice(1,localStorage.lastSearch.length).value();                
         }
+        //Nhan: why remove at index=2?
+        /*
+        else if (localStorage.lastSearch.length==2){
+            localStorage.lastSearch =  _(localStorage.lastSearch).slice(1,localStorage.lastSearch.length).value();                
+        }*/
         localStorage.lastSearch.push(
           {
             time: new Date().toString('yyyyMMdd HH:mm:ss'),
