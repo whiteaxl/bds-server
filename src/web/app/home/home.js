@@ -700,6 +700,22 @@
               $rootScope.$broadcast("unreadMsgs");
           },100)
       });
+      $rootScope.$bus.subscribe({
+          channel: 'user',
+          topic: 'logged-in',
+          callback: function(data, envelope) {
+              //console.log('add new chat box', data, envelope);
+              $rootScope.$broadcast("userLogin");
+          }
+      });
+
+      $rootScope.$bus.subscribe({
+          channel: 'login',
+          topic: 'logged out',
+          callback: function(data, envelope) {
+              $rootScope.$broadcast("userLogout");
+          }
+      });
   }]);
   })();
 

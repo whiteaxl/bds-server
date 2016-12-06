@@ -17,8 +17,6 @@ var fs = require("fs");
 var mkdirp = require("mkdirp");
 var async = require("async");
 
-
-
 var utils = {
   checkWrongGeo(done) {
     let that = this;
@@ -60,7 +58,8 @@ var utils = {
       all.forEach((ads) => {
         key = "loaiTin="+ads.loaiTin + " and loaiNhaDat=" + ads.loaiNhaDat
             + " and dienTich=" + ads.dienTich + " and  dangBoi.phone='"
-            + ads.dangBoi.phone + "'" + ` and place.diaChi='${ads.place.diaChi}'`;
+            + ads.dangBoi.phone + "'" + ` and place.diaChi='${ads.place.diaChi}'`
+            + ` and ads.chiTiet='${ads.chiTiet}'`;
         if (grp[key]) {
           grp[key].push(ads)
         } else {
@@ -70,17 +69,49 @@ var utils = {
 
       //
       let cnt = 0;
+      let dups = [];
 
       for (let att in grp) {
         if (grp[att].length > 1) {
           console.log("Cnt:" + grp[att].length, "Same:" + att);
           cnt = cnt +  grp[att].length - 1;
+          dups.push(grp[att]);
         }
       }
 
-      console.log("Total duplicate:", cnt);
+      async.eachSeries(dups, (oneGrp, doneOneGroup) => {
+        let sorted = oneGrp.sort((a, b) => { //desc sort by ngayDangTin
+          if (a.ngayDangTin > b.ngayDangTin ) return -1;
+          if (a.ngayDangTin < b.ngayDangTin ) return 1;
 
-      done();
+          if (a.id < b.id ) return  1;
+          if (a.id > b.id ) return -1;
+
+          return 0;
+        });
+
+        //keep first one, the rest mark as duplicated
+        let goodId = sorted[0].id;
+        let duplicatedList = sorted.slice(1);
+        async.each(duplicatedList, (ads, callback) => {
+          let sql = `update default set meta.duplicated = true, meta.duplicatee = '${goodId}' where id = '${ads.id}' `;
+          commonService.query(sql, (err, res) => {
+            if (err) {
+              logUtil.error("Error when trying to mark as duplicate:" + ads.id);
+            }
+
+            callback();
+          })
+        }, (err) => {
+          logUtil.info("Done for one group :" + goodId);
+
+          doneOneGroup();
+        })
+      }, (err) => {
+        console.log("Done all. Total duplicate:", cnt);
+
+        done && done();
+      });
     });
   },
 
@@ -166,13 +197,13 @@ var utils = {
   },
 
 
-  downloadAllAdsImage(baseDir) {
+  downloadAllAdsImage(baseDir, doneAll) {
     let that = this;
     var targetSize = "745x510";
 
-    commonService.query("select default.image.images, id from default where type='Ads' " +
+    commonService.query("select default.image.images, default.image.cover, id from default where type='Ads' " +
       "and meta.downloadedImage is missing " +
-      "limit 100000"
+      "limit 200000"
       , (err, res) => {
         if (err) {
           return console.log("Err when load:" + err);
@@ -182,6 +213,8 @@ var utils = {
 
           async.eachOfLimit(res, 100, (ads, key, doneAds) => {
             logUtil.info("Starting with " + ads.id + ", ads.images.length=" + ads.images.length);
+
+
 
             async.each(ads.images, (img, callback) => {
                 if (!img) {
@@ -193,6 +226,10 @@ var utils = {
               if (err) {
                 console.error('A file failed to download!' + err + ", for " + ads.id);
               }
+
+              //let cover = ads.cover
+
+              that.downloadImage(baseDir, cover, callback);
 
               //update flag
               commonService.query(`update default set meta.downloadedImage = true where id = '${ads.id}'`
@@ -209,6 +246,7 @@ var utils = {
               console.error(err);
             } else {
               console.log("All DONE successfully!");
+              doneAll && doneAll();
             }
           });
 
@@ -219,6 +257,8 @@ var utils = {
 };
 
 //----------------------------------------------------------------------------------
+
+module.exports = utils;
 
 /*
 utils.checkWrongGeo(()=> {
@@ -251,5 +291,5 @@ utils.downloadImage("/Users/supermac/Projects/tmp/images"
 
 */
 
+//utils.downloadAllAdsImage("/u01/images");
 
-utils.downloadAllAdsImage("/u01/images");

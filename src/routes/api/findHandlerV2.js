@@ -225,7 +225,7 @@ function viewportTooLarge(vp) {
   let a = geoUtil.measure(sw.lat, sw.lon, sw.lat, ne.lon);
   let b = geoUtil.measure(sw.lat, sw.lon, ne.lat, sw.lon);
 
-  let MAX = (20*1000) * (20*1000);
+  let MAX = (60*1000) * (60*1000);
 
   let tooLarge = (a * b) > MAX;
 

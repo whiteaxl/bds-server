@@ -363,6 +363,10 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
 
                     vm.userLoggedIn();
 
+                    $scope.$on("userLogin", function (event, data) {
+                        vm.userLoggedIn();
+                    });
+                    /*
                     $scope.$bus.subscribe({
                         channel: 'user',
                         topic: 'logged-in',
@@ -370,7 +374,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                             //console.log('add new chat box', data, envelope);
                             vm.userLoggedIn();
                         }
-                    });
+                    });*/
                 }
                 
                 $timeout(function() {

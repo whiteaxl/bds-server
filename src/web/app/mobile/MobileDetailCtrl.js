@@ -399,7 +399,11 @@
 				if(vm.ads.dangBoi.email == $rootScope.user.userEmail)
 					vm.showLuotXem = true;
 			}
-			
+
+			$scope.$on("userLogin", function (event, data) {
+				vm.userLoggedIn();
+			});
+			/*
 			$scope.$bus.subscribe({
             	channel: 'user',
 	            topic: 'logged-in',
@@ -407,7 +411,7 @@
 	                //console.log('add new chat box', data, envelope);
 	                vm.userLoggedIn();
 	            }
-	        });
+	        });*/
 	        if($rootScope.isLoggedIn()){	        	
 	        	vm.userLoggedIn();
 	        }

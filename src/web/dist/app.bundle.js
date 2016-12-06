@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "536de734c52b76b09513"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "856567ead9ef532ba29c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1649,6 +1649,22 @@
 	                }
 	                $rootScope.$broadcast("unreadMsgs");
 	            }, 100);
+	        });
+	        $rootScope.$bus.subscribe({
+	            channel: 'user',
+	            topic: 'logged-in',
+	            callback: function callback(data, envelope) {
+	                //console.log('add new chat box', data, envelope);
+	                $rootScope.$broadcast("userLogin");
+	            }
+	        });
+
+	        $rootScope.$bus.subscribe({
+	            channel: 'login',
+	            topic: 'logged out',
+	            callback: function callback(data, envelope) {
+	                $rootScope.$broadcast("userLogout");
+	            }
 	        });
 	    }]);
 	})();
@@ -24042,14 +24058,18 @@
 					if (vm.ads.dangBoi.email == $rootScope.user.userEmail) vm.showLuotXem = true;
 				};
 
-				$scope.$bus.subscribe({
-					channel: 'user',
-					topic: 'logged-in',
-					callback: function callback(data, envelope) {
-						//console.log('add new chat box', data, envelope);
-						vm.userLoggedIn();
-					}
+				$scope.$on("userLogin", function (event, data) {
+					vm.userLoggedIn();
 				});
+				/*
+	   $scope.$bus.subscribe({
+	            	channel: 'user',
+	             topic: 'logged-in',
+	             callback: function(data, envelope) {
+	                 //console.log('add new chat box', data, envelope);
+	                 vm.userLoggedIn();
+	             }
+	         });*/
 				if ($rootScope.isLoggedIn()) {
 					vm.userLoggedIn();
 				}
@@ -34089,6 +34109,7 @@
 	                    $scope.searchData.giaKhacFrom = undefined;
 	                    $scope.searchData.giaKhacTo = undefined;
 	                }
+	                if ($scope.searchData.ngayDangTinGREATER) $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
 	                $scope.searchData.polygon = undefined;
 	                if (vm.item) {
 	                    if (vm.item.query) {
@@ -34302,7 +34323,7 @@
 	                var areaElm = $("select#area");
 	                setDrumValues(areaElm, area);
 
-	                var datepost = $scope.searchData.ngayDangTinGREATER;
+	                var datepost = $scope.searchData.ngayDangTinGREATER + "";
 	                var datepostElm = $("select#datepost");
 	                setDrumValues(datepostElm, datepost);
 	            };
@@ -34378,26 +34399,39 @@
 
 	                vm.userLoggedIn();
 
-	                $scope.$bus.subscribe({
+	                $scope.$on("userLogin", function (event, data) {
+	                    vm.userLoggedIn();
+	                });
+	                $scope.$on("userLogout", function (event, data) {
+	                    vm.favoriteSearchSource = [{
+	                        description: "Vị trí hiện tại",
+	                        location: true,
+	                        class: "ui-autocomplete-category"
+	                    }];
+	                });
+	                /*
+	                  $scope.$bus.subscribe({
 	                    channel: 'user',
 	                    topic: 'logged-in',
-	                    callback: function callback(data, envelope) {
+	                    callback: function(data, envelope) {
 	                        //console.log('add new chat box', data, envelope);
 	                        vm.userLoggedIn();
 	                    }
 	                });
-
-	                $scope.$bus.subscribe({
+	                  $scope.$bus.subscribe({
 	                    channel: 'login',
 	                    topic: 'logged out',
-	                    callback: function callback(data, envelope) {
-	                        vm.favoriteSearchSource = [{
-	                            description: "Vị trí hiện tại",
-	                            location: true,
-	                            class: "ui-autocomplete-category"
-	                        }];
+	                    callback: function(data, envelope) {
+	                        vm.favoriteSearchSource = [
+	                            {
+	                                description: "Vị trí hiện tại",
+	                                location: true,
+	                                class: "ui-autocomplete-category"
+	                            }
+	                        ];
 	                    }
 	                });
+	                 */
 	            };
 	            $timeout(function () {
 	                vm.init();
@@ -34754,14 +34788,18 @@
 
 	                vm.userLoggedIn();
 
+	                $scope.$on("userLogin", function (event, data) {
+	                    vm.userLoggedIn();
+	                });
+	                /*
 	                $scope.$bus.subscribe({
 	                    channel: 'user',
 	                    topic: 'logged-in',
-	                    callback: function callback(data, envelope) {
+	                    callback: function(data, envelope) {
 	                        //console.log('add new chat box', data, envelope);
 	                        vm.userLoggedIn();
 	                    }
-	                });
+	                });*/
 	            };
 
 	            $timeout(function () {
@@ -34805,19 +34843,29 @@
 	      vm.state = vm.ENTER_EMAIL;
 	      vm.head = "Đăng nhập/Đăng ký để lưu thông tin tìm kiếm";
 	      vm.subHead = "";
+	      $scope.$on("userLogout", function (event, data) {
+	        vm.userExist = false;
+	        vm.password = "";
+	        $localStorage.relandToken = undefined;
+	        $rootScope.user.userID = undefined;
+	        $rootScope.user.saveSearch = undefined;
+	        $localStorage.searchHistory = undefined;
+	        vm.changeState(vm.ENTER_EMAIL, vm.userExist);
+	      });
+	      /*
 	      $scope.$bus.subscribe({
 	        channel: 'login',
 	        topic: 'logged out',
-	        callback: function callback(data, envelope) {
-	          vm.userExist = false;
-	          vm.password = "";
-	          $localStorage.relandToken = undefined;
-	          $rootScope.user.userID = undefined;
-	          $rootScope.user.saveSearch = undefined;
-	          $localStorage.searchHistory = undefined;
-	          vm.changeState(vm.ENTER_EMAIL, vm.userExist);
+	        callback: function(data, envelope) {
+	            vm.userExist = false;
+	            vm.password = "";
+	            $localStorage.relandToken = undefined;  
+	            $rootScope.user.userID = undefined;
+	            $rootScope.user.saveSearch = undefined;
+	            $localStorage.searchHistory = undefined;
+	            vm.changeState(vm.ENTER_EMAIL,vm.userExist);
 	        }
-	      });
+	      });*/
 
 	      $scope.$bus.subscribe({
 	        channel: 'login',
