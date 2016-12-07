@@ -128,6 +128,15 @@
                     //end
                     $rootScope.searchData.viewport = vm.viewport;
                     $rootScope.searchData.placeId = vm.placeId;
+
+                    // eliminate some file not exist in payload
+                    if($scope.searchData.dbLimit)
+                        $scope.searchData.dbLimit = undefined;
+                    if($scope.searchData.dbOrderBy)
+                        $scope.searchData.dbOrderBy = undefined;
+                    if($scope.searchData.dbPageNo)
+                        $scope.searchData.dbPageNo = undefined;
+                    //
                     vm.search(function(){
                         if(vm.viewMode=="list"){
                             vm.initMap = false;
@@ -135,10 +144,21 @@
                     });
                 });
             }else {
+                //Hung them doan nay lam gi, sao phai bo diaChinh va view report?
+                /*
                 vm.viewport = $rootScope.searchData.viewport;
                 $rootScope.searchData.viewport = undefined;
                 $rootScope.searchData.diaChinh = undefined;
                 $scope.center = "[14.058324,108.277199]";
+                */
+                // eliminate some file not exist in payload
+                if($scope.searchData.dbLimit)
+                    $scope.searchData.dbLimit = undefined;
+                if($scope.searchData.dbOrderBy)
+                    $scope.searchData.dbOrderBy = undefined;
+                if($scope.searchData.dbPageNo)
+                    $scope.searchData.dbPageNo = undefined;
+                //
                 vm.search(function(){
                     if(vm.viewMode=="list"){
                         vm.initMap = false;

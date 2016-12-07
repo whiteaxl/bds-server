@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b20dbd3e802d72f12cbe"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0f37788e71849ac91a67"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22781,6 +22781,12 @@
 	                    //end
 	                    $rootScope.searchData.viewport = vm.viewport;
 	                    $rootScope.searchData.placeId = vm.placeId;
+
+	                    // eliminate some file not exist in payload
+	                    if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
+	                    if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
+	                    if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
+	                    //
 	                    vm.search(function () {
 	                        if (vm.viewMode == "list") {
 	                            vm.initMap = false;
@@ -22788,10 +22794,18 @@
 	                    });
 	                });
 	            } else {
+	                //Hung them doan nay lam gi, sao phai bo diaChinh va view report?
+	                /*
 	                vm.viewport = $rootScope.searchData.viewport;
 	                $rootScope.searchData.viewport = undefined;
 	                $rootScope.searchData.diaChinh = undefined;
 	                $scope.center = "[14.058324,108.277199]";
+	                */
+	                // eliminate some file not exist in payload
+	                if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
+	                if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
+	                if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
+	                //
 	                vm.search(function () {
 	                    if (vm.viewMode == "list") {
 	                        vm.initMap = false;
@@ -32392,7 +32406,6 @@
 	                        };
 	                    }
 	                }
-
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
 	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
