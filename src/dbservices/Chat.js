@@ -43,6 +43,7 @@ class ChatModel {
   }
   */
   saveChat(chat,callback){
+      /*
     bucket.counter("idGeneratorForChats", 1, {initial: 0}, (err, res)=> {
       if (err) {
         callback(err, res);
@@ -70,7 +71,23 @@ class ChatModel {
           }
         });
       }
-    });
+    });*/
+      var date = new Date();
+      chat.type = "Chat";
+      chat.id = chat.chatID;
+      chat.date = date;
+      chat.timestamp = date.getTime();
+      console.log("before upsert " + chat.id);
+
+      bucket.upsert(chat.id, chat, function (err, res) {
+          if (err) {
+              console.log("ERROR:" + err);
+              callback({code:99, msg:err.toString()})
+          }else{
+              log.info("chat save:", res);
+              callback(null, chat);
+          }
+      });
   }
 
   getUnreadMessages(user,callback){
@@ -89,6 +106,58 @@ class ChatModel {
       callback(err,all);
     });  	
   }
+
+  markReadMessage(chat,callback){
+    var sql = `update default set read=true where type='Chat' and chatID='${chat.chatID}'`;
+    var query = N1qlQuery.fromString(sql);
+
+    bucket.query(query, function (err, res) {
+        if (err) {
+            console.log('query failed'.red, err);
+            return;
+        }
+        console.log("----------------------------------markReadMessage------------------");
+        console.log(sql);
+        console.log("----------------------------------markReadMessage------------------");
+        callback(err,res);
+    });
+  }
+/*
+    getChatID(chatID,callback){
+        var sql = `select default.* from default where type='Chat' and id='${chatID}'`;
+
+        var query = N1qlQuery.fromString(sql);
+
+        log.info("getUserByID: " + sql);
+        bucket.query(query, callback);
+    }
+    markReadMessage(chat,callback){
+        this.getChatID(chat.chatID, (err,res) => {
+            if (err) {
+                console.log("ERROR:" + err);
+            }else{
+                if(res && res.length==1){
+                    //get user from database
+                    var chat = res[0];
+                    chat.read = true;
+                    console.log("-------------------------markReadMessage-read----------");
+                    console.log(chat);
+
+                    bucket.upsert(chat.id, chat, function (err, res) {
+                        if (err) {
+                            console.log("ERROR:" + err);
+                        }
+                        console.log("-------------------------markReadMessage-upset----------");
+                        console.log(chat);
+                        console.log("-------------------------markReadMessage-upset----------");
+
+
+                        callback(err, res);
+                    })
+                }
+            }
+        });
+    }*/
 
   getAllChatMsg(payload,callback) {
      var userID = payload.userID;

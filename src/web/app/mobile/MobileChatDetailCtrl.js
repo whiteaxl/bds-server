@@ -388,14 +388,9 @@
 					}
 					data.date = new Date(data.date);
 					console.log(data);
-					$timeout(function() {
-						socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
-							console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
-							console.log(data);
-						});
-					},300);
-
-
+					HouseService.markReadMessage({chatID: data.chatID}).then(function(res){
+						console.log("--------------------markReadMessage---------------");
+					});
 					window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 					$scope.$apply();
 					$("body").animate({ scrollTop: $(document).height() }, "slow");
@@ -522,6 +517,7 @@
 				, timeStamp : (new Date()).getTime()
 				, date: new Date()
 				, type: "Chat"
+				, chatID: ("Chat_" + vm.user.userID.trim() + "_" + (new Date()).getTime())
 			};
 		}
 

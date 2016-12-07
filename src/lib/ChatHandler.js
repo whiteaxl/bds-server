@@ -248,7 +248,7 @@ ChatHandler.init = function(server){
     fn(data,function(err,result){
       console.log(JSON.stringify(result));
       chatModel.saveChat(result,function(){
-        callback({success: true, offline: result.read});  
+        callback({success: true, offline: result.read});
       });
     })
       if(socket.allParner && data.toUserID){

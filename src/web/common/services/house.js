@@ -143,6 +143,9 @@
       },
       getUnreadMessages: function(data){
         return $http.post("/api/getUnreadMessages",data);
+      },
+      markReadMessage: function(data){
+        return $http.post("/api/markReadMessage",data);
       }
 
     };

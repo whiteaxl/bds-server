@@ -42,6 +42,31 @@ internals.getAllChatMsg = function(req, reply){
 /*
  params:
  {
+ chatID: string
+ }
+ */
+internals.markReadMessage = function(req, reply){
+    console.log("-----------------set message was read----------------------");
+    logUtil.info("set message was read", req.payload);
+
+    chatModel.markReadMessage( req.payload, function(err, res){
+        if (err != null){
+            logUtil.error("Error when set message was read, chatID: " + JSON.stringify(req.payload));
+            reply({
+                status: constant.STS.FAILURE,
+                error: err
+            });
+        } else {
+            logUtil.info("set message was read, chatID: ", JSON.stringify(req.payload));
+            reply({
+                status: constant.STS.SUCCESS,
+            });
+        }
+    });
+}
+/*
+ params:
+ {
  userID: string
  }
  */
