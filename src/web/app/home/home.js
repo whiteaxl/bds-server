@@ -389,7 +389,8 @@
         // },
         "diaChinh" : {
           "tinhKhongDau" : "HN",
-          "huyenKhongDau" : "7"
+          "huyenKhongDau" : "7",
+          "fullName" : "Quận Cầu Giấy, Hà Nội"
         },
         // circle : {
         //   center : PointModel,
