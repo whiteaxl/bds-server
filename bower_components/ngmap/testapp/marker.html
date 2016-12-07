@@ -2,14 +2,11 @@
 <html ng-app="ngMap">
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=places" ></script>
-<script src="../../angular/angular.js"></script>'
-<script src="../build/scripts/ng-map.js"></script>
-
+<script src="script-tags-for-development.js"></script>
 </head>
 
 <body>
-  <ng-map zoom="11" center="[40.74, -74.18]" style="height:599px;">
+  <ng-map zoom="11" center="[40.74, -74.18]">
     <marker position="[40.71, -74.21]" title="hello"></marker>
     <marker position="[40.72, -74.20]" title="marker" animation="Animation.DROP"></marker>
     <marker position="[40.73, -74.19]" title="drag me" draggable="true"></marker>

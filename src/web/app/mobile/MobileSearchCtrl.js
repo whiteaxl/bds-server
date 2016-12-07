@@ -303,10 +303,10 @@
             vm.disableIdleHandler();
         });
 
-        NgMap.getMap("searchmap").then(function(){
-            // Initialize the Google map
-            vm.map = NgMap.initMap("searchmap");
-        });
+        // NgMap.getMap("searchmap").then(function(){
+        //     // Initialize the Google map
+        //     vm.map = NgMap.initMap("searchmap");
+        // });
 		vm.mapInitialized = function(){
 			//vm.initialized = true;
 			// alert('aa');

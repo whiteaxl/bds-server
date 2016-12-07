@@ -1,6 +1,6 @@
 (function(root, factory) {
 if (typeof exports === "object") {
-module.exports = factory(window.angular);
+module.exports = factory(require('angular'));
 } else if (typeof define === "function" && define.amd) {
 define(['angular'], factory);
 } else{
@@ -8,7 +8,7 @@ factory(root.angular);
 }
 }(this, function(angular) {
 /**
- * AngularJS Google Maps Ver. 1.17.2
+ * AngularJS Google Maps Ver. 1.17.7
  *
  * The MIT License (MIT)
  * 
@@ -130,17 +130,21 @@ angular.module('ngMap', []);
      * @function zoomToIncludeMarkers
      */
     vm.zoomToIncludeMarkers = function() {
-      var bounds = new google.maps.LatLngBounds();
-      for (var k1 in vm.map.markers) {
-        bounds.extend(vm.map.markers[k1].getPosition());
+      // Only fit to bounds if we have any markers
+      // object.keys is supported in all major browsers (IE9+)
+      if ((vm.map.markers != null && Object.keys(vm.map.markers).length > 0) || (vm.map.customMarkers != null && Object.keys(vm.map.customMarkers).length > 0)) {
+        var bounds = new google.maps.LatLngBounds();
+        for (var k1 in vm.map.markers) {
+          bounds.extend(vm.map.markers[k1].getPosition());
+        }
+        for (var k2 in vm.map.customMarkers) {
+          bounds.extend(vm.map.customMarkers[k2].getPosition());
+        }
+    	  if (vm.mapOptions.maximumZoom) {
+    		  vm.enableMaximumZoomCheck = true; //enable zoom check after resizing for markers
+    	  }
+        vm.map.fitBounds(bounds);
       }
-      for (var k2 in vm.map.customMarkers) {
-        bounds.extend(vm.map.customMarkers[k2].getPosition());
-      }
-	  if (vm.mapOptions.maximumZoom) {
-		  vm.enableMaximumZoomCheck = true; //enable zoom check after resizing for markers
-	  }
-      vm.map.fitBounds(bounds);
     };
 
     /**
@@ -178,7 +182,7 @@ angular.module('ngMap', []);
 
         /**
          * rebuild mapOptions for lazyInit
-         * becasue attributes values might have been changed
+         * because attributes values might have been changed
          */
         var filtered = Attr2MapOptions.filter($attrs);
         var options = Attr2MapOptions.getOptions(filtered);
@@ -205,6 +209,8 @@ angular.module('ngMap', []);
         ((typeof center === 'string') && center.match(/\{\{.*\}\}/))
       ) {
         mapOptions.center = new google.maps.LatLng(0, 0);
+      } else if( (typeof center === 'string') && center.match(/[0-9.-]*,[0-9.-]*/) ){
+           mapOptions.center = new google.maps.LatLng(center);
       } else if (!(center instanceof google.maps.LatLng)) {
         var geoCenter = mapOptions.center;
         delete mapOptions.center;
@@ -282,7 +288,11 @@ angular.module('ngMap', []);
 
     if (options.lazyInit) { // allows controlled initialization
       // parse angular expression for dynamic ids
-      if (!!$attrs.id && $attrs.id.startsWith('{{') && $attrs.id.endsWith('}}')) {
+      if (!!$attrs.id && 
+      	  // starts with, at position 0
+	  $attrs.id.indexOf("{{", 0) === 0 &&
+	  // ends with
+	  $attrs.id.indexOf("}}", $attrs.id.length - "}}".length) !== -1) {
         var idExpression = $attrs.id.slice(2,-2);
         var mapId = $parse(idExpression)($scope);
       } else {
@@ -512,9 +522,9 @@ angular.module('ngMap', []);
       position && (this.position = position); /* jshint ignore:line */
 
       if (this.getProjection() && typeof this.position.lng == 'function') {
-        var posPixel = this.getProjection().fromLatLngToDivPixel(this.position);
         var _this = this;
         var setPosition = function() {
+          var posPixel = _this.getProjection().fromLatLngToDivPixel(_this.position);
           var x = Math.round(posPixel.x - (_this.el.offsetWidth/2));
           var y = Math.round(posPixel.y - _this.el.offsetHeight - 10); // 10px for anchor
           _this.el.style.left = x + "px";
@@ -1112,7 +1122,7 @@ angular.module('ngMap', []);
 (function() {
   'use strict';
 
-  var infoWindow = function(Attr2MapOptions, $compile, $timeout, $parse, NgMap)  {
+  var infoWindow = function(Attr2MapOptions, $compile, $q, $templateRequest, $timeout, $parse, NgMap)  {
     var parser = Attr2MapOptions;
 
     var getInfoWindow = function(options, events, element) {
@@ -1136,31 +1146,46 @@ angular.module('ngMap', []);
       }
 
       /**
-       * set template ane template-relate functions
+       * set template and template-related functions
        * it must have a container element with ng-non-bindable
        */
-      var template = element.html().trim();
-      if (angular.element(template).length != 1) {
-        throw "info-window working as a template must have a container";
-      }
-      infoWindow.__template = template.replace(/\s?ng-non-bindable[='"]+/,"");
+      var templatePromise = $q(function(resolve) {
+        if (angular.isString(element)) {
+          $templateRequest(element).then(function (requestedTemplate) {
+            resolve(angular.element(requestedTemplate).wrap('<div>').parent());
+          }, function(message) {
+            throw "info-window template request failed: " + message;
+          });
+        }
+        else {
+          resolve(element);
+        }
+      }).then(function(resolvedTemplate) {
+        var template = resolvedTemplate.html().trim();
+        if (angular.element(template).length != 1) {
+          throw "info-window working as a template must have a container";
+        }
+        infoWindow.__template = template.replace(/\s?ng-non-bindable[='"]+/,"");
+      });
 
       infoWindow.__open = function(map, scope, anchor) {
-        $timeout(function() {
-          anchor && (scope.anchor = anchor);
-          var el = $compile(infoWindow.__template)(scope);
-          infoWindow.setContent(el[0]);
-          scope.$apply();
-          if (anchor && anchor.getPosition) {
-            infoWindow.open(map, anchor);
-          } else if (anchor && anchor instanceof google.maps.LatLng) {
-            infoWindow.open(map);
-            infoWindow.setPosition(anchor);
-          } else {
-            infoWindow.open(map);
-          }
-          var infoWindowContainerEl = infoWindow.content.parentElement.parentElement.parentElement;
-          infoWindowContainerEl.className = "ng-map-info-window";
+        templatePromise.then(function() {
+          $timeout(function() {
+            anchor && (scope.anchor = anchor);
+            var el = $compile(infoWindow.__template)(scope);
+            infoWindow.setContent(el[0]);
+            scope.$apply();
+            if (anchor && anchor.getPosition) {
+              infoWindow.open(map, anchor);
+            } else if (anchor && anchor instanceof google.maps.LatLng) {
+              infoWindow.open(map);
+              infoWindow.setPosition(anchor);
+            } else {
+              infoWindow.open(map);
+            }
+            var infoWindowContainerEl = infoWindow.content.parentElement.parentElement.parentElement;
+            infoWindowContainerEl.className = "ng-map-info-window";
+          });
         });
       };
 
@@ -1177,11 +1202,11 @@ angular.module('ngMap', []);
       var options = parser.getOptions(filtered, {scope: scope});
       var events = parser.getEvents(scope, filtered);
 
+      var infoWindow = getInfoWindow(options, events, options.template || element);
       var address;
       if (options.position && !(options.position instanceof google.maps.LatLng)) {
         address = options.position;
       }
-      var infoWindow = getInfoWindow(options, events, element);
       if (address) {
         NgMap.getGeoLocation(address).then(function(latlng) {
           infoWindow.setPosition(latlng);
@@ -1194,7 +1219,7 @@ angular.module('ngMap', []);
       mapController.addObject('infoWindows', infoWindow);
       mapController.observeAttrSetObj(orgAttrs, attrs, infoWindow);
 
-      mapController.showInfoWindow = 
+      mapController.showInfoWindow =
       mapController.map.showInfoWindow = mapController.showInfoWindow ||
         function(p1, p2, p3) { //event, id, marker
           var id = typeof p1 == 'string' ? p1 : p2;
@@ -1238,7 +1263,8 @@ angular.module('ngMap', []);
       scope.showInfoWindow = mapController.map.showInfoWindow;
       scope.hideInfoWindow = mapController.map.hideInfoWindow;
 
-      NgMap.getMap().then(function(map) {
+      var map = infoWindow.mapId ? {id:infoWindow.mapId} : 0;
+      NgMap.getMap(map).then(function(map) {
         infoWindow.visible && infoWindow.__open(map, scope);
         if (infoWindow.visibleOnMarker) {
           var markerId = infoWindow.visibleOnMarker;
@@ -1256,7 +1282,7 @@ angular.module('ngMap', []);
 
   }; // infoWindow
   infoWindow.$inject =
-    ['Attr2MapOptions', '$compile', '$timeout', '$parse', 'NgMap'];
+    ['Attr2MapOptions', '$compile', '$q', '$templateRequest', '$timeout', '$parse', 'NgMap'];
 
   angular.module('ngMap').directive('infoWindow', infoWindow);
 })();
@@ -1420,20 +1446,28 @@ angular.module('ngMap', []);
 /* global window, document */
 (function() {
   'use strict';
-  var $timeout, $compile, src, savedHtml;
+  var $timeout, $compile, src, savedHtml = [], elements = [];
 
   var preLinkFunc = function(scope, element, attrs) {
     var mapsUrl = attrs.mapLazyLoadParams || attrs.mapLazyLoad;
 
-    window.lazyLoadCallback = function() {
-      void 0;
-      $timeout(function() { /* give some time to load */
-        element.html(savedHtml);
-        $compile(element.contents())(scope);
-      }, 100);
-    };
-
     if(window.google === undefined || window.google.maps === undefined) {
+      elements.push({
+        scope: scope,
+        element: element,
+        savedHtml: savedHtml[elements.length],
+      });
+
+      window.lazyLoadCallback = function() {
+        void 0;
+        $timeout(function() { /* give some time to load */
+          elements.forEach(function(elm) {
+              elm.element.html(elm.savedHtml);
+              $compile(elm.element.contents())(elm.scope);
+          });
+        }, 100);
+      };
+
       var scriptEl = document.createElement('script');
       void 0;
 
@@ -1453,7 +1487,7 @@ angular.module('ngMap', []);
   var compileFunc = function(tElement, tAttrs) {
 
     (!tAttrs.mapLazyLoad) && void 0;
-    savedHtml = tElement.html();
+    savedHtml.push(tElement.html());
     src = tAttrs.mapLazyLoad;
 
     /**
@@ -1834,7 +1868,7 @@ angular.module('ngMap', []);
  * @example
  * Example:
  *   <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
- *   <input places-auto-complete types="['geocode']" on-place-changed="myCallback(place)" />
+ *   <input places-auto-complete types="['geocode']" on-place-changed="myCallback(place)" component-restrictions="{country:'au'}"/>
  */
 /* global google */
 (function() {
@@ -1869,8 +1903,14 @@ angular.module('ngMap', []);
           autocomplete.setTypes(optionValue);
         }
       });
+	  
+	  attrs.$observe('componentRestrictions', function (val) {
+		 if (val) {
+		   autocomplete.setComponentRestrictions(scope.$eval(val));
+		 }
+	   });
     };
-
+	
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -1880,7 +1920,6 @@ angular.module('ngMap', []);
 
   placesAutoComplete.$inject = ['Attr2MapOptions', '$timeout'];
   angular.module('ngMap').directive('placesAutoComplete', placesAutoComplete);
-
 })();
 
 /**
@@ -2451,7 +2490,7 @@ angular.module('ngMap', []);
 
       // convert output more for center and position
       if (
-        (options.key == 'center' || options.key == 'center') &&
+        (options.key == 'center' || options.key == 'position') &&
         output instanceof Array
       ) {
         output = new google.maps.LatLng(output[0], output[1]);
@@ -3072,6 +3111,14 @@ angular.module('ngMap', []);
           deferred.reject(error);
         }
       );
+      // var geocoder = new google.maps.Geocoder();
+      // geocoder.geocode(options, function (results, status) {
+      //   if (status == google.maps.GeocoderStatus.OK) {
+      //     deferred.resolve(results);
+      //   } else {
+      //     deferred.reject(status);
+      //   }
+      // });
     }
 
     return deferred.promise;
