@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "856567ead9ef532ba29c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d5bb814142b8e4772920"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22951,6 +22951,10 @@
 	            vm.disableIdleHandler();
 	        });
 
+	        NgMap.getMap("searchmap").then(function () {
+	            // Initialize the Google map
+	            vm.map = NgMap.initMap("searchmap");
+	        });
 	        vm.mapInitialized = function () {
 	            //vm.initialized = true;
 	            // alert('aa');
@@ -23479,7 +23483,9 @@
 	                vm.currentPage = $rootScope.searchData.pageNo;
 	                vm.setNextPrevButtonClass();
 
-	                vm.mapInitialized();
+	                $timeout(function () {
+	                    vm.mapInitialized();
+	                }, 100);
 	                // if(vm.map){
 	                //     vm.disableIdleHandler();
 	                //     google.maps.event.addListenerOnce(vm.map, 'idle', function() {
