@@ -323,6 +323,10 @@
             vm.disableIdleHandler();
         });
 
+        // NgMap.getMap("searchmap").then(function(){
+        //     // Initialize the Google map
+        //     vm.map = NgMap.initMap("searchmap");
+        // });
 		vm.mapInitialized = function(){
 			//vm.initialized = true;
 			// alert('aa');
@@ -877,7 +881,9 @@
                 vm.currentPage = $rootScope.searchData.pageNo;
                 vm.setNextPrevButtonClass();
 
-                vm.mapInitialized();       
+                $timeout(function() {
+                    vm.mapInitialized();
+                }, 100);     
                 // if(vm.map){
                 //     vm.disableIdleHandler();
                 //     google.maps.event.addListenerOnce(vm.map, 'idle', function() {
