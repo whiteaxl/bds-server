@@ -2,7 +2,7 @@
 <bds-mobile-filter search-data="$root.searchData"></bds-mobile-filter>
 <!-- <bds-mobile-header></bds-mobile-header> -->
 <bds-mobile-header act="$root.act"></bds-mobile-header>
-<div class="search-nodata" ng-if="!mhc.boSuuTap || mhc.boSuuTap.length==0">
+<div class="search-nodata" ng-if="(mhc.doneSearch==true) && (!mhc.boSuuTap || mhc.boSuuTap.length==0)">
     <strong>Không tìm thấy kết quả phù hợp nào!</strong>
     <p>Hãy nhấn vào biểu tượng “Tìm kiếm” bên trên <br> để thực hiện lệnh tìm kiếm khác</p>
 </div>
