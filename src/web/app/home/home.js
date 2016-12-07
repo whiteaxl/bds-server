@@ -364,18 +364,18 @@
     $rootScope.searchData = {
         "placeId": undefined,
         "loaiTin": 0,
-        "giaBETWEEN": [0, 999999999],
-        "dienTichBETWEEN" : [0, 99999999999],
-        "ngayDangTinGREATER" : "19810101",
+        //"giaBETWEEN": [0, 999999999],
+        //"dienTichBETWEEN" : [0, 99999999999],
+        //"ngayDangTinGREATER" : "19810101",
         "viewport" : {
-               "northeast" : {
-                  "lat" : 23.393395,
-                  "lon" : 109.4689483
-               },
-               "southwest" : {
-                  "lat" : 8.412729499999999,
-                  "lon" : 102.14441
-               }
+            "northeast": {
+                "lat": 21.055138,
+                "lon": 105.857493
+            },
+            "southwest": {
+                "lat": 21.0166219,
+                "lon": 105.801771
+            }
         },
         // "viewport" : {
         //   "northeast" : {
@@ -388,8 +388,8 @@
         //   }
         // },
         "diaChinh" : {
-          "tinhKhongDau" : "ha-noi",
-          "huyenKhongDau" : "cau-giay"
+          "tinhKhongDau" : "HN",
+          "huyenKhongDau" : "7"
         },
         // circle : {
         //   center : PointModel,

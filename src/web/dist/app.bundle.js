@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0f37788e71849ac91a67"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a814f10ddb6ffbf623f0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1344,17 +1344,17 @@
 	        $rootScope.searchData = {
 	            "placeId": undefined,
 	            "loaiTin": 0,
-	            "giaBETWEEN": [0, 999999999],
-	            "dienTichBETWEEN": [0, 99999999999],
-	            "ngayDangTinGREATER": "19810101",
+	            //"giaBETWEEN": [0, 999999999],
+	            //"dienTichBETWEEN" : [0, 99999999999],
+	            //"ngayDangTinGREATER" : "19810101",
 	            "viewport": {
 	                "northeast": {
-	                    "lat": 23.393395,
-	                    "lon": 109.4689483
+	                    "lat": 21.055138,
+	                    "lon": 105.857493
 	                },
 	                "southwest": {
-	                    "lat": 8.412729499999999,
-	                    "lon": 102.14441
+	                    "lat": 21.0166219,
+	                    "lon": 105.801771
 	                }
 	            },
 	            // "viewport" : {
@@ -1368,8 +1368,8 @@
 	            //   }
 	            // },
 	            "diaChinh": {
-	                "tinhKhongDau": "ha-noi",
-	                "huyenKhongDau": "cau-giay"
+	                "tinhKhongDau": "HN",
+	                "huyenKhongDau": "7"
 	            },
 	            // circle : {
 	            //   center : PointModel,
@@ -32588,7 +32588,26 @@
 
 	            vm.updateDrums = function () {
 	                //set price drum
-	                var prices = "[" + $scope.searchData.giaBETWEEN[0] + "," + $scope.searchData.giaBETWEEN[1] + "]";
+	                var prices = "";
+	                if ($scope.searchData.giaBETWEEN) {
+	                    prices = "[";
+	                    if ($scope.searchData.giaBETWEEN[0]) {
+	                        prices = prices + $scope.searchData.giaBETWEEN[0];
+	                    } else {
+	                        prices = prices + 0;
+	                    }
+	                    prices = prices + ",";
+	                    if ($scope.searchData.giaBETWEEN[1]) {
+	                        prices = prices + $scope.searchData.giaBETWEEN[1];
+	                    } else {
+	                        prices = prices + 999999999;
+	                    }
+	                    prices = prices + "]";
+	                } else {
+	                    prices = "[0, 999999999]";
+	                }
+
+	                //var prices = "["+$scope.searchData.giaBETWEEN[0]+"," +$scope.searchData.giaBETWEEN[1]+"]";
 	                var pricesElm = $("#price_" + $scope.searchData.loaiTin + " select#prices");
 	                setDrumValues(pricesElm, prices);
 
@@ -32596,11 +32615,29 @@
 	                // var area1Elm = $("select#area1");
 	                // setDrumValues(area1Elm,area1);
 
-	                var area = "[" + $scope.searchData.dienTichBETWEEN[0] + "," + $scope.searchData.dienTichBETWEEN[1] + "]";
+	                var area = "";
+	                if ($scope.searchData.dienTichBETWEEN) {
+	                    area = "[";
+	                    if ($scope.searchData.dienTichBETWEEN[0]) {
+	                        area = area + $scope.searchData.dienTichBETWEEN[0] + ",";
+	                    } else {
+	                        area = area + 0 + ",";;
+	                    }
+	                    if ($scope.searchData.dienTichBETWEEN[1]) {
+	                        area = area + $scope.searchData.dienTichBETWEEN[1];
+	                    } else {
+	                        area = area + 99999999999;
+	                    }
+	                    area = area + "]";
+	                } else {
+	                    area = "[0, 99999999999]";
+	                }
+
+	                //var area = "["+$scope.searchData.dienTichBETWEEN[0]+","+$scope.searchData.dienTichBETWEEN[1]+"]";
 	                var areaElm = $("select#area");
 	                setDrumValues(areaElm, area);
 
-	                var datepost = $scope.searchData.ngayDangTinGREATER + "";
+	                var datepost = ($scope.searchData.ngayDangTinGREATER ? $scope.searchData.ngayDangTinGREATER : "19810101") + "";
 	                var datepostElm = $("select#datepost");
 	                setDrumValues(datepostElm, datepost);
 	            };
