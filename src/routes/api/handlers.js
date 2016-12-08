@@ -386,7 +386,7 @@ function _transformDetailAds(adsFromDb) {
     ads.image.images_small =ads.image.images;
 
     if (ads.image.images_small) {
-        ads.image.images = ads.image.images.map((one) => {
+        ads.image.images = ads.image.images.filter((n) => n).map((one) => {
             return one.replace("80x60", "745x510").replace("200x200", "745x510");
         });
     }
