@@ -412,6 +412,7 @@
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" +
 				"&latlng=" + lat + ',' + lon;
+			// $http.get(url, {headers: {'Authorization': 'Bearer ' + 'AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A','Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*','Access-Control-Allow-Headers': '*'}}).then(function(res){
 			$http.post(url).then(function(res){
 				console.log(res);
 				callback(res);
@@ -421,6 +422,7 @@
 
 		//get place in danh muc dia chinh
 		//dung voi fetch
+		/*
 		vm.getDiaChinhGoogle = function(lat, lon){
 			vm.getGeoCode(lat, lon, function(res){
 				if(res.results){
@@ -429,6 +431,16 @@
 					vm.autoCompleteText = place.formatted_address;
 				}
 			})
+		}*/
+
+		vm.getDiaChinhGoogle = function(lat, lon){
+			console.log("------------------test getDiaChinh post,fetch----------------");
+			HouseService.getGogleDiaChinhNameByLatLon({lat: lat, lon: lon}).then(function(res) {
+				console.log("-----------------getGogleDiaChinhNameByLatLon: " + res )
+				if(res.status==200 && res.data.status==0){
+					vm.autoCompleteText = place.formatted_address;
+				}
+			});
 		}
 
 		vm.getDiaChinhInDb = function(lat, lon, isInit){

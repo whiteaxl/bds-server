@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d7bab2fa55ce11ff7fe3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1e07f4e32e96cfdc9f77"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21578,6 +21578,9 @@
 	      },
 	      markReadMessage: function markReadMessage(data) {
 	        return $http.post("/api/markReadMessage", data);
+	      },
+	      getGogleDiaChinhNameByLatLon: function getGogleDiaChinhNameByLatLon(data) {
+	        return $http.post("/api/place/getGogleDiaChinhNameByLatLon", data);
 	      }
 
 	    };
@@ -30861,6 +30864,7 @@
 			vm.getGeoCodePostGet = function (lat, lon, callback) {
 				console.log($localStorage.relandToken);
 				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" + "&latlng=" + lat + ',' + lon;
+				// $http.get(url, {headers: {'Authorization': 'Bearer ' + 'AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A','Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*','Access-Control-Allow-Headers': '*'}}).then(function(res){
 				$http.post(url).then(function (res) {
 					console.log(res);
 					callback(res);
@@ -30870,11 +30874,22 @@
 
 			//get place in danh muc dia chinh
 			//dung voi fetch
+			/*
+	  vm.getDiaChinhGoogle = function(lat, lon){
+	  	vm.getGeoCode(lat, lon, function(res){
+	  		if(res.results){
+	  			vm.googlePlaces = res.results;
+	  			var place = vm.googlePlaces[0];
+	  			vm.autoCompleteText = place.formatted_address;
+	  		}
+	  	})
+	  }*/
+
 			vm.getDiaChinhGoogle = function (lat, lon) {
-				vm.getGeoCode(lat, lon, function (res) {
-					if (res.results) {
-						vm.googlePlaces = res.results;
-						var place = vm.googlePlaces[0];
+				console.log("------------------test getDiaChinh post,fetch----------------");
+				HouseService.getGogleDiaChinhNameByLatLon({ lat: lat, lon: lon }).then(function (res) {
+					console.log("-----------------getGogleDiaChinhNameByLatLon: " + res);
+					if (res.status == 200 && res.data.status == 0) {
 						vm.autoCompleteText = place.formatted_address;
 					}
 				});

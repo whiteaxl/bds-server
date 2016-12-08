@@ -146,6 +146,9 @@
       },
       markReadMessage: function(data){
         return $http.post("/api/markReadMessage",data);
+      },
+      getGogleDiaChinhNameByLatLon: function(data){
+        return $http.post("/api/place/getGogleDiaChinhNameByLatLon",data);
       }
 
     };
