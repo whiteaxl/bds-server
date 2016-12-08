@@ -430,6 +430,10 @@ function convertChoTot(bds, callback) {
   ads.getGeoBy = "convert";
   ads.GEOvsDC = 0;
 
+  ads.meta = {
+    status : 'good'
+  };
+
   _convertDiaChi(ads, bds,(err) => {
     if (err) {
       callback(err)

@@ -101,7 +101,9 @@ function convertBds(bds) {
     ads.GEOvsDC = 4; //no geo data
   }
 
-  ads.meta = {};
+  ads.meta = {
+    status : 'good'
+  };
 
   return ads;
 }
