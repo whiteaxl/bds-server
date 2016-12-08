@@ -152,6 +152,8 @@
                 $scope.center = "[14.058324,108.277199]";
                 */
                 // eliminate some file not exist in payload
+                $scope.center = "[21.03019,105.7907652]";
+                vm.viewport = $rootScope.searchData.viewport
                 if($scope.searchData.dbLimit)
                     $scope.searchData.dbLimit = undefined;
                 if($scope.searchData.dbOrderBy)

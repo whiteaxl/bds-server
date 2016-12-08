@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "20a0cca1c3dac58f954d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d7bab2fa55ce11ff7fe3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1349,12 +1349,12 @@
 	            //"ngayDangTinGREATER" : "19810101",
 	            "viewport": {
 	                "northeast": {
-	                    "lat": 21.055138,
-	                    "lon": 105.857493
+	                    "lat": 21.0594115,
+	                    "lon": 105.8134889
 	                },
 	                "southwest": {
-	                    "lat": 21.0166219,
-	                    "lon": 105.801771
+	                    "lat": 21.0009685,
+	                    "lon": 105.7680415
 	                }
 	            },
 	            // "viewport" : {
@@ -22803,6 +22803,8 @@
 	                $scope.center = "[14.058324,108.277199]";
 	                */
 	                // eliminate some file not exist in payload
+	                $scope.center = "[21.03019,105.7907652]";
+	                vm.viewport = $rootScope.searchData.viewport;
 	                if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
 	                if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
 	                if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
