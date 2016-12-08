@@ -106,6 +106,10 @@ var parseEmail = function(encEmail) {
 		if (idx1 > -1 && idx2 > -1) {
 			let email = decode.substring(idx1, idx2);
 
+			if (email && email[0] == '"') {
+				email = email.substring(1);
+			}
+
 			return email;
 		}
 	}
