@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1e07f4e32e96cfdc9f77"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "eaff3f20d32221a37dd9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30890,7 +30890,7 @@
 				HouseService.getGogleDiaChinhNameByLatLon({ lat: lat, lon: lon }).then(function (res) {
 					console.log("-----------------getGogleDiaChinhNameByLatLon: " + res);
 					if (res.status == 200 && res.data.status == 0) {
-						vm.autoCompleteText = place.formatted_address;
+						vm.autoCompleteText = res.data.place.formatted_address;
 					}
 				});
 			};

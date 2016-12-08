@@ -438,7 +438,7 @@
 			HouseService.getGogleDiaChinhNameByLatLon({lat: lat, lon: lon}).then(function(res) {
 				console.log("-----------------getGogleDiaChinhNameByLatLon: " + res )
 				if(res.status==200 && res.data.status==0){
-					vm.autoCompleteText = place.formatted_address;
+					vm.autoCompleteText = res.data.place.formatted_address;
 				}
 			});
 		}
