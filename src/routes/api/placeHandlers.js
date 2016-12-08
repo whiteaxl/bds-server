@@ -204,7 +204,7 @@ internals._getDiaChinhFromCache = function(codeDiaChinh) {
   return ret;
 };
 
-internals.getGogleDiaChinhNameByLatLon = function(req,reply){
+internals.getGogleDiaChinhByLatLon = function(req,reply){
   var payload = req.payload;
   log.info("getPlaceByID, payload=", payload);
 
@@ -217,22 +217,18 @@ internals.getGogleDiaChinhNameByLatLon = function(req,reply){
     return;
   }
   let center = {};
-  services.getGeocoding(payload.lat, payload.lon,
+  services.getFullGeocoding(payload.lat, payload.lon,
       (res) => {
-        if (res && res.formatted_address) {
-          const adr = res.formatted_address;
-          center.formatted_address = adr;
-        }
         reply({
-          place : center,
+          place : res,
           status: "0"
         });
       },
       (err) => {
         center.formatted_address = "";
         reply({
-          place : center,
-          status: "0"
+          place : undefined,
+          status: "1"
         });
       }
   );

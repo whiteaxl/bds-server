@@ -1033,8 +1033,8 @@ internals.endpoints = [
   },
   {
     method: 'POST',
-    path: '/api/place/getGogleDiaChinhNameByLatLon',
-    handler: placeHandlers.getGogleDiaChinhNameByLatLon,
+    path: '/api/place/getGogleDiaChinhByLatLon',
+    handler: placeHandlers.getGogleDiaChinhByLatLon,
     config: {
       description: 'Tra ve ten dia chinh cua google',
       tags: ['api'],
@@ -1046,7 +1046,7 @@ internals.endpoints = [
       },
       response: {
         schema: Joi.object({
-          place: Joi.object().description("dia chinh thoa man"),
+          place: Joi.array().description("all level off dia chinh"),
           status: Joi.number().description("mô tả trạng thái 1/0"),
         })
       }
