@@ -70,7 +70,7 @@
                         <div class="pdall15">
                             <input type="text" class="form-control" id="searchSendLocation" ng-change="mcdc.autoCompleteChange();" ng-model="mcdc.autoCompleteText" ng-click="mcdc.showFavorite($event)" ng-keypress="mcdc.keyPress($event)" >
                         </div>
-                        <ng-map center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">
+                        <ng-map gesture-handling="greedy" center="[{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}]" lazy-init="true" id="fullMapSendLocation" class="maps">
                             <marker position="{{mcdc.sendLocation.lat}},{{mcdc.sendLocation.lon}}" title="Hello World!"></marker>
                         </ng-map>
                         <footer class="main border blue uln">
@@ -91,7 +91,7 @@
                         <h4 class="modal-title" id="mapsBoxLableViewLocation">Bản đồ</h4>
                     </div>
                     <div class="modal-body uln">
-                        <ng-map center="[{{mcdc.sentLocationView.lat}},{{mcdc.sentLocationView.lon}}]" lazy-init="true" id="fullMapViewLocation" class="maps">
+                        <ng-map gesture-handling="greedy" center="[{{mcdc.sentLocationView.lat}},{{mcdc.sentLocationView.lon}}]" lazy-init="true" id="fullMapViewLocation" class="maps">
                             <custom-marker position="[{{mcdc.currentLocation.lat}},{{mcdc.currentLocation.lon}}]">
                                 <div class = "marker">
                                     Vị trí của bạn
