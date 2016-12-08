@@ -58,6 +58,9 @@
 								vm.boSuuTap.push(item);
 						});
 						vm.doneSearch = true;
+						$timeout(function() {
+		                    $('body').scrollTop(0);
+		                },0);						
 					});
 		        }, function(error){
 		        	console.log(error);		        	
@@ -72,6 +75,9 @@
 							vm.boSuuTap.push(item);
 					});
 					vm.doneSearch = true;
+					$timeout(function() {
+	                    $('body').scrollTop(0);
+	                },0);
 				});
 		    }
 
