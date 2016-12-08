@@ -277,7 +277,7 @@
   .run(['socket', '$timeout', 'jwtHelper','$rootScope','$localStorage', '$cookieStore','$http','$compile','HouseService', function(socket, $timeout, jwtHelper,$rootScope,$localStorage, $cookieStore, $http,$compile,HouseService){
     $rootScope.globals = $cookieStore.get('globals') || {};
     //$rootScope.center = "Hanoi Vietnam";
-    FastClick.attach(document.body);    
+    // FastClick.attach(document.body);    
     $rootScope.center  = {
       lat: 16.0439,
       lng: 108.199
@@ -369,12 +369,12 @@
         //"ngayDangTinGREATER" : "19810101",
         "viewport" : {
             "northeast": {
-                "lat": 21.055138,
-                "lon": 105.857493
+                "lat": 21.0594115,
+                "lon": 105.8134889
             },
             "southwest": {
-                "lat": 21.0166219,
-                "lon": 105.801771
+                "lat": 21.0009685,
+                "lon": 105.7680415
             }
         },
         // "viewport" : {

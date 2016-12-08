@@ -252,11 +252,11 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
 
                 }
                 vm.userLoggedIn = function(){                   
-                    let saveSearches = $rootScope.user.saveSearch;
+                    var saveSearches = $rootScope.user.saveSearch;
                     if(saveSearches ){
                         $scope.saveSearchCount = saveSearches.length;
                         for (var i = saveSearches.length - 1; i >= 0; i--) {                              
-                            let des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
+                            var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
                             if(des && des.length>20)
                                 des = des.substring(0,20) + "...";                            
                             vm.favoriteSearchSource.splice(1,0,{

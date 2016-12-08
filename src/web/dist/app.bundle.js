@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "20a0cca1c3dac58f954d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fe1ec2220a4e7a11637b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1260,7 +1260,7 @@
 	    }).run(['socket', '$timeout', 'jwtHelper', '$rootScope', '$localStorage', '$cookieStore', '$http', '$compile', 'HouseService', function (socket, $timeout, jwtHelper, $rootScope, $localStorage, $cookieStore, $http, $compile, HouseService) {
 	        $rootScope.globals = $cookieStore.get('globals') || {};
 	        //$rootScope.center = "Hanoi Vietnam";
-	        FastClick.attach(document.body);
+	        // FastClick.attach(document.body);   
 	        $rootScope.center = {
 	            lat: 16.0439,
 	            lng: 108.199
@@ -1349,12 +1349,12 @@
 	            //"ngayDangTinGREATER" : "19810101",
 	            "viewport": {
 	                "northeast": {
-	                    "lat": 21.055138,
-	                    "lon": 105.857493
+	                    "lat": 21.0594115,
+	                    "lon": 105.8134889
 	                },
 	                "southwest": {
-	                    "lat": 21.0166219,
-	                    "lon": 105.801771
+	                    "lat": 21.0009685,
+	                    "lon": 105.7680415
 	                }
 	            },
 	            // "viewport" : {
@@ -21578,6 +21578,9 @@
 	      },
 	      markReadMessage: function markReadMessage(data) {
 	        return $http.post("/api/markReadMessage", data);
+	      },
+	      getGogleDiaChinhByLatLon: function getGogleDiaChinhByLatLon(data) {
+	        return $http.post("/api/place/getGogleDiaChinhByLatLon", data);
 	      }
 
 	    };
@@ -22559,6 +22562,9 @@
 								if (item.data.length > 0) vm.boSuuTap.push(item);
 							});
 							vm.doneSearch = true;
+							$timeout(function () {
+								$('body').scrollTop(0);
+							}, 0);
 						});
 					}, function (error) {
 						console.log(error);
@@ -22572,6 +22578,9 @@
 							if (item.data.length > 0) vm.boSuuTap.push(item);
 						});
 						vm.doneSearch = true;
+						$timeout(function () {
+							$('body').scrollTop(0);
+						}, 0);
 					});
 				}
 			};
@@ -22803,6 +22812,8 @@
 	                $scope.center = "[14.058324,108.277199]";
 	                */
 	                // eliminate some file not exist in payload
+	                $scope.center = "[21.03019,105.7907652]";
+	                vm.viewport = $rootScope.searchData.viewport;
 	                if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
 	                if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
 	                if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
@@ -23463,20 +23474,21 @@
 	                        var dup = false;
 	                        for (var j = 0; j < $scope.markers.length; j++) {
 	                            var marker = $scope.markers[j];
-	                            if (marker.coords.latitude == res.data.list[i].map.marker.latitude && marker.coords.longitude == res.data.list[i].map.marker.longitude) {
-	                                marker.adsList.push(ads);
-	                                marker.count = marker.count + 1;
-	                                marker.class = "reland-marker marker-include";
-	                                dup = true;
-	                                if (!ads.gia || ads.gia < 0) {
-	                                    break;
-	                                }
-	                                if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
-	                                    marker.gia = ads.gia;
-	                                    marker.content = ads.giaFmt;
-	                                }
+	                            // if(marker.coords.latitude==res.data.list[i].map.marker.latitude
+	                            //    && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+	                            marker.adsList.push(ads);
+	                            marker.count = marker.count + 1;
+	                            marker.class = "reland-marker marker-include";
+	                            dup = true;
+	                            if (!ads.gia || ads.gia < 0) {
 	                                break;
 	                            }
+	                            if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
+	                                marker.gia = ads.gia;
+	                                marker.content = ads.giaFmt;
+	                            }
+	                            break;
+	                            // }
 	                        }
 	                        if (dup == false) {
 	                            var m = res.data.list[i].map.marker;
@@ -30859,6 +30871,7 @@
 			vm.getGeoCodePostGet = function (lat, lon, callback) {
 				console.log($localStorage.relandToken);
 				var url = "https://maps.googleapis.com/maps/api/geocode/json?" + "key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" + "&latlng=" + lat + ',' + lon;
+				// $http.get(url, {headers: {'Authorization': 'Bearer ' + 'AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A','Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*','Access-Control-Allow-Headers': '*'}}).then(function(res){
 				$http.post(url).then(function (res) {
 					console.log(res);
 					callback(res);
@@ -30868,21 +30881,33 @@
 
 			//get place in danh muc dia chinh
 			//dung voi fetch
+			/*
+	  vm.getDiaChinhGoogle = function(lat, lon){
+	  	vm.getGeoCode(lat, lon, function(res){
+	  		if(res.results){
+	  			vm.googlePlaces = res.results;
+	  			var place = vm.googlePlaces[0];
+	  			vm.autoCompleteText = place.formatted_address;
+	  		}
+	  	})
+	  }*/
+
 			vm.getDiaChinhGoogle = function (lat, lon) {
-				vm.getGeoCode(lat, lon, function (res) {
-					if (res.results) {
-						vm.googlePlaces = res.results;
-						var place = vm.googlePlaces[0];
-						vm.autoCompleteText = place.formatted_address;
+				console.log("------------------test getDiaChinh post,fetch----------------");
+				HouseService.getGogleDiaChinhByLatLon({ lat: lat, lon: lon }).then(function (res) {
+					console.log("-----------------getGogleDiaChinhByLatLon: " + res);
+					if (res.status == 200 && res.data.status == 0) {
+						if (res.data.place && res.data.place.length > 0) vm.autoCompleteText = res.data.place[0].formatted_address;
 					}
 				});
 			};
 
 			vm.getDiaChinhInDb = function (lat, lon, isInit) {
 				if (!vm.googlePlaces || vm.googlePlaces && vm.googlePlaces.length == 0) {
-					vm.getGeoCode(lat, lon, function (res) {
-						if (res.results) {
-							vm.googlePlaces = res.results;
+					//vm.getGeoCode(lat, lon, function (res) {
+					HouseService.getGogleDiaChinhByLatLon({ lat: lat, lon: lon }).then(function (res) {
+						if (res.data.place) {
+							vm.googlePlaces = res.data.place;
 							var place = vm.googlePlaces[0];
 							vm.autoCompleteText = place.formatted_address;
 						}

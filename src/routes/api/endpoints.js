@@ -1031,6 +1031,27 @@ internals.endpoints = [
       }
     }
   },
+  {
+    method: 'POST',
+    path: '/api/place/getGogleDiaChinhByLatLon',
+    handler: placeHandlers.getGogleDiaChinhByLatLon,
+    config: {
+      description: 'Tra ve ten dia chinh cua google',
+      tags: ['api'],
+      validate: {
+        payload: {
+          lat: Joi.number(),
+          lon: Joi.number()
+        }
+      },
+      response: {
+        schema: Joi.object({
+          place: Joi.array().description("all level off dia chinh"),
+          status: Joi.number().description("mô tả trạng thái 1/0"),
+        })
+      }
+    }
+  },
 
   {
     method: 'POST',

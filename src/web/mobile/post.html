@@ -364,7 +364,7 @@
                 <div class="pdall15">
                     <input type="text" class="form-control" id="searchAddPost" ng-change="mpc.autoCompleteChange();" ng-model="mpc.autoCompleteText" ng-click="mpc.showFavorite($event)" ng-keypress="mpc.keyPress($event)" >
                 </div>
-                <ng-map center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" draggable="true" class="maps">
+                <ng-map gesture-handling="greedy" center="[{{mpc.location.lat}},{{mpc.location.lon}}]" lazy-init="true" id="fullMapPost" draggable="true" class="maps">
                     <!--custom-marker position="[{{mpc.location.lat}},{{mpc.location.lon}}]">
                         <div class = "marker">
                             Vị trí của bạn: {{mpc.location.lat}},{{mpc.location.lon}}

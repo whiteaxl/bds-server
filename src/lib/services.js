@@ -58,6 +58,27 @@ services.getPlaceDetail = function(placeId, callback, callbackError) {
     })
 };
 
+services.getFullGeocoding = function(lat, lon, callback, callbackError) {
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
+        "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +
+        "&latlng=" + lat + ',' + lon;
+
+    console.log(url);
+
+    request({url: url,json: true
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            if (body.results)
+                callback(body.results);
+            else
+                callback(null);
+        } else {
+            console.log("Error when getFullGeocoding" + error);
+            callbackError(error);
+        }
+    })
+};
+
 services.getGeocoding = function(lat, lon, callback, callbackError) {
     var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
       "key=AIzaSyAnioOM0qiWwUoCz8hNS8B2YuzKiYYaDdU" +

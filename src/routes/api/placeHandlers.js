@@ -5,6 +5,7 @@ var utils = require('../../lib/utils');
 var log = require('../../lib/logUtil');
 var constant = require('../../lib/constant');
 var placeUtil = require('../../lib/placeUtil');
+var services = require("../../lib/services");
 
 var cfg = require('../../config');
 var request = require("request");
@@ -201,9 +202,37 @@ internals._getDiaChinhFromCache = function(codeDiaChinh) {
   }
 
   return ret;
-}
+};
 
+internals.getGogleDiaChinhByLatLon = function(req,reply){
+  var payload = req.payload;
+  log.info("getPlaceByID, payload=", payload);
 
+  if (!payload.lat || !payload.lon) {
+    reply({
+      place : undefined,
+      status: "1"
+    });
+
+    return;
+  }
+  let center = {};
+  services.getFullGeocoding(payload.lat, payload.lon,
+      (res) => {
+        reply({
+          place : res,
+          status: "0"
+        });
+      },
+      (err) => {
+        center.formatted_address = "";
+        reply({
+          place : undefined,
+          status: "1"
+        });
+      }
+  );
+};
 
 internals.getPlaceByID = function(req,reply){
   var payload = req.payload;

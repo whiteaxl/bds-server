@@ -412,6 +412,7 @@
 			var url = "https://maps.googleapis.com/maps/api/geocode/json?" +
 				"key=AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A" +
 				"&latlng=" + lat + ',' + lon;
+			// $http.get(url, {headers: {'Authorization': 'Bearer ' + 'AIzaSyDhk9mOXjM79P7ceOceYSCxQO-o9YXCR3A','Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*','Access-Control-Allow-Headers': '*'}}).then(function(res){
 			$http.post(url).then(function(res){
 				console.log(res);
 				callback(res);
@@ -421,6 +422,7 @@
 
 		//get place in danh muc dia chinh
 		//dung voi fetch
+		/*
 		vm.getDiaChinhGoogle = function(lat, lon){
 			vm.getGeoCode(lat, lon, function(res){
 				if(res.results){
@@ -429,13 +431,25 @@
 					vm.autoCompleteText = place.formatted_address;
 				}
 			})
+		}*/
+
+		vm.getDiaChinhGoogle = function(lat, lon){
+			console.log("------------------test getDiaChinh post,fetch----------------");
+			HouseService.getGogleDiaChinhByLatLon({lat: lat, lon: lon}).then(function(res) {
+				console.log("-----------------getGogleDiaChinhByLatLon: " + res )
+				if(res.status==200 && res.data.status==0){
+					if(res.data.place && res.data.place.length>0)
+						vm.autoCompleteText = res.data.place[0].formatted_address;
+				}
+			});
 		}
 
 		vm.getDiaChinhInDb = function(lat, lon, isInit){
 			if(!vm.googlePlaces || (vm.googlePlaces && vm.googlePlaces.length == 0)) {
-				vm.getGeoCode(lat, lon, function (res) {
-					if (res.results) {
-						vm.googlePlaces = res.results;
+				//vm.getGeoCode(lat, lon, function (res) {
+				HouseService.getGogleDiaChinhByLatLon({lat: lat, lon: lon}).then(function(res) {
+					if (res.data.place) {
+						vm.googlePlaces = res.data.place;
 						var place = vm.googlePlaces[0];
 						vm.autoCompleteText = place.formatted_address;
 					}
