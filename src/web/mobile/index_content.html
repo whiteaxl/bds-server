@@ -17,7 +17,7 @@
         	<li ng-repeat="ads in bst.data" ng-click="mhc.goDetail(ads)">
             	<a href="" class="heart" ng-click="mhc.likeAds($event,ads.adsID)"><i ng-class="$root.alreadyLike(ads.adsID) ==  true?'icon-heart active':'icon-heart'"></i></a>
             	<a href="#">
-                	<span class="img" style="background-image:url({{(ads.image.cover?ads.image.cover:'')}})"></span>
+                	<span class="img" style="background-image:url({{ads.cover}})"></span>
                     <span class="des bgOpa">
                     	<span class="price">{{ads.giaFmt}}</span>
                         <span class="name">{{ads.khuVuc | limitTo: 30}}</span>
