@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4597e0946dd47b876aab"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5e2a80766368156c1d2d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22641,7 +22641,13 @@
 			};
 
 			vm.init = function () {
-				if (!$rootScope.fromDetail) vm.getLocation();else $rootScope.fromDetail = false;
+				if (!$rootScope.fromDetail) {
+					vm.getLocation();
+				} else {
+					$rootScope.fromDetail = false;
+					vm.doneSearch = true;
+				}
+
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
@@ -23931,6 +23937,7 @@
 						vm.ads.chiTietThuGon = vm.ads.chiTiet.substring(0, 300);
 					}
 				}
+				vm.doneSearch = true;
 				vm.ads.place.diaChinh.tinhKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.tinh);
 				vm.ads.place.diaChinh.huyenKhongDau = window.RewayUtil.locDau(vm.ads.place.diaChinh.huyen);
 				vm.placeSearchText = vm.ads.place.diaChinh.huyen + "," + vm.ads.place.diaChinh.tinh;

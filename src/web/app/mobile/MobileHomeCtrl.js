@@ -141,10 +141,13 @@
 		
 
 		vm.init = function(){
-			if(!$rootScope.fromDetail)
+			if(!$rootScope.fromDetail){
 				vm.getLocation();
-			else
+			} else{
 				$rootScope.fromDetail = false;
+				vm.doneSearch = true;
+			}
+
 			if($rootScope.currentLocation){
 				if($rootScope.lastSearch){
 					var queryNearBy = {};
