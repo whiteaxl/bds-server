@@ -33,8 +33,8 @@
                         <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="areaBox spinner spinner-hide">
 	                    	<div class="mb10 ovh">
-                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacFrom" class="form-control" /></div>
-                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacTo" class="form-control" /></div>
+                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacFrom" ng-change="mf.changeDienTichFrom()" class="form-control" placeholder="Từ"/></div>
+                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.dienTichKhacTo" ng-change="mf.changeDienTichTo()" class="form-control" placeholder="Đến"/></div>
                             </div>
 	                    	<select id="area" class="drum">
 	                    		<option ng-repeat="area in mf.areas track by $index" value="{{area.value}}">{{area.lable}}</option>	
@@ -45,8 +45,8 @@
 	                	<a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')" >Mức giá<span><label id="prices_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div id="price_0" ng-show="searchData.loaiTin==0 || mf.initialized==false" class="priceBox spinner spinner-hide">
 	                    	<div class="mb10 ovh">
-                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacFrom" class="form-control" /></div>
-                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacTo" class="form-control" /></div>
+                            	<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacFrom" ng-change="mf.changeGiaKhacFrom()"  class="form-control" placeholder="Từ"/></div>
+                                <div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacTo" ng-change="mf.changeGiaKhacTo()"  class="form-control" placeholder="Đến"/> tỷ</div>
                             </div>
 	                        <select class="drum" id="prices" >	                        	
 	                        	<option ng-repeat="price in mf.sellPrices track by $index" value="{{price.value}}">{{price.lable}}</option>	
@@ -54,7 +54,7 @@
 	                    </div>
 	                    <div id="price_1" ng-show="searchData.loaiTin==1 || mf.initialized==false" class="priceBox spinner spinner-hide">
 	                        <select class="drum" id="prices">
-	                        	<option ng-repeat="price in mf.rentPrices track by $index" value="{{price.value}}">{{price.lable}}</option>	
+	                        	<option ng-repeat="price in mf.rentPrices track by $index" value="{{price.value}}">{{price.lable}}</option>
                             </select>
 	                    </div>
 	                </div>
@@ -124,7 +124,7 @@
 	                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Ngày đăng <span><label id="datepost_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 							<div class="dateBox spinner spinner-hide">
 								<div class="mb10 ovh">
-									<div class="col-sm-12 text-center"><input type="text" ng-model="ngayDangTinInput" ng-change="mf.ngayDangTinInputChange()" class="form-control" /> ngày</div>
+									<div class="col-sm-12 text-center"><input type="number" ng-model="ngayDangTinInput" ng-change="mf.ngayDangTinInputChange()" class="form-control" /> ngày</div>
 								</div>
 								<select id="datepost" ng-model="searchData.ngayDangTinGREATER"class="drum">
 									<option ng-repeat="ndt in mf.ngayDangTinList track by $index" value="{{ndt.value}}">{{ndt.lable}}</option>
