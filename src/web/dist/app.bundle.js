@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5e2a80766368156c1d2d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "10b185981b53b00f3fda"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -21682,7 +21682,7 @@
 	          if (item.location == true || item.lastSearchSeparator == true) {
 	            return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo(ul);
 	          } else {
-	            return $("<li class='ui-menu-item'>").append('<i class="' + item.class + '"></i>' + item.description + (item.subDescription ? '<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>' : '') + '</li>').appendTo(ul);
+	            return $("<li class='ui-menu-item'>").append(item.description + (item.subDescription ? '<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>' : '') + '</li>').appendTo(ul);
 	          }
 	        };
 	        // .autocomplete( "instance" )._renderMenu = function( ul, items ) {
@@ -32192,6 +32192,7 @@
 	            vm.initialized = false;
 	            vm.keepViewport = true;
 	            vm.stateName = $state.current.name;
+	            vm.act = $rootScope.act;
 	            // $scope.searchData = {};
 	            // //Object.assign($scope.searchData,$rootScope.searchData);
 	            // _.assign($scope.searchData,$rootScope.searchData);
@@ -32407,6 +32408,19 @@
 	                }
 	            };
 
+	            vm.ngayDangTinInputChange = function () {
+	                if (parseInt($scope.ngayDangTinInput) && parseInt($scope.ngayDangTinInput) >= 0) {
+	                    var ngayDang = parseInt($scope.ngayDangTinInput);
+	                    if (ngayDang == 0) {
+	                        $("#datepost_value").html("Bất kỳ");
+	                        $scope.searchData.ngayDangTinGREATER = "19810101";
+	                    } else {
+	                        $scope.searchData.ngayDangTinGREATER = Date.today().add(-parseInt($scope.ngayDangTinInput)).days().toString('yyyyMMdd');
+	                        $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
+	                    }
+	                }
+	            };
+
 	            vm.gotoSearchPage = function (event) {
 	                //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
 	                // if(!vm.place)
@@ -32461,6 +32475,9 @@
 	                if (item.lastSearchSeparator == true) {
 	                    return;
 	                }
+	                $(".close-search").removeAttr("style");
+	                $(".input-fr").removeAttr("style");
+
 	                $rootScope.act = item.description;
 	                vm.item = item;
 	                if (vm.item.placeId) $rootScope.searchData.placeId = vm.item.placeId;
@@ -32559,7 +32576,7 @@
 	            };
 
 	            vm.exitAutoComplete = function (event) {
-	                vm.act = '';
+	                vm.act = $rootScope.act;
 	                if ($(event.target).hasClass('iconCancel')) {
 	                    // $(".input-fr").removeAttr("style");
 	                    $('.iconCancel').hide();
@@ -32574,6 +32591,7 @@
 	            };
 	            vm.showFavorite = function (event) {
 	                console.log("------------------showFavorite-Filter------------------");
+	                vm.act = '';
 	                var $ww = $(window).width();
 	                $(".input-fr").css("width", $ww - 78);
 	                $('.iconCancel').hide();
@@ -32723,6 +32741,19 @@
 	                            $scope.searchData.dienTichBETWEEN = array;
 	                        } else if (selected.id == "datepost") {
 	                            $scope.searchData.ngayDangTinGREATER = selected.value;
+	                            var soNgayDang = $(selected).find(":selected").html();
+	                            if (soNgayDang.trim() == "Bất kỳ") {
+	                                $timeout(function () {
+	                                    $scope.ngayDangTinInput = 0;
+	                                }, 0);
+	                            } else {
+	                                if (soNgayDang.indexOf(" ") > -1) {
+	                                    soNgayDang = soNgayDang.substring(0, soNgayDang.indexOf(" "));
+	                                }
+	                                $timeout(function () {
+	                                    $scope.ngayDangTinInput = soNgayDang;
+	                                }, 0);
+	                            }
 	                        }
 	                    }
 	                });

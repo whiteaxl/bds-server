@@ -22,7 +22,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.pageSize = 25;
                 vm.initialized = false;
                 vm.keepViewport = true;
-                vm.stateName = $state.current.name;  
+                vm.stateName = $state.current.name;
+                vm.act = $rootScope.act;
                 // $scope.searchData = {};
                 // //Object.assign($scope.searchData,$rootScope.searchData);
                 // _.assign($scope.searchData,$rootScope.searchData);
@@ -287,6 +288,19 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         me.find("i").addClass("iconDownOpen").removeClass("iconUpOpen");
                     }
                 }
+
+                vm.ngayDangTinInputChange = function () {
+                    if(parseInt($scope.ngayDangTinInput) && (parseInt($scope.ngayDangTinInput) >=0)){
+                        var ngayDang=parseInt($scope.ngayDangTinInput);
+                        if(ngayDang == 0){
+                            $("#datepost_value").html("Bất kỳ");
+                            $scope.searchData.ngayDangTinGREATER = "19810101";
+                        } else{
+                            $scope.searchData.ngayDangTinGREATER = Date.today().add(-parseInt($scope.ngayDangTinInput)).days().toString('yyyyMMdd')
+                            $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
+                        }
+                    }
+                }
                 
                 vm.gotoSearchPage = function(event){
                     //$state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});
@@ -347,6 +361,9 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     if(item.lastSearchSeparator==true){
                         return;
                     }
+                    $(".close-search").removeAttr("style");
+                    $(".input-fr").removeAttr("style");
+
                     $rootScope.act = item.description;
                     vm.item = item;
                     if(vm.item.placeId)
@@ -403,12 +420,12 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     var options = select[0].options;
                     if(value.indexOf("[0,9999999")>-1){
                          select.drum('setIndex', 0); 
-                         $("#"+select.attr("id") + "_value").html(options[0].label);   
+                         $("#"+select.attr("id") + "_value").html(options[0].label);
                     }else{
                         for(var i =0;i<options.length;i++){
                             if(options[i].value==value){
                                 select.drum('setIndex', i); 
-                                $("#"+select.attr("id") + "_value").html(options[i].label);                                
+                                $("#"+select.attr("id") + "_value").html(options[i].label);
                                 break;
                             }
                         }
@@ -455,7 +472,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
                 
                 vm.exitAutoComplete =function(event){
-                    vm.act = '';
+                    vm.act = $rootScope.act;
                     if($(event.target).hasClass('iconCancel')){                        
                         // $(".input-fr").removeAttr("style");
                         $('.iconCancel').hide();
@@ -471,6 +488,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
                 vm.showFavorite = function(event){
                     console.log("------------------showFavorite-Filter------------------");
+                    vm.act='';
                     var $ww = $(window).width();
                     $(".input-fr").css("width", $ww-78);
                     $('.iconCancel').hide();
@@ -629,6 +647,19 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                                 $scope.searchData.dienTichBETWEEN = array;
                             }else if(selected.id=="datepost"){
                                 $scope.searchData.ngayDangTinGREATER = selected.value;
+                                var soNgayDang = $(selected).find(":selected").html();
+                                if(soNgayDang.trim()=="Bất kỳ"){
+                                    $timeout(function () {
+                                        $scope.ngayDangTinInput =  0;
+                                    },0)
+                                } else{
+                                    if(soNgayDang.indexOf(" ") > -1){
+                                        soNgayDang=soNgayDang.substring(0,soNgayDang.indexOf(" "));
+                                    }
+                                    $timeout(function () {
+                                        $scope.ngayDangTinInput =  soNgayDang;
+                                    },0)
+                                }
                             }
                         }
                     });

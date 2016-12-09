@@ -5,10 +5,11 @@
 	    </ng-map>   
 
 	</div>
+	<div id="loadingSearchDiv" class="loading" style="display:none"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
 	<form>
 		<div class="search-fr">
 	    	<i class="iconSearch"></i>
-	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="{{$root.act}}" />	
+	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>
@@ -121,11 +122,14 @@
 	                    </div>
 	                    <div class="date-box collapse-box">
 	                        <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Ngày đăng <span><label id="datepost_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
-	                        <div class="dateBox spinner spinner-hide">
-	                            <select id="datepost" ng-model="searchData.ngayDangTinGREATER" class="drum">
-	                            	<option ng-repeat="ndt in mf.ngayDangTinList track by $index" value="{{ndt.value}}">{{ndt.lable}}</option>
-	                            </select>
-	                        </div>
+							<div class="dateBox spinner spinner-hide">
+								<div class="mb10 ovh">
+									<div class="col-sm-12 text-center"><input type="text" ng-model="ngayDangTinInput" ng-change="mf.ngayDangTinInputChange()" class="form-control" /> ngày</div>
+								</div>
+								<select id="datepost" ng-model="searchData.ngayDangTinGREATER"class="drum">
+									<option ng-repeat="ndt in mf.ngayDangTinList track by $index" value="{{ndt.value}}">{{ndt.lable}}</option>
+								</select>
+							</div>
 	                    </div>
 	                    
 	                </div>

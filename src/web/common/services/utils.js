@@ -93,7 +93,7 @@
             return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo( ul );
           }else {
             return $( "<li class='ui-menu-item'>")
-            .append('<i class="' + item.class + '"></i>' + item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
+            .append(item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
             .appendTo(ul);
           }
         };
