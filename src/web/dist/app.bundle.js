@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f6b24c370dcb3379dee3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7f18bd5bda5013832419"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32409,15 +32409,13 @@
 	            };
 
 	            vm.ngayDangTinInputChange = function () {
-	                if (parseInt($scope.ngayDangTinInput) && parseInt($scope.ngayDangTinInput) >= 0) {
+	                if (!$scope.ngayDangTinInput) {
+	                    $("#datepost_value").html("Bất kỳ");
+	                    $scope.searchData.ngayDangTinGREATER = "19810101";
+	                } else {
 	                    var ngayDang = parseInt($scope.ngayDangTinInput);
-	                    if (ngayDang == 0) {
-	                        $("#datepost_value").html("Bất kỳ");
-	                        $scope.searchData.ngayDangTinGREATER = "19810101";
-	                    } else {
-	                        $scope.searchData.ngayDangTinGREATER = Date.today().add(-parseInt($scope.ngayDangTinInput)).days().toString('yyyyMMdd');
-	                        $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
-	                    }
+	                    $scope.searchData.ngayDangTinGREATER = Date.today().add(-ngayDang).days().toString('yyyyMMdd');
+	                    $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
 	                }
 	            };
 
@@ -32517,14 +32515,14 @@
 	                if ($scope.searchData.dienTichKhacFrom || $scope.searchData.dienTichKhacTo) {
 	                    $scope.searchData.dienTichBETWEEN[0] = 0 || $scope.searchData.dienTichKhacFrom;
 	                    $scope.searchData.dienTichBETWEEN[1] = $scope.searchData.dienTichKhacTo || 9999999999999999;
-	                    $scope.searchData.dienTichKhacFrom = undefined;
-	                    $scope.searchData.dienTichKhacTo = undefined;
+	                    // $scope.searchData.dienTichKhacFrom = undefined;
+	                    // $scope.searchData.dienTichKhacTo = undefined;
 	                }
 	                if ($scope.searchData.giaKhacFrom || $scope.searchData.giaKhacTo) {
-	                    $scope.searchData.giaBETWEEN[0] = $scope.searchData.giaKhacFrom || 0;
-	                    $scope.searchData.giaBETWEEN[1] = $scope.searchData.giaKhacTo || 9999999999999999;
-	                    $scope.searchData.giaKhacFrom = undefined;
-	                    $scope.searchData.giaKhacTo = undefined;
+	                    $scope.searchData.giaBETWEEN[0] = $scope.searchData.giaKhacFrom * 1000 || 0;
+	                    $scope.searchData.giaBETWEEN[1] = $scope.searchData.giaKhacTo * 1000 || 9999999999999999;
+	                    // $scope.searchData.giaKhacFrom = undefined;
+	                    // $scope.searchData.giaKhacTo = undefined;
 	                }
 	                if ($scope.searchData.ngayDangTinGREATER) $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
 	                $scope.searchData.polygon = undefined;
@@ -32860,13 +32858,52 @@
 	                                    soNgayDang = soNgayDang.substring(0, soNgayDang.indexOf(" "));
 	                                }
 	                                $timeout(function () {
-	                                    $scope.ngayDangTinInput = soNgayDang;
+	                                    $scope.ngayDangTinInput = parseInt(soNgayDang);
 	                                }, 0);
 	                            }
 	                        }
 	                    }
 	                });
 	                vm.updateDrums();
+
+	                if ($scope.searchData.ngayDangTinGREATER) {
+	                    var year = $scope.searchData.ngayDangTinGREATER.substring(0, 4);
+	                    var month = $scope.searchData.ngayDangTinGREATER.substring(4, 6);
+	                    var day = $scope.searchData.ngayDangTinGREATER.substring(6, 8);
+
+	                    var dateDangTin = new Date(year, month - 1, day);
+	                    var currentDate = new Date();
+
+	                    var timeDiff = Math.abs(currentDate.getTime() - dateDangTin.getTime());
+	                    $scope.ngayDangTinInput = Math.round(timeDiff / (1000 * 3600 * 24));
+	                    $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
+	                }
+
+	                if ($scope.searchData.loaiNhaDat) {
+	                    if ($scope.searchData.loaiTin == 0) {
+	                        for (var i = 0; i < vm.loaiNhaDatBan.length; i++) {
+	                            if (vm.loaiNhaDatBan[i].value.trim() == $scope.searchData.loaiNhaDat[0].trim()) {
+	                                $(".type-box .collapse-title span label").html(vm.loaiNhaDatBan[i].lable.trim());
+	                                break;
+	                            }
+	                        }
+	                    } else if ($scope.searchData.loaiTin == 1) {
+	                        for (var i = 0; i < vm.loaiNhaDatThue.length; i++) {
+	                            if (vm.loaiNhaDatThue[i].value.trim() == $scope.searchData.loaiNhaDat[0].trim()) {
+	                                $(".type-box .collapse-title span label").html(vm.loaiNhaDatThue[i].lable.trim());
+	                                break;
+	                            }
+	                        }
+	                    }
+	                };
+	                if ($scope.searchData.huongNha) {
+	                    for (var i = 0; i < vm.huongNhaList.length; i++) {
+	                        if (vm.huongNhaList[i].value.trim() == $scope.searchData.huongNha[0].trim()) {
+	                            $(".trend-box .collapse-title span label").html(vm.huongNhaList[i].lable.trim());
+	                            break;
+	                        }
+	                    }
+	                };
 
 	                if ($rootScope.getSearchHistory()) {
 

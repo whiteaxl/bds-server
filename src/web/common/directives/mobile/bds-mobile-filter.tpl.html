@@ -53,6 +53,10 @@
                             </select>
 	                    </div>
 	                    <div id="price_1" ng-show="searchData.loaiTin==1 || mf.initialized==false" class="priceBox spinner spinner-hide">
+							<div class="mb10 ovh">
+								<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacFrom" ng-change="mf.changeGiaKhacFrom()"  class="form-control" placeholder="Từ"/></div>
+								<div class="col-sm-6 text-center"><input type="number" ng-model="searchData.giaKhacTo" ng-change="mf.changeGiaKhacTo()"  class="form-control" placeholder="Đến"/> tỷ</div>
+							</div>
 	                        <select class="drum" id="prices">
 	                        	<option ng-repeat="price in mf.rentPrices track by $index" value="{{price.value}}">{{price.lable}}</option>
                             </select>
@@ -151,7 +155,6 @@
 	            <!--END tabs-->
 	        </div>
 	    </div>
-	</script>
 	</form>
 	<div class="modal fade modal-choose" id="typeBox" tabindex="-1" role="dialog" aria-labelledby="typeBoxLabel">
     <div class="modal-dialog" role="document">
@@ -162,7 +165,7 @@
             </div>
             <div class="modal-body uln">
             	<ul class="type-list">
-                    <li ng-repeat="lnd in mf.loaiNhaDat track by $index"><a ng-click="mf.selectLoaiNhaDat(lnd);" class="{{searchData.loaiNhaDat==lnd.value?'active':''}}" href="#">{{lnd.lable}}</a></li>                    
+                    <li ng-repeat="lnd in mf.loaiNhaDat track by $index"><a ng-click="mf.selectLoaiNhaDat(lnd);" class="{{searchData.loaiNhaDat[0]==lnd.value?'active':''}}" href="#">{{lnd.lable}}</a></li>
                 </ul>
             </div>
         </div>
@@ -178,7 +181,7 @@
             </div>
             <div class="modal-body uln">
             	<ul class="type-list">
-                	<li ng-repeat="hn in mf.huongNhaList track by $index"><a ng-click="mf.selectHuongNha(hn);"  href="#" class="{{searchData.huongNha==hn.value?'active':''}}">{{hn.lable}}</a></li>                	
+                	<li ng-repeat="hn in mf.huongNhaList track by $index"><a ng-click="mf.selectHuongNha(hn);"  href="#" class="{{searchData.huongNha[0]==hn.value?'active':''}}">{{hn.lable}}</a></li>
                 </ul>
             </div>
         </div>
