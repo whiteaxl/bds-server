@@ -2,12 +2,12 @@
 <bds-mobile-filter search-data="$root.searchData"></bds-mobile-filter>
 <!-- <bds-mobile-header></bds-mobile-header> -->
 <bds-mobile-header act="$root.act"></bds-mobile-header>
-<div class="search-nodata" ng-if="(mhc.doneSearch==true) && (!mhc.boSuuTap || mhc.boSuuTap.length==0)">
+<div class="search-nodata" ng-if="(mhc.doneSearch==true) && (!$root.boSuuTap || $root.boSuuTap.length==0)">
     <strong>Không tìm thấy kết quả phù hợp nào!</strong>
     <p>Hãy nhấn vào biểu tượng “Tìm kiếm” bên trên <br> để thực hiện lệnh tìm kiếm khác</p>
 </div>
 <div class="wapper" ng-if="$root.currentLocation">
-	<div class="reland-box reland-box_1 uln" ng-repeat="bst in mhc.boSuuTap track by $index" reland-item="reland-box_1">
+	<div class="reland-box reland-box_1 uln" ng-repeat="bst in $root.boSuuTap track by $index" reland-item="reland-box_1">
         <div class="reland-title">
             <h4>Bộ sưu tập</h4>
             <h3>{{bst.title1}}</h3>
@@ -38,7 +38,7 @@
     <span>Hãy cho chúng tôi sử dụng vị trí hiện tại của bạn hoặc hãy thực hiện lệnh tìm kiếm để chúng tôi có thể gợi ý những nhà phù hợp với bạn.</span>
 </div>
 <div class="loadingBox text-center" ng-show="mhc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
-<div class="bottom clb ovh uln" style="display: none;" ng-show="mhc.boSuuTap && mhc.boSuuTap.length>0">
+<div class="bottom clb ovh uln" style="display: none;" ng-show="$root.boSuuTap && $root.boSuuTap.length>0">
 	<div class="app" >
     	<h5>Reland App (IOS/Android)</h5>
         <ul>

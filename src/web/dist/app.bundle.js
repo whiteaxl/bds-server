@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fe1ec2220a4e7a11637b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4597e0946dd47b876aab"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22536,10 +22536,10 @@
 			vm.getLocation = function () {
 				/*function fetchHomeData(){
 	   	var async = require("async");
-	   vm.boSuuTap = [];
+	   $rootScope.boSuuTap = [];
 	   var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
 	   	if(res.data.list && res.data.list.data.length>=5)
-	   		vm.boSuuTap.push(res.data.list);
+	   		$rootScope.boSuuTap.push(res.data.list);
 	   	//alert(res.data.length);
 	   });
 	    async.series(fl,
@@ -22557,9 +22557,9 @@
 						homeDataSearch.currentLocation = $rootScope.currentLocation;
 						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 							//alert(JSON.stringify(res));
-							vm.boSuuTap = [];
+							$rootScope.boSuuTap = [];
 							res.data.data.forEach(function (item, index) {
-								if (item.data.length > 0) vm.boSuuTap.push(item);
+								if (item.data.length > 0) $rootScope.boSuuTap.push(item);
 							});
 							vm.doneSearch = true;
 							$timeout(function () {
@@ -22573,9 +22573,9 @@
 					homeDataSearch.currentLocation = $rootScope.currentLocation;
 					HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 						//alert(JSON.stringify(res));
-						vm.boSuuTap = [];
+						$rootScope.boSuuTap = [];
 						res.data.data.forEach(function (item, index) {
-							if (item.data.length > 0) vm.boSuuTap.push(item);
+							if (item.data.length > 0) $rootScope.boSuuTap.push(item);
 						});
 						vm.doneSearch = true;
 						$timeout(function () {
@@ -22586,6 +22586,8 @@
 			};
 
 			vm.goDetail = function (ads) {
+				//add flag to don't research on home when comback from detail
+				$rootScope.fromDetail = true;
 				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
 			};
 
@@ -22623,14 +22625,14 @@
 			};
 			vm.showMore = function (index) {
 				var query = {};
-				//Object.assign( query,vm.boSuuTap[index].query);
-				_.assign(query, vm.boSuuTap[index].query);
+				//Object.assign( query,$rootScope.boSuuTap[index].query);
+				_.assign(query, $rootScope.boSuuTap[index].query);
 				query.limit = 20;
-				query.duAnID = vm.boSuuTap[index].query.duAnID;
+				query.duAnID = $rootScope.boSuuTap[index].query.duAnID;
 				var pid = query.place ? query.place.placeId || query.place.place_id : undefined;
 				// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
-				$rootScope.headerInfo.listMoreFirstTitle = vm.boSuuTap[index].title1;
-				$rootScope.headerInfo.listMoreSecondTitle = vm.boSuuTap[index].title2;
+				$rootScope.headerInfo.listMoreFirstTitle = $rootScope.boSuuTap[index].title1;
+				$rootScope.headerInfo.listMoreSecondTitle = $rootScope.boSuuTap[index].title2;
 
 				$state.go('mlistMore', { place: pid, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
 
@@ -22639,7 +22641,7 @@
 			};
 
 			vm.init = function () {
-				vm.getLocation();
+				if (!$rootScope.fromDetail) vm.getLocation();else $rootScope.fromDetail = false;
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
@@ -23474,21 +23476,20 @@
 	                        var dup = false;
 	                        for (var j = 0; j < $scope.markers.length; j++) {
 	                            var marker = $scope.markers[j];
-	                            // if(marker.coords.latitude==res.data.list[i].map.marker.latitude
-	                            //    && marker.coords.longitude == res.data.list[i].map.marker.longitude){
-	                            marker.adsList.push(ads);
-	                            marker.count = marker.count + 1;
-	                            marker.class = "reland-marker marker-include";
-	                            dup = true;
-	                            if (!ads.gia || ads.gia < 0) {
+	                            if (marker.coords.latitude == res.data.list[i].map.marker.latitude && marker.coords.longitude == res.data.list[i].map.marker.longitude) {
+	                                marker.adsList.push(ads);
+	                                marker.count = marker.count + 1;
+	                                marker.class = "reland-marker marker-include";
+	                                dup = true;
+	                                if (!ads.gia || ads.gia < 0) {
+	                                    break;
+	                                }
+	                                if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
+	                                    marker.gia = ads.gia;
+	                                    marker.content = ads.giaFmt;
+	                                }
 	                                break;
 	                            }
-	                            if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
-	                                marker.gia = ads.gia;
-	                                marker.content = ads.giaFmt;
-	                            }
-	                            break;
-	                            // }
 	                        }
 	                        if (dup == false) {
 	                            var m = res.data.list[i].map.marker;
@@ -32049,6 +32050,7 @@
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
 	            var vm = this;
 	            vm.gotoHomePage = function (event) {
+	                if ($rootScope.fromDetail) $rootScope.fromDetail = false;
 	                vm.hideMenuLeft();
 	                $state.go('mhome', {}, { location: true });
 	                $(".overlay").click();

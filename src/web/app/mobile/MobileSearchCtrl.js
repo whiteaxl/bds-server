@@ -845,8 +845,8 @@
                         var dup = false;                        
                         for(var j=0;j<$scope.markers.length;j++){
                             var marker = $scope.markers[j];
-                            // if(marker.coords.latitude==res.data.list[i].map.marker.latitude 
-                            //    && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+                            if(marker.coords.latitude==res.data.list[i].map.marker.latitude
+                               && marker.coords.longitude == res.data.list[i].map.marker.longitude){
                                 marker.adsList.push(ads);
                                 marker.count = marker.count + 1;
                                 marker.class = "reland-marker marker-include";
@@ -859,7 +859,7 @@
                                     marker.content = ads.giaFmt;
                                 }
                                 break;
-                            // }
+                            }
                         }                      
                         if(dup == false){
                             var m = res.data.list[i].map.marker;
