@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "248df8dd148c84e03db5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9e8ad9c9d8cf03e4c6b0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22536,10 +22536,10 @@
 			vm.getLocation = function () {
 				/*function fetchHomeData(){
 	   	var async = require("async");
-	   $rootScope.boSuuTap = [];
+	   vm.boSuuTap = [];
 	   var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
 	   	if(res.data.list && res.data.list.data.length>=5)
-	   		$rootScope.boSuuTap.push(res.data.list);
+	   		vm.boSuuTap.push(res.data.list);
 	   	//alert(res.data.length);
 	   });
 	    async.series(fl,
@@ -22557,9 +22557,9 @@
 						homeDataSearch.currentLocation = $rootScope.currentLocation;
 						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 							//alert(JSON.stringify(res));
-							$rootScope.boSuuTap = [];
+							vm.boSuuTap = [];
 							res.data.data.forEach(function (item, index) {
-								if (item.data.length > 0) $rootScope.boSuuTap.push(item);
+								if (item.data.length > 0) vm.boSuuTap.push(item);
 							});
 							vm.doneSearch = true;
 							$timeout(function () {
@@ -22573,9 +22573,9 @@
 					homeDataSearch.currentLocation = $rootScope.currentLocation;
 					HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 						//alert(JSON.stringify(res));
-						$rootScope.boSuuTap = [];
+						vm.boSuuTap = [];
 						res.data.data.forEach(function (item, index) {
-							if (item.data.length > 0) $rootScope.boSuuTap.push(item);
+							if (item.data.length > 0) vm.boSuuTap.push(item);
 						});
 						vm.doneSearch = true;
 						$timeout(function () {
@@ -22587,7 +22587,7 @@
 
 			vm.goDetail = function (ads) {
 				//add flag to don't research on home when comback from detail
-				$rootScope.fromDetail = true;
+				//$rootScope.fromDetail = true;
 				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
 			};
 
@@ -22625,14 +22625,14 @@
 			};
 			vm.showMore = function (index) {
 				var query = {};
-				//Object.assign( query,$rootScope.boSuuTap[index].query);
-				_.assign(query, $rootScope.boSuuTap[index].query);
+				//Object.assign( query,vm.boSuuTap[index].query);
+				_.assign(query, vm.boSuuTap[index].query);
 				query.limit = 20;
-				query.duAnID = $rootScope.boSuuTap[index].query.duAnID;
+				query.duAnID = vm.boSuuTap[index].query.duAnID;
 				var pid = query.place ? query.place.placeId || query.place.place_id : undefined;
 				// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
-				$rootScope.headerInfo.listMoreFirstTitle = $rootScope.boSuuTap[index].title1;
-				$rootScope.headerInfo.listMoreSecondTitle = $rootScope.boSuuTap[index].title2;
+				$rootScope.headerInfo.listMoreFirstTitle = vm.boSuuTap[index].title1;
+				$rootScope.headerInfo.listMoreSecondTitle = vm.boSuuTap[index].title2;
 
 				$state.go('mlistMore', { place: pid, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
 
@@ -22641,13 +22641,7 @@
 			};
 
 			vm.init = function () {
-				if (!$rootScope.fromDetail) {
-					vm.getLocation();
-				} else {
-					$rootScope.fromDetail = false;
-					vm.doneSearch = true;
-				}
-
+				vm.getLocation();
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
@@ -32057,7 +32051,6 @@
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
 	            var vm = this;
 	            vm.gotoHomePage = function (event) {
-	                if ($rootScope.fromDetail) $rootScope.fromDetail = false;
 	                vm.hideMenuLeft();
 	                $state.go('mhome', {}, { location: true });
 	                $(".overlay").click();
