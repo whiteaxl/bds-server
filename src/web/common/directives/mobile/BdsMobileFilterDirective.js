@@ -529,8 +529,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                               tinh: prediction.tinh,
                               huyen: prediction.huyen,
                               xa: prediction.xa,
-                              placeId: prediction.placeId,
-                              class: "iconLocation gray"
+                              placeId: prediction.placeId
+                              // class: "iconLocation gray"
                             }
                             );
                           } 
@@ -590,10 +590,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             var lastSearches = $rootScope.getSearchHistory();
                             if(lastSearches.length>0){
                                 console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-                                vm.favoriteSearchSource.push({
-                                    description: "Tìm kiếm gần đây",
-                                    lastSearchSeparator: true
-                                });
+                                // vm.favoriteSearchSource.push({
+                                //     description: "Tìm kiếm gần đây",
+                                //     lastSearchSeparator: true
+                                // });
                             }
                             var count = 0;
                             for (var i = lastSearches.length - 1; i >= 0; i--) {
@@ -817,10 +817,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         var lastSearches = $rootScope.getSearchHistory();
                         if(lastSearches.length>0){
                             console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-                            vm.favoriteSearchSource.push({
-                                description: "Tìm kiếm gần đây",
-                                lastSearchSeparator: true
-                            });
+                            // vm.favoriteSearchSource.push({
+                            //     description: "Tìm kiếm gần đây",
+                            //     lastSearchSeparator: true
+                            // });
                         }
                         var count = 0;
                         for (var i = lastSearches.length - 1; i >= 0; i--) {

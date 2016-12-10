@@ -88,13 +88,29 @@
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
             console.log("-----------------------------utils.autoComplete-------------------");
           ul.addClass('relandAuto');
-          ul.css("max-height","200 px !important;");
+          // ul.css("max-height","200 px !important;");
+          let firstLi = false;
+          if(ul.has('li').length==0){
+            firstLi = true;
+          }
           if(item.location == true || item.lastSearchSeparator == true){
-            return $('<li disabled class="ui-autocomplete-category">' + item.description + '</li>').appendTo( ul );
+            if(firstLi == true){
+              return $('<li disabled class="ui-autocomplete-category" style="border-top: 1px solid #e4e4e4;" >' + item.description + '</li>').appendTo( ul );
+            }else{
+              return $('<li disabled class="ui-autocomplete-category" >' + item.description + '</li>').appendTo( ul );  
+            }
+            
           }else {
-            return $( "<li class='ui-menu-item'>")
-            .append(item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
-            .appendTo(ul);
+            if(firstLi==true){
+              return $( "<li class='ui-menu-item' style='padding: 8px 0 8px 44px !important;margin-left: 0px !important;'>")
+              .append('<i class="' + item.class + '" style="left: -36px;"></i>' + item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
+              .appendTo(ul);               
+            }else{
+              return $( "<li class='ui-menu-item' style='padding: 8px 0 8px 0px !important;margin-left: 44px !important;'>")
+              .append('<i class="' + item.class + '" style="left: -36px;"></i>'  +  item.description + (item.subDescription?('<span class="ui-menu-item-wrapper">' + item.subDescription + '</span>'):'') + '</li>')
+              .appendTo(ul);  
+            }
+            
           }
         };
         // .autocomplete( "instance" )._renderMenu = function( ul, items ) {
