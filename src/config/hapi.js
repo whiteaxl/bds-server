@@ -37,7 +37,7 @@ internals.http = new Hapi.Server();
 // var http = new Hapi.Server();
 // // Setup the connection for the environment
 internals.http.connection({
-  port: process.env.PORT || 80,
+  port: process.env.PORT || 5000,
   address: process.env.IP || '127.0.0.1',
     routes: {
     cors: {
