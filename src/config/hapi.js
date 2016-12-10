@@ -31,8 +31,10 @@ var internals = {};
 
 // //The real Hapi server! 
 internals.server = new Hapi.Server();
+console.log("Done internals.server = new Hapi.Server()");
 
 internals.http = new Hapi.Server();
+console.log("Done internals.http = new Hapi.Server()");
 
 // var http = new Hapi.Server();
 // // Setup the connection for the environment
@@ -46,6 +48,8 @@ internals.http.connection({
   },
   labels: 'http'
 });
+console.log("Done internals.http.connection");
+
 
 internals.server.connection({
   port: 4432,
@@ -62,7 +66,7 @@ internals.server.connection({
   labels: 'https'
 });
 
-
+console.log("Done internals.server.connection");
 
 
 var validate = function (decoded, request, callback) {
@@ -100,6 +104,7 @@ internals.server.register(Plugins.get(), (err) => {
 
 });
 
+console.log("Done register plugins");
 
 // var redirect = function () {
 //     console.log(JSON.stringify(this));
@@ -114,7 +119,7 @@ internals.server.register(Plugins.get(), (err) => {
 Views.init(internals.server);
 // Views.init(internals.http);
 // set routes
-
+console.log("Done Views.init(internals.server)");
 
 const Url = require('url');
 
@@ -141,6 +146,7 @@ internals.http.route({
 
 Routes.init(internals.server);
 
+console.log("Done Routes.init(internals.server)");
 
 
 // internals.http.register(Plugins.get(), (err) => {

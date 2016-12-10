@@ -9,7 +9,8 @@
  *  Hapi is configured in this import
  */
 
-var HapiServers = require('./src/config/hapi');  
+var HapiServers = require('./src/config/hapi');
+console.log("Done require HapiServers");
 var https = HapiServers.server;
 var http = HapiServers.http;
 
@@ -20,6 +21,7 @@ require('babel-core/register')({
 var chatHandler = require('./src/lib/ChatHandler');
 chatHandler.init(https);
 
+console.log("Done chatHandler.init(https)");
 
 // var dbChangeHandler = require('./src/lib/dbChangeHandler');
 
@@ -130,9 +132,13 @@ https.start(function () {
 
   //console.log('Server is running: ' + HapiServer.info.uri);
 
-
+    console.log("Done https.start");
 
 });
 
-http.start();
+
+
+http.start(() => {
+    console.log("Done http.start");
+});
 
