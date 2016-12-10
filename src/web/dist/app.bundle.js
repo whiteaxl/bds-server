@@ -65,7 +65,11 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< HEAD
 /******/ 	var hotCurrentHash = "a607c9087cd1e47abe1c"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "9e8ad9c9d8cf03e4c6b0"; // eslint-disable-line no-unused-vars
+>>>>>>> 6271b46bd300bd1791d627fc493945e2447ee81e
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22549,10 +22553,10 @@
 			vm.getLocation = function () {
 				/*function fetchHomeData(){
 	   	var async = require("async");
-	   $rootScope.boSuuTap = [];
+	   vm.boSuuTap = [];
 	   var fl = window.RewayUtil.generateHomeSearchSeries(homeDataSearch.query,homeDataSearch.currentLocation,HouseService.findAdsSpatial,function(res){
 	   	if(res.data.list && res.data.list.data.length>=5)
-	   		$rootScope.boSuuTap.push(res.data.list);
+	   		vm.boSuuTap.push(res.data.list);
 	   	//alert(res.data.length);
 	   });
 	    async.series(fl,
@@ -22570,9 +22574,9 @@
 						homeDataSearch.currentLocation = $rootScope.currentLocation;
 						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 							//alert(JSON.stringify(res));
-							$rootScope.boSuuTap = [];
+							vm.boSuuTap = [];
 							res.data.data.forEach(function (item, index) {
-								if (item.data.length > 0) $rootScope.boSuuTap.push(item);
+								if (item.data.length > 0) vm.boSuuTap.push(item);
 							});
 							vm.doneSearch = true;
 							$timeout(function () {
@@ -22586,9 +22590,9 @@
 					homeDataSearch.currentLocation = $rootScope.currentLocation;
 					HouseService.homeDataForApp(homeDataSearch).then(function (res) {
 						//alert(JSON.stringify(res));
-						$rootScope.boSuuTap = [];
+						vm.boSuuTap = [];
 						res.data.data.forEach(function (item, index) {
-							if (item.data.length > 0) $rootScope.boSuuTap.push(item);
+							if (item.data.length > 0) vm.boSuuTap.push(item);
 						});
 						vm.doneSearch = true;
 						$timeout(function () {
@@ -22600,7 +22604,7 @@
 
 			vm.goDetail = function (ads) {
 				//add flag to don't research on home when comback from detail
-				$rootScope.fromDetail = true;
+				//$rootScope.fromDetail = true;
 				$state.go('mdetail', { "adsID": ads.adsID }, { location: true });
 			};
 
@@ -22638,14 +22642,14 @@
 			};
 			vm.showMore = function (index) {
 				var query = {};
-				//Object.assign( query,$rootScope.boSuuTap[index].query);
-				_.assign(query, $rootScope.boSuuTap[index].query);
+				//Object.assign( query,vm.boSuuTap[index].query);
+				_.assign(query, vm.boSuuTap[index].query);
 				query.limit = 20;
-				query.duAnID = $rootScope.boSuuTap[index].query.duAnID;
+				query.duAnID = vm.boSuuTap[index].query.duAnID;
 				var pid = query.place ? query.place.placeId || query.place.place_id : undefined;
 				// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
-				$rootScope.headerInfo.listMoreFirstTitle = $rootScope.boSuuTap[index].title1;
-				$rootScope.headerInfo.listMoreSecondTitle = $rootScope.boSuuTap[index].title2;
+				$rootScope.headerInfo.listMoreFirstTitle = vm.boSuuTap[index].title1;
+				$rootScope.headerInfo.listMoreSecondTitle = vm.boSuuTap[index].title2;
 
 				$state.go('mlistMore', { place: pid, loaiTin: query.loaiTin, loaiNhaDat: query.loaiNhaDat, viewMode: "list", query: query });
 
@@ -22654,13 +22658,7 @@
 			};
 
 			vm.init = function () {
-				if (!$rootScope.fromDetail) {
-					vm.getLocation();
-				} else {
-					$rootScope.fromDetail = false;
-					vm.doneSearch = true;
-				}
-
+				vm.getLocation();
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
 						var queryNearBy = {};
@@ -33805,7 +33803,6 @@
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService) {
 	            var vm = this;
 	            vm.gotoHomePage = function (event) {
-	                if ($rootScope.fromDetail) $rootScope.fromDetail = false;
 	                vm.hideMenuLeft();
 	                $state.go('mhome', {}, { location: true });
 	                $(".overlay").click();
@@ -34169,84 +34166,84 @@
 
 	            vm.changeDienTichFrom = function () {
 
-	                if (!$scope.searchData.dienTichKhacFrom) {
-	                    if (!$scope.searchData.dienTichKhacTo) {
+	                if (!$scope.dienTichKhacFrom) {
+	                    if (!$scope.dienTichKhacTo) {
 	                        $("#area_value").html("Bất kỳ");
 	                        $scope.searchData.dienTichBETWEEN = [0, 9999999999999];
 	                    } else {
-	                        $("#area_value").html("0 m² - " + $scope.searchData.dienTichKhacTo + " m²");
-	                        $scope.searchData.dienTichBETWEEN = [0, $scope.searchData.dienTichKhacTo];
+	                        $("#area_value").html("0 m² - " + $scope.dienTichKhacTo + " m²");
+	                        $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacTo];
 	                    }
 	                } else {
-	                    if ($scope.searchData.dienTichKhacTo) {
-	                        $("#area_value").html($scope.searchData.dienTichKhacFrom + " m² - Bất kỳ");
-	                        $scope.searchData.dienTichBETWEEN = [$scope.searchData.dienTichKhacFrom, 9999999999999];
+	                    if ($scope.dienTichKhacTo) {
+	                        $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ");
+	                        $scope.searchData.dienTichBETWEEN = [$scope.dienTichKhacFrom, 9999999999999];
 	                    } else {
-	                        $("#area_value").html($scope.searchData.dienTichKhacFrom + " m² - " + $scope.searchData.dienTichKhacTo + " m²");
-	                        $scope.searchData.dienTichBETWEEN = [$scope.searchData.dienTichKhacFrom, $scope.searchData.dienTichKhacTo];
+	                        $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
+	                        $scope.searchData.dienTichBETWEEN = [$scope.dienTichKhacFrom, $scope.dienTichKhacTo];
 	                    }
 	                }
 	            };
 
 	            vm.changeDienTichTo = function () {
 
-	                if (!$scope.searchData.dienTichKhacTo) {
-	                    if (!$scope.searchData.dienTichKhacFrom) {
+	                if (!$scope.dienTichKhacTo) {
+	                    if (!$scope.dienTichKhacFrom) {
 	                        $("#area_value").html("Bất kỳ");
 	                        $scope.searchData.dienTichBETWEEN = [0, 9999999999999];
 	                    } else {
-	                        $("#area_value").html($scope.searchData.dienTichKhacFrom + " m² - Bất kỳ");
-	                        $scope.searchData.dienTichBETWEEN = [$scope.searchData.dienTichKhacFrom, 9999999999999];
+	                        $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ");
+	                        $scope.searchData.dienTichBETWEEN = [$scope.dienTichKhacFrom, 9999999999999];
 	                    }
 	                } else {
-	                    if ($scope.searchData.dienTichKhacTo) {
-	                        $("#area_value").html("0 m² " + $scope.searchData.dienTichKhacTo + " m²");
-	                        $scope.searchData.dienTichBETWEEN = [0, $scope.searchData.dienTichKhacTo];
+	                    if ($scope.dienTichKhacTo) {
+	                        $("#area_value").html("0 m² " + $scope.dienTichKhacTo + " m²");
+	                        $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacTo];
 	                    } else {
-	                        $("#area_value").html($scope.searchData.dienTichKhacFrom + " m² - " + $scope.searchData.dienTichKhacTo + " m²");
-	                        $scope.searchData.dienTichBETWEEN = [$scope.searchData.dienTichKhacFrom, $scope.searchData.dienTichKhacTo];
+	                        $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
+	                        $scope.searchData.dienTichBETWEEN = [$scope.dienTichKhacFrom, $scope.dienTichKhacTo];
 	                    }
 	                }
 	            };
 
 	            vm.changeGiaKhacFrom = function () {
 
-	                if (!$scope.searchData.giaKhacFrom) {
-	                    if (!$scope.searchData.giaKhacTo) {
+	                if (!$scope.giaKhacFrom) {
+	                    if (!$scope.giaKhacTo) {
 	                        $("#prices_value").html("Bất kỳ");
 	                        $scope.searchData.giaBETWEEN = [0, 9999999999999];
 	                    } else {
-	                        $("#prices_value").html("0 triệu - " + $scope.searchData.giaKhacTo * 1000 + " triệu");
-	                        $scope.searchData.giaBETWEEN = [0, $scope.searchData.giaKhacTo * 1000];
+	                        $("#prices_value").html("0 triệu - " + $scope.giaKhacTo * 1000 + " triệu");
+	                        $scope.searchData.giaBETWEEN = [0, $scope.giaKhacTo * 1000];
 	                    }
 	                } else {
-	                    if ($scope.searchData.giaKhacTo) {
-	                        $("#prices_value").html($scope.searchData.giaKhacFrom * 1000 + " triệu - Bất kỳ");
-	                        $scope.searchData.giaBETWEEN = [$scope.searchData.giaKhacFrom * 1000, 9999999999999];
+	                    if ($scope.giaKhacTo) {
+	                        $("#prices_value").html($scope.giaKhacFrom * 1000 + " triệu - Bất kỳ");
+	                        $scope.searchData.giaBETWEEN = [$scope.giaKhacFrom * 1000, 9999999999999];
 	                    } else {
-	                        $("#prices_value").html($scope.searchData.giaKhacFrom * 1000 + " triệu - " + $scope.searchData.giaKhacTo * 1000 + " triệu");
-	                        $scope.searchData.giaBETWEEN = [$scope.searchData.giaKhacFrom * 1000, $scope.searchData.giaKhacTo * 1000];
+	                        $("#prices_value").html($scope.giaKhacFrom * 1000 + " triệu - " + $scope.giaKhacTo * 1000 + " triệu");
+	                        $scope.searchData.giaBETWEEN = [$scope.giaKhacFrom * 1000, $scope.giaKhacTo * 1000];
 	                    }
 	                }
 	            };
 
 	            vm.changeGiaKhacTo = function () {
 
-	                if (!$scope.searchData.giaKhacTo) {
-	                    if (!$scope.searchData.giaKhacFrom) {
+	                if (!$scope.giaKhacTo) {
+	                    if (!$scope.giaKhacFrom) {
 	                        $("#prices_value").html("Bất kỳ");
 	                        $scope.searchData.giaBETWEEN = [0, 9999999999999];
 	                    } else {
-	                        $("#prices_value").html($scope.searchData.giaKhacFrom * 1000 + " triệu - Bất kỳ");
-	                        $scope.searchData.giaBETWEEN = [$scope.searchData.giaKhacFrom * 1000, 9999999999999];
+	                        $("#prices_value").html($scope.giaKhacFrom * 1000 + " triệu - Bất kỳ");
+	                        $scope.searchData.giaBETWEEN = [$scope.giaKhacFrom * 1000, 9999999999999];
 	                    }
 	                } else {
-	                    if ($scope.searchData.giaKhacTo) {
-	                        $("#prices_value").html("0 triệu " + $scope.searchData.giaKhacTo * 1000 + " triệu");
-	                        $scope.searchData.giaBETWEEN = [0, $scope.searchData.giaKhacTo * 1000];
+	                    if ($scope.giaKhacTo) {
+	                        $("#prices_value").html("0 triệu " + $scope.giaKhacTo * 1000 + " triệu");
+	                        $scope.searchData.giaBETWEEN = [0, $scope.giaKhacTo * 1000];
 	                    } else {
-	                        $("#prices_value").html($scope.searchData.giaKhacFrom * 1000 + " triệu - " + $scope.searchData.giaKhacTo * 1000 + " triệu");
-	                        $scope.searchData.giaBETWEEN = [$scope.searchData.giaKhacFrom * 1000, $scope.searchData.giaKhacTo * 1000];
+	                        $("#prices_value").html($scope.giaKhacFrom * 1000 + " triệu - " + $scope.giaKhacTo * 1000 + " triệu");
+	                        $scope.searchData.giaBETWEEN = [$scope.giaKhacFrom * 1000, $scope.giaKhacTo * 1000];
 	                    }
 	                }
 	            };
@@ -34260,17 +34257,17 @@
 	                //     inherit: false,
 	                //     notify: true
 	                // });
-	                if ($scope.searchData.dienTichKhacFrom || $scope.searchData.dienTichKhacTo) {
-	                    $scope.searchData.dienTichBETWEEN[0] = 0 || $scope.searchData.dienTichKhacFrom;
-	                    $scope.searchData.dienTichBETWEEN[1] = $scope.searchData.dienTichKhacTo || 9999999999999999;
-	                    // $scope.searchData.dienTichKhacFrom = undefined;
-	                    // $scope.searchData.dienTichKhacTo = undefined;
+	                if ($scope.dienTichKhacFrom || $scope.dienTichKhacTo) {
+	                    $scope.searchData.dienTichBETWEEN[0] = 0 || $scope.dienTichKhacFrom;
+	                    $scope.searchData.dienTichBETWEEN[1] = $scope.dienTichKhacTo || 9999999999999999;
+	                    // $scope.dienTichKhacFrom = undefined;
+	                    // $scope.dienTichKhacTo = undefined;
 	                }
-	                if ($scope.searchData.giaKhacFrom || $scope.searchData.giaKhacTo) {
-	                    $scope.searchData.giaBETWEEN[0] = $scope.searchData.giaKhacFrom * 1000 || 0;
-	                    $scope.searchData.giaBETWEEN[1] = $scope.searchData.giaKhacTo * 1000 || 9999999999999999;
-	                    // $scope.searchData.giaKhacFrom = undefined;
-	                    // $scope.searchData.giaKhacTo = undefined;
+	                if ($scope.giaKhacFrom || $scope.giaKhacTo) {
+	                    $scope.searchData.giaBETWEEN[0] = $scope.giaKhacFrom * 1000 || 0;
+	                    $scope.searchData.giaBETWEEN[1] = $scope.giaKhacTo * 1000 || 9999999999999999;
+	                    // $scope.giaKhacFrom = undefined;
+	                    // $scope.giaKhacTo = undefined;
 	                }
 	                if ($scope.searchData.ngayDangTinGREATER) $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
 	                $scope.searchData.polygon = undefined;
@@ -34563,35 +34560,36 @@
 	                $("select.drum").drum({
 	                    onChange: function onChange(selected) {
 	                        //if (selected.value !=0)
-	                        var drumLable = $(selected).find(":selected").html().trim();
+	                        var drumLable = $(selected).find(":selected").html();
+	                        if (drumLable) drumLable = drumLable.trim();
 	                        $("#" + selected.id + "_value").html(drumLable);
 	                        var array = JSON.parse(selected.value);
 	                        if (selected.id == "prices") {
 	                            $scope.searchData.giaBETWEEN = array;
 	                            $timeout(function () {
 	                                if (drumLable == "Bất kỳ") {
-	                                    $scope.searchData.giaKhacFrom = "";
-	                                    $scope.searchData.giaKhacTo = "";
+	                                    $scope.giaKhacFrom = "";
+	                                    $scope.giaKhacTo = "";
 	                                } else if (drumLable.indexOf("&gt;") > -1) {
-	                                    $scope.searchData.giaKhacFrom = Math.round(parseFloat(array[0]) / 1000 * 1000) / 1000;
-	                                    $scope.searchData.giaKhacTo = "";
+	                                    $scope.giaKhacFrom = Math.round(parseFloat(array[0]) / 1000 * 1000) / 1000;
+	                                    $scope.giaKhacTo = "";
 	                                } else {
-	                                    $scope.searchData.giaKhacFrom = Math.round(parseFloat(array[0]) / 1000 * 1000) / 1000;
-	                                    $scope.searchData.giaKhacTo = Math.round(parseFloat(array[1]) / 1000 * 1000) / 1000;
+	                                    $scope.giaKhacFrom = Math.round(parseFloat(array[0]) / 1000 * 1000) / 1000;
+	                                    $scope.giaKhacTo = Math.round(parseFloat(array[1]) / 1000 * 1000) / 1000;
 	                                }
 	                            }, 0);
 	                        } else if (selected.id == "area") {
 	                            $scope.searchData.dienTichBETWEEN = array;
 	                            $timeout(function () {
 	                                if (drumLable == "Bất kỳ") {
-	                                    $scope.searchData.dienTichKhacFrom = "";
-	                                    $scope.searchData.dienTichKhacTo = "";
+	                                    $scope.dienTichKhacFrom = "";
+	                                    $scope.dienTichKhacTo = "";
 	                                } else if (drumLable.indexOf("&gt;") > -1) {
-	                                    $scope.searchData.dienTichKhacFrom = array[0];
-	                                    $scope.searchData.dienTichKhacTo = "";
+	                                    $scope.dienTichKhacFrom = array[0];
+	                                    $scope.dienTichKhacTo = "";
 	                                } else {
-	                                    $scope.searchData.dienTichKhacFrom = array[0];
-	                                    $scope.searchData.dienTichKhacTo = array[1];
+	                                    $scope.dienTichKhacFrom = array[0];
+	                                    $scope.dienTichKhacTo = array[1];
 	                                }
 	                            }, 0);
 	                        } else if (selected.id == "datepost") {
