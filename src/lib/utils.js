@@ -329,7 +329,7 @@ const defaultItemInCollection = {
   soPhongNguFmt: " ",
   soPhongTamFmt: " ",
   dienTichFmt: " ",
-  cover: "http://203.162.13.177:5000/web/asset/img/reland_house_large.jpg"
+  cover: cfg.noCoverUrl
 };
 
 util.appDefault = function(collection) {
