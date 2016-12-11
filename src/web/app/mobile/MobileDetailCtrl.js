@@ -372,7 +372,7 @@
 						// vm.showStreetView = false;
     				}
     				// $timeout(function() {
-      				google.maps.event.trigger(map, "resize");
+      				google.maps.event.trigger(vm.fullMap, "resize");
     // });
     			},300);
 			});

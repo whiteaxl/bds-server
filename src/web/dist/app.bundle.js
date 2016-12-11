@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aba48babd51ff0eb6235"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3345774d507ad6303954"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -24170,7 +24170,7 @@
 							// vm.showStreetView = false;
 						}
 						// $timeout(function() {
-						google.maps.event.trigger(map, "resize");
+						google.maps.event.trigger(vm.fullMap, "resize");
 						// });
 					}, 300);
 				});
