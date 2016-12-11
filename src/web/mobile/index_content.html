@@ -13,10 +13,11 @@
             <h3>{{bst.title1}}</h3>
             <h5>{{bst.title2}}</h5>
         </div>
-        <ul class="reland-list full-3">
-        	<li ng-repeat="ads in bst.data" ng-click="mhc.goDetail(ads)">
+        <ul class="reland-list full-3">            
+        	<li ng-repeat="ads in bst.data" ng-click="$root.showDetailAds(ads.adsID,this);">
             	<a href="" class="heart" ng-click="mhc.likeAds($event,ads.adsID)"><i ng-class="$root.alreadyLike(ads.adsID) ==  true?'icon-heart active':'icon-heart'"></i></a>
-            	<a href="#">
+
+            	<a href="#" >
                 	<span class="img" style="background-image:url({{ads.cover}})"></span>
                     <span class="des bgOpa">
                     	<span class="price">{{ads.giaFmt}}</span>
@@ -64,6 +65,7 @@
     </ul>
 </footer>-->
 <div class="overlay"></div>
+<!-- <div ui-view="mhome.mdetail" id="detailView" tabindex="-1"></div> -->
 
 
 <script src="/web/mobile/js/javascript.min.js"></script>

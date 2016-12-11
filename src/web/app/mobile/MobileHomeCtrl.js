@@ -81,13 +81,7 @@
 				});
 		    }
 
-		}
-
-		vm.goDetail = function(ads){
-			//add flag to don't research on home when comback from detail
-			//$rootScope.fromDetail = true;
-			$state.go('mdetail', { "adsID" : ads.adsID}, {location: true});
-		}
+		}		
 
 		vm.likeAds = function(event,adsID){
 		  event.stopPropagation();

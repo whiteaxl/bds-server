@@ -3,7 +3,11 @@
 	var controllerId = 'MobileDetailCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, RewayCommonUtil, NewsService, NgMap, $window,$timeout,$location){
 		var vm = this;
-		vm.adsID = $state.params.adsID;
+		if($state.params.adsID)
+			vm.adsID = $state.params.adsID;
+		if(vm.adsId){
+			vm.adsID = vm.adsId;
+		}
 		vm.marker = {
 			id: 1,
 			coords: {
@@ -295,7 +299,10 @@
 				// 	$state.go($rootScope.lastState, $rootScope.lastStateParams);
 				// }
 				//$window.history.back();
-				$state.go($rootScope.lastState, $rootScope.lastStateParams);
+				// $state.go($rootScope.lastState, $rootScope.lastStateParams);
+				$rootScope.bodyClass = "hfixed header bodySearchShow";
+				angular.element('#detailModal').hide();
+	            angular.element('#mainView').show();
 				
 			}
 
@@ -362,6 +369,9 @@
     					vm.fullMap.getStreetView().setPosition(vm.ads.streetviewLatLng);
 						// vm.showStreetView = false;
     				}
+    				// $timeout(function() {
+      				google.maps.event.trigger(map, "resize");
+    // });
     			},300);
 			});
 

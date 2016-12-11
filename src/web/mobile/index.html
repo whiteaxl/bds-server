@@ -41,14 +41,22 @@
             height: 100%;
             width: 100%;
     }
+
+    .iconSearch1: before {
+        content: 'fa fa-refresh fa-spin';
+    }
+
+
     </style>
     
 </head>
 <body ng-class="$root.bodyClass">
-	<div ui-view style="min-height: 1000px;"></div>
+	<div id="mainView" ui-view style="min-height: 1000px;"></div>
     
     <bds-mobile-login-form></bds-mobile-login-form>
-    
+    <!-- <div ui-view="mhome.mdetail" id="detailView" tabindex="-1"></div> -->
+    <div id="detailModal">
+    </div>
 </body>
 
 

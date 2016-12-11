@@ -5,9 +5,13 @@
     <div class="loadingBox text-center" ng-show="mlm.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
 	<div class="uln clb">
 		<ul class="reland-list full">
+            <li ng-if="mlm.prevPage==true" ng-click="mlm.prev();" style="height: 44px;text-align: center;margin-bottom: 5px;">
+                <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang trước</a></span><br>
+                <span>Đang hiển thị từ {{mlm.currentPageStart}} đến {{msc.currentPageEnd}} / {{mlm.totalResultCounts}} kết quả</span>
+            </li>
 			<li ng-repeat="ads in mlm.adsList track by $index">
 			<a href="#" ng-click="mlm.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
-            <a href="#" ng-click="mlm.goDetail($event,$index)">
+            <a href="#" ng-click="$root.showDetailAds(ads.adsID,this);">
                 <span class="img" style="background-image:url({{ads.image.cover}})"></span>
                 <span class="des bgOpa">
                     <!-- <span class="btn btn-primary">Cần bán gấp</span>
@@ -20,7 +24,11 @@
                     <span>{{ads.soTangFmt}}</span>
                 </span>
             </a>
-			</li>				
+			</li>	
+            <li ng-click="mlm.next();" ng-if="mlm.nextPage==true" style="height: 44px;text-align: center;margin-bottom: 5px;">
+                <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang sau </a></span><br>
+                <span>Đang hiển thị từ {{mlm.currentPageStart}} đến {{mlm.currentPageEnd}} / {{mlm.totalResultCounts}} kết quả
+            </li>		
 		</ul>
 	</div>
 	<div class="clb ovh">&nbsp;</div>
