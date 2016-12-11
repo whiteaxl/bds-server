@@ -188,6 +188,7 @@
 		vm.showMap = function(){
             // if(vm.searching == true)
             //     return;
+            $('body').scrollTop(0);
 			vm.viewMode = "map";
 			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
             $timeout(function() {
@@ -432,10 +433,10 @@
 		}*/
 		vm.goDetail = function(event,i){
             $('#previewAds').modal('hide');
-            $timeout(function() {
-                $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
-            },200);
-        	
+            // $timeout(function() {
+            //     $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+            // },200);
+            $rootScope.showDetailAds(vm.ads_list[i].adsID,$scope);        	
         }
 
         vm.previewAds = function(event,i){

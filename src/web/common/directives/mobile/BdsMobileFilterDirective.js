@@ -461,6 +461,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     if(!item.location){
                         $scope.searchData.circle = undefined;
                     }    
+                    $('#searchadd').blur();
                     $scope.$apply();               
                 }
 

@@ -55,10 +55,12 @@ require("./src/web/app/mobile/MobileAdsMgmtCtrl.js");
 require("./src/web/app/mobile/MobileListAdsCtrl.js");
 
 
+
 require("./src/web/common/directives/mobile/BdsMobileLeftMenuDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileFilterDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileHeaderDirective.js");
 require("./src/web/common/directives/mobile/BdsMobileLoginDirective.js");
+require("./src/web/common/directives/mobile/BdsMobileDetailDirective.js");
 
 
 //Libs

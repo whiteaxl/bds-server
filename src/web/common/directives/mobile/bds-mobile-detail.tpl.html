@@ -1,0 +1,270 @@
+<div>    
+    <header class="main gradient">
+        <a href="#" ng-click= "$root.removeDetailAds();" class="header-icon"><i class="iconLeftOpen"></i></a>
+		<a role="button" data-toggle="modal" data-target="#detailAlertBox" class="header-icon header-alert pull-right">
+            <img src="/web/mobile/img/warning-dot.svg">
+        </a>
+        <a href="javascript:void(0)" class="pull-right header-icon iconShareContent">
+        	<svg xmlns="http://www.w3.org/2000/svg" fill="white" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
+			  <g id="_x37_02-share_x40_2x.png_1_">
+				<g>
+				  <path d="M164.6 200h-127c-6.1 0-11.2-5.1-11.2-11.2V66c0-6.1 5.1-11.2 11.2-11.2h33.6c4.5 0 7.8 3.4 7.8 7.8s-3.4 7.8-7.8 7.8H42.1V184h118.3V70.2h-29.1c-4.5 0-7.8-3.4-7.8-7.8 0-4.5 3.4-7.8 7.8-7.8h33.3c6.3 0 11.2 5 11.2 11.5v122.8C175.8 194.9 170.7 200 164.6 200zM101.1 131.7c-4.5 0-7.8-3.4-7.8-7.8v-97L80.1 40.3c-1.3 1.7-3.4 2.7-5.7 2.7 -2.4 0-4.5-1-5.9-2.7 -1.2-1.5-1.8-3.3-1.6-5.2 0.1-2.7 1.2-4.4 2.1-5.4l26.4-27C96.8 1 98.8 0 101.1 0c2.9 0 4.7 1.2 5.7 2.2l27 27.6 0.2 0.3c1.1 1.6 1.6 3.3 1.6 5 0 4.5-3.4 7.8-7.8 7.8 -2.6 0-4.5-1.5-5.4-2.4l-13.4-13.6v97C108.9 128.4 105.6 131.7 101.1 131.7z"></path>
+				</g>
+			  </g>
+			</svg>
+        </a>
+        <span class="bgOpa"></span>
+    </header>
+    <div class="notifyBox detailnotify">Đã lưu tin thành công</div>
+    
+    <div class="wapper" style="position: absolute;top: 0px;">
+    	<div class="detail-page">
+        	<div class="img" ng-click="mdt.showFullImage();" style="background-image:url({{mdt.ads.image.cover}})"><a href="#"  data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
+            <a href="{{img}}" ng-repeat="img in mdt.ads.image.images track by $index" class="fancybox" data-fancybox-group="gallery" title=""></a>
+                <div class="desSort">
+            	<div class="price">{{mdt.ads.giaFmt}}</div>
+                <div class="address">{{mdt.ads.place.diaChi}}</div>
+                <div class="note">
+                	<ul>                    	
+                        <!-- <li ng-if="mdt.ads.loaiTinFmt"><label>{{mdt.ads.loaiTinFmt}}</label></li>
+                         -->
+                        <li ng-if="mdt.ads.loaiNhaDatFmt"><label>{{mdt.ads.loaiNhaDatFmt}}</label></li>
+                        <li ng-if="mdt.ads.dienTichFmt"><label>{{mdt.ads.dienTichFmt}}</label></li>
+                        <li ng-if="mdt.ads.soTangFmt"><label>{{mdt.ads.soTangFmt}}</label></li>
+                        <li ng-if="mdt.ads.soPhongTamFmt"><label>{{mdt.ads.soPhongTamFmt}}</label></li>
+                        <li ng-if="mdt.ads.soPhongNguFmt"><label>{{mdt.ads.soPhongNguFmt}}</label></li>
+                        <li ng-if="mdt.ads.huongNhaFmt"><label>{{mdt.ads.huongNhaFmt}}</label></li>
+                        <li ng-if="mdt.ads.soNgayDaDangTinFmt"><label>{{mdt.ads.soNgayDaDangTinFmt}}</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="title background-none border-none border-top"></div>
+            <div class="desDetail ovh clb">
+            	<h3 class="collapse-title">Chi tiết</h3>
+                <div onClick="detailMore('.more', '.detailMore', '... Xem thêm', '... Thu gọn', '.less')">
+					<span class="less">{{mdt.ads.chiTietThuGon}}</span>
+					<div class="detailMore" style="display: none;">
+                	   {{mdt.ads.chiTiet}}
+					</div>
+					<a href="javascript:void(0)" ng-if="mdt.ads.chiTietThuGon" class="more">... Xem thêm</a>
+				</div>
+                
+            </div>
+            <div class="dir-box collapse-box border-top">
+                <a role="button" ng-click="mdt.showFullMap();" class="collapse-title" href="#"><i class="iconCar"></i> Dẫn đường <span><i class="iconRightOpen"></i></span></a>                
+            </div>
+            <div class="dir-box collapse-box">
+                <a role="button" class="collapse-title" ng-click="mdt.showFullMapWithStreetView();" href="#"><i class="fa fa-street-view"></i> Street view <span><i class="iconRightOpen"></i></span></a>                
+            </div>
+            <div class="area-box collapse-box">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Đặc điểm <span><i class="iconUpOpen"></i></span></a>
+                <div class="areaBox spinner">
+                    <div ng-if="mdt.ads.loaiNhaDatFmt" class="lined">
+                    	<span class="titlelbl">Loại nhà đất</span>
+                        <label>{{mdt.ads.loaiNhaDatFmt}}</label>
+                    </div>
+                    <div class="lined" style="display: none;">
+                    	<span class="titlelbl">Gía</span>
+                        <label>{{mdt.ads.giaFmt}}</label>
+                    </div>
+                    <div ng-if="mdt.ads.giaM2Fmt" class="lined">
+                    	<span class="titlelbl">Giá/m²</span>
+                        <label>{{mdt.ads.giaM2Fmt}}</label>
+                    </div>
+                    <div class="lined" ng-if="mdt.ads.soPhongNgu">
+                    	<span class="titlelbl">Số phòng ngủ</span>
+                        <label>{{mdt.ads.soPhongNgu}}</label>
+                    </div>
+                    <div class="lined" ng-if="mdt.ads.soPhongTam">
+                    	<span class="titlelbl">Số phòng tắm</span>
+                        <label>{{mdt.ads.soPhongTam}}</label>
+                    </div>
+                    <div class="lined" ng-if="mdt.ads.dienTichFmt">
+                    	<span class="titlelbl">Diện tích</span>
+                        <label>{{mdt.ads.dienTichFmt}}</label>
+                    </div>
+					<div class="lined" ng-if="mdt.ads.huongNha">
+                    	<span class="titlelbl">Hướng nhà</span>
+                        <label>{{mdt.ads.huongNha}}</label>
+                    </div>
+					<div class="lined" ng-if="mdt.ads.duAn">
+                    	<span class="titlelbl">Thuộc dự án</span>
+                        <label>{{mdt.ads.place.duAn}}</label>
+                    </div>					
+                    <div class="lined" ng-if="mdt.ads.ngayDangTinFmt">
+                    	<span class="titlelbl">Ngày đăng tin</span>
+                        <label>{{mdt.ads.ngayDangTinFmt}}</label>
+                    </div>
+                    <div ng-if="mdt.showLuotXem" class="lined">
+                    	<span class="titlelbl">Lượt xem</span>
+                        <label>{{mdt.ads.luotXem}}</label>
+                    </div>
+                    <div class="lined" ng-if="mdt.ads.diaChi">
+                    	<span class="titlelbl">Địa chỉ</span>
+                        <label>{{mdt.ads.place.diaChi}}</label>
+                    </div>
+                    <div class="lined" ng-if="mdt.ads.maSo">
+                        <span class="titlelbl">Mã tin</span>
+                        <label>{{mdt.ads.maSo}}</label>
+                    </div>
+                </div>
+                <div class="title background-none border-none"></div>
+                <div class="title background-none border-none border-top"></div>
+                <div>Vị trí</div>
+                <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
+                        <ng-map center="{{mdt.center}}" zoom-control="false" draggable="false" zoom="15" class="ngmap" default-style="false">                           
+                            <directions
+                              draggable="true"                              
+                              travel-mode="DRIVING"
+                              origin="{{$root.currentLocation.lat}},{{$root.currentLocation.lon}}"
+                              destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
+                            </directions>                                                  
+                        </ng-map>
+                    </div>
+                </div>
+
+            <div class="share-box collapse-box">
+            	<div class="pull-left">
+                	<a href="fb:" class="p-icon i-fb"></a>                    
+                    <a href="sms:" class="p-icon i-sms"></a>
+                    <a href="zalo:" class="p-icon i-zalo"></a>
+                    <a href="mailto:" class="p-icon i-email"></a>
+                </div>
+                <div class="pull-right">
+                	<a href="#" class="p-icon i-share"></a>
+                </div>
+            </div>
+            <div class="contact-box collapse-box">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Liên hệ <span><i class="iconUpOpen"></i></span></a>
+                <div class="contactBox spinner">
+                    <div class="lined">
+                    	<span class="titlelbl">Tên liên lạc</span>
+                        <label>{{::mdt.ads.dangBoi.name}}</label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Điện thoại</span>
+                        <label> <a id="tellTo" href="sms:{{::mdt.ads.dangBoi.phone}}&body='I%27m%20interested%20in%20your%20product.%20Please%20contact%20me.'"> {{::mdt.ads.dangBoi.phone}}</a></label>
+                    </div>
+                    <div class="lined">
+                    	<span class="titlelbl">Email</span>
+                        <!-- <label>{{::mdt.ads.dangBoi.email}}</label> -->
+                        <label><a id="mailTo" href="mailto:{{::mdt.ads.dangBoi.email}}?Subject=Hello%20again" target="_top">{{::mdt.ads.dangBoi.email}}</a></label>
+
+                    </div>
+					<div class="lined" style="display: none;">
+                    	<span class="titlelbl"><a href="#"><i class="p-icon i-plus18"></i> Lưu vào danh bạ</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="agency-box collapse-box uln" ng-if="mdt.ads.loaiTin==0">
+                <a class="collapse-title" onClick="spinner(this, '.spinner', 'spinner-hide')">Phương án tài chính <span><i class="iconUpOpen"></i></span><span class="txt">Tính trên cơ sở vay 70% giá trị nhà trig vòng 15 năm với lãi suất cố định 12%/năm theo số tiền vay </span></a>
+                <div class="agencyBox spinner">
+                    <div class="card-chart">
+						<div class="chart-reland">
+							<div class="chart" id="phgantaichinh"></div>
+							<script>
+								$(function(){
+								 //  $("#phgantaichinh").drawDoughnutChart([
+									// { title: "Gốc", value : 400,  color: "#20c063"},
+									// { title: "Lãi", value:  100,   color: "#f0a401"}
+								 //  ]);
+								});
+							</script>
+						</div>
+						<div class="chart-txt uln ovh">
+							<ul>
+								<li class="chart-txt-1"><i></i>{{mdt.patc.interest}} triệu<span>Gốc</span></li>
+								<li class="chart-txt-2"><i></i>{{mdt.patc.payment}} triệu<span>Lãi</span></li>
+							</ul>
+						</div>
+					</div>
+                </div>
+            </div>
+            <div class="other-box collapse-box uln border-none">
+                <div class="reland-box home-page reland-box_1 uln" ng-if="mdt.nhaXungQuanh" reland-item="reland-box_1">
+                    <div class="reland-title">
+                        <h4>Bộ sưu tập</h4>
+                        <h3>Những nhà đang bán gần nhà này</h3>
+                        <h5>{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h5>
+                    </div>
+                    <ul class="reland-list full-3">
+                        <li  ng-repeat="ads in mdt.nhaXungQuanh track by $index">
+                            <a href="#" ng-click="mdt.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
+                            <a href="#" ng-click="mdt.goDetail(ads.adsID)">
+                                <span class="img" style="background-image:url({{ads.image.cover}})"></span>
+                                <span class="des bgOpa">
+                                    <span class="price">{{ads.giaFmt}}</span>
+                                    <span class="name">{{mdt.ads.place.diaChi}}</span>
+                                    <span>{{mdt.ads.soPhongNguFmt}}</span>
+                                    <span class="split"></span>
+                                    <span>{{mdt.ads.soPhongTamFmt}}</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clb ovh"></div>
+                    <div class="btn-box"><a rol="button" href="#" ng-if="mdt.nhaXungQuanh" ng-click="mdt.showMoreXungQuanh()" class="btn btn-primary btn-block">Xem thêm</a></div>
+                </div>
+                <!--END-->
+                
+                
+            </div>
+
+        </div>
+        
+		<div class="clb ovh"></div>
+    </div>
+    <footer class="main border uln" style="{{mdt.viewImage==true?'background: transparent;':';'}}">
+        <ul class="navmain nav-3 button">
+        	<li><a role="button" class="btn btn-organe" href="tel:{{::mdt.ads.dangBoi.phone}}"><i class="iconPhone"></i> Gọi điện</a></li>
+            <li><a role="button" class="btn btn-warning" href="#" ng-click="mdt.openChat(event)"><i class="iconChat"></i> Chat</a></li>
+            <li><a role="button" class="btn btn-primary" href="javascript:void(0)" ng-click="mdt.likeAds($event,mdt.ads.adsID);"><i class="iconHeart"></i> Lưu tin</a></li>
+        </ul>
+    </footer>
+    <div class="overlay"></div>
+
+    <div class="modal fade modal-choose modal-none modal-list" id="detailAlertBox" tabindex="-1" role="dialog" aria-labelledby="detailAlertBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <h4 class="modal-title" id="detailAlertBoxLabel">Thông báo cho chúng tôi</h4>
+                </div>
+                <div class="modal-body uln">
+                    <div class="title border-bottom">Chọn lý do</div>
+                    <ul class="type-list">
+                        <li><a ng-click="mdt.setReportCode(1);" href="javascript:void(0)" class="active">Nhà không có thật</a></li>
+                        <li><a ng-click="mdt.setReportCode(2);" href="javascript:void(0)">Nhà đã bị bán hoặc cho thuê</a></li>
+                        <li class="pdr15"><a ng-click="mdt.setReportCode(6);" href="javascript:void(0)" class="border-none">Lý do khác</a><input type="text" ng-model="mdt.reportContent" class="form-control" placeholder="Lý do thông báo..."></li>
+                    </ul>
+                    <div class="mb10"></div>
+                    <div class="title border-top background-none"></div>
+                    <div class="pd15"><button type="button" ng-click="mdt.sendReport();" class="btn btn-organe btn-block">Gửi</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-choose modal-none" id="mapsBox" tabindex="-1" role="dialog" aria-labelledby="mapsBoxLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+                    <h4 class="modal-title" id="mapsBoxLabel">{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h4>
+                </div>
+                <div class="modal-body uln" style="height: 100%;">
+                    <ng-map style="width:100%; height:100%;position: absolute;" gesture-handling="greedy" center="{{mdt.center}}" id="fullMap"  default-style="false"  zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
+                        <directions
+                          draggable="false"                              
+                          travel-mode="DRIVING"
+                          origin="{{$root.currentLocation.lat}},{{$root.currentLocation.lon}}"
+                          destination="{{mdt.marker.coords.latitude}},{{mdt.marker.coords.longitude}}">
+                        </directions> 
+                        <street-view-panorama>
+                        </street-view-panorama> 
+                    </ng-map>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="/web/mobile/js/javascript.js"></script>
+</div>

@@ -191,8 +191,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                               tinh: prediction.tinh,
                               huyen: prediction.huyen,
                               xa: prediction.xa,
-                              placeId: prediction.placeId,
-                              class: "iconLocation gray"
+                              placeId: prediction.placeId
+                              // class: "iconLocation gray"
                             }
                             );
                           } 

@@ -587,6 +587,30 @@
         //}
 
     });
+
+    $rootScope.bodyScrollTop =0;
+
+    $rootScope.removeDetailAds = function(){
+      $rootScope.bodyClass = "hfixed header bodySearchShow";
+      angular.element('#detailModal').hide();
+      angular.element('#mainView').show();
+      $('body').scrollTop($rootScope.bodyScrollTop);
+      if($rootScope.detailAdsScope){
+        $rootScope.detailAdsScope.$destroy();
+        $('#detailModal').empty();
+        $('#detailModal').show();
+      }
+    }
+    $rootScope.showDetailAds = function(adsID,scope){
+        $rootScope.bodyClass = "hfixed header";        
+        $rootScope.bodyScrollTop = $('body').scrollTop();
+        $rootScope.detailAdsScope = scope.$new();
+        $rootScope.compiledDirective = $compile("<bds-detail ads-id='" + adsID+ "' on-remove-detail='$root.removeDetailAds'></bds-detail>")
+        var directiveElement = $rootScope.compiledDirective($rootScope.detailAdsScope);
+        angular.element('#detailModal').append(directiveElement);
+        angular.element('#mainView').hide();
+    }
+
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
       console.log("changed to state " + toState) ;
       $rootScope.lastState = fromState;
@@ -595,7 +619,7 @@
         $rootScope.bodyClass = "hfixed header";
       }else{
         $rootScope.bodyClass = "hfixed header bodySearchShow";
-      }
+      }      
     });
 
     $rootScope.getGoogleLocation = function(val) {
