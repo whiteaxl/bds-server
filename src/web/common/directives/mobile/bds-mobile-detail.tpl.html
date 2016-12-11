@@ -112,7 +112,7 @@
                 <div class="title background-none border-none border-top"></div>
                 <div>Vị trí</div>
                 <div class="lined map" id="map_container" ng-click="mdt.showFullMap();">
-                        <ng-map center="{{mdt.center}}" zoom-control="false" draggable="false" zoom="15" class="ngmap" default-style="false">                           
+                        <ng-map zoom-control="false"  id="miniMap" map-type-control="false" fullscreen-control="false"  street-view-control="false" lazy-init="true" draggable="false" zoom="15" class="ngmap" default-style="false">                           
                             <directions
                               draggable="true"                              
                               travel-mode="DRIVING"
@@ -252,7 +252,7 @@
                     <h4 class="modal-title" id="mapsBoxLabel">{{mdt.ads.place.diaChinh.huyen}}, {{mdt.ads.place.diaChinh.tinh}}</h4>
                 </div>
                 <div class="modal-body uln" style="height: 100%;">
-                    <ng-map style="width:100%; height:100%;position: absolute;" gesture-handling="greedy" id="fullMap"  default-style="false"  zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
+                    <ng-map style="width:100%; height:100%;position: absolute;" gesture-handling="greedy" id="fullMap" map-type-control="false"  default-style="false"  zoom-control="false" street-view-control="false" fullscreen-control ="false" lazy-init="true" class="ngmap">
                         <directions
                           draggable="false"                              
                           travel-mode="DRIVING"

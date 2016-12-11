@@ -33,7 +33,31 @@
             //$scope.$apply();
         }
 
-         vm.getLocation = function() {     
+        vm.mapType = "roadmap";
+        
+        vm.showMapNormal = function(){
+            vm.mapType = 'roadmap';
+            vm.map.setMapTypeId(vm.mapType);
+            vm.closeMapUtilities();
+        }
+        vm.showMapSatellite = function(){            
+            vm.mapType = 'satellite';
+            vm.map.setMapTypeId(vm.mapType);
+            vm.closeMapUtilities();
+        }
+        vm.showMapHybrid = function(){            
+            vm.mapType = 'hybrid';
+            vm.map.setMapTypeId(vm.mapType);
+            vm.closeMapUtilities();
+        }
+        vm.closeMapUtilities = function(){
+            $('#mapUtilities').modal('hide');
+        }
+        vm.showMapUtilities = function(){
+            $('#mapUtilities').modal('show');
+        }
+
+        vm.getLocation = function() {     
             if(vm.poly)
                 vm.poly.setMap(null);            
             if (navigator.geolocation) {

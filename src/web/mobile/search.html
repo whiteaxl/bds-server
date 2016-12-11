@@ -18,6 +18,12 @@
     .i-maplocationActive {
         background-position-x: -176px !important;
     }
+    .mapUtilActive {
+        width: 33% !important; float: left !important;font-size: medium !important;color: white !important;background-color: #00a8e6 !important;   
+    }
+    .mapUtilInactive {
+        width: 33% !important;float: left !important;font-size: medium !important;color: #00a8e6 !important;        
+    }
 
 </style>
 <div ng-if="msc.viewMode=='list'"  class="wapper" >
@@ -80,7 +86,7 @@
 <div  class="wapper" style="top: 42px;">
     <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
     <div  class="maps"  ng-show ="msc.viewMode!='list'">
-        <div ontouchstart="return false;" ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
+        <div ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" gesture-handling="greedy" street-view-control-options="{position:'RIGHT_CENTER'}"
              ng-show ="msc.viewMode!='list'"  center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
@@ -128,7 +134,7 @@
     <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
     <footer class="main border uln">
         <ul class="navmain nav-3 blue nav-text">
-            <li>
+            <li ng-if="msc.viewMode=='list'">
                 <!-- <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a> -->
                 <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
                 <div class="list-sort popovers top uln">
@@ -142,6 +148,9 @@
                         <li><a href="javascript:void(0)" ng-click="msc.sort('dienTich','ASC')">Diện tích</a></li>
                     </ul>
                 </div>
+            </li>
+            <li ng-if="msc.viewMode=='map'">
+                <a href="#" ng-click="msc.showMapUtilities();">Tiện ích</a>
             </li>
             <li>
                 <a role="button" data-toggle="modal" ng-click="msc.showSaveSearch();">Lưu tìm kiếm</a>
@@ -249,6 +258,24 @@
                 </a>
             </li>            
         </ul>        
+    </div>
+</div>
+<div class="modal fade modal-msg" id="mapUtilities" tabindex="-1" role="dialog" aria-labelledby="saveBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body uln">
+                <div class="text-center">
+                    
+                    <h3> <a href="#" style="float: left;" ng-click="msc.closeMapUtilities();">X</a> Tiện ích</h3>
+                    <p style="text-align: left;height: 20px;">Loại bản đồ</p>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <a href="#" ng-class="msc.mapType=='roadmap'?'mapUtilActive':'mapUtilInactive'" ng-click="msc.showMapNormal();">T.thường</a>
+                <a href="#" ng-class="msc.mapType=='satellite'?'mapUtilActive':'mapUtilInactive'" ng-click="msc.showMapSatellite();">Vệ tinh</a>
+                <a href="#" ng-class="msc.mapType=='hybrid'?'mapUtilActive':'mapUtilInactive'" ng-click="msc.showMapHybrid();">Hỗn hợp</a>
+            </div>
+        </div>
     </div>
 </div>
 <script src="/web/mobile/js/javascript.min.js"></script>

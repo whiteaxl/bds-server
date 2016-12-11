@@ -332,6 +332,7 @@
 					}
 				});
 			}
+			
 				
 
 			
@@ -477,9 +478,12 @@
         		//alert('aaaa');
         		//$scope.$apply();
         	}
-        	NgMap.getMap().then(function(map){
-        		vm.map = map; 
-        	});
+        	// NgMap.getMap().then(function(map){
+        	// 	vm.map = map; 
+        	// 	$timeout(function() {
+        	// 		google.maps.event.trigger(vm.map, "resize");
+        	// 	},0);        		
+        	// });
 
 
 
@@ -495,8 +499,11 @@
 				$("#phgantaichinh").drawDoughnutChart([
 					{ title: "Gốc", value : vm.patc.payment,  color: "#20c063"},
 					{ title: "Lãi", value:  vm.patc.interest,   color: "#f0a401"}
-			  	]);			  	
+			  	]);	
+			  	vm.map = NgMap.initMap("miniMap");
+			  	google.maps.event.trigger(vm.map, "resize");	        		
                 $('body').scrollTop(0);
+
 			}, 0);
 
 			vm.searchDataXungQuanh.circle = {

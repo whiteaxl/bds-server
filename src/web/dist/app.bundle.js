@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3345774d507ad6303954"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3f4f0538278e0bd06481"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22741,6 +22741,30 @@
 	            //$scope.$apply();
 	        };
 
+	        vm.mapType = "roadmap";
+
+	        vm.showMapNormal = function () {
+	            vm.mapType = 'roadmap';
+	            vm.map.setMapTypeId(vm.mapType);
+	            vm.closeMapUtilities();
+	        };
+	        vm.showMapSatellite = function () {
+	            vm.mapType = 'satellite';
+	            vm.map.setMapTypeId(vm.mapType);
+	            vm.closeMapUtilities();
+	        };
+	        vm.showMapHybrid = function () {
+	            vm.mapType = 'hybrid';
+	            vm.map.setMapTypeId(vm.mapType);
+	            vm.closeMapUtilities();
+	        };
+	        vm.closeMapUtilities = function () {
+	            $('#mapUtilities').modal('hide');
+	        };
+	        vm.showMapUtilities = function () {
+	            $('#mapUtilities').modal('show');
+	        };
+
 	        vm.getLocation = function () {
 	            if (vm.poly) vm.poly.setMap(null);
 	            if (navigator.geolocation) {
@@ -24270,9 +24294,13 @@
 					//alert('aaaa');
 					//$scope.$apply();
 				};
-				NgMap.getMap().then(function (map) {
-					vm.map = map;
-				});
+				// NgMap.getMap().then(function(map){
+				// 	vm.map = map; 
+				// 	$timeout(function() {
+				// 		google.maps.event.trigger(vm.map, "resize");
+				// 	},0);        		
+				// });
+
 
 				$timeout(function () {
 					var price = vm.ads.gia; /* don vi trieu*/
@@ -24284,6 +24312,8 @@
 					vm.patc.interest = Math.round(vm.patc.interest * 100) / 100;
 
 					$("#phgantaichinh").drawDoughnutChart([{ title: "Gốc", value: vm.patc.payment, color: "#20c063" }, { title: "Lãi", value: vm.patc.interest, color: "#f0a401" }]);
+					vm.map = NgMap.initMap("miniMap");
+					google.maps.event.trigger(vm.map, "resize");
 					$('body').scrollTop(0);
 				}, 0);
 
