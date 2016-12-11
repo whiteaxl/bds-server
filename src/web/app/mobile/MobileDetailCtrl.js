@@ -8,6 +8,7 @@
 		if(vm.adsId){
 			vm.adsID = vm.adsId;
 		}
+		vm.loaded = false;
 		vm.marker = {
 			id: 1,
 			coords: {
@@ -247,6 +248,7 @@
 			vm.marker.coords.latitude = vm.ads.place.geo.lat;
 			vm.marker.coords.longitude = vm.ads.place.geo.lon;
 			vm.likeAdsClass ="";
+			vm.loaded = true;
 
 			vm.likeAds = function(event,adsID){
 			  //event.stopPropagation();

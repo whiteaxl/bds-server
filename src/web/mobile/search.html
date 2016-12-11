@@ -1,19 +1,22 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
-<bds-mobile-header mode="msc.viewMode" act="$root.act"></bds-mobile-header>
+<bds-mobile-header mode="msc.viewMode" icon-search-class="msc.searchingIconClass" act="$root.act"></bds-mobile-header>
 <style type="text/css">
     .custom-marker{
         background-color: transparent;
         border-color: transparent;
     }
     .nextEnable{       
-        background-position-x: -177px !important; 
+        background-position-x: -176px !important; 
     }
     .prevEnable{
-        background-position-x: -177px !important;   
+        background-position-x: -176px !important;   
     }
     .mapdrawing{
-        background-position-x: -177px !important;
+        background-position-x: -176px !important;
+    }
+    .i-maplocationActive {
+        background-position-x: -176px !important;
     }
 
 </style>
@@ -91,7 +94,7 @@
                         </div>
                     </div>
                 </custom-marker>
-                <!-- <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker> -->
+                <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
                 <!-- <street-view-panorama
                   click-to-go="false"
                   disable-default-u-i="false"
@@ -119,7 +122,7 @@
         </div>
         <div class="actions" ng-if="msc.streetViewMode!=true" style="bottom: 55px;">
             <a href="#" ng-click="msc.toggleDrawMode($event)"><i ng-class="msc.drawButtonClass" ></i></i></a>
-            <a href="#" ng-click="msc.getLocation($event)"><i class="p-icon i-maplocation"></i></i></a>
+            <a href="#" ng-click="msc.getLocation($event)"><i ng-class="msc.mapLocationClass" ></i></i></a>
         </div>
     </div>
     <div class="loadingBox text-center" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>

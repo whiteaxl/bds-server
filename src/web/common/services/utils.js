@@ -4,7 +4,7 @@
   .module('bds')
   .factory('RewayCommonUtil', function($http, $q, $rootScope){
     return {
-      placeAutoComplete: function(callback, inputTagId, source){
+      placeAutoComplete: function(callback, inputTagId, source,showLoadingFuntion){
         // $http.post("api/place/autocomplete",data);
         var sourceP = function(request,response){
           var results = [];
@@ -74,6 +74,14 @@
           _create: function() {
             this._super();
             this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+          },
+          search: function(){
+            if(showLoadingFuntion)
+              showLoadingFuntion(true);
+          },
+          response: function(){
+            if(showLoadingFuntion)
+              showLoadingFuntion(false);
           },
           select: function( event, ui ) {
               if(ui.item.lastSearchSeparator == true){                

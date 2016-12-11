@@ -8,6 +8,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil','NgMap',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil,NgMap) {
                 var vm = this; 
+                vm.iconSearchClass = "iconSearch";
                 $(".btn-more .collapse-title").click(function() {
                     $(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
                 })   
@@ -465,6 +466,14 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $scope.$apply();               
                 }
 
+                vm.showLoadingFuntion = function(loading){
+                    if(loading==true){
+                        vm.iconSearchClass = "iconSearching search-head fa-spin";
+                    }else{
+                        vm.iconSearchClass = "iconSearch";
+                    }
+                }
+
                 NgMap.getMap("filtermap").then(function(map){
                     vm.map = map;           
                     /*window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map,[
@@ -495,7 +504,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             place_id:   "111",
                             class: "iconLocation grasy"
                         }
-                    ]);
+                    ],vm.showLoadingFuntion);
                     // vm.PlacesService =  new google.maps.places.PlacesService(map);                                
                 });
 

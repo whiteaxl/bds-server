@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "074a2b41cc2aec56f186"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "aba48babd51ff0eb6235"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1341,7 +1341,6 @@
 	            listMoreFirstTitle: 'Hung',
 	            listMoreSecondTitle: 'Tim'
 	        };
-
 	        $rootScope.searchData = {
 	            "placeId": undefined,
 	            "loaiTin": 0,
@@ -21623,7 +21622,7 @@
 
 	  angular.module('bds').factory('RewayCommonUtil', function ($http, $q, $rootScope) {
 	    return {
-	      placeAutoComplete: function placeAutoComplete(callback, inputTagId, source) {
+	      placeAutoComplete: function placeAutoComplete(callback, inputTagId, source, showLoadingFuntion) {
 	        // $http.post("api/place/autocomplete",data);
 	        var sourceP = function sourceP(request, response) {
 	          var results = [];
@@ -21690,6 +21689,12 @@
 	          _create: function _create() {
 	            this._super();
 	            this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+	          },
+	          search: function search() {
+	            if (showLoadingFuntion) showLoadingFuntion(true);
+	          },
+	          response: function response() {
+	            if (showLoadingFuntion) showLoadingFuntion(false);
 	          },
 	          select: function select(event, ui) {
 	            if (ui.item.lastSearchSeparator == true) {
@@ -22721,8 +22726,10 @@
 	        // vm.zoomMode = "auto";
 	        vm.pageSize = 25;
 	        vm.drawButtonClass = "p-icon i-mapdraw";
+	        vm.mapLocationClass = "p-icon i-maplocation";
 	        $scope.relandMarkerGroupCss = "reland-marker marker-include";
 	        $scope.relandMarkerCss = "reland-marker";
+	        vm.searchingIconClass = "iconSearching search-head fa-spin";
 
 	        vm.resetResultList = function () {
 	            vm.currentPage = 0;
@@ -22746,6 +22753,7 @@
 	                        radius: 2
 	                    };
 	                    vm.initialized = false;
+	                    vm.mapLocationClass = "p-icon i-maplocation i-maplocationActive";
 
 	                    vm.disableIdleHandler();
 	                    $rootScope.searchData.viewport = undefined;
@@ -22755,6 +22763,7 @@
 	                    $rootScope.currentLocation.lon = position.coords.longitude;
 	                    $scope.center = "[" + position.coords.latitude + "," + position.coords.longitude + "]";
 	                    vm.marker = position;
+	                    vm.map.setZoom(20);
 	                    // homeDataSearch.currentLocation = $rootScope.currentLocation;
 	                    //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
 	                    //  //alert(JSON.stringify(res));
@@ -22767,7 +22776,7 @@
 	                        //vm.initialized = true;
 
 	                        $timeout(function () {
-	                            vm.initialized = true;
+	                            //vm.initialized = true;
 	                            //vm.map.fitBounds(bounds);
 	                            vm.humanZoom = false;
 	                            vm.enableMapIdleHandler();
@@ -22955,54 +22964,54 @@
 	        vm.enableMapIdleHandler = function () {
 	            if (!vm.map) return;
 	            vm.disableIdleHandler();
-	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function () {
-	                if (vm.initialized == true) {
-	                    vm.initialized = false;
-	                    vm.humanZoom = true;
-	                    console.log("search due to zoom zoom_changed");
-	                    // $rootScope.searchData.viewport = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
-	                    $rootScope.searchData.viewport = {
-	                        southwest: {
-	                            lat: vm.map.getBounds().getSouthWest().lat(),
-	                            lon: vm.map.getBounds().getSouthWest().lng()
-	                        },
-	                        northeast: {
-	                            lat: vm.map.getBounds().getNorthEast().lat(),
-	                            lon: vm.map.getBounds().getNorthEast().lng()
-	                        }
-	                    };
-	                    // $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
-	                    // //var bounds = vm.map.getBounds();
-	                    // //alert($rootScope.searchData.geoBox);
-	                    // vm.marker = {
-	                    //  id: -1,
-	                    //  coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
-	                    //  content: 'you are here'
-	                    // };
-	                    $rootScope.searchData.limit = 24;
-	                    vm.viewport = $rootScope.searchData.viewport;
-	                    if ($rootScope.user.autoSearch == false) {
-	                        vm.initialized = true;
-	                        vm.humanZoom = false;
-	                        return;
+	            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "dragend", function () {
+	                // if(vm.initialized == true){
+	                vm.initialized = false;
+	                vm.humanZoom = true;
+	                console.log("search due to zoom zoom_changed");
+	                // $rootScope.searchData.viewport = [vm.map.getBounds().getSouthWest().lat(),vm.map.getBounds().getSouthWest().lng(), vm.map.getBounds().getNorthEast().lat(),vm.map.getBounds().getNorthEast().lng()];
+	                $rootScope.searchData.viewport = {
+	                    southwest: {
+	                        lat: vm.map.getBounds().getSouthWest().lat(),
+	                        lon: vm.map.getBounds().getSouthWest().lng()
+	                    },
+	                    northeast: {
+	                        lat: vm.map.getBounds().getNorthEast().lat(),
+	                        lon: vm.map.getBounds().getNorthEast().lng()
 	                    }
+	                };
+	                // $scope.center = "["+vm.map.getCenter().lat() +"," +vm.map.getCenter().lng() +"]";
+	                // //var bounds = vm.map.getBounds();
+	                // //alert($rootScope.searchData.geoBox);
+	                // vm.marker = {
+	                //  id: -1,
+	                //  coords: {latitude: vm.map.getCenter().lat(), longitude: vm.map.getCenter().lng()},
+	                //  content: 'you are here'
+	                // };
+	                $rootScope.searchData.limit = 24;
+	                vm.viewport = $rootScope.searchData.viewport;
+	                if ($rootScope.user.autoSearch == false) {
+	                    vm.initialized = true;
+	                    vm.humanZoom = false;
+	                    return;
+	                }
 
-	                    vm.search(function () {
-	                        $timeout(function () {
-	                            vm.initialized = true;
-	                            //vm.map.fitBounds(bounds);
-	                            vm.humanZoom = false;
-	                        }, 0);
-	                    });
-	                    // alert('human zoom');
-	                } else {
-	                    console.log("not human zoom and turn to human zoom");
+	                vm.search(function () {
 	                    $timeout(function () {
-	                        vm.initialized = true;
+	                        //vm.initialized = true;
 	                        //vm.map.fitBounds(bounds);
 	                        vm.humanZoom = false;
-	                    }, 200);
-	                }
+	                    }, 0);
+	                });
+	                // alert('human zoom');
+	                // }else{
+	                //     console.log("not human zoom and turn to human zoom");
+	                //     $timeout(function() {
+	                //         //vm.initialized = true;
+	                //         //vm.map.fitBounds(bounds);
+	                //         vm.humanZoom = false;
+	                //     }, 200);
+	                // }
 	            });
 	        };
 	        $scope.$on("$destroy", function () {
@@ -23062,7 +23071,7 @@
 	                    vm.initialized = true;
 	                }, 0);
 	            }
-	            vm.enableMapIdleHandler();
+	            // vm.enableMapIdleHandler();
 
 	            // vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
 	            //          	//alert(vm.map.getBounds());
@@ -23266,6 +23275,9 @@
 	                    if (vm.viewMode == "list") {
 	                        vm.initMap = false;
 	                    }
+	                    if (vm.ads_list.length == 0) {
+	                        vm.poly.setMap(null);
+	                    }
 	                });
 
 	                vm.mapMode = 2;
@@ -23329,6 +23341,9 @@
 	                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
 	                vm.drawButtonClass = "p-icon i-mapdraw";
 	                vm.enable();
+	                if ($scope.markers.length == 0 && vm.ads_list.length > 0) {
+	                    vm.createMarkersFromAds($scope, vm.ads_list);
+	                }
 	                // if(vm.place){
 	                //     $rootScope.act = vm.place.fullName;
 	                // }  
@@ -23420,17 +23435,54 @@
 	        //         vm.mapInitialized(vm.map);
 	        //     } 
 	        // }
+	        vm.createMarkersFromAds = function (scope, adsList) {
+	            scope.markers = [];
+	            for (var i = 0; i < adsList.length; i++) {
+	                var ads = adsList[i];
+	                if (adsList.map) {
+	                    var dup = false;
+	                    for (var j = 0; j < scope.markers.length; j++) {
+	                        var marker = scope.markers[j];
+	                        if (marker.coords.latitude == adsList[i].map.marker.latitude && marker.coords.longitude == adsList[i].map.marker.longitude) {
+	                            marker.adsList.push(ads);
+	                            marker.count = marker.count + 1;
+	                            marker.class = "reland-marker marker-include";
+	                            dup = true;
+	                            if (!ads.gia || ads.gia < 0) {
+	                                break;
+	                            }
+	                            if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
+	                                marker.gia = ads.gia;
+	                                marker.content = ads.giaFmt;
+	                            }
+	                            break;
+	                        }
+	                    }
+	                    if (dup == false) {
+	                        var m = adsList[i].map.marker;
+	                        m.adsList = [];
+	                        m.adsList.push(ads);
+	                        adsList[i].map.marker.class = "reland-marker";
+	                        scope.markers.push(adsList[i].map.marker);
+	                    }
+	                }
+	            }
+	        };
 
 	        vm.searchPage = function (i, callback) {
+	            vm.searchingIconClass = "iconSearching search-head fa-spin";
 	            $rootScope.searchData.pageNo = i;
 	            vm.searching = true;
 	            $rootScope.searchData.userID = $rootScope.user.userID || undefined;
 	            //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
 	            //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
 	            vm.initialized = false;
+	            // vm.mapLocationClass = "p-icon i-maplocation";
 
 	            // vm.khoangGiaList[]
 	            // $rootScope.searchData.khoangGia
+	            vm.disableIdleHandler();
+
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
 	                //vm.totalResultCounts = res.data.list.length;
@@ -23487,7 +23539,6 @@
 	                }
 	                vm.ads_list = res.data.list;
 
-	                $scope.markers = [];
 	                if (vm.viewport) {
 	                    //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
 	                    var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
@@ -23505,36 +23556,40 @@
 	                    }
 	                }
 
-	                for (var i = 0; i < res.data.list.length; i++) {
-	                    var ads = res.data.list[i];
-	                    if (res.data.list[i].map) {
-	                        var dup = false;
-	                        for (var j = 0; j < $scope.markers.length; j++) {
-	                            var marker = $scope.markers[j];
-	                            if (marker.coords.latitude == res.data.list[i].map.marker.latitude && marker.coords.longitude == res.data.list[i].map.marker.longitude) {
-	                                marker.adsList.push(ads);
-	                                marker.count = marker.count + 1;
-	                                marker.class = "reland-marker marker-include";
-	                                dup = true;
-	                                if (!ads.gia || ads.gia < 0) {
-	                                    break;
-	                                }
-	                                if (!marker.gia || marker.gia < 0 || marker.gia > ads.gia) {
-	                                    marker.gia = ads.gia;
-	                                    marker.content = ads.giaFmt;
-	                                }
-	                                break;
-	                            }
-	                        }
-	                        if (dup == false) {
-	                            var m = res.data.list[i].map.marker;
-	                            m.adsList = [];
-	                            m.adsList.push(ads);
-	                            res.data.list[i].map.marker.class = "reland-marker";
-	                            $scope.markers.push(res.data.list[i].map.marker);
-	                        }
-	                    }
-	                }
+	                // $scope.markers = [];
+	                // for(var i = 0; i < res.data.list.length; i++) { 
+	                //     var ads = res.data.list[i];
+	                //     if(res.data.list[i].map){  
+	                //         var dup = false;                        
+	                //         for(var j=0;j<$scope.markers.length;j++){
+	                //             var marker = $scope.markers[j];
+	                //             if(marker.coords.latitude==res.data.list[i].map.marker.latitude
+	                //                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+	                //                 marker.adsList.push(ads);
+	                //                 marker.count = marker.count + 1;
+	                //                 marker.class = "reland-marker marker-include";
+	                //                 dup = true;
+	                //                 if(!ads.gia || ads.gia < 0){                                    
+	                //                     break;
+	                //                 }
+	                //                 if(!marker.gia || marker.gia<0 || marker.gia > ads.gia){
+	                //                     marker.gia = ads.gia;
+	                //                     marker.content = ads.giaFmt;
+	                //                 }
+	                //                 break;
+	                //             }
+	                //         }                      
+	                //         if(dup == false){
+	                //             var m = res.data.list[i].map.marker;
+	                //             m.adsList = [];
+	                //             m.adsList.push(ads);
+	                //             res.data.list[i].map.marker.class = "reland-marker";
+	                //             $scope.markers.push(res.data.list[i].map.marker);    
+	                //         }
+
+	                //     }
+	                // }
+	                vm.createMarkersFromAds($scope, vm.ads_list);
 
 	                /*if(vm.ads_list.length==0){
 	                    vm.zoomMode = "false";
@@ -23592,12 +23647,24 @@
 	                    });
 	                }
 	                vm.disableScrolling = false;
-	                if ($rootScope.searchData.pageNo > 1 && result && result.length > 0 && vm.viewMode == "map") {
-	                    $timeout(function () {
+
+	                // if($rootScope.searchData.pageNo>1 && result && result.length >0 && vm.viewMode=="map"){
+	                //     $timeout(function() {
+	                //         $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+	                //         vm.initialized = true;
+	                //     },100);    
+	                // }               
+	                $timeout(function () {
+	                    if ($rootScope.searchData.pageNo > 1 && result && result.length > 0 && vm.viewMode == "map") {
 	                        $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
-	                    }, 100);
-	                }
+	                    }
+	                }, 0);
+	                $timeout(function () {
+	                    vm.initialized = true;
+	                    vm.enableMapIdleHandler();
+	                }, 0);
 	                vm.searching = false;
+	                vm.searchingIconClass = "iconSearch search-head";
 	                if (callback) callback(res);
 	            });
 	        };
@@ -23765,6 +23832,7 @@
 			if (vm.adsId) {
 				vm.adsID = vm.adsId;
 			}
+			vm.loaded = false;
 			vm.marker = {
 				id: 1,
 				coords: {
@@ -23986,6 +24054,7 @@
 				vm.marker.coords.latitude = vm.ads.place.geo.lat;
 				vm.marker.coords.longitude = vm.ads.place.geo.lon;
 				vm.likeAdsClass = "";
+				vm.loaded = true;
 
 				vm.likeAds = function (event, adsID) {
 					//event.stopPropagation();
@@ -34017,6 +34086,7 @@
 	        replace: 'true',
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'RewayCommonUtil', 'NgMap', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, RewayCommonUtil, NgMap) {
 	            var vm = this;
+	            vm.iconSearchClass = "iconSearch";
 	            $(".btn-more .collapse-title").click(function () {
 	                $(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
 	            });
@@ -34418,6 +34488,14 @@
 	                $scope.$apply();
 	            };
 
+	            vm.showLoadingFuntion = function (loading) {
+	                if (loading == true) {
+	                    vm.iconSearchClass = "iconSearching search-head fa-spin";
+	                } else {
+	                    vm.iconSearchClass = "iconSearch";
+	                }
+	            };
+
 	            NgMap.getMap("filtermap").then(function (map) {
 	                vm.map = map;
 	                /*window.RewayClientUtils.createPlaceAutoComplete(vm.selectPlaceCallback,"searchadd",map,[
@@ -34445,7 +34523,7 @@
 	                    types: "1",
 	                    place_id: "111",
 	                    class: "iconLocation grasy"
-	                }]);
+	                }], vm.showLoadingFuntion);
 	                // vm.PlacesService =  new google.maps.places.PlacesService(map);                                
 	            });
 
@@ -34827,13 +34905,14 @@
 	angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
 	    var def = {
 	        restrict: 'E',
-	        scope: { mode: '=mode', headerInfo: '=headerInfo' },
+	        scope: { mode: '=mode', headerInfo: '=headerInfo', iconSearchClass: '=iconSearchClass' },
 	        terminal: true,
 	        templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
 	        replace: 'true',
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'RewayCommonUtil', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, RewayCommonUtil) {
 	            var vm = this;
 	            vm.stateName = $state.current.name;
+	            // vm.iconSearchClass = "iconSearch search-head";        
 	            //nhannc
 	            $scope.isPostPage = false;
 	            vm.openPost = function () {
@@ -35103,6 +35182,13 @@
 	            vm.goToHomePage = function () {
 	                $state.go('mhome', {}, { location: true });
 	            };
+	            vm.showLoadingFuntion = function (loading) {
+	                if (loading == true) {
+	                    $scope.iconSearchClass = "iconSearching search-head fa-spin";
+	                } else {
+	                    $scope.iconSearchClass = "iconSearch search-head";
+	                }
+	            };
 	            vm.init = function () {
 	                RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1, "searchadd1", [{
 	                    description: "3",
@@ -35114,7 +35200,7 @@
 	                    types: "1",
 	                    place_id: "111",
 	                    class: "iconLocation grasy"
-	                }]);
+	                }], vm.showLoadingFuntion);
 
 	                $scope.$bus.subscribe({
 	                    channel: 'search',

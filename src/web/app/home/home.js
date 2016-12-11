@@ -358,9 +358,8 @@
     $rootScope.headerInfo = {
       act: "Quận Cầu Giấy, Hà Nội",
       listMoreFirstTitle: 'Hung',
-      listMoreSecondTitle: 'Tim'
-    }
-
+      listMoreSecondTitle: 'Tim',      
+    }    
     $rootScope.searchData = {
         "placeId": undefined,
         "loaiTin": 0,

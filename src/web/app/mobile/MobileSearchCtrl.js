@@ -17,8 +17,10 @@
 		// vm.zoomMode = "auto";
         vm.pageSize = 25;        
         vm.drawButtonClass ="p-icon i-mapdraw";
+        vm.mapLocationClass = "p-icon i-maplocation";
         $scope.relandMarkerGroupCss = "reland-marker marker-include";
         $scope.relandMarkerCss = "reland-marker";
+        vm.searchingIconClass = "iconSearching search-head fa-spin";
         
 
         vm.resetResultList = function(){
@@ -44,6 +46,7 @@
                       radius : 2
                     };
                     vm.initialized = false
+                    vm.mapLocationClass = "p-icon i-maplocation i-maplocationActive";
 
                     vm.disableIdleHandler();
                     $rootScope.searchData.viewport = undefined;
@@ -53,6 +56,7 @@
                     $rootScope.currentLocation.lon = position.coords.longitude;
                     $scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
                     vm.marker = position;
+                    vm.map.setZoom(20);
                     // homeDataSearch.currentLocation = $rootScope.currentLocation;
            //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
                     //  //alert(JSON.stringify(res));
@@ -65,7 +69,7 @@
                         //vm.initialized = true;
 
                         $timeout(function() {
-                            vm.initialized = true;
+                            //vm.initialized = true;
                             //vm.map.fitBounds(bounds);
                             vm.humanZoom = false;
                             vm.enableMapIdleHandler();
@@ -266,8 +270,8 @@
             if(!vm.map)
                 return;
             vm.disableIdleHandler();
-            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "idle", function(){
-                if(vm.initialized == true){
+            vm.zoomChangeHanlder = google.maps.event.addListener(vm.map, "dragend", function(){
+                // if(vm.initialized == true){
                     vm.initialized = false;
                     vm.humanZoom = true;                    
                     console.log("search due to zoom zoom_changed");
@@ -300,21 +304,21 @@
 
                     vm.search(function(){
                         $timeout(function() {
-                            vm.initialized = true;
+                            //vm.initialized = true;
                             //vm.map.fitBounds(bounds);
                             vm.humanZoom = false;                            
                         }, 0);
                         
                     });
                     // alert('human zoom');
-                }else{
-                    console.log("not human zoom and turn to human zoom");
-                    $timeout(function() {
-                        vm.initialized = true;
-                        //vm.map.fitBounds(bounds);
-                        vm.humanZoom = false;
-                    }, 200);
-                }
+                // }else{
+                //     console.log("not human zoom and turn to human zoom");
+                //     $timeout(function() {
+                //         //vm.initialized = true;
+                //         //vm.map.fitBounds(bounds);
+                //         vm.humanZoom = false;
+                //     }, 200);
+                // }
             });   
         }
         $scope.$on("$destroy", function() {
@@ -375,7 +379,7 @@
                     vm.initialized = true;
                 },0);                        
             }
-            vm.enableMapIdleHandler();
+            // vm.enableMapIdleHandler();
 
 			// vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
    //          	//alert(vm.map.getBounds());
@@ -588,6 +592,9 @@
                         vm.initMap = false;
 
                     }
+                    if(vm.ads_list.length ==0 ){
+                        vm.poly.setMap(null);
+                    }
                 });
                 
                 vm.mapMode = 2;
@@ -651,7 +658,10 @@
                 }
                 google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
                 vm.drawButtonClass ="p-icon i-mapdraw";
-                vm.enable();              
+                vm.enable();      
+                if($scope.markers.length ==0 && vm.ads_list.length >0 ){
+                    vm.createMarkersFromAds($scope,vm.ads_list);
+                }        
                 // if(vm.place){
                 //     $rootScope.act = vm.place.fullName;
                 // }  
@@ -749,17 +759,56 @@
         //         vm.mapInitialized(vm.map);
         //     } 
         // }
+        vm.createMarkersFromAds = function(scope, adsList){
+            scope.markers = [];
+            for(var i = 0; i < adsList.length; i++) { 
+                var ads = adsList[i];
+                if(adsList.map){  
+                    var dup = false;                        
+                    for(var j=0;j<scope.markers.length;j++){
+                        var marker = scope.markers[j];
+                        if(marker.coords.latitude==adsList[i].map.marker.latitude
+                           && marker.coords.longitude == adsList[i].map.marker.longitude){
+                            marker.adsList.push(ads);
+                            marker.count = marker.count + 1;
+                            marker.class = "reland-marker marker-include";
+                            dup = true;
+                            if(!ads.gia || ads.gia < 0){                                    
+                                break;
+                            }
+                            if(!marker.gia || marker.gia<0 || marker.gia > ads.gia){
+                                marker.gia = ads.gia;
+                                marker.content = ads.giaFmt;
+                            }
+                            break;
+                        }
+                    }                      
+                    if(dup == false){
+                        var m = adsList[i].map.marker;
+                        m.adsList = [];
+                        m.adsList.push(ads);
+                        adsList[i].map.marker.class = "reland-marker";
+                        scope.markers.push(adsList[i].map.marker);    
+                    }
+                    
+                }
+            }
+        }
 
 		vm.searchPage = function(i, callback){
+            vm.searchingIconClass = "iconSearching search-head fa-spin";
             $rootScope.searchData.pageNo = i; 
             vm.searching = true;      
             $rootScope.searchData.userID = $rootScope.user.userID || undefined;
             //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
             //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
             vm.initialized = false;   
+            // vm.mapLocationClass = "p-icon i-maplocation";
 
             // vm.khoangGiaList[]
             // $rootScope.searchData.khoangGia
+            vm.disableIdleHandler();
+
             HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
                 var result = res.data.list;
                 //vm.totalResultCounts = res.data.list.length;
@@ -819,7 +868,7 @@
                 }
                 vm.ads_list = res.data.list;
 
-                $scope.markers = [];
+                
                 if(vm.viewport){
                     //$scope.center = [vm.viewport.center.lat,vm.viewport.center.lon];  
                     var southWest = new google.maps.LatLng(vm.viewport.southwest.lat, vm.viewport.southwest.lon);
@@ -839,39 +888,40 @@
                         
                 }
 
-
-                for(var i = 0; i < res.data.list.length; i++) { 
-                    var ads = res.data.list[i];
-                    if(res.data.list[i].map){  
-                        var dup = false;                        
-                        for(var j=0;j<$scope.markers.length;j++){
-                            var marker = $scope.markers[j];
-                            if(marker.coords.latitude==res.data.list[i].map.marker.latitude
-                               && marker.coords.longitude == res.data.list[i].map.marker.longitude){
-                                marker.adsList.push(ads);
-                                marker.count = marker.count + 1;
-                                marker.class = "reland-marker marker-include";
-                                dup = true;
-                                if(!ads.gia || ads.gia < 0){                                    
-                                    break;
-                                }
-                                if(!marker.gia || marker.gia<0 || marker.gia > ads.gia){
-                                    marker.gia = ads.gia;
-                                    marker.content = ads.giaFmt;
-                                }
-                                break;
-                            }
-                        }                      
-                        if(dup == false){
-                            var m = res.data.list[i].map.marker;
-                            m.adsList = [];
-                            m.adsList.push(ads);
-                            res.data.list[i].map.marker.class = "reland-marker";
-                            $scope.markers.push(res.data.list[i].map.marker);    
-                        }
+                // $scope.markers = [];
+                // for(var i = 0; i < res.data.list.length; i++) { 
+                //     var ads = res.data.list[i];
+                //     if(res.data.list[i].map){  
+                //         var dup = false;                        
+                //         for(var j=0;j<$scope.markers.length;j++){
+                //             var marker = $scope.markers[j];
+                //             if(marker.coords.latitude==res.data.list[i].map.marker.latitude
+                //                && marker.coords.longitude == res.data.list[i].map.marker.longitude){
+                //                 marker.adsList.push(ads);
+                //                 marker.count = marker.count + 1;
+                //                 marker.class = "reland-marker marker-include";
+                //                 dup = true;
+                //                 if(!ads.gia || ads.gia < 0){                                    
+                //                     break;
+                //                 }
+                //                 if(!marker.gia || marker.gia<0 || marker.gia > ads.gia){
+                //                     marker.gia = ads.gia;
+                //                     marker.content = ads.giaFmt;
+                //                 }
+                //                 break;
+                //             }
+                //         }                      
+                //         if(dup == false){
+                //             var m = res.data.list[i].map.marker;
+                //             m.adsList = [];
+                //             m.adsList.push(ads);
+                //             res.data.list[i].map.marker.class = "reland-marker";
+                //             $scope.markers.push(res.data.list[i].map.marker);    
+                //         }
                         
-                    }
-                }
+                //     }
+                // }
+                vm.createMarkersFromAds($scope,vm.ads_list);
 
                 /*if(vm.ads_list.length==0){
                     vm.zoomMode = "false";
@@ -934,12 +984,24 @@
                         });
                 }
                 vm.disableScrolling = false; 
-                if($rootScope.searchData.pageNo>1 && result && result.length >0 && vm.viewMode=="map"){
-                    $timeout(function() {
+
+                // if($rootScope.searchData.pageNo>1 && result && result.length >0 && vm.viewMode=="map"){
+                //     $timeout(function() {
+                //         $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
+                //         vm.initialized = true;
+                //     },100);    
+                // }               
+                $timeout(function() {
+                    if($rootScope.searchData.pageNo>1 && result && result.length >0 && vm.viewMode=="map"){
                         $rootScope.showNotify("Đang hiển thị từ " + vm.currentPageStart + "-" + vm.currentPageEnd + " / " + vm.totalResultCounts + " kết quả phù hợp",".mapsnotify");
-                    },100);    
-                }               
+                    }   
+                },0);                
+                $timeout(function() {
+                    vm.initialized = true;
+                    vm.enableMapIdleHandler();
+                },0);
                 vm.searching = false; 
+                vm.searchingIconClass = "iconSearch search-head";
                 if(callback)
                     callback(res);
             });

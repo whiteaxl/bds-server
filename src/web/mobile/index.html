@@ -42,10 +42,40 @@
             width: 100%;
     }
 
-    .iconSearch1: before {
-        content: 'fa fa-refresh fa-spin';
+    .iconSearching:before {
+        content: "\f110";
+        /*content: "\f002 \"*/        
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;        
     }
-
+    .spinner:after {
+        top: 107px;
+        height: 1px;
+    }
+    .spinner:before {
+        content: "";
+        height: 2px;
+        position: absolute;
+        left: 0;
+        right: 15px;
+        top: 81px;
+        background: #e4e4e4;
+    }
+    div.drum-wrapper {
+        position: relative;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        height: 130px;
+        width: 100%;
+        display: inline-block;
+        margin: 0 auto;
+        vertical-align: middle;
+    }
 
     </style>
     

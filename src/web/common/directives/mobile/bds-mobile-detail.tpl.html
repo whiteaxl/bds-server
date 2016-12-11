@@ -16,8 +16,8 @@
         <span class="bgOpa"></span>
     </header>
     <div class="notifyBox detailnotify">Đã lưu tin thành công</div>
-    
-    <div class="wapper" style="position: absolute;top: 0px;">
+    <div class="loading" style="display:block" ng-if="mdt.loaded!=true"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
+    <div class="wapper" ng-show="mdt.loaded==true" style="position: absolute;top: 0px;">
     	<div class="detail-page">
         	<div class="img" ng-click="mdt.showFullImage();" style="background-image:url({{mdt.ads.image.cover}})"><a href="#"  data-fancybox-group="gallery"><i class="iconCamera"></i> 1/{{mdt.ads.image.images.length}}</a></div>
             <a href="{{img}}" ng-repeat="img in mdt.ads.image.images track by $index" class="fancybox" data-fancybox-group="gallery" title=""></a>

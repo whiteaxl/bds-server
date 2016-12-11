@@ -8,7 +8,7 @@
 	<div id="loadingSearchDiv" class="loading" style="display:none"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
 	<form>
 		<div class="search-fr">
-	    	<i class="iconSearch"></i>
+	    	<i ng-class="mf.iconSearchClass" style="left: 12px; top: 5px;color: white; position: absolute;font-weight: bold;"></i>
 	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>

@@ -1,14 +1,15 @@
 angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeout) {
     var def = {
         restrict: 'E',
-        scope: {mode: '=mode',headerInfo: '=headerInfo'},
+        scope: {mode: '=mode',headerInfo: '=headerInfo', iconSearchClass: '=iconSearchClass'},
         terminal: true,
         templateUrl: "/web/common/directives/mobile/bds-mobile-header.tpl.html",
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil) {
                 var vm = this; 
-                vm.stateName = $state.current.name;                
+                vm.stateName = $state.current.name;        
+                // vm.iconSearchClass = "iconSearch search-head";        
                 //nhannc
                 $scope.isPostPage = false;
                 vm.openPost = function(){
@@ -296,6 +297,13 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 vm.goToHomePage = function(){
                     $state.go('mhome', { }, {location: true});
                 }
+                vm.showLoadingFuntion = function(loading){
+                    if(loading==true){
+                        $scope.iconSearchClass = "iconSearching search-head fa-spin";
+                    }else{
+                        $scope.iconSearchClass = "iconSearch search-head";
+                    }
+                }
                 vm.init = function(){
                     RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1,"searchadd1",[
                         {
@@ -310,7 +318,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                             place_id:   "111",
                             class: "iconLocation grasy"
                         }
-                    ]);
+                    ],vm.showLoadingFuntion);
 
                     $scope.$bus.subscribe({
                         channel: 'search',
