@@ -132,13 +132,13 @@ https.start(function () {
 
   //console.log('Server is running: ' + HapiServer.info.uri);
 
-    console.log("Done https.start");
-
+    console.log("Done https.start", `Server started at ${ https.info.uri }`);
 });
 
 
 
 http.start(() => {
     console.log("Done http.start");
+    console.log("Done https.start", `Server started at ${ http.info.uri }`);
 });
 

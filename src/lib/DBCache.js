@@ -10,6 +10,8 @@ var placeUtil = require('./placeUtil');
 
 var loki = require("lokijs");
 
+var async = require("async");
+
 var constants = require("./constant");
 
 var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
@@ -25,6 +27,8 @@ var adsCol = db.addCollection('ads', {
 global.rwcache = {};
 
 global.lastSyncTime = 0;
+
+var FIlTER_LIMIT = process.env.FIlTER_LIMIT || 100;
 
 
 function loadDoc(type, moreCondition, callback) {
@@ -279,30 +283,12 @@ var cache = {
       }
     }
   },
+  _doSortingAndReturn(filtered, q, callback) {
+    let count = filtered.length;
+    console.log("Filterred length: ", count);
 
-  query(q, callback){
-    let startQuery = new Date().getTime();
-
-    if (q.huongNha && q.huongNha.length==1 && q.huongNha[0] == 0) {
-      q.huongNha = null;
-    }
     //sorting
     let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
-
-    let that = this;
-
-    let filtered = [];
-    filtered = adsCol.chain()
-      .find({loaiTin:q.loaiTin})
-      .where((e) => {
-        return that._match(q, e)
-      })
-      .data();
-
-    //ordering
-    let count = filtered.length;
-
-    console.log("Filterred length: ", count);
 
     let sign = 1;
     if (orderBy.type == 'DESC') {
@@ -344,13 +330,51 @@ var cache = {
     //do paging
     filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
 
-    let endQuery = new Date().getTime();
 
-    logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
 
     callback(null, filtered, count);
-
     return filtered;
+  },
+  
+  query(q, callback){
+    let startQuery = new Date().getTime();
+
+    if (q.huongNha && q.huongNha.length==1 && q.huongNha[0] == 0) {
+      q.huongNha = null;
+    }
+
+    let that = this;
+
+    let filteredByLoaiTin = adsCol.chain()
+      .find({loaiTin:q.loaiTin})
+      .where((e) => {
+        return that._match(q, e)
+      })
+      .data();
+
+
+    /*
+    async.filterLimit(filteredByLoaiTin, FIlTER_LIMIT, (one, callbackFilter) => {
+      let truth = that._match(q, one);
+      //callbackFilter(null, truth);
+
+      // defer the callback
+      setImmediate(callbackFilter, null, truth);
+    }, (err, filtered) => {
+
+      that._doSortingAndReturn(filtered, q, callback);
+
+      let endQuery = new Date().getTime();
+      logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
+    });
+    */
+    let filtered = filteredByLoaiTin;
+
+    that._doSortingAndReturn(filtered, q, callback);
+
+    let endQuery = new Date().getTime();
+    logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
+
   },
 
   _match(q, ads){
