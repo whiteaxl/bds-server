@@ -345,18 +345,17 @@ var cache = {
 
     let that = this;
 
-    let filteredByLoaiTin = [];
-    filteredByLoaiTin = adsCol.chain()
+    let filteredByLoaiTin = adsCol.chain()
       .find({loaiTin:q.loaiTin})
-      /*
       .where((e) => {
         return that._match(q, e)
       })
-      */
       .data();
 
+
+    /*
     async.filterLimit(filteredByLoaiTin, FIlTER_LIMIT, (one, callbackFilter) => {
-      let truth = g_match(q, one);
+      let truth = that._match(q, one);
       //callbackFilter(null, truth);
 
       // defer the callback
@@ -368,6 +367,14 @@ var cache = {
       let endQuery = new Date().getTime();
       logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
     });
+    */
+    let filtered = filteredByLoaiTin;
+
+    that._doSortingAndReturn(filtered, q, callback);
+
+    let endQuery = new Date().getTime();
+    logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
+
   },
 
   _match(q, ads){
@@ -488,124 +495,5 @@ var cache = {
   }
 
 };
-
-
-function g_match(q, ads){
-  if (q.loaiTin !== ads.loaiTin) {
-    return false;
-  }
-
-  if(q.loaiNhaDat && _.indexOf(q.loaiNhaDat, ads.loaiNhaDat) === -1){
-    //logUtil.info("Not match loaiNhaDat", q.loaiNhaDat, ads.loaiNhaDat);
-    return false;
-  }
-
-  if (q.viewport) {
-    let vp = q.viewport;
-    let geo = ads.place.geo;
-
-    if (geo.lat < vp.southwest.lat || geo.lat > vp.northeast.lat
-      || geo.lon < vp.southwest.lon || geo.lon > vp.northeast.lon
-    ) {
-      //logUtil.info("Not match viewport", vp, geo);
-      return false;
-    }
-  }
-
-  if (q.diaChinh) {
-    let dc = q.diaChinh;
-    if (dc.tinhKhongDau && ads.place.diaChinh.codeTinh !== dc.tinhKhongDau) {
-      //logUtil.info("Not match codeTinh", dc.tinhKhongDau, ads.place.diaChinh.codeTinh);
-      return false;
-    }
-
-    if (dc.huyenKhongDau && ads.place.diaChinh.codeHuyen !== dc.huyenKhongDau) {
-      //logUtil.info("Not match codeHuyen", dc.huyenKhongDau, ads.place.diaChinh.codeHuyen);
-      return false;
-    }
-    if (dc.xaKhongDau && ads.place.diaChinh.codeXa !== dc.xaKhongDau) {
-      return false;
-    }
-    if (dc.duAnKhongDau && ads.place.diaChinh.codeDuAn !== dc.duAnKhongDau) {
-      return false;
-    }
-  }
-
-  if (q.ngayDangTinGREATER && ads.ngayDangTin <= q.ngayDangTinGREATER) { //ngayDangTinFrom: 20-04-2016
-    return false;
-  }
-
-  if (q.giaBETWEEN && (q.giaBETWEEN[0] > 0 || q.giaBETWEEN[1] < 9999999)) {
-    if (ads.gia < q.giaBETWEEN[0] || ads.gia > q.giaBETWEEN[1]) {
-      return false;
-    }
-  }
-
-  if(q.soPhongNguGREATER){
-    let soPhongNguGREATER = Number(q.soPhongNguGREATER);
-    if (soPhongNguGREATER && ads.soPhongNgu < soPhongNguGREATER) {
-      return false;
-    }
-  }
-
-
-  if(q.soPhongTamGREATER){
-    let soPhongTamGREATER = Number(q.soPhongTamGREATER);
-    if (soPhongTamGREATER && ads.soPhongTam < soPhongTamGREATER) {
-      return false;
-    }
-  }
-  if(q.soTangGREATER){
-    let soTangGREATER = Number(q.soTangGREATER);
-    if (soTangGREATER && ads.soTang < soTangGREATER) {
-      return false;
-    }
-  }
-
-  if ((q.dienTichBETWEEN) && (q.dienTichBETWEEN[0] > 0 || q.dienTichBETWEEN[1] < 9999999)) {
-    if (ads.dienTich < q.dienTichBETWEEN[0] || ads.dienTich > q.dienTichBETWEEN[1]) {
-      return false;
-    }
-  }
-
-  if(q.huongNha  && _.indexOf(q.huongNha, ads.huongNha) === -1){
-    return false;
-  }
-
-  if(q.soPhongNgu){
-    let soPhongNgu = Number(q.soPhongNgu);
-    if (ads.soPhongNgu !== soPhongNgu) {
-      return false;
-    }
-  }
-  if(q.soPhongTam){
-    let soPhongTam = Number(q.soPhongTam);
-    if (ads.soPhongTam !== soPhongTam) {
-      return false;
-    }
-  }
-
-  if(q.soTang){
-    let soTang = Number(q.soTang);
-    if (ads.soTang !== soTang) {
-      return false;
-    }
-  }
-
-  if (q.gia) {
-    if (ads.gia !== q.gia) {
-      return false;
-    }
-  }
-
-  if (q.dienTich) {
-    if (ads.dienTich !== q.dienTich) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 
 module.exports = cache;
