@@ -553,6 +553,9 @@
                     }  
                     $rootScope.searchData.diaChinh = undefined;  
                 }
+                vm.mapMode = 2;
+                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
+                vm.enable();   
                 
                 vm.search(function(){
                     let polygonCoords = $rootScope.searchData.polygon.map((e) => {
@@ -621,9 +624,7 @@
                     }
                 });
                 
-                vm.mapMode = 2;
-                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
-                vm.enable();   
+                
 
                 //google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
                 

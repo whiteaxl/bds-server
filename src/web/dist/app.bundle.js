@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3f4f0538278e0bd06481"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "57cf2ad2d775e878c4c9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -23239,6 +23239,9 @@
 	                    }
 	                    $rootScope.searchData.diaChinh = undefined;
 	                }
+	                vm.mapMode = 2;
+	                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
+	                vm.enable();
 
 	                vm.search(function () {
 	                    var polygonCoords = $rootScope.searchData.polygon.map(function (e) {
@@ -23303,10 +23306,6 @@
 	                        vm.poly.setMap(null);
 	                    }
 	                });
-
-	                vm.mapMode = 2;
-	                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
-	                vm.enable();
 
 	                //google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
 

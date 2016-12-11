@@ -86,7 +86,7 @@
 <div  class="wapper" style="top: 42px;">
     <!-- <div  class="maps" ng-style="{'visibility': msc.viewMode=='map' ? 'visible' : 'hidden'}" style="bottom: 44px;"> -->
     <div  class="maps"  ng-show ="msc.viewMode!='list'">
-        <div ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
+        <div ontouchmove="return false;" ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" gesture-handling="greedy" street-view-control-options="{position:'RIGHT_CENTER'}"
              ng-show ="msc.viewMode!='list'"  center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
