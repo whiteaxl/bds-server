@@ -13,7 +13,7 @@ var placeUtil = require('./placeUtil');
 var async = require("async");
 
 //var adsCacheFilename = '/tmp/adsCache.json';
-var adsCacheFilename = '/Users/supermac/Projects/reway/bds-server/adsCache.json';
+var adsCacheFilename = '/tmp/adsCache.json';
 
 var constants = require("./constant");
 
