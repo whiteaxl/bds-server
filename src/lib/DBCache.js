@@ -5,11 +5,8 @@ var _ = require("lodash");
 var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
-var fs=require("fs");
 
 var placeUtil = require('./placeUtil');
-
-var loki = require("lokijs");
 
 var async = require("async");
 
@@ -17,9 +14,6 @@ var constants = require("./constant");
 
 var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
   , "place", "loaiNhaDat", "huongNha", "ngayDangTin", "chiTiet", "dangBoi"];
-
-var adsCol;
-var db = null;
 
 //declare global cache
 global.rwcache = {};
@@ -54,39 +48,17 @@ function loadDoc(type, moreCondition, callback) {
   });
 }
 
-function initLokiCache(done) {
+function initCache(done) {
   let fileName = 'ads_cache_dump.json';
   console.log("Loki fileName:", fileName);
 
-  db = new loki(fileName, {
-    //autosave: true,
-    //autosaveInterval: 1*60*1000,//2 mins
-    //persistenceMethod: 'fs',
-    //autoload: true,
-    //autoloadCallback : cacheLoadHandler
-  });
+  global.rwcache.ads = {};
+  global.rwcache.ads[0] = {}; //sale
+  global.rwcache.ads[1] = {}; //rent
 
-  function cacheLoadHandler() {
-    console.log("Call cacheLoadHandler...");
+  //global.lastSyncTime = fs.statSync(fileName).mtime.getTime();
 
-    // if database did not exist it will be empty so I will intitialize here
-    adsCol = db.getCollection('ads');
-    if (adsCol === null) {
-      console.log("Add new 'ads' DB to lokiJS");
-
-      adsCol = db.addCollection('ads', {
-        unique : ['id'],
-        indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
-      });
-    } else {
-      global.lastSyncTime = fs.statSync(fileName).mtime.getTime();
-    }
-
-    done();
-  }
-
-  cacheLoadHandler();
-
+  done();
 }
 
 function _loadAdsFromDB(isFull, moreCondition, callback) {
@@ -106,21 +78,8 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
       return;
     }
 
-    let adsColNotEmpty = adsCol.count() !== 0;
-
-    list.forEach(e => {
-      if (adsColNotEmpty) { // first time fullload, just simply insert
-        let inCache = adsCol.by('id', e.id);
-        if (inCache) {
-          Object.assign(inCache, e);
-
-          adsCol.update(inCache);
-        } else {
-          adsCol.insert(e);
-        }
-      } else {
-        adsCol.insert(e);
-      }
+    list.forEach(ads => {
+      global.rwcache.ads[ads.loaiTin][ads.id] = ads;
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
@@ -130,8 +89,8 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
 }
 
 function loadAds(isFull, moreCondition, callback) {
-  if(!db) {
-    initLokiCache(() => {
+  if(!global.rwcache.ads) {
+    initCache(() => {
       _loadAdsFromDB(isFull, moreCondition, callback);
     });
   } else {
@@ -141,14 +100,7 @@ function loadAds(isFull, moreCondition, callback) {
 
 
 function updateCache(ads){
-  let inCache = adsCol.by('id', ads.id);
-  if (inCache) {
-    Object.assign(inCache, ads);
-
-    adsCol.update(inCache);
-  } else {
-    adsCol.insert(ads);
-  }
+  global.rwcache.ads[ads.loaiTin][ads.id] = ads;
 }
 
 var cache = {
@@ -240,7 +192,8 @@ var cache = {
 
     loadAds(isFull, moreCondition, (length)=> {
       total += length;
-      logUtil.info("Total loaded ads : ", total + ", from loki ads:" + adsCol.count());
+      logUtil.info("Total loaded ads : ", total + ", from loki ads:"
+        + (Object.keys(global.rwcache.ads[0]).length + Object.keys(global.rwcache.ads[1]).length));
       that._loadingAds = false;
       done && done();
     });
@@ -384,13 +337,17 @@ var cache = {
 
     let that = this;
 
-    let filteredByLoaiTin = adsCol.chain()
-      .find({loaiTin:q.loaiTin})
-      .where((e) => {
-        return that._match(q, e)
-      })
-      .data();
+    let allByLoaiTin = global.rwcache.ads[q.loaiTin];
 
+    let filtered = [];
+    let tmp;
+
+    for (let key in allByLoaiTin) {
+      tmp = allByLoaiTin[key];
+      if (that._match(q, tmp)) {
+        filtered.push(tmp);
+      }
+    }
 
     /*
     async.filterLimit(filteredByLoaiTin, FIlTER_LIMIT, (one, callbackFilter) => {
@@ -407,7 +364,7 @@ var cache = {
       logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
     });
     */
-    let filtered = filteredByLoaiTin;
+    //let filtered = filteredByLoaiTin;
 
     that._doSortingAndReturn(filtered, q, callback);
 
