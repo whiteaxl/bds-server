@@ -12,7 +12,8 @@ var placeUtil = require('./placeUtil');
 
 var async = require("async");
 
-var adsCacheFilename = '/tmp/adsCache.json';
+//var adsCacheFilename = '/tmp/adsCache.json';
+var adsCacheFilename = '/Users/supermac/Projects/reway/bds-server/adsCache.json';
 
 var constants = require("./constant");
 
@@ -52,13 +53,20 @@ function loadDoc(type, moreCondition, callback) {
   });
 }
 
+//only for ads
 function saveToFile(obj, filename) {
   var fl = fs.createWriteStream(filename);
 
   var out = jsonStream.stringifyObject();
   out.pipe(fl);
 
-  for (let key in obj) out.write([key, obj[key]]);
+
+  for (let key in obj) {
+    for (let childKey in obj[key]) {
+      out.write([childKey, obj[key][childKey]]);
+    }
+  }
+
   out.end();
 
   console.log("Done save to file: ", filename)
@@ -76,14 +84,20 @@ function loadFromFile(filename) {
 }
 
 function initCache(done) {
+  global.rwcache.ads = {};
+  global.rwcache.ads[0] = {}; //sale
+  global.rwcache.ads[1] = {}; //rent
+
   //load from file
-  global.rwcache.ads = loadFromFile(adsCacheFilename);
-  if (global.rwcache.ads) {
+  let fromFile = loadFromFile(adsCacheFilename);
+  let tmp;
+  if (fromFile) {
+    for(let k in fromFile) {
+      tmp = fromFile[k];
+      global.rwcache.ads[tmp.loaiTin][tmp.id] = tmp;
+    }
+
     global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
-  } else {
-    global.rwcache.ads = {};
-    global.rwcache.ads[0] = {}; //sale
-    global.rwcache.ads[1] = {}; //rent
   }
 
   done();
