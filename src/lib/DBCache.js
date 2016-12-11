@@ -58,7 +58,13 @@ function initLokiCache(done) {
   let fileName = 'ads_cache_dump.json';
   console.log("Loki fileName:", fileName);
 
-  db = new loki(fileName);
+  db = new loki(fileName, {
+    //autosave: true,
+    //autosaveInterval: 1*60*1000,//2 mins
+    //persistenceMethod: 'fs',
+    //autoload: true,
+    //autoloadCallback : cacheLoadHandler
+  });
 
   function cacheLoadHandler() {
     console.log("Call cacheLoadHandler...");
@@ -78,6 +84,8 @@ function initLokiCache(done) {
 
     done();
   }
+
+  cacheLoadHandler();
 
 }
 
