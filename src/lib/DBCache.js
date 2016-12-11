@@ -5,6 +5,7 @@ var _ = require("lodash");
 var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
+var fs=require("fs");
 
 var placeUtil = require('./placeUtil');
 
@@ -17,19 +18,13 @@ var constants = require("./constant");
 var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
   , "place", "loaiNhaDat", "huongNha", "ngayDangTin", "chiTiet", "dangBoi"];
 
-var db = new loki('rw.json');
-var adsCol = db.addCollection('ads', {
-  unique : ['id'],
-  indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
-});
+var adsCol;
+var db = null;
 
 //declare global cache
 global.rwcache = {};
 
 global.lastSyncTime = 0;
-
-var FIlTER_LIMIT = process.env.FIlTER_LIMIT || 100;
-
 
 function loadDoc(type, moreCondition, callback) {
   let sql = `select t.* from default t where type='${type}' `;
@@ -59,8 +54,39 @@ function loadDoc(type, moreCondition, callback) {
   });
 }
 
+function initLokiCache(done) {
+  let fileName = 'ads_cache_dump.json';
 
-function loadAds(isFull, moreCondition, callback) {
+  db = new loki(fileName, {
+    autosave: true,
+    autosaveInterval: 1*60*1000,//2 mins
+    persistenceMethod: 'fs',
+    autoload: true,
+    autoloadCallback : cacheLoadHandler
+  });
+
+  function cacheLoadHandler() {
+    console.log("Call cacheLoadHandler...");
+
+    // if database did not exist it will be empty so I will intitialize here
+    adsCol = db.getCollection('ads');
+    if (adsCol === null) {
+      console.log("Add new 'ads' DB to lokiJS");
+
+      adsCol = db.addCollection('ads', {
+        unique : ['id'],
+        indices: ['loaiTin', 'place.diaChinh.codeTinh', 'place.diaChinh.codeHuyen']
+      });
+    } else {
+      global.lastSyncTime = fs.statSync(fileName).mtime.getTime();
+    }
+
+    done();
+  }
+
+}
+
+function _loadAdsFromDB(isFull, moreCondition, callback) {
   let type = 'Ads';
   let projection = "id, gia, loaiTin, dienTich, soPhongNgu, soTang, soPhongTam, image, place, giaM2, loaiNhaDat, huongNha, ngayDangTin,timeExtracted ";
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
@@ -98,6 +124,16 @@ function loadAds(isFull, moreCondition, callback) {
 
     callback(list.length);
   });
+}
+
+function loadAds(isFull, moreCondition, callback) {
+  if(!db) {
+    initLokiCache(() => {
+      _loadAdsFromDB(isFull, moreCondition, callback);
+    });
+  } else {
+    _loadAdsFromDB(isFull, moreCondition, callback);
+  }
 }
 
 
