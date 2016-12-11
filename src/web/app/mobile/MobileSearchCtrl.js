@@ -223,6 +223,9 @@
                 vm.mapInitialized();
             }, 0);            
             vm.changeBrowserHistory();
+            $timeout(function() {
+                google.maps.event.trigger(vm.map, "resize");
+            });            
 		}
 		vm.sort = function(sortByName, sortByType){
 			$rootScope.searchData.orderBy.name = sortByName;
@@ -518,6 +521,17 @@
         }
         /*start draw mapMode*/
         vm.drawText = "Draw";
+        vm.handleTouchStatrt = function(){
+            return false;
+        }
+
+        angular.element('#mapContainer').bind('touchstart', function(e){
+            //alert('aaa');\
+            if(vm.mapMode == 1)
+                e.preventDefault();
+            //e.stopPropagation();
+            //return false;
+        });
 
         vm.drawmapMode = function(){
 
