@@ -57,6 +57,9 @@ function loadDoc(type, moreCondition, callback) {
 function initLokiCache(done) {
   let fileName = 'ads_cache_dump.json';
 
+  console.log("Loki fileName:", fileName);
+
+  
   db = new loki(fileName, {
     autosave: true,
     autosaveInterval: 1*60*1000,//2 mins
