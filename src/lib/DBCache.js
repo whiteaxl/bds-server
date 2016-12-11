@@ -10,6 +10,8 @@ var placeUtil = require('./placeUtil');
 
 var loki = require("lokijs");
 
+var async = require("async");
+
 var constants = require("./constant");
 
 var COMPARE_FIELDS = ["id", "gia", "loaiTin", "dienTich", "soPhongNgu", "soTang", "soPhongTam", "image"
@@ -291,66 +293,72 @@ var cache = {
 
     let that = this;
 
-    let filtered = [];
-    filtered = adsCol.chain()
+    let filteredByLoaiTin = [];
+    filteredByLoaiTin = adsCol.chain()
       .find({loaiTin:q.loaiTin})
+      /*
       .where((e) => {
         return that._match(q, e)
       })
+      */
       .data();
 
-    //ordering
-    let count = filtered.length;
+    async.filter(filteredByLoaiTin, (e, callback) => {
+      return that._match(q, e);
+    }, (err, filtered) => {
 
-    console.log("Filterred length: ", count);
+      //ordering
+      let count = filtered.length;
 
-    let sign = 1;
-    if (orderBy.type == 'DESC') {
-      sign = -1;
-    }
-    console.log("Will sort by ", orderBy, sign);
+      console.log("Filterred length: ", count);
 
-    let startTime = new Date().getTime();
-    filtered.sort((a, b) => {
-      if (a[orderBy.name] > b[orderBy.name]) {
-        return sign;
+      let sign = 1;
+      if (orderBy.type == 'DESC') {
+        sign = -1;
       }
+      console.log("Will sort by ", orderBy, sign);
 
-      if (a[orderBy.name] < b[orderBy.name]) {
-        return -1 * sign;
-      }
+      let startTime = new Date().getTime();
+      filtered.sort((a, b) => {
+        if (a[orderBy.name] > b[orderBy.name]) {
+          return sign;
+        }
 
-      if (a.timeExtracted > b.timeExtracted) {
-        return sign;
-      }
-      if (a.timeExtracted < b.timeExtracted) {
-        return -1 * sign;
-      }
+        if (a[orderBy.name] < b[orderBy.name]) {
+          return -1 * sign;
+        }
 
-      if (a.id > b.id) {
-        return sign;
-      }
+        if (a.timeExtracted > b.timeExtracted) {
+          return sign;
+        }
+        if (a.timeExtracted < b.timeExtracted) {
+          return -1 * sign;
+        }
 
-      if (a.id < b.id) {
-        return -1 * sign;
-      }
+        if (a.id > b.id) {
+          return sign;
+        }
 
-      return 0;
+        if (a.id < b.id) {
+          return -1 * sign;
+        }
+
+        return 0;
+      });
+      let endTime = new Date().getTime();
+
+      logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
+
+      //do paging
+      filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
+
+      let endQuery = new Date().getTime();
+
+      logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
+
+      callback(null, filtered, count);
+      return filtered;
     });
-    let endTime = new Date().getTime();
-
-    logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
-
-    //do paging
-    filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
-
-    let endQuery = new Date().getTime();
-
-    logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
-
-    callback(null, filtered, count);
-
-    return filtered;
   },
 
   _match(q, ads){
