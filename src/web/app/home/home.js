@@ -292,7 +292,7 @@
       userID: undefined,
       adsLikes: [],
       lastSearch: null,
-      autoSearch: true
+      autoSearch: false
     }    
     $rootScope.pageSize = 25;
     $rootScope.act = "Quận Cầu Giấy, Hà Nội";
@@ -395,7 +395,8 @@
         //   center : PointModel,
         //   radius : Joi.number()
         // },
-        "orderBy" : {"name": "ngayDangTin", "type":"ASC"},
+        //server ordered by itself
+        //"orderBy" : {"name": "ngayDangTin", "type":"ASC"},
         "limit" : 25,
         "pageNo" : 1,
         "isIncludeCountInResponse" : false,

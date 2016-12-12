@@ -735,49 +735,51 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             if(drumLable)
                                 drumLable=drumLable.trim();
                             $("#" + selected.id + "_value").html(drumLable);
-                            var array = JSON.parse(selected.value);
-                            if(selected.id =="prices"){
-                                $scope.searchData.giaBETWEEN = array;
-                                $timeout(function () {
-                                    if(drumLable == "Bất kỳ"){
-                                        $scope.giaKhacFrom="";
-                                        $scope.giaKhacTo="";
-                                    } else if(drumLable.indexOf("&gt;") > -1){
-                                        $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
-                                        $scope.giaKhacTo="";
-                                    } else{
-                                        $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
-                                        $scope.giaKhacTo=Math.round((parseFloat(array[1])/1000)*1000)/1000;
-                                    }
-                                },0)
-                            }else if(selected.id =="area"){
-                                $scope.searchData.dienTichBETWEEN = array;
-                                $timeout(function () {
-                                    if(drumLable == "Bất kỳ"){
-                                        $scope.dienTichKhacFrom="";
-                                        $scope.dienTichKhacTo="";
-                                    } else if(drumLable.indexOf("&gt;") > -1){
-                                        $scope.dienTichKhacFrom=array[0];
-                                        $scope.dienTichKhacTo="";
-                                    } else{
-                                        $scope.dienTichKhacFrom=array[0];
-                                        $scope.dienTichKhacTo=array[1];
-                                    }
-                                },0)
-                            }else if(selected.id=="datepost"){
-                                $scope.searchData.ngayDangTinGREATER = selected.value;
-                                var soNgayDang = drumLable;
-                                if(soNgayDang.trim()=="Bất kỳ"){
+                            if(selected.value && selected.value.trim().length>0){
+                                var array = JSON.parse(selected.value);
+                                if(selected.id =="prices"){
+                                    $scope.searchData.giaBETWEEN = array;
                                     $timeout(function () {
-                                        $scope.ngayDangTinInput =  0;
+                                        if(drumLable == "Bất kỳ"){
+                                            $scope.giaKhacFrom="";
+                                            $scope.giaKhacTo="";
+                                        } else if(drumLable.indexOf("&gt;") > -1){
+                                            $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
+                                            $scope.giaKhacTo="";
+                                        } else{
+                                            $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
+                                            $scope.giaKhacTo=Math.round((parseFloat(array[1])/1000)*1000)/1000;
+                                        }
                                     },0)
-                                } else{
-                                    if(soNgayDang.indexOf(" ") > -1){
-                                        soNgayDang=soNgayDang.substring(0,soNgayDang.indexOf(" "));
-                                    }
+                                }else if(selected.id =="area"){
+                                    $scope.searchData.dienTichBETWEEN = array;
                                     $timeout(function () {
-                                        $scope.ngayDangTinInput =  parseInt(soNgayDang);
+                                        if(drumLable == "Bất kỳ"){
+                                            $scope.dienTichKhacFrom="";
+                                            $scope.dienTichKhacTo="";
+                                        } else if(drumLable.indexOf("&gt;") > -1){
+                                            $scope.dienTichKhacFrom=array[0];
+                                            $scope.dienTichKhacTo="";
+                                        } else{
+                                            $scope.dienTichKhacFrom=array[0];
+                                            $scope.dienTichKhacTo=array[1];
+                                        }
                                     },0)
+                                }else if(selected.id=="datepost"){
+                                    $scope.searchData.ngayDangTinGREATER = selected.value;
+                                    var soNgayDang = drumLable;
+                                    if(soNgayDang.trim()=="Bất kỳ"){
+                                        $timeout(function () {
+                                            $scope.ngayDangTinInput =  0;
+                                        },0)
+                                    } else{
+                                        if(soNgayDang.indexOf(" ") > -1){
+                                            soNgayDang=soNgayDang.substring(0,soNgayDang.indexOf(" "));
+                                        }
+                                        $timeout(function () {
+                                            $scope.ngayDangTinInput =  parseInt(soNgayDang);
+                                        },0)
+                                    }
                                 }
                             }
                         }
