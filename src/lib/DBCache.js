@@ -88,17 +88,7 @@ function initCache(done) {
   global.rwcache.ads[0] = {}; //sale
   global.rwcache.ads[1] = {}; //rent
 
-  //load from file
-  let fromFile = loadFromFile(adsCacheFilename);
-  let tmp;
-  if (fromFile) {
-    for(let k in fromFile) {
-      tmp = fromFile[k];
-      global.rwcache.ads[tmp.loaiTin][tmp.id] = tmp;
-    }
-
-    global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
-  }
+  //global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
 
   done();
 }
@@ -237,10 +227,6 @@ var cache = {
       logUtil.info("Total loaded ads : ", total + ", from loki ads:"
         + (Object.keys(global.rwcache.ads[0]).length + Object.keys(global.rwcache.ads[1]).length));
       that._loadingAds = false;
-      //
-      if (total > 0) {
-        saveToFile(global.rwcache.ads, adsCacheFilename);
-      }
 
       done && done();
     });
