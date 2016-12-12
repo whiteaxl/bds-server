@@ -785,16 +785,19 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     vm.updateDrums();
 
                     if($scope.searchData.ngayDangTinGREATER){
-                        var year = $scope.searchData.ngayDangTinGREATER.substring(0,4);
-                        var month = $scope.searchData.ngayDangTinGREATER.substring(4,6);
-                        var day = $scope.searchData.ngayDangTinGREATER.substring(6,8);
-
-                        var dateDangTin = new Date(year, month-1, day);
-                        var currentDate = new Date();
-
-                        var timeDiff = Math.abs(currentDate.getTime() - dateDangTin.getTime());
-                        $scope.ngayDangTinInput = Math.round(timeDiff / (1000 * 3600 * 24));
-                        $("#datepost_value").html($scope.ngayDangTinInput + " ngày");
+                        if($scope.searchData.ngayDangTinGREATER.trim() == "19810101"){
+                            $scope.ngayDangTinInput = 0;
+                            $("#datepost_value").html("Bất kỳ");
+                        } else{
+                            var year = $scope.searchData.ngayDangTinGREATER.substring(0,4);
+                            var month = $scope.searchData.ngayDangTinGREATER.substring(4,6);
+                            var day = $scope.searchData.ngayDangTinGREATER.substring(6,8);
+                            var dateDangTin = new Date(year, month-1, day);
+                            var currentDate = new Date();
+                            var timeDiff = Math.abs(currentDate.getTime() - dateDangTin.getTime());
+                            $scope.ngayDangTinInput = Math.round(timeDiff / (1000 * 3600 * 24));
+                            $("#datepost_value").html(($scope.ngayDangTinInput -1) + " ngày");
+                        }
                     }
 
                     if($scope.searchData.loaiNhaDat){
