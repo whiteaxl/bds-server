@@ -800,14 +800,15 @@
         // }
         vm.createMarkersFromAds = function(scope, adsList){
             scope.markers = [];
-            for(var i = 0; i < adsList.length; i++) { 
+            const PADDING = 0.00000005;
+            for(var i = 0; i < adsList.length; i++) {
                 var ads = adsList[i];
                 if(adsList.map){  
                     var dup = false;                        
                     for(var j=0;j<scope.markers.length;j++){
                         var marker = scope.markers[j];
-                        if(marker.coords.latitude==adsList[i].map.marker.latitude
-                           && marker.coords.longitude == adsList[i].map.marker.longitude){
+                        if((Math.abs(marker.coords.latitude - adsList[i].map.marker.latitude) <= PADDING)
+                           && (Math.abs(marker.coords.longitude - adsList[i].map.marker.longitude) <= PADDING)){
                             marker.adsList.push(ads);
                             marker.count = marker.count + 1;
                             marker.class = "reland-marker marker-include";

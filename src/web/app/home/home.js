@@ -368,12 +368,12 @@
         //"ngayDangTinGREATER" : "19810101",
         "viewport" : {
             "northeast": {
-                "lat": 21.0594115,
-                "lon": 105.8134889
+                "lat": 21.056221,
+                "lon": 105.8139039
             },
             "southwest": {
-                "lat": 21.0009685,
-                "lon": 105.7680415
+                "lat": 21.0011369,
+                "lon": 105.7679238
             }
         },
         // "viewport" : {
@@ -601,14 +601,49 @@
         $('#detailModal').show();
       }
     }
-    $rootScope.showDetailAds = function(adsID,scope){
+    $rootScope.showDetailAds = function(adsID,scope, isFromDetail){
         $rootScope.bodyClass = "hfixed header";        
         $rootScope.bodyScrollTop = $('body').scrollTop();
-        $rootScope.detailAdsScope = scope.$new();
-        $rootScope.compiledDirective = $compile("<bds-detail ads-id='" + adsID+ "' on-remove-detail='$root.removeDetailAds'></bds-detail>")
-        var directiveElement = $rootScope.compiledDirective($rootScope.detailAdsScope);
-        angular.element('#detailModal').append(directiveElement);
-        angular.element('#mainView').hide();
+        if(isFromDetail){
+            var async = require("async");
+            async.series(
+                [function (callback) {
+                    $rootScope.detailAdsScope.$destroy();
+                    angular.element('#detailModal').empty();
+                    $rootScope.detailAdsScope = scope.$parent.$new();
+                    console.log("--------------one------------");
+                    callback(null, 'one');
+                },
+                function (callback) {
+                    $timeout(function() {
+                        $rootScope.compiledDirective = $compile("<bds-detail ads-id='" + adsID+ "' on-remove-detail='$root.removeDetailAds'></bds-detail>");
+                        console.log("--------------two------------");
+                        callback(null, 'two');
+                    },300);
+
+
+                },
+                function (callback) {
+                    $timeout(function() {
+                        var directiveElement = $rootScope.compiledDirective($rootScope.detailAdsScope);
+                        console.log("--------------three------------");
+                        callback(null, 'three');
+                    },300);
+                }]
+                ,function(err, results){
+                    angular.element('#detailModal').append(directiveElement);
+                    console.log("--------------directiveElement----finish------------");
+                }
+            )
+
+        } else{
+            $rootScope.detailAdsScope = scope.$new();
+            $rootScope.compiledDirective = $compile("<bds-detail ads-id='" + adsID+ "' on-remove-detail='$root.removeDetailAds'></bds-detail>")
+            var directiveElement = $rootScope.compiledDirective($rootScope.detailAdsScope);
+            angular.element('#detailModal').append(directiveElement);
+            angular.element('#mainView').hide();
+        }
+
     }
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){

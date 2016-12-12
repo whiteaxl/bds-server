@@ -359,13 +359,11 @@ function _transformDetailAds(adsFromDb) {
     ads.place.duAn = adsFromDb.place.duAn;
     ads.place.diaChi = adsFromDb.place.diaChi;
     ads.place.diaChinh = adsFromDb.place.diaChinh;
-    ads.place.geo = adsFromDb.place.geo;
+    ads.place.geo = adsFromDb.place.geo?{lat:adsFromDb.place.geo.lat,lon:adsFromDb.place.geo.lon}:undefined;
     ads.place.diaChinhFullName = adsFromDb.place.diaChinhFullName;
     ads.place.duAnFullName = adsFromDb.place.duAnFullName;
 
     ads.type = adsFromDb.type;
-
-
     ads.loaiTinFmt = danhMuc.LoaiTin[ads.loaiTin];
     if (ads.loaiNhaDat) {
         ads.loaiNhaDatFmt = ads.loaiTin ? danhMuc.LoaiNhaDatThue[ads.loaiNhaDat] : danhMuc.LoaiNhaDatBan[ads.loaiNhaDat];

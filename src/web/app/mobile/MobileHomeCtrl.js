@@ -122,6 +122,12 @@
 			query.limit = 20;
 			query.duAnID = vm.boSuuTap[index].query.duAnID;
 			let pid = query.place?(query.place.placeId || query.place.place_id):undefined;
+			if(query.dbLimit)
+				query.dbLimit = undefined;
+			if(query.dbOrderBy)
+				query.dbOrderBy = undefined;
+			if(query.dbPageNo)
+				query.dbPageNo = undefined;
 			// $state.go('msearch',{place: pid,loaiTin: query.loaiTin, loaiNhaDat:query.loaiNhaDat,viewMode: "list", query: query})			
 			$rootScope.headerInfo.listMoreFirstTitle = vm.boSuuTap[index].title1;
 			$rootScope.headerInfo.listMoreSecondTitle = vm.boSuuTap[index].title2;

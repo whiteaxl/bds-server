@@ -41,7 +41,8 @@
 		}
 
 		vm.goDetail = function(ads){
-			$state.go('mdetail', { "adsID" : ads.adsID});
+			//$state.go('mdetail', { "adsID" : ads.adsID});
+			$rootScope.showDetailAds(ads.adsID,$scope);
 		}
 
 		vm.updateAds = function(ads){
