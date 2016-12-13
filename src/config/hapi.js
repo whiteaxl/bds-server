@@ -151,19 +151,20 @@ Routes.init(internals.server);
 console.log("Done Routes.init(internals.server)");
 
 
-// internals.http.register(Plugins.get(), (err) => {
-//   Hoek.assert(!err,err);
-//   internals.http.auth.strategy('jwt', 'jwt',
-//     { key: 'Cexk6azogyew7DoTOYKgAXtTOP+18VLDQ1MzYoEWxr6Gqbhg+CeK33MuBPdhyz1dlW4VOKE/ce4TTkfI0yGLlTc+kC74BA8WNoySWmmNsBTEgt83f+9WKYNUgYoGUvml3rRlzvNG71bFqcfJa7U+AuCECq8JnPTeMQ4MSuFBZb4i/q91ZPoI/8SDmcvfai1ofyaHc4xauqhq2hrED5zuZsFbiRDY9bo4d4hHPXdBQaUCm/vklx/BxaAL3OLvvNGhULYmbV/v9Yj0xSAqhZMd7b0TJcDYZ+FHrTX7ZCG15M/Sj/amI/auUEKRNYfwL67/Y7zZxgUWLPsZQ48zPBxgeA==',// Never Share your secret key
-//       validateFunc: validate,            // validate function defined above
-//       verifyOptions: { algorithms: [ 'HS256' ] }, // pick a strong algorithm.
-//       complete: true
-//   });
-//   //internals.server.auth.default('jwt');
+internals.http.register(Plugins.get(), (err) => {
+  Hoek.assert(!err,err);
+  internals.http.auth.strategy('jwt', 'jwt',
+    { key: 'Cexk6azogyew7DoTOYKgAXtTOP+18VLDQ1MzYoEWxr6Gqbhg+CeK33MuBPdhyz1dlW4VOKE/ce4TTkfI0yGLlTc+kC74BA8WNoySWmmNsBTEgt83f+9WKYNUgYoGUvml3rRlzvNG71bFqcfJa7U+AuCECq8JnPTeMQ4MSuFBZb4i/q91ZPoI/8SDmcvfai1ofyaHc4xauqhq2hrED5zuZsFbiRDY9bo4d4hHPXdBQaUCm/vklx/BxaAL3OLvvNGhULYmbV/v9Yj0xSAqhZMd7b0TJcDYZ+FHrTX7ZCG15M/Sj/amI/auUEKRNYfwL67/Y7zZxgUWLPsZQ48zPBxgeA==',// Never Share your secret key
+      validateFunc: validate,            // validate function defined above
+      verifyOptions: { algorithms: [ 'HS256' ] }, // pick a strong algorithm.
+      complete: true
+  });
+  //internals.server.auth.default('jwt');
 
-// });
-// Routes.init(internals.http);
+ });
 
+Routes.init(internals.http);
+Views.init(internals.http);
 
 // internals.server.views({
 //     engines: {
