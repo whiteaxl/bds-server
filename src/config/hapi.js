@@ -123,6 +123,7 @@ console.log("Done Views.init(internals.server)");
 
 const Url = require('url');
 
+/*
 internals.http.route({
     method: '*',
     path: '/{p*}',
@@ -143,6 +144,7 @@ internals.http.route({
         description: 'Http catch route. Will redirect every http call to https'
     }
 });
+*/
 
 Routes.init(internals.server);
 
