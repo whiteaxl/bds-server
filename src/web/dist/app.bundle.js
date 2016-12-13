@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "20900f3fc0c5ddc27bea"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b7ea8ffdf0ee1f206bcc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -27933,14 +27933,7 @@
 							//alert(JSON.stringify(res));
 							vm.boSuuTap = [];
 							res.data.data.forEach(function (item, index) {
-								if (item.data.length > 0) {
-									item.data.forEach(function (adsData, index) {
-										if (adsData.cover && adsData.cover.indexOf("http://") > -1) {
-											adsData.cover = adsData.cover.substring(5);
-										}
-									});
-									vm.boSuuTap.push(item);
-								}
+								if (item.data.length > 0) vm.boSuuTap.push(item);
 							});
 							vm.doneSearch = true;
 							$timeout(function () {
