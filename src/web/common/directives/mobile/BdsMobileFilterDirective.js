@@ -19,6 +19,23 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
                     $(".btn-group .btn").removeClass("active");
                     $(".btn-group .btn:first-child").addClass("active");
+                    $scope.searchData.loaiNhaDat = undefined;
+                    angular.element('#loadiNhaDatContainer span label').text(vm.loaiNhaDat[0].lable);
+
+                    if($scope.searchData.loaiTin==0){
+                        $scope.searchData.giaBETWEEN =  vm.sellPrices[0].value;    
+                    }else{
+                        $scope.searchData.giaBETWEEN =  vm.rentPrices[0].value;    
+                    }     
+                    $scope.searchData.dienTichBETWEEN = vm.areas[0].value;
+
+                    vm.setSearchDataSpn(0);
+                    vm.selectHuongNha(vm.huongNhaList[0]);
+                    angular.element('#huongNhaContainer span label').text(vm.huongNhaList[0].lable);
+                    $scope.searchData.ngayDangTinGREATER = "19810101";
+                    vm.updateDrums();
+                    
+                    
                 }
                 vm.pageSize = 25;
                 vm.initialized = false;
@@ -580,7 +597,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
                 vm.showFavorite = function(event){
                     console.log("------------------showFavorite-Filter------------------");
-                    vm.act='';
+                    
                     var $ww = $(window).width();
                     $(".input-fr").css("width", $ww-78);
                     $('.iconCancel').hide();
@@ -588,6 +605,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
                     $( "#searchadd").autocomplete( "search", "" );                            
                     $( "#searchadd").focus();
+                    $( "#searchadd").text("");
+                    vm.act='';
+                    //event.preventDefault
+                    //$scope.$digest();
+
                 }
 
 
@@ -696,6 +718,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     var datepost = ($scope.searchData.ngayDangTinGREATER?$scope.searchData.ngayDangTinGREATER:"19810101") + "";
                     var datepostElm = $("select#datepost");
                     setDrumValues(datepostElm,datepost);   
+
                 }
                 vm.init = function(){
                     $scope.$bus.subscribe({

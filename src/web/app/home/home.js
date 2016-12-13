@@ -424,6 +424,10 @@
     } 
     $rootScope.lastSearch = undefined;
 
+    $rootScope.bdsData = {
+      filterShowAct: true
+    }
+
     $rootScope.getUnreadMsgCount = function(userID){
       HouseService.getUnreadMessages({userID: userID}).then(function(res) {
           if (res.status == 200 && res.data.status == 0) {

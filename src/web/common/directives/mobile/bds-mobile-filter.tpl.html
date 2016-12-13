@@ -9,7 +9,7 @@
 	<form>
 		<div class="search-fr">
 	    	<i ng-class="mf.iconSearchClass" style="left: 12px; top: 5px;color: white; position: absolute;font-weight: bold;"></i>
-	    	<input ng-if="mf.stateName!='msearch'" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
+	    	<input ng-show="$root.bdsData.filterShowAct==true" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>
@@ -25,7 +25,7 @@
 	        <div class="tab-content">
 	            <div role="tabpanel" class="tab-pane active" id="searchbuy">
 	            	<div class="title">Các điều kiện</div>
-	            	<div class="type-box collapse-box">
+	            	<div class="type-box collapse-box" id="loadiNhaDatContainer">
 	                	<a role="button" class="collapse-title" data-toggle="modal" data-target="#typeBox">Loại nhà đất <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>
 	                </div>
 
@@ -119,7 +119,7 @@
 	                <div class="btn-box collapse-box btn-more">
 	                	<a role="button" class="collapse-title blue">Mở rộng</a>
 	                </div>
-	                <div class="more-box more-box-hide">
+	                <div class="more-box more-box-hide" id = "huongNhaContainer">
 	                	
 	                	<div class="trend-box collapse-box">
 	                        <a role="button" class="collapse-title" data-toggle="modal" data-target="#trendBox">Hướng nhà <span><label>Bất kỳ</label> <i class="iconRightOpen"></i></span></a>

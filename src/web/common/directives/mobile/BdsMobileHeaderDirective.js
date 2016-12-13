@@ -113,6 +113,12 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".search_mobile").removeClass("active");
                 }         
                 vm.toggleFilter = function(event){
+                    if($state.current.name=='msearch'){
+                        $rootScope.bdsData.filterShowAct = false;    
+                    }else{
+                        $rootScope.bdsData.filterShowAct = true;    
+                    }
+                    
                     //nhannc
                     if($(".search_mobile").find("i").hasClass("iconSearch")) {
                         if ($(".post").css("right") == "0px") {
@@ -158,7 +164,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         left: 0
                     }, 120);
                 }
-
+                $rootScope.bdsData.filterShowAct = false;
                 $scope.$bus.subscribe({
                     channel: 'search',
                     topic: 'show search',

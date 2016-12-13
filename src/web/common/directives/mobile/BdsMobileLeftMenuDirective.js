@@ -83,6 +83,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 }
                 //nhannc end
                 vm.showFilter = function(){
+                    $rootScope.bdsData.filterShowAct = true;
                     $scope.$bus.publish({
                         channel: 'search',
                         topic: 'show search',

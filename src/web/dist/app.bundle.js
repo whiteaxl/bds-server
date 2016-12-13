@@ -65,11 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-<<<<<<< HEAD
-/******/ 	var hotCurrentHash = "42ae797c585f7439ad46"; // eslint-disable-line no-unused-vars
-=======
-/******/ 	var hotCurrentHash = "0ca6b2bfb03e77513c83"; // eslint-disable-line no-unused-vars
->>>>>>> 502cf75eaddeac77527e69ecd1680da825662281
+/******/ 	var hotCurrentHash = "a8a60f951606d7971ce9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1409,6 +1405,10 @@
 	            lon: undefined
 	        };
 	        $rootScope.lastSearch = undefined;
+
+	        $rootScope.bdsData = {
+	            filterShowAct: true
+	        };
 
 	        $rootScope.getUnreadMsgCount = function (userID) {
 	            HouseService.getUnreadMessages({ userID: userID }).then(function (res) {
@@ -34137,6 +34137,7 @@
 	            };
 	            //nhannc end
 	            vm.showFilter = function () {
+	                $rootScope.bdsData.filterShowAct = true;
 	                $scope.$bus.publish({
 	                    channel: 'search',
 	                    topic: 'show search',
@@ -34200,6 +34201,21 @@
 	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	                $(".btn-group .btn").removeClass("active");
 	                $(".btn-group .btn:first-child").addClass("active");
+	                $scope.searchData.loaiNhaDat = undefined;
+	                angular.element('#loadiNhaDatContainer span label').text(vm.loaiNhaDat[0].lable);
+
+	                if ($scope.searchData.loaiTin == 0) {
+	                    $scope.searchData.giaBETWEEN = vm.sellPrices[0].value;
+	                } else {
+	                    $scope.searchData.giaBETWEEN = vm.rentPrices[0].value;
+	                }
+	                $scope.searchData.dienTichBETWEEN = vm.areas[0].value;
+
+	                vm.setSearchDataSpn(0);
+	                vm.selectHuongNha(vm.huongNhaList[0]);
+	                angular.element('#huongNhaContainer span label').text(vm.huongNhaList[0].lable);
+	                $scope.searchData.ngayDangTinGREATER = "19810101";
+	                vm.updateDrums();
 	            };
 	            vm.pageSize = 25;
 	            vm.initialized = false;
@@ -34695,7 +34711,7 @@
 	            };
 	            vm.showFavorite = function (event) {
 	                console.log("------------------showFavorite-Filter------------------");
-	                vm.act = '';
+
 	                var $ww = $(window).width();
 	                $(".input-fr").css("width", $ww - 78);
 	                $('.iconCancel').hide();
@@ -34703,6 +34719,10 @@
 	                $("#searchadd").autocomplete("option", "source", vm.favoriteSearchSource);
 	                $("#searchadd").autocomplete("search", "");
 	                $("#searchadd").focus();
+	                $("#searchadd").text("");
+	                vm.act = '';
+	                //event.preventDefault
+	                //$scope.$digest();
 	            };
 
 	            vm.userLoggedIn = function () {
@@ -35119,6 +35139,12 @@
 	                $(".search_mobile").removeClass("active");
 	            };
 	            vm.toggleFilter = function (event) {
+	                if ($state.current.name == 'msearch') {
+	                    $rootScope.bdsData.filterShowAct = false;
+	                } else {
+	                    $rootScope.bdsData.filterShowAct = true;
+	                }
+
 	                //nhannc
 	                if ($(".search_mobile").find("i").hasClass("iconSearch")) {
 	                    if ($(".post").css("right") == "0px") {
@@ -35163,7 +35189,7 @@
 	                    left: 0
 	                }, 120);
 	            };
-
+	            $rootScope.bdsData.filterShowAct = false;
 	            $scope.$bus.subscribe({
 	                channel: 'search',
 	                topic: 'show search',
