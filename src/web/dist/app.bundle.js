@@ -65,7 +65,11 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< HEAD
 /******/ 	var hotCurrentHash = "42ae797c585f7439ad46"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "0ca6b2bfb03e77513c83"; // eslint-disable-line no-unused-vars
+>>>>>>> 502cf75eaddeac77527e69ecd1680da825662281
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30559,7 +30563,7 @@
 	                    var dup = false;
 	                    for (var j = 0; j < scope.markers.length; j++) {
 	                        var marker = scope.markers[j];
-	                        if (Math.abs(marker.coords.latitude - adsList[i].map.marker.latitude) <= PADDING && Math.abs(marker.coords.longitude - adsList[i].map.marker.longitude) <= PADDING) {
+	                        if (Math.abs(marker.coords.latitude - adsList[i].map.marker.coords.latitude) <= PADDING && Math.abs(marker.coords.longitude - adsList[i].map.marker.coords.longitude) <= PADDING) {
 	                            marker.adsList.push(ads);
 	                            marker.count = marker.count + 1;
 	                            marker.class = "reland-marker marker-include";
@@ -33687,7 +33691,11 @@
 
 							$timeout(function () {
 								var fileUrl = location.protocol;
-								fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+								var hostStr = window.location.host + ":4432";
+								if (hostStr.indexOf(":") > -1) {
+									hostStr = hostStr.substring(0, hostStr.indexOf(":"));
+								}
+								fileUrl = fileUrl.concat("//").concat(hostStr).concat(resp.data.file.url);
 
 								console.log("----fileUrl: " + fileUrl);
 								if (vm.ads.image.cover.trim().length == 0) {

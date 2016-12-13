@@ -20,6 +20,7 @@ require('babel-core/register')({
 
 var chatHandler = require('./src/lib/ChatHandler');
 chatHandler.init(https);
+chatHandler.init(http);
 
 console.log("Done chatHandler.init(https)");
 
