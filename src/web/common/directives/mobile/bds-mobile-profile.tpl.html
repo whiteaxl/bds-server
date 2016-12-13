@@ -1,0 +1,87 @@
+<div class="modal fade modal-choose modal-none" id="profileBox" tabindex="-1" role="dialog" aria-labelledby="profileBoxLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header blue">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="iconLeftOpen"></span></button>
+            	<a role="button" class="pull-right modal-header-txt">Thay đổi</a>
+                <h4 class="modal-title" id="profileBoxLabel">Trần Việt Anh</h4>
+            </div>
+            <div class="modal-body uln profile">
+            	<div class="title border">Thông tin liên lạc</div>
+                <div class="collapse-box">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Tên đầy đủ</div>
+                        <div class="ovh profile-txt">Trần Việt Anh</div>
+                    </div>
+                </div>
+                <div class="collapse-box">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Số điện thoại</div>
+                        <div class="ovh profile-txt">096 758 889</div>
+                    </div>
+                </div>
+                <div class="collapse-box">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Email</div>
+                        <div class="ovh profile-txt">tranvietanh@gmail.com</div>
+                    </div>
+                </div>
+                <div class="collapse-box">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Website</div>
+                        <div class="ovh profile-txt">batdongsan.vn</div>
+                    </div>
+                </div>
+                <div class="collapse-box fr">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Giới thiệu</div>
+                        <div class="ovh profile-txt"><textarea></textarea><div class="text-right datetime">6/250</div></div>
+                    </div>
+                </div>
+                <div class="collapse-box border-none">
+                	<div class="collapse-title">
+                    	<div class="titlefr">Ảnh</div>
+                        <div class="ovh profile-txt"><label class="datetime"><img src="/web/mobile/images/avarta.jpg" class="img-circle" /><input type="file">Chạm để thay đổi ảnh</label></div>
+                    </div>
+                </div>
+                <div class="title border">&nbsp;</div>
+                <div class="changepass-box collapse-box border-none">
+                    <a role="button" class="collapse-title" data-toggle="modal" data-target="#changepassBox">Thay đổi mật khẩu <span><i class="iconRightOpen"></i></span></a>
+                </div>
+                <div class="title border">Thông tin cá nhận</div>
+                <div class="changepass-box collapse-box">
+                    <div class="collapse-title">Giới tính <span>Nam</span></div>
+                </div>
+                <div class="changepass-box collapse-box">
+                    <div class="collapse-title">Ngày sinh <span>11/11/1982</span></div>
+                </div>
+                <div class="address-box collapse-box">
+                    <a role="button" class="collapse-title" data-toggle="modal" data-target="#addressBox">Địa chỉ <span><label>Đường Phùng Hưng</label> <i class="iconRightOpen"></i></span></a>
+                </div>
+                <div class="changepass-box collapse-box border-none">
+                    <div class="collapse-title">Vai trò của bạn <span>Môi giới</span></div>
+                </div>
+                <div class="title border">Thông tin tài khoản</div>
+                <div class="card-chart">
+                    <div class="chart-reland">
+                        <div class="chart" id="napthe"></div>
+                        <script>
+                            $(function(){
+                              $("#napthe").drawDoughnutChart([
+                                { title: "Tài khoản chính", value : 400,  color: "#00a8e6" },
+                                { title: "Tài khoản khuyến mại", value:  100,   color: "#ff8400" }
+                              ]);
+                            });
+                        </script>
+                    </div>
+                    <div class="chart-txt uln ovh">
+                        <ul>
+                            <li class="chart-txt-1"><i></i>400k<span>Tài khoản chính</span></li>
+                            <li class="chart-txt-2"><i></i>100k<span>Tài khoản khuyến mại</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

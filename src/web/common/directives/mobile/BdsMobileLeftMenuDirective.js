@@ -17,7 +17,14 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                     //$('#loginBox').fadeIn(500);
                     //window.loca
                 }
-                
+                vm.loginProfile = function(){
+                    if($rootScope.isLoggedIn()){
+                        $rootScope.showProfile(true);
+                        vm.hideMenuLeft();                        
+                    }else{
+                        $('#loginBox').modal('show');
+                    }
+                }
                 vm.gotoSearchPage = function(event){
                     console.log("-------vao msearch");
                     $state.go('msearch', { "place" : 'ChIJoRyG2ZurNTERqRfKcnt_iOc', "loaiTin" : 0, "loaiNhaDat" : 0 ,"viewMode": "list"}, {location: true});

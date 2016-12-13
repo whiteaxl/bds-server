@@ -246,6 +246,11 @@
               templateUrl: "/web/mobile/detail.html",
               controller: "MobileDetailCtrl",
               controllerAs: 'mdt'
+          }).state('mprofile', {
+              url: "/mobile/profile/:userID",
+              templateUrl: "/web/mobile/profile.tpl.html",
+              controller: "MobileProfileCtrl",
+              controllerAs: 'mpc'
           }).state('mpost', {
               url: "/mobile/post/:adsID",
               templateUrl: "/web/mobile/post.html",
@@ -512,13 +517,18 @@
     }
 
     $rootScope.isLoggedIn = function(){
-
       if($rootScope.user.userID)
         return true;
       return false;
     }
 
-    
+    $rootScope.showProfile = function(show){
+      if(show==true){
+        $('#profileBox').modal('show');
+      }else{
+        $('#profileBox').modal('hide');
+      }
+    }
     
       
     $rootScope.chat_visible = true;
