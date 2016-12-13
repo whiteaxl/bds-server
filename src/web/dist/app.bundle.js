@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b7ea8ffdf0ee1f206bcc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0ca6b2bfb03e77513c83"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28813,7 +28813,7 @@
 	                    var dup = false;
 	                    for (var j = 0; j < scope.markers.length; j++) {
 	                        var marker = scope.markers[j];
-	                        if (Math.abs(marker.coords.latitude - adsList[i].map.marker.latitude) <= PADDING && Math.abs(marker.coords.longitude - adsList[i].map.marker.longitude) <= PADDING) {
+	                        if (Math.abs(marker.coords.latitude - adsList[i].map.marker.coords.latitude) <= PADDING && Math.abs(marker.coords.longitude - adsList[i].map.marker.coords.longitude) <= PADDING) {
 	                            marker.adsList.push(ads);
 	                            marker.count = marker.count + 1;
 	                            marker.class = "reland-marker marker-include";
