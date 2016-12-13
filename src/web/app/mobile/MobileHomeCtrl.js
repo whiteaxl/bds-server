@@ -54,8 +54,14 @@
 						//alert(JSON.stringify(res));
 						vm.boSuuTap = [];
 						res.data.data.forEach(function(item,index){
-							if(item.data.length>0)
+							if(item.data.length>0){
+								item.data.forEach(function(adsData,index){
+									if(adsData.cover && adsData.cover.indexOf("http://")>-1){
+										adsData.cover = adsData.cover.substring(5);
+									}
+								});
 								vm.boSuuTap.push(item);
+							}
 						});
 						vm.doneSearch = true;
 						$timeout(function() {

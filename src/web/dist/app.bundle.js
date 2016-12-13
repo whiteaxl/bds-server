@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1b8514529544af81a68f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "20900f3fc0c5ddc27bea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -27933,7 +27933,14 @@
 							//alert(JSON.stringify(res));
 							vm.boSuuTap = [];
 							res.data.data.forEach(function (item, index) {
-								if (item.data.length > 0) vm.boSuuTap.push(item);
+								if (item.data.length > 0) {
+									item.data.forEach(function (adsData, index) {
+										if (adsData.cover && adsData.cover.indexOf("http://") > -1) {
+											adsData.cover = adsData.cover.substring(5);
+										}
+									});
+									vm.boSuuTap.push(item);
+								}
 							});
 							vm.doneSearch = true;
 							$timeout(function () {
@@ -31937,7 +31944,11 @@
 
 							$timeout(function () {
 								var fileUrl = location.protocol;
-								fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+								var hostStr = window.location.host + ":4432";
+								if (hostStr.indexOf(":") > -1) {
+									hostStr = hostStr.substring(0, hostStr.indexOf(":"));
+								}
+								fileUrl = fileUrl.concat("//").concat(hostStr).concat(resp.data.file.url);
 
 								console.log("----fileUrl: " + fileUrl);
 								if (vm.ads.image.cover.trim().length == 0) {

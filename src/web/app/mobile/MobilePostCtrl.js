@@ -1330,7 +1330,11 @@
 
 						$timeout(function() {
 							var fileUrl = location.protocol;
-							fileUrl = fileUrl.concat("//").concat(window.location.host).concat(resp.data.file.url);
+							var hostStr = window.location.host + ":4432";
+							if (hostStr.indexOf(":") > -1){
+								hostStr = hostStr.substring(0,hostStr.indexOf(":"));
+							}
+							fileUrl = fileUrl.concat("//").concat(hostStr).concat(resp.data.file.url);
 
 							console.log("----fileUrl: " + fileUrl);
 							if(vm.ads.image.cover.trim().length == 0){
