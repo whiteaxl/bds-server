@@ -335,12 +335,11 @@ function _transformDetailAds(adsFromDb) {
         ads.soPhongTamFmt = ads.soPhongTam + " phòng tắm";
     }
     ads.image = {};
-    ads.image.cover = adsFromDb.image.cover || cfg.noCoverUrl;
-    if(ads.image.cover.indexOf("no-photo")>-1){
-        ads.image.cover = cfg.noCoverUrl;
-    }
 
-    ads.image.images = adsFromDb.image.images;
+    ads.image.cover = util.forwardImage(adsFromDb.image.cover);
+    ads.image.images = adsFromDb.image.images ? adsFromDb.image.images.filter((n) => n).map((e) => {
+        return util.forwardImage(e);
+    }) : [cfg.noCoverUrl];
 
     ads.diaChi = adsFromDb.diaChi;
     ads.ngayDangTin = adsFromDb.ngayDangTin;
