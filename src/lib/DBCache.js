@@ -56,37 +56,8 @@ function initCache(done) {
   global.rwcache.ads = {};
   global.rwcache.ads[0] = {}; //sale
   global.rwcache.ads[1] = {}; //rent
-  global.rwcache.adsSorted={};
 
-  var comp = (a,b) => {
-    if (a.ngayDangTin > b.ngayDangTin) {
-      return -1;
-    }
 
-    if (a.ngayDangTin < b.ngayDangTin) {
-      return 1;
-    }
-
-    if (a.timeExtracted > b.timeExtracted) {
-      return -1;
-    }
-    if (a.timeExtracted < b.timeExtracted) {
-      return 1;
-    }
-
-    if (a.id > b.id) {
-      return -1;
-    }
-
-    if (a.id < b.id) {
-      return 1;
-    }
-
-    return 0;
-  };
-
-  global.rwcache.adsSorted[0] = sortedlist.create([], {compare : comp});
-  global.rwcache.adsSorted[1] = sortedlist.create([], {compare : comp});
 
   //global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
 
@@ -113,10 +84,55 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
 
     list.forEach(ads => {
       global.rwcache.ads[ads.loaiTin][ads.id] = ads;
-      global.rwcache.adsSorted[ads.loaiTin].insertOne(ads);
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
+
+    logUtil.info("First sorting ");
+    global.rwcache.adsSorted={};
+
+    var comp = (a,b) => {
+      if (a.ngayDangTin > b.ngayDangTin) {
+        return -1;
+      }
+
+      if (a.ngayDangTin < b.ngayDangTin) {
+        return 1;
+      }
+
+      if (a.timeExtracted > b.timeExtracted) {
+        return -1;
+      }
+      if (a.timeExtracted < b.timeExtracted) {
+        return 1;
+      }
+
+      if (a.id > b.id) {
+        return -1;
+      }
+
+      if (a.id < b.id) {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    let a0 = [];
+    for (let k in global.rwcache.ads[0]) {
+      a0.push(global.rwcache.ads[0][k]);
+    }
+    let a1 = [];
+    for (let k in global.rwcache.ads[1]) {
+      a1.push(global.rwcache.ads[1][k]);
+    }
+
+    global.rwcache.adsSorted[0] = sortedlist.create(a0, {compare : comp});
+    logUtil.info("DONE sorting ban:", a0.length);
+    global.rwcache.adsSorted[1] = sortedlist.create(a1, {compare : comp});
+    logUtil.info("DONE sorting thue:", a1.length);
+
+    logUtil.info("DONE ALL sorting ");
 
     callback(list.length);
   });
