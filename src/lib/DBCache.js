@@ -53,36 +53,6 @@ function loadDoc(type, moreCondition, callback) {
   });
 }
 
-//only for ads
-function saveToFile(obj, filename) {
-  var fl = fs.createWriteStream(filename);
-
-  var out = jsonStream.stringifyObject();
-  out.pipe(fl);
-
-
-  for (let key in obj) {
-    for (let childKey in obj[key]) {
-      out.write([childKey, obj[key][childKey]]);
-    }
-  }
-
-  out.end();
-
-  console.log("Done save to file: ", filename)
-}
-
-function loadFromFile(filename) {
-  if (!fs.existsSync(filename)) {
-    console.log("File does not exists! " , filename);
-    return null;
-  }
-
-  var json = require(filename);
-
-  return json;
-}
-
 function initCache(done) {
   global.rwcache.ads = {};
   global.rwcache.ads[0] = {}; //sale
@@ -99,7 +69,9 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
-  let sql = `select ${projection} from default where type='Ads' and timeModified >= ${global.lastSyncTime}  ` ;
+  //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC_diff is missing or GEOvsDC_diff = null or GEOvsDC_diff = 0)  and timeModified >= ${global.lastSyncTime}  ` ;
+  let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} 
+   order by ngayDangTin desc, timeModified desc` ;
   if (moreCondition) {
     sql = sql + " and " + moreCondition;
   }
@@ -308,10 +280,7 @@ var cache = {
       }
     }
   },
-  _doSortingAndReturn(filtered, q, callback) {
-    let count = filtered.length;
-    console.log("Filterred length: ", count);
-
+  _doSorting(filtered, q) {
     //sorting
     let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
 
@@ -352,15 +321,9 @@ var cache = {
 
     logUtil.info("Sorting time " + (endTime - startTime) + " ms for " + filtered.length + " records");
 
-    //do paging
-    filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
-
-
-
-    callback(null, filtered, count);
     return filtered;
   },
-  
+
   query(q, callback){
     let startQuery = new Date().getTime();
 
@@ -371,35 +334,27 @@ var cache = {
     let that = this;
 
     let allByLoaiTin = global.rwcache.ads[q.loaiTin];
+    let asArrays = [];
+    for (let key in allByLoaiTin) {
+      asArrays.push(allByLoaiTin[key]);
+    }
+
+    this._doSorting(asArrays, q);
 
     let filtered = [];
-    let tmp;
-
-    for (let key in allByLoaiTin) {
-      tmp = allByLoaiTin[key];
+    for (let i in asArrays) {
+      let tmp = asArrays[i];
       if (that._match(q, tmp)) {
         filtered.push(tmp);
       }
     }
 
-    /*
-    async.filterLimit(filteredByLoaiTin, FIlTER_LIMIT, (one, callbackFilter) => {
-      let truth = that._match(q, one);
-      //callbackFilter(null, truth);
+    let count = filtered.length;
+    console.log("Filterred length: ", count);
 
-      // defer the callback
-      setImmediate(callbackFilter, null, truth);
-    }, (err, filtered) => {
-
-      that._doSortingAndReturn(filtered, q, callback);
-
-      let endQuery = new Date().getTime();
-      logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
-    });
-    */
-    //let filtered = filteredByLoaiTin;
-
-    that._doSortingAndReturn(filtered, q, callback);
+    //do paging
+    filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
+    callback(null, filtered, count);
 
     let endQuery = new Date().getTime();
     logUtil.info("Query time " + (endQuery - startQuery) + " ms for " + filtered.length + " records");
