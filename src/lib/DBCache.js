@@ -12,8 +12,7 @@ var placeUtil = require('./placeUtil');
 
 var async = require("async");
 
-//var adsCacheFilename = '/tmp/adsCache.json';
-var adsCacheFilename = '/tmp/adsCache.json';
+var timSort = require('timsort');
 
 var constants = require("./constant");
 
@@ -57,6 +56,9 @@ function initCache(done) {
   global.rwcache.ads = {};
   global.rwcache.ads[0] = {}; //sale
   global.rwcache.ads[1] = {}; //rent
+  global.rwcache.adsSorted={};
+  global.rwcache.adsSorted[0] = [];
+  global.rwcache.adsSorted[1] = [];
 
   //global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
 
@@ -70,8 +72,7 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
   //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC_diff is missing or GEOvsDC_diff = null or GEOvsDC_diff = 0)  and timeModified >= ${global.lastSyncTime}  ` ;
-  let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} 
-   order by ngayDangTin desc, timeModified desc` ;
+  let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
   if (moreCondition) {
     sql = sql + " and " + moreCondition;
   }
@@ -84,6 +85,7 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
 
     list.forEach(ads => {
       global.rwcache.ads[ads.loaiTin][ads.id] = ads;
+      global.rwcache.adsSorted[ads.loaiTin].push(ads);
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
@@ -104,6 +106,10 @@ function loadAds(isFull, moreCondition, callback) {
 
 
 function updateCache(ads){
+  if (!global.rwcache.ads[ads.loaiTin][ads.id]) {
+    global.rwcache.adsSorted[ads.loaiTin].push(ads);
+  }
+
   global.rwcache.ads[ads.loaiTin][ads.id] = ads;
 }
 
@@ -280,9 +286,7 @@ var cache = {
       }
     }
   },
-  _doSorting(filtered, q) {
-    //sorting
-    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+  _doSorting(filtered, orderBy) {
 
     let sign = 1;
     if (orderBy.type == 'DESC') {
@@ -291,7 +295,7 @@ var cache = {
     console.log("Will sort by ", orderBy, sign);
 
     let startTime = new Date().getTime();
-    filtered.sort((a, b) => {
+    timSort.sort(filtered, (a, b) => {
       if (a[orderBy.name] > b[orderBy.name]) {
         return sign;
       }
@@ -339,7 +343,10 @@ var cache = {
       asArrays.push(allByLoaiTin[key]);
     }
 
-    this._doSorting(asArrays, q);
+    //sorting
+    let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
+
+    this._doSorting(asArrays, orderBy);
 
     let filtered = [];
     for (let i in asArrays) {
