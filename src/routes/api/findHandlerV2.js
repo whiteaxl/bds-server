@@ -103,11 +103,27 @@ function _doPolygonOrCircleFilter(allAds, q) {
   return filtered;
 }
 
+//images:
+var targetSize = "745x510"; //350x280
+function _forwardImage(imgUrl) {
+  if (!imgUrl) {
+    return cfg.noCoverUrl;
+  }
+
+  let ret = imgUrl.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
+
+  ret = ret.replace("http://file1.batdongsan.com.vn", "https://img.landber.com/img01");
+  ret = ret.replace("http://file4.batdongsan.com.vn", "https://img.landber.com/img02");
+  ret = ret.replace("http://img.dothi.net", "https://img.landber.com/img11");
+  ret = ret.replace("http://img2.dothi.net", "https://img.landber.com/img12");
+  ret = ret.replace("http://static.chotot.com.vn", "https://img.landber.com/img21");
+  ret = ret.replace("http://img.phonhadat.net", "https://img.landber.com/img31");
+
+  return ret;
+}
+
 function _transform(allAds, q) {
   let transformeds = allAds.map((ads) => {
-    //images:
-    var targetSize = "745x510"; //350x280
-
     let tmp = {
       adsID: ads.id,
       gia: ads.gia && !isNaN(ads.gia) ? ads.gia : Number(0),
@@ -121,9 +137,9 @@ function _transform(allAds, q) {
       soPhongTam: ads.soPhongTam,
       soPhongTamFmt: ads.soPhongTam ? ads.soPhongTam + "p.tắm" : null,
       image: {
-        cover: ads.image.cover ? ads.image.cover.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize) : cfg.noCoverUrl,
+        cover: _forwardImage(ads.image.cover),
         images: ads.image.images ? ads.image.images.filter((n) => n).map((e) => {
-            return e.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
+            return _forwardImage(e);
         }) : [cfg.noCoverUrl]
       },
       diaChi: ads.place.diaChi,
