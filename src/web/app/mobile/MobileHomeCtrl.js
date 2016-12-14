@@ -3,6 +3,7 @@
 	var controllerId = 'MobileHomeCtrl';
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
+		vm.doneSearch = false;
 		/*
 		var query = { 
 			loaiTin: 0,

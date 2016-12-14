@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d2a97d52c1f0d90cb51"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e2b680075f5fc24ef96a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -27899,6 +27899,7 @@
 		var controllerId = 'MobileHomeCtrl';
 		angular.module('bds').controller(controllerId, function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window, $timeout, $location, $localStorage) {
 			var vm = this;
+			vm.doneSearch = false;
 			/*
 	  var query = { 
 	  	loaiTin: 0,
@@ -32358,6 +32359,7 @@
 
 	            vm.gotoChatPage = function () {
 	                console.log("-------vao mchats");
+	                $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32373,6 +32375,7 @@
 
 	            vm.gotoDangTinPage = function (event) {
 	                console.log("-------vao mpost");
+	                $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32387,6 +32390,7 @@
 	            };
 	            vm.gotoQuanLyDangTin = function (event) {
 	                console.log("-------vao madsMgmt");
+	                $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32401,6 +32405,7 @@
 	            };
 	            //nhannc end
 	            vm.showFilter = function () {
+	                $scope.$parent.mhc.doneSearch = true;
 	                $rootScope.bdsData.filterShowAct = true;
 	                $scope.$bus.publish({
 	                    channel: 'search',
@@ -32454,6 +32459,7 @@
 	        replace: 'true',
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'RewayCommonUtil', 'NgMap', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, RewayCommonUtil, NgMap) {
 	            var vm = this;
+
 	            vm.iconSearchClass = "iconSearch";
 	            $(".btn-more .collapse-title").click(function () {
 	                $(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
@@ -32687,7 +32693,7 @@
 	                } else {
 	                    $scope.searchData.dienTich = undefined;
 	                    if (!$scope.dienTichKhacFrom) {
-	                        $("#area_value").html("0 m² " + $scope.dienTichKhacTo + " m²");
+	                        $("#area_value").html("0 m² -" + $scope.dienTichKhacTo + " m²");
 	                        $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacTo];
 	                    } else {
 	                        if ($scope.dienTichKhacFrom < $scope.dienTichKhacTo) {
@@ -32782,7 +32788,7 @@
 	                } else {
 	                    $scope.searchData.gia = undefined;
 	                    if (!$scope.giaKhacFrom) {
-	                        $("#prices_value").html("0 triệu " + $scope.giaKhacTo + " tỷ");
+	                        $("#prices_value").html("0 triệu -" + $scope.giaKhacTo + " tỷ");
 	                        $scope.searchData.giaBETWEEN = [0, $scope.giaKhacTo * 1000];
 	                    } else {
 	                        if ($scope.giaKhacFrom < $scope.giaKhacTo) {
@@ -33384,6 +33390,7 @@
 	            };
 	            //end nhannc
 	            vm.goToSearchPage = function () {
+	                $scope.$parent.mhc.doneSearch = true;
 	                if ($rootScope.searchData.placeId) {
 	                    $rootScope.searchData.polygon = undefined;
 	                    $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
@@ -33462,6 +33469,7 @@
 	                $(".search_mobile").removeClass("active");
 	            };
 	            vm.toggleFilter = function (event) {
+	                $scope.$parent.mhc.doneSearch = true;
 	                if ($state.current.name == 'msearch') {
 	                    $rootScope.bdsData.filterShowAct = false;
 	                } else {

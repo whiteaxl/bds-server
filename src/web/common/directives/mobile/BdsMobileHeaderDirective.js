@@ -30,6 +30,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 }
                 //end nhannc
                 vm.goToSearchPage = function(){
+                    $scope.$parent.mhc.doneSearch = true;
                     if($rootScope.searchData.placeId){
                         $rootScope.searchData.polygon = undefined;
                         $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
@@ -113,10 +114,11 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".search_mobile").removeClass("active");
                 }         
                 vm.toggleFilter = function(event){
+                    $scope.$parent.mhc.doneSearch = true;
                     if($state.current.name=='msearch'){
                         $rootScope.bdsData.filterShowAct = false;    
                     }else{
-                        $rootScope.bdsData.filterShowAct = true;    
+                        $rootScope.bdsData.filterShowAct = true;
                     }
                     
                     //nhannc

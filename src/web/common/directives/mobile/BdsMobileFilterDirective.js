@@ -7,7 +7,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
         replace: 'true',
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil','NgMap',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil,NgMap) {
-                var vm = this; 
+                var vm = this;
+                
                 vm.iconSearchClass = "iconSearch";
                 $(".btn-more .collapse-title").click(function() {
                     $(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
@@ -257,7 +258,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     } else{
                         $scope.searchData.dienTich = undefined;
                         if(!$scope.dienTichKhacFrom){
-                            $("#area_value").html("0 m² " + $scope.dienTichKhacTo + " m²" );
+                            $("#area_value").html("0 m² -" + $scope.dienTichKhacTo + " m²" );
                             $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacTo]
                         } else{
                             if($scope.dienTichKhacFrom < $scope.dienTichKhacTo){
@@ -352,7 +353,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     }else{
                         $scope.searchData.gia = undefined;
                         if(!$scope.giaKhacFrom){
-                            $("#prices_value").html("0 triệu " + $scope.giaKhacTo + " tỷ" );
+                            $("#prices_value").html("0 triệu -" + $scope.giaKhacTo + " tỷ" );
                             $scope.searchData.giaBETWEEN=[0, $scope.giaKhacTo*1000];
                         } else{
                             if($scope.giaKhacFrom < $scope.giaKhacTo){

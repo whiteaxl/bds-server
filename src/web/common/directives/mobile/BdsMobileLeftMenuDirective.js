@@ -40,6 +40,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
 
                 vm.gotoChatPage = function(){
                     console.log("-------vao mchats");
+                    $scope.$parent.mhc.doneSearch = true;
                     vm.hideMenuLeft();
                     if($rootScope.isLoggedIn()==false){
                         $scope.$bus.publish({
@@ -55,6 +56,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 
                 vm.gotoDangTinPage = function(event){
                     console.log("-------vao mpost");
+                    $scope.$parent.mhc.doneSearch = true;
                     vm.hideMenuLeft();
                     if($rootScope.isLoggedIn()==false){
                         $scope.$bus.publish({
@@ -69,6 +71,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 }
                 vm.gotoQuanLyDangTin = function(event){
                     console.log("-------vao madsMgmt");
+                    $scope.$parent.mhc.doneSearch = true;
                     vm.hideMenuLeft();
                     if($rootScope.isLoggedIn()==false){
                         $scope.$bus.publish({
@@ -83,6 +86,7 @@ angular.module('bds').directive('bdsMobileLeftMenu', ['$timeout', function ($tim
                 }
                 //nhannc end
                 vm.showFilter = function(){
+                    $scope.$parent.mhc.doneSearch = true;
                     $rootScope.bdsData.filterShowAct = true;
                     $scope.$bus.publish({
                         channel: 'search',
