@@ -1,16 +1,17 @@
 var danhMuc = {};
 
 var BAT_KY = "Bất kỳ";
+var BIG = 9999999
 danhMuc.CHUA_XAC_DINH = "Chưa xác định";
 danhMuc.THOA_THUAN = "Thỏa thuận";
 danhMuc.BAT_KY = BAT_KY;
-danhMuc.BIG =9999999;
+danhMuc.BIG =BIG;
 
 danhMuc.sellStepValues = [0, 1000, 2000, 3000, 5000, 7000, 10000, 20000, 30000]; //trieu
 
 danhMuc.filter_max_value = {
     lable: "Bất kỳ",
-    value: 999999999999999999,
+    value: BIG,
 }
 
 danhMuc.sortHouseOptions = [
@@ -168,7 +169,7 @@ danhMuc.khoangDienTich = [
     {
         value: {
             min:  500,
-            max:  999999999999999,
+            max:  BIG,
             id: 10     
         },
         label: ">= 500m2",
@@ -177,7 +178,7 @@ danhMuc.khoangDienTich = [
     {
         value: {
             min:  0,
-            max:  999999999999999,
+            max:  BIG,
             id: 11     
         },
         label: "Diện tích bất kỳ",
@@ -278,7 +279,7 @@ danhMuc.khoangGia = [
     {
         value: {
             min:  30000,
-            max:  999999999999,
+            max:  BIG,
             id:11    
         },
         label: ">= 30 tỷ",
@@ -287,7 +288,7 @@ danhMuc.khoangGia = [
     {
         value: {
             min:  0,
-            max:  999999999999,
+            max:  BIG,
             id:12    
         },
         label: "Giá bất kỳ",
@@ -364,7 +365,7 @@ danhMuc.khoangGiaThue = [
     {
         value: {
             min:  100,
-            max:  999999999999,
+            max:  BIG,
             id:8     
         },
         label: "> 100 triệu",
@@ -373,7 +374,7 @@ danhMuc.khoangGiaThue = [
     {
         value: {
             min:  0,
-            max:  999999999999,
+            max:  BIG,
             id:9    
         },
         label: "Giá bất kỳ",
@@ -551,6 +552,158 @@ danhMuc.LoaiNhaDatThueWeb = [
     { value: "99", lable: "Cho Thuê loại bất động sản khác" }    
 ];
 
+danhMuc.sellPrices  =[
+    {
+        value: [0,BIG],
+        lable: "Bất kỳ"
+    },
+    {
+        value: [-1,-1],
+        lable: "Chưa xác định"
+    },
+    {
+        value: [0,500],
+        lable: "<500 triệu"
+    },
+    {
+        value: [500,800],
+        lable: "500-800 triệu"
+    },
+    {
+        value: [800,1000],
+        lable: "800 triệu - 1 tỷ"
+    },
+    {
+        value: [1000,2000],
+        lable: "1-2 tỷ"
+    },
+    {
+        value: [2000,3000],
+        lable: "2-3 tỷ"
+    },
+    {
+        value: [3000,5000],
+        lable: "3-5 tỷ"
+    },
+    {
+        value: [5000,7000],
+        lable: "5-7 tỷ"
+    },
+    {
+        value: [7000,10000],
+        lable: "7-10 tỷ"
+    },
+    {
+        value: [10000,20000],
+        lable: "10-20 tỷ"
+    },
+    {
+        value: [20000,30000],
+        lable: "20-30 tỷ"
+    },
+    {
+        value: [30000,BIG],
+        lable: ">30 tỷ"
+    }
+];
+
+danhMuc.rentPrices  =[
+    {
+        value: [0,BIG],
+        lable: "Bất kỳ"
+    },
+    {
+        value: [-1,-1],
+        lable: "Chưa xác định"
+    },
+    {
+        value: [0,1],
+        lable: "<1 triệu"
+    },
+    {
+        value: [1,3],
+        lable: "1-3 triệu"
+    },
+    {
+        value: [3,5],
+        lable: "3-5 triệu"
+    },
+    {
+        value: [5,10],
+        lable: "5-10 triệu"
+    },
+    {
+        value: [10,20],
+        lable: "10-20 triệu"
+    },
+    {
+        value: [20,40],
+        lable: "20-40 triệu"
+    },
+    {
+        value: [40,70],
+        lable: "40-70 triệu"
+    },
+    {
+        value: [70,100],
+        lable: "70-100 triệu"
+    },
+    {
+        value: [100,BIG],
+        lable: ">100 triệu"
+    }
+];
+danhMuc.areas = [
+    {
+        value: [0,BIG],
+        lable: "Bất kỳ"
+    },
+    {
+        value: [-1,-1],
+        lable: "Chưa xác định"
+    },
+    {
+        value: [0,30],
+        lable: "<30 m²"
+    },
+    {
+        value: [30,50],
+        lable: "30-50 m²"
+    },
+    {
+        value: [50,80],
+        lable: "50-80 m²"
+    },
+    {
+        value: [80,100],
+        lable: "80-100 m²"
+    },
+    {
+        value: [100,150],
+        lable: "100-150 m²"
+    },
+    {
+        value: [150,200],
+        lable: "150-200 m²"
+    },
+    {
+        value: [200,250],
+        lable: "200-250 m²"
+    },
+    {
+        value: [250,300],
+        lable: "250-300 m²"
+    },
+    {
+        value: [300,500],
+        lable: "300-500 m²"
+    },
+    {
+        value: [500,BIG],
+        lable: ">500 m²"
+    }
+];
+
 danhMuc.DacTinhNha = [
     { value: "0", lable: "Nhà mới xây" },
     { value: "1", lable: "Nhà lô góc" },
@@ -625,6 +778,7 @@ danhMuc.NgayDaDangKey = [
 
 danhMuc.HuongNha = {
     0: BAT_KY,
+    "-1": "Chưa xác định",
     1: "Đông",
     2: "Tây",
     3: "Nam",

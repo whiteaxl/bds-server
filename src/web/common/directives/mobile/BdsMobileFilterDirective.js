@@ -51,147 +51,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.loaiNhaDatThue = window.RewayListValue.LoaiNhaDatThueWeb;
 
                 vm.huongNhaList = window.RewayListValue.getNameValueArray(window.RewayListValue.HuongNha);
-                
 
-                vm.sellPrices  =[                    
-                    {
-                        value: [0,9999999999999],
-                        lable: "Bất kỳ"
-                    },
-                    {
-                        value: [0,500],
-                        lable: "<500 triệu"
-                    },                    
-                    {
-                        value: [500,800],
-                        lable: "500-800 triệu"
-                    },
-                    {
-                        value: [800,1000],
-                        lable: "800 triệu - 1 tỷ"
-                    },
-                    {
-                        value: [1000,2000],
-                        lable: "1-2 tỷ"
-                    },
-                    {
-                        value: [2000,3000],
-                        lable: "2-3 tỷ"
-                    },
-                    {
-                        value: [3000,5000],
-                        lable: "3-5 tỷ"
-                    },
-                    {
-                        value: [5000,7000],
-                        lable: "5-7 tỷ"
-                    },
-                    {
-                        value: [7000,10000],
-                        lable: "7-10 tỷ"
-                    },
-                    {
-                        value: [10000,20000],
-                        lable: "10-20 tỷ"
-                    },
-                    {
-                        value: [20000,30000],
-                        lable: "20-30 tỷ"
-                    },
-                    {
-                        value: [30000,99999999999999],
-                        lable: ">30 tỷ"
-                    }
-                ];
 
-                vm.rentPrices  =[
-                    {
-                        value: [0,9999999999999],
-                        lable: "Bất kỳ"
-                    },                    
-                    {
-                        value: [0,1],
-                        lable: "<1 triệu"
-                    },
-                    {
-                        value: [1,3],
-                        lable: "1-3 triệu"
-                    },
-                    {
-                        value: [3,5],
-                        lable: "3-5 triệu"
-                    },
-                    {
-                        value: [5,10],
-                        lable: "5-10 triệu"
-                    },
-                    {
-                        value: [10,20],
-                        lable: "10-20 triệu"
-                    },
-                    {
-                        value: [20,40],
-                        lable: "20-40 triệu"
-                    },
-                    {
-                        value: [40,70],
-                        lable: "40-70 triệu"
-                    },
-                    {
-                        value: [70,100],
-                        lable: "70-100 triệu"
-                    },
-                    {
-                        value: [100,999999999999],
-                        lable: ">100 triệu"
-                    }
-                ];
-                vm.areas = [
-                    {
-                        value: [0,9999999999999],
-                        lable: "Bất kỳ"
-                    },                    
-                    {
-                        value: [0,30],
-                        lable: "<30 m²"
-                    },                    
-                    {
-                        value: [30,50],
-                        lable: "30-50 m²"
-                    },                    
-                    {
-                        value: [50,80],
-                        lable: "50-80 m²"
-                    },                    
-                    {
-                        value: [80,100],
-                        lable: "80-100 m²"
-                    },                    
-                    {
-                        value: [100,150],
-                        lable: "100-150 m²"
-                    },                    
-                    {
-                        value: [150,200],
-                        lable: "150-200 m²"
-                    },                    
-                    {
-                        value: [200,250],
-                        lable: "200-250 m²"
-                    },                    
-                    {
-                        value: [250,300],
-                        lable: "250-300 m²"
-                    },                    
-                    {
-                        value: [300,500],
-                        lable: "300-500 m²"
-                    },                    
-                    {
-                        value: [500,9999999999999999],
-                        lable: ">500 m²"
-                    }
-                ];
+                vm.sellPrices  = window.RewayListValue.sellPrices;
+                vm.rentPrices  = window.RewayListValue.rentPrices;
+                vm.areas = window.RewayListValue.areas;
                 vm.ngayDangTinList = [
                     {
                         value: "19810101",
@@ -200,19 +64,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     {
                         value: Date.today().add(-1).days().toString('yyyyMMdd'),
                         lable: "1 ngày"
-                    },                    
-                    {
-                        value: Date.today().add(-2).days().toString('yyyyMMdd'),
-                        lable: "2 ngày"
-                    },                    
+                    },
                     {
                         value: Date.today().add(-3).days().toString('yyyyMMdd'),
                         lable: "3 ngày"
-                    },                    
-                    {
-                        value: Date.today().add(-5).days().toString('yyyyMMdd'),
-                        lable: "5 ngày"
-                    },                    
+                    },
                     {
                         value: Date.today().add(-7).days().toString('yyyyMMdd'),
                         lable: "7 ngày"
@@ -319,85 +175,193 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 }
 
                 vm.changeDienTichFrom = function () {
-
                     if(!$scope.dienTichKhacFrom){
-                        if(!$scope.dienTichKhacTo){
-                            $("#area_value").html("Bất kỳ");
-                            $scope.searchData.dienTichBETWEEN=[0, 9999999999999]
+                        if($scope.dienTichKhacFrom==0){
+                            if(!$scope.dienTichKhacTo){
+                                if($scope.dienTichKhacTo==0){
+                                    $("#area_value").html("Chưa xác định");
+                                    $scope.searchData.dienTich = -1;
+                                    $scope.searchData.dienTichBETWEEN=[-1,-1];
+                                } else{
+                                    $scope.searchData.dienTich = undefined;
+                                    $("#area_value").html("Bất kỳ");
+                                    $scope.searchData.dienTichBETWEEN=[0, window.RewayListValue.BIG];
+                                }
+                            } else{
+                                $scope.searchData.dienTich = undefined;
+                                $("#area_value").html("0 m² - " + $scope.dienTichKhacTo + " m²");
+                                $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacTo];
+                            }
                         } else{
-                            $("#area_value").html("0 m² - " + $scope.dienTichKhacTo + " m²");
-                            $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacTo]
+                            $scope.searchData.dienTich = undefined;
+                            if(!$scope.dienTichKhacTo){
+                                $("#area_value").html("Bất kỳ");
+                                $scope.searchData.dienTichBETWEEN=[0, window.RewayListValue.BIG]
+                            } else{
+                                $("#area_value").html("0 m² - " + $scope.dienTichKhacTo + " m²");
+                                $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacTo];
+                            }
                         }
+
                     } else{
-                        if($scope.dienTichKhacTo){
-                            $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ" );
-                            $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, 9999999999999]
+                        $scope.searchData.dienTich = undefined;
+                        if(!$scope.dienTichKhacTo){
+                            if($scope.dienTichKhacTo==0){
+                                $("#area_value").html("0 m² - " + $scope.dienTichKhacFrom + " m²");
+                                $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacFrom];
+                            } else{
+                                $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ" );
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, window.RewayListValue.BIG];
+                            }
                         } else{
-                            $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
-                            $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, $scope.dienTichKhacTo]
+                            if($scope.dienTichKhacFrom < $scope.dienTichKhacTo){
+                                $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, $scope.dienTichKhacTo];
+                            } else {
+                                $("#area_value").html($scope.dienTichKhacTo + " m² - " + $scope.dienTichKhacFrom + " m²");
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacTo, $scope.dienTichKhacFrom];
+                            }
                         }
                     }
                 }
 
                 vm.changeDienTichTo = function () {
-
                     if(!$scope.dienTichKhacTo){
-                        if(!$scope.dienTichKhacFrom){
-                            $("#area_value").html("Bất kỳ");
-                            $scope.searchData.dienTichBETWEEN=[0, 9999999999999]
+                        if($scope.dienTichKhacTo==0){
+                            if(!$scope.dienTichKhacFrom){
+                                if($scope.dienTichKhacFrom==0){
+                                    $("#area_value").html("Chưa xác định");
+                                    $scope.searchData.dienTich = -1;
+                                    $scope.searchData.dienTichBETWEEN=[-1,-1];
+                                } else{
+                                    $scope.searchData.dienTich = undefined;
+                                    $("#area_value").html("Bất kỳ");
+                                    $scope.searchData.dienTichBETWEEN=[0, window.RewayListValue.BIG];
+                                }
+                            } else{
+                                $scope.searchData.dienTich = undefined;
+                                $("#area_value").html("0 m² - " + $scope.dienTichKhacFrom + " m²");
+                                $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacFrom];
+                            }
                         } else{
-                            $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ");
-                            $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom,9999999999999]
+                            $scope.searchData.dienTich = undefined;
+                            if(!$scope.dienTichKhacFrom){
+                                $("#area_value").html("Bất kỳ");
+                                $scope.searchData.dienTichBETWEEN=[0, window.RewayListValue.BIG]
+                            } else{
+                                $("#area_value").html($scope.dienTichKhacFrom + " m² - Bất kỳ");
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom,window.RewayListValue.BIG];
+                            }
                         }
+
                     } else{
-                        if($scope.dienTichKhacTo){
+                        $scope.searchData.dienTich = undefined;
+                        if(!$scope.dienTichKhacFrom){
                             $("#area_value").html("0 m² " + $scope.dienTichKhacTo + " m²" );
                             $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacTo]
                         } else{
-                            $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
-                            $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, $scope.dienTichKhacTo]
+                            if($scope.dienTichKhacFrom < $scope.dienTichKhacTo){
+                                $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacFrom, $scope.dienTichKhacTo];
+                            } else {
+                                $("#area_value").html($scope.dienTichKhacTo + " m² - " + $scope.dienTichKhacFrom + " m²");
+                                $scope.searchData.dienTichBETWEEN=[$scope.dienTichKhacTo, $scope.dienTichKhacFrom];
+                            }
                         }
                     }
                 }
 
                 vm.changeGiaKhacFrom = function () {
-
                     if(!$scope.giaKhacFrom){
-                        if(!$scope.giaKhacTo){
-                            $("#prices_value").html("Bất kỳ");
-                            $scope.searchData.giaBETWEEN=[0, 9999999999999];
+                        if($scope.giaKhacFrom==0){
+                            if(!$scope.giaKhacTo){
+                                if($scope.giaKhacTo==0){
+                                    $("#prices_value").html("Chưa xác định");
+                                    $scope.searchData.gia = -1;
+                                    $scope.searchData.giaBETWEEN=[-1,-1];
+                                } else{
+                                    $scope.searchData.gia = undefined;
+                                    $("#prices_value").html("Bất kỳ");
+                                    $scope.searchData.giaBETWEEN=[0, window.RewayListValue.BIG];
+                                }
+                            } else{
+                                $scope.searchData.gia = undefined;
+                                $("#prices_value").html("0 triệu - " + $scope.giaKhacTo + " tỷ");
+                                $scope.searchData.giaBETWEEN=[0, $scope.giaKhacTo*1000];
+                            }
                         } else{
-                            $("#prices_value").html("0 triệu - " + $scope.giaKhacTo*1000 + " triệu");
-                            $scope.searchData.giaBETWEEN=[0, $scope.giaKhacTo*1000];
+                            $scope.searchData.gia = undefined;
+                            if(!$scope.giaKhacTo){
+                                $("#prices_value").html("Bất kỳ");
+                                $scope.searchData.giaBETWEEN=[0, window.RewayListValue.BIG]
+                            } else{
+                                $("#prices_value").html("0 triệu - " + $scope.giaKhacTo + " tỷ");
+                                $scope.searchData.giaBETWEEN=[0, $scope.giaKhacTo*1000];
+                            }
                         }
                     } else{
-                        if($scope.giaKhacTo){
-                            $("#prices_value").html($scope.giaKhacFrom*1000 + " triệu - Bất kỳ" );
-                            $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, 9999999999999];
+                        $scope.searchData.gia = undefined;
+                        if(!$scope.giaKhacTo){
+                            if($scope.giaKhacTo==0){
+                                $("#prices_value").html("0 triệu - " + $scope.giaKhacFrom + " tỷ");
+                                $scope.searchData.giaBETWEEN=[0, $scope.giaKhacFrom*1000];
+                            } else{
+                                $("#prices_value").html($scope.giaKhacFrom + " tỷ - Bất kỳ" );
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, window.RewayListValue.BIG];
+                            }
                         } else{
-                            $("#prices_value").html($scope.giaKhacFrom*1000 + " triệu - " + $scope.giaKhacTo*1000 + " triệu");
-                            $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, $scope.giaKhacTo*1000];
+                            if($scope.giaKhacFrom < $scope.giaKhacTo){
+                                $("#prices_value").html($scope.giaKhacFrom + " tỷ - " + $scope.giaKhacTo + " tỷ");
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, $scope.giaKhacTo*1000];
+                            } else {
+                                $("#prices_value").html($scope.giaKhacTo + " tỷ - " + $scope.giaKhacFrom + " tỷ");
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacTo*1000, $scope.giaKhacFrom*1000];
+                            }
                         }
                     }
                 }
 
                 vm.changeGiaKhacTo = function () {
-
                     if(!$scope.giaKhacTo){
-                        if(!$scope.giaKhacFrom){
-                            $("#prices_value").html("Bất kỳ");
-                            $scope.searchData.giaBETWEEN=[0, 9999999999999];
+                        if($scope.giaKhacTo==0){
+                            if(!$scope.giaKhacFrom){
+                                if($scope.giaKhacFrom==0){
+                                    $("#prices_value").html("Chưa xác định");
+                                    $scope.searchData.gia = -1;
+                                    $scope.searchData.giaBETWEEN=[-1,-1];
+                                } else{
+                                    $scope.searchData.gia = undefined;
+                                    $("#prices_value").html("Bất kỳ");
+                                    $scope.searchData.giaBETWEEN=[0, window.RewayListValue.BIG];
+                                }
+                            } else{
+                                $scope.searchData.gia = undefined;
+                                $("#prices_value").html("0 triệu - " + $scope.giaKhacFrom + " tỷ");
+                                $scope.searchData.giaBETWEEN=[0, $scope.giaKhacFrom*1000];
+                            }
                         } else{
-                            $("#prices_value").html($scope.giaKhacFrom*1000 + " triệu - Bất kỳ");
-                            $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, 9999999999999];
+                            $scope.searchData.gia = undefined;
+                            if(!$scope.giaKhacFrom){
+                                $("#prices_value").html("Bất kỳ");
+                                $scope.searchData.giaBETWEEN=[0, window.RewayListValue.BIG]
+                            } else{
+                                $("#prices_value").html($scope.giaKhacFrom + " tỷ - Bất kỳ");
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, window.RewayListValue.BIG];
+                            }
                         }
-                    } else{
-                        if($scope.giaKhacTo){
-                            $("#prices_value").html("0 triệu " + $scope.giaKhacTo*1000 + " triệu" );
+                    }else{
+                        $scope.searchData.gia = undefined;
+                        if(!$scope.giaKhacFrom){
+                            $("#prices_value").html("0 triệu " + $scope.giaKhacTo + " tỷ" );
                             $scope.searchData.giaBETWEEN=[0, $scope.giaKhacTo*1000];
                         } else{
-                            $("#prices_value").html($scope.giaKhacFrom*1000 + " triệu - " + $scope.giaKhacTo*1000 + " triệu");
-                            $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, $scope.giaKhacTo*1000];
+                            if($scope.giaKhacFrom < $scope.giaKhacTo){
+                                $("#prices_value").html($scope.giaKhacFrom + " tỷ - " + $scope.giaKhacTo + " tỷ");
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacFrom*1000, $scope.giaKhacTo*1000];
+                            } else {
+                                $("#prices_value").html($scope.giaKhacTo + " tỷ - " + $scope.giaKhacFrom + " tỷ");
+                                $scope.searchData.giaBETWEEN=[$scope.giaKhacTo*1000, $scope.giaKhacFrom*1000];
+                            }
                         }
                     }
                 }
@@ -411,18 +375,19 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     //     inherit: false,
                     //     notify: true
                     // });
+                    /*
                     if($scope.dienTichKhacFrom || $scope.dienTichKhacTo){
                         $scope.searchData.dienTichBETWEEN[0] = 0 || $scope.dienTichKhacFrom;
-                        $scope.searchData.dienTichBETWEEN[1] = $scope.dienTichKhacTo || 9999999999999999;  
+                        $scope.searchData.dienTichBETWEEN[1] = $scope.dienTichKhacTo || window.RewayListValue.BIG;
                         // $scope.dienTichKhacFrom = undefined;
                         // $scope.dienTichKhacTo = undefined;
                     }
                     if($scope.giaKhacFrom || $scope.giaKhacTo){
                         $scope.searchData.giaBETWEEN[0] = $scope.giaKhacFrom * 1000|| 0;
-                        $scope.searchData.giaBETWEEN[1] = $scope.giaKhacTo *1000|| 9999999999999999;
+                        $scope.searchData.giaBETWEEN[1] = $scope.giaKhacTo *1000|| window.RewayListValue.BIG;
                         // $scope.giaKhacFrom = undefined;
                         // $scope.giaKhacTo = undefined;
-                    }
+                    }*/
                     if($scope.searchData.ngayDangTinGREATER)
                         $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
                     $scope.searchData.polygon = undefined;
@@ -677,11 +642,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         if ($scope.searchData.giaBETWEEN[1]){
                             prices = prices + $scope.searchData.giaBETWEEN[1]
                         } else {
-                            prices = prices + 999999999;
+                            prices = prices + window.RewayListValue.BIG;
                         }
                         prices = prices + "]";
                     } else{
-                        prices = "[0, 999999999]";
+                        prices = "[0, " + window.RewayListValue.BIG + "]";
                     }
 
                     //var prices = "["+$scope.searchData.giaBETWEEN[0]+"," +$scope.searchData.giaBETWEEN[1]+"]";
@@ -704,11 +669,11 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         if ($scope.searchData.dienTichBETWEEN[1]){
                             area = area + $scope.searchData.dienTichBETWEEN[1]
                         } else {
-                            area = area + 99999999999;
+                            area = area + window.RewayListValue.BIG;
                         }
                         area = area + "]";
                     } else{
-                        area = "[0, 99999999999]";
+                        area = "[0, " + window.RewayListValue.BIG + "]";
                     }
 
                     //var area = "["+$scope.searchData.dienTichBETWEEN[0]+","+$scope.searchData.dienTichBETWEEN[1]+"]";
@@ -766,10 +731,18 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                                         if(drumLable == "Bất kỳ"){
                                             $scope.giaKhacFrom="";
                                             $scope.giaKhacTo="";
+                                            $scope.searchData.gia = undefined;
+                                        } else if(drumLable == "Chưa xác định"){
+                                            $scope.searchData.giaBETWEEN = [-1,-1];
+                                            $scope.searchData.gia = -1;
+                                            $scope.giaKhacFrom=0;
+                                            $scope.giaKhacTo=0;
                                         } else if(drumLable.indexOf("&gt;") > -1){
+                                            $scope.searchData.gia = undefined;
                                             $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
                                             $scope.giaKhacTo="";
                                         } else{
+                                            $scope.searchData.gia = undefined;
                                             $scope.giaKhacFrom=Math.round((parseFloat(array[0])/1000)*1000)/1000;
                                             $scope.giaKhacTo=Math.round((parseFloat(array[1])/1000)*1000)/1000;
                                         }
@@ -780,10 +753,18 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                                         if(drumLable == "Bất kỳ"){
                                             $scope.dienTichKhacFrom="";
                                             $scope.dienTichKhacTo="";
+                                            $scope.searchData.dienTich = undefined;
+                                        } else if(drumLable == "Chưa xác định"){
+                                            $scope.searchData.dienTichBETWEEN = [-1,-1];
+                                            $scope.searchData.dienTich = -1;
+                                            $scope.dienTichKhacFrom=0;
+                                            $scope.dienTichKhacTo=0;
                                         } else if(drumLable.indexOf("&gt;") > -1){
+                                            $scope.searchData.dienTich = undefined;
                                             $scope.dienTichKhacFrom=array[0];
                                             $scope.dienTichKhacTo="";
                                         } else{
+                                            $scope.searchData.dienTich = undefined;
                                             $scope.dienTichKhacFrom=array[0];
                                             $scope.dienTichKhacTo=array[1];
                                         }
@@ -821,7 +802,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             var currentDate = new Date();
                             var timeDiff = Math.abs(currentDate.getTime() - dateDangTin.getTime());
                             $scope.ngayDangTinInput = Math.round(timeDiff / (1000 * 3600 * 24));
-                            $("#datepost_value").html(($scope.ngayDangTinInput -1) + " ngày");
+                            $("#datepost_value").html(($scope.ngayDangTinInput) + " ngày");
                         }
                     }
 
@@ -843,6 +824,48 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         }
 
                     };
+
+                    if($scope.searchData.dienTich && $scope.searchData.dienTich == -1){
+                        $scope.dienTichKhacFrom = 0;
+                        $scope.dienTichKhacTo=0;
+                        $("#area_value").html("Chưa xác định");
+                    }else{
+                        if($scope.searchData.dienTichBETWEEN){
+                            if($scope.searchData.dienTichBETWEEN[0]==0 && $scope.searchData.dienTichBETWEEN[1]==window.RewayListValue.BIG){
+                                $("#area_value").html("Bất kỳ");
+                            }else{
+                                $scope.dienTichKhacFrom = $scope.searchData.dienTichBETWEEN[0];
+                                if($scope.searchData.dienTichBETWEEN[1] != window.RewayListValue.BIG){
+                                    $scope.dienTichKhacTo=$scope.searchData.dienTichBETWEEN[1];
+                                    $("#area_value").html($scope.dienTichKhacFrom + " m² - " + $scope.dienTichKhacTo + " m²");
+                                } else{
+                                    $("#area_value").html($scope.dienTichKhacFrom + " m² - " + " Bất kỳ");
+                                }
+                            }
+                        }
+                    }
+
+                    if($scope.searchData.gia && $scope.searchData.gia == -1){
+                        $scope.giaKhacFrom = 0;
+                        $scope.giaKhacTo=0;
+                        $("#prices_value").html("Chưa xác định");
+                    } else{
+                        if($scope.searchData.giaBETWEEN){
+                            if($scope.searchData.giaBETWEEN[0]==0 && $scope.searchData.giaBETWEEN[1]==window.RewayListValue.BIG){
+                                $("#prices_value").html("Bất kỳ");
+                            } else {
+                                $scope.giaKhacFrom=Math.round((parseFloat($scope.searchData.giaBETWEEN[0])/1000)*1000)/1000;
+
+                                if($scope.searchData.giaBETWEEN[1] != window.RewayListValue.BIG){
+                                    $scope.giaKhacTo=Math.round((parseFloat($scope.searchData.giaBETWEEN[1])/1000)*1000)/1000;
+                                    $("#prices_value").html($scope.giaKhacFrom + " tỷ - " + $scope.giaKhacTo + " tỷ");
+                                } else{
+                                    $("#prices_value").html($scope.giaKhacFrom + " tỷ - Bất kỳ");
+                                }
+                            }
+                        }
+                    }
+
                     if($scope.searchData.huongNha){
                         for(var i=0; i<vm.huongNhaList.length; i++){
                             if(vm.huongNhaList[i].value.trim() == $scope.searchData.huongNha[0].trim()) {
