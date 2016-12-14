@@ -38,6 +38,15 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     
                     
                 }
+
+                $scope.$on("changeSearchData", function () {
+                    console.log("---------------------changeAutoComplete-----------");
+                    $timeout(function() {
+                        $scope.searchData = $rootScope.searchData.query;
+                        vm.act = $rootScope.act;
+                        vm.init();
+                    },0);
+                });
                 vm.pageSize = 25;
                 vm.initialized = false;
                 vm.keepViewport = true;
@@ -792,7 +801,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     vm.updateDrums();
 
                     if($scope.searchData.ngayDangTinGREATER){
-                        if($scope.searchData.ngayDangTinGREATER.trim() == "19810101"){
+                        if(($scope.searchData.ngayDangTinGREATER + "").trim() == "19810101"){
                             $scope.ngayDangTinInput = 0;
                             $("#datepost_value").html("Bất kỳ");
                         } else{
@@ -810,14 +819,14 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     if($scope.searchData.loaiNhaDat){
                         if($scope.searchData.loaiTin==0){
                             for(var i=0; i<vm.loaiNhaDatBan.length; i++){
-                                if(vm.loaiNhaDatBan[i].value.trim() ==$scope.searchData.loaiNhaDat[0].trim()) {
+                                if(vm.loaiNhaDatBan[i].value == $scope.searchData.loaiNhaDat[0]) {
                                     $(".type-box .collapse-title span label").html(vm.loaiNhaDatBan[i].lable.trim());
                                     break;
                                 }
                             }
                         } else if($scope.searchData.loaiTin==1) {
                             for (var i = 0; i < vm.loaiNhaDatThue.length; i++) {
-                                if (vm.loaiNhaDatThue[i].value.trim() == $scope.searchData.loaiNhaDat[0].trim()) {
+                                if (vm.loaiNhaDatThue[i].value == $scope.searchData.loaiNhaDat[0]) {
                                     $(".type-box .collapse-title span label").html(vm.loaiNhaDatThue[i].lable.trim());
                                     break;
                                 }
@@ -869,7 +878,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                     if($scope.searchData.huongNha){
                         for(var i=0; i<vm.huongNhaList.length; i++){
-                            if(vm.huongNhaList[i].value.trim() == $scope.searchData.huongNha[0].trim()) {
+                            if(vm.huongNhaList[i].value == $scope.searchData.huongNha[0]) {
                                 $(".trend-box .collapse-title span label").html(vm.huongNhaList[i].lable.trim());
                                 break;
                             }

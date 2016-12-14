@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e2b680075f5fc24ef96a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1f774e75bd9a91c8c86a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1310,6 +1310,7 @@
 	                if (res.data.user.lastSearch && res.data.user.lastSearch.length > 0) {
 	                    $localStorage.searchHistory = res.data.user.lastSearch;
 	                    $rootScope.user.lastSearch = res.data.user.lastSearch;
+	                    $rootScope.searchData = $localStorage.searchHistory[0];
 	                }
 
 	                if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
@@ -32359,7 +32360,7 @@
 
 	            vm.gotoChatPage = function () {
 	                console.log("-------vao mchats");
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32375,7 +32376,7 @@
 
 	            vm.gotoDangTinPage = function (event) {
 	                console.log("-------vao mpost");
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32390,7 +32391,7 @@
 	            };
 	            vm.gotoQuanLyDangTin = function (event) {
 	                console.log("-------vao madsMgmt");
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                vm.hideMenuLeft();
 	                if ($rootScope.isLoggedIn() == false) {
 	                    $scope.$bus.publish({
@@ -32405,7 +32406,7 @@
 	            };
 	            //nhannc end
 	            vm.showFilter = function () {
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                $rootScope.bdsData.filterShowAct = true;
 	                $scope.$bus.publish({
 	                    channel: 'search',
@@ -32487,6 +32488,15 @@
 	                $scope.searchData.ngayDangTinGREATER = "19810101";
 	                vm.updateDrums();
 	            };
+
+	            $scope.$on("changeSearchData", function () {
+	                console.log("---------------------changeAutoComplete-----------");
+	                $timeout(function () {
+	                    $scope.searchData = $rootScope.searchData.query;
+	                    vm.act = $rootScope.act;
+	                    vm.init();
+	                }, 0);
+	            });
 	            vm.pageSize = 25;
 	            vm.initialized = false;
 	            vm.keepViewport = true;
@@ -33199,7 +33209,7 @@
 	                vm.updateDrums();
 
 	                if ($scope.searchData.ngayDangTinGREATER) {
-	                    if ($scope.searchData.ngayDangTinGREATER.trim() == "19810101") {
+	                    if (($scope.searchData.ngayDangTinGREATER + "").trim() == "19810101") {
 	                        $scope.ngayDangTinInput = 0;
 	                        $("#datepost_value").html("Bất kỳ");
 	                    } else {
@@ -33217,14 +33227,14 @@
 	                if ($scope.searchData.loaiNhaDat) {
 	                    if ($scope.searchData.loaiTin == 0) {
 	                        for (var i = 0; i < vm.loaiNhaDatBan.length; i++) {
-	                            if (vm.loaiNhaDatBan[i].value.trim() == $scope.searchData.loaiNhaDat[0].trim()) {
+	                            if (vm.loaiNhaDatBan[i].value == $scope.searchData.loaiNhaDat[0]) {
 	                                $(".type-box .collapse-title span label").html(vm.loaiNhaDatBan[i].lable.trim());
 	                                break;
 	                            }
 	                        }
 	                    } else if ($scope.searchData.loaiTin == 1) {
 	                        for (var i = 0; i < vm.loaiNhaDatThue.length; i++) {
-	                            if (vm.loaiNhaDatThue[i].value.trim() == $scope.searchData.loaiNhaDat[0].trim()) {
+	                            if (vm.loaiNhaDatThue[i].value == $scope.searchData.loaiNhaDat[0]) {
 	                                $(".type-box .collapse-title span label").html(vm.loaiNhaDatThue[i].lable.trim());
 	                                break;
 	                            }
@@ -33275,7 +33285,7 @@
 
 	                if ($scope.searchData.huongNha) {
 	                    for (var i = 0; i < vm.huongNhaList.length; i++) {
-	                        if (vm.huongNhaList[i].value.trim() == $scope.searchData.huongNha[0].trim()) {
+	                        if (vm.huongNhaList[i].value == $scope.searchData.huongNha[0]) {
 	                            $(".trend-box .collapse-title span label").html(vm.huongNhaList[i].lable.trim());
 	                            break;
 	                        }
@@ -33390,7 +33400,7 @@
 	            };
 	            //end nhannc
 	            vm.goToSearchPage = function () {
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                if ($rootScope.searchData.placeId) {
 	                    $rootScope.searchData.polygon = undefined;
 	                    $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
@@ -33469,7 +33479,8 @@
 	                $(".search_mobile").removeClass("active");
 	            };
 	            vm.toggleFilter = function (event) {
-	                $scope.$parent.mhc.doneSearch = true;
+	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
+	                $(".search input").val($rootScope.act);
 	                if ($state.current.name == 'msearch') {
 	                    $rootScope.bdsData.filterShowAct = false;
 	                } else {
@@ -33881,8 +33892,10 @@
 	                  $localStorage.relandToken = res.data.token;
 	                  if (res.data.lastSearch && res.data.lastSearch.length > 0) {
 	                    $rootScope.user.lastSearch = res.data.lastSearch;
-	                    $localStorage.lastSearch = res.data.lastSearch;
 	                    $localStorage.searchHistory = res.data.lastSearch;
+	                    $rootScope.searchData = $localStorage.searchHistory[0];
+	                    if ($rootScope.searchData.query.diaChinh.fullName) $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+	                    $rootScope.$broadcast("changeSearchData");
 	                  } else $localStorage.searchHistory = [];
 
 	                  $rootScope.user.userName = res.data.userName;
@@ -33945,8 +33958,10 @@
 	                //$window.token = res.data.token;
 	                $localStorage.relandToken = res.data.token;
 	                if (res.data.lastSearch && res.data.lastSearch.length > 0) {
-	                  $localStorage.lastSearch = res.data.lastSearch;
 	                  $localStorage.searchHistory = res.data.lastSearch;
+	                  $rootScope.searchData = $localStorage.searchHistory[0];
+	                  if ($rootScope.searchData.query.diaChinh.fullName) $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+	                  $rootScope.$broadcast("changeSearchData");
 	                } else $localStorage.searchHistory = [];
 
 	                $rootScope.user.userName = res.data.userName;

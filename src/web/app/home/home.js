@@ -325,6 +325,7 @@
           if(res.data.user.lastSearch && res.data.user.lastSearch.length > 0){
               $localStorage.searchHistory = res.data.user.lastSearch;
               $rootScope.user.lastSearch = res.data.user.lastSearch;
+              $rootScope.searchData = $localStorage.searchHistory[0];
           }
 
           if(res.data.user.fullName)
