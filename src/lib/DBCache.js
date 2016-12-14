@@ -12,7 +12,7 @@ var placeUtil = require('./placeUtil');
 
 var async = require("async");
 
-var SortedArray = require('sorted-array');
+var timsort = require('timsort');
 
 var constants = require("./constant");
 
@@ -126,9 +126,11 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
       a1.push(global.rwcache.ads[1][k]);
     }
 
-    global.rwcache.adsSorted[0] = new SortedArray(a0,g_comp);
+    timsort.sort(a0, g_comp);
+    global.rwcache.adsSorted[0] = a0;
     logUtil.info("DONE sorting ban:", a0.length);
-    global.rwcache.adsSorted[1] = new SortedArray(a1,g_comp);
+    timsort.sort(a1, g_comp);
+    global.rwcache.adsSorted[1] = a1;
     logUtil.info("DONE sorting thue:", a1.length);
 
     logUtil.info("DONE ALL sorting ");
@@ -151,10 +153,8 @@ function loadAds(isFull, moreCondition, callback) {
 function updateCache(ads){
   if (!global.rwcache.ads[ads.loaiTin][ads.id]) {
     let a = global.rwcache.adsSorted[ads.loaiTin];
-    a.insert(ads);
-
-    //let idx = _.sortedIndex(a, )
-    //array.splice( _.sortedIndex( array, value ), 0, value );
+    a.push(ads);
+    timsort(a, g_comp);
   }
 
   global.rwcache.ads[ads.loaiTin][ads.id] = ads;
@@ -384,7 +384,7 @@ var cache = {
 
     let that = this;
 
-    let allByLoaiTin = global.rwcache.adsSorted[q.loaiTin].array;
+    let allByLoaiTin = global.rwcache.adsSorted[q.loaiTin];
 
     //sorting
     let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
