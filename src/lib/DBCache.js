@@ -12,7 +12,7 @@ var placeUtil = require('./placeUtil');
 
 var async = require("async");
 
-var timSort = require('timsort');
+var sortedlist = require('sortedlist');
 
 var constants = require("./constant");
 
@@ -57,8 +57,36 @@ function initCache(done) {
   global.rwcache.ads[0] = {}; //sale
   global.rwcache.ads[1] = {}; //rent
   global.rwcache.adsSorted={};
-  global.rwcache.adsSorted[0] = [];
-  global.rwcache.adsSorted[1] = [];
+
+  var comp = (a,b) => {
+    if (a.ngayDangTin > b.ngayDangTin) {
+      return -1;
+    }
+
+    if (a.ngayDangTin < b.ngayDangTin) {
+      return 1;
+    }
+
+    if (a.timeExtracted > b.timeExtracted) {
+      return -1;
+    }
+    if (a.timeExtracted < b.timeExtracted) {
+      return 1;
+    }
+
+    if (a.id > b.id) {
+      return -1;
+    }
+
+    if (a.id < b.id) {
+      return 1;
+    }
+
+    return 0;
+  };
+
+  global.rwcache.adsSorted[0] = sortedlist.create([], {compare : comp});
+  global.rwcache.adsSorted[1] = sortedlist.create([], {compare : comp});
 
   //global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
 
@@ -85,7 +113,7 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
 
     list.forEach(ads => {
       global.rwcache.ads[ads.loaiTin][ads.id] = ads;
-      global.rwcache.adsSorted[ads.loaiTin].push(ads);
+      global.rwcache.adsSorted[ads.loaiTin].insertOne(ads);
     });
 
     logUtil.info("Done load all " + type, list.length + " records");
@@ -107,7 +135,7 @@ function loadAds(isFull, moreCondition, callback) {
 
 function updateCache(ads){
   if (!global.rwcache.ads[ads.loaiTin][ads.id]) {
-    global.rwcache.adsSorted[ads.loaiTin].push(ads);
+    global.rwcache.adsSorted[ads.loaiTin].insertOne(ads);
   }
 
   global.rwcache.ads[ads.loaiTin][ads.id] = ads;
@@ -295,7 +323,7 @@ var cache = {
     console.log("Will sort by ", orderBy, sign);
 
     let startTime = new Date().getTime();
-    timSort.sort(filtered, (a, b) => {
+    filtered.sort((a, b) => {
       if (a[orderBy.name] > b[orderBy.name]) {
         return sign;
       }
@@ -337,27 +365,33 @@ var cache = {
 
     let that = this;
 
-    let allByLoaiTin = global.rwcache.ads[q.loaiTin];
-    let asArrays = [];
-    for (let key in allByLoaiTin) {
-      asArrays.push(allByLoaiTin[key]);
-    }
+    let allByLoaiTin = global.rwcache.adsSorted[q.loaiTin];
 
     //sorting
     let orderBy = q.orderBy || {"name": "ngayDangTin", "type":"DESC"};
 
-    this._doSorting(asArrays, orderBy);
-
     let filtered = [];
-    for (let i in asArrays) {
-      let tmp = asArrays[i];
+    let tmp;
+
+    let noCountAndDefaultSort = !q.isIncludeCountInResponse
+      && orderBy.name === "ngayDangTin" && orderBy.type === "DESC";
+
+
+    for (let i = 0; i < allByLoaiTin.length; i++) {
+      tmp = allByLoaiTin[i];
       if (that._match(q, tmp)) {
         filtered.push(tmp);
+        if (noCountAndDefaultSort && filtered.length >= q.dbPageNo*q.dbLimit) {
+          logUtil.info("noCount and DefaultSort => No need to search all!");
+          break;
+        }
       }
     }
 
     let count = filtered.length;
     console.log("Filterred length: ", count);
+
+    this._doSorting(filtered, orderBy);
 
     //do paging
     filtered = filtered.slice((q.dbPageNo-1)*q.dbLimit, q.dbPageNo*q.dbLimit);
