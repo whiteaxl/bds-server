@@ -84,7 +84,7 @@ function initCache(done) {
   global.rwcache.ads[0] = {}; //sale
   global.rwcache.ads[1] = {}; //rent
 
-  //global.lastSyncTime = fs.statSync(adsCacheFilename).mtime.getTime();
+  //global.lastSyncTime = fs.statSync(adsC    acheFilename).mtime.getTime();
 
   done();
 }
@@ -95,8 +95,8 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
-  //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC_diff is missing or GEOvsDC_diff = null or GEOvsDC_diff = 0)  and timeModified >= ${global.lastSyncTime}  ` ;
-  let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
+  let sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
+  //let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
   if (moreCondition) {
     sql = sql + " and " + moreCondition;
   }
@@ -290,7 +290,9 @@ var cache = {
   },
 
   adsById(id) {
-    return adsCol.by('id', id);
+    let ret  = global.rwcache.ads[ads.loaiTin][0][id] || global.rwcache.ads[ads.loaiTin][1][id];
+
+    return ret;
   },
 
   updateCache(ads){
