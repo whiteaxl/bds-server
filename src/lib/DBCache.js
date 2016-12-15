@@ -95,8 +95,12 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
   //projection = isFull ? "`timeModified`,`id`,`gia`,`loaiTin`,`dienTich`,`soPhongNgu`,`soTang`,`soPhongTam`,`image`,`place`,`giaM2`,`loaiNhaDat`,`huongNha`,`ngayDangTin`,`chiTiet`,`dangBoi`,`source`,`type`,`maSo`,`url`,`GEOvsDC`,`GEOvsDC_distance`,`GEOvsDC_radius`,`timeExtracted`" : projection;
   projection = isFull ? COMPARE_FIELDS.join(",") : projection;
 
-  let sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
-  //let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
+  //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
+  let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
+  if (process.env.ENV == 'PROD') {
+    sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
+  }
+
   if (moreCondition) {
     sql = sql + " and " + moreCondition;
   }
