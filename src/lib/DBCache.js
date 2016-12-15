@@ -290,7 +290,7 @@ var cache = {
   },
 
   adsById(id) {
-    let ret  = global.rwcache.ads[ads.loaiTin][0][id] || global.rwcache.ads[ads.loaiTin][1][id];
+    let ret  = global.rwcache.ads[0][id] || global.rwcache.ads[1][id];
 
     return ret;
   },
