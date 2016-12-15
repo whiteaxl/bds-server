@@ -1005,15 +1005,35 @@ a.active .p-icon.i-close {
   text-shadow: none;
   outline: none; }
 
-html, body {
+.baseBox {
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; }
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: #000;
   margin: 0;
   padding: 0;
-  min-height: 100%;
   background: #fff;
-  overflow-x: hidden; }
+  width: 100%;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none; }
 
 ::-moz-selection, ::selection {
   background: #fff;
@@ -1509,7 +1529,9 @@ nav.main {
   width: 100%;
   bottom: 0;
   top: 0;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   z-index: 9990; }
 
 .bgOpa {
@@ -2653,14 +2675,17 @@ div.disabled > .toggle-slide {
   right: 0;
   height: 44px;
   line-height: 44px;
-  z-index: 999;
+  z-index: 9991;
   position: fixed;
   border-top: 1px solid #e4e4e4; }
   .search-btn .btn-none, .post-btn .btn-none {
-    width: 30%;
+    width: 40%;
     white-space: nowrap;
-    text-align: center;
+    text-align: left;
+    padding: 0 20px;
     display: inline-block; }
+    .search-btn .btn-none.pull-right, .post-btn .btn-none.pull-right {
+      text-align: right; }
   .search-btn.blue, .post-btn.blue {
     background: #00a8e6; }
     .search-btn.blue .btn-none, .post-btn.blue .btn-none {

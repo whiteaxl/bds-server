@@ -3,7 +3,7 @@ function update(){
 	$ww = $(window).width();
 	
 	$(".modal-choose .modal-body").height($wh-46);
-	$(".search, .post").height($wh);
+	//$(".search, .post").height($wh);
 	$(".wapper > .maps").height($wh-42);
 		
 	if($(".search").find("input").hasClass("input-fr")){
@@ -93,10 +93,12 @@ function post(){
 	$(".post").scrollTop(0);
 	$(".post-footer").addClass("fixed");
 	overlay(".overlay");
+	$(".search-btn").show();
 }
 // close post
 function postExit(){
 	$(".post").removeAttr("style");		
+	$(".search-btn").removeAttr("style");		
 	$("body").removeClass("bodySearchShow");
 	$(".post-footer").removeClass("fixed");
 }
@@ -323,8 +325,13 @@ $(function(){
 	});
 	
 	//heart click
-	$(".heart").click(function(){
-		$(this).find(".icon-heart").toggleClass("active");
+	$('.heart').on('click', function(){
+		var self = $(this).find(".icon-heart");
+		self.addClass("refresh animation");
+		setTimeout(function(){
+			self.removeClass("refresh animation");
+		}, 600);
+		self.toggleClass("active");
 		if($(this).find(".icon-heart").hasClass("active")){
 			showNotify("Lưu tin thành công", ".heartNotify");
 			return;
@@ -350,6 +357,12 @@ $(function(){
 		});
 		$("#"+currb).addClass("active");
 	});
+	
+	// draw click
+	$('.i-mapdraw').on('click', function(){
+		$(this).parent().toggleClass("active");
+	});
+	
 	
 	// get numb title
 	var box = 0;
