@@ -403,13 +403,17 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $scope.searchData.polygon = undefined;
                     if(vm.item){
                         if(vm.item.query){
-                            $scope.searchData = vm.item.query;                             
+                            $scope.searchData = vm.item.query;
+                            if($scope.searchData.circle)
+                                $scope.searchData.circle = undefined;
                         } else if(vm.item.location){
                             $scope.searchData.circle = {
                                 center: $rootScope.currentLocation,
-                                radius: vm.radius
+                                radius: vm.radius?vm.radius:0.5
                             }
                         } else{
+                            if($scope.searchData.circle)
+                                $scope.searchData.circle = undefined;
                             $scope.searchData.diaChinh = {
                                 tinhKhongDau: vm.place.tinh,
                                 huyenKhongDau: vm.place.huyen,
@@ -446,7 +450,10 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     vm.keepViewport = false;
                     if(item.query){
                         vm.place = vm.item.place;
-                        $scope.searchData = item.query;                        
+                        $scope.searchData = item.query;
+                        $timeout(function() {
+                            vm.init();
+                        },0);
                         vm.updateDrums();
                     }else{
                         vm.place = item;

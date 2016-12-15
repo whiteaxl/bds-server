@@ -326,6 +326,7 @@
               $localStorage.searchHistory = res.data.user.lastSearch;
               $rootScope.user.lastSearch = res.data.user.lastSearch;
               $rootScope.searchData = $localStorage.searchHistory[$localStorage.searchHistory.length -1].query;
+              $rootScope.act = $rootScope.searchData.diaChinh.fullName;
           }
 
           if(res.data.user.fullName)

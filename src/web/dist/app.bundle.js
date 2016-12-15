@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c16e123cb7ad94d0d0c2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "af0d478f45cd5c6db19b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1311,6 +1311,7 @@
 	                    $localStorage.searchHistory = res.data.user.lastSearch;
 	                    $rootScope.user.lastSearch = res.data.user.lastSearch;
 	                    $rootScope.searchData = $localStorage.searchHistory[$localStorage.searchHistory.length - 1].query;
+	                    $rootScope.act = $rootScope.searchData.diaChinh.fullName;
 	                }
 
 	                if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
@@ -28171,7 +28172,7 @@
 
 	        vm.init = function () {
 	            vm.ads_list = [];
-	            $scope.center = "Danang";
+	            $scope.center = "[21.03019,105.7907652]";
 	            vm.zoomMode = "false";
 	            vm.loaiTin = $state.params.loaiTin;
 	            vm.loaiNhaDat = $state.params.loaiNhaDat;
@@ -28213,9 +28214,9 @@
 	                    $rootScope.searchData.placeId = vm.placeId;
 
 	                    // eliminate some file not exist in payload
-	                    if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
-	                    if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
-	                    if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
+	                    $rootScope.searchData.dbLimit = undefined;
+	                    $rootScope.searchData.dbOrderBy = undefined;
+	                    $rootScope.searchData.dbPageNo = undefined;
 	                    //
 	                    vm.search(function () {
 	                        if (vm.viewMode == "list") {
@@ -28232,11 +28233,15 @@
 	                $scope.center = "[14.058324,108.277199]";
 	                */
 	                // eliminate some file not exist in payload
-	                $scope.center = "[21.03019,105.7907652]";
-	                vm.viewport = $rootScope.searchData.viewport;
-	                if ($scope.searchData.dbLimit) $scope.searchData.dbLimit = undefined;
-	                if ($scope.searchData.dbOrderBy) $scope.searchData.dbOrderBy = undefined;
-	                if ($scope.searchData.dbPageNo) $scope.searchData.dbPageNo = undefined;
+	                if ($rootScope.searchData.viewport.northeast.lat && $rootScope.searchData.viewport.northeast.lon && $rootScope.searchData.viewport.southwest.lat && $rootScope.searchData.viewport.southwest.lon) {
+	                    vm.viewport = $rootScope.searchData.viewport;
+	                } else {
+	                    $rootScope.searchData.viewport = undefined;
+	                }
+
+	                $rootScope.searchData.dbLimit = undefined;
+	                $rootScope.searchData.dbOrderBy = undefined;
+	                $rootScope.searchData.dbPageNo = undefined;
 	                //
 	                vm.search(function () {
 	                    if (vm.viewMode == "list") {
@@ -29027,7 +29032,7 @@
 
 	                if (vm.ads_list && vm.ads_list.length > 0) {
 	                    //if search polygon then don't push to lastSearch
-	                    if (!$rootScope.searchData.polygon) $rootScope.addLastSearch($localStorage, $rootScope.searchData);
+	                    if (!$rootScope.searchData.polygon && !$rootScope.searchData.circle) $rootScope.addLastSearch($localStorage, $rootScope.searchData);
 	                    //end
 	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
 	                        if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
@@ -30749,16 +30754,27 @@
 				$(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
 			});
 
-			$(".btn-reset .collapse-title").click(function () {
-				$(this).parent().parent().find(".btn-more").removeAttr("style");
-				$(this).parent().parent().find(".title-more").removeAttr("style");
-				$(this).parent().parent().find(".more-box").addClass("more-box-hide");
-				$(this).parent().parent().find(".spinner").addClass("spinner-hide");
-				$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
-				$(this).parent().parent().find(".btn-group .btn").removeClass("active");
-				$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
-				$(this).parent().parent().find(".search").val('');
-			});
+			/*
+	  $(".btn-reset .collapse-title").click(function(){
+	  	$(this).parent().parent().find(".btn-more").removeAttr("style");
+	  	$(this).parent().parent().find(".title-more").removeAttr("style");
+	  	$(this).parent().parent().find(".more-box").addClass("more-box-hide");
+	  	$(this).parent().parent().find(".spinner").addClass("spinner-hide");
+	  	$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+	  	$(this).parent().parent().find(".btn-group .btn").removeClass("active");
+	  	$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
+	  	$(this).parent().parent().find(".search").val('');
+	  });
+	  */
+			vm.reset = function () {
+				$(".btn-more").removeAttr("style");
+				$(".title-more").removeAttr("style");
+				$(".more-box").addClass("more-box-hide");
+				$(".spinner").addClass("spinner-hide");
+				$(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+				$(".btn-group .btn").removeClass("active");
+				$(".btn-group .btn:first-child").addClass("active");
+			};
 
 			/*
 	  vm.getDanhMucNamXd = function(){
@@ -32839,12 +32855,14 @@
 	                if (vm.item) {
 	                    if (vm.item.query) {
 	                        $scope.searchData = vm.item.query;
+	                        if ($scope.searchData.circle) $scope.searchData.circle = undefined;
 	                    } else if (vm.item.location) {
 	                        $scope.searchData.circle = {
 	                            center: $rootScope.currentLocation,
-	                            radius: vm.radius
+	                            radius: vm.radius ? vm.radius : 0.5
 	                        };
 	                    } else {
+	                        if ($scope.searchData.circle) $scope.searchData.circle = undefined;
 	                        $scope.searchData.diaChinh = {
 	                            tinhKhongDau: vm.place.tinh,
 	                            huyenKhongDau: vm.place.huyen,
@@ -32877,6 +32895,9 @@
 	                if (item.query) {
 	                    vm.place = vm.item.place;
 	                    $scope.searchData = item.query;
+	                    $timeout(function () {
+	                        vm.init();
+	                    }, 0);
 	                    vm.updateDrums();
 	                } else {
 	                    vm.place = item;

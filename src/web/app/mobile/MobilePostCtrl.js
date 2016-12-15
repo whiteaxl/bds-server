@@ -70,6 +70,7 @@
 			$(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
 		})
 
+		/*
 		$(".btn-reset .collapse-title").click(function(){
 			$(this).parent().parent().find(".btn-more").removeAttr("style");
 			$(this).parent().parent().find(".title-more").removeAttr("style");
@@ -80,6 +81,16 @@
 			$(this).parent().parent().find(".btn-group .btn:first-child").addClass("active");
 			$(this).parent().parent().find(".search").val('');
 		});
+		*/
+		vm.reset = function(){
+			$(".btn-more").removeAttr("style");
+			$(".title-more").removeAttr("style");
+			$(".more-box").addClass("more-box-hide");
+			$(".spinner").addClass("spinner-hide");
+			$(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
+			$(".btn-group .btn").removeClass("active");
+			$(".btn-group .btn:first-child").addClass("active");
+		}
 
 		/*
 		vm.getDanhMucNamXd = function(){

@@ -111,7 +111,7 @@
 		
 		vm.init = function(){
             vm.ads_list = [];
-            $scope.center = "Danang";
+            $scope.center = "[21.03019,105.7907652]";
             vm.zoomMode = "false";
             vm.loaiTin = $state.params.loaiTin;
             vm.loaiNhaDat = $state.params.loaiNhaDat;
@@ -158,12 +158,9 @@
                     $rootScope.searchData.placeId = vm.placeId;
 
                     // eliminate some file not exist in payload
-                    if($scope.searchData.dbLimit)
-                        $scope.searchData.dbLimit = undefined;
-                    if($scope.searchData.dbOrderBy)
-                        $scope.searchData.dbOrderBy = undefined;
-                    if($scope.searchData.dbPageNo)
-                        $scope.searchData.dbPageNo = undefined;
+                    $rootScope.searchData.dbLimit = undefined;
+                    $rootScope.searchData.dbOrderBy = undefined;
+                    $rootScope.searchData.dbPageNo = undefined;
                     //
                     vm.search(function(){
                         if(vm.viewMode=="list"){
@@ -180,14 +177,16 @@
                 $scope.center = "[14.058324,108.277199]";
                 */
                 // eliminate some file not exist in payload
-                $scope.center = "[21.03019,105.7907652]";
-                vm.viewport = $rootScope.searchData.viewport
-                if($scope.searchData.dbLimit)
-                    $scope.searchData.dbLimit = undefined;
-                if($scope.searchData.dbOrderBy)
-                    $scope.searchData.dbOrderBy = undefined;
-                if($scope.searchData.dbPageNo)
-                    $scope.searchData.dbPageNo = undefined;
+                if($rootScope.searchData.viewport.northeast.lat && $rootScope.searchData.viewport.northeast.lon
+                    &&$rootScope.searchData.viewport.southwest.lat && $rootScope.searchData.viewport.southwest.lon){
+                    vm.viewport = $rootScope.searchData.viewport
+                } else{
+                    $rootScope.searchData.viewport = undefined;
+                }
+
+                $rootScope.searchData.dbLimit = undefined;
+                $rootScope.searchData.dbOrderBy = undefined;
+                $rootScope.searchData.dbPageNo = undefined;
                 //
                 vm.search(function(){
                     if(vm.viewMode=="list"){
@@ -1014,7 +1013,7 @@
                 
                 if(vm.ads_list && vm.ads_list.length>0){
                     //if search polygon then don't push to lastSearch
-                    if(!$rootScope.searchData.polygon)
+                    if(!$rootScope.searchData.polygon && !$rootScope.searchData.circle)
                         $rootScope.addLastSearch($localStorage,$rootScope.searchData);
                     //end
                     if(vm.diaChinh)
