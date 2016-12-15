@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1f774e75bd9a91c8c86a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c16e123cb7ad94d0d0c2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1310,7 +1310,7 @@
 	                if (res.data.user.lastSearch && res.data.user.lastSearch.length > 0) {
 	                    $localStorage.searchHistory = res.data.user.lastSearch;
 	                    $rootScope.user.lastSearch = res.data.user.lastSearch;
-	                    $rootScope.searchData = $localStorage.searchHistory[0];
+	                    $rootScope.searchData = $localStorage.searchHistory[$localStorage.searchHistory.length - 1].query;
 	                }
 
 	                if (res.data.user.fullName) $rootScope.user.fullName = res.data.user.fullName;
@@ -32460,7 +32460,7 @@
 	        replace: 'true',
 	        controller: ['$state', 'socket', '$scope', '$rootScope', '$http', '$window', '$localStorage', 'HouseService', 'RewayCommonUtil', 'NgMap', function ($state, socket, $scope, $rootScope, $http, $window, $localStorage, HouseService, RewayCommonUtil, NgMap) {
 	            var vm = this;
-
+	            $scope.data = {};
 	            vm.iconSearchClass = "iconSearch";
 	            $(".btn-more .collapse-title").click(function () {
 	                $(this).parent().hide(), $(".more-box").removeClass("more-box-hide");
@@ -32491,9 +32491,9 @@
 
 	            $scope.$on("changeSearchData", function () {
 	                console.log("---------------------changeAutoComplete-----------");
+	                $scope.searchData = $rootScope.searchData.query;
+	                vm.act = $rootScope.act;
 	                $timeout(function () {
-	                    $scope.searchData = $rootScope.searchData.query;
-	                    vm.act = $rootScope.act;
 	                    vm.init();
 	                }, 0);
 	            });
@@ -32592,7 +32592,7 @@
 	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	                $(".btn-group .btn").removeClass("active");
 	                $(".btn-group .btn:first-child").addClass("active");
-	                $(".search input").val('');
+	                $(".search #searchadd").val('');
 	                $(".search_mobile").removeClass("active");
 	                $(".search").css("top", "42");
 	                $("header").show();
@@ -33209,7 +33209,8 @@
 	                vm.updateDrums();
 
 	                if ($scope.searchData.ngayDangTinGREATER) {
-	                    if (($scope.searchData.ngayDangTinGREATER + "").trim() == "19810101") {
+	                    $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
+	                    if ($scope.searchData.ngayDangTinGREATER.trim() == "19810101") {
 	                        $scope.ngayDangTinInput = 0;
 	                        $("#datepost_value").html("Bất kỳ");
 	                    } else {
@@ -33475,12 +33476,12 @@
 	                $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
 	                $(".btn-group .btn").removeClass("active");
 	                $(".btn-group .btn:first-child").addClass("active");
-	                $(".search input").val('');
+	                $(".search #searchadd").val('');
 	                $(".search_mobile").removeClass("active");
 	            };
 	            vm.toggleFilter = function (event) {
 	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
-	                $(".search input").val($rootScope.act);
+	                $(".search #searchadd").val($rootScope.act);
 	                if ($state.current.name == 'msearch') {
 	                    $rootScope.bdsData.filterShowAct = false;
 	                } else {
@@ -33741,7 +33742,7 @@
 
 	            $timeout(function () {
 	                vm.init();
-	            }, 0);
+	            }, 100);
 
 	            $scope.$on("$destroy", function () {
 	                $('#searchadd1').autocomplete("destroy");
@@ -33893,8 +33894,8 @@
 	                  if (res.data.lastSearch && res.data.lastSearch.length > 0) {
 	                    $rootScope.user.lastSearch = res.data.lastSearch;
 	                    $localStorage.searchHistory = res.data.lastSearch;
-	                    $rootScope.searchData = $localStorage.searchHistory[0];
-	                    if ($rootScope.searchData.query.diaChinh.fullName) $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+	                    $rootScope.searchData = $localStorage.searchHistory[0].query;
+	                    if ($rootScope.searchData.diaChinh.fullName) $rootScope.act = $rootScope.searchData.diaChinh.fullName;
 	                    $rootScope.$broadcast("changeSearchData");
 	                  } else $localStorage.searchHistory = [];
 
@@ -33959,8 +33960,8 @@
 	                $localStorage.relandToken = res.data.token;
 	                if (res.data.lastSearch && res.data.lastSearch.length > 0) {
 	                  $localStorage.searchHistory = res.data.lastSearch;
-	                  $rootScope.searchData = $localStorage.searchHistory[0];
-	                  if ($rootScope.searchData.query.diaChinh.fullName) $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+	                  $rootScope.searchData = $localStorage.searchHistory[0].query;
+	                  if ($rootScope.searchData.diaChinh.fullName) $rootScope.act = $rootScope.searchData.diaChinh.fullName;
 	                  $rootScope.$broadcast("changeSearchData");
 	                } else $localStorage.searchHistory = [];
 
@@ -35738,6 +35739,25 @@
 	    } else {
 	        return '';
 	    }
+	};
+
+	//images:
+	var targetSize = "745x510"; //350x280
+	util.forwardImage = function (imgUrl) {
+	    if (!imgUrl || imgUrl.indexOf("no-photo") > -1) {
+	        return cfg.noCoverUrl;
+	    }
+
+	    var ret = imgUrl.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
+
+	    ret = ret.replace("http://file1.batdongsan.com.vn", "https://img.landber.com/img01");
+	    ret = ret.replace("http://file4.batdongsan.com.vn", "https://img.landber.com/img02");
+	    ret = ret.replace("http://img.dothi.net", "https://img.landber.com/img11");
+	    ret = ret.replace("http://img2.dothi.net", "https://img.landber.com/img12");
+	    ret = ret.replace("http://static.chotot.com.vn", "https://img.landber.com/img21");
+	    ret = ret.replace("http://img.phonhadat.net", "https://img.landber.com/img31");
+
+	    return ret;
 	};
 
 	module.exports = util;

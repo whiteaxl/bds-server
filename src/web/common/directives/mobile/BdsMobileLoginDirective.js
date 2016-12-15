@@ -143,9 +143,9 @@ angular.module('bds')
                           if(res.data.lastSearch && res.data.lastSearch.length>0){
                             $rootScope.user.lastSearch = res.data.lastSearch;
                             $localStorage.searchHistory = res.data.lastSearch;
-                            $rootScope.searchData = $localStorage.searchHistory[0];
-                            if($rootScope.searchData.query.diaChinh.fullName)
-                              $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+                            $rootScope.searchData = $localStorage.searchHistory[0].query;
+                            if($rootScope.searchData.diaChinh.fullName)
+                              $rootScope.act = $rootScope.searchData.diaChinh.fullName;
                             $rootScope.$broadcast("changeSearchData");
                           }else
                             $localStorage.searchHistory = [];
@@ -214,9 +214,9 @@ angular.module('bds')
                         $localStorage.relandToken = res.data.token;
                         if(res.data.lastSearch && res.data.lastSearch.length>0){
                           $localStorage.searchHistory = res.data.lastSearch;
-                          $rootScope.searchData = $localStorage.searchHistory[0];
-                          if($rootScope.searchData.query.diaChinh.fullName)
-                            $rootScope.act = $rootScope.searchData.query.diaChinh.fullName;
+                          $rootScope.searchData = $localStorage.searchHistory[0].query;
+                          if($rootScope.searchData.diaChinh.fullName)
+                            $rootScope.act = $rootScope.searchData.diaChinh.fullName;
                           $rootScope.$broadcast("changeSearchData");
                         } else
                           $localStorage.searchHistory = [];

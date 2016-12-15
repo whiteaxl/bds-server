@@ -8,7 +8,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil','NgMap',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil,NgMap) {
                 var vm = this;
-                
+                $scope.data = {};
                 vm.iconSearchClass = "iconSearch";
                 $(".btn-more .collapse-title").click(function() {
                     $(this).parent().hide(), $(".more-box").removeClass("more-box-hide")
@@ -41,9 +41,9 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 $scope.$on("changeSearchData", function () {
                     console.log("---------------------changeAutoComplete-----------");
+                    $scope.searchData = $rootScope.searchData.query;
+                    vm.act = $rootScope.act;
                     $timeout(function() {
-                        $scope.searchData = $rootScope.searchData.query;
-                        vm.act = $rootScope.act;
                         vm.init();
                     },0);
                 });
@@ -153,7 +153,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
                     $(".btn-group .btn").removeClass("active");
                     $(".btn-group .btn:first-child").addClass("active");
-                    $(".search input").val('');
+                    $(".search #searchadd").val('');
                     $(".search_mobile").removeClass("active");
                     $(".search").css("top","42");
                     $("header").show();
@@ -801,7 +801,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     vm.updateDrums();
 
                     if($scope.searchData.ngayDangTinGREATER){
-                        if(($scope.searchData.ngayDangTinGREATER + "").trim() == "19810101"){
+                        $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
+                        if(($scope.searchData.ngayDangTinGREATER).trim() == "19810101"){
                             $scope.ngayDangTinInput = 0;
                             $("#datepost_value").html("Bất kỳ");
                         } else{

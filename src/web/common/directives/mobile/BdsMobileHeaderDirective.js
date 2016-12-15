@@ -111,13 +111,13 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     $(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
                     $(".btn-group .btn").removeClass("active");
                     $(".btn-group .btn:first-child").addClass("active");
-                    $(".search input").val('');
+                    $(".search #searchadd").val('');
                     $(".search_mobile").removeClass("active");
                 }         
                 vm.toggleFilter = function(event){
                     if($scope.$parent.mhc)
                         $scope.$parent.mhc.doneSearch = true;
-                    $(".search input").val($rootScope.act);
+                    $(".search #searchadd").val($rootScope.act);
                     if($state.current.name=='msearch'){
                         $rootScope.bdsData.filterShowAct = false;    
                     }else{
@@ -398,7 +398,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 
                 $timeout(function() {
                     vm.init();
-                },0);
+                },100);
 
                 $scope.$on("$destroy", function() {
                     $('#searchadd1').autocomplete("destroy");
