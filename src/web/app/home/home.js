@@ -301,7 +301,7 @@
     }    
     $rootScope.pageSize = 25;
     $rootScope.act = "Quận Cầu Giấy, Hà Nội";
-    $rootScope.bodyClass = "hfixed header bodySearchShow";
+    $rootScope.bodyClass = "hfixed header";
 
     if($localStorage.relandToken){
       decodedToken = jwtHelper.decodeToken($localStorage.relandToken);
@@ -607,7 +607,7 @@
     $rootScope.bodyScrollTop =0;
 
     $rootScope.removeDetailAds = function(){
-      $rootScope.bodyClass = "hfixed header bodySearchShow";
+      $rootScope.bodyClass = "hfixed header ";
       angular.element('#detailModal').hide();
       angular.element('#mainView').show();
       $('body').scrollTop($rootScope.bodyScrollTop);
@@ -669,7 +669,7 @@
       if(toState.name==='mdetail'){
         $rootScope.bodyClass = "hfixed header";
       }else{
-        $rootScope.bodyClass = "hfixed header bodySearchShow";
+        $rootScope.bodyClass = "hfixed header";
       }      
     });
 

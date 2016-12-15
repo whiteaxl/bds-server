@@ -621,8 +621,11 @@
                     //     let zoom = vm.map.zoom;
                     //vm.map.setZoom(10);
                     // var zoom = vm.map.getBoundsZoomLevel(polyBounds);
-                    vm.map.setCenter(polyBounds.getCenter());
-                    vm.map.fitBounds(polyBounds);
+                    
+                    if(vm.ads_list.length>0){
+                        vm.map.setCenter(polyBounds.getCenter());
+                        vm.map.fitBounds(polyBounds);
+                    }
                     // vm.map.panToBounds(polyBounds);
                     // vm.map.setZoom(zoom);
                     $rootScope.act = "Trong khu vực vẽ tay";
@@ -1083,7 +1086,7 @@
                 google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
                 vm.enable();
                 vm.mapMode = false;         
-                $rootScope.searchData.polygon = undefined;   
+                // $rootScope.searchData.polygon = undefined;   
                 vm.search();
             }            
         }
