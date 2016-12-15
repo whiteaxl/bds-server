@@ -130,6 +130,8 @@ internals.getInboxMsg = function(req, reply){
                                     numOfUnreadMessage = numOfUnreadMessage + 1;
                                 }
                         });
+                        e.fromUserID = msgRes[0].default.fromUserID;
+                        e.msgType = msgRes[0].default.msgType;
                         e.content = msgRes[0].default.content;
                         e.date = new Date(msgRes[0].default.date);
                         e.numOfUnreadMessage = numOfUnreadMessage;
