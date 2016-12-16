@@ -398,6 +398,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         // $scope.giaKhacFrom = undefined;
                         // $scope.giaKhacTo = undefined;
                     }*/
+                    $scope.searchData.updateLastSearch = true;
                     if($scope.searchData.ngayDangTinGREATER)
                         $scope.searchData.ngayDangTinGREATER = $scope.searchData.ngayDangTinGREATER + "";
                     $scope.searchData.polygon = undefined;
@@ -407,6 +408,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             if($scope.searchData.circle)
                                 $scope.searchData.circle = undefined;
                         } else if(vm.item.location){
+                            $scope.searchData.updateLastSearch = false;
                             $scope.searchData.circle = {
                                 center: $rootScope.currentLocation,
                                 radius: vm.radius?vm.radius:0.5

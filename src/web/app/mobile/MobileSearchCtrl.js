@@ -73,6 +73,7 @@
                     vm.mapLocationClass = "p-icon i-maplocation i-maplocationActive";
 
                     vm.disableIdleHandler();
+                    //$rootScope.searchData.updateLastSearch = false;
                     $rootScope.searchData.viewport = undefined;
                     $rootScope.searchData.diaChinh = undefined;
                     $rootScope.searchData.polygon = undefined;
@@ -80,7 +81,8 @@
                     $rootScope.currentLocation.lon = position.coords.longitude;
                     $scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
                     vm.marker = position;
-                    vm.map.setZoom(20);
+                    //zoom make issue 
+                    //vm.map.setZoom(20);
                     // homeDataSearch.currentLocation = $rootScope.currentLocation;
            //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
                     //  //alert(JSON.stringify(res));
@@ -206,6 +208,8 @@
 		vm.showList = function(){
             // if(vm.searching == true)
             //     return;
+            //all search action in list must save to lastSearch
+            $rootScope.searchData.updateLastSearch = true;
 			vm.viewTemplateUrl = "/web/mobile/list.tpl.html"
 			vm.viewMode = "list";
             vm.disableIdleHandler();
@@ -215,6 +219,8 @@
 		vm.showMap = function(){
             // if(vm.searching == true)
             //     return;
+            //all search action in map do not save last search
+            $rootScope.searchData.updateLastSearch = false;
             $('body').scrollTop(0);
 			vm.viewMode = "map";
 			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
@@ -568,8 +574,9 @@
                 }
                 vm.mapMode = 2;
                 google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');                
-                vm.enable();   
-                
+                vm.enable();
+
+                //$rootScope.searchData.updateLastSearch = false;
                 vm.search(function(){
                     let polygonCoords = $rootScope.searchData.polygon.map((e) => {
                         return {latitude: e.lat, longitude: e.lon}

@@ -30,6 +30,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 }
                 //end nhannc
                 vm.goToSearchPage = function(){
+                    $rootScope.searchData.updateLastSearch = false;
                     if($scope.$parent.mhc)
                         $scope.$parent.mhc.doneSearch = true;
                     if($rootScope.searchData.placeId){
