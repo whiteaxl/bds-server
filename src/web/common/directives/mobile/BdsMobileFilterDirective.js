@@ -186,7 +186,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.changeDienTichFrom = function () {
                     if(!$scope.dienTichKhacFrom){
-                        if($scope.dienTichKhacFrom==0){
+                        if($scope.dienTichKhacFrom==0 && $scope.dienTichKhacFrom !=""){
                             if(!$scope.dienTichKhacTo){
                                 if($scope.dienTichKhacTo==0){
                                     $("#area_value").html("Chưa xác định");
@@ -216,7 +216,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     } else{
                         $scope.searchData.dienTich = undefined;
                         if(!$scope.dienTichKhacTo){
-                            if($scope.dienTichKhacTo==0){
+                            if($scope.dienTichKhacTo==0 && $scope.dienTichKhacTo !=""){
                                 $("#area_value").html("0 m² - " + $scope.dienTichKhacFrom + " m²");
                                 $scope.searchData.dienTichBETWEEN=[0, $scope.dienTichKhacFrom];
                             } else{
@@ -237,7 +237,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.changeDienTichTo = function () {
                     if(!$scope.dienTichKhacTo){
-                        if($scope.dienTichKhacTo==0){
+                        if($scope.dienTichKhacTo==0 && $scope.dienTichKhacTo!=""){
                             if(!$scope.dienTichKhacFrom){
                                 if($scope.dienTichKhacFrom==0){
                                     $("#area_value").html("Chưa xác định");
@@ -283,7 +283,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.changeGiaKhacFrom = function () {
                     if(!$scope.giaKhacFrom){
-                        if($scope.giaKhacFrom==0){
+                        if($scope.giaKhacFrom==0 && $scope.giaKhacFrom!=""){
                             if(!$scope.giaKhacTo){
                                 if($scope.giaKhacTo==0){
                                     $("#prices_value").html("Chưa xác định");
@@ -312,7 +312,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     } else{
                         $scope.searchData.gia = undefined;
                         if(!$scope.giaKhacTo){
-                            if($scope.giaKhacTo==0){
+                            if($scope.giaKhacTo==0 && $scope.giaKhacTo!=""){
                                 $("#prices_value").html("0 triệu - " + $scope.giaKhacFrom + " tỷ");
                                 $scope.searchData.giaBETWEEN=[0, $scope.giaKhacFrom*1000];
                             } else{
@@ -333,7 +333,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.changeGiaKhacTo = function () {
                     if(!$scope.giaKhacTo){
-                        if($scope.giaKhacTo==0){
+                        if($scope.giaKhacTo==0 && $scope.giaKhacTo!=""){
                             if(!$scope.giaKhacFrom){
                                 if($scope.giaKhacFrom==0){
                                     $("#prices_value").html("Chưa xác định");
@@ -571,7 +571,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $('.iconCancel').hide();
                         $('#searchadd').focus();
                         $( "#searchadd").autocomplete( "option", "source",vm.favoriteSearchSource);
-                        $( "#searchadd").autocomplete( "search", "" );                        
+                        $( "#searchadd").autocomplete( "search", "" );
                     }else{
                         $(".close-search").removeAttr("style");
                         $(".input-fr").removeAttr("style");
@@ -600,32 +600,22 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
 
                 vm.userLoggedIn = function(){
                     console.log("---------------------filter-userLoggedIn--------------------");
-                    if(vm.favoriteSearchSource && vm.favoriteSearchSource.length<2){
-                        if($rootScope.getSearchHistory()){
-
-                            var lastSearches = $rootScope.getSearchHistory();
-                            if(lastSearches.length>0){
-                                console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-                                // vm.favoriteSearchSource.push({
-                                //     description: "Tìm kiếm gần đây",
-                                //     lastSearchSeparator: true
-                                // });
-                            }
-                            var count = 0;
-                            for (var i = lastSearches.length - 1; i >= 0; i--) {
-                                var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-                                if(des && des.length>20)
-                                    des = des.substring(0,20) + "...";
-                                vm.favoriteSearchSource.push({
-                                    description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
-                                    subDescription: des,
-                                    query: lastSearches[i].query,
-                                    class: "fa fa-history gray ui-menu-item-wrapper"
-                                });
-                                count++;
-                                if(count>10)
-                                    break;
-                            }
+                    if($rootScope.getSearchHistory()){
+                        var lastSearches = $rootScope.getSearchHistory();
+                        var count = 0;
+                        for (var i = lastSearches.length - 1; i >= 0; i--) {
+                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+                            if(des && des.length>60)
+                                des = des.substring(0,60) + "...";
+                            vm.favoriteSearchSource.push({
+                                description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
+                                subDescription: des,
+                                query: lastSearches[i].query,
+                                class: "fa fa-history gray ui-menu-item-wrapper"
+                            });
+                            count++;
+                            if(count>10)
+                                break;
                         }
                     }
 
@@ -634,8 +624,8 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.saveSearchCount = saveSearches.length;
                         for (var i = saveSearches.length - 1; i >= 0; i--) {                              
                             var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
-                            if(des && des.length>20)
-                                des = des.substring(0,20) + "...";                            
+                            if(des && des.length>60)
+                                des = des.substring(0,60) + "...";
                             vm.favoriteSearchSource.splice(1,0,{
                                 description: saveSearches[i].name,
                                 subDescription: des,
@@ -704,15 +694,57 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     setDrumValues(datepostElm,datepost);   
 
                 }
+
+                $scope.$on("addedNewSearch", function () {
+                    var data = $rootScope.getLastSearch($localStorage);
+                    console.log("--------------------- topic Search-Filter-------------------");
+                    var des = window.RewayUtil.convertQuery2String(data.query);
+                    if(des && des.length>60)
+                        des = des.substring(0,60) + "...";
+                    var index = 1;
+                    var lastSearchLength = vm.favoriteSearchSource.length;
+                    if($scope.saveSearchCount){
+                        lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+                        index = index + $scope.saveSearchCount;
+                    }
+                    if(lastSearchLength>= 10){
+                        vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length-1, 1);
+                    }
+
+                    vm.favoriteSearchSource.splice(index, 0,
+                        {
+                            description: (data.query && data.query.diaChinh && data.query.diaChinh.fullName? data.query.diaChinh.fullName : ''),
+                            subDescription: des,
+                            query: data.query,
+                            class: "fa fa-history gray ui-menu-item-wrapper"
+                        }
+                    );
+                });
+
+                $scope.$on("saveSearch", function () {
+                    var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
+                    console.log("--------------------listen- saveSearch -Filter-------------------");
+                    var des = window.RewayUtil.convertQuery2String(saveSearch.query);
+                    if(des && des.length>60)
+                        des = des.substring(0,60) + "...";
+                    vm.favoriteSearchSource.splice(1,0,{
+                        description: saveSearch.name,
+                        subDescription: des,
+                        query: saveSearch.query,
+                        class: "fa fa-heart red ui-menu-item-wrapper"
+                    });
+                });
+
                 vm.init = function(){
+                    /*
                     $scope.$bus.subscribe({
                         channel: 'search',
                         topic: 'search',
                         callback: function(data, envelope) {
                             console.log("--------------------- topic Search-Filter-------------------");
                             var des = window.RewayUtil.convertQuery2String(data.query);
-                            if(des && des.length>20)
-                                des = des.substring(0,20) + "...";
+                            if(des && des.length>40)
+                                des = des.substring(0,40) + "...";
                             var lastSearchLength = vm.favoriteSearchSource.length;
                             if($scope.saveSearchCount)
                                 var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
@@ -726,7 +758,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                                 class: "fa fa-history gray ui-menu-item-wrapper"                        
                             }); 
                         }
-                    });
+                    });*/
 
                     $("#typeBox .type-list li a").click(function(){
                         $(".type-box .collapse-title span label").html($(this).html());
@@ -894,33 +926,6 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             }
                         }
                     };
-
-                    if($rootScope.getSearchHistory()){
-
-                        var lastSearches = $rootScope.getSearchHistory();
-                        if(lastSearches.length>0){
-                            console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-                            // vm.favoriteSearchSource.push({
-                            //     description: "Tìm kiếm gần đây",
-                            //     lastSearchSeparator: true
-                            // });
-                        }
-                        var count = 0;
-                        for (var i = lastSearches.length - 1; i >= 0; i--) {
-                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-                            if(des && des.length>20)
-                                des = des.substring(0,20) + "...";
-                            vm.favoriteSearchSource.push({
-                                description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
-                                subDescription: des,
-                                query: lastSearches[i].query,
-                                class: "fa fa-history gray ui-menu-item-wrapper"                        
-                            });
-                            count++;
-                            if(count>10)
-                                break;
-                        }
-                    }
 
                     vm.userLoggedIn();
 

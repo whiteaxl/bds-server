@@ -455,7 +455,7 @@
       }      
     }
     
-    $rootScope.addLastSearch = function(localStorage, oLastSearch){
+    $rootScope.addLastSearch = function(localStorage, oLastSearch, isUpdateLastSearch){
         console.log("---------------home-addLastSearch-------------------");
       var lastSearch = _.cloneDeep(oLastSearch);
       if(localStorage){
@@ -474,26 +474,26 @@
           }
         );
 
-        if($rootScope.user && $rootScope.user.userID){
-          if(!localStorage.searchHistory || localStorage.searchHistory.length==0){
-              localStorage.searchHistory = [];
-          }
-          var searchHistory = _.cloneDeep(oLastSearch);
+        if(isUpdateLastSearch){
+            if($rootScope.user && $rootScope.user.userID){
+                if(!localStorage.searchHistory || localStorage.searchHistory.length==0){
+                    localStorage.searchHistory = [];
+                }
+                var searchHistory = _.cloneDeep(oLastSearch);
 
-          $localStorage.searchHistory.push(
-              {
-                  time: new Date().toString('yyyyMMdd HH:mm:ss'),
-                  query: searchHistory
-              }
-          );
+                $localStorage.searchHistory.push(
+                    {
+                        time: new Date().toString('yyyyMMdd HH:mm:ss'),
+                        query: searchHistory
+                    }
+                );
+            }
+            $rootScope.$bus.publish({
+                channel: 'search',
+                topic: 'search',
+                data: $rootScope.getLastSearch(localStorage)
+            });
         }
-        
-
-        $rootScope.$bus.publish({
-            channel: 'search',
-            topic: 'search',
-            data: $rootScope.getLastSearch(localStorage)
-        });
       }
     }
 
@@ -790,6 +790,14 @@
           topic: 'logged out',
           callback: function(data, envelope) {
               $rootScope.$broadcast("userLogout");
+          }
+      });
+
+      $rootScope.$bus.subscribe({
+          channel: 'search',
+          topic: 'search',
+          callback: function(data, envelope) {
+              $rootScope.$broadcast("addedNewSearch");
           }
       });
   }]);

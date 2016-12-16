@@ -81,7 +81,7 @@
                     $rootScope.currentLocation.lon = position.coords.longitude;
                     $scope.center = "[" +position.coords.latitude + "," + position.coords.longitude+"]";
                     vm.marker = position;
-                    //zoom make issue 
+                    //zoom make issue
                     //vm.map.setZoom(20);
                     // homeDataSearch.currentLocation = $rootScope.currentLocation;
            //       HouseService.homeDataForApp(homeDataSearch).then(function(res){
@@ -520,6 +520,11 @@
                     saveSearch.name = data.saveSearchName;
                     saveSearch.query = data.query;
                     $rootScope.user.saveSearch.push(saveSearch);
+                    $rootScope.$bus.publish({
+                        channel: 'saveSearch',
+                        topic: 'saveSearch',
+                        data: saveSearch
+                    });
 				}
 			})
         	
@@ -1024,7 +1029,7 @@
                 if(vm.ads_list && vm.ads_list.length>0){
                     //if search polygon then don't push to lastSearch
                     if(!$rootScope.searchData.polygon && !$rootScope.searchData.circle)
-                        $rootScope.addLastSearch($localStorage,$rootScope.searchData);
+                        $rootScope.addLastSearch($localStorage,$rootScope.searchData, $scope.searchData.updateLastSearch);
                     //end
                     if(vm.diaChinh)
                         HouseService.findDuAnHotByDiaChinhForSearchPage({diaChinh: vm.diaChinh}).then(function(res){

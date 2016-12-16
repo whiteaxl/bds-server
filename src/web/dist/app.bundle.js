@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "eaeaabb695140dd124ee"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2fd3cdc80f8980a4e54f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1436,7 +1436,7 @@
 	            }
 	        };
 
-	        $rootScope.addLastSearch = function (localStorage, oLastSearch) {
+	        $rootScope.addLastSearch = function (localStorage, oLastSearch, isUpdateLastSearch) {
 	            console.log("---------------home-addLastSearch-------------------");
 	            var lastSearch = _.cloneDeep(oLastSearch);
 	            if (localStorage) {
@@ -1453,23 +1453,24 @@
 	                    query: lastSearch
 	                });
 
-	                if ($rootScope.user && $rootScope.user.userID) {
-	                    if (!localStorage.searchHistory || localStorage.searchHistory.length == 0) {
-	                        localStorage.searchHistory = [];
-	                    }
-	                    var searchHistory = _.cloneDeep(oLastSearch);
+	                if (isUpdateLastSearch) {
+	                    if ($rootScope.user && $rootScope.user.userID) {
+	                        if (!localStorage.searchHistory || localStorage.searchHistory.length == 0) {
+	                            localStorage.searchHistory = [];
+	                        }
+	                        var searchHistory = _.cloneDeep(oLastSearch);
 
-	                    $localStorage.searchHistory.push({
-	                        time: new Date().toString('yyyyMMdd HH:mm:ss'),
-	                        query: searchHistory
+	                        $localStorage.searchHistory.push({
+	                            time: new Date().toString('yyyyMMdd HH:mm:ss'),
+	                            query: searchHistory
+	                        });
+	                    }
+	                    $rootScope.$bus.publish({
+	                        channel: 'search',
+	                        topic: 'search',
+	                        data: $rootScope.getLastSearch(localStorage)
 	                    });
 	                }
-
-	                $rootScope.$bus.publish({
-	                    channel: 'search',
-	                    topic: 'search',
-	                    data: $rootScope.getLastSearch(localStorage)
-	                });
 	            }
 	        };
 
@@ -1735,6 +1736,14 @@
 	            topic: 'logged out',
 	            callback: function callback(data, envelope) {
 	                $rootScope.$broadcast("userLogout");
+	            }
+	        });
+
+	        $rootScope.$bus.subscribe({
+	            channel: 'search',
+	            topic: 'search',
+	            callback: function callback(data, envelope) {
+	                $rootScope.$broadcast("addedNewSearch");
 	            }
 	        });
 	    }]);
@@ -28567,6 +28576,11 @@
 	                    saveSearch.name = data.saveSearchName;
 	                    saveSearch.query = data.query;
 	                    $rootScope.user.saveSearch.push(saveSearch);
+	                    $rootScope.$bus.publish({
+	                        channel: 'saveSearch',
+	                        topic: 'saveSearch',
+	                        data: saveSearch
+	                    });
 	                }
 	            });
 	        };
@@ -29042,7 +29056,7 @@
 
 	                if (vm.ads_list && vm.ads_list.length > 0) {
 	                    //if search polygon then don't push to lastSearch
-	                    if (!$rootScope.searchData.polygon && !$rootScope.searchData.circle) $rootScope.addLastSearch($localStorage, $rootScope.searchData);
+	                    if (!$rootScope.searchData.polygon && !$rootScope.searchData.circle) $rootScope.addLastSearch($localStorage, $rootScope.searchData, $scope.searchData.updateLastSearch);
 	                    //end
 	                    if (vm.diaChinh) HouseService.findDuAnHotByDiaChinhForSearchPage({ diaChinh: vm.diaChinh }).then(function (res) {
 	                        if (res.data.success == true) vm.duAnNoiBat = res.data.duAnNoiBat;
@@ -32650,7 +32664,7 @@
 
 	            vm.changeDienTichFrom = function () {
 	                if (!$scope.dienTichKhacFrom) {
-	                    if ($scope.dienTichKhacFrom == 0) {
+	                    if ($scope.dienTichKhacFrom == 0 && $scope.dienTichKhacFrom != "") {
 	                        if (!$scope.dienTichKhacTo) {
 	                            if ($scope.dienTichKhacTo == 0) {
 	                                $("#area_value").html("Chưa xác định");
@@ -32679,7 +32693,7 @@
 	                } else {
 	                    $scope.searchData.dienTich = undefined;
 	                    if (!$scope.dienTichKhacTo) {
-	                        if ($scope.dienTichKhacTo == 0) {
+	                        if ($scope.dienTichKhacTo == 0 && $scope.dienTichKhacTo != "") {
 	                            $("#area_value").html("0 m² - " + $scope.dienTichKhacFrom + " m²");
 	                            $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacFrom];
 	                        } else {
@@ -32700,7 +32714,7 @@
 
 	            vm.changeDienTichTo = function () {
 	                if (!$scope.dienTichKhacTo) {
-	                    if ($scope.dienTichKhacTo == 0) {
+	                    if ($scope.dienTichKhacTo == 0 && $scope.dienTichKhacTo != "") {
 	                        if (!$scope.dienTichKhacFrom) {
 	                            if ($scope.dienTichKhacFrom == 0) {
 	                                $("#area_value").html("Chưa xác định");
@@ -32745,7 +32759,7 @@
 
 	            vm.changeGiaKhacFrom = function () {
 	                if (!$scope.giaKhacFrom) {
-	                    if ($scope.giaKhacFrom == 0) {
+	                    if ($scope.giaKhacFrom == 0 && $scope.giaKhacFrom != "") {
 	                        if (!$scope.giaKhacTo) {
 	                            if ($scope.giaKhacTo == 0) {
 	                                $("#prices_value").html("Chưa xác định");
@@ -32774,7 +32788,7 @@
 	                } else {
 	                    $scope.searchData.gia = undefined;
 	                    if (!$scope.giaKhacTo) {
-	                        if ($scope.giaKhacTo == 0) {
+	                        if ($scope.giaKhacTo == 0 && $scope.giaKhacTo != "") {
 	                            $("#prices_value").html("0 triệu - " + $scope.giaKhacFrom + " tỷ");
 	                            $scope.searchData.giaBETWEEN = [0, $scope.giaKhacFrom * 1000];
 	                        } else {
@@ -32795,7 +32809,7 @@
 
 	            vm.changeGiaKhacTo = function () {
 	                if (!$scope.giaKhacTo) {
-	                    if ($scope.giaKhacTo == 0) {
+	                    if ($scope.giaKhacTo == 0 && $scope.giaKhacTo != "") {
 	                        if (!$scope.giaKhacFrom) {
 	                            if ($scope.giaKhacFrom == 0) {
 	                                $("#prices_value").html("Chưa xác định");
@@ -33041,30 +33055,20 @@
 
 	            vm.userLoggedIn = function () {
 	                console.log("---------------------filter-userLoggedIn--------------------");
-	                if (vm.favoriteSearchSource && vm.favoriteSearchSource.length < 2) {
-	                    if ($rootScope.getSearchHistory()) {
-
-	                        var lastSearches = $rootScope.getSearchHistory();
-	                        if (lastSearches.length > 0) {
-	                            console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-	                            // vm.favoriteSearchSource.push({
-	                            //     description: "Tìm kiếm gần đây",
-	                            //     lastSearchSeparator: true
-	                            // });
-	                        }
-	                        var count = 0;
-	                        for (var i = lastSearches.length - 1; i >= 0; i--) {
-	                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-	                            if (des && des.length > 20) des = des.substring(0, 20) + "...";
-	                            vm.favoriteSearchSource.push({
-	                                description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
-	                                subDescription: des,
-	                                query: lastSearches[i].query,
-	                                class: "fa fa-history gray ui-menu-item-wrapper"
-	                            });
-	                            count++;
-	                            if (count > 10) break;
-	                        }
+	                if ($rootScope.getSearchHistory()) {
+	                    var lastSearches = $rootScope.getSearchHistory();
+	                    var count = 0;
+	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
+	                            subDescription: des,
+	                            query: lastSearches[i].query,
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
+	                        });
+	                        count++;
+	                        if (count > 10) break;
 	                    }
 	                }
 
@@ -33073,7 +33077,7 @@
 	                    $scope.saveSearchCount = saveSearches.length;
 	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
 	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
-	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                        vm.favoriteSearchSource.splice(1, 0, {
 	                            description: saveSearches[i].name,
 	                            subDescription: des,
@@ -33139,27 +33143,67 @@
 	                var datepostElm = $("select#datepost");
 	                setDrumValues(datepostElm, datepost);
 	            };
+
+	            $scope.$on("addedNewSearch", function () {
+	                var data = $rootScope.getLastSearch($localStorage);
+	                console.log("--------------------- topic Search-Filter-------------------");
+	                var des = window.RewayUtil.convertQuery2String(data.query);
+	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                var index = 1;
+	                var lastSearchLength = vm.favoriteSearchSource.length;
+	                if ($scope.saveSearchCount) {
+	                    lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+	                    index = index + $scope.saveSearchCount;
+	                }
+	                if (lastSearchLength >= 10) {
+	                    vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
+	                }
+
+	                vm.favoriteSearchSource.splice(index, 0, {
+	                    description: data.query && data.query.diaChinh && data.query.diaChinh.fullName ? data.query.diaChinh.fullName : '',
+	                    subDescription: des,
+	                    query: data.query,
+	                    class: "fa fa-history gray ui-menu-item-wrapper"
+	                });
+	            });
+
+	            $scope.$on("saveSearch", function () {
+	                var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
+	                console.log("--------------------listen- saveSearch -Filter-------------------");
+	                var des = window.RewayUtil.convertQuery2String(saveSearch.query);
+	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                vm.favoriteSearchSource.splice(1, 0, {
+	                    description: saveSearch.name,
+	                    subDescription: des,
+	                    query: saveSearch.query,
+	                    class: "fa fa-heart red ui-menu-item-wrapper"
+	                });
+	            });
+
 	            vm.init = function () {
+	                /*
 	                $scope.$bus.subscribe({
 	                    channel: 'search',
 	                    topic: 'search',
-	                    callback: function callback(data, envelope) {
+	                    callback: function(data, envelope) {
 	                        console.log("--------------------- topic Search-Filter-------------------");
 	                        var des = window.RewayUtil.convertQuery2String(data.query);
-	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        if(des && des.length>40)
+	                            des = des.substring(0,40) + "...";
 	                        var lastSearchLength = vm.favoriteSearchSource.length;
-	                        if ($scope.saveSearchCount) var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
-	                        if (lastSearchLength >= 10) {
-	                            vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
+	                        if($scope.saveSearchCount)
+	                            var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+	                        if(lastSearchLength>= 10){
+	                            vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length-1, 1);
 	                        }
 	                        vm.favoriteSearchSource.push({
-	                            description: data.query && data.query.diaChinh && data.query.diaChinh.fullName ? data.query.diaChinh.fullName : '',
+	                            description: (data.query && data.query.diaChinh && data.query.diaChinh.fullName? data.query.diaChinh.fullName : ''),
 	                            subDescription: des,
 	                            query: data.query,
-	                            class: "fa fa-history gray ui-menu-item-wrapper"
-	                        });
+	                            class: "fa fa-history gray ui-menu-item-wrapper"                        
+	                        }); 
 	                    }
-	                });
+	                });*/
 
 	                $("#typeBox .type-list li a").click(function () {
 	                    $(".type-box .collapse-title span label").html($(this).html());
@@ -33325,31 +33369,6 @@
 	                        }
 	                    }
 	                };
-
-	                if ($rootScope.getSearchHistory()) {
-
-	                    var lastSearches = $rootScope.getSearchHistory();
-	                    if (lastSearches.length > 0) {
-	                        console.log("--------------------- init sugestSearch-Filter-------------------: " + lastSearches.length);
-	                        // vm.favoriteSearchSource.push({
-	                        //     description: "Tìm kiếm gần đây",
-	                        //     lastSearchSeparator: true
-	                        // });
-	                    }
-	                    var count = 0;
-	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
-	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
-	                        vm.favoriteSearchSource.push({
-	                            description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
-	                            subDescription: des,
-	                            query: lastSearches[i].query,
-	                            class: "fa fa-history gray ui-menu-item-wrapper"
-	                        });
-	                        count++;
-	                        if (count > 10) break;
-	                    }
-	                }
 
 	                vm.userLoggedIn();
 
@@ -33654,6 +33673,24 @@
 	                //}
 	            };
 	            vm.userLoggedIn = function () {
+	                console.log("---------------------header-userLoggedIn--------------------");
+	                if ($rootScope.getSearchHistory()) {
+	                    var lastSearches = $rootScope.getSearchHistory();
+	                    var count = 0;
+	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                        vm.favoriteSearchSource.push({
+	                            description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
+	                            subDescription: des,
+	                            query: lastSearches[i].query,
+	                            class: "fa fa-history gray ui-menu-item-wrapper"
+	                        });
+	                        count++;
+	                        if (count > 10) break;
+	                    }
+	                }
+
 	                var saveSearches = $rootScope.user.saveSearch;
 	                if (saveSearches) {
 	                    $scope.saveSearchCount = saveSearches.length;
@@ -33700,6 +33737,43 @@
 	                    $scope.iconSearchClass = "iconSearch search-head";
 	                }
 	            };
+
+	            $scope.$on("addedNewSearch", function () {
+	                var data = $rootScope.getLastSearch($localStorage);
+	                console.log("--------------------- topic Search-header-------------------");
+	                var des = window.RewayUtil.convertQuery2String(data.query);
+	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                var lastSearchLength = vm.favoriteSearchSource.length;
+	                var index = 1;
+	                if ($scope.saveSearchCount) {
+	                    lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+	                    index = index + $scope.saveSearchCount;
+	                }
+
+	                if (lastSearchLength >= 10) {
+	                    vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
+	                }
+	                vm.favoriteSearchSource.splice(index, 0, {
+	                    description: data.query && data.query.diaChinh && data.query.diaChinh.fullName ? data.query.diaChinh.fullName : '',
+	                    subDescription: des,
+	                    query: data.query,
+	                    class: "fa fa-history gray ui-menu-item-wrapper"
+	                });
+	            });
+
+	            $scope.$on("saveSearch", function () {
+	                var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
+	                console.log("--------------------listen- saveSearch -Header-------------------");
+	                var des = window.RewayUtil.convertQuery2String(saveSearch.query);
+	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
+	                vm.favoriteSearchSource.splice(1, 0, {
+	                    description: saveSearch.name,
+	                    subDescription: des,
+	                    query: saveSearch.query,
+	                    class: "fa fa-heart red ui-menu-item-wrapper"
+	                });
+	            });
+
 	            vm.init = function () {
 	                RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1, "searchadd1", [{
 	                    description: "3",
@@ -33712,51 +33786,30 @@
 	                    place_id: "111",
 	                    class: "iconLocation grasy"
 	                }], vm.showLoadingFuntion);
-
+	                /*
 	                $scope.$bus.subscribe({
 	                    channel: 'search',
 	                    topic: 'search',
-	                    callback: function callback(data, envelope) {
+	                    callback: function(data, envelope) {
 	                        console.log("--------------------- topic Search-header-------------------");
 	                        var des = window.RewayUtil.convertQuery2String(data.query);
-	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
+	                        if(des && des.length>40)
+	                            des = des.substring(0,40) + "...";
 	                        var lastSearchLength = vm.favoriteSearchSource.length;
-	                        if ($scope.saveSearchCount) var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
-	                        if (lastSearchLength >= 10) {
+	                        if($scope.saveSearchCount)
+	                            var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+	                        if(lastSearchLength >= 10){
 	                            vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
 	                        }
 	                        vm.favoriteSearchSource.push({
-	                            description: data.query && data.query.diaChinh && data.query.diaChinh.fullName ? data.query.diaChinh.fullName : '',
+	                            description: (data.query && data.query.diaChinh && data.query.diaChinh.fullName? data.query.diaChinh.fullName : ''),
 	                            subDescription: des,
 	                            query: data.query,
-	                            class: "fa fa-history gray ui-menu-item-wrapper"
-	                        });
+	                            class: "fa fa-history gray ui-menu-item-wrapper"                        
+	                        }); 
 	                    }
 	                });
-
-	                if ($rootScope.getSearchHistory()) {
-	                    var lastSearches = $rootScope.getSearchHistory();
-	                    if (lastSearches.length > 0) {
-	                        console.log("--------------------- init sugestSearch-header-------------------: " + lastSearches.length);
-	                        vm.favoriteSearchSource.push({
-	                            description: "Tìm kiếm gần đây",
-	                            lastSearchSeparator: true
-	                        });
-	                    }
-	                    var count = 0;
-	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
-	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
-	                        vm.favoriteSearchSource.push({
-	                            description: lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : '',
-	                            subDescription: des,
-	                            query: lastSearches[i].query,
-	                            class: "fa fa-history gray ui-menu-item-wrapper"
-	                        });
-	                        count++;
-	                        if (count > 10) break;
-	                    }
-	                }
+	                */
 
 	                vm.userLoggedIn();
 

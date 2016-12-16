@@ -264,7 +264,27 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     //}
 
                 }
-                vm.userLoggedIn = function(){                   
+                vm.userLoggedIn = function(){
+                    console.log("---------------------header-userLoggedIn--------------------");
+                    if($rootScope.getSearchHistory()){
+                        var lastSearches = $rootScope.getSearchHistory();
+                        var count = 0;
+                        for (var i = lastSearches.length - 1; i >= 0; i--) {
+                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
+                            if(des && des.length>60)
+                                des = des.substring(0,60) + "...";
+                            vm.favoriteSearchSource.push({
+                                description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
+                                subDescription: des,
+                                query: lastSearches[i].query,
+                                class: "fa fa-history gray ui-menu-item-wrapper"
+                            });
+                            count++;
+                            if(count>10)
+                                break;
+                        }
+                    }
+
                     var saveSearches = $rootScope.user.saveSearch;
                     if(saveSearches ){
                         $scope.saveSearchCount = saveSearches.length;
@@ -282,8 +302,6 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
 
                     }                
                 }
-
-
 
                 vm.selectPlaceCallback1 = function(item){
                     if(item.lastSearchSeparator==true){
@@ -316,6 +334,47 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $scope.iconSearchClass = "iconSearch search-head";
                     }
                 }
+
+                $scope.$on("addedNewSearch", function () {
+                    var data = $rootScope.getLastSearch($localStorage);
+                    console.log("--------------------- topic Search-header-------------------");
+                    var des = window.RewayUtil.convertQuery2String(data.query);
+                    if(des && des.length>60)
+                        des = des.substring(0,60) + "...";
+                    var lastSearchLength = vm.favoriteSearchSource.length;
+                    var index = 1;
+                    if($scope.saveSearchCount){
+                        lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
+                        index = index + $scope.saveSearchCount
+                    }
+
+                    if(lastSearchLength >= 10){
+                        vm.favoriteSearchSource.splice(vm.favoriteSearchSource.length - 1, 1);
+                    }
+                    vm.favoriteSearchSource.splice(index, 0,
+                        {
+                            description: (data.query && data.query.diaChinh && data.query.diaChinh.fullName? data.query.diaChinh.fullName : ''),
+                            subDescription: des,
+                            query: data.query,
+                            class: "fa fa-history gray ui-menu-item-wrapper"
+                        }
+                    );
+                });
+
+                $scope.$on("saveSearch", function () {
+                    var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
+                    console.log("--------------------listen- saveSearch -Header-------------------");
+                    var des = window.RewayUtil.convertQuery2String(saveSearch.query);
+                    if(des && des.length>60)
+                        des = des.substring(0,60) + "...";
+                    vm.favoriteSearchSource.splice(1,0,{
+                        description: saveSearch.name,
+                        subDescription: des,
+                        query: saveSearch.query,
+                        class: "fa fa-heart red ui-menu-item-wrapper"
+                    });
+                });
+
                 vm.init = function(){
                     RewayCommonUtil.placeAutoComplete(vm.selectPlaceCallback1,"searchadd1",[
                         {
@@ -331,15 +390,15 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                             class: "iconLocation grasy"
                         }
                     ],vm.showLoadingFuntion);
-
+                    /*
                     $scope.$bus.subscribe({
                         channel: 'search',
                         topic: 'search',
                         callback: function(data, envelope) {
                             console.log("--------------------- topic Search-header-------------------");
                             var des = window.RewayUtil.convertQuery2String(data.query);
-                            if(des && des.length>20)
-                                des = des.substring(0,20) + "...";
+                            if(des && des.length>40)
+                                des = des.substring(0,40) + "...";
                             var lastSearchLength = vm.favoriteSearchSource.length;
                             if($scope.saveSearchCount)
                                 var lastSearchLength = vm.favoriteSearchSource.length - $scope.saveSearchCount;
@@ -354,32 +413,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                             }); 
                         }
                     });
-
-                    if($rootScope.getSearchHistory()){
-                        var lastSearches = $rootScope.getSearchHistory();
-                        if(lastSearches.length>0){
-                            console.log("--------------------- init sugestSearch-header-------------------: " + lastSearches.length);
-                            vm.favoriteSearchSource.push({
-                                description: "Tìm kiếm gần đây",
-                                lastSearchSeparator: true
-                            });
-                        }
-                        var count = 0;
-                        for (var i = lastSearches.length - 1; i >= 0; i--) {
-                            var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
-                            if(des && des.length>20)
-                                des = des.substring(0,20) + "...";
-                            vm.favoriteSearchSource.push({
-                                description: (lastSearches[i].query && lastSearches[i].query.diaChinh ? lastSearches[i].query.diaChinh.fullName : ''),
-                                subDescription: des,
-                                query: lastSearches[i].query,
-                                class: "fa fa-history gray ui-menu-item-wrapper"                        
-                            });
-                            count++;
-                            if(count>10)
-                                break;
-                        }
-                    }
+                    */
 
                     vm.userLoggedIn();
 
