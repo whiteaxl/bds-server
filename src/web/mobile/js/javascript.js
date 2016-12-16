@@ -37,7 +37,9 @@ function relandPop(box,footer){
 	$(box).animate({
 		right: 0
 	}, 120);
-	$("body").addClass("bodySearchShow");
+	setTimeout(function(){
+		$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+	},100);
 	$(box).scrollTop(0);
 	overlay(".overlay");
 	if(footer) $(box+"-footer").addClass("fixed");
@@ -75,13 +77,16 @@ function searchopen(){
 			right: 0
 		}, 120);
 		$(".search-btn").show();
-		$("body").addClass("bodySearchShow");
+		setTimeout(function(){
+			$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+		},100);
 		$(".search").scrollTop(0);
 		$(".search-footer").addClass("fixed");
 		overlay(".overlay");
 	}else{
 		searchfr();
-	}	
+	}
+	
 }
 
 // open post
@@ -89,7 +94,9 @@ function post(){
 	$(".post").animate({
 		right: 0
 	}, 120);
-	$("body").addClass("bodySearchShow");
+	setTimeout(function(){
+		$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+	},100);
 	$(".post").scrollTop(0);
 	$(".post-footer").addClass("fixed");
 	overlay(".overlay");
@@ -188,7 +195,9 @@ $(function(){
 				right: 0
 			}, 120);
 			$(".search-btn").show();
-			$("body").addClass("bodySearchShow");
+			setTimeout(function(){
+				$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+			},100);
 			$(".search").scrollTop(0);
 			$(".search-footer").addClass("fixed");
 		}else{

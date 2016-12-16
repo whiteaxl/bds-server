@@ -464,6 +464,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.circle = undefined;
                     }    
                     $('#searchadd').blur();
+                    $('#searchadd').focusout();
                     $scope.$apply();               
                 }
 
@@ -818,6 +819,13 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                             }); 
                         }
                     });*/
+                    vm.favoriteSearchSource = [
+                        {
+                            description: "Vị trí hiện tại",
+                            location: true,
+                            class: "ui-autocomplete-category"
+                        }
+                    ];
 
                     $("#typeBox .type-list li a").click(function(){
                         $(".type-box .collapse-title span label").html($(this).html());

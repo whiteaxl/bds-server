@@ -459,6 +459,14 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     });
                     */
 
+                    vm.favoriteSearchSource = [
+                        {
+                            description: "Vị trí hiện tại",
+                            location: true,
+                            class: "ui-autocomplete-category"
+                        }
+                    ];
+
                     vm.userLoggedIn();
 
                     $scope.$on("userLogin", function (event, data) {

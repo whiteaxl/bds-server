@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "243910ffb1bbc7ed2cf4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0583cf673d05f063823c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32932,6 +32932,7 @@
 	                    $scope.searchData.circle = undefined;
 	                }
 	                $('#searchadd').blur();
+	                $('#searchadd').focusout();
 	                $scope.$apply();
 	            };
 
@@ -33251,6 +33252,11 @@
 	                        }); 
 	                    }
 	                });*/
+	                vm.favoriteSearchSource = [{
+	                    description: "Vị trí hiện tại",
+	                    location: true,
+	                    class: "ui-autocomplete-category"
+	                }];
 
 	                $("#typeBox .type-list li a").click(function () {
 	                    $(".type-box .collapse-title span label").html($(this).html());
@@ -33889,6 +33895,12 @@
 	                    }
 	                });
 	                */
+
+	                vm.favoriteSearchSource = [{
+	                    description: "Vị trí hiện tại",
+	                    location: true,
+	                    class: "ui-autocomplete-category"
+	                }];
 
 	                vm.userLoggedIn();
 
