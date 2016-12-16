@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2fd3cdc80f8980a4e54f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7eda382688666916459b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1282,7 +1282,7 @@
 	            userID: undefined,
 	            adsLikes: [],
 	            lastSearch: null,
-	            autoSearch: false
+	            autoSearch: true
 	        };
 	        $rootScope.pageSize = 25;
 	        $rootScope.act = "Quận Cầu Giấy, Hà Nội";
@@ -33059,6 +33059,16 @@
 	                    var lastSearches = $rootScope.getSearchHistory();
 	                    var count = 0;
 	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        if (lastSearches[i].query.dienTichBETWEEN) {
+	                            if (lastSearches[i].query.dienTichBETWEEN[0] == 0 && lastSearches[i].query.dienTichBETWEEN[1] == window.RewayListValue.BIG) lastSearches[i].query.dienTichBETWEEN = undefined;
+	                        }
+	                        if (lastSearches[i].query.giaBETWEEN) {
+	                            if (lastSearches[i].query.giaBETWEEN[0] == 0 && lastSearches[i].query.giaBETWEEN[1] == window.RewayListValue.BIG) lastSearches[i].query.giaBETWEEN = undefined;
+	                        }
+	                        if (lastSearches[i].query.dienTichBETWEEN) {
+	                            if (lastSearches[i].query.ngayDangTinGREATER == 19810101) lastSearches[i].query.ngayDangTinGREATER = undefined;
+	                        }
+
 	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
 	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                        vm.favoriteSearchSource.push({
@@ -33076,6 +33086,16 @@
 	                if (saveSearches) {
 	                    $scope.saveSearchCount = saveSearches.length;
 	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
+	                        if (saveSearches[i].query.dienTichBETWEEN) {
+	                            if (saveSearches[i].query.dienTichBETWEEN[0] == 0 && saveSearches[i].query.dienTichBETWEEN[1] == window.RewayListValue.BIG) saveSearches[i].query.dienTichBETWEEN = undefined;
+	                        }
+	                        if (saveSearches[i].query.giaBETWEEN) {
+	                            if (saveSearches[i].query.giaBETWEEN[0] == 0 && saveSearches[i].query.giaBETWEEN[1] == window.RewayListValue.BIG) saveSearches[i].query.giaBETWEEN = undefined;
+	                        }
+	                        if (saveSearches[i].query.ngayDangTinGREATER) {
+	                            if (saveSearches[i].query.ngayDangTinGREATER == 19810101) saveSearches[i].query.ngayDangTinGREATER = undefined;
+	                        }
+
 	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
 	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                        vm.favoriteSearchSource.splice(1, 0, {
@@ -33147,6 +33167,16 @@
 	            $scope.$on("addedNewSearch", function () {
 	                var data = $rootScope.getLastSearch($localStorage);
 	                console.log("--------------------- topic Search-Filter-------------------");
+	                if (data.query.dienTichBETWEEN) {
+	                    if (data.query.dienTichBETWEEN[0] == 0 && data.query.dienTichBETWEEN[1] == window.RewayListValue.BIG) data.query.dienTichBETWEEN = undefined;
+	                }
+	                if (data.query.giaBETWEEN) {
+	                    if (data.query.giaBETWEEN[0] == 0 && data.query.giaBETWEEN[1] == window.RewayListValue.BIG) data.query.giaBETWEEN = undefined;
+	                }
+	                if (data.query.ngayDangTinGREATER) {
+	                    if (data.query.ngayDangTinGREATER == 19810101) data.query.ngayDangTinGREATER = undefined;
+	                }
+
 	                var des = window.RewayUtil.convertQuery2String(data.query);
 	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                var index = 1;
@@ -33170,6 +33200,16 @@
 	            $scope.$on("saveSearch", function () {
 	                var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
 	                console.log("--------------------listen- saveSearch -Filter-------------------");
+	                if (saveSearch.query.dienTichBETWEEN) {
+	                    if (saveSearch.query.dienTichBETWEEN[0] == 0 && saveSearch.query.dienTichBETWEEN[1] == window.RewayListValue.BIG) saveSearch.query.dienTichBETWEEN = undefined;
+	                }
+	                if (saveSearch.query.giaBETWEEN) {
+	                    if (saveSearch.query.giaBETWEEN[0] == 0 && saveSearch.query.giaBETWEEN[1] == window.RewayListValue.BIG) saveSearch.query.giaBETWEEN = undefined;
+	                }
+	                if (saveSearch.query.ngayDangTinGREATER) {
+	                    if (saveSearch.query.ngayDangTinGREATER == 19810101) saveSearch.query.ngayDangTinGREATER = undefined;
+	                }
+
 	                var des = window.RewayUtil.convertQuery2String(saveSearch.query);
 	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                vm.favoriteSearchSource.splice(1, 0, {
@@ -33678,6 +33718,14 @@
 	                    var lastSearches = $rootScope.getSearchHistory();
 	                    var count = 0;
 	                    for (var i = lastSearches.length - 1; i >= 0; i--) {
+	                        if (lastSearches[i].query.dienTichBETWEEN) {
+	                            if (lastSearches[i].query.dienTichBETWEEN[0] == 0 && lastSearches[i].query.dienTichBETWEEN[1] == window.RewayListValue.BIG) lastSearches[i].query.dienTichBETWEEN = undefined;
+	                        }
+	                        if (lastSearches[i].query.giaBETWEEN) {
+	                            if (lastSearches[i].query.giaBETWEEN[0] == 0 && lastSearches[i].query.giaBETWEEN[1] == window.RewayListValue.BIG) lastSearches[i].query.giaBETWEEN = undefined;
+	                        }
+	                        if (lastSearches[i].query.ngayDangTinGREATER && lastSearches[i].query.ngayDangTinGREATER == 19810101) lastSearches[i].query.ngayDangTinGREATER = undefined;
+
 	                        var des = window.RewayUtil.convertQuery2String(lastSearches[i].query);
 	                        if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                        vm.favoriteSearchSource.push({
@@ -33695,6 +33743,14 @@
 	                if (saveSearches) {
 	                    $scope.saveSearchCount = saveSearches.length;
 	                    for (var i = saveSearches.length - 1; i >= 0; i--) {
+	                        if (saveSearches[i].query.dienTichBETWEEN) {
+	                            if (saveSearches[i].query.dienTichBETWEEN[0] == 0 && saveSearches[i].query.dienTichBETWEEN[1] == window.RewayListValue.BIG) saveSearches[i].query.dienTichBETWEEN = undefined;
+	                        }
+	                        if (saveSearches[i].query.giaBETWEEN) {
+	                            if (saveSearches[i].query.giaBETWEEN[0] == 0 && saveSearches[i].query.giaBETWEEN[1] == window.RewayListValue.BIG) saveSearches[i].query.giaBETWEEN = undefined;
+	                        }
+	                        if (saveSearches[i].query.ngayDangTinGREATER && saveSearches[i].query.ngayDangTinGREATER == 19810101) saveSearches[i].query.ngayDangTinGREATER = undefined;
+
 	                        var des = window.RewayUtil.convertQuery2String(saveSearches[i].query);
 	                        if (des && des.length > 20) des = des.substring(0, 20) + "...";
 	                        vm.favoriteSearchSource.splice(1, 0, {
@@ -33741,6 +33797,14 @@
 	            $scope.$on("addedNewSearch", function () {
 	                var data = $rootScope.getLastSearch($localStorage);
 	                console.log("--------------------- topic Search-header-------------------");
+	                if (data.query.dienTichBETWEEN) {
+	                    if (data.query.dienTichBETWEEN[0] == 0 && data.query.dienTichBETWEEN[1] == window.RewayListValue.BIG) data.query.dienTichBETWEEN = undefined;
+	                }
+	                if (data.query.giaBETWEEN) {
+	                    if (data.query.giaBETWEEN[0] == 0 && data.query.giaBETWEEN[1] == window.RewayListValue.BIG) data.query.giaBETWEEN = undefined;
+	                }
+	                if (data.query.ngayDangTinGREATER && data.query.ngayDangTinGREATER == 19810101) data.query.ngayDangTinGREATER = undefined;
+
 	                var des = window.RewayUtil.convertQuery2String(data.query);
 	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                var lastSearchLength = vm.favoriteSearchSource.length;
@@ -33764,6 +33828,14 @@
 	            $scope.$on("saveSearch", function () {
 	                var saveSearch = $rootScope.user.saveSearch[$rootScope.user.saveSearch.length - 1];
 	                console.log("--------------------listen- saveSearch -Header-------------------");
+	                if (saveSearch.query.dienTichBETWEEN) {
+	                    if (saveSearch.query.dienTichBETWEEN[0] == 0 && saveSearch.query.dienTichBETWEEN[1] == window.RewayListValue.BIG) saveSearch.query.dienTichBETWEEN = undefined;
+	                }
+	                if (saveSearch.query.giaBETWEEN) {
+	                    if (saveSearch.query.giaBETWEEN[0] == 0 && saveSearch.query.giaBETWEEN[1] == window.RewayListValue.BIG) saveSearch.query.giaBETWEEN = undefined;
+	                }
+	                if (saveSearch.query.ngayDangTinGREATER && saveSearch.query.ngayDangTinGREATER == 19810101) saveSearch.query.ngayDangTinGREATER = undefined;
+
 	                var des = window.RewayUtil.convertQuery2String(saveSearch.query);
 	                if (des && des.length > 60) des = des.substring(0, 60) + "...";
 	                vm.favoriteSearchSource.splice(1, 0, {

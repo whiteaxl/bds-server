@@ -297,7 +297,7 @@
       userID: undefined,
       adsLikes: [],
       lastSearch: null,
-      autoSearch: false
+      autoSearch: true
     }    
     $rootScope.pageSize = 25;
     $rootScope.act = "Quận Cầu Giấy, Hà Nội";
