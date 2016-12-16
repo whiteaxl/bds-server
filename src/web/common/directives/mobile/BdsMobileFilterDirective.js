@@ -579,6 +579,13 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     event.preventDefault();
                     
                 }
+
+                vm.searchTextBlur = function(event){
+                    console.log("------------------searchTextBlur------------------");
+                    $( "#searchadd").text("");
+                    vm.act = $rootScope.act;
+                }
+
                 vm.showFavorite = function(event){
                     console.log("------------------showFavorite-Filter------------------");
                     
