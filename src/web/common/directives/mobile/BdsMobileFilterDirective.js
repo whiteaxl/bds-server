@@ -464,7 +464,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                         $scope.searchData.circle = undefined;
                     }    
                     $('#searchadd').blur();
-                    $('#focusWhenAutoTextBlur').focus();
+                    //$('#focusWhenAutoTextBlur').focus();
                     //$('#searchadd').focusout();
                     $scope.$apply();               
                 }
