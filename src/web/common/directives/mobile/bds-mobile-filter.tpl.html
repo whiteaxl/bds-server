@@ -33,7 +33,7 @@
                         <a class="collapse-title" ng-click="mf.spinner($event, '.spinner', 'spinner-hide')">Diện tích <span><label id="area_value">Bất kỳ</label> <i class="iconDownOpen"></i></span></a>
 	                    <div class="areaBox spinner spinner-hide">
 	                    	<div class="mb10 ovh">
-                            	<div class="col-sm-6 text-center"><input type="number" ng-model="dienTichKhacFrom" ng-change="mf.changeDienTichFrom()" class="form-control" placeholder="Từ"/></div>
+                            	<div class="col-sm-6 text-center"><input id="focusWhenAutoTextBlur" type="number" ng-model="dienTichKhacFrom" ng-change="mf.changeDienTichFrom()" class="form-control" placeholder="Từ"/></div>
                                 <div class="col-sm-6 text-center"><input type="number" ng-model="dienTichKhacTo" ng-change="mf.changeDienTichTo()" class="form-control" placeholder="Đến"/></div>
                             </div>
 	                    	<select id="area" class="drum">
