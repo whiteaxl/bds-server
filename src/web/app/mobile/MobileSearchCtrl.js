@@ -411,7 +411,7 @@
                     vm.initialized = true;
                 },0);                        
             }
-            // vm.enableMapIdleHandler();
+            vm.enableMapIdleHandler();
 
 			// vm.dragendHanlder = google.maps.event.addListener(vm.map, "dragend", function() {
    //          	//alert(vm.map.getBounds());

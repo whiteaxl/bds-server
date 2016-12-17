@@ -2,9 +2,9 @@
     <div ng-if="mhdr.stateName=='msearch'">
     	<a href="javascript:void(0)" class="nav_mobile header-icon" ng-click="mhdr.toggleLeftMenu();"><i class="iconMenu"></i><span style="display: none;">{{$root.unreadMsg?$root.unreadMsg:""}}</span></a>
 		<i ng-class="iconSearchClass"></i>
-		<a href="javascript:void(0)" class="search_mobile search-txt" ng-click="mhdr.toggleFilter($event);">Lọc</a>
-		<!-- <input type="search" placeholder="Tìm tất cả theo khung nhìn" /> -->
-		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model = "mdhr.act" ng-click="mhdr.showFavorite($event)" ng-keypress="mhdr.keyPress($event)" id="searchadd1" placeholder="{{$root.act}}" />
+		<a href="javascript:void(0)" class="search_mobile search-txt"  ng-click="mhdr.toggleFilter($event);">{{mhdr.headerFilterButtonText}}</a>	
+		<!-- <input type="search" placeholder="Tìm tất cả theo khung nhìn" /> -->		
+		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model="mdhr.act" ng-click="mhdr.showFavorite($event)" ng-keypress="mhdr.keyPress($event)" id="searchadd1" placeholder="{{$root.act}}" />
     </div>
     <div ng-if="mhdr.stateName=='mlistMore'">    	
         <a href="#" ng-click="mhdr.goToHomePage();" class="header-icon pull-left"><i class="iconLeftOpen"></i></a>

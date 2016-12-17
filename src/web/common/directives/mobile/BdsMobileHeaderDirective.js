@@ -8,7 +8,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
         controller: ['$state','socket','$scope','$rootScope', '$http', '$window','$localStorage','HouseService','RewayCommonUtil',
             function($state,socket,$scope,$rootScope, $http, $window,$localStorage, HouseService,RewayCommonUtil) {
                 var vm = this; 
-                vm.stateName = $state.current.name;        
+                vm.stateName = $state.current.name;    
+                vm.headerFilterButtonText = "Lọc";    
                 // vm.iconSearchClass = "iconSearch search-head";        
                 //nhannc
                 $scope.isPostPage = false;
@@ -124,6 +125,16 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     }else{
                         $rootScope.bdsData.filterShowAct = true;
                     }
+
+                    if(vm.headerFilterButtonText=="Hủy"){                        
+                        vm.headerFilterButtonText = "Lọc";
+                        vm.searchfr();
+                        $(".search").css("top","42");
+                        $('#searchadd1').val('');
+                        vm.act = '';
+                        $("header").show();
+                        return;
+                    }
                     
                     //nhannc
                     if($(".search_mobile").find("i").hasClass("iconSearch")) {
@@ -139,7 +150,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     }
                     //end nhannc
                     if(!$('.search_mobile').hasClass("active")){
-                        $(event.target).text("Hủy");
+                        vm.headerFilterButtonText = "Hủy";                        
                         $(".search").animate({
                             right: 0
                         }, 120);
@@ -152,8 +163,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $(".search_mobile").addClass("active");
                         $("header").hide();
 
-                    }else{                        
-                        $(event.target).text("Lọc");
+                    }else{                                                
+                        vm.headerFilterButtonText = "Lọc";
                         vm.searchfr();
                         $(".search").css("top","42");
                         $("header").show();
@@ -222,7 +233,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 ];
 
                 vm.keyPress = function(event){
-                    vm.showFrequentSearch = false;
+                    vm.showFrequentSearch = false;                    
                     $( "#searchadd1").autocomplete( "option", "source",vm.autocompleteSource);
                     var $ww = $(window).width();                 
 
@@ -258,6 +269,7 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 }
                 vm.showFavorite = function(event){
                     //if($rootScope.act == '' || !$rootScope.act){
+                    vm.headerFilterButtonText = "Hủy";
                     console.log("------------------showFavorite-Header------------------");
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
