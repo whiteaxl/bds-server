@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/reway/bds-server#readme",
   "dependencies": {
-    "JSONStream": "1.2.1",
     "apn": "^1.7.6",
     "async": "^2.0.0-rc.6",
     "babel-core": "^6.4.5",

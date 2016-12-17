@@ -6,8 +6,6 @@ var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
 var fs = require('fs');
-var jsonStream = require('JSONStream');
-
 var placeUtil = require('./placeUtil');
 
 var async = require("async");
@@ -158,7 +156,7 @@ function updateCache(ads){
   if (!global.rwcache.ads[ads.loaiTin][ads.id]) {
     let a = global.rwcache.adsSorted[ads.loaiTin];
     a.push(ads);
-    timsort(a, g_comp);
+    timsort.sort(a, g_comp);
   }
 
   global.rwcache.ads[ads.loaiTin][ads.id] = ads;
