@@ -6,8 +6,6 @@ var Fuse = require("fuse.js");
 var CommonModel = require("../dbservices/Common");
 var commonService = new CommonModel;
 var fs = require('fs');
-var jsonStream = require('JSONStream');
-
 var placeUtil = require('./placeUtil');
 
 var async = require("async");
@@ -98,7 +96,7 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
   //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
   let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
   if (process.env.ENV == 'PROD') {
-    sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
+    sql = `select ${projection} from default where type='Ads' and (source='reway' or GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
   }
 
   if (moreCondition) {
@@ -158,7 +156,7 @@ function updateCache(ads){
   if (!global.rwcache.ads[ads.loaiTin][ads.id]) {
     let a = global.rwcache.adsSorted[ads.loaiTin];
     a.push(ads);
-    timsort(a, g_comp);
+    timsort.sort(a, g_comp);
   }
 
   global.rwcache.ads[ads.loaiTin][ads.id] = ads;

@@ -65,7 +65,11 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< HEAD
 /******/ 	var hotCurrentHash = "1f551cc28e5f8f8a7364"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "249028e774fdb30d0d4a"; // eslint-disable-line no-unused-vars
+>>>>>>> 9934a782c3c602e21fcfc070594b3893c6025195
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -34669,7 +34673,8 @@
 	                    $scope.searchData.circle = undefined;
 	                }
 	                $('#searchadd').blur();
-	                $('#searchadd').focusout();
+	                $('#focusWhenAutoTextBlur').focus();
+	                //$('#searchadd').focusout();
 	                $scope.$apply();
 	            };
 
