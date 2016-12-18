@@ -589,12 +589,12 @@ util.forwardImage = function(imgUrl) {
 
   var ret = imgUrl.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
 
-  ret = ret.replace("http://file1.batdongsan.com.vn", "https://img.landber.com/img01");
-  ret = ret.replace("http://file4.batdongsan.com.vn", "https://img.landber.com/img02");
-  ret = ret.replace("http://img.dothi.net", "https://img.landber.com/img11");
-  ret = ret.replace("http://img2.dothi.net", "https://img.landber.com/img12");
-  ret = ret.replace("http://static.chotot.com.vn", "https://img.landber.com/img21");
-  ret = ret.replace("http://img.phonhadat.net", "https://img.landber.com/img31");
+  ret = ret.replace("http://file1.batdongsan.com.vn", "https://landber.com/img01");
+  ret = ret.replace("http://file4.batdongsan.com.vn", "https://landber.com/img02");
+  ret = ret.replace("http://img.dothi.net", "https://landber.com/img11");
+  ret = ret.replace("http://img2.dothi.net", "https://landber.com/img12");
+  ret = ret.replace("http://static.chotot.com.vn", "https://landber.com/img21");
+  ret = ret.replace("http://img.phonhadat.net", "https://landber.com/img31");
 
   return ret;
 };
