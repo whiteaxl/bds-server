@@ -95,7 +95,7 @@ function _loadAdsFromDB(isFull, moreCondition, callback) {
 
   //let sql = `select ${projection} from default where type='Ads' and (GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
   let sql = `select ${projection} from default where type='Ads'  and timeModified >= ${global.lastSyncTime} ` ;
-  if (process.env.ENV == 'PROD') {
+  if (process.env.ENV == 'PROD' && !isFull) {
     sql = `select ${projection} from default where type='Ads' and (source='reway' or GEOvsDC in [0,1,2] or ( GEOvsDC = 3 and GEOvsDC_diff < 200))  and timeModified >= ${global.lastSyncTime}  ` ;
   }
 

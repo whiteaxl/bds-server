@@ -20,7 +20,7 @@ module.exports = {
     //rootUrl : `http://${process.env.OPENSHIFT_NODEJS_IP || '192.168.0.109'}:5000`,
     rootUrl : "http://192.168.0.109:5000",
   },
-  noCoverUrl : "https://img.landber.com/images/reland_house_large.jpg",
+  noCoverUrl : "https://landber.com/images/reland_house_large.jpg",
   esms : {
     APIKEY:"80FFA052B5321FE40A7633AA0F01F6",
     SECRETKEY: "6697FF3D7420874690FFC6CAC9C7CE",
