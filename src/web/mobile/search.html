@@ -26,11 +26,12 @@
     }
 
 </style>
+<link href="custom-marker.css"  rel="stylesheet" />
 <div ng-if="msc.viewMode=='list'"  class="wapper" >
     <div class="reland-box uln" >
         <ul class="reland-list full" >
-            <li ng-if="msc.currentPage >1" ng-click="msc.prev();" style="height: 44px;text-align: center;margin-bottom: 5px;">
-                <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang trước</a></span><br>
+            <li ng-if="msc.currentPage >=0" ng-click="msc.prev();" style="height: 44px;text-align: center;margin-bottom: 5px;">
+                <span ng-if="msc.currentPage>1"><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang trước</a></span><br ng-if="msc.currentPage>1">
                 <span>Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
             </li>
             <li ng-repeat="ads in msc.ads_list track by $index" >
@@ -88,21 +89,21 @@
     <div  class="maps"  ng-show ="msc.viewMode!='list'">
         <div id="mapContainer" ng-show ="msc.viewMode!='list'" style="height: 100%;width: 100%;">
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" gesture-handling="greedy" street-view-control-options="{position:'RIGHT_CENTER'}"
-             ng-show ="msc.viewMode!='list'"  center="{{center}}" lazy-init="true"   class="ngmap">
+             ng-show ="msc.viewMode!='list'"  default-style="false" center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                <custom-marker  class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
+                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
-                    <div>
-                        <div class="{{m.class}}">
+                    <div style="visibility: {{m.show==true?'visible':'hidden'}};position: relative;"> 
+                        <div class="{{m.class}}" style="{{m.style}}">
                             {{m.content}}
                             <i ng-if="m.count>1" class="icon iconUp"></i>
                             <span ng-if="m.count>1" >{{m.count}}</span>
                         </div>
                     </div>
                 </custom-marker>
-                <!-- <marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
-                                id="m_{{$index}}" >
-                    
+                <!-- <marker  ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]"     on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
+                    id="m_{{$index}}" 
+                    >                                                    
                 </marker> -->
 
                 <marker animation="BOUNCE" position="[{{msc.marker.coords.latitude}},{{msc.marker.coords.longitude}}]"></marker>
