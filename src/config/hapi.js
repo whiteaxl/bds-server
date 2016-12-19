@@ -166,7 +166,7 @@ internals.http.register(Plugins.get(), (err) => {
 Routes.init(internals.http);
 Views.init(internals.http);
 internals.server.on('response', function (request) {
-    if((request.response.statusCode==400) || (request.response.statusCode==404)){
+    if(request.response.statusCode>=400){
         if(request.payload){
             console.log("---------------request invalid---------------");
             console.log(request.payload);

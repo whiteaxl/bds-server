@@ -233,6 +233,8 @@
             });            
 		}
 		vm.sort = function(sortByName, sortByType){
+            if(!$rootScope.searchData.orderBy)
+                $rootScope.searchData.orderBy = {};
 			$rootScope.searchData.orderBy.name = sortByName;
             $rootScope.searchData.orderBy.type = sortByType;
 			vm.search();
