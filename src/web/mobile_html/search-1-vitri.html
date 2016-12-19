@@ -21,35 +21,41 @@
 	<script src="js/javascript.min.js"></script>
     <script>
     	$(function(){
-			var searchadd = [
-			  {
-				diadiem: "CT1B1 - KDT Xa La",
-				diadiemlbl: "Địa điểm",
-				diadiemicon: "iconLocation gray",
-				label: "Xala",
-				quanlbl: "Quận",
-				quanicon: "iconStar red",
-				tinh: "Hà Nội",
-				tinhlbl: "Tỉnh",
-				tinhicon: "iconStar red"
+			$.widget( "custom.catcomplete", $.ui.autocomplete, {
+			  _create: function() {
+				this._super();
+				this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+			  },
+			  _renderMenu: function( ul, items ) {
+				var that = this,
+				  currentCategory = "";
+				ul.addClass('relandAuto');
+				$.each( items, function( index, item ) {
+				  var li;
+				  if ( item.category != currentCategory ) {
+					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+					currentCategory = item.category;
+				  }
+				  li = that._renderItemData( ul, item );
+				  
+					li.html("<i class='" + item.labelicon + "'></i>" + item.label + "<span>" + item.labeldes + "</span>");
+				  
+				});
 			  }
+			});
+			var data = [
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-heart red", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}", category: "Vị trí hiện tại"},
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-heart red", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}",category: "Vị trí hiện tại"},
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-heart red", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}",category: "Vị trí hiện tại"},
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-history gray", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}",category: ""},
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-history gray", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}",category: ""},
+			  { label: "Search at 01-10-2016: 10:22:01", labelicon: "fa fa-history gray", labeldes:"{Bán, 2 tỷ - 5 tỷ, Đông bắc}",category: "" },
 			];
-			$("#searchadd").autocomplete({
-			  minLength: 0,
-			  source: searchadd,
-			  focus: function( event, ui ) {
-				$( "#searchadd" ).val( ui.item.label );
-				return false;
-			  }
-			})
-			.autocomplete( "instance" )._renderItem = function( ul, item ) {
-				ul.addClass('relandAutoOne');
-				return $( "<li>")
-				.append("<p><i class='" + item.diadiemicon + "'></i>" + item.diadiem + "<span>" + item.diadiemlbl + "</span></p>")
-				.append("<p><i class='" + item.quanicon + "'></i>" + item.label + "<span>" + item.quanlbl + "</span></p>")
-				.append("<p><i class='" + item.tinhicon + "'></i>" + item.tinh + "<span>" + item.tinhlbl + "</span></p>")
-				.appendTo( ul );
-			};	
+		 
+			$( "#searchadd" ).catcomplete({
+			  delay: 0,
+			  source: data
+			});	
 		});
 	</script>
 </head>

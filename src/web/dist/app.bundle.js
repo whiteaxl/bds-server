@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f5b85c6f64bc16924604"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "acd9107c85604d9b7b1a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30068,6 +30068,18 @@
 	            }
 	        };
 
+	        vm.correctCustomMarkerPos = function () {
+	            $timeout(function () {
+	                for (var i = 0; i < $scope.markers.length; i++) {
+	                    var o = $('.custom-marker')[i];
+	                    var w = $(o.firstElementChild.firstElementChild).outerWidth();
+	                    var h = $(o.firstElementChild.firstElementChild).outerHeight();
+	                    $scope.markers[i].show = true;
+	                    $scope.markers[i].style = "left: -" + w / 2 + "px;top: -" + h / 2 + "px;";
+	                }
+	            }, 0);
+	        };
+
 	        vm.searchCurrentViewport = function () {
 	            vm.noResult = false;
 	            $rootScope.searchData.viewport = {
@@ -30165,6 +30177,10 @@
 
 	            if (!vm.map && vm.viewMode == 'map') {
 	                vm.map = NgMap.initMap('searchmap');
+
+	                google.maps.event.addListener(vm.map, 'idle', function (e) {
+	                    vm.correctCustomMarkerPos();
+	                });
 	                var thePanorama = vm.map.getStreetView();
 	                google.maps.event.addListener(thePanorama, 'visible_changed', function () {
 
@@ -30332,24 +30348,28 @@
 
 	        vm.drawmapMode = function () {
 
+	            vm.historicalOverlay = new google.maps.GroundOverlay(null, vm.map.getBounds());
+	            vm.historicalOverlay.setMap(vm.map);
+
 	            //the polygon
 	            vm.poly = new google.maps.Polyline({ map: vm.map, clickable: false, fillColor: '#00a8e6', strokeColor: '#0096ce' });
-
+	            // google.maps.event.clearListeners(vm.map, 'mousemove');    
+	            // google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown'); 
 	            //move-listener
 	            if (vm.drawMove) google.maps.event.removeListener(vm.drawMove);
 
-	            vm.drawMove = google.maps.event.addListener(vm.map, 'mousemove', function (e) {
+	            vm.drawMove = google.maps.event.addListener(vm.historicalOverlay, 'mousemove', function (e) {
 	                //e.preventDefault();
 	                vm.poly.getPath().push(e.latLng);
 	            });
 
-	            //mouseup-listener
-	            google.maps.event.addListenerOnce(vm.map, 'mouseup', function (e) {
-	                //google.maps.event.removeListener(vm.drawMove);
+	            //mouseup-listener            
+	            vm.mouseupHandler = google.maps.event.addListener(vm.historicalOverlay, 'mouseup', function (e) {
+
+	                //google.maps.event.removeListener(vm.drawMove);                
 	                var path = vm.poly.getPath();
 	                vm.poly.setMap(null);
 	                vm.poly = new google.maps.Polygon({ map: vm.map, path: path, fillColor: '#00a8e6', strokeColor: '#0096ce' });
-
 	                //search here
 	                if (vm.poly) {
 	                    $rootScope.searchData.polygon = [];
@@ -30459,6 +30479,11 @@
 	                google.maps.event.removeListener(vm.drawMove);
 	                vm.drawMove = undefined;
 	            }
+	            if (vm.mouseupHandler) {
+	                console.log('remove mouseup');
+	                google.maps.event.removeListener(vm.mouseupHandler);
+	                vm.mouseupHandler = undefined;
+	            }
 	        };
 	        vm.mapMode = 0; //0 normal, 1 drawing, 2 drawed
 	        vm.toggleDrawMode = function (e) {
@@ -30466,7 +30491,7 @@
 	                vm.poly.setMap(null);
 	            }
 	            if (vm.mapMode == 0) {
-	                e.preventDefault();
+	                //e.preventDefault();
 	                console.log("enable draws");
 	                vm.mapMode = 1;
 	                $scope.markers = [];
@@ -30488,6 +30513,7 @@
 	                if (vm.poly) {
 	                    vm.poly.setMap(null);
 	                }
+	                if (vm.historicalOverlay) vm.historicalOverlay.setMap(null);
 	                google.maps.event.clearListeners(vm.map.getDiv(), 'mousedown');
 	                vm.drawButtonClass = "p-icon i-mapdraw";
 	                vm.enable();
@@ -30755,6 +30781,7 @@
 
 	                $timeout(function () {
 	                    vm.mapInitialized();
+	                    // vm.correctCustomMarkerPos();
 	                }, 100);
 	                // if(vm.map){
 	                //     vm.disableIdleHandler();
@@ -30913,7 +30940,7 @@
 	                    vm.startPageNo = 0;
 	                }
 	                $timeout(function () {
-	                    if (vm.totalResultCounts > 0) $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
+	                    if (vm.totalResultCounts > 0 && vm.viewMode == 'map') $rootScope.showNotify("Tìm thấy " + vm.totalResultCounts + " kết quả phù hợp", ".mapsnotify");
 	                }, 100);
 
 	                if (callback) callback(res);
@@ -31321,7 +31348,7 @@
 							// vm.showStreetView = false;
 						}
 						// $timeout(function() {
-						google.maps.event.trigger(vm.fullMap, "resize");
+						// google.maps.event.trigger(vm.fullMap, "resize");
 						// });
 					}, 300);
 				});
@@ -34756,7 +34783,7 @@
 	                class: "ui-autocomplete-category"
 	            }];
 
-	            vm.keyPress = function (event) {
+	            vm.autoCompleteChange = function (event) {
 	                vm.showFrequentSearch = false;
 	                $("#searchadd").autocomplete("option", "source", vm.autocompleteSource);
 	                $('.iconCancel').show();
@@ -35436,7 +35463,9 @@
 
 	            vm.keyPress = function (event) {
 	                vm.showFrequentSearch = false;
+	                // alert(1);
 	                $("#searchadd1").autocomplete("option", "source", vm.autocompleteSource);
+	                // alert(2);
 	                var $ww = $(window).width();
 	            };
 	            vm.toggleQuickClearAutoComplete = function () {
@@ -35461,11 +35490,12 @@
 	                // }
 	            };
 	            vm.autoCompleteChange = function (event) {
-	                if ($rootScope.act == '') {
-	                    $("#searchadd1").autocomplete("option", "source", vm.favoriteSearchSource);
-	                    $("#searchadd1").autocomplete("search", "");
-	                }
-	                vm.toggleQuickClearAutoComplete();
+	                // if($rootScope.act == ''){
+	                //     $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
+	                //     $( "#searchadd1").autocomplete( "search", "" );
+	                // }
+	                // vm.toggleQuickClearAutoComplete(); 
+	                vm.keyPress(event);
 	            };
 	            vm.showFavorite = function (event) {
 	                //if($rootScope.act == '' || !$rootScope.act){
@@ -37678,12 +37708,12 @@
 
 	    var ret = imgUrl.replace("80x60", targetSize).replace("120x90", targetSize).replace("200x200", targetSize);
 
-	    ret = ret.replace("http://file1.batdongsan.com.vn", "https://img.landber.com/img01");
-	    ret = ret.replace("http://file4.batdongsan.com.vn", "https://img.landber.com/img02");
-	    ret = ret.replace("http://img.dothi.net", "https://img.landber.com/img11");
-	    ret = ret.replace("http://img2.dothi.net", "https://img.landber.com/img12");
-	    ret = ret.replace("http://static.chotot.com.vn", "https://img.landber.com/img21");
-	    ret = ret.replace("http://img.phonhadat.net", "https://img.landber.com/img31");
+	    ret = ret.replace("http://file1.batdongsan.com.vn", "https://landber.com/img01");
+	    ret = ret.replace("http://file4.batdongsan.com.vn", "https://landber.com/img02");
+	    ret = ret.replace("http://img.dothi.net", "https://landber.com/img11");
+	    ret = ret.replace("http://img2.dothi.net", "https://landber.com/img12");
+	    ret = ret.replace("http://static.chotot.com.vn", "https://landber.com/img21");
+	    ret = ret.replace("http://img.phonhadat.net", "https://landber.com/img31");
 
 	    return ret;
 	};
@@ -52668,7 +52698,7 @@
 	    //rootUrl : `http://${process.env.OPENSHIFT_NODEJS_IP || '192.168.0.109'}:5000`,
 	    rootUrl: "http://192.168.0.109:5000"
 	  },
-	  noCoverUrl: "https://img.landber.com/images/reland_house_large.jpg",
+	  noCoverUrl: "https://landber.com/images/reland_house_large.jpg",
 	  esms: {
 	    APIKEY: "80FFA052B5321FE40A7633AA0F01F6",
 	    SECRETKEY: "6697FF3D7420874690FFC6CAC9C7CE",

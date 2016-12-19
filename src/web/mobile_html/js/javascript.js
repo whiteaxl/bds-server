@@ -3,7 +3,7 @@ function update(){
 	$ww = $(window).width();
 	
 	$(".modal-choose .modal-body").height($wh-46);
-	$(".search, .post").height($wh);
+	//$(".search, .post").height($wh);
 	$(".wapper > .maps").height($wh-42);
 		
 	if($(".search").find("input").hasClass("input-fr")){
@@ -37,7 +37,9 @@ function relandPop(box,footer){
 	$(box).animate({
 		right: 0
 	}, 120);
-	$("body").addClass("bodySearchShow");
+	setTimeout(function(){
+		$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+	},100);
 	$(box).scrollTop(0);
 	overlay(".overlay");
 	if(footer) $(box+"-footer").addClass("fixed");
@@ -64,6 +66,7 @@ function searchreset(){
 // search function
 function searchfr(){
 	$(".search").removeAttr("style");
+	$(".search-btn").removeAttr("style");
 	$("body").removeClass("bodySearchShow");
 	searchreset();
 }
@@ -73,13 +76,17 @@ function searchopen(){
 		$(".search").animate({
 			right: 0
 		}, 120);
-		$("body").addClass("bodySearchShow");
+		$(".search-btn").show();
+		setTimeout(function(){
+			$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+		},100);
 		$(".search").scrollTop(0);
 		$(".search-footer").addClass("fixed");
 		overlay(".overlay");
 	}else{
 		searchfr();
-	}	
+	}
+	
 }
 
 // open post
@@ -87,14 +94,18 @@ function post(){
 	$(".post").animate({
 		right: 0
 	}, 120);
-	$("body").addClass("bodySearchShow");
+	setTimeout(function(){
+		$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+	},100);
 	$(".post").scrollTop(0);
 	$(".post-footer").addClass("fixed");
 	overlay(".overlay");
+	$(".search-btn").show();
 }
 // close post
 function postExit(){
 	$(".post").removeAttr("style");		
+	$(".search-btn").removeAttr("style");		
 	$("body").removeClass("bodySearchShow");
 	$(".post-footer").removeClass("fixed");
 }
@@ -183,7 +194,10 @@ $(function(){
 			$(".search").animate({
 				right: 0
 			}, 120);
-			$("body").addClass("bodySearchShow");
+			$(".search-btn").show();
+			setTimeout(function(){
+				$("body").animate({ scrollTop: 0 }, 1).addClass("bodySearchShow");
+			},100);
 			$(".search").scrollTop(0);
 			$(".search-footer").addClass("fixed");
 		}else{
@@ -233,10 +247,12 @@ $(function(){
 	$(".btn-more .collapse-title").click(function(){
 		$(this).parent().hide();
 		$(this).parent().parent().find(".more-box").removeClass("more-box-hide");
+		$(this).parent().parent().find(".title-more").hide();
 	});
 	// click button reset in search
 	$(".btn-reset .collapse-title").click(function(){
 		$(this).parent().parent().find(".btn-more").removeAttr("style");
+		$(this).parent().parent().find(".title-more").removeAttr("style");
 		$(this).parent().parent().find(".more-box").addClass("more-box-hide");
 		$(this).parent().parent().find(".spinner").addClass("spinner-hide");
 		$(this).parent().parent().find(".spinner").parent().find(".collapse-title i").addClass("iconDownOpen").removeClass("iconUpOpen");
@@ -247,6 +263,11 @@ $(function(){
 	// add class list check
 	$(".list-check li a").click(function(){
 		$(this).toggleClass("active");
+	});
+	// add class list option
+	$(".list-option li a").click(function(){
+		$(".list-option li a").removeClass("active");
+		$(this).addClass("active");
 	});
 	// set active lien he in post
 	$("#contactBox .contact-list li a").click(function(){
@@ -313,8 +334,13 @@ $(function(){
 	});
 	
 	//heart click
-	$(".heart").click(function(){
-		$(this).find(".icon-heart").toggleClass("active");
+	$('.heart').on('click', function(){
+		var self = $(this).find(".icon-heart");
+		self.addClass("refresh animation");
+		setTimeout(function(){
+			self.removeClass("refresh animation");
+		}, 600);
+		self.toggleClass("active");
 		if($(this).find(".icon-heart").hasClass("active")){
 			showNotify("Lưu tin thành công", ".heartNotify");
 			return;
@@ -340,6 +366,12 @@ $(function(){
 		});
 		$("#"+currb).addClass("active");
 	});
+	
+	// draw click
+	$('.i-mapdraw').on('click', function(){
+		$(this).parent().toggleClass("active");
+	});
+	
 	
 	// get numb title
 	var box = 0;

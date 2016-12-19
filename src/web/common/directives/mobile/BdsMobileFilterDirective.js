@@ -560,7 +560,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 ];
 
 
-                vm.keyPress = function(event){
+                vm.autoCompleteChange = function(event){
                     vm.showFrequentSearch = false;
                     $( "#searchadd").autocomplete( "option", "source",vm.autocompleteSource);
                     $('.iconCancel').show();

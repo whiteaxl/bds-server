@@ -9,7 +9,7 @@
 	<form>
 		<div class="search-fr">
 	    	<i ng-class="mf.iconSearchClass" style="left: 12px; top: 5px;color: white; position: absolute;font-weight: bold;"></i>
-	    	<input ng-show="$root.bdsData.filterShowAct==true" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-keypress="mf.keyPress($event)" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
+	    	<input ng-show="$root.bdsData.filterShowAct==true" type="text" ng-model="mf.act" ng-click="mf.showFavorite($event)" ng-change="mf.autoCompleteChange();" class="input-fr" id="searchadd" placeholder="Nhập Tỉnh, Huyện, Xã hoặc Dự Án" />
 	    	<!-- <ul ng-if="mf.showFrequentSearch==true" >
 	    		<li>1</li>
 	    		<li>2</li>

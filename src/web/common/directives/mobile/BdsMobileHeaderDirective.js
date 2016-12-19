@@ -234,7 +234,9 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
 
                 vm.keyPress = function(event){
                     vm.showFrequentSearch = false;                    
+                    // alert(1);
                     $( "#searchadd1").autocomplete( "option", "source",vm.autocompleteSource);
+                    // alert(2);
                     var $ww = $(window).width();                 
 
                     
@@ -261,11 +263,12 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     // }
                 }
                 vm.autoCompleteChange = function(event){
-                    if($rootScope.act == ''){
-                        $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
-                        $( "#searchadd1").autocomplete( "search", "" );
-                    }
-                    vm.toggleQuickClearAutoComplete();                    
+                    // if($rootScope.act == ''){
+                    //     $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
+                    //     $( "#searchadd1").autocomplete( "search", "" );
+                    // }
+                    // vm.toggleQuickClearAutoComplete(); 
+                    vm.keyPress(event);                   
                 }
                 vm.showFavorite = function(event){
                     //if($rootScope.act == '' || !$rootScope.act){
