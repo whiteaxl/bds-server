@@ -21,7 +21,18 @@
         $scope.relandMarkerGroupCss = "reland-marker marker-include";
         $scope.relandMarkerCss = "reland-marker";
         vm.searchingIconClass = "iconSearching search-head fa-spin";
-        
+
+        vm.orderTypeList = [
+            { value: 0, lable: "Mặc định", orderFieldName: "ngayDaDang" , orderType: "DESC"},
+            { value: 1, lable: "Ngày đăng mới nhất", orderFieldName: "ngayDaDang" , orderType: "DESC"},
+            { value: 2, lable: "Giá tăng dần", orderFieldName: "gia", orderType: "ASC"},
+            { value: 3, lable: "Giá giảm dần", orderFieldName: "gia", orderType: "DESC"},
+            { value: 4, lable: "Giá/m² tăng dần", orderFieldName: "giaM2", orderType: "ASC"},
+            { value: 5, lable: "Giá/m² giảm dần", orderFieldName: "giaM2", orderType: "DESC"},
+            { value: 6, lable: "Diện tích tăng dần", orderFieldName: "dienTich", orderType: "ASC"},
+            { value: 7, lable: "Diện tích giảm dần", orderFieldName: "dienTich", orderType: "DESC"}
+        ];
+        $scope.orderValue = 0;
 
         vm.resetResultList = function(){
             vm.currentPage = 0;
@@ -220,19 +231,28 @@
             // if(vm.searching == true)
             //     return;
             //all search action in map do not save last search
-            $rootScope.searchData.updateLastSearch = false;
-            $('body').scrollTop(0);
-			vm.viewMode = "map";
-			vm.viewTemplateUrl = "/web/mobile/map.tpl.html"			
-            $timeout(function() {
-                vm.mapInitialized();
-            }, 0);            
-            vm.changeBrowserHistory();
-            $timeout(function() {
-                google.maps.event.trigger(vm.map, "resize");
-            });            
+            if ($('.list-sort').css('display') == 'none') {
+                $rootScope.searchData.updateLastSearch = false;
+                $('body').scrollTop(0);
+                vm.viewMode = "map";
+                vm.viewTemplateUrl = "/web/mobile/map.tpl.html"
+                $timeout(function() {
+                    vm.mapInitialized();
+                }, 0);
+                vm.changeBrowserHistory();
+                $timeout(function() {
+                    google.maps.event.trigger(vm.map, "resize");
+                });
+            } else {
+                $('.list-sort').toggle();
+            }
 		}
-		vm.sort = function(sortByName, sortByType){
+
+		vm.sort = function(sortByName, sortByType, orderValue){
+            console.log("------------------sort--------------");
+            $scope.orderValue = orderValue;
+            if(!$rootScope.searchData.orderBy)
+                $rootScope.searchData.orderBy = {};
 			$rootScope.searchData.orderBy.name = sortByName;
             $rootScope.searchData.orderBy.type = sortByType;
 			vm.search();
@@ -242,35 +262,39 @@
 
 		vm.likeAds = function(event,adsID){
 		  //event.stopPropagation();
-	      if($rootScope.isLoggedIn()==false){
-	        $scope.$bus.publish({
-              channel: 'login',
-              topic: 'show login',
-              data: {label: "Đăng nhập để lưu BĐS"}
-	        });
-	        return;
-	      }
-          if(!$rootScope.user.adsLikes){
-            $rootScope.user.adsLikes = [];
-          }
-          let ind = $rootScope.user.adsLikes.indexOf(adsID);
-          if(ind >=0){
-            HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
-                if(res.status == 200){
-                    var index = $rootScope.user.adsLikes.indexOf(adsID);
-                    $rootScope.user.adsLikes.splice(index,1);                    
-                }                
-            });
-          } else{
-            HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
-                //alert(res.data.msg);
-                //console.log(res);
-                if(res.data.success == true || res.data.status==1){
-                    $rootScope.user.adsLikes.push(adsID);
+            if ($('.list-sort').css('display') == 'none') {
+                if($rootScope.isLoggedIn()==false){
+                    $scope.$bus.publish({
+                        channel: 'login',
+                        topic: 'show login',
+                        data: {label: "Đăng nhập để lưu BĐS"}
+                    });
+                    return;
                 }
-            });  
-          }	      
-	    };       
+                if(!$rootScope.user.adsLikes){
+                    $rootScope.user.adsLikes = [];
+                }
+                let ind = $rootScope.user.adsLikes.indexOf(adsID);
+                if(ind >=0){
+                    HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
+                        if(res.status == 200){
+                            var index = $rootScope.user.adsLikes.indexOf(adsID);
+                            $rootScope.user.adsLikes.splice(index,1);
+                        }
+                    });
+                } else{
+                    HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
+                        //alert(res.data.msg);
+                        //console.log(res);
+                        if(res.data.success == true || res.data.status==1){
+                            $rootScope.user.adsLikes.push(adsID);
+                        }
+                    });
+                }
+            } else {
+                $('.list-sort').toggle();
+            }
+	    };
 
         vm.correctCustomMarkerPos = function(){
             $timeout(function() {
@@ -484,11 +508,17 @@
 		  	"pageNo": 1
 		}*/
 		vm.goDetail = function(event,i){
-            $('#previewAds').modal('hide');
-            // $timeout(function() {
-            //     $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
-            // },200);
-            $rootScope.showDetailAds(vm.ads_list[i].adsID,$scope);        	
+            console.log("-----------------------show Detail----------------");
+            if ($('.list-sort').css('display') == 'none') {
+                $('#previewAds').modal('hide');
+                // $timeout(function() {
+                //     $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+                // },200);
+                $rootScope.showDetailAds(vm.ads_list[i].adsID,$scope);
+            } else {
+                $('.list-sort').toggle();
+            }
+
         }
 
         vm.previewAds = function(event,i){
@@ -502,16 +532,21 @@
         }
 
         vm.showSaveSearch = function(){
-        	if($rootScope.isLoggedIn()){
-        		$('#saveBox').modal("show");
-        	}else{
-        		$scope.$bus.publish({
-	              channel: 'login',
-	              topic: 'show login',
-	              data: {label: "Đăng nhập để lưu tìm kiếm"}
-		        });
-        	}
+            if ($('.list-sort').css('display') == 'none') {
+                if($rootScope.isLoggedIn()){
+                    $('#saveBox').modal("show");
+                }else{
+                    $scope.$bus.publish({
+                        channel: 'login',
+                        topic: 'show login',
+                        data: {label: "Đăng nhập để lưu tìm kiếm"}
+                    });
+                }
+            } else {
+                $('.list-sort').toggle();
+            }
         }
+
         vm.saveSearch = function(){
         	if(!vm.saveSearchName){
 				vm.blankName = true;
@@ -878,7 +913,7 @@
 		vm.searchPage = function(i, callback){
             vm.searchingIconClass = "iconSearching search-head fa-spin";
             $rootScope.searchData.pageNo = i; 
-            vm.searching = true;      
+            vm.searching = true;
             $rootScope.searchData.userID = $rootScope.user.userID || undefined;
             //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
             //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
@@ -1031,7 +1066,7 @@
                 $timeout(function() {
                     $('body').scrollTop(0);
                     // vm.initialized = true;  
-                    vm.doneSearch = true;   
+                       
                     if($rootScope.searchData.polygon && !vm.poly){
                         //has polygon so construct it
                         vm.poly=new google.maps.Polyline({map:vm.map,clickable:false, fillColor: '#00a8e6', strokeColor: '#0096ce'});
@@ -1083,6 +1118,7 @@
                 },0);
                 vm.searching = false; 
                 vm.searchingIconClass = "iconSearch search-head";
+                vm.doneSearch = true;
                 if(callback)
                     callback(res);
             });

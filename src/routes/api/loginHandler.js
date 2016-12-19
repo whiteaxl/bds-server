@@ -25,6 +25,7 @@ var RewayMailer = require("../../lib/RewayMailer");
 
 var placeHandlers = require('./placeHandlers');
 
+var esms = require("../../lib/esms");
 
 /**
     Ham nay kiem tra xem user co ton tai trong he thong theo tat ca nhung dieu kien truyen vao
@@ -188,6 +189,7 @@ Response Data:
 }
 
 */
+
 internals.forgotPassword = function(req,reply){
     var email = req.payload.email;
     var phone = req.payload.phone;
@@ -250,11 +252,166 @@ internals.forgotPassword = function(req,reply){
           });
         });
     }else if(phone){
-        result.success = true;
+        if (phone && (phone.length != 10 && phone.length !=11)){
+            console.log("loginHandler.forgotPassword - sai dinh dang so dt " + phone);
+            result.msg = "Số điện thoại không đúng định dạng";
+            reply(result);
+            return;
+        }
+        userService.getUser({phone: phone}, (err, res) => {
+            if (err) {
+                reply({
+                    success: false,
+                    msg: err.toString()
+                });
+                return;
+            }
+
+            if (res.length <= 0) { //exists
+                reply({
+                    success: false,
+                    msg:constant.MSG.USER_NOT_EXIST + ". Xin nhập số điện thoại"
+                });
+                return;
+            }
+
+            var user = res[0];
+            let code = Math.round(Math.random()*100000).toString();
+
+            esms.sendMultipleMessage(code, [phone])
+                .then((res) => {
+                    console.log("Final res:", res);
+                    // Final res: { code: 0, errorMsg: undefined }
+                    if (res.code ==0 ){
+                      let expiredDate = Math.floor(new Date().getTime()/1000) + 12*60*60;
+
+                      let verify = {    sendType: 'sms', // sms/email
+                                        verifyType:'password', // password/ads
+                                        verifyCode: code,
+                                        expiredDate: expiredDate,
+                                        verifyStatus:  false // true/false
+                                    };
+
+                      user.verify = user.verify ? user.verify : [];
+
+                      user.verify.push(verify);
+
+                      userService.upsert(user,function(uerr,ures){
+                            if(uerr){
+                                result.success = false
+                                result.msg = uerr;
+                            }else{
+                                result.success = true;
+                                result.sentSms = true;
+                            }
+                            reply(result);
+                      });
+                    }
+                });
+        });
+
+        /*result.success = true;
         result.sentMail = true;
         result.msg = "TODO";
-        reply(result);
+        reply(result);*/
     }
+}
+
+/**
+
+ This function udpate password su dung verifyCode
+
+ {
+ Request Data:
+ {
+     email: email dung de dang nhap
+     phone: so dien thoai de dang nhap
+     verifyCode: verify code lay tu sms
+     newPassword: mat khau moi su dung de update
+ }
+ Response Data:
+ {
+     success: true/false
+ }
+
+ }
+
+ */
+
+internals.updatePassword = function(req,reply){
+    var email = req.payload.email;
+    var phone = req.payload.phone;
+    var verifyCode = req.payload.verifyCode;
+    var newPassword = req.payload.newPassword;
+
+    var result = {
+        success: false
+    }
+
+    if (email){
+        result.success = true;
+        result.msg = "TODO";
+        reply(result);
+    } else if (phone){
+        userService.getUser({phone: phone}, (err, res) => {
+            if (err) {
+                reply({
+                    success: false,
+                    msg: err.toString()
+                });
+                return;
+            }
+
+            if (res.length <= 0) { //exists
+                reply({
+                    success: false,
+                    msg: constant.MSG.USER_NOT_EXIST + ". Xin nhập số điện thoại"
+                });
+                return;
+            }
+
+            var user = res[0];
+            let expiredDate = Math.floor(new Date().getTime()/1000);
+            if (user.verify && user.verify.length>0){
+                for (var i=0; i< user.verify.length; i++){
+                    if (user.verify[i].verifyCode == verifyCode
+                        && expiredDate <= user.verify[i].expiredDate
+                        && !user.verify[i].verifyStatus)
+                    {
+                        user.verify[i].verifyStatus = true;
+                        user.matKhau = newPassword;
+
+                        userService.upsert(user,function(uerr,ures){
+                            if(uerr){
+                                result.success = false
+                                result.msg = uerr;
+                            }else{
+                                result.success = true;
+                            }
+                            reply(result);
+                        });
+                        return;
+                    }
+                }
+                reply({
+                    success: false,
+                    msg: "Mã xác nhận không hợp lệ"
+                });
+                return;
+            } else {
+                reply({
+                    success: false,
+                    msg: "Không tồn tại mã xác nhận"
+                });
+                return;
+            }
+
+        });
+    }
+
+    /*result.success = true;
+    result.msg = "TODO";
+    reply(result);*/
 }
 
 internals.changePassword = function(req,reply){

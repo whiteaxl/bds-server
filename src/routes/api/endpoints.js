@@ -585,6 +585,14 @@ internals.endpoints = [
   },
   {
     method: 'POST',
+    path: '/api/updatePassword',
+    handler: loginHandler.updatePassword,
+    config: {
+      description: 'update password using verified code',
+    }
+  },
+  {
+    method: 'POST',
     path: '/api/resetPassword',
     handler: loginHandler.resetPassword,
     config: {

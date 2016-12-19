@@ -31,11 +31,13 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 }
                 //end nhannc
                 vm.goToSearchPage = function(){
+                    $scope.$emit("searchingByLocation");
                     $rootScope.searchData.updateLastSearch = false;
                     if($scope.$parent.mhc)
                         $scope.$parent.mhc.doneSearch = true;
                     if($rootScope.searchData.placeId){
                         $rootScope.searchData.polygon = undefined;
+                        $scope.$emit("doneSearchByLocation");
                         $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                     }else{
                         if (navigator.geolocation) {
@@ -74,7 +76,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                                         HouseService.getPlaceByDiaChinhKhongDau(diaChinhDto).then(function(res){
                                             console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
                                             if(res){             
-                                                $rootScope.searchData.polygon = undefined;                                                                                   
+                                                $rootScope.searchData.polygon = undefined;
+                                                $scope.$emit("doneSearchByLocation");
                                                 $state.go("msearch", { "placeId": res.data.diaChinh.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                                             }
                                         });
@@ -84,9 +87,11 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                             }, function(error){
                                 console.log(error);                 
                                 // vm.showAskCurrentLocation  = true;
+                                $scope.$emit("doneSearchByLocation");
                                 $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                             });
                         } else {
+                            $scope.$emit("doneSearchByLocation");
                             $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin" : 0, "loaiNhaDat" : 0,"query": $rootScope.searchData, "viewMode": "map"},{reload: true});   
                         }
 

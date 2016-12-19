@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "acd9107c85604d9b7b1a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e6c16343d03482e9110"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -29773,6 +29773,18 @@
 			};
 
 			vm.init = function () {
+				$scope.$on("searchingByLocation", function (event) {
+					console.log("----------------hearing searchingLocation--------------------");
+					$timeout(function () {
+						vm.doneSearch = false;
+					}, 0);
+				});
+				$scope.$on("doneSearchByLocation", function (event) {
+					console.log("----------------hearing doneSearchByLocation--------------------");
+					$timeout(function () {
+						vm.doneSearch = true;
+					}, 0);
+				});
 				vm.getLocation();
 				if ($rootScope.currentLocation) {
 					if ($rootScope.lastSearch) {
@@ -29825,6 +29837,9 @@
 	        $scope.relandMarkerGroupCss = "reland-marker marker-include";
 	        $scope.relandMarkerCss = "reland-marker";
 	        vm.searchingIconClass = "iconSearching search-head fa-spin";
+
+	        vm.orderTypeList = [{ value: 0, lable: "Mặc định", orderFieldName: "ngayDaDang", orderType: "DESC" }, { value: 1, lable: "Ngày đăng mới nhất", orderFieldName: "ngayDaDang", orderType: "DESC" }, { value: 2, lable: "Giá tăng dần", orderFieldName: "gia", orderType: "ASC" }, { value: 3, lable: "Giá giảm dần", orderFieldName: "gia", orderType: "DESC" }, { value: 4, lable: "Giá/m² tăng dần", orderFieldName: "giaM2", orderType: "ASC" }, { value: 5, lable: "Giá/m² giảm dần", orderFieldName: "giaM2", orderType: "DESC" }, { value: 6, lable: "Diện tích tăng dần", orderFieldName: "dienTich", orderType: "ASC" }, { value: 7, lable: "Diện tích giảm dần", orderFieldName: "dienTich", orderType: "DESC" }];
+	        $scope.orderValue = 0;
 
 	        vm.resetResultList = function () {
 	            vm.currentPage = 0;
@@ -30016,19 +30031,27 @@
 	            // if(vm.searching == true)
 	            //     return;
 	            //all search action in map do not save last search
-	            $rootScope.searchData.updateLastSearch = false;
-	            $('body').scrollTop(0);
-	            vm.viewMode = "map";
-	            vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
-	            $timeout(function () {
-	                vm.mapInitialized();
-	            }, 0);
-	            vm.changeBrowserHistory();
-	            $timeout(function () {
-	                google.maps.event.trigger(vm.map, "resize");
-	            });
+	            if ($('.list-sort').css('display') == 'none') {
+	                $rootScope.searchData.updateLastSearch = false;
+	                $('body').scrollTop(0);
+	                vm.viewMode = "map";
+	                vm.viewTemplateUrl = "/web/mobile/map.tpl.html";
+	                $timeout(function () {
+	                    vm.mapInitialized();
+	                }, 0);
+	                vm.changeBrowserHistory();
+	                $timeout(function () {
+	                    google.maps.event.trigger(vm.map, "resize");
+	                });
+	            } else {
+	                $('.list-sort').toggle();
+	            }
 	        };
-	        vm.sort = function (sortByName, sortByType) {
+
+	        vm.sort = function (sortByName, sortByType, orderValue) {
+	            console.log("------------------sort--------------");
+	            $scope.orderValue = orderValue;
+	            if (!$rootScope.searchData.orderBy) $rootScope.searchData.orderBy = {};
 	            $rootScope.searchData.orderBy.name = sortByName;
 	            $rootScope.searchData.orderBy.type = sortByType;
 	            vm.search();
@@ -30038,33 +30061,37 @@
 
 	        vm.likeAds = function (event, adsID) {
 	            //event.stopPropagation();
-	            if ($rootScope.isLoggedIn() == false) {
-	                $scope.$bus.publish({
-	                    channel: 'login',
-	                    topic: 'show login',
-	                    data: { label: "Đăng nhập để lưu BĐS" }
-	                });
-	                return;
-	            }
-	            if (!$rootScope.user.adsLikes) {
-	                $rootScope.user.adsLikes = [];
-	            }
-	            var ind = $rootScope.user.adsLikes.indexOf(adsID);
-	            if (ind >= 0) {
-	                HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
-	                    if (res.status == 200) {
-	                        var index = $rootScope.user.adsLikes.indexOf(adsID);
-	                        $rootScope.user.adsLikes.splice(index, 1);
-	                    }
-	                });
+	            if ($('.list-sort').css('display') == 'none') {
+	                if ($rootScope.isLoggedIn() == false) {
+	                    $scope.$bus.publish({
+	                        channel: 'login',
+	                        topic: 'show login',
+	                        data: { label: "Đăng nhập để lưu BĐS" }
+	                    });
+	                    return;
+	                }
+	                if (!$rootScope.user.adsLikes) {
+	                    $rootScope.user.adsLikes = [];
+	                }
+	                var ind = $rootScope.user.adsLikes.indexOf(adsID);
+	                if (ind >= 0) {
+	                    HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
+	                        if (res.status == 200) {
+	                            var index = $rootScope.user.adsLikes.indexOf(adsID);
+	                            $rootScope.user.adsLikes.splice(index, 1);
+	                        }
+	                    });
+	                } else {
+	                    HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
+	                        //alert(res.data.msg);
+	                        //console.log(res);
+	                        if (res.data.success == true || res.data.status == 1) {
+	                            $rootScope.user.adsLikes.push(adsID);
+	                        }
+	                    });
+	                }
 	            } else {
-	                HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
-	                    //alert(res.data.msg);
-	                    //console.log(res);
-	                    if (res.data.success == true || res.data.status == 1) {
-	                        $rootScope.user.adsLikes.push(adsID);
-	                    }
-	                });
+	                $('.list-sort').toggle();
 	            }
 	        };
 
@@ -30274,11 +30301,16 @@
 	          	"pageNo": 1
 	        }*/
 	        vm.goDetail = function (event, i) {
-	            $('#previewAds').modal('hide');
-	            // $timeout(function() {
-	            //     $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
-	            // },200);
-	            $rootScope.showDetailAds(vm.ads_list[i].adsID, $scope);
+	            console.log("-----------------------show Detail----------------");
+	            if ($('.list-sort').css('display') == 'none') {
+	                $('#previewAds').modal('hide');
+	                // $timeout(function() {
+	                //     $state.go('mdetail', { "adsID" : vm.ads_list[i].adsID}, {location: true});
+	                // },200);
+	                $rootScope.showDetailAds(vm.ads_list[i].adsID, $scope);
+	            } else {
+	                $('.list-sort').toggle();
+	            }
 	        };
 
 	        vm.previewAds = function (event, i) {
@@ -30292,16 +30324,21 @@
 	        };
 
 	        vm.showSaveSearch = function () {
-	            if ($rootScope.isLoggedIn()) {
-	                $('#saveBox').modal("show");
+	            if ($('.list-sort').css('display') == 'none') {
+	                if ($rootScope.isLoggedIn()) {
+	                    $('#saveBox').modal("show");
+	                } else {
+	                    $scope.$bus.publish({
+	                        channel: 'login',
+	                        topic: 'show login',
+	                        data: { label: "Đăng nhập để lưu tìm kiếm" }
+	                    });
+	                }
 	            } else {
-	                $scope.$bus.publish({
-	                    channel: 'login',
-	                    topic: 'show login',
-	                    data: { label: "Đăng nhập để lưu tìm kiếm" }
-	                });
+	                $('.list-sort').toggle();
 	            }
 	        };
+
 	        vm.saveSearch = function () {
 	            if (!vm.saveSearchName) {
 	                vm.blankName = true;
@@ -30796,7 +30833,7 @@
 	                $timeout(function () {
 	                    $('body').scrollTop(0);
 	                    // vm.initialized = true;  
-	                    vm.doneSearch = true;
+
 	                    if ($rootScope.searchData.polygon && !vm.poly) {
 	                        //has polygon so construct it
 	                        vm.poly = new google.maps.Polyline({ map: vm.map, clickable: false, fillColor: '#00a8e6', strokeColor: '#0096ce' });
@@ -30843,6 +30880,7 @@
 	                }, 0);
 	                vm.searching = false;
 	                vm.searchingIconClass = "iconSearch search-head";
+	                vm.doneSearch = true;
 	                if (callback) callback(res);
 	            });
 	        };
@@ -34455,6 +34493,24 @@
 	                        }
 	                    }
 	                } else {
+	                    if ($scope.dienTichKhacFrom < 0) {
+	                        $scope.dienTichKhacFrom = 0;
+	                        if (!$scope.dienTichKhacTo) {
+	                            if ($scope.dienTichKhacTo == 0) {
+	                                $("#area_value").html("Chưa xác định");
+	                                $scope.searchData.dienTich = -1;
+	                                $scope.searchData.dienTichBETWEEN = [-1, -1];
+	                            } else {
+	                                $scope.searchData.dienTich = undefined;
+	                                $("#area_value").html("Bất kỳ");
+	                                $scope.searchData.dienTichBETWEEN = [0, window.RewayListValue.BIG];
+	                            }
+	                        } else {
+	                            $scope.searchData.dienTich = undefined;
+	                            $("#area_value").html("0 m² - " + $scope.dienTichKhacTo + " m²");
+	                            $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacTo];
+	                        }
+	                    }
 	                    $scope.searchData.dienTich = undefined;
 	                    if (!$scope.dienTichKhacTo) {
 	                        if ($scope.dienTichKhacTo == 0 && $scope.dienTichKhacTo != "") {
@@ -34505,6 +34561,24 @@
 	                        }
 	                    }
 	                } else {
+	                    if ($scope.dienTichKhacTo < 0) {
+	                        $scope.dienTichKhacTo = 0;
+	                        if (!$scope.dienTichKhacFrom) {
+	                            if ($scope.dienTichKhacFrom == 0) {
+	                                $("#area_value").html("Chưa xác định");
+	                                $scope.searchData.dienTich = -1;
+	                                $scope.searchData.dienTichBETWEEN = [-1, -1];
+	                            } else {
+	                                $scope.searchData.dienTich = undefined;
+	                                $("#area_value").html("Bất kỳ");
+	                                $scope.searchData.dienTichBETWEEN = [0, window.RewayListValue.BIG];
+	                            }
+	                        } else {
+	                            $scope.searchData.dienTich = undefined;
+	                            $("#area_value").html("0 m² - " + $scope.dienTichKhacFrom + " m²");
+	                            $scope.searchData.dienTichBETWEEN = [0, $scope.dienTichKhacFrom];
+	                        }
+	                    }
 	                    $scope.searchData.dienTich = undefined;
 	                    if (!$scope.dienTichKhacFrom) {
 	                        $("#area_value").html("0 m² -" + $scope.dienTichKhacTo + " m²");
@@ -34550,6 +34624,24 @@
 	                        }
 	                    }
 	                } else {
+	                    if ($scope.giaKhacFrom < 0) {
+	                        $scope.giaKhacFrom = 0;
+	                        if (!$scope.giaKhacTo) {
+	                            if ($scope.giaKhacTo == 0) {
+	                                $("#prices_value").html("Chưa xác định");
+	                                $scope.searchData.gia = -1;
+	                                $scope.searchData.giaBETWEEN = [-1, -1];
+	                            } else {
+	                                $scope.searchData.gia = undefined;
+	                                $("#prices_value").html("Bất kỳ");
+	                                $scope.searchData.giaBETWEEN = [0, window.RewayListValue.BIG];
+	                            }
+	                        } else {
+	                            $scope.searchData.gia = undefined;
+	                            $("#prices_value").html("0 triệu - " + $scope.giaKhacTo + " tỷ");
+	                            $scope.searchData.giaBETWEEN = [0, $scope.giaKhacTo * 1000];
+	                        }
+	                    }
 	                    $scope.searchData.gia = undefined;
 	                    if (!$scope.giaKhacTo) {
 	                        if ($scope.giaKhacTo == 0 && $scope.giaKhacTo != "") {
@@ -34600,6 +34692,24 @@
 	                        }
 	                    }
 	                } else {
+	                    if ($scope.giaKhacTo < 0) {
+	                        $scope.giaKhacTo = 0;
+	                        if (!$scope.giaKhacFrom) {
+	                            if ($scope.giaKhacFrom == 0) {
+	                                $("#prices_value").html("Chưa xác định");
+	                                $scope.searchData.gia = -1;
+	                                $scope.searchData.giaBETWEEN = [-1, -1];
+	                            } else {
+	                                $scope.searchData.gia = undefined;
+	                                $("#prices_value").html("Bất kỳ");
+	                                $scope.searchData.giaBETWEEN = [0, window.RewayListValue.BIG];
+	                            }
+	                        } else {
+	                            $scope.searchData.gia = undefined;
+	                            $("#prices_value").html("0 triệu - " + $scope.giaKhacFrom + " tỷ");
+	                            $scope.searchData.giaBETWEEN = [0, $scope.giaKhacFrom * 1000];
+	                        }
+	                    }
 	                    $scope.searchData.gia = undefined;
 	                    if (!$scope.giaKhacFrom) {
 	                        $("#prices_value").html("0 triệu -" + $scope.giaKhacTo + " tỷ");
@@ -35272,10 +35382,12 @@
 	            };
 	            //end nhannc
 	            vm.goToSearchPage = function () {
+	                $scope.$emit("searchingByLocation");
 	                $rootScope.searchData.updateLastSearch = false;
 	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                if ($rootScope.searchData.placeId) {
 	                    $rootScope.searchData.polygon = undefined;
+	                    $scope.$emit("doneSearchByLocation");
 	                    $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
 	                } else {
 	                    if (navigator.geolocation) {
@@ -35314,6 +35426,7 @@
 	                                        console.log("--------------HouseService.getPlaceByDiaChinhKhongDau-------------");
 	                                        if (res) {
 	                                            $rootScope.searchData.polygon = undefined;
+	                                            $scope.$emit("doneSearchByLocation");
 	                                            $state.go("msearch", { "placeId": res.data.diaChinh.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
 	                                        }
 	                                    });
@@ -35322,9 +35435,11 @@
 	                        }, function (error) {
 	                            console.log(error);
 	                            // vm.showAskCurrentLocation  = true;
+	                            $scope.$emit("doneSearchByLocation");
 	                            $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
 	                        });
 	                    } else {
+	                        $scope.$emit("doneSearchByLocation");
 	                        $state.go("msearch", { "placeId": "Place_T_HN", "loaiTin": 0, "loaiNhaDat": 0, "query": $rootScope.searchData, "viewMode": "map" }, { reload: true });
 	                    }
 	                }
