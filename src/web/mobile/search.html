@@ -86,7 +86,7 @@
         <p class="mtm">Copyright © 2016 Reland Inc., All Rights Reserved.</p>
     </div>
 </div>
-<div class="notifyBox mapsnotify">Hiện có 24 thông báo mới</div>
+<div class="notifyBox mapsnotify" ng-show ="msc.viewMode!='list'">Hiện có 24 thông báo mới</div>
 <div class="search-nodata" ng-if="msc.noResult==true">
     <strong>Không tìm thấy kết quả nào phù hợp</strong>
     <p>Hãy Zoom nhỏ lại, thay đổi điều kiện <a href="#" ng-click= "msc.showFilter();"> <strong>Lọc</strong></a> hoặc nhấn vào nút bên dưới để xem các tin nằm trong khung hình hiện tại</p>
@@ -154,13 +154,9 @@
                 <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
                 <div class="list-sort popovers top uln">
                     <ul>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')" class="active">Mặc định</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('ngayDaDang','ASC')">Ngày đăng</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('gia','DESC')">Giá (giảm dần)</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('gia','ASC')">Giá (tăng dần)</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongNgu','ASC')">Số phòng ngủ</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('soPhongTam','ASC')">Số phòng tắm</a></li>
-                        <li><a href="javascript:void(0)" ng-click="msc.sort('dienTich','ASC')">Diện tích</a></li>
+                        <li ng-repeat="orderObj in msc.orderTypeList track by $index" >
+                            <a href="javascript:void(0)" ng-click="msc.sort(orderObj.orderFieldName,orderObj.orderType,orderObj.value)" class={{orderValue==orderObj.value?"active":""}} >{{orderObj.lable}}</a>
+                        </li>
                     </ul>
                 </div>
             </li>
