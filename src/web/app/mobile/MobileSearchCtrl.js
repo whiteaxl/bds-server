@@ -285,7 +285,7 @@
                             $(event.target).removeClass("refresh animation");
                             $(event.target).toggleClass("active");
                             $timeout(function() {
-                                $rootScope.showLikeAdsNotify("Bỏ lưu tin thành công");
+                                $rootScope.showLikeAdsNotify("#notifyAdsLikeId","Bỏ lưu tin thành công");
                             },0);
                         }
                     });
@@ -297,11 +297,10 @@
                         if(res.data.success == true || res.data.status==1){
                             $rootScope.user.adsLikes.push(adsID);
                         }
-                        $scope.isPopulate = false;
                         $(event.target).removeClass("refresh animation");
                         $(event.target).toggleClass("active");
                         $timeout(function() {
-                            $rootScope.showLikeAdsNotify("Lưu tin thành công");
+                            $rootScope.showLikeAdsNotify("#notifyAdsLikeId","Lưu tin thành công");
                         },0);
                     });
                 }

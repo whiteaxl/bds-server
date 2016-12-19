@@ -518,9 +518,9 @@
       }
     }
 
-      $rootScope.showLikeAdsNotify = function(text){
-          $("#notifyAdsLikeId").html(text);
-          $("#notifyAdsLikeId").fadeIn(100).delay(900).slideUp(150);
+      $rootScope.showLikeAdsNotify = function(box, text){
+          $(box).html(text);
+          $(box).fadeIn(100).delay(900).slideUp(200);
       }
 
     $rootScope.showDangNhapForLike = function(){

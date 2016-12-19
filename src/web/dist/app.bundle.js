@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "48feeb13ec3eb43e1c6c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1d943a563da364f1d5b3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1492,9 +1492,9 @@
 	            }
 	        };
 
-	        $rootScope.showLikeAdsNotify = function (text) {
-	            $("#notifyAdsLikeId").html(text);
-	            $("#notifyAdsLikeId").fadeIn(100).delay(900).slideUp(150);
+	        $rootScope.showLikeAdsNotify = function (box, text) {
+	            $(box).html(text);
+	            $(box).fadeIn(100).delay(900).slideUp(200);
 	        };
 
 	        $rootScope.showDangNhapForLike = function () {};
@@ -28009,18 +28009,30 @@
 				}
 				var ind = $rootScope.user.adsLikes.indexOf(adsID);
 				if (ind >= 0) {
+					$(event.target).addClass("refresh animation");
 					HouseService.unlikeAds({ userID: $rootScope.user.userID, adsID: adsID }).then(function (res) {
 						if (res.status == 200) {
 							var index = $rootScope.user.adsLikes.indexOf(adsID);
 							$rootScope.user.adsLikes.splice(index, 1);
+							$(event.target).removeClass("refresh animation");
+							$(event.target).toggleClass("active");
+							$timeout(function () {
+								$rootScope.showLikeAdsNotify("#homeNotifyAdsLikeId", "Bỏ lưu tin thành công");
+							}, 0);
 						}
 					});
 				} else {
+					$(event.target).addClass("refresh animation");
 					HouseService.likeAds({ adsID: adsID, userID: $rootScope.user.userID }).then(function (res) {
 						//alert(res.data.msg);
 						//console.log(res);
 						if (res.data.success == true || res.data.status == 1) {
 							$rootScope.user.adsLikes.push(adsID);
+							$(event.target).removeClass("refresh animation");
+							$(event.target).toggleClass("active");
+							$timeout(function () {
+								$rootScope.showLikeAdsNotify("#homeNotifyAdsLikeId", "Lưu tin thành công");
+							}, 0);
 						}
 					});
 				}
@@ -28357,7 +28369,7 @@
 	                            $(event.target).removeClass("refresh animation");
 	                            $(event.target).toggleClass("active");
 	                            $timeout(function () {
-	                                $rootScope.showLikeAdsNotify("Bỏ lưu tin thành công");
+	                                $rootScope.showLikeAdsNotify("#notifyAdsLikeId", "Bỏ lưu tin thành công");
 	                            }, 0);
 	                        }
 	                    });
@@ -28369,11 +28381,10 @@
 	                        if (res.data.success == true || res.data.status == 1) {
 	                            $rootScope.user.adsLikes.push(adsID);
 	                        }
-	                        $scope.isPopulate = false;
 	                        $(event.target).removeClass("refresh animation");
 	                        $(event.target).toggleClass("active");
 	                        $timeout(function () {
-	                            $rootScope.showLikeAdsNotify("Lưu tin thành công");
+	                            $rootScope.showLikeAdsNotify("#notifyAdsLikeId", "Lưu tin thành công");
 	                        }, 0);
 	                    });
 	                }
