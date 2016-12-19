@@ -29,9 +29,15 @@
 <div ng-if="msc.viewMode=='list'"  class="wapper" >
     <div class="reland-box uln" >
         <ul class="reland-list full" >
+            <li ng-if="msc.currentPage ==1" style="height: 25px;text-align: center;margin-bottom: 2px; margin-top: 5px">
+                <span style="font-size:14px">Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
+            </li>
             <li ng-if="msc.currentPage >1" ng-click="msc.prev();" style="height: 44px;text-align: center;margin-bottom: 5px;">
-                <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang trước</a></span><br>
-                <span>Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
+                <div class="loadingBox text-center" ng-if="msc.searching"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
+                <div ng-if="!msc.searching">
+                    <span><a href="#" style="color: #00a8e6; text-decoration: none;font-size:14px"> Nhấn vào đây để đi đến trang trước</a></span><br>
+                    <span style="font-size:14px">Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
+                </div>
             </li>
             <li ng-repeat="ads in msc.ads_list track by $index" >
                 <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
@@ -40,7 +46,7 @@
                     <span class="des bgOpa">
                         <!-- <span class="btn btn-primary">Cần bán gấp</span>
                         <span class="btn btn-warning">Nhà mới xây</span>
-                         --><span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
+                         --><span class="price">{{ads.giaFmt}} <small><!--Mới giảm giá</small>--></span>
                         <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
                         <span class="split text-center">.</span>
                         <span>{{ads.soPhongNguFmt}}</span>
@@ -50,8 +56,11 @@
                 </a>
             </li>
             <li ng-click="msc.next();" ng-if="msc.currentPage < msc.lastPageNo" style="height: 44px;text-align: center;margin-bottom: 5px;">
-                <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang sau </a></span><br>
-                <span>Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả
+                <div class="loadingBox text-center" ng-if="msc.searching"><img src="/web/mobile/img/loading_spinner.gif" width="60"></div>
+                <div ng-if="!msc.searching">
+                    <span><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang sau </a></span><br>
+                    <span>Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
+                </div>
             </li>
         </ul>
         <div class="clb ovh"></div>
@@ -139,6 +148,7 @@
     <div class="loading" style="display:block" ng-show="msc.doneSearch!=true"><img src="/web/mobile/img/loading_spinner_post.gif" /></div>
     <footer class="main border uln">
         <ul class="navmain nav-3 blue nav-text">
+
             <li ng-if="msc.viewMode=='list'">
                 <!-- <a href="javascript:void(0)" onClick="showhide('.list-sort');"><i class="p-icon i-sort"></i> Sắp xếp</a> -->
                 <a href="javascript:void(0)" onclick="showhide('.list-sort');">Sắp xếp</a>
@@ -253,7 +263,7 @@
                     <span class="des bgOpa">
                         <span class="btn btn-primary">Cần bán gấp</span>
                         <span class="btn btn-warning">Nhà mới xây</span>
-                        <span class="price">{{ads.giaFmt}} <small>Mới giảm giá</small></span>
+                        <span class="price">{{ads.giaFmt}} <!--<small>Mới giảm giá</small>--></span>
                         <span class="name">{{ads.diaChi | limitTo: 20 }}</span>
                         <span class="split text-center">.</span>
                         <span>{{ads.soPhongNguFmt}}</span>

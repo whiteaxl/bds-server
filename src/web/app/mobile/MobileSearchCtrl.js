@@ -852,7 +852,7 @@
 		vm.searchPage = function(i, callback){
             vm.searchingIconClass = "iconSearching search-head fa-spin";
             $rootScope.searchData.pageNo = i; 
-            vm.searching = true;      
+            vm.searching = true;
             $rootScope.searchData.userID = $rootScope.user.userID || undefined;
             //$rootScope.searchData.dienTichBETWEEN[0] = $rootScope.searchData.khoangDienTich.value.min;
             //$rootScope.searchData.dienTichBETWEEN[1] = $rootScope.searchData.khoangDienTich.value.max;
@@ -1004,7 +1004,7 @@
                 $timeout(function() {
                     $('body').scrollTop(0);
                     // vm.initialized = true;  
-                    vm.doneSearch = true;   
+                       
                     if($rootScope.searchData.polygon && !vm.poly){
                         //has polygon so construct it
                         vm.poly=new google.maps.Polyline({map:vm.map,clickable:false, fillColor: '#00a8e6', strokeColor: '#0096ce'});
@@ -1056,6 +1056,7 @@
                 },0);
                 vm.searching = false; 
                 vm.searchingIconClass = "iconSearch search-head";
+                vm.doneSearch = true;
                 if(callback)
                     callback(res);
             });

@@ -142,6 +142,19 @@
 		
 
 		vm.init = function(){
+			$scope.$on("searchingByLocation", function(event){
+				console.log("----------------hearing searchingLocation--------------------");
+				$timeout(function() {
+					vm.doneSearch=false;
+				},0);
+
+			});
+			$scope.$on("doneSearchByLocation", function(event){
+				console.log("----------------hearing doneSearchByLocation--------------------");
+				$timeout(function() {
+					vm.doneSearch=true;
+				},0);
+			})
 			vm.getLocation();
 			if($rootScope.currentLocation){
 				if($rootScope.lastSearch){
