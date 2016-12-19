@@ -260,8 +260,8 @@
 
 		vm.likeAdsClass ="";
 
-		vm.likeAds = function(event,adsID){
-		  //event.stopPropagation();
+        vm.likeAds = function(event,adsID){
+            //event.stopPropagation();
             if ($('.list-sort').css('display') == 'none') {
                 if($rootScope.isLoggedIn()==false){
                     $scope.$bus.publish({
@@ -275,26 +275,40 @@
                     $rootScope.user.adsLikes = [];
                 }
                 let ind = $rootScope.user.adsLikes.indexOf(adsID);
+
                 if(ind >=0){
+                    $(event.target).addClass("refresh animation");
                     HouseService.unlikeAds({userID: $rootScope.user.userID, adsID: adsID}).then(function(res){
                         if(res.status == 200){
                             var index = $rootScope.user.adsLikes.indexOf(adsID);
                             $rootScope.user.adsLikes.splice(index,1);
+                            $(event.target).removeClass("refresh animation");
+                            $(event.target).toggleClass("active");
+                            $timeout(function() {
+                                $rootScope.showLikeAdsNotify("Bỏ lưu tin thành công");
+                            },0);
                         }
                     });
                 } else{
+                    $(event.target).addClass("refresh animation");
                     HouseService.likeAds({adsID: adsID,userID: $rootScope.user.userID}).then(function(res){
                         //alert(res.data.msg);
                         //console.log(res);
                         if(res.data.success == true || res.data.status==1){
                             $rootScope.user.adsLikes.push(adsID);
                         }
+                        $scope.isPopulate = false;
+                        $(event.target).removeClass("refresh animation");
+                        $(event.target).toggleClass("active");
+                        $timeout(function() {
+                            $rootScope.showLikeAdsNotify("Lưu tin thành công");
+                        },0);
                     });
                 }
             } else {
                 $('.list-sort').toggle();
             }
-	    };
+        };
 
         vm.correctCustomMarkerPos = function(){
             $timeout(function() {

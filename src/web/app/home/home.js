@@ -518,6 +518,11 @@
       }
     }
 
+      $rootScope.showLikeAdsNotify = function(text){
+          $("#notifyAdsLikeId").html(text);
+          $("#notifyAdsLikeId").fadeIn(100).delay(900).slideUp(150);
+      }
+
     $rootScope.showDangNhapForLike = function(){
         
     }
