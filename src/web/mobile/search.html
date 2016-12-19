@@ -30,11 +30,6 @@
 <div ng-if="msc.viewMode=='list'"  class="wapper" >
     <div class="reland-box uln" >
         <ul class="reland-list full" >
-<<<<<<< HEAD
-            <li ng-if="msc.currentPage >=0" ng-click="msc.prev();" style="height: 44px;text-align: center;margin-bottom: 5px;">
-                <span ng-if="msc.currentPage>1"><a href="#" style="color: #00a8e6; text-decoration: none;"> Nhấn vào đây để đi đến trang trước</a></span><br ng-if="msc.currentPage>1">
-                <span>Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
-=======
             <li ng-if="msc.currentPage ==1" style="height: 25px;text-align: center;margin-bottom: 2px; margin-top: 5px">
                 <span style="font-size:14px">Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
             </li>
@@ -44,7 +39,6 @@
                     <span><a href="#" style="color: #00a8e6; text-decoration: none;font-size:14px"> Nhấn vào đây để đi đến trang trước</a></span><br>
                     <span style="font-size:14px">Đang hiển thị từ {{msc.currentPageStart}} đến {{msc.currentPageEnd}} / {{msc.totalResultCounts}} kết quả</span>
                 </div>
->>>>>>> 25b90b62123f2f64bc1b2497858347222bb10219
             </li>
             <li ng-repeat="ads in msc.ads_list track by $index" >
                 <a href="#" ng-click="msc.likeAds($event,ads.adsID);" class="heart"><i class="icon-heart {{$root.alreadyLike(ads.adsID) ==  true?'active':''}}"></i></a>
