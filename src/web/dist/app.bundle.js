@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f2133037c3d1bf583d20"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "dfc656edfd3e66677863"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1403,8 +1403,8 @@
 	        $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
 
 	        $rootScope.currentLocation = {
-	            lat: undefined,
-	            lon: undefined
+	            lat: 20.95389909999999,
+	            lon: 105.75490945
 	        };
 	        $rootScope.lastSearch = undefined;
 
@@ -27977,7 +27977,20 @@
 							}, 0);
 						});
 					}, function (error) {
+						console.log("--------error in navigator.geolocation-------------");
 						console.log(error);
+						homeDataSearch.currentLocation = $rootScope.currentLocation;
+						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
+							//alert(JSON.stringify(res));
+							vm.boSuuTap = [];
+							res.data.data.forEach(function (item, index) {
+								if (item.data.length > 0) vm.boSuuTap.push(item);
+							});
+							vm.doneSearch = true;
+							$timeout(function () {
+								$('body').scrollTop(0);
+							}, 0);
+						});
 					});
 				} else {
 					homeDataSearch.currentLocation = $rootScope.currentLocation;
