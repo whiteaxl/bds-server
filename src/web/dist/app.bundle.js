@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d943a563da364f1d5b3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "17ba047e3ae2be76628b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28954,6 +28954,9 @@
 	                    var dup = false;
 	                    for (var j = 0; j < scope.markers.length; j++) {
 	                        var marker = scope.markers[j];
+	                        //nhannc add to allway show marker on map, Hung check logic again
+	                        marker.show = true;
+	                        //end nhannc
 	                        if (Math.abs(marker.coords.latitude - adsList[i].map.marker.coords.latitude) <= PADDING && Math.abs(marker.coords.longitude - adsList[i].map.marker.coords.longitude) <= PADDING) {
 	                            marker.adsList.push(ads);
 	                            marker.count = marker.count + 1;

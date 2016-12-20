@@ -895,6 +895,9 @@
                     var dup = false;                        
                     for(var j=0;j<scope.markers.length;j++){
                         var marker = scope.markers[j];
+                        //nhannc add to allway show marker on map, Hung check logic again
+                        marker.show = true;
+                        //end nhannc
                         if((Math.abs(marker.coords.latitude - adsList[i].map.marker.coords.latitude) <= PADDING)
                            && (Math.abs(marker.coords.longitude - adsList[i].map.marker.coords.longitude) <= PADDING)){
                             marker.adsList.push(ads);

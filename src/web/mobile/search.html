@@ -101,10 +101,10 @@
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" gesture-handling="greedy" street-view-control-options="{position:'RIGHT_CENTER'}"
              ng-show ="msc.viewMode!='list'"  default-style="false" center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                <custom-marker  class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
+                <custom-marker class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
-                    <div>
-                        <div class="{{m.class}}">
+                    <div style="visibility: {{m.show==true?'visible':'hidden'}};position: relative;">
+                        <div class="{{m.class}}" style="{{m.style}}">
                             {{m.content}}
                             <i ng-if="m.count>1" class="icon iconUp"></i>
                             <span ng-if="m.count>1" >{{m.count}}</span>
