@@ -499,6 +499,9 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                     }
                     if($scope.searchData.loaiNhaDat && ($scope.searchData.loaiNhaDat[0]==0))
                         $scope.searchData.loaiNhaDat = undefined;
+                    if($scope.searchData.huongNha != undefined && $scope.searchData.huongNha==null){
+                        $scope.searchData.huongNha=undefined;
+                    }
                     // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
                     $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin" : 0, "loaiNhaDat" : 0,"query": $scope.searchData, "viewMode": $scope.mode?$scope.mode:"list"},{reload: true});

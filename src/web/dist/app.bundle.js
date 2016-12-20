@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6da70abd9f767a1c1b77"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f2133037c3d1bf583d20"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28999,6 +28999,10 @@
 	            // $rootScope.searchData.khoangGia
 	            vm.disableIdleHandler();
 
+	            if ($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha == null) {
+	                $rootScope.searchData.huongNha = undefined;
+	            }
+
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
 	                //vm.totalResultCounts = res.data.list.length;
@@ -33060,6 +33064,9 @@
 	                    }
 	                }
 	                if ($scope.searchData.loaiNhaDat && $scope.searchData.loaiNhaDat[0] == 0) $scope.searchData.loaiNhaDat = undefined;
+	                if ($scope.searchData.huongNha != undefined && $scope.searchData.huongNha == null) {
+	                    $scope.searchData.huongNha = undefined;
+	                }
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
 	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
@@ -33672,6 +33679,9 @@
 	            vm.goToSearchPage = function () {
 	                $scope.$emit("searchingByLocation");
 	                $rootScope.searchData.updateLastSearch = false;
+	                if ($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha == null) {
+	                    $rootScope.searchData.huongNha = undefined;
+	                }
 	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                if ($rootScope.searchData.placeId) {
 	                    $rootScope.searchData.polygon = undefined;
