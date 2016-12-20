@@ -131,86 +131,72 @@
 
 		vm.openChat = function(event){
 			vm.userPostAdsExist = false;
-			if(!vm.userPostAdsExist){
-				if(vm.ads && vm.ads.dangBoi.userID){
-					HouseService.getUserInfo({userID: vm.ads.dangBoi.userID}).then(function(res) {
-						if (res.status == 200 && res.data.status == 0) {
-							vm.userPostAdsExist = true;
+			if(vm.ads && vm.ads.dangBoi.userID){
+				HouseService.getUserInfo({userID: vm.ads.dangBoi.userID}).then(function(res) {
+					if (res.status == 200 && res.data.status == 0) {
+						vm.userPostAdsExist = true;
+					}
+					if(vm.userPostAdsExist){
+						if($rootScope.isLoggedIn()==false){
+							$scope.$bus.publish({
+								channel: 'login',
+								topic: 'show login',
+								data: {label: "Đăng nhập để trao đổi"}
+							});
+							return true;
 						}
-						if(vm.userPostAdsExist){
-							if($rootScope.isLoggedIn()==false){
-								$scope.$bus.publish({
-									channel: 'login',
-									topic: 'show login',
-									data: {label: "Đăng nhập để trao đổi"}
-								});
-								return true;
-							}
-							$state.go('mchatDetail', { "adsID" : vm.adsID});
-							$(".overlay").click();
-						} else{
-							if(vm.ads.dangBoi.phone){
-								/*
-								console.log("--------------tellTo----1---------------");
-								var href = $('#tellTo').attr('href');
-								window.location.href = href;
-								console.log("--------------tellTo--------1-2----------");*/
-								var message_text = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại. https://landber.com/web/detail/" + vm.ads.adsID + " xin vui lòng liên hệ lại sớm";
-								var href = '';
-								if (vm.checkMobileOS() == 'iOS') {
-									href = "sms:" + vm.ads.dangBoi.phone +"&body=" + encodeURI(message_text);
-								}
-								if (vm.checkMobileOS() == 'Android') {
-									href = "sms:" + vm.ads.dangBoi.phone +"?body=" + encodeURI(message_text);
-								}
-								window.location.href = href;
-							} else {
-								if(vm.ads.dangBoi.email){
-									console.log("--------------mailTo----1---------------");
-									var href = $('#mailTo').attr('href');
-									window.location.href = href;
-									console.log("--------------mailTo--------1-2----------");
-								}
-							}
-						}
-					});
-				} else {
-					if(vm.ads.dangBoi.phone){
-						/*
-						console.log("--------------tellTo----1---------------");
-						var href = $('#tellTo').attr('href');
-						window.location.href = href;
-						console.log("--------------tellTo--------1-2----------");*/
-						var message_text = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại. https://landber.com/web/detail/" + vm.ads.adsID + " xin vui lòng liên hệ lại sớm";
-						var href = '';
-						if (vm.checkMobileOS() == 'iOS') {
-							href = "sms:" + vm.ads.dangBoi.phone +"&body=" + encodeURI(message_text);
-						}
-						if (vm.checkMobileOS() == 'Android') {
-							href = "sms:" + vm.ads.dangBoi.phone +"?body=" + encodeURI(message_text);
-						}
-						window.location.href = href;
-					} else {
-						if(vm.ads.dangBoi.email){
-							console.log("--------------mailTo----1---------------");
-							var href = $('#mailTo').attr('href');
+						$state.go('mchatDetail', { "adsID" : vm.adsID});
+						$(".overlay").click();
+					} else{
+						if(vm.ads.dangBoi.phone){
+							/*
+							console.log("--------------tellTo----1---------------");
+							var href = $('#tellTo').attr('href');
 							window.location.href = href;
-							console.log("--------------mailTo--------1-2----------");
+							console.log("--------------tellTo--------1-2----------");*/
+							var message_text = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại. https://landber.com/web/detail/" + vm.ads.adsID + " xin vui lòng liên hệ lại sớm";
+							var href = '';
+							if (vm.checkMobileOS() == 'iOS') {
+								href = "sms:" + vm.ads.dangBoi.phone +"&body=" + encodeURI(message_text);
+							}
+							if (vm.checkMobileOS() == 'Android') {
+								href = "sms:" + vm.ads.dangBoi.phone +"?body=" + encodeURI(message_text);
+							}
+							window.location.href = href;
+						} else {
+							if(vm.ads.dangBoi.email){
+								console.log("--------------mailTo----1---------------");
+								var href = $('#mailTo').attr('href');
+								window.location.href = href;
+								console.log("--------------mailTo--------1-2----------");
+							}
 						}
 					}
-				}
+				});
 			} else {
-				if($rootScope.isLoggedIn()==false){
-					$scope.$bus.publish({
-						channel: 'login',
-						topic: 'show login',
-						data: {label: "Đăng nhập để trao đổi"}
-					});
-					return true;
+				if(vm.ads.dangBoi.phone){
+					/*
+					console.log("--------------tellTo----1---------------");
+					var href = $('#tellTo').attr('href');
+					window.location.href = href;
+					console.log("--------------tellTo--------1-2----------");*/
+					var message_text = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại. https://landber.com/web/detail/" + vm.ads.adsID + " xin vui lòng liên hệ lại sớm";
+					var href = '';
+					if (vm.checkMobileOS() == 'iOS') {
+						href = "sms:" + vm.ads.dangBoi.phone +"&body=" + encodeURI(message_text);
+					}
+					if (vm.checkMobileOS() == 'Android') {
+						href = "sms:" + vm.ads.dangBoi.phone +"?body=" + encodeURI(message_text);
+					}
+					window.location.href = href;
+				} else {
+					if(vm.ads.dangBoi.email){
+						console.log("--------------mailTo----1---------------");
+						var href = $('#mailTo').attr('href');
+						window.location.href = href;
+						console.log("--------------mailTo--------1-2----------");
+					}
 				}
-				//ngDialog.open({ template: 'templateId' });
-				$state.go('mchatDetail', { "adsID" : vm.adsID});
-				$(".overlay").click();
 			}
 		}
 
