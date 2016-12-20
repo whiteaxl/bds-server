@@ -4,6 +4,8 @@
 	angular.module('bds').controller(controllerId,function ($rootScope, $http, $scope, $state, HouseService, NewsService, NgMap, $window,$timeout,$location,$localStorage){
 		var vm = this;
 		vm.doneSearch = false;
+		$scope.imgForNoAds="/web/mobile/img/no_ads.jpg";
+		$scope.noCover="/web/mobile/img/no_cover.jpg";
 		/*
 		var query = { 
 			loaiTin: 0,
