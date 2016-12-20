@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cfb7bad6fa5120128e78"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e92194f8fefb7cbddb38"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -29504,13 +29504,13 @@
 	      var href = $('#tellTo').attr('href');
 	      window.location.href = href;
 	      console.log("--------------tellTo--------1-2----------");*/
-							var message_text = 'Some message goes here';
+							var message_text = "Tôi muốn tìm hiểu thêm thông tin về bất động sản tại. https://landber.com/web/detail/" + vm.ads.adsID + " xin vui lòng liên hệ lại sớm";
 							var href = '';
 							if (vm.checkMobileOS() == 'iOS') {
-								href = "sms:0986590642&body=" + encodeURI(message_text);
+								href = "sms:" + vm.ads.dangBoi.phone + "&body=" + encodeURI(message_text);
 							}
 							if (vm.checkMobileOS() == 'Android') {
-								href = "sms:0986590642?body=" + encodeURI(message_text);
+								href = "sms:" + vm.ads.dangBoi.phone + "?body=" + encodeURI(message_text);
 							}
 							window.location.href = href;
 						} else {
