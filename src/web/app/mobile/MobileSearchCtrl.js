@@ -238,11 +238,16 @@
                 vm.viewTemplateUrl = "/web/mobile/map.tpl.html"
                 $timeout(function() {
                     vm.mapInitialized();
-                }, 0);
+                    // vm.correctCustomMarkerPos();
+
+                },0);
                 vm.changeBrowserHistory();
+
                 $timeout(function() {
-                    google.maps.event.trigger(vm.map, "resize");
-                });
+                    // google.maps.event.trigger(vm.map, "resize");
+                    google.maps.event.trigger(vm.map, "idle");
+                },100);
+                
             } else {
                 $('.list-sort').toggle();
             }
@@ -1129,12 +1134,15 @@
                     }   
                 },0);                
                 $timeout(function() {
-                    vm.initialized = true;
+                    vm.initialized = true;                    
                     vm.enableMapIdleHandler();
+                    if(vm.map)
+                        google.maps.event.trigger(vm.map, "idle");
                 },0);
                 vm.searching = false; 
                 vm.searchingIconClass = "iconSearch search-head";
                 vm.doneSearch = true;
+                
                 if(callback)
                     callback(res);
             });
@@ -1158,6 +1166,9 @@
                 vm.currentPage = vm.currentPage-1;
                 vm.searchPage(vm.currentPage);
                 vm.setNextPrevButtonClass();
+                $timeout(function() {
+                    // vm.correctCustomMarkerPos();
+                },300);
             }
         }
         vm.next = function(){
@@ -1165,6 +1176,9 @@
                 vm.currentPage = vm.currentPage+1;
                 vm.searchPage(vm.currentPage);
                 vm.setNextPrevButtonClass();
+                $timeout(function() {
+                    // vm.correctCustomMarkerPos();
+                },300);
             }
 
         }

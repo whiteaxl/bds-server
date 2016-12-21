@@ -1,11 +1,7 @@
 <bds-mobile-left-menu></bds-mobile-left-menu>
 <bds-mobile-filter mode="msc.viewMode" search-data="$root.searchData"></bds-mobile-filter>
 <bds-mobile-header mode="msc.viewMode" icon-search-class="msc.searchingIconClass" act="$root.act"></bds-mobile-header>
-<style type="text/css">
-    .custom-marker{
-        background-color: transparent;
-        border-color: transparent;
-    }
+<style type="text/css">    
     .nextEnable{       
         background-position-x: -176px !important; 
     }
@@ -101,7 +97,7 @@
             <ng-map id="searchmap" zoom-control="false" map-type-control="false" fullscreen-control="false" street-view-control="true" gesture-handling="greedy" street-view-control-options="{position:'RIGHT_CENTER'}"
              ng-show ="msc.viewMode!='list'"  default-style="false" center="{{center}}" lazy-init="true"   class="ngmap">
                 <!-- <ng-map zoom="11" id="searchmap" center="Danang Vietnam" class="ngmap"> -->
-                <custom-marker class="custom-marker" ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
+                <custom-marker ng-repeat="m in markers track by $index" position="[{{m.coords.latitude}},{{m.coords.longitude}}]" on-mouseover="msc.mouseover({{$index}})"  on-mouseout="msc.mouseout()" on-click="msc.previewAds({{$index}});"
                                 id="m_{{$index}}" >
                     <div style="visibility: {{m.show==true?'visible':'hidden'}};position: relative;">
                         <div class="{{m.class}}" style="{{m.style}}">
