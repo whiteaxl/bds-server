@@ -21,27 +21,39 @@ var chatModel = new ChatModel();
 var UserModel = require("../dbservices/User");
 var userModel = new UserModel();
 
+//nhannc rao
+/*
 ChatHandler.addUser = function(user){
+    console.log("------------addUser: ---------------" + data.userID);
 	online_users[user.userID];
+    console.log(online_users);
+    console.log("----------------------------------");
   
 }
 
 ChatHandler.removeUser = function(user){
 	online_users.remove(user);
-}
+}*/
 
 function processSendMsg(data){
   	var sendMsgResult = {
   		success: true,
   		offline: false
   	}
-  	console.log("emit to user " + data.toUserID);
-  	if (online_users[data.toUserID]) {
-  		console.log("emit to online user " + data.toUserID);
-  		online_users[data.toUserID].emit('new message', data);
-  	}else{
-  		sendMsgResult.offline = true;
-  	}   
+    let toUserId = data.toUserID.trim();
+    let userId;
+    let userOnline = false;
+    console.log("-------------------------processSendMsg: " + toUserId);
+    for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+        userId = online_users[keys[i]].userID.trim();
+        if(toUserId == userId){
+            console.log("-------------------------------processSendMsg to  " + userId);
+            online_users[online_users[keys[i]].sessionID].emit('new message', data);
+            userOnline = true;
+        }
+    }
+    sendMsgResult.offline = !userOnline;
+
   	return sendMsgResult;
   }
 
@@ -54,7 +66,6 @@ ChatHandler.sendImage = function(data,callback){
   });
 }
 
-
 ChatHandler.init = function(server){
   // console.log(JSON.stringify(server[0]));
 
@@ -63,13 +74,24 @@ ChatHandler.init = function(server){
 	ios.on('connection', function(socket){  
 		console.log("socket.io on connection");
   	// creating new user if nickname doesn't exists
+    var containsObject =  function(obj, list) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
   	socket.on('new user', function(data, callback){
-  		if(online_users[data.userID])
+  		if(online_users[data.sessionID])
   		{
+            console.log("------------da ton tai socket for user: ---------------" + data.userID + "--with sessionID: " + data.sessionID);
   			callback({success:false});
   		}else{
   			callback({success:true});
-  			console.log("socket.io got one new user " + data.userID);
+            console.log("------------chua ton tai socket for user: ---------------" + data.userID + "--with sessionID: " + data.sessionID);
+  			console.log("socket.io got one new sessionID for user " + data.userID);
+            socket.allPartner = [];
             if(data.username){
                 socket.username = data.username;
             }
@@ -77,10 +99,12 @@ ChatHandler.init = function(server){
                 socket.userAvatar = data.userAvatar;
             }
   			socket.userID = data.userID;
-  			online_users[data.userID] = socket;
+            socket.sessionID = data.sessionID
+  			online_users[data.sessionID] = socket;
+
             chatModel.getUnreadMessages(data,function(err,res){
                 if(!err)
-                    online_users[data.userID].emit('unread-messages', res);
+                    online_users[data.sessionID].emit('unread-messages', res);
             });
 
             let fromUserId = data.userID.trim();
@@ -91,26 +115,43 @@ ChatHandler.init = function(server){
                     console.log("Error when get Chat inbox for userID: " + data.userID);
                 } else {
                     if(res && res.length > 0){
-                        let allParner = [];
-                        var async = require("async");
-                        async.forEach(res,function(inbox){
-                            if(inbox.partner.userID) {
-                                toUserId = inbox.partner.userID.trim();
-                                allParner.push(toUserId);
-                                data.toUserId = toUserId;
-                                console.log("-------------------------inbox: " + toUserId);
-                                if(online_users[toUserId])
-                                    online_users[toUserId].emit('alert user online', data);
+                        let allPartner = [];
+                        let toUserId;
+                        for(let i=0; i<res.length; i ++){
+                            if(res[i].partner.userID) {
+                                toUserId = res[i].partner.userID.trim();
+                                if(!containsObject(toUserId, allPartner)){
+                                    allPartner.push(toUserId);
+                                }
                             }
+                        }
+                        console.log("-------------------------allpartner of: " + data.fromUserID);
+                        console.log(allPartner);
+                        console.log("-------------------------allpartner of: " + data.fromUserID);
+
+                        var async = require("async");
+                        async.forEach(allPartner,function(partner, callback){
+                            data.toUserId = partner;
+                            console.log("-------------------------inbox: " + toUserId);
+                            for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                                toUserId = online_users[keys[i]].userID.trim();
+                                console.log("-------------------------------alert online--- user " + toUserId + "---with Session: " + online_users[keys[i]].sessionID);
+                                if(partner == toUserId){
+                                    online_users[online_users[keys[i]].sessionID].emit('alert user online', data);
+                                }
+                            }
+                            callback();
                         }, function(err){
                             if(err)
                                 console.log(err)
                             else{
                                 console.log("processing all elements completed");
-
                             }
                         });
-                        socket.allParner = allParner;
+                        socket.allPartner = allPartner;
+                        console.log("------------xem thong tin online_user---------------");
+                        console.log(online_users);
+                        console.log("---------------------------");
                     }
                 }
             });
@@ -130,7 +171,7 @@ ChatHandler.init = function(server){
 
     socket.on('alert user online', function(data){
         console.log("-----------------------alert user online by user " + data.fromUserID);
-        if(!online_users[data.fromUserID])
+        if(!online_users[data.sessionID])
         {
             if(data.fromUsername){
                 socket.username = data.fromUserName;
@@ -139,54 +180,77 @@ ChatHandler.init = function(server){
                 socket.userAvatar = data.userAvatar;
             }
             socket.userID = data.fromUserID;
+            socket.sessionID = data.sessionID
 
-            online_users[data.fromUserID] = socket;
-            let toUserId;
+            online_users[data.sessionID] = socket;
 
             chatModel.getInboxMsg( {userID: data.fromUserID}, function(err, res){
                 if (err != null){
                     console.log("Error when get Chat inbox for userID: " + data.userID);
                 } else {
                     if(res && res.length > 0){
-                        let allParner = [];
-                        var async = require("async");
-                        async.forEach(res,function(inbox){
-                            if(inbox.partner.userID) {
-                                toUserId = inbox.partner.userID.trim();
-                                allParner.push(toUserId);
-                                data.toUserId = toUserId;
-                                console.log("-------------------------inbox: " + toUserId);
-                                if(online_users[toUserId])
-                                    online_users[toUserId].emit('alert user online', data);
+                        let allPartner = [];
+                        let toUserId;
+                        for(let i=0; i<res.length; i ++){
+                            if(res[i].partner.userID) {
+                                toUserId = res[i].partner.userID.trim();
+                                if(!containsObject(toUserId, allPartner)){
+                                    allPartner.push(toUserId);
+                                }
                             }
+                        }
+                        console.log("-------------------------allpartner of: " + data.fromUserID);
+                        console.log(allPartner);
+                        console.log("-------------------------");
+                        var async = require("async");
+                        async.forEach(allPartner,function(partner, callback){
+                            data.toUserId = partner;
+                            console.log("-------------------------inbox: " + toUserId);
+                            for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                                toUserId = online_users[keys[i]].userID.trim();
+                                console.log("-------------------------------alert online--- user " + toUserId + "---with Session: " + online_users[keys[i]].sessionID);
+                                if(partner == toUserId){
+                                    online_users[online_users[keys[i]].sessionID].emit('alert user online', data);
+                                }
+                            }
+                            callback();
                         }, function(err){
                             if(err)
                                 console.log(err)
                             else{
                                 console.log("processing all elements completed");
-
                             }
                         });
-                        socket.allParner = allParner;
+                        socket.allPartner = allPartner;
+                        console.log("------------xem thong tin online_user---------------");
+                        console.log(online_users);
+                        console.log("---------------------------");
                     }
                 }
             });
         }
     });
 
+        /*
     socket.on('alert user offline', function(data){
         if(online_users[data.fromUserID])
         {
             delete online_users[data.fromUserID];
         }
         console.log("--------------------------alert user offline by user " + data.fromUserID);
-        if(socket.allParner){
+        if(socket.allPartner){
             var async = require("async");
-            async.forEach(socket.allParner,function(parner){
-                data.toUserId = parner;
-                console.log("-------------------------to user: " + data.toUserId);
-                if(online_users[data.toUserId])
-                    online_users[data.toUserId].emit('alert user offline', data);
+            async.forEach(socket.allPartner,function(partner, callback){
+                let toUserId;
+                data.toUserId = partner;
+                for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                    toUserId = online_users[keys[i]].userID.trim();
+                    console.log("-------------------------------alert offline--- user " + toUserId + "---with Session: " + online_users[keys[i]].sessionID);
+                    if(partner == toUserId){
+                        online_users[online_users[keys[i]].sessionID].emit('alert user offline', data);
+                    }
+                }
+                callback();
             }, function(err){
                 if(err)
                     console.log(err)
@@ -196,7 +260,7 @@ ChatHandler.init = function(server){
                 }
             });
         }
-    });
+    });*/
 
     socket.on('read-messages', function(data, callback){
       for (var i = 0, len = data.length; i < len; i++) {
@@ -216,8 +280,6 @@ ChatHandler.init = function(server){
   // sending new message
   socket.on('send-message', function(data, callback){
       console.log("--------------------------send-message----------------------");
-      console.log(socket);
-      console.log("--------------------------send-message-------1---------------");
       console.log("receive message "+ JSON.stringify(data));
     var async = require("async");
     var updateUserID = function(data,callback){
@@ -239,6 +301,9 @@ ChatHandler.init = function(server){
         }
       });      
     }
+
+
+
     var pMessage = function(data,callback){
       var sendMsgResult = processSendMsg(data)
       data.read = !sendMsgResult;
@@ -251,9 +316,9 @@ ChatHandler.init = function(server){
         callback({success: true, offline: result.read});
       });
     })
-      if(socket.allParner && data.toUserID){
-          if(socket.allParner.indexOf(data.toUserID.trim()) <= 0){
-              socket.allParner.push(data.toUserID.trim());
+      if(socket.allPartner && data.toUserID){
+          if(socket.allPartner.indexOf(data.toUserID.trim()) <= 0){
+              socket.allPartner.push(data.toUserID.trim());
           }
       }
 
@@ -263,8 +328,8 @@ ChatHandler.init = function(server){
   
   // disconnect user handling 
   socket.on('disconnect', function (data, callback) { 
-  	console.log('-------tim log this to prove disconnect called: ' + socket.userID + '  --------name: ' + socket.username);
-    delete online_users[socket.userID];
+  	console.log('-------tim log this to prove disconnect called: ' + socket.userID + '  --------with session: ' + socket.sessionID);
+    delete online_users[socket.sessionID];
     console.log(data);
     console.log(callback);
     //callback({success: true});
@@ -272,18 +337,26 @@ ChatHandler.init = function(server){
 
   // disconnect user handling 
   socket.on('user leave', function (data, callback) { 
-  	console.log('--------------tim log this to prove user leave called '  + socket.userID + '  --------name: ' + socket.username);
-      if(socket.userID){
-          let fromUserId = socket.userID.trim();
-          data.fromUserID = fromUserId;
-          delete online_users[socket.userID];
-          if(socket.allParner){
+  	console.log('------------------ user leave called '  + socket.userID + '  --------with session: ' + socket.sessionID);
+      if(socket.sessionID){
+          if(socket.userID){
+              let fromUserId = socket.userID.trim();
+              data.fromUserID = fromUserId;
+          }
+          delete online_users[socket.sessionID];
+          if(socket.allPartner){
               var async = require("async");
-              async.forEach(socket.allParner,function(parner){
-                  data.toUserId = parner;
-                  console.log("-------------------------to user: " + data.toUserId);
-                  if(online_users[data.toUserId])
-                      online_users[data.toUserId].emit('alert user offline', data);
+              async.forEach(socket.allPartner,function(partner, callback){
+                  data.toUserId = partner;
+                  let toUserId;
+                  for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+                      toUserId = online_users[keys[i]].userID.trim();
+                      console.log("-------------------------------alert online--- user " + toUserId + "---with Session: " + online_users[keys[i]].sessionID);
+                      if(partner == toUserId){
+                          online_users[online_users[keys[i]].sessionID].emit('alert user offline', data);
+                      }
+                  }
+                  callback();
               }, function(err){
                   if(err)
                       console.log(err)
@@ -310,24 +383,51 @@ ChatHandler.init = function(server){
 
 //emit user start typing
   socket.on('check user online', function(data){
-      if(online_users[data.toUserID]){
-          data.toUserIsOnline = true;
-      } else{
-          data.toUserIsOnline = false;
+
+      let userId;
+      let userCheckId = data.toUserID.trim();
+      data.toUserIsOnline = false;
+      console.log("-------------------------check user online : " + userCheckId);
+      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+          userId = online_users[keys[i]].userID.trim();
+          if(userCheckId == userId){
+              console.log("-------------------------------alert online--- user " + userId);
+              data.toUserIsOnline = true;
+              break;
+          }
       }
-      online_users[data.fromUserID].emit('check user online',data);
-  });        
+      let fromUser = data.fromUserID.trim();
+      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+          userId = online_users[keys[i]].userID.trim();
+          if(fromUser == userId){
+              console.log("-------------------------------response check online--- user " + userId);
+              online_users[online_users[keys[i]].sessionID].emit('check user online', data);
+          }
+      }
+  });
   //emit user start typing
   socket.on('user-start-typing', function(data){
-    if(online_users[data.toUserID]){
-      online_users[data.toUserID].emit("user-start-typing",data);
-    }
+      let toUserId = data.toUserID;
+      let userId;
+      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+          userId = online_users[keys[i]].userID.trim();
+          if(toUserId == userId){
+              console.log("-------------------------------user-start-typing--- user " + userId);
+              online_users[online_users[keys[i]].sessionID].emit('user-start-typing', data);
+          }
+      }
   });
   //emit user stop typing
   socket.on('user-stop-typing', function(data){
-    if(online_users[data.toUserID]){
-      online_users[data.toUserID].emit("user-stop-typing",data);
-    }
+      let toUserId = data.toUserID;
+      let userId;
+      for (var i = 0, keys = Object.keys(online_users), ii = keys.length; i < ii; i++) {
+          userId = online_users[keys[i]].userID.trim();
+          if(toUserId == userId){
+              console.log("-------------------------------user-stop-typin--- user " + userId);
+              online_users[online_users[keys[i]].sessionID].emit('user-stop-typing', data);
+          }
+      }
   });
 
 

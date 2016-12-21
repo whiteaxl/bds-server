@@ -1,6 +1,6 @@
 <div>    
     <header class="main gradient">
-        <a href="#" ng-click= "$root.removeDetailAds();" class="header-icon"><i class="iconLeftOpen"></i></a>
+        <a href="#" {{$root.chatFromDetail?ng-click="$root.removeDetailAds()":ng-click="mdt.goBack()"}} class="header-icon"><i class="iconLeftOpen"></i></a>
 		<a role="button" data-toggle="modal" data-target="#detailAlertBox" class="header-icon header-alert pull-right">
             <img src="/web/mobile/img/warning-dot.svg">
         </a>

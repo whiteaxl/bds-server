@@ -172,7 +172,7 @@ angular.module('bds')
                           vm.state = vm.LOGGED_IN;
                           vm.userExist = false;
                           vm.password = "";
-                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+                          socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, sessionID: $localStorage.relandToken, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
                             console.log("register socket user " + $rootScope.user.userName);
                           });
                           $scope.$bus.publish({
@@ -242,7 +242,7 @@ angular.module('bds')
                         vm.state = vm.LOGGED_IN;
                         vm.userExist = false;
                         vm.password = "";
-                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
+                        socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, sessionID: $localStorage.relandToken, username : $rootScope.user.userName, avatar : res.data.avatar},function(data){
                           console.log("register socket user " + $rootScope.user.userName);
                         });
                         $scope.$bus.publish({
@@ -273,7 +273,7 @@ angular.module('bds')
                       //end nhannc
                       vm.class = "has-sub";
                       vm.state = vm.LOGGED_IN;
-                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, name : $rootScope.user.userName, userAvatar : undefined},function(data){
+                      socket.emit('new user',{email: $rootScope.user.userEmail, userID:  $rootScope.user.userID, sessionID: $localStorage.relandToken, name : $rootScope.user.userName, userAvatar : undefined},function(data){
                           console.log("register socket user " + $rootScope.user.userName);
                       });
                       $scope.$bus.publish({

@@ -945,6 +945,10 @@
             // $rootScope.searchData.khoangGia
             vm.disableIdleHandler();
 
+            if($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha==null){
+                $rootScope.searchData.huongNha=undefined;
+            }
+
             HouseService.findAdsSpatial($rootScope.searchData).then(function(res){
                 var result = res.data.list;
                 //vm.totalResultCounts = res.data.list.length;

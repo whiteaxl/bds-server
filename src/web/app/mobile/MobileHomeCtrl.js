@@ -66,7 +66,21 @@
 		                },0);						
 					});
 		        }, function(error){
-		        	console.log(error);		        	
+					console.log("--------error in navigator.geolocation-------------");
+		        	console.log(error);
+					homeDataSearch.currentLocation = $rootScope.currentLocation;
+					HouseService.homeDataForApp(homeDataSearch).then(function(res){
+						//alert(JSON.stringify(res));
+						vm.boSuuTap = [];
+						res.data.data.forEach(function(item,index){
+							if(item.data.length>0)
+								vm.boSuuTap.push(item);
+						});
+						vm.doneSearch = true;
+						$timeout(function() {
+							$('body').scrollTop(0);
+						},0);
+					});
 		        });
 		    } else {
 				homeDataSearch.currentLocation = $rootScope.currentLocation;
@@ -83,8 +97,7 @@
 	                },0);
 				});
 		    }
-
-		}		
+		}
 
 		vm.likeAds = function(event,adsID){
 		  event.stopPropagation();

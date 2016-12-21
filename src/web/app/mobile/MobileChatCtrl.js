@@ -8,7 +8,7 @@
 		vm.allRentInbox = [];
 		vm.toUserIdDetail;
 		
-
+		/* nhannc rao
 		vm.init = function(){
 			socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
 				console.log("alert user online " + $rootScope.user.userID);
@@ -18,6 +18,7 @@
 		$timeout(function() {
 			vm.init();
 		},100);
+		*/
 
 		vm.getChatTime = function (date) {
 			var mm = date.getMonth() + 1; // getMonth() is zero-based

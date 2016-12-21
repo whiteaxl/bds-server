@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7582d28cedb0e7f063bf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2f94e02f7cf6a6428bc2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1318,7 +1318,7 @@
 	                $rootScope.user.lastViewAds = res.data.user.lastViewAds;
 	                $rootScope.user.saveSearch = res.data.user.saveSearch;
 	                $rootScope.getUnreadMsgCount($rootScope.user.userID);
-	                socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUserName: $rootScope.user.userName }, function (data) {
+	                socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, sessionID: $localStorage.relandToken, fromUserName: $rootScope.user.userName }, function (data) {
 	                    console.log("alert user online " + $rootScope.user.userID);
 	                });
 	            });
@@ -1403,8 +1403,8 @@
 	        $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
 
 	        $rootScope.currentLocation = {
-	            lat: undefined,
-	            lon: undefined
+	            lat: 20.95389909999999,
+	            lon: 105.75490945
 	        };
 	        $rootScope.lastSearch = undefined;
 
@@ -29709,7 +29709,20 @@
 							}, 0);
 						});
 					}, function (error) {
+						console.log("--------error in navigator.geolocation-------------");
 						console.log(error);
+						homeDataSearch.currentLocation = $rootScope.currentLocation;
+						HouseService.homeDataForApp(homeDataSearch).then(function (res) {
+							//alert(JSON.stringify(res));
+							vm.boSuuTap = [];
+							res.data.data.forEach(function (item, index) {
+								if (item.data.length > 0) vm.boSuuTap.push(item);
+							});
+							vm.doneSearch = true;
+							$timeout(function () {
+								$('body').scrollTop(0);
+							}, 0);
+						});
 					});
 				} else {
 					homeDataSearch.currentLocation = $rootScope.currentLocation;
@@ -30735,6 +30748,10 @@
 	            // $rootScope.searchData.khoangGia
 	            vm.disableIdleHandler();
 
+	            if ($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha == null) {
+	                $rootScope.searchData.huongNha = undefined;
+	            }
+
 	            HouseService.findAdsSpatial($rootScope.searchData).then(function (res) {
 	                var result = res.data.list;
 	                //vm.totalResultCounts = res.data.list.length;
@@ -31214,6 +31231,8 @@
 								});
 								return true;
 							}
+							$rootScope.removeDetailAds();
+							$rootScope.chatFromDetail = true;
 							$state.go('mchatDetail', { "adsID": vm.adsID });
 							$(".overlay").click();
 						} else {
@@ -31357,9 +31376,17 @@
 					// }
 					//$window.history.back();
 					// $state.go($rootScope.lastState, $rootScope.lastStateParams);
-					$rootScope.bodyClass = "hfixed header bodySearchShow";
-					angular.element('#detailModal').hide();
-					angular.element('#mainView').show();
+					console.log("-----------gobackDetail------------");
+					$rootScope.chatFromDetail = false;
+					$rootScope.removeDetailAds();
+					$state.go('mhome', {}, { location: true });
+					$(".overlay").click();
+
+					/*
+	    $rootScope.bodyClass = "hfixed header bodySearchShow";
+	    angular.element('#detailModal').hide();
+	    angular.element('#mainView').show();
+	    */
 				};
 
 				vm.setReportCode = function (reportCode) {
@@ -31608,15 +31635,16 @@
 			vm.allRentInbox = [];
 			vm.toUserIdDetail;
 
-			vm.init = function () {
-				socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUserName: $rootScope.user.userName }, function (data) {
-					console.log("alert user online " + $rootScope.user.userID);
-				});
-			};
-
-			$timeout(function () {
-				vm.init();
-			}, 100);
+			/* nhannc rao
+	  vm.init = function(){
+	  	socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
+	  		console.log("alert user online " + $rootScope.user.userID);
+	  	});
+	  }
+	  		$timeout(function() {
+	  	vm.init();
+	  },100);
+	  */
 
 			vm.getChatTime = function (date) {
 				var mm = date.getMonth() + 1; // getMonth() is zero-based
@@ -32111,9 +32139,11 @@
 			vm.init = function () {
 				vm.getCurrentLocation();
 
-				socket.emit('alert user online', { email: $rootScope.user.userEmail, fromUserID: $rootScope.user.userID, fromUserName: $rootScope.user.userName }, function (data) {
-					console.log("alert user online " + $rootScope.user.userID);
-				});
+				/*
+	   socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
+	   	console.log("alert user online " + $rootScope.user.userID);
+	   });
+	   */
 
 				socket.emit('get-unread-message', { userID: $rootScope.user.userID }, function (data) {
 					console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
@@ -32236,7 +32266,11 @@
 				//vm.closeChat();
 				console.log("-------------------------goback-Chat----------------------");
 				$rootScope.isChatDetail = false;
-				$state.go($rootScope.lastState, $rootScope.lastStateParams);
+				if ($rootScope.chatFromDetail) {
+					$rootScope.showDetailAds(vm.adsID, $scope);
+				} else {
+					$state.go($rootScope.lastState, $rootScope.lastStateParams);
+				}
 			};
 
 			$timeout(function () {
@@ -34312,7 +34346,7 @@
 	                    data: {}
 	                });
 
-	                socket.emit('user leave', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	                socket.emit('user leave', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, sessionID: $localStorage.relandToken, username: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                    console.log("disconect socket user " + $rootScope.user.userName);
 	                });
 	                $(".overlay").click();
@@ -34808,6 +34842,9 @@
 	                    }
 	                }
 	                if ($scope.searchData.loaiNhaDat && $scope.searchData.loaiNhaDat[0] == 0) $scope.searchData.loaiNhaDat = undefined;
+	                if ($scope.searchData.huongNha != undefined && $scope.searchData.huongNha == null) {
+	                    $scope.searchData.huongNha = undefined;
+	                }
 	                // $state.go("msearch", { "place" : vm.place.place_id, "loaiTin" : 0, "loaiNhaDat" : 0 ,"query": $scope.searchData, "viewMode": "list"});
 
 	                $state.go("msearch", { "placeId": $rootScope.searchData.placeId, "loaiTin": 0, "loaiNhaDat": 0, "query": $scope.searchData, "viewMode": $scope.mode ? $scope.mode : "list" }, { reload: true });
@@ -35420,6 +35457,9 @@
 	            vm.goToSearchPage = function () {
 	                $scope.$emit("searchingByLocation");
 	                $rootScope.searchData.updateLastSearch = false;
+	                if ($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha == null) {
+	                    $rootScope.searchData.huongNha = undefined;
+	                }
 	                if ($scope.$parent.mhc) $scope.$parent.mhc.doneSearch = true;
 	                if ($rootScope.searchData.placeId) {
 	                    $rootScope.searchData.polygon = undefined;
@@ -36029,7 +36069,7 @@
 	                  vm.state = vm.LOGGED_IN;
 	                  vm.userExist = false;
 	                  vm.password = "";
-	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                  socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, sessionID: $localStorage.relandToken, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                    console.log("register socket user " + $rootScope.user.userName);
 	                  });
 	                  $scope.$bus.publish({
@@ -36094,7 +36134,7 @@
 	                vm.state = vm.LOGGED_IN;
 	                vm.userExist = false;
 	                vm.password = "";
-	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
+	                socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, sessionID: $localStorage.relandToken, username: $rootScope.user.userName, avatar: res.data.avatar }, function (data) {
 	                  console.log("register socket user " + $rootScope.user.userName);
 	                });
 	                $scope.$bus.publish({
@@ -36125,7 +36165,7 @@
 	              //end nhannc
 	              vm.class = "has-sub";
 	              vm.state = vm.LOGGED_IN;
-	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
+	              socket.emit('new user', { email: $rootScope.user.userEmail, userID: $rootScope.user.userID, sessionID: $localStorage.relandToken, name: $rootScope.user.userName, userAvatar: undefined }, function (data) {
 	                console.log("register socket user " + $rootScope.user.userName);
 	              });
 	              $scope.$bus.publish({

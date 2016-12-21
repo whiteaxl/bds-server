@@ -33,6 +33,9 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 vm.goToSearchPage = function(){
                     $scope.$emit("searchingByLocation");
                     $rootScope.searchData.updateLastSearch = false;
+                    if($rootScope.searchData.huongNha != undefined && $rootScope.searchData.huongNha==null){
+                        $rootScope.searchData.huongNha=undefined;
+                    }
                     if($scope.$parent.mhc)
                         $scope.$parent.mhc.doneSearch = true;
                     if($rootScope.searchData.placeId){

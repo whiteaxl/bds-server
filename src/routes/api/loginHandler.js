@@ -162,7 +162,9 @@ internals.signup = function(req, reply){
             result.email = user.email;
             //result.phone = user.phone;
             console.log("dddddd");
-            chatHandler.addUser(user);
+            //nhannc rao
+            //chatHandler.addUser(user);
+            //
             console.log("eeeee");
         	reply(result);
 		}

@@ -334,7 +334,7 @@
           $rootScope.user.lastViewAds = res.data.user.lastViewAds;
           $rootScope.user.saveSearch = res.data.user.saveSearch;
           $rootScope.getUnreadMsgCount($rootScope.user.userID);
-          socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
+          socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, sessionID: $localStorage.relandToken, fromUserName : $rootScope.user.userName},function(data){
               console.log("alert user online " + $rootScope.user.userID);
           });
       });
@@ -421,8 +421,8 @@
     $rootScope.loginbox.state = $rootScope.ENTER_EMAIL;
 
     $rootScope.currentLocation = {
-      lat: undefined,
-      lon: undefined
+      lat: 20.95389909999999,
+      lon: 105.75490945
     } 
     $rootScope.lastSearch = undefined;
 
