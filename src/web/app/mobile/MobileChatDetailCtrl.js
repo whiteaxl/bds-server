@@ -232,9 +232,11 @@
 		vm.init = function(){
 			vm.getCurrentLocation();
 
+			/*
 			socket.emit('alert user online',{email: $rootScope.user.userEmail, fromUserID:  $rootScope.user.userID, fromUserName : $rootScope.user.userName},function(data){
 				console.log("alert user online " + $rootScope.user.userID);
 			});
+			*/
 
 			socket.emit('get-unread-message',{userID: $rootScope.user.userID},function (data){
 				console.log("-----------------emit get-unread-message " + $rootScope.user.userID);
@@ -303,7 +305,7 @@
 						}
 					}
 					if(vm.toUserID){
-						socket.emit('check user online',{fromUserID: $rootScope.user.userID,toUserID : vm.toUserID},function(data){
+						socket.emit('check user online',{fromUserID: $rootScope.user.userID, toUserID : vm.toUserID},function(data){
 							console.log("register socket user " + vm.toUserID);
 						});
 
@@ -356,7 +358,11 @@
 			//vm.closeChat();
 			console.log("-------------------------goback-Chat----------------------");
 			$rootScope.isChatDetail = false;
-			$state.go($rootScope.lastState, $rootScope.lastStateParams);
+			if($rootScope.chatFromDetail){
+				$rootScope.showDetailAds(vm.adsID,$scope);
+			}else {
+				$state.go($rootScope.lastState, $rootScope.lastStateParams);
+			}
 		}
 
 		$timeout(function() {
