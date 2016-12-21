@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a41d388b407179e6cb92"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1ff265f0ac3ec06feee2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30554,6 +30554,15 @@
 						HouseService.markReadMessage({ chatID: data.chatID }).then(function (res) {
 							console.log("--------------------markReadMessage---------------");
 						});
+						window.RewayClientUtils.addChatMessage($scope.chatBox, data);
+						$scope.$apply();
+						$("body").animate({ scrollTop: $(document).height() }, "slow");
+					} else if (data.fromUserID.trim() == vm.user.userID) {
+						if (!$scope.chatBox.user) {
+							vm.initChatBox({ userID: data.toUserID, name: data.toFullName, avatar: data.toUserAvatar });
+						}
+						data.date = new Date(data.date);
+						console.log(data);
 						window.RewayClientUtils.addChatMessage($scope.chatBox, data);
 						$scope.$apply();
 						$("body").animate({ scrollTop: $(document).height() }, "slow");

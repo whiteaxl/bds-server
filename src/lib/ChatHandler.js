@@ -35,12 +35,16 @@ ChatHandler.removeUser = function(user){
 	online_users.remove(user);
 }*/
 
-function processSendMsg(data){
+function processSendMsg(data,socket){
   	var sendMsgResult = {
   		success: true,
   		offline: false
   	}
+    console.log("--------------socket-----------");
+    console.log(socket);
+    console.log("-------------end-socket-----------");
     let toUserId = data.toUserID.trim();
+    let fromUserId = data.fromUserID.trim();
     let userId;
     let userOnline = false;
     console.log("-------------------------processSendMsg: " + toUserId);
@@ -50,6 +54,10 @@ function processSendMsg(data){
             console.log("-------------------------------processSendMsg to  " + userId);
             online_users[online_users[keys[i]].sessionID].emit('new message', data);
             userOnline = true;
+        }
+        if((fromUserId == userId) && (socket.sessionID != online_users[keys[i]].sessionID)){
+            console.log("-------------------------------processSendMsg to owner: " + userId);
+            online_users[online_users[keys[i]].sessionID].emit('new message', data);
         }
     }
     sendMsgResult.offline = !userOnline;
@@ -305,7 +313,8 @@ ChatHandler.init = function(server){
 
 
     var pMessage = function(data,callback){
-      var sendMsgResult = processSendMsg(data)
+
+      var sendMsgResult = processSendMsg(data,socket)
       data.read = !sendMsgResult;
       callback(null,data);
     } 

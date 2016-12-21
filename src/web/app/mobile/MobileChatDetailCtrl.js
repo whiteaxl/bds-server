@@ -400,6 +400,15 @@
 					window.RewayClientUtils.addChatMessage($scope.chatBox,data);
 					$scope.$apply();
 					$("body").animate({ scrollTop: $(document).height() }, "slow");
+				} else if(data.fromUserID.trim()==vm.user.userID){
+					if(!$scope.chatBox.user){
+						vm.initChatBox({userID: data.toUserID,name: data.toFullName,avatar: data.toUserAvatar});
+					}
+					data.date = new Date(data.date);
+					console.log(data);
+					window.RewayClientUtils.addChatMessage($scope.chatBox,data);
+					$scope.$apply();
+					$("body").animate({ scrollTop: $(document).height() }, "slow");
 				} else{
 					if(!$rootScope.unreadMsg)
 						$rootScope.unreadMsg = 1;
