@@ -4,7 +4,7 @@
 		<i ng-class="iconSearchClass"></i>
 		<a href="javascript:void(0)" class="search_mobile search-txt"  ng-click="mhdr.toggleFilter($event);">{{mhdr.headerFilterButtonText}}</a>	
 		<!-- <input type="search" placeholder="Tìm tất cả theo khung nhìn" /> -->		
-		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model="mdhr.act" ng-click="mhdr.showFavorite($event)"  id="searchadd1" placeholder="{{$root.act}}" />
+		<input type="search" ng-change="mhdr.autoCompleteChange();" ng-model="mdhr.act" ng-click="mhdr.showFavorite($event)"   id="searchadd1" placeholder="{{$root.act}}" />
     </div>
     <div ng-if="mhdr.stateName=='mlistMore'">    	
         <a href="#" ng-click="mhdr.goToHomePage();" class="header-icon pull-left"><i class="iconLeftOpen"></i></a>

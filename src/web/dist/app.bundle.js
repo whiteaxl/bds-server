@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2f94e02f7cf6a6428bc2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "966f315e75fce63194d2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30239,6 +30239,7 @@
 	            if (vm.poly) {
 	                vm.poly.setMap(null);
 	            }
+	            if (vm.historicalOverlay) vm.historicalOverlay.setMap(null);
 	            vm.disableIdleHandler();
 	        });
 
@@ -30433,6 +30434,7 @@
 
 	        vm.drawmapMode = function () {
 
+	            if (vm.historicalOverlay) vm.historicalOverlay.setMap(null);
 	            vm.historicalOverlay = new google.maps.GroundOverlay(null, vm.map.getBounds());
 	            vm.historicalOverlay.setMap(vm.map);
 
@@ -34413,7 +34415,7 @@
 	            vm.initialized = false;
 	            vm.keepViewport = true;
 	            vm.stateName = $state.current.name;
-	            vm.act = $rootScope.act;
+
 	            // $scope.searchData = {};
 	            // //Object.assign($scope.searchData,$rootScope.searchData);
 	            // _.assign($scope.searchData,$rootScope.searchData);
@@ -35436,6 +35438,7 @@
 	            vm.headerFilterButtonText = "Lọc";
 	            // vm.iconSearchClass = "iconSearch search-head";        
 	            //nhannc
+	            vm.act = $rootScope.act;
 	            $scope.isPostPage = false;
 	            vm.openPost = function () {
 	                $(".post").animate({
@@ -35558,6 +35561,7 @@
 	                    $('#searchadd1').val('');
 	                    vm.act = '';
 	                    $("header").show();
+	                    $rootScope.act = vm.pht;
 	                    return;
 	                }
 
@@ -35694,6 +35698,8 @@
 	                console.log("------------------showFavorite-Header------------------");
 	                $("#searchadd1").autocomplete("option", "source", vm.favoriteSearchSource);
 	                $("#searchadd1").autocomplete("search", "");
+	                if ($rootScope.act != '') vm.pht = $rootScope.act;
+	                $rootScope.act = '';
 	                //}
 	            };
 	            vm.userLoggedIn = function () {

@@ -413,6 +413,8 @@
             if(vm.poly){
                 vm.poly.setMap(null);
             }
+            if(vm.historicalOverlay)
+                vm.historicalOverlay.setMap(null);
             vm.disableIdleHandler();
         });
 
@@ -614,6 +616,8 @@
 
         vm.drawmapMode = function(){
 
+            if(vm.historicalOverlay)
+                vm.historicalOverlay.setMap(null);
             vm.historicalOverlay = new google.maps.GroundOverlay(null,vm.map.getBounds());
             vm.historicalOverlay.setMap(vm.map);
 

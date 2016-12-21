@@ -12,7 +12,8 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                 vm.headerFilterButtonText = "Lọc";    
                 // vm.iconSearchClass = "iconSearch search-head";        
                 //nhannc
-                $scope.isPostPage = false;
+                vm.act = $rootScope.act;
+                $scope.isPostPage = false;                
                 vm.openPost = function(){
                     $(".post").animate({
                         right: 0
@@ -141,7 +142,9 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                         $('#searchadd1').val('');
                         vm.act = '';
                         $("header").show();
+                        $rootScope.act = vm.pht;
                         return;
+
                     }
                     
                     //nhannc
@@ -284,6 +287,9 @@ angular.module('bds').directive('bdsMobileHeader', ['$timeout', function ($timeo
                     console.log("------------------showFavorite-Header------------------");
                         $( "#searchadd1").autocomplete( "option", "source",vm.favoriteSearchSource);
                         $( "#searchadd1").autocomplete( "search", "" );
+                        if($rootScope.act!='')
+                            vm.pht = $rootScope.act;
+                        $rootScope.act = '';
                     //}
 
                 }

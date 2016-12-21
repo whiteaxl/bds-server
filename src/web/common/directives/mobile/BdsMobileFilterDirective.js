@@ -51,7 +51,7 @@ angular.module('bds').directive('bdsMobileFilter', ['$timeout', function ($timeo
                 vm.initialized = false;
                 vm.keepViewport = true;
                 vm.stateName = $state.current.name;
-                vm.act = $rootScope.act;
+                
                 // $scope.searchData = {};
                 // //Object.assign($scope.searchData,$rootScope.searchData);
                 // _.assign($scope.searchData,$rootScope.searchData);
