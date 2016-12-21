@@ -145,6 +145,8 @@
 							});
 							return true;
 						}
+						$rootScope.removeDetailAds();
+						$rootScope.chatFromDetail = true;
 						$state.go('mchatDetail', { "adsID" : vm.adsID});
 						$(".overlay").click();
 					} else{
@@ -291,9 +293,17 @@
 				// }
 				//$window.history.back();
 				// $state.go($rootScope.lastState, $rootScope.lastStateParams);
+				console.log("-----------gobackDetail------------");
+				$rootScope.chatFromDetail = false;
+				$rootScope.removeDetailAds();
+				$state.go('mhome', { }, {location: true});
+				$(".overlay").click();
+
+				/*
 				$rootScope.bodyClass = "hfixed header bodySearchShow";
 				angular.element('#detailModal').hide();
-	            angular.element('#mainView').show();
+				angular.element('#mainView').show();
+				*/
 				
 			}
 
